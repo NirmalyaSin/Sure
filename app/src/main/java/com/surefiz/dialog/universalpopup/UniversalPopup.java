@@ -1,0 +1,49 @@
+package com.surefiz.dialog.universalpopup;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.PopupWindow;
+
+import com.surefiz.R;
+import com.surefiz.registration.RegistrationActivity;
+
+import java.util.List;
+
+public class UniversalPopup extends PopupWindow implements View.OnClickListener {
+    public View popUpView;
+    private RegistrationActivity activity;
+    private List<String> universalList;
+    public EditText et;
+
+    public UniversalPopup(RegistrationActivity activity, List<String> universalList, EditText et) {
+        super(activity);
+        this.activity = activity;
+        this.universalList = universalList;
+        this.et = et;
+        initXML(activity);
+
+    }
+
+    private void initXML(Activity activity) {
+        popUpView = activity.getLayoutInflater().inflate(R.layout.popup_filter, null);
+        setContentView(popUpView);
+
+        UniversalPopUpResponsive filterPopUpResponsive = new UniversalPopUpResponsive((RegistrationActivity) activity, popUpView, universalList, et, this);
+
+        setWidth(filterPopUpResponsive.popUpWidth);
+        if (universalList.size() > 5) {
+            setHeight(filterPopUpResponsive.popUpHeight * 5);
+        } else {
+            setHeight(filterPopUpResponsive.popUpHeightWrap);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+}

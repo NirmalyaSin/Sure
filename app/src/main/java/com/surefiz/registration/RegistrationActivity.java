@@ -20,6 +20,7 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
+import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MediaUtils;
 
 import java.io.File;
@@ -79,6 +80,7 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_phone;
     @BindView(R.id.et_scale)
     EditText et_scale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +88,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         registrationClickEvent = new RegistrationClickEvent(this);
-
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {

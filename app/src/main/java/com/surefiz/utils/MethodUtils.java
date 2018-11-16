@@ -3,6 +3,7 @@ package com.surefiz.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,5 +37,9 @@ public class MethodUtils {
 
     public static void errorMsg(Context context, String msg) {
         ErrorMessageDialog.getInstant(context).show(msg);
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

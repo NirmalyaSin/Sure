@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.OpenCameraOrGalleryDialog;
@@ -139,11 +140,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
             case R.id.tv_upload:
                 break;
             case R.id.btn_register:
-                if (registrationActivity.mCompressedFile != null) {
-                    callRegistrationApiWithImage();
-                } else {
-                    callRegistrationApi();
-                }
+                validationAndApiCall();
                 break;
             case R.id.profile_image:
                 new OpenCameraOrGalleryDialog(registrationActivity, new OnImageSet() {
@@ -278,6 +275,36 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 break;
 
         }
+    }
+
+    private void validationAndApiCall() {
+        if (registrationActivity.et_full.getText().toString().equals("")) {
+
+        } else if (registrationActivity.et_email.getText().toString().equals("")) {
+        } else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
+        } else if (registrationActivity.et_password.getText().toString().equals("")) {
+        } else if (registrationActivity.et_phone.getText().toString().equals("")) {
+        } else if (registrationActivity.et_scale.getText().toString().equals("")) {
+        } else if (registrationActivity.et_units.getText().toString().equals("")) {
+        } else if (registrationActivity.et_gender.getText().toString().equals("")) {
+        } else if (registrationActivity.et_DOB.getText().toString().equals("")) {
+        } else if (registrationActivity.et_height.getText().toString().equals("")) {
+        } else if (registrationActivity.et_weight.getText().toString().equals("")) {
+        } else if (registrationActivity.et_time_loss.getText().toString().equals("")) {
+        } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
+        } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
+        } else {
+            if (registrationActivity.mCompressedFile != null) {
+                callRegistrationApiWithImage();
+            } else {
+                callRegistrationApi();
+            }
+        }
+    }
+
+    private boolean lengthCheck(final String password) {
+        return password.length() >= 8 && password.length() <= 20;
     }
 
     private void callRegistrationApi() {

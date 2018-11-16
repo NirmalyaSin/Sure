@@ -8,4 +8,10 @@
     <color name="whiteColor">#FFFFFF</color>
     <color name="hintColor">#A9A9A9</color>
     <color name="popup_color">#EFEFEF</color>
+    <color name="registration_color_white">#FEFEFE</color>
+    <color name="registration_color_black">#151515</color>
+
+    <!--Progress Bar Color Chart-->
+    <color name="kprogresshud_default_color">#b1000000</color>
+    <color name="kprogresshud_grey_color">#449E9E9E</color>
 </resources>

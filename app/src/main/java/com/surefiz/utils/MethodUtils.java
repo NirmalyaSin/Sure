@@ -1,12 +1,14 @@
 package com.surefiz.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.surefiz.R;
+import com.surefiz.dialog.ErrorMessageDialog;
 
 public class MethodUtils {
 
@@ -30,5 +32,9 @@ public class MethodUtils {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         window.setStatusBarColor(ContextCompat.getColor(activity, R.color.statusBarColor));
+    }
+
+    public static void errorMsg(Context context, String msg) {
+        ErrorMessageDialog.getInstant(context).show(msg);
     }
 }

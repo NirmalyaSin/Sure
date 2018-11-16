@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SureFiz</string>
+
+    <string name="permission_not_given">If you deny permission, you can not use this service.Please turn on permissions in [Setup]-> [Permission]</string>
+
+    <string name="image_compression_error_text">Image not compressed</string>
+    <string name="image_capture_cancel_text">User cancelled image process</string>
+    <string name="failed_to_capture_image_text">Sorry! Failed to process image</string>
+
+    <string name="error_occurred">Something went wrong!</string>
 </resources>

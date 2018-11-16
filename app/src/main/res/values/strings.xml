@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SureFiz</string>
+    <string name="wifi_config">Please configure your scale with\nWiFi Password</string>
 </resources>

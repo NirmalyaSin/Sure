@@ -10,4 +10,17 @@
         <item name="android:windowDisablePreview">true</item>
     </style>
 
+    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/whiteColor</item>
+        <item name="android:textSize">@dimen/_14sdp</item>
+        <item name="android:textColor">@color/whiteColor</item>
+    </style>
+
+    <style name="GreenTextInputLayout" parent="@style/TextAppearance.AppCompat">
+        <item name="android:textColor">@color/whiteColor</item>
+    </style>
+
 </resources>

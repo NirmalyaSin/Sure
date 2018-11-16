@@ -8,4 +8,5 @@
     <color name="whiteColor">#FFFFFF</color>
     <color name="hintColor">#A9A9A9</color>
     <color name="popup_color">#EFEFEF</color>
+    <color name="blue">#3981F5</color>
 </resources>

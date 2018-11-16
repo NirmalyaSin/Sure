@@ -1,25 +1,40 @@
 package com.surefiz.login;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.surefiz.R;
-import com.surefiz.utils.MethodUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
-    LoginViewAndResponsive loginViewAndResponsive;
-    private View view;
+    @BindView(R.id.editEmail)
+    EditText editEmail;
+    @BindView(R.id.editPassword)
+    EditText editPassword;
+    @BindView(R.id.btnLogin)
+    Button btnLogin;
+    @BindView(R.id.tv_forgetPassword)
+    TextView tv_forgetPassword;
+    @BindView(R.id.iv_facebook)
+    ImageView iv_facebook;
+    @BindView(R.id.iv_twiter)
+    ImageView iv_twiter;
+    @BindView(R.id.tv_register)
+    TextView tv_register;
+
+    private LoginClickEvent loginClickEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = View.inflate(this, R.layout.activity_login, null);
-        setContentView(view);
-
-        MethodUtils.setStickyBar(this);
-//        loginViewAndResponsive = new LoginViewAndResponsive(this, view);
-
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+        loginClickEvent = new LoginClickEvent(this);
     }
 }

@@ -1,12 +1,11 @@
 package com.surefiz;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.surefiz.login.LoginActivity;
-import com.surefiz.registration.RegistrationActivity;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 
@@ -29,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void navigate() {
-        Intent loginIntent = new Intent(this, RegistrationActivity.class);
+        Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();

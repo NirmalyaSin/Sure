@@ -1,5 +1,5 @@
 
-package com.surefiz.registration.model;
+package com.surefiz.screens.registration.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

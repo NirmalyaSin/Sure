@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/splash_image"
     android:fitsSystemWindows="true"
-    tools:context=".SplashActivity">
+    tools:context=".screens.SplashActivity">
 
 
 </RelativeLayout>

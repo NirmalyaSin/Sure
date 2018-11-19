@@ -1,7 +1,6 @@
 package com.surefiz.dialog.universalpopup;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.designhelper.ResolutionHelper;
-import com.surefiz.registration.RegistrationActivity;
+import com.surefiz.screens.registration.RegistrationActivity;
 
 import java.util.List;
 

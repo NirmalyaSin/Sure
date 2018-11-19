@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.surefiz.registration.model.RegistrationModel;
+import com.surefiz.screens.registration.model.RegistrationModel;
 
 
 public class LoginShared {
@@ -48,6 +48,43 @@ public class LoginShared {
             loginModel = gson.fromJson(userDataModelJson, RegistrationModel.class);
 
         return loginModel;
+    }
+
+    //otp varification get set method
+
+    public static void setstatusforOtpvarification(boolean otpvatified){
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(SharedUtils.KEY_SHARED_OTP_VERIFIED,otpvatified);
+    }
+
+    public static boolean getstatusforOtpvarification(Context context){
+        boolean isotp_varified=false;
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        isotp_varified=prefs.getBoolean(SharedUtils.KEY_SHARED_OTP_VERIFIED,false);
+        return isotp_varified;
+    }
+
+
+//wifi config-varification
+
+    public static void setstatusforwifivarification(boolean wifivarified){
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(SharedUtils.KEY_SHARED_WIFI_VERIFIED,wifivarified);
+    }
+
+    public static boolean getstatusforwifivarification(Context context){
+        boolean isotp_varified=false;
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        isotp_varified=prefs.getBoolean(SharedUtils.KEY_SHARED_WIFI_VERIFIED,false);
+        return isotp_varified;
     }
 
     public static void destroySessionTypePreference() {

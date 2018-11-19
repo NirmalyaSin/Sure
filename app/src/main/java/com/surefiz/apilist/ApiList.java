@@ -7,4 +7,6 @@ public class ApiList {
 
 
     public static final String REGISTRATION= "ApiServices/Registration";
+    public static final String SENDOTP= "ApiServices/OtpValidation";
+    public static final String LOGIN= "ApiServices/Login";
 }

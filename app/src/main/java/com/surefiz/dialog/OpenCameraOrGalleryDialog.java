@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
-import com.surefiz.registration.RegistrationActivity;
+import com.surefiz.screens.registration.RegistrationActivity;
 
 
 public class OpenCameraOrGalleryDialog extends AppCompatDialog implements View.OnClickListener {

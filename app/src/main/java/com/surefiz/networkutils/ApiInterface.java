@@ -1,15 +1,23 @@
 package com.surefiz.networkutils;
 
 
+import com.google.gson.JsonObject;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
+import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
+import static com.surefiz.apilist.ApiList.SENDOTP;
 
 public interface ApiInterface {
 
@@ -43,4 +51,14 @@ public interface ApiInterface {
                                             @Part("prefferedUnits") RequestBody prefferedUnits,
                                             @Part("scaleMacId") RequestBody scaleMacId,
                                             @Part("deviceType") RequestBody deviceType);
+
+    @POST(SENDOTP)
+    Call<ResponseBody> call_otpApi(@Header("Content-Type") String type,
+                                   @Header("x-authorization") String token,
+                                   @Body JsonObject object);
+
+    @FormUrlEncoded
+    @POST(LOGIN)
+    Call<ResponseBody> call_loginApi(@Field("user_email") String user_email,
+                                     @Field("user_password") String user_password);
 }

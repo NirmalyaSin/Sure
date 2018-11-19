@@ -1,15 +1,12 @@
 package com.surefiz.dialog.universalpopup;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import com.surefiz.R;
-import com.surefiz.registration.RegistrationActivity;
+import com.surefiz.screens.registration.RegistrationActivity;
 
 import java.util.List;
 
@@ -25,7 +22,6 @@ public class UniversalPopup extends PopupWindow implements View.OnClickListener 
         this.universalList = universalList;
         this.et = et;
         initXML(activity);
-
     }
 
     private void initXML(Activity activity) {
@@ -36,7 +32,7 @@ public class UniversalPopup extends PopupWindow implements View.OnClickListener 
 
         setWidth(filterPopUpResponsive.popUpWidth);
         if (universalList.size() > 5) {
-            setHeight(filterPopUpResponsive.popUpHeight * 5);
+            setHeight(filterPopUpResponsive.popUpHeight * 3);
         } else {
             setHeight(filterPopUpResponsive.popUpHeightWrap);
         }

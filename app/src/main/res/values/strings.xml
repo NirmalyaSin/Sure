@@ -9,4 +9,7 @@
 
     <string name="error_occurred">Something went wrong!</string>
     <string name="no_internet">No internet connection</string>
+
+    <string name="edittext_hint"><font size="20">_</font></string>
+    <string name="wifi_config">Please configure your scale with\nWiFi Password</string>
 </resources>

@@ -1,5 +1,5 @@
 
-package com.surefiz.registration.model;
+package com.surefiz.screens.registration.model;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

@@ -18,6 +18,7 @@ import retrofit2.http.Part;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.SENDOTP;
+import static com.surefiz.apilist.ApiList.VIEWPROFILE;
 
 public interface ApiInterface {
 
@@ -51,14 +52,21 @@ public interface ApiInterface {
                                             @Part("prefferedUnits") RequestBody prefferedUnits,
                                             @Part("scaleMacId") RequestBody scaleMacId,
                                             @Part("deviceType") RequestBody deviceType);
-
+    @FormUrlEncoded
     @POST(SENDOTP)
     Call<ResponseBody> call_otpApi(@Header("Content-Type") String type,
                                    @Header("x-authorization") String token,
-                                   @Body JsonObject object);
+                                   @Field("userId") String userId,
+                                   @Field("OTP") String OTP);
 
     @FormUrlEncoded
     @POST(LOGIN)
     Call<ResponseBody> call_loginApi(@Field("user_email") String user_email,
                                      @Field("user_password") String user_password);
+
+    @FormUrlEncoded
+    @POST(VIEWPROFILE)
+    Call<ResponseBody> call_viewprofileApi(@Header("Content-Type") String type,
+                                           @Header("x-authorization") String token,
+                                           @Field("user_id") String user_id);
 }

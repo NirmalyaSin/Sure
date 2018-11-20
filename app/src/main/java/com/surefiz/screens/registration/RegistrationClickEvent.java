@@ -478,7 +478,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     loader.dismiss();
 
                 try {
-                    String responseString = response.errorBody().string();
+                    String responseString = response.body().string();
                     Gson gson = new Gson();
                     RegistrationModel registrationModel;
 

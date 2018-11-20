@@ -158,17 +158,14 @@ public class OtpClickEvent implements View.OnClickListener {
     }
 
     private void sendOtpApi() {
-        JsonObject object = new JsonObject();
         String otpValue = otpActivity.et_first.getText().toString() + otpActivity.et_second.getText().toString() + otpActivity.et_third.getText().toString() +
                 otpActivity.et_fourth.getText().toString();
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        object.addProperty("userId", LoginShared.getRegistrationDataModel(otpActivity).
-                getData().getUser().get(0).getUserId());
-        object.addProperty("OTP", otpValue);
         final Call<ResponseBody> otp = apiInterface.call_otpApi("application/json",
-                LoginShared.getRegistrationDataModel(otpActivity).getData().getToken(), object);
+                LoginShared.getRegistrationDataModel(otpActivity).getData().getToken(),
+                LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserId(), otpValue);
         otp.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

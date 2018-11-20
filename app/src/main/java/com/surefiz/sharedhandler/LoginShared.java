@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
 
 
@@ -46,6 +47,38 @@ public class LoginShared {
             loginModel = new RegistrationModel();
         else
             loginModel = gson.fromJson(userDataModelJson, RegistrationModel.class);
+
+        return loginModel;
+    }
+
+    /**
+     * Set User Data Model
+     */
+    public static void setViewProfileDataModel(Context context, ViewProfileModel loginModel) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(loginModel);
+        editor.putString(SharedUtils.KEY_SHARED_VIEW_PROFILE, json);
+        editor.commit();
+
+    }
+
+    //
+    public static ViewProfileModel getViewProfileDataModel(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        ViewProfileModel loginModel = null;
+        Gson gson = new Gson();
+        String userDataModelJson = LoginShared.prefs.getString(SharedUtils.KEY_SHARED_VIEW_PROFILE, "");
+
+        if (userDataModelJson.equals(""))
+            loginModel = new ViewProfileModel();
+        else
+            loginModel = gson.fromJson(userDataModelJson, ViewProfileModel.class);
 
         return loginModel;
     }

@@ -26,6 +26,7 @@ public class SharedUtils {
 	public static final String KEY_SHARED_REGISTRATION_MODEL = "KEY_SHARED_REGISTRATION_MODEL";
 	public static final String KEY_SHARED_OTP_VERIFIED = "IS_OTP_VARIFIED";
 	public static final String KEY_SHARED_WIFI_VERIFIED = "IS_WiFi_VARIFIED";
+	public static final String KEY_SHARED_VIEW_PROFILE = "KEY_SHARED_VIEW_PROFILE";
 
 
 	public static final String KEY_SHARED_USER_TYPE = "KEY_SHARED_USER_TYPE"; //customer or normal or fb etc

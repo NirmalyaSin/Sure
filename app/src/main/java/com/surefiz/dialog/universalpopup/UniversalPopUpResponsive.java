@@ -18,14 +18,14 @@ import java.util.List;
 
 public class UniversalPopUpResponsive extends ResolutionHelper {
     private View view;
-    private RegistrationActivity activity;
+    private Activity activity;
 
     private LinearLayout llAddView;
     public int popUpWidth, popUpHeight, popUpHeightWrap;
     private TextView et;
     private PopupWindow popupWindow;
 
-    public UniversalPopUpResponsive(RegistrationActivity activity, View popUpView, List<String> universalList,
+    public UniversalPopUpResponsive(Activity activity, View popUpView, List<String> universalList,
                                     EditText et, PopupWindow universalPopup) {
         super(activity);
         this.view = popUpView;

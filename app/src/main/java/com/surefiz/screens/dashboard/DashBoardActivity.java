@@ -1,13 +1,19 @@
 package com.surefiz.screens.dashboard;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
-public class DashBoardActivity extends AppCompatActivity {
+import com.surefiz.R;
+
+public class DashBoardActivity extends BaseActivity {
+
+    public View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dash_board);
+        view = View.inflate(this, R.layout.activity_dash_board, null);
+        addContentView(view);
+        iv_edit.setVisibility(View.GONE);
     }
 }

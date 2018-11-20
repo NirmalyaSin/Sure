@@ -12,11 +12,11 @@ import java.util.List;
 
 public class UniversalPopup extends PopupWindow implements View.OnClickListener {
     public View popUpView;
-    private RegistrationActivity activity;
+    private Activity activity;
     private List<String> universalList;
     public EditText et;
 
-    public UniversalPopup(RegistrationActivity activity, List<String> universalList, EditText et) {
+    public UniversalPopup(Activity activity, List<String> universalList, EditText et) {
         super(activity);
         this.activity = activity;
         this.universalList = universalList;
@@ -28,7 +28,7 @@ public class UniversalPopup extends PopupWindow implements View.OnClickListener 
         popUpView = activity.getLayoutInflater().inflate(R.layout.popup_filter, null);
         setContentView(popUpView);
 
-        UniversalPopUpResponsive filterPopUpResponsive = new UniversalPopUpResponsive((RegistrationActivity) activity, popUpView, universalList, et, this);
+        UniversalPopUpResponsive filterPopUpResponsive = new UniversalPopUpResponsive( activity, popUpView, universalList, et, this);
 
         setWidth(filterPopUpResponsive.popUpWidth);
         if (universalList.size() > 5) {

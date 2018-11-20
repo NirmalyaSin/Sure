@@ -22,8 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.login.LoginActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".screens.login.LoginActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".screens.registration.RegistrationActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -38,8 +39,11 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".screens.otp.OtpActivity"></activity>
-        <activity android:name=".screens.wificonfig.WifiConfigActivity"></activity>
+        <activity android:name=".screens.otp.OtpActivity" />
+        <activity android:name=".screens.wificonfig.WifiConfigActivity" />
+        <activity android:name=".screens.dashboard.BaseActivity" />
+        <activity android:name=".screens.dashboard.DashBoardActivity" />
+        <activity android:name=".screens.profile.ProfileActivity"></activity>
     </application>
 
 </manifest>

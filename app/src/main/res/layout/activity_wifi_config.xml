@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/splash_image"
-    android:alpha="0.6">
+    android:alpha="0.6"
+    tools:context=".login.LoginActivity">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -14,7 +15,7 @@
         android:background="@color/statusBarColor"
         android:gravity="center_vertical">
 
-        <TextView
+        <!--<TextView
             android:id="@+id/tv_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,6 +24,18 @@
             android:text="Skip"
             android:padding="@dimen/_10sdp"
             android:layout_alignParentRight="true"/>
+-->
+        <Button
+            android:id="@+id/btn_skip_config"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:text="@string/skip"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteColor"
+            android:background="@drawable/weight_blue_button"/>
 
         <TextView
             android:layout_width="wrap_content"

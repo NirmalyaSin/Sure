@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/splash_image"
+    android:alpha="0.6"
+    tools:context=".login.LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/statusBarColor"
+        android:gravity="center_vertical">
+
+       <!-- <TextView
+            android:id="@+id/tv_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/whiteColor"
+            android:text="Skip"
+            android:padding="@dimen/_10sdp"
+            android:layout_alignParentRight="true"/>-->
+        <Button
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:text="@string/skip"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteColor"
+            android:background="@drawable/weight_blue_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight Details"
+            android:paddingBottom="@dimen/_10sdp"
+            android:textColor="@color/whiteColor"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sv_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/youe_weight"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/_20sdp"
+                android:textColor="@color/whiteColor"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/btn_kg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:background="@drawable/weight_white_button"
+                        android:text="KG"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+                    <View
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".2"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+                    <Button
+                        android:id="@+id/btn_lbs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+
+                        android:background="@drawable/weight_blue_button"
+                        android:text="LBS"
+                        android:textColor="@color/registration_color_black"
+                        android:textSize="@dimen/_14sdp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/_250sdp"
+                        android:layout_height="@dimen/_250sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/circle_shape_white"></RelativeLayout>
+
+                   <!-- <com.budiyev.android.circularprogressbar.CircularProgressBar
+                        android:id="@+id/circular_progress_bar_outside"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_240sdp"
+                        app:animateProgress="true"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:backgroundStrokeColor="@color/whiteColor"
+                        app:backgroundStrokeWidth="@dimen/_3sdp"
+                        app:drawBackgroundStroke="false"
+                        app:foregroundStrokeCap="butt"
+                        app:foregroundStrokeColor="@color/colorAccent"
+                        app:foregroundStrokeWidth="@dimen/_3sdp"
+                        app:indeterminate="false"
+                        app:indeterminateRotationAnimationDuration="1200"
+                        app:indeterminateSweepAnimationDuration="600"
+                        app:indeterminateMinimumAngle="45"
+                        app:maximum="100"
+                        app:progress="50"
+                        app:progressAnimationDuration="100"
+                        app:startAngle="270"/>-->
+                    <TextView
+                        android:id="@+id/tv_kg_lb_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textSize="@dimen/_25sdp"
+                        android:textColor="@color/whiteColor"
+                        android:text="0.0 lbs"/>
+
+
+                </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_go_next"
+                android:layout_width="@dimen/_160sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:text="@string/go_next_action"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="invisible"
+                android:background="@drawable/login_submit_rounded_corner"
+                />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

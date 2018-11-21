@@ -146,7 +146,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     public void onSuccess(String path) {
                         filePath = path;
                     }
-                }).show();
+                }, "0").show();
                 break;
             case R.id.iv_plus_add_image:
                 new OpenCameraOrGalleryDialog(registrationActivity, new OnImageSet() {
@@ -154,7 +154,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     public void onSuccess(String path) {
                         filePath = path;
                     }
-                }).show();
+                }, "0").show();
                 break;
             case R.id.et_DOB:
                 ExpiryDialog();
@@ -312,7 +312,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 if (dayInString.length() == 1) {
                     dayInString = "0" + dayInString;
                 }
-                registrationActivity.et_DOB.setText(dayInString + "--" + monthInString + "--" + year);
+                registrationActivity.et_DOB.setText(dayInString + "-" + monthInString + "-" + year);
 
             }
         });
@@ -346,7 +346,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
         } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
             MethodUtils.errorMsg(registrationActivity, "Password must be more than 8 characters");
-        }else if (!lengthScale(registrationActivity.et_scale.getText().toString().trim())) {
+        } else if (!lengthScale(registrationActivity.et_scale.getText().toString().trim())) {
             MethodUtils.errorMsg(registrationActivity, "Scale id must be contains 10 digit numeric number");
         } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
             MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
@@ -486,7 +486,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
                     if (jsonObject.optInt("status") == 1) {
 
-                        Toast.makeText(registrationActivity, "Success", Toast.LENGTH_SHORT).show();
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationModel);
                         JSONObject jsObject = jsonObject.getJSONObject("data");

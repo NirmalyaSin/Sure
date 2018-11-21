@@ -41,7 +41,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
-            android:src="@drawable/add_new" />
+            android:src="@drawable/edit_icon" />
 
     </RelativeLayout>
 

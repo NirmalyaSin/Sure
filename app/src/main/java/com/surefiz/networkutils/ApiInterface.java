@@ -15,6 +15,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
+import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.SENDOTP;
@@ -52,10 +53,10 @@ public interface ApiInterface {
                                             @Part("prefferedUnits") RequestBody prefferedUnits,
                                             @Part("scaleMacId") RequestBody scaleMacId,
                                             @Part("deviceType") RequestBody deviceType);
+
     @FormUrlEncoded
     @POST(SENDOTP)
-    Call<ResponseBody> call_otpApi(@Header("Content-Type") String type,
-                                   @Header("x-authorization") String token,
+    Call<ResponseBody> call_otpApi(@Header("x-authorization") String token,
                                    @Field("userId") String userId,
                                    @Field("OTP") String OTP);
 
@@ -66,7 +67,29 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST(VIEWPROFILE)
-    Call<ResponseBody> call_viewprofileApi(@Header("Content-Type") String type,
-                                           @Header("x-authorization") String token,
+    Call<ResponseBody> call_viewprofileApi(@Header("x-authorization") String token,
                                            @Field("user_id") String user_id);
+
+    @Multipart
+    @POST(EDITPROFILE)
+    Call<ResponseBody> call_editprofileImageApi(@Header("x-authorization") String token,
+                                                @Part("current_UserId") RequestBody current_UserId,
+                                                @Part("fullName") RequestBody fullName,
+                                                @Part("gender") RequestBody gender,
+                                                @Part("phoneNumber") RequestBody phoneNumber,
+                                                @Part("dob") RequestBody dob,
+                                                @Part("prefferedUnits") RequestBody prefferedUnits,
+                                                @Part("deviceType") RequestBody deviceType,
+                                                @Part MultipartBody.Part attachment);
+
+    @Multipart
+    @POST(EDITPROFILE)
+    Call<ResponseBody> call_editprofileApi(@Header("x-authorization") String token,
+                                           @Part("current_UserId") RequestBody current_UserId,
+                                           @Part("fullName") RequestBody fullName,
+                                           @Part("gender") RequestBody gender,
+                                           @Part("phoneNumber") RequestBody phoneNumber,
+                                           @Part("dob") RequestBody dob,
+                                           @Part("prefferedUnits") RequestBody prefferedUnits,
+                                           @Part("deviceType") RequestBody deviceType);
 }

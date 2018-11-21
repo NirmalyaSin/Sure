@@ -21,8 +21,8 @@ public class WifiConfigActivity extends AppCompatActivity {
     EditText editPassword;
     @BindView(R.id.btnConfigure)
     Button btnConfigure;
-    @BindView(R.id.tv_skip)
-    TextView tv_skip;
+    @BindView(R.id.btn_skip_config)
+    Button btn_skip_config;
     @BindView(R.id.iv_showPassword)
     ImageView iv_showPassword;
     @BindView(R.id.iv_hidePassword)

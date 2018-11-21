@@ -12,4 +12,14 @@
 
     <string name="edittext_hint"><font size="20">_</font></string>
     <string name="wifi_config">Please configure your scale with\nWiFi Password</string>
+
+    <string name="instruction_page_text">To Know Your Weight follow the steps below :</string>
+    <string name="step_on_scale"> 1. Step on the scale and measure your weight</string>
+    <string name="scale_blinking"> 2. Scale start blinking and with your weight &amp; stop</string>
+    <string name="step_down"> 3. Step down from scale.</string>
+    <string name="yes_it_down">Yes! it"'s" done</string>
+    <string name="configrution">Your Configrution completed successfully.</string>
+    <string name="youe_weight">Your Weight</string>
+    <string name="go_next_action">Go DashBoard</string>
+    <string name="skip">Skip</string>
 </resources>

@@ -11,6 +11,11 @@ import android.view.WindowManager;
 import com.surefiz.R;
 import com.surefiz.dialog.ErrorMessageDialog;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MethodUtils {
 
     public static void fullScreen(Activity activity) {
@@ -41,5 +46,19 @@ public class MethodUtils {
 
     public static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public static String profileDOB(String date) {
+        String converted_date = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date0 = sdf.parse(date);
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            converted_date = dateFormat.format(date0);
+            System.out.println("Converted String: " + converted_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return converted_date;
     }
 }

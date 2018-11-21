@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void navigate() {
-        Intent loginIntent = new Intent(this, RegistrationActivity.class);
+        Intent loginIntent = new Intent(this, WifiConfigActivity.class);
         startActivity(loginIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();

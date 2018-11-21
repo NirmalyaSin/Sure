@@ -1,15 +1,24 @@
 package com.surefiz.screens.wificonfig;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,22 +28,31 @@ import android.widget.Toast;
 
 import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
+import com.surefiz.screens.instruction.InstructionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+import cn.onecoder.scalewifi.api.ScaleWiFiConfig;
+import cn.onecoder.scalewifi.api.impl.OnScaleWiFiConfigResultListener;
+
+public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.OnMenuItemClickListener, OnScaleWiFiConfigResultListener {
     private WifiConfigActivity mWifiConfigActivity;
     private PermissionHelper permissionHelper;
     private WifiManager mWifiManager;
     private PopupMenu popup;
     private List<ScanResult> scanResultsWifi = new ArrayList<>();
     private ProgressDialog progressDialog;
+    private ScaleWiFiConfig scaleWiFiConfig;
+    private String bssid;
+    WifiReceiver wifiReceiver = new WifiReceiver();
+
 
     public WifiActivityClickEvent(WifiConfigActivity activity) {
         this.mWifiConfigActivity = activity;
         setClickEvent();
         permissionHelper = new PermissionHelper(mWifiConfigActivity);
+        scaleWiFiConfig = new ScaleWiFiConfig();
     }
 
 
@@ -43,7 +61,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         mWifiConfigActivity.iv_showPassword.setOnClickListener(this);
         mWifiConfigActivity.iv_hidePassword.setOnClickListener(this);
         mWifiConfigActivity.editSSID.setOnClickListener(this);
-        mWifiConfigActivity.tv_skip.setOnClickListener(this);
+        mWifiConfigActivity.btn_skip_config.setOnClickListener(this);
     }
 
     @Override
@@ -54,15 +72,15 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 hideSoftKeyBoard();
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
                     //Scan for available wifi list
+                    //  mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     getAvailableSSID();
                 } else {
                     permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
                 }
-
-
                 break;
 
             case R.id.btnConfigure:
+                wificonfigblankvalidation();
                 break;
 
             case R.id.iv_showPassword:
@@ -71,19 +89,58 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 mWifiConfigActivity.editPassword.setTransformationMethod
                         (PasswordTransformationMethod.getInstance());
                 break;
-
             case R.id.iv_hidePassword:
                 mWifiConfigActivity.iv_showPassword.setVisibility(View.VISIBLE);
                 mWifiConfigActivity.iv_hidePassword.setVisibility(View.GONE);
                 mWifiConfigActivity.editPassword.setTransformationMethod
                         (HideReturnsTransformationMethod.getInstance());
                 break;
-
-            case R.id.tv_skip:
+            case R.id.btn_skip_config:
                 //     mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void wificonfigblankvalidation() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (mWifiConfigActivity.checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED &&
+                    mWifiConfigActivity.checkSelfPermission(Manifest.permission.CHANGE_WIFI_MULTICAST_STATE) == PackageManager.PERMISSION_GRANTED &&
+                    mWifiConfigActivity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+                String ssid = mWifiConfigActivity.editBSSID.getText().toString();
+                String pwd = mWifiConfigActivity.editPassword.getText().toString();
+                if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
+                    Toast.makeText(mWifiConfigActivity, "Plz input ssid and pwd.", Toast.LENGTH_SHORT).show();
+                } else {
+                    mWifiConfigActivity.unregisterReceiver(wifiReceiver);
+                    progressDialog.setMessage("Please wait ");
+                    progressDialog.show();
+                    //  scaleWiFiConfig.apConfig(ssid, pwd, this);
+                    scaleWiFiConfig.smartLinkConfig(mWifiConfigActivity, ssid, bssid, pwd, this);
+                }
+            } else {
+
+                mWifiConfigActivity.requestPermissions(new String[]{Manifest.permission.ACCESS_WIFI_STATE,
+                        Manifest.permission.CHANGE_WIFI_MULTICAST_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            }
+        } else {
+            String ssid = mWifiConfigActivity.editBSSID.getText().toString();
+            String pwd = mWifiConfigActivity.editPassword.getText().toString();
+            if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
+                Toast.makeText(mWifiConfigActivity, "Plz input ssid and pwd.", Toast.LENGTH_SHORT).show();
+            } else {
+                mWifiConfigActivity.unregisterReceiver(wifiReceiver);
+                progressDialog.setMessage("Please wait ");
+                progressDialog.show();
+                //  scaleWiFiConfig.apConfig(ssid, pwd, this);
+                scaleWiFiConfig.smartLinkConfig(mWifiConfigActivity, ssid, bssid, pwd, this);
+            }
+        }
+
+
     }
 
     private void hideSoftKeyBoard() {
@@ -98,12 +155,52 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         mWifiManager = (WifiManager) mWifiConfigActivity.getApplicationContext()
                 .getSystemService(Context.WIFI_SERVICE);
 
-        mWifiConfigActivity.registerReceiver(new WifiReceiver(), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        mWifiConfigActivity.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
         mWifiManager.startScan();
         progressDialog = new ProgressDialog(mWifiConfigActivity);
         progressDialog.setMessage("Finding Available WiFi-Network");
         progressDialog.show();
+    }
+
+    @Override
+    public void onApConfigResult(boolean sucess) {
+        progressDialog.dismiss();
+        if (sucess)
+            Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(mWifiConfigActivity, "wificonfig  not done", Toast.LENGTH_LONG).show();
+
+
+    }
+
+
+    @Override
+    public void onSmartLinkConfigResult(boolean sucess) {
+        progressDialog.dismiss();
+        if (sucess)
+            showalertdialog();
+            // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(mWifiConfigActivity, "wifi configruation  not done", Toast.LENGTH_LONG).show();
+
+
+    }
+
+    private void showalertdialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
+        alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
+        alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.configrution));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Update Weight",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
+                        mWifiConfigActivity.startActivity(instruc);
+                        mWifiConfigActivity.finish();
+                    }
+                });
+        alertDialog.show();
     }
 
 
@@ -121,7 +218,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     }
 
     public void ShowSSIDList() {
-        popup = new PopupMenu(mWifiConfigActivity, mWifiConfigActivity.editSSID);
+        popup = new PopupMenu(mWifiConfigActivity, mWifiConfigActivity.editSSID, Gravity.CENTER);
         popup.setOnMenuItemClickListener(this);
         Menu popupMenuItem = popup.getMenu();
 
@@ -139,7 +236,9 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
         for (ScanResult result : scanResultsWifi) {
             if (result.SSID.equals(item.getTitle())) {
-                mWifiConfigActivity.editBSSID.setText(result.BSSID);
+                bssid = result.BSSID;
+                mWifiConfigActivity.editBSSID.setText(result.SSID);
+                popup.dismiss();
                 Log.d("Selected-Wifi : ", result.SSID + " (" + result.BSSID + ")");
                 break;
             }
@@ -147,5 +246,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
         return true;
     }
+
 
 }

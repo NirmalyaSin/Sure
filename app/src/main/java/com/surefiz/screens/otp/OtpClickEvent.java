@@ -1,6 +1,7 @@
 package com.surefiz.screens.otp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -163,8 +165,7 @@ public class OtpClickEvent implements View.OnClickListener {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        final Call<ResponseBody> otp = apiInterface.call_otpApi("application/json",
-                LoginShared.getRegistrationDataModel(otpActivity).getData().getToken(),
+        final Call<ResponseBody> otp = apiInterface.call_otpApi(LoginShared.getRegistrationDataModel(otpActivity).getData().getToken(),
                 LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserId(), otpValue);
         otp.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -180,6 +181,9 @@ public class OtpClickEvent implements View.OnClickListener {
 
                         MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
                         LoginShared.setstatusforOtpvarification(true);
+                        Intent dashBoardIntent = new Intent(otpActivity, DashBoardActivity.class);
+                        otpActivity.startActivity(dashBoardIntent);
+                        otpActivity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
+import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 
 
@@ -21,11 +22,13 @@ public class OpenCameraOrGalleryDialog extends AppCompatDialog implements View.O
     private Activity mActivity;
     private TextView tv_header, tv_openCamera, tv_openGallery, tvCancel;
     private OnImageSet onImageSet;
+    String choose;
 
-    public OpenCameraOrGalleryDialog(Activity mActivity, OnImageSet onImageSet) {
+    public OpenCameraOrGalleryDialog(Activity mActivity, OnImageSet onImageSet, String choose) {
         super(mActivity);
         this.mActivity = mActivity;
         this.onImageSet = onImageSet;
+        this.choose = choose;
     }
 
 
@@ -78,11 +81,19 @@ public class OpenCameraOrGalleryDialog extends AppCompatDialog implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_openCamera:
-                ((RegistrationActivity) mActivity).choiceMedia(RegistrationActivity.CAMERA, onImageSet);
+                if (choose.equals("0")) {
+                    ((RegistrationActivity) mActivity).choiceMedia(RegistrationActivity.CAMERA, onImageSet);
+                }else{
+                    ((ProfileActivity) mActivity).choiceMedia(RegistrationActivity.CAMERA, onImageSet);
+                }
                 dismiss();
                 break;
             case R.id.tv_openGallery:
-                ((RegistrationActivity) mActivity).choiceMedia(RegistrationActivity.GALLERY, onImageSet);
+                if (choose.equals("0")) {
+                    ((RegistrationActivity) mActivity).choiceMedia(RegistrationActivity.GALLERY, onImageSet);
+                }else{
+                    ((ProfileActivity) mActivity).choiceMedia(RegistrationActivity.GALLERY, onImageSet);
+                }
                 dismiss();
                 break;
             case R.id.tvCancel:

@@ -10,4 +10,5 @@ public class ApiList {
     public static final String SENDOTP= "ApiServices/OtpValidation";
     public static final String LOGIN= "ApiServices/Login";
     public static final String VIEWPROFILE= "ApiServices/userProfile";
+    public static final String EDITPROFILE= "ApiServices/EditUserProfile";
 }

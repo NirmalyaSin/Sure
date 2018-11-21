@@ -31,7 +31,6 @@ public class PermissionHelper implements ActivityCompat.OnRequestPermissionsResu
         } else {
             return true;
         }
-
     }
 
     public void requestForPermission(final int permission) {

@@ -79,16 +79,27 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addHeightListAndCall(String change) {
-
-        for (int i = 1; i < 241; i++) {
-            heightList.add(i + " " + change);
+        if (change.equals("INCH")) {
+            for (int i = 1; i < 109; i++) {
+                heightList.add(i + " " + change);
+            }
+        } else {
+            for (int i = 1; i < 276; i++) {
+                heightList.add(i + " " + change);
+            }
         }
         heightPopup = new UniversalPopup(registrationActivity, heightList, registrationActivity.et_height);
     }
 
     private void addWeightListAndCall(String change) {
-        for (int i = 5; i < 141; i++) {
-            weightList.add(i + " " + change);
+        if (change.equals("LB")) {
+            for (int i = 5; i < 1001; i++) {
+                weightList.add(i + " " + change);
+            }
+        } else {
+            for (int i = 5; i < 455; i++) {
+                weightList.add(i + " " + change);
+            }
         }
         weightPopup = new UniversalPopup(registrationActivity, weightList, registrationActivity.et_weight);
     }
@@ -106,13 +117,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
         genderList.add("Others");
 
         genderPopup = new UniversalPopup(registrationActivity, genderList, registrationActivity.et_gender);
-    }
-
-    private void updateLabel() {
-        String myFormat = "dd-MM-yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        registrationActivity.et_DOB.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void setClickEvent() {

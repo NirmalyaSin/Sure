@@ -14,8 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.screens.profile.ProfileActivity;
+import com.surefiz.screens.users.UserListActivity;
+import com.surefiz.sharedhandler.LoginShared;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +65,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private ImageLoader imageLoader;
 
 
     @Override
@@ -68,12 +74,35 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
         clickEvent();
+        initializeImageLoader();
+        showData();
         initializeDrawer();
+    }
+
+    private void initializeImageLoader() {
+        DisplayImageOptions opts = new DisplayImageOptions.Builder().cacheInMemory(true).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .defaultDisplayImageOptions(DisplayImageOptions.createSimple()).defaultDisplayImageOptions(opts)
+                .build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+    }
+
+    private void showData() {
+        tv_user_name.setText(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserName());
+        showImage();
+    }
+
+    private void showImage() {
+        String url = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto();
+        url = url.replace(" ", "20%");
+        imageLoader.displayImage(url, img_topbar_menu_profile);
     }
 
     private void clickEvent() {
         img_topbar_menu.setOnClickListener(this);
         tv_profile.setOnClickListener(this);
+        tv_users.setOnClickListener(this);
     }
 
     public void addContentView(View view) {
@@ -134,6 +163,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 else {
                     mDrawerLayout.openDrawer(Gravity.LEFT);
                 }
+                break;
+            case R.id.tv_users:
+                Intent userIntent = new Intent(this, UserListActivity.class);
+                startActivity(userIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
             case R.id.tv_profile:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

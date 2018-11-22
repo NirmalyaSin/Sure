@@ -87,6 +87,7 @@ public class ProfileActivity extends BaseActivity {
         et_gender = view.findViewById(R.id.et_gender);
         et_units = view.findViewById(R.id.et_units);
         btn_register = view.findViewById(R.id.btn_register);
+        tv_universal_header.setText("Profile");
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {

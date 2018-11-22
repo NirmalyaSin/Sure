@@ -60,7 +60,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                     permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
                 }
 
-
                 break;
 
             case R.id.btnConfigure:

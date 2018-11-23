@@ -44,7 +44,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     //Universal Image Loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation project(path: ':commonutils_2_0')
     implementation files('libs/ScaleWiFiKit_v1.0.2.jar')
     implementation files('libs/ScaleWiFiKit_v1.0.2.jar')
 }
+apply plugin: 'com.google.gms.google-services'

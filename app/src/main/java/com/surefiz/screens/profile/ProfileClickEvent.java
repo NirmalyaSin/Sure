@@ -2,6 +2,7 @@ package com.surefiz.screens.profile;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,7 @@ import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.sharedhandler.LoginShared;
@@ -101,6 +103,11 @@ public class ProfileClickEvent implements View.OnClickListener {
                         viewProfileModel = gson.fromJson(responseString, ViewProfileModel.class);
                         LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         setData();
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(loginIntent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        activity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(activity, jsObject.getString("message"));
@@ -264,12 +271,12 @@ public class ProfileClickEvent implements View.OnClickListener {
         if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
             preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else {
-            preffered = RequestBody.create(MediaType.parse("text/plain"), "2");
+            preffered = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
         if (activity.et_gender.getText().toString().trim().equals("Male")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else if (activity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else if (activity.et_gender.getText().toString().trim().equals("Female")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
@@ -298,6 +305,11 @@ public class ProfileClickEvent implements View.OnClickListener {
 
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.iv_edit.setVisibility(View.VISIBLE);
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(loginIntent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        activity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
@@ -324,17 +336,19 @@ public class ProfileClickEvent implements View.OnClickListener {
         RequestBody preffered = null;
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), activity.et_full.getText().toString().trim());
-        RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), activity.et_phone.getText().toString().trim());
+        RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"),
+                activity.et_full.getText().toString().trim());
+        RequestBody phone = RequestBody.create(MediaType.parse("text/plain"),
+                activity.et_phone.getText().toString().trim());
         if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
             preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else {
-            preffered = RequestBody.create(MediaType.parse("text/plain"), "2");
+            preffered = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
         if (activity.et_gender.getText().toString().trim().equals("Male")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else if (activity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else if (activity.et_gender.getText().toString().trim().equals("Female")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
@@ -359,6 +373,11 @@ public class ProfileClickEvent implements View.OnClickListener {
                         JSONObject jObject = jsonObject.getJSONObject("data");
 
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(loginIntent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        activity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
@@ -434,8 +453,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 if (dayInString.length() == 1) {
                     dayInString = "0" + dayInString;
                 }
-                activity.et_DOB.setText(dayInString + "--" + monthInString + "--" + year);
-
+                activity.et_DOB.setText(dayInString + "-" + monthInString + "-" + year);
             }
         });
     }

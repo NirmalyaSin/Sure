@@ -14,6 +14,11 @@ public class DashBoardActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_dash_board, null);
         addContentView(view);
+        setHeaderView();
+    }
+
+    private void setHeaderView() {
         iv_edit.setVisibility(View.GONE);
+        btn_add.setVisibility(View.GONE);
     }
 }

@@ -85,40 +85,57 @@ public class LoginShared {
 
     //otp varification get set method
 
-    public static void setstatusforOtpvarification(boolean otpvatified){
+    public static void setstatusforOtpvarification(boolean otpvatified) {
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(SharedUtils.KEY_SHARED_OTP_VERIFIED,otpvatified);
+        editor.putBoolean(SharedUtils.KEY_SHARED_OTP_VERIFIED, otpvatified);
     }
 
-    public static boolean getstatusforOtpvarification(Context context){
-        boolean isotp_varified=false;
+    public static boolean getstatusforOtpvarification(Context context) {
+        boolean isotp_varified = false;
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
-        isotp_varified=prefs.getBoolean(SharedUtils.KEY_SHARED_OTP_VERIFIED,false);
+        isotp_varified = prefs.getBoolean(SharedUtils.KEY_SHARED_OTP_VERIFIED, false);
         return isotp_varified;
     }
 
 
 //wifi config-varification
 
-    public static void setstatusforwifivarification(boolean wifivarified){
+    public static void setstatusforwifivarification(boolean wifivarified) {
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(SharedUtils.KEY_SHARED_WIFI_VERIFIED,wifivarified);
+        editor.putBoolean(SharedUtils.KEY_SHARED_WIFI_VERIFIED, wifivarified);
     }
 
-    public static boolean getstatusforwifivarification(Context context){
-        boolean isotp_varified=false;
+    public static boolean getstatusforwifivarification(Context context) {
+        boolean isotp_varified = false;
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
-        isotp_varified=prefs.getBoolean(SharedUtils.KEY_SHARED_WIFI_VERIFIED,false);
+        isotp_varified = prefs.getBoolean(SharedUtils.KEY_SHARED_WIFI_VERIFIED, false);
         return isotp_varified;
     }
+
+    public static void setScaleUserId(int wifivarified) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(SharedUtils.KEY_SHARED_SCALE_USER_ID, wifivarified);
+    }
+
+    public static int getScaleUserId(Context context) {
+        int id = 0;
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        id = prefs.getInt(SharedUtils.KEY_SHARED_SCALE_USER_ID, id);
+        return id;
+    }
+
 
     public static void destroySessionTypePreference() {
         prefs = context.getSharedPreferences(
@@ -127,4 +144,6 @@ public class LoginShared {
         editor.clear();
         editor.commit();
     }
+
+
 }

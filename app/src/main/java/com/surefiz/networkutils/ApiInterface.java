@@ -1,13 +1,12 @@
 package com.surefiz.networkutils;
 
 
-import com.google.gson.JsonObject;
+import com.surefiz.screens.users.model.UserListModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
@@ -15,10 +14,12 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
+import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.SENDOTP;
+import static com.surefiz.apilist.ApiList.USERLIST;
 import static com.surefiz.apilist.ApiList.VIEWPROFILE;
 
 public interface ApiInterface {
@@ -92,4 +93,27 @@ public interface ApiInterface {
                                            @Part("dob") RequestBody dob,
                                            @Part("prefferedUnits") RequestBody prefferedUnits,
                                            @Part("deviceType") RequestBody deviceType);
+
+    @FormUrlEncoded
+    @POST(USERLIST)
+    Call<UserListModel> call_userListApi(@Header("x-authorization") String token,
+                                         @Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST(ADDUSER)
+    Call<ResponseBody> call_adduserApi(@Header("x-authorization") String token,
+                                       @Header("Accept") String Accept,
+                                       @Field("current_UserId") String current_UserId,
+                                       @Field("added_DeviceId") String added_DeviceId,
+                                       @Field("fullName") String fullName,
+                                       @Field("emailId") String emailId,
+                                       @Field("requiredTime") String requredTime,
+                                       @Field("currentHeight") String currentHeight,
+                                       @Field("targetWeight") String targetWeight,
+                                       @Field("password") String password,
+                                       @Field("gender") String Gender,
+                                       @Field("phoneNumber") String phoneNumber,
+                                       @Field("dob") String dob,
+                                       @Field("deviceType") String deviceType,
+                                       @Field("prefferedUnits") String prefferedUnits);
 }

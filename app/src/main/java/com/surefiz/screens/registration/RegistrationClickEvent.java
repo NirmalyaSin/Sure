@@ -22,6 +22,7 @@ import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.sharedhandler.LoginShared;
@@ -383,9 +384,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
         RequestBody preffered = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_units.getText().toString().trim());
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
@@ -426,6 +427,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
                                 registrationActivity.finish();
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(registrationActivity, LoginActivity.class);
+                        registrationActivity.startActivity(loginIntent);
+                        registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        registrationActivity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
@@ -460,9 +466,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
         RequestBody preffered = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_units.getText().toString().trim());
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
@@ -505,6 +511,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
                                 registrationActivity.finish();
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(registrationActivity, LoginActivity.class);
+                        registrationActivity.startActivity(loginIntent);
+                        registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        registrationActivity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 

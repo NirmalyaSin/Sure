@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,6 +65,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public ImageView iv_edit;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+    @BindView(R.id.btn_add)
+    public Button btn_add;
     private ActionBarDrawerToggle mDrawerToggle;
     private ImageLoader imageLoader;
 
@@ -165,6 +168,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.tv_users:
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent userIntent = new Intent(this, UserListActivity.class);
                 startActivity(userIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

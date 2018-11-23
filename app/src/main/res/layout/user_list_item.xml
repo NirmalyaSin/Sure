@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Santanu"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingLeft="@dimen/_12sdp"
+        android:textColor="@color/whiteColor" />
+
+    <TextView
+        android:id="@+id/tv_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:text="Santanu"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingLeft="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        android:textColor="@color/whiteColor" />
+
+    <ImageView
+        android:id="@+id/iv_separature"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_below="@+id/tv_weight"
+        android:src="@drawable/stripe" />
+
+</RelativeLayout>

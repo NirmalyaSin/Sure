@@ -11,4 +11,6 @@ public class ApiList {
     public static final String LOGIN= "ApiServices/Login";
     public static final String VIEWPROFILE= "ApiServices/userProfile";
     public static final String EDITPROFILE= "ApiServices/EditUserProfile";
+    public static final String USERLIST= "ApiServices/UserList";
+    public static final String ADDUSER= "ApiServices/AddUser";
 }

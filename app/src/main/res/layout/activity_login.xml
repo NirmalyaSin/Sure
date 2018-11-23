@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/splash_image"
     android:alpha="0.6"
     tools:context=".login.LoginActivity">
@@ -30,7 +29,7 @@
                 android:layout_marginBottom="@dimen/_40sdp"
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/_18sdp"
-                android:textColor="@color/whiteColor"/>
+                android:textColor="@color/whiteColor" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,8 +54,10 @@
                     android:hint="Enter Email Id"
                     android:inputType="text|textNoSuggestions"
                     android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
                     android:textColor="@color/whiteColor"
                     android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
@@ -85,8 +86,10 @@
                     android:hint="Enter Password"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
                     android:textColor="@color/whiteColor"
                     android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
@@ -94,9 +97,9 @@
                 android:id="@+id/tv_forgetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:paddingTop="@dimen/_20sdp"
                 android:text="Forgot Password?"
-                android:layout_gravity="right"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/_14sdp" />
 
@@ -104,13 +107,13 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
                 android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/login_submit_rounded_corner"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:background="@drawable/login_submit_rounded_corner"
                 android:text="Login"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
@@ -125,8 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <RelativeLayout
+<!--                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -145,13 +147,36 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:layout_marginLeft="@dimen/_10sdp">
+                    android:layout_marginLeft="@dimen/_10sdp">-->
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:gravity="right">
+
+                    <ImageView
+                        android:id="@+id/iv_facebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_facebook" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:gravity="left">
+
                     <ImageView
                         android:id="@+id/iv_twiter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_twitter"
-                        android:scaleType="fitXY"/>
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_twitter" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -159,9 +184,9 @@
                 android:id="@+id/tv_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:text="New User? Sign Up"
-                android:layout_gravity="center_horizontal"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/_14sdp" />
         </LinearLayout>

@@ -7,6 +7,15 @@
     <color name="statusBarColor">#8436B8</color>
     <color name="whiteColor">#FFFFFF</color>
     <color name="hintColor">#A9A9A9</color>
+    <color name="otphintColor">#FFFFFF</color>
     <color name="popup_color">#EFEFEF</color>
+
+    <color name="registration_color_white">#FEFEFE</color>
+    <color name="registration_color_black">#151515</color>
+
+    <!--Progress Bar Color Chart-->
+    <color name="kprogresshud_default_color">#b1000000</color>
+    <color name="kprogresshud_grey_color">#449E9E9E</color>
     <color name="blue">#3981F5</color>
+    <color name="menu_header">#0F2233</color>
 </resources>

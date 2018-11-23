@@ -3,13 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.surefiz">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
 
     <application
         android:allowBackup="true"
@@ -19,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SplashActivity">
+        <activity android:name=".screens.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,14 +34,33 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".login.LoginActivity"
+        <activity android:name=".screens.wificonfig.WifiConfigActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
-        <activity android:name=".wificonfig.WifiConfigActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".screens.login.LoginActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".screens.registration.RegistrationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <activity android:name=".registration.RegistrationActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity android:name=".screens.otp.OtpActivity" />
+        <activity android:name=".screens.dashboard.BaseActivity" />
+        <activity android:name=".screens.dashboard.DashBoardActivity" />
+        <activity android:name=".screens.profile.ProfileActivity"/>
+        <activity android:name=".screens.instruction.InstructionActivity" />
+        <activity android:name=".screens.weightdetails.WeightDetailsActivity" />
+
     </application>
 
 </manifest>

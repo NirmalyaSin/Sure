@@ -1,12 +1,20 @@
 package com.surefiz.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.surefiz.R;
+import com.surefiz.dialog.ErrorMessageDialog;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MethodUtils {
 
@@ -30,5 +38,27 @@ public class MethodUtils {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         window.setStatusBarColor(ContextCompat.getColor(activity, R.color.statusBarColor));
+    }
+
+    public static void errorMsg(Context context, String msg) {
+        ErrorMessageDialog.getInstant(context).show(msg);
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public static String profileDOB(String date) {
+        String converted_date = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date0 = sdf.parse(date);
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            converted_date = dateFormat.format(date0);
+            System.out.println("Converted String: " + converted_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return converted_date;
     }
 }

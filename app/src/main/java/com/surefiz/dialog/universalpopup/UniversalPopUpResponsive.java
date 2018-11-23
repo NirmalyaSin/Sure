@@ -1,7 +1,6 @@
 package com.surefiz.dialog.universalpopup;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -13,20 +12,20 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.designhelper.ResolutionHelper;
-import com.surefiz.registration.RegistrationActivity;
+import com.surefiz.screens.registration.RegistrationActivity;
 
 import java.util.List;
 
 public class UniversalPopUpResponsive extends ResolutionHelper {
     private View view;
-    private RegistrationActivity activity;
+    private Activity activity;
 
     private LinearLayout llAddView;
     public int popUpWidth, popUpHeight, popUpHeightWrap;
     private TextView et;
     private PopupWindow popupWindow;
 
-    public UniversalPopUpResponsive(RegistrationActivity activity, View popUpView, List<String> universalList,
+    public UniversalPopUpResponsive(Activity activity, View popUpView, List<String> universalList,
                                     EditText et, PopupWindow universalPopup) {
         super(activity);
         this.view = popUpView;

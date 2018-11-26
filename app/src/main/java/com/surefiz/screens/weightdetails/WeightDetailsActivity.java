@@ -12,15 +12,10 @@ import android.widget.Toast;
 
 import com.surefiz.R;
 import com.surefiz.utils.GeneralToApp;
-import com.surefiz.utils.entity.RequestUserIdInfo;
 import com.surefiz.utils.progressloader.LoadingData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.onecoder.scalewifi.api.UserIdManager;
 import cn.onecoder.scalewifi.api.impl.OnUserIdManagerListener;
 import cn.onecoder.scalewifi.net.socket.udp.UDPHelper;
 
@@ -28,6 +23,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
     @BindView(R.id.btn_kg)
     Button btn_kg;
+
+    @BindView(R.id.btnSkipWeight)
+    Button btnSkipWeight;
 
     @BindView(R.id.btn_lbs)
     Button btn_lbs;
@@ -38,31 +36,57 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     @BindView(R.id.tv_kg_lb_value)
     TextView tv_kg_lb_value;
 
+    private WeightDetailsOnclick mWeightDetailsOnclick;
     private UDPHelper udpHelper;
     private UserIdManager userIdManager;
-
-    private boolean showMsgView = true;
-    private boolean debug = true;
-    private List<RequestUserIdInfo> requestUserIdInfoList;
-
     private LoadingData loader;
+
+    //Weight Measurement Units
+    public int captureWeight = 0;
+    private String data_id = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_details);
-        loader=new LoadingData(this);
-        requestUserIdInfoList = new ArrayList<RequestUserIdInfo>();
+        //Bind ButterKnife to the view
         ButterKnife.bind(this);
-        new WeightDetailsOnclick(this);
-        capturescaledatasetup();
+        //Set onClickListener here
+        mWeightDetailsOnclick = new WeightDetailsOnclick(this);
+        loader=new LoadingData(this);
+
+        btn_go_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("@@Clicked: ", "Skip-Button");
+                if (userIdManager != null) {
+                    Log.e("@@Clicked-1: ", "Skip-Button");
+                    Log.d("@@ScaleUsrMgr :", "Initializing.." +   userIdManager.init());
+                }
+            }
+        });
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 goNextAction();
-
             }
         }, GeneralToApp.SCALECONFIG_WAIT_TIME);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Initialize scale
+        capturescaledatasetup();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Close UDP Connection
+        ClosePrevConnections();
     }
 
     private void goNextAction() {
@@ -79,15 +103,23 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         }
     }
 
-    private void capturescaledatasetup() {
-        loader.show();
+    public void ClosePrevConnections(){
+        if (userIdManager != null) {
+            userIdManager.close();
+        }
+    }
+
+    public void capturescaledatasetup() {
+        captureWeight = 0;
+        data_id = "";
         try {
             udpHelper = new UDPHelper(61111);
-            //udpHelper = new UDPHelper(6666);
-            udpHelper.setDebug(debug);
-            userIdManager = new UserIdManager();
+      //      udpHelper.setDebug(debug);
+       //     Log.d("@@ScaleUDP :", "Initializing.." +  udpHelper.init());
+
+            userIdManager = new UserIdManager(udpHelper);
+            userIdManager.setDebug(true);
             userIdManager.setOnUserIdManagerListener(this);
-            userIdManager.setDebug(debug);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,31 +128,46 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
     @Override
     public void onReceiveRequestUserIDPkg(String dataId, int weight) {
-        System.out.println("saghjg" + " 收到请求userID广播 dataId:" + dataId + " weight:" + weight);
-        if (loader.isShowing())
-            loader.dismiss();
-        if (requestUserIdInfoList.size() >= 100) {
-            requestUserIdInfoList.remove(0);
-        }
-        requestUserIdInfoList.add(new RequestUserIdInfo(dataId, weight));
 
+        if (loader.isShowing()) {
+            loader.dismiss();
+        }
+
+        Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
+        captureWeight = weight;
+        //Set text value to kg
+        mWeightDetailsOnclick.onClick(btn_kg);
+
+        //Set userID
+        boolean setUser = userIdManager.setUserId(dataId, weight, GeneralToApp.PRIMARY_USER_ID);
+        Log.d("@@SetUser = ", ""+setUser);
+
+     /*   Log.d("@@CaptureOut = ", "dataId: " + dataId + " weight: " + weight);
+
+        if(data_id.equals("") || !data_id.equals(dataId)) {
+            Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
+            captureWeight = weight;
+            //Set text value to kg
+            mWeightDetailsOnclick.onClick(btn_kg);
+
+            //Set userID
+            boolean setUser = userIdManager.setUserId(dataId, weight, GeneralToApp.PRIMARY_USER_ID);
+            Log.d("@@SetUser = ", ""+setUser);
+        }*/
     }
 
     @Override
     public void onReceiveSetUserIDAckPkg(String dataId, int weight, int status) {
-        System.out.println("AFDAYTF" + " 收到设置userID ACK广播 dataId:" + dataId + " weight:" + weight + " status:" + status);
-        if (loader.isShowing())
-            loader.dismiss();
+        Log.d("@@CaptureUser-id: " , "dataId: " + dataId + " weight: " + weight + " status: " + status);
+       /* if (loader.isShowing())
+            loader.dismiss();*/
+
+       /* tv_kg_lb_value.setText(weight);
+
+        for(RequestUserIdInfo info: requestUserIdInfoList){
+            Log.d("@@capture-data: ", info.toString());
+        }*/
 
     }
-    @Override
-    protected void onDestroy() {
-        if (udpHelper != null) {
-            udpHelper.close();
-        }
-        if (userIdManager != null) {
-            userIdManager.close();
-        }
-        super.onDestroy();
-    }
+
 }

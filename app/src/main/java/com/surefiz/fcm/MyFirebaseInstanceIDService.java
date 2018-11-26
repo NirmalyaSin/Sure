@@ -1,6 +1,5 @@
 package com.surefiz.fcm;
 
-
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;

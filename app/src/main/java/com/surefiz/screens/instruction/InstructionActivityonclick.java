@@ -7,7 +7,8 @@ import com.surefiz.R;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 
 public class InstructionActivityonclick  implements  View.OnClickListener{
-    InstructionActivity instructionActivity;
+    private InstructionActivity instructionActivity;
+
     public InstructionActivityonclick(InstructionActivity instructionActivity) {
         this.instructionActivity=instructionActivity;
         setonclicklistner();

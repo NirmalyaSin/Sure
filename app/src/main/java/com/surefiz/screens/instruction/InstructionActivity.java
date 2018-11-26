@@ -14,11 +14,13 @@ public class InstructionActivity extends AppCompatActivity {
     @BindView(R.id.btndone)
     Button btn_button;
 
+    InstructionActivityonclick mInstructionActivityonclick;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instruction);
         ButterKnife.bind(this);
-        InstructionActivityonclick instructionActivityonclick=new InstructionActivityonclick(this);
+        mInstructionActivityonclick = new InstructionActivityonclick(this);
     }
 }

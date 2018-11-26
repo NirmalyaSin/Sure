@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_image"
     android:alpha="0.6"
-    android:background="@drawable/splash_image">
+    tools:context=".login.LoginActivity">
 
     <ScrollView
         android:id="@+id/sv_main"
@@ -16,20 +16,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/_40sdp"
                 android:text="LOGIN TO YOUR ACCOUNT"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_18sdp" />
+                android:layout_marginBottom="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/_18sdp"
+                android:textColor="@color/whiteColor" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,6 +128,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+<!--                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_marginRight="@dimen/_10sdp">
+                    <ImageView
+                        android:id="@+id/iv_facebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_facebook" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginLeft="@dimen/_10sdp">-->
 
                 <RelativeLayout
                     android:layout_width="0dp"

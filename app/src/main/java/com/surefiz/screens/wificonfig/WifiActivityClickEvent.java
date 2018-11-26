@@ -44,7 +44,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     private List<ScanResult> scanResultsWifi = new ArrayList<>();
     private ProgressDialog progressDialog;
     private ScaleWiFiConfig scaleWiFiConfig;
-    private String bssid;
     WifiReceiver wifiReceiver = new WifiReceiver();
 
 
@@ -110,14 +109,17 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                     mWifiConfigActivity.checkSelfPermission(Manifest.permission.CHANGE_WIFI_MULTICAST_STATE) == PackageManager.PERMISSION_GRANTED &&
                     mWifiConfigActivity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-                String ssid = mWifiConfigActivity.editBSSID.getText().toString();
+                String ssid = mWifiConfigActivity.editSSID.getText().toString();
                 String pwd = mWifiConfigActivity.editPassword.getText().toString();
+                String bssid = mWifiConfigActivity.editBSSID.getText().toString();
+
                 if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
                     Toast.makeText(mWifiConfigActivity, "Plz input ssid and pwd.", Toast.LENGTH_SHORT).show();
                 } else {
                     mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     progressDialog.setMessage("Please wait ");
                     progressDialog.show();
+                    Log.d("@@Sent-SmartLink : ", ssid+"\n"+pwd+"\n"+bssid);
                     //  scaleWiFiConfig.apConfig(ssid, pwd, this);
                     scaleWiFiConfig.smartLinkConfig(mWifiConfigActivity, ssid, bssid, pwd, this);
                 }
@@ -127,8 +129,9 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                         Manifest.permission.CHANGE_WIFI_MULTICAST_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             }
         } else {
-            String ssid = mWifiConfigActivity.editBSSID.getText().toString();
+            String ssid = mWifiConfigActivity.editSSID.getText().toString();
             String pwd = mWifiConfigActivity.editPassword.getText().toString();
+            String bssid = mWifiConfigActivity.editBSSID.getText().toString();
             if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
                 Toast.makeText(mWifiConfigActivity, "Plz input ssid and pwd.", Toast.LENGTH_SHORT).show();
             } else {
@@ -139,8 +142,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 scaleWiFiConfig.smartLinkConfig(mWifiConfigActivity, ssid, bssid, pwd, this);
             }
         }
-
-
     }
 
     private void hideSoftKeyBoard() {
@@ -164,14 +165,12 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     }
 
     @Override
-    public void onApConfigResult(boolean sucess) {
+    public void onApConfigResult(boolean success) {
         progressDialog.dismiss();
-        if (sucess)
+        if (success)
             Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         else
             Toast.makeText(mWifiConfigActivity, "wificonfig  not done", Toast.LENGTH_LONG).show();
-
-
     }
 
 
@@ -231,15 +230,14 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        mWifiConfigActivity.editSSID.setText(item.getTitle());
         popup.dismiss();
 
         for (ScanResult result : scanResultsWifi) {
             if (result.SSID.equals(item.getTitle())) {
-                bssid = result.BSSID;
-                mWifiConfigActivity.editBSSID.setText(result.SSID);
+                mWifiConfigActivity.editSSID.setText(result.SSID);
+                mWifiConfigActivity.editBSSID.setText(result.BSSID);
                 popup.dismiss();
-                Log.d("Selected-Wifi : ", result.SSID + " (" + result.BSSID + ")");
+                Log.d("@@Selected-Wifi : ", result.SSID + " (" + result.BSSID + ")");
                 break;
             }
         }

@@ -14,6 +14,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -43,6 +44,7 @@ public class LoginClickEvent implements View.OnClickListener {
         mLoginActivity.btnLogin.setOnClickListener(this);
         mLoginActivity.tv_register.setOnClickListener(this);
         mLoginActivity.iv_facebook.setOnClickListener(this);
+        mLoginActivity.iv_twiter.setOnClickListener(this);
     }
 
     @Override
@@ -62,6 +64,8 @@ public class LoginClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.iv_twiter:
+                mLoginActivity.startActivity(new Intent(mLoginActivity, WeightDetailsActivity.class));
+                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
             case R.id.tv_register:

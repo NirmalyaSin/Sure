@@ -8,10 +8,8 @@ import com.surefiz.utils.GeneralToApp;
 import java.text.DecimalFormat;
 
 public class WeightDetailsOnclick implements View.OnClickListener {
-    WeightDetailsActivity weightDetailsActivity;
-    int kg_lbs=5545;
-    float kg=0;
-    Double lbs=0.0;
+    private WeightDetailsActivity weightDetailsActivity;
+
     public WeightDetailsOnclick(WeightDetailsActivity weightDetailsActivity) {
         this.weightDetailsActivity=weightDetailsActivity;
         setonclicklistner();
@@ -28,32 +26,34 @@ public class WeightDetailsOnclick implements View.OnClickListener {
             case R.id.btn_kg:
                 weightDetailsActivity.btn_kg.setBackgroundResource(R.drawable.weight_blue_button);
                 weightDetailsActivity.btn_lbs.setBackgroundResource(R.drawable.weight_white_button);
-                weightDetailsActivity.btn_kg.setTextColor(weightDetailsActivity.getResources().getColor(R.color.registration_color_black));
+                weightDetailsActivity.btn_kg.setTextColor(weightDetailsActivity.getResources().getColor(R.color.whiteColor));
                 weightDetailsActivity.btn_lbs.setTextColor(weightDetailsActivity.getResources().getColor(R.color.whiteColor));
-                convertinlbs();
+                //Convert weight to kg
+                double weightKg = covertInKG(weightDetailsActivity.captureWeight);
+                weightDetailsActivity.tv_kg_lb_value.setText(new DecimalFormat("##.##").format(weightKg)+" KG");
 
                 break;
             case R.id.btn_lbs:
+
                 weightDetailsActivity.btn_kg.setBackgroundResource(R.drawable.weight_white_button);
                 weightDetailsActivity.btn_lbs.setBackgroundResource(R.drawable.weight_blue_button);
-                weightDetailsActivity.btn_lbs.setTextColor(weightDetailsActivity.getResources().getColor(R.color.registration_color_black));
+                weightDetailsActivity.btn_lbs.setTextColor(weightDetailsActivity.getResources().getColor(R.color.whiteColor));
                 weightDetailsActivity.btn_kg.setTextColor(weightDetailsActivity.getResources().getColor(R.color.whiteColor));
+                //Convert weight to lbs
+                double weightLBS = covertInLBS(weightDetailsActivity.captureWeight);
+                weightDetailsActivity.tv_kg_lb_value.setText(new DecimalFormat("##.##").format(weightLBS)+" LBS");
 
-
-                covertinkg();
                 break;
         }
     }
 
-    private void convertinlbs() {
-        kg= (float)kg_lbs/100;
-        weightDetailsActivity.tv_kg_lb_value.setText(new DecimalFormat("##.##").format(kg)+" kg");
-
+    public double covertInKG(int weight) {
+        double kg = weight/100;
+        return kg;
     }
 
-    private void covertinkg() {
-        lbs=kg* GeneralToApp.KG_TO_LBS;
-        weightDetailsActivity.tv_kg_lb_value.setText(new DecimalFormat("##.###").format(lbs)+" lbs");
-
+    private double covertInLBS(int weight) {
+        double lbs=weight* GeneralToApp.KG_TO_LBS;
+        return lbs;
     }
 }

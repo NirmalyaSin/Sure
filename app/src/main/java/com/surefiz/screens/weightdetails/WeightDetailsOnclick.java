@@ -53,7 +53,7 @@ public class WeightDetailsOnclick implements View.OnClickListener {
     }
 
     private double covertInLBS(int weight) {
-        double lbs=weight* GeneralToApp.KG_TO_LBS;
+        double lbs=(weight/100)* GeneralToApp.KG_TO_LBS;
         return lbs;
     }
 }

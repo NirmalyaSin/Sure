@@ -52,12 +52,18 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".screens.otp.OtpActivity" />
+        <activity
+            android:name=".screens.otp.OtpActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".screens.dashboard.BaseActivity" />
         <activity android:name=".screens.dashboard.DashBoardActivity" />
-        <activity android:name=".screens.profile.ProfileActivity" />
+        <activity
+            android:name=".screens.profile.ProfileActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".screens.instruction.InstructionActivity" />
-        <activity android:name=".screens.weightdetails.WeightDetailsActivity" />
+        <activity
+            android:name=".screens.weightdetails.WeightDetailsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".screens.users.UserListActivity" />
 
         <service android:name=".fcm.MyFirebaseInstanceIDService">
@@ -80,7 +86,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".screens.forgotpassword.ForgotPasswordActivity"></activity>
+        <activity
+            android:name=".screens.forgotpassword.ForgotPasswordActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
     </application>
 
 </manifest>

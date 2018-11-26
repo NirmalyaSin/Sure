@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.surefiz.R;
+import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.progressloader.LoadingData;
 
@@ -49,11 +50,14 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_details);
+        if (LoginShared.getScaleUserId(this) != 1) {
+            LoginShared.setScaleUserId(GeneralToApp.PRIMARY_USER_ID);
+        }
         //Bind ButterKnife to the view
         ButterKnife.bind(this);
         //Set onClickListener here
         mWeightDetailsOnclick = new WeightDetailsOnclick(this);
-        loader=new LoadingData(this);
+        loader = new LoadingData(this);
 
         btn_go_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +65,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                 Log.e("@@Clicked: ", "Skip-Button");
                 if (userIdManager != null) {
                     Log.e("@@Clicked-1: ", "Skip-Button");
-                    Log.d("@@ScaleUsrMgr :", "Initializing.." +   userIdManager.init());
+                    Log.d("@@ScaleUsrMgr :", "Initializing.." + userIdManager.init());
                 }
             }
         });
@@ -96,14 +100,14 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         if (userIdManager == null) {
             Toast.makeText(this, "UserIdManager not init yet.", Toast.LENGTH_SHORT).show();
         }
-       boolean ret = userIdManager.init();
+        boolean ret = userIdManager.init();
         if (ret) {
             Toast.makeText(this, "UserIdManager  init sucessfully.", Toast.LENGTH_SHORT).show();
 
         }
     }
 
-    public void ClosePrevConnections(){
+    public void ClosePrevConnections() {
         if (userIdManager != null) {
             userIdManager.close();
         }
@@ -114,8 +118,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         data_id = "";
         try {
             udpHelper = new UDPHelper(61111);
-      //      udpHelper.setDebug(debug);
-       //     Log.d("@@ScaleUDP :", "Initializing.." +  udpHelper.init());
+            //      udpHelper.setDebug(debug);
+            //     Log.d("@@ScaleUDP :", "Initializing.." +  udpHelper.init());
 
             userIdManager = new UserIdManager(udpHelper);
             userIdManager.setDebug(true);
@@ -139,8 +143,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         mWeightDetailsOnclick.onClick(btn_kg);
 
         //Set userID
-        boolean setUser = userIdManager.setUserId(dataId, weight, GeneralToApp.PRIMARY_USER_ID);
-        Log.d("@@SetUser = ", ""+setUser);
+        boolean setUser = userIdManager.setUserId(dataId, weight, LoginShared.getScaleUserId(this));
+        Log.d("@@SetUser = ", "" + setUser);
 
      /*   Log.d("@@CaptureOut = ", "dataId: " + dataId + " weight: " + weight);
 
@@ -158,7 +162,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
     @Override
     public void onReceiveSetUserIDAckPkg(String dataId, int weight, int status) {
-        Log.d("@@CaptureUser-id: " , "dataId: " + dataId + " weight: " + weight + " status: " + status);
+        Log.d("@@CaptureUser-id: ", "dataId: " + dataId + " weight: " + weight + " status: " + status);
        /* if (loader.isShowing())
             loader.dismiss();*/
 

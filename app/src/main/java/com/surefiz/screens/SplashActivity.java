@@ -12,6 +12,7 @@ import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -38,10 +39,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void navigate() {
-        /*Intent loginIntent = new Intent(this, WifiConfigActivity.class);
-        startActivity(loginIntent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        finish();*/
         if (LoginShared.getRegistrationDataModel(this) != null) {
             if (LoginShared.getRegistrationDataModel(this).getData() != null) {
                 if (LoginShared.getRegistrationDataModel(this).getData().getToken().equals("") ||

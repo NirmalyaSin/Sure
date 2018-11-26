@@ -1,4 +1,4 @@
-package com.surefiz;
+package com.surefiz.screens.weightdetails;
 
 //
 // Source code recreated from a .class file by IntelliJ IDEA
@@ -169,6 +169,7 @@ public class UserIdManager implements OnDataListener {
         this.udpHelper.setTimeoutInMillis(this.timeoutInMillis);
         this.udpHelper.setOnDataListener(this);
         this.udpHelper.init();
+        init();
     }
 
     public static boolean isDataIdValid(String dataId) {

@@ -11,13 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.surefiz.R;
-import com.surefiz.UserIdManager;
 import com.surefiz.utils.GeneralToApp;
-import com.surefiz.utils.entity.RequestUserIdInfo;
 import com.surefiz.utils.progressloader.LoadingData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,13 +39,11 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     private WeightDetailsOnclick mWeightDetailsOnclick;
     private UDPHelper udpHelper;
     private UserIdManager userIdManager;
-    private boolean showMsgView = true;
-    private boolean debug = true;
-    private List<RequestUserIdInfo> requestUserIdInfoList = new ArrayList<RequestUserIdInfo>();
     private LoadingData loader;
 
     //Weight Measurement Units
     public int captureWeight = 0;
+    private String data_id = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,12 +54,6 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         //Set onClickListener here
         mWeightDetailsOnclick = new WeightDetailsOnclick(this);
         loader=new LoadingData(this);
-
-        //Close Previous Connections
-   //     ClosePrevConnections();
-
-        //Initialize scale
-        capturescaledatasetup();
 
         btn_go_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,13 +66,27 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             }
         });
 
-       /* new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 goNextAction();
             }
-        }, GeneralToApp.SCALECONFIG_WAIT_TIME);*/
+        }, GeneralToApp.SCALECONFIG_WAIT_TIME);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Initialize scale
+        capturescaledatasetup();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Close UDP Connection
+        ClosePrevConnections();
     }
 
     private void goNextAction() {
@@ -103,18 +104,14 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     }
 
     public void ClosePrevConnections(){
-        if (udpHelper != null) {
-            udpHelper.close();
-        }
-
         if (userIdManager != null) {
             userIdManager.close();
         }
     }
 
     public void capturescaledatasetup() {
-     //   loader.show();
-   //     ClosePrevConnections();
+        captureWeight = 0;
+        data_id = "";
         try {
             udpHelper = new UDPHelper(61111);
       //      udpHelper.setDebug(debug);
@@ -131,29 +128,37 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
     @Override
     public void onReceiveRequestUserIDPkg(String dataId, int weight) {
-        Log.d("@@Capture = " ,"dataId: " + dataId + " weight: " + weight);
 
-        tv_kg_lb_value.setText(String.valueOf(weight));
-
-        captureWeight = weight;
-
-       /* if (loader.isShowing())
+        if (loader.isShowing()) {
             loader.dismiss();
-        if (requestUserIdInfoList.size() >= 100) {
-            requestUserIdInfoList.remove(0);
-            tv_kg_lb_value.setText(weight);
-        }*/
-   //     requestUserIdInfoList.add(new RequestUserIdInfo(dataId, weight));
+        }
 
-      /*  for(RequestUserIdInfo info: requestUserIdInfoList){
-            Log.d("@@capture-data: ", info.toString());
-        }*/
+        Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
+        captureWeight = weight;
+        //Set text value to kg
+        mWeightDetailsOnclick.onClick(btn_kg);
 
+        //Set userID
+        boolean setUser = userIdManager.setUserId(dataId, weight, GeneralToApp.PRIMARY_USER_ID);
+        Log.d("@@SetUser = ", ""+setUser);
+
+     /*   Log.d("@@CaptureOut = ", "dataId: " + dataId + " weight: " + weight);
+
+        if(data_id.equals("") || !data_id.equals(dataId)) {
+            Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
+            captureWeight = weight;
+            //Set text value to kg
+            mWeightDetailsOnclick.onClick(btn_kg);
+
+            //Set userID
+            boolean setUser = userIdManager.setUserId(dataId, weight, GeneralToApp.PRIMARY_USER_ID);
+            Log.d("@@SetUser = ", ""+setUser);
+        }*/
     }
 
     @Override
     public void onReceiveSetUserIDAckPkg(String dataId, int weight, int status) {
-        Log.d("@@CaptureUser" , "dataId: " + dataId + " weight: " + weight + " status: " + status);
+        Log.d("@@CaptureUser-id: " , "dataId: " + dataId + " weight: " + weight + " status: " + status);
        /* if (loader.isShowing())
             loader.dismiss();*/
 
@@ -165,10 +170,4 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e("@@Called: ", "onDestroyed()");
-        ClosePrevConnections();
-    }
 }

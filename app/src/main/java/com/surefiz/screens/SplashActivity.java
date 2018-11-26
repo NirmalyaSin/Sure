@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void navigate() {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
+        Intent loginIntent = new Intent(this, DashBoardActivity.class);
         startActivity(loginIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();

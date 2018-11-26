@@ -15,6 +15,8 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -183,6 +185,11 @@ public class OtpClickEvent implements View.OnClickListener {
                         LoginShared.setstatusforOtpvarification(true);
                         Intent dashBoardIntent = new Intent(otpActivity, DashBoardActivity.class);
                         otpActivity.startActivity(dashBoardIntent);
+                        otpActivity.finish();
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(otpActivity, LoginActivity.class);
+                        otpActivity.startActivity(loginIntent);
+                        otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         otpActivity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");

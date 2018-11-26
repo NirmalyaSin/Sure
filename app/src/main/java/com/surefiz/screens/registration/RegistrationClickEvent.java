@@ -22,6 +22,7 @@ import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.sharedhandler.LoginShared;
@@ -79,16 +80,27 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addHeightListAndCall(String change) {
-
-        for (int i = 1; i < 241; i++) {
-            heightList.add(i + " " + change);
+        if (change.equals("INCH")) {
+            for (int i = 1; i < 109; i++) {
+                heightList.add(i + " " + change);
+            }
+        } else {
+            for (int i = 1; i < 276; i++) {
+                heightList.add(i + " " + change);
+            }
         }
         heightPopup = new UniversalPopup(registrationActivity, heightList, registrationActivity.et_height);
     }
 
     private void addWeightListAndCall(String change) {
-        for (int i = 5; i < 141; i++) {
-            weightList.add(i + " " + change);
+        if (change.equals("LB")) {
+            for (int i = 5; i < 1001; i++) {
+                weightList.add(i + " " + change);
+            }
+        } else {
+            for (int i = 5; i < 455; i++) {
+                weightList.add(i + " " + change);
+            }
         }
         weightPopup = new UniversalPopup(registrationActivity, weightList, registrationActivity.et_weight);
     }
@@ -106,13 +118,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
         genderList.add("Others");
 
         genderPopup = new UniversalPopup(registrationActivity, genderList, registrationActivity.et_gender);
-    }
-
-    private void updateLabel() {
-        String myFormat = "dd-MM-yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        registrationActivity.et_DOB.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void setClickEvent() {
@@ -379,9 +384,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
         RequestBody preffered = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_units.getText().toString().trim());
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
@@ -422,6 +427,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
                                 registrationActivity.finish();
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(registrationActivity, LoginActivity.class);
+                        registrationActivity.startActivity(loginIntent);
+                        registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        registrationActivity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
@@ -456,9 +466,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
         RequestBody preffered = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_units.getText().toString().trim());
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
@@ -501,6 +511,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
                                 registrationActivity.finish();
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(registrationActivity, LoginActivity.class);
+                        registrationActivity.startActivity(loginIntent);
+                        registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        registrationActivity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 

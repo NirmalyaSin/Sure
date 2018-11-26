@@ -64,8 +64,15 @@ public class ProfileActivity extends BaseActivity {
         view = View.inflate(this, R.layout.activity_profile, null);
         addContentView(view);
         initView();
+        setHeaderView();
         showViewMode();
         profileClickEvent = new ProfileClickEvent(this);
+    }
+
+    private void setHeaderView() {
+        tv_universal_header.setText("Profile");
+        iv_edit.setVisibility(View.VISIBLE);
+        btn_add.setVisibility(View.GONE);
     }
 
     private void showViewMode() {

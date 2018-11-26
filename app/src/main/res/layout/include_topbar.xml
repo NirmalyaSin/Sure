@@ -14,6 +14,7 @@
             android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true">
+
             <ImageButton
                 android:id="@+id/img_topbar_menu"
                 android:layout_width="?android:attr/actionBarSize"
@@ -33,6 +34,19 @@
             android:text="DashBoard"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_40sdp"
+            android:layout_toLeftOf="@+id/iv_edit"
+            android:layout_toRightOf="@+id/tv_universal_header"
+            android:background="@drawable/login_submit_rounded_corner"
+            android:text="Add"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp" />
 
         <ImageView
             android:id="@+id/iv_edit"

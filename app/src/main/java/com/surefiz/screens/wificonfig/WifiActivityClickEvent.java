@@ -28,7 +28,9 @@ import android.widget.Toast;
 
 import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
+import com.surefiz.sharedhandler.LoginShared;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +97,9 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                         (HideReturnsTransformationMethod.getInstance());
                 break;
             case R.id.btn_skip_config:
-                //     mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                Intent details = new Intent(mWifiConfigActivity, InstructionActivity.class);
+                mWifiConfigActivity.startActivity(details);
+                mWifiConfigActivity.finish();
                 break;
 
         }
@@ -119,7 +123,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                     mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     progressDialog.setMessage("Please wait ");
                     progressDialog.show();
-                    Log.d("@@Sent-SmartLink : ", ssid+"\n"+pwd+"\n"+bssid);
+                    Log.d("@@Sent-SmartLink : ", ssid + "\n" + pwd + "\n" + bssid);
                     //  scaleWiFiConfig.apConfig(ssid, pwd, this);
                     scaleWiFiConfig.smartLinkConfig(mWifiConfigActivity, ssid, bssid, pwd, this);
                 }
@@ -194,6 +198,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        LoginShared.setstatusforwifivarification(true);
                         Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
                         mWifiConfigActivity.startActivity(instruc);
                         mWifiConfigActivity.finish();

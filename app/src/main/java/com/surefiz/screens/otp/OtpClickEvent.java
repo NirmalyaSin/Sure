@@ -17,6 +17,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.users.UserListActivity;
+import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -183,7 +184,7 @@ public class OtpClickEvent implements View.OnClickListener {
 
                         MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
                         LoginShared.setstatusforOtpvarification(true);
-                        Intent dashBoardIntent = new Intent(otpActivity, DashBoardActivity.class);
+                        Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
                         otpActivity.startActivity(dashBoardIntent);
                         otpActivity.finish();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {

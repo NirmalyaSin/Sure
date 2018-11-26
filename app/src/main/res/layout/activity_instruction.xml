@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_image"
-    android:alpha="0.6"
     tools:context=".screens.instruction.InstructionActivity">
 
     <RelativeLayout
@@ -15,101 +13,115 @@
         android:gravity="center_vertical">
 
         <Button
-            android:layout_width="@dimen/_45sdp"
+            android:id="@+id/btn_skip"
+            android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/_5sdp"
-            android:text="@string/skip"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/login_submit_rounded_corner"
+            android:text="Skip"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
-            android:background="@drawable/weight_blue_button"/>
+            android:textSize="@dimen/_12sdp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Instruction"
-            android:paddingBottom="@dimen/_10sdp"
-            android:textColor="@color/whiteColor"
             android:layout_centerInParent="true"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="Instruction"
+            android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
     </RelativeLayout>
 
-    <ScrollView
-        android:id="@+id/sv_main"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_header">
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:layout_height="match_parent"
+            android:alpha="0.6"
+            android:background="@drawable/splash_image" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/instruction_page_text"
-                android:layout_marginBottom="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textSize="@dimen/_20sdp"
-                android:textColor="@color/whiteColor"/>
+        <ScrollView
+            android:id="@+id/sv_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_15sdp"
-                    android:text="@string/step_on_scale"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:text="@string/scale_blinking"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:text="@string/step_down"/>
-
-                <Button
-                    android:id="@+id/btndone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_40sdp"
-                    android:layout_marginLeft="@dimen/_30sdp"
-                    android:layout_marginRight="@dimen/_30sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:background="@drawable/login_submit_rounded_corner"
-                    android:text="@string/yes_it_down"
-                    android:textAllCaps="false"
+                    android:gravity="center_horizontal"
+                    android:text="@string/instruction_page_text"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-            </LinearLayout>
+                    android:textSize="@dimen/_20sdp" />
 
-        </LinearLayout>
-    </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/step_on_scale"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:text="@string/scale_blinking"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:text="@string/step_down"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <Button
+                        android:id="@+id/btndone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_marginRight="@dimen/_30sdp"
+                        android:layout_marginBottom="@dimen/_40sdp"
+                        android:background="@drawable/login_submit_rounded_corner"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="@string/yes_it_down"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>

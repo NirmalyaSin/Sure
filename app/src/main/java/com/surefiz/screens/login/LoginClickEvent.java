@@ -52,6 +52,7 @@ public class LoginClickEvent implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.tv_forgetPassword:
+                MethodUtils.errorMsg(mLoginActivity,"Under Development");
                 break;
 
             case R.id.btnLogin:
@@ -59,13 +60,11 @@ public class LoginClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.iv_facebook:
-                mLoginActivity.startActivity(new Intent(mLoginActivity, WifiConfigActivity.class));
-                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                MethodUtils.errorMsg(mLoginActivity, "Under Development");
                 break;
 
             case R.id.iv_twiter:
-                mLoginActivity.startActivity(new Intent(mLoginActivity, WeightDetailsActivity.class));
-                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                MethodUtils.errorMsg(mLoginActivity, "Under Development");
                 break;
 
             case R.id.tv_register:

@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_image"
     android:alpha="0.6"
-    tools:context=".login.LoginActivity">
+    android:background="@drawable/splash_image">
 
     <ScrollView
         android:id="@+id/sv_main"
@@ -16,20 +15,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_40sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LOGIN TO YOUR ACCOUNT"
-                android:layout_marginBottom="@dimen/_40sdp"
                 android:layout_gravity="center_horizontal"
-                android:textSize="@dimen/_18sdp"
-                android:textColor="@color/whiteColor" />
+                android:layout_marginBottom="@dimen/_40sdp"
+                android:text="LOGIN TO YOUR ACCOUNT"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_18sdp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,15 +105,10 @@
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_30sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_margin="@dimen/_40sdp"
                 android:background="@drawable/login_submit_rounded_corner"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:text="Login"
+                android:text="LOGIN"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
@@ -128,26 +122,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-<!--                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:layout_marginRight="@dimen/_10sdp">
-                    <ImageView
-                        android:id="@+id/iv_facebook"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_facebook" />
-                </RelativeLayout>
+                <!--                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:layout_marginRight="@dimen/_10sdp">
+                                    <ImageView
+                                        android:id="@+id/iv_facebook"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/ic_facebook" />
+                                </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:layout_marginLeft="@dimen/_10sdp">-->
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="left"
+                                    android:layout_marginLeft="@dimen/_10sdp">-->
 
                 <RelativeLayout
                     android:layout_width="0dp"

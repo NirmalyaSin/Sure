@@ -13,6 +13,8 @@ import butterknife.ButterKnife;
 public class InstructionActivity extends AppCompatActivity {
     @BindView(R.id.btndone)
     Button btn_button;
+    @BindView(R.id.btn_skip)
+    Button btn_skip;
 
     InstructionActivityonclick mInstructionActivityonclick;
 

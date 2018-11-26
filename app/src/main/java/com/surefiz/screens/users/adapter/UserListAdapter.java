@@ -40,10 +40,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         df2 = new DecimalFormat(".##");
         userListViewHolder.tv_name.setText("Name:   " + userLists.get(i).getUserName());
         if (userLists.get(i).getUserWeight().equals("0")) {
-            userListViewHolder.tv_weight.setText("Weight:  " + "0" + "lbs");
+            userListViewHolder.tv_weight.setText("Weight:  " + "0" + " lbs");
         } else {
             userListViewHolder.tv_weight.setText("Weight:  " + df2.format((Double.parseDouble
-                    (userLists.get(i).getUserWeight()) * 2.20462)) + "lbs");
+                    (userLists.get(i).getUserWeight()) * 2.20462)) + " lbs");
         }
 
     }

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.interfaces.MoveTutorial;
@@ -48,6 +49,8 @@ public class AddUserDialog extends Dialog {
         loader = new LoadingData(activity);
         iv_cross = findViewById(R.id.iv_cross);
         btn_submit = findViewById(R.id.btn_submit);
+        et_name = findViewById(R.id.et_name);
+        et_email = findViewById(R.id.et_email);
 
         iv_cross.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +62,17 @@ public class AddUserDialog extends Dialog {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addUserApi();
+                if (et_name.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Please enter user name");
+                } else if (et_email.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Please enter user email");
+                } else if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
+                    MethodUtils.errorMsg(activity, "Please enter a valid email address");
+                } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
+                } else {
+                    addUserApi();
+                }
             }
         });
     }
@@ -69,9 +82,11 @@ public class AddUserDialog extends Dialog {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),"application/json",
+        final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
                 LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
-                " name!", "email!", "10", "175", "150", "12345678", "0", "9874859685", "09-02-1994", "2","1");
+                et_name.getText().toString().trim(), et_email.getText().toString().trim(), "10",
+                "175", "150", "12345678", "0", "9874859685",
+                "09-02-1994", "2", "1");
         call_addUser.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -88,7 +103,6 @@ public class AddUserDialog extends Dialog {
                         moveTutorial.onSuccess("1");
                         dismiss();
                     }
-
                 } catch (Exception e) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
                 }

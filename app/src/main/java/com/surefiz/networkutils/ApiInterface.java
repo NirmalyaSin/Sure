@@ -102,12 +102,11 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(ADDUSER)
     Call<ResponseBody> call_adduserApi(@Header("x-authorization") String token,
-                                       @Header("Accept") String Accept,
                                        @Field("current_UserId") String current_UserId,
                                        @Field("added_DeviceId") String added_DeviceId,
                                        @Field("fullName") String fullName,
                                        @Field("emailId") String emailId,
-                                       @Field("requiredTime") String requredTime,
+                                       @Field("requredTime") String requredTime,
                                        @Field("currentHeight") String currentHeight,
                                        @Field("targetWeight") String targetWeight,
                                        @Field("password") String password,

@@ -4,9 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_image"
     android:fitsSystemWindows="true"
     tools:context=".screens.SplashActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.6"
+        android:background="@drawable/splash_image" />
+
+
+    <TextView
+        android:id="@+id/tv_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="SUREFIZ"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_40sdp"
+        android:typeface="monospace" />
 
 </RelativeLayout>

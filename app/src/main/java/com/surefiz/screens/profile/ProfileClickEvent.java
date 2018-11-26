@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -137,10 +138,19 @@ public class ProfileClickEvent implements View.OnClickListener {
     }
 
     private void showImage() {
-        String url = LoginShared.getViewProfileDataModel(activity).getData().getUser().
-                get(0).getUserImage();
-        url = url.replace(" ", "20%");
-        imageLoader.displayImage(url, activity.profile_image);
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().
+                get(0).getUserImage().equals("") ||
+                LoginShared.getViewProfileDataModel(activity).getData().getUser().
+                        get(0).getUserImage().equalsIgnoreCase("null") ||
+                LoginShared.getViewProfileDataModel(activity).getData().getUser().
+                        get(0).getUserImage() == null) {
+            activity.profile_image.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.prof_img_placeholder));
+        } else {
+            String url = LoginShared.getViewProfileDataModel(activity).getData().getUser().
+                    get(0).getUserImage();
+            url = url.replace(" ", "20%");
+            imageLoader.displayImage(url, activity.profile_image);
+        }
     }
 
     private void setClickEvent() {

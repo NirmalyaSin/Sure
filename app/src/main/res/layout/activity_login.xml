@@ -106,7 +106,7 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_margin="@dimen/_40sdp"
+                android:layout_margin="@dimen/_35sdp"
                 android:background="@drawable/login_submit_rounded_corner"
                 android:text="LOGIN"
                 android:textColor="@color/whiteColor"

@@ -394,10 +394,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim());
         RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
         RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
-        RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "Android");
+        RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");
+        RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
 
         Call<ResponseBody> registration_api = apiInterface.call_registrationApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, preffered, scale, deviceType);
+                height, weight, time, preffered, scale, deviceType, deviceToken);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -476,10 +477,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim());
         RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
         RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
-        RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "Android");
+        RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");
+        RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
+
 
         Call<ResponseBody> registration_api = apiInterface.call_registrationImageApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, preffered, deviceType, scale, body);
+                height, weight, time, preffered, deviceType, scale, deviceToken, body);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override

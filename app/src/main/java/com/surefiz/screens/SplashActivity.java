@@ -38,11 +38,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void navigate() {
-        Intent loginIntent = new Intent(this, DashBoardActivity.class);
+        /*Intent loginIntent = new Intent(this, WifiConfigActivity.class);
         startActivity(loginIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        finish();
-       /* if (LoginShared.getRegistrationDataModel(this) != null) {
+        finish();*/
+        if (LoginShared.getRegistrationDataModel(this) != null) {
             if (LoginShared.getRegistrationDataModel(this).getData() != null) {
                 if (LoginShared.getRegistrationDataModel(this).getData().getToken().equals("") ||
                         LoginShared.getRegistrationDataModel(this).getData().getToken() == null) {
@@ -61,7 +61,10 @@ public class SplashActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                 } else {
-                    Toast.makeText(this, "dashboard", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, DashBoardActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 }
             }else{
                 Intent loginIntent = new Intent(this, LoginActivity.class);
@@ -69,6 +72,6 @@ public class SplashActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
-        }*/
+        }
     }
 }

@@ -85,12 +85,13 @@ public class LoginShared {
 
     //otp varification get set method
 
-    public static void setstatusforOtpvarification(boolean otpvatified) {
+    public static void setstatusforOtpvarification(Context context,boolean otpvatified) {
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(SharedUtils.KEY_SHARED_OTP_VERIFIED, otpvatified);
+        editor.commit();
     }
 
     public static boolean getstatusforOtpvarification(Context context) {
@@ -104,12 +105,13 @@ public class LoginShared {
 
 //wifi config-varification
 
-    public static void setstatusforwifivarification(boolean wifivarified) {
+    public static void setstatusforwifivarification(Context context,boolean wifivarified) {
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(SharedUtils.KEY_SHARED_WIFI_VERIFIED, wifivarified);
+        editor.commit();
     }
 
     public static boolean getstatusforwifivarification(Context context) {
@@ -126,6 +128,7 @@ public class LoginShared {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(SharedUtils.KEY_SHARED_SCALE_USER_ID, wifivarified);
+        editor.commit();
     }
 
     public static int getScaleUserId(Context context) {
@@ -134,6 +137,24 @@ public class LoginShared {
             activateShared(context);
         id = prefs.getInt(SharedUtils.KEY_SHARED_SCALE_USER_ID, id);
         return id;
+    }
+
+    /**
+     * DEVICE TOKEN
+     */
+    public static void setDeviceToken(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_DEVICE_TOKEN_KEY, value);
+        editor.commit();
+    }
+
+    public static String getDeviceToken(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_DEVICE_TOKEN_KEY, SharedUtils.KEY_SHARED_NO_DATA);
     }
 
 

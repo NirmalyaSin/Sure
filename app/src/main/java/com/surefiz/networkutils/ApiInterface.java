@@ -16,6 +16,7 @@ import retrofit2.http.Part;
 
 import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
+import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.SENDOTP;
@@ -38,6 +39,7 @@ public interface ApiInterface {
                                                  @Part("prefferedUnits") RequestBody prefferedUnits,
                                                  @Part("deviceType") RequestBody deviceType,
                                                  @Part("scaleMacId") RequestBody scaleMacId,
+                                                 @Part("device_Token") RequestBody device_Token,
                                                  @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -53,7 +55,8 @@ public interface ApiInterface {
                                             @Part("timeToloseWeight") RequestBody timeToloseWeight,
                                             @Part("prefferedUnits") RequestBody prefferedUnits,
                                             @Part("scaleMacId") RequestBody scaleMacId,
-                                            @Part("deviceType") RequestBody deviceType);
+                                            @Part("deviceType") RequestBody deviceType,
+                                            @Part("device_Token") RequestBody device_Token);
 
     @FormUrlEncoded
     @POST(SENDOTP)
@@ -64,7 +67,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(LOGIN)
     Call<ResponseBody> call_loginApi(@Field("user_email") String user_email,
-                                     @Field("user_password") String user_password);
+                                     @Field("user_password") String user_password,
+                                     @Field("deviceType") String deviceType,
+                                     @Field("device_Token") String device_Token);
 
     @FormUrlEncoded
     @POST(VIEWPROFILE)
@@ -115,4 +120,8 @@ public interface ApiInterface {
                                        @Field("dob") String dob,
                                        @Field("deviceType") String deviceType,
                                        @Field("prefferedUnits") String prefferedUnits);
+
+    @FormUrlEncoded
+    @POST(FORGOTPASSWORD)
+    Call<ResponseBody> call_forgotApi(@Field("user_email") String user_email);
 }

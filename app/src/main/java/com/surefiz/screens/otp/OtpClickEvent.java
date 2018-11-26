@@ -183,7 +183,7 @@ public class OtpClickEvent implements View.OnClickListener {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
                         MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
-                        LoginShared.setstatusforOtpvarification(true);
+                        LoginShared.setstatusforOtpvarification(otpActivity,true);
                         Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
                         otpActivity.startActivity(dashBoardIntent);
                         otpActivity.finish();

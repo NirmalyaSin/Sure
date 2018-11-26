@@ -26,11 +26,13 @@ public class InstructionActivityonclick implements View.OnClickListener {
             case R.id.btndone:
                 Intent weightdetails = new Intent(instructionActivity, WeightDetailsActivity.class);
                 instructionActivity.startActivity(weightdetails);
+                instructionActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 instructionActivity.finish();
                 break;
             case R.id.btn_skip:
                 Intent details = new Intent(instructionActivity, DashBoardActivity.class);
                 instructionActivity.startActivity(details);
+                instructionActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 instructionActivity.finish();
                 break;
 

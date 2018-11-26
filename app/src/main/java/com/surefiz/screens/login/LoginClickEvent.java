@@ -11,6 +11,8 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.forgotpassword.ForgotPasswordActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
@@ -45,6 +47,7 @@ public class LoginClickEvent implements View.OnClickListener {
         mLoginActivity.tv_register.setOnClickListener(this);
         mLoginActivity.iv_facebook.setOnClickListener(this);
         mLoginActivity.iv_twiter.setOnClickListener(this);
+        mLoginActivity.tv_forgetPassword.setOnClickListener(this);
     }
 
     @Override
@@ -52,7 +55,8 @@ public class LoginClickEvent implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.tv_forgetPassword:
-                MethodUtils.errorMsg(mLoginActivity,"Under Development");
+                mLoginActivity.startActivity(new Intent(mLoginActivity, ForgotPasswordActivity.class));
+                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
             case R.id.btnLogin:
@@ -90,7 +94,8 @@ public class LoginClickEvent implements View.OnClickListener {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<ResponseBody> loginapicall = apiInterface.call_loginApi(mLoginActivity.editEmail.getText().toString().trim(), mLoginActivity.editPassword.getText().toString());
+        Call<ResponseBody> loginapicall = apiInterface.call_loginApi(mLoginActivity.editEmail.getText().toString().trim(),
+                mLoginActivity.editPassword.getText().toString(),"2",LoginShared.getDeviceToken(mLoginActivity));
         loginapicall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -106,14 +111,21 @@ public class LoginClickEvent implements View.OnClickListener {
 
                     if (jsonObject.optInt("status") == 1) {
 
-                        Toast.makeText(mLoginActivity, "Success", Toast.LENGTH_SHORT).show();
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
-
-                        //DashBoard Page Navigation.
+                        if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
+                            Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                            mLoginActivity.startActivity(intent);
+                            mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            mLoginActivity.finish();
+                        } else {
+                            Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
+                            mLoginActivity.startActivity(intent);
+                            mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            mLoginActivity.finish();
+                        }
 
                     } else if (jsonObject.optInt("status") == 4) {
-                        Toast.makeText(mLoginActivity, "otp screen", Toast.LENGTH_SHORT).show();
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
                         Intent intent = new Intent(mLoginActivity, OtpActivity.class);

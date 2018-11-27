@@ -14,16 +14,13 @@
 
         <Button
             android:id="@+id/btnSkipWeight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/login_submit_rounded_corner"
             android:text="Skip"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp" />
@@ -31,12 +28,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="Weight Details"
             android:textColor="@color/whiteColor"
-            android:layout_centerInParent="true"
             android:textSize="@dimen/_14sdp" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,111 +46,112 @@
             android:alpha="0.6"
             android:background="@drawable/splash_image" />
 
-    <ScrollView
-        android:id="@+id/sv_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/sv_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/youe_weight"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textSize="@dimen/_18sdp"
-                android:textColor="@color/whiteColor"/>
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/youe_weight"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_18sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_kg"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:background="@drawable/weight_white_button"
-                        android:text="KG"
-                        android:textColor="@color/whiteColor"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:layout_margin="@dimen/_5sdp" />
-
-                    <Button
-                        android:id="@+id/btn_lbs"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:background="@drawable/weight_blue_button"
-                        android:text="LBS"
-                        android:textColor="@color/whiteColor"
-                        android:textSize="@dimen/_14sdp" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="@dimen/_250sdp"
-                    android:layout_height="@dimen/_250sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_30sdp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/circle_shape_white">
-
-                    <TextView
-                        android:id="@+id/tv_kg_lb_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"                        android:layout_marginTop="@dimen/_5sdp"
-                        android:textSize="@dimen/_25sdp"
-                        android:textColor="@color/whiteColor"
-                        android:text="0.0 lbs"/>
-
-                </RelativeLayout>
-
-                <Button
-                    android:id="@+id/btn_go_next"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:textAllCaps="false"
-                    android:textColor="@color/whiteColor"
-                    android:text="@string/go_next_action"
-                    android:textSize="@dimen/_15sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_30sdp"
-                    android:background="@drawable/login_submit_rounded_corner" />
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_kg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/weight_white_button"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:text="KG"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp" />
+
+                        <Button
+                            android:id="@+id/btn_lbs"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/weight_blue_button"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:text="LBS"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="@dimen/_14sdp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/_250sdp"
+                        android:layout_height="@dimen/_250sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_30sdp"
+                        android:background="@drawable/circle_shape_white">
+
+                        <TextView
+                            android:id="@+id/tv_kg_lb_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text="0.0 lbs"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="@dimen/_25sdp" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/btn_go_next"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/_30sdp"
+                        android:background="@drawable/login_submit_rounded_corner"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="@string/go_next_action"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_15sdp" />
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
     </RelativeLayout>
 </RelativeLayout>

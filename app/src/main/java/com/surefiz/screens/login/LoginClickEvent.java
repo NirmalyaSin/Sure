@@ -112,7 +112,7 @@ public class LoginClickEvent implements View.OnClickListener {
                     Log.d("@@LoginData : ", jsonObject.toString());
                     if (jsonObject.optInt("status") == 1) {
                         LoginShared.setstatusforOtpvarification(mLoginActivity, true);
-                        LoginShared.setWeightPageFrom(mLoginActivity,"0");
+                        LoginShared.setWeightPageFrom(mLoginActivity, "0");
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
                         if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
@@ -126,7 +126,6 @@ public class LoginClickEvent implements View.OnClickListener {
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             mLoginActivity.finish();
                         }
-
                     } else if (jsonObject.optInt("status") == 4) {
                         /*registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);

@@ -85,7 +85,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     }
 
     private void goNextAction() {
-        loader.dismiss();
+        if(loader.isShowing()){
+            loader.dismiss();
+        }
         btn_go_next.setVisibility(View.VISIBLE);
 
         //Close UDP Connection
@@ -143,7 +145,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
         captureWeight = weight;
 
-        if(!isWeightReceived) {
+        if (!isWeightReceived) {
             //Set text value to kg
             mWeightDetailsOnclick.onClick(btn_kg);
 

@@ -49,6 +49,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     private ScaleWiFiConfig scaleWiFiConfig;
     WifiReceiver wifiReceiver = new WifiReceiver();
     LoadingData loader;
+    boolean isWifiReceived=false;
 
 
     public WifiActivityClickEvent(WifiConfigActivity activity) {
@@ -125,7 +126,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
                     Toast.makeText(mWifiConfigActivity, "Plz input ssid and pwd.", Toast.LENGTH_SHORT).show();
                 } else {
-                    mWifiConfigActivity.unregisterReceiver(wifiReceiver);
+                  //  mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     if (!loader.isShowing()) {
                         loader.show_with_label("Loading");
                     }
@@ -145,7 +146,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
                 Toast.makeText(mWifiConfigActivity, "Plz input ssid and pwd.", Toast.LENGTH_SHORT).show();
             } else {
-                mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                 /*progressDialog.setMessage("Please wait ");
                 progressDialog.show();*/
                 if (!loader.isShowing()) {
@@ -197,11 +197,12 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         if (loader.isShowing()) {
             loader.dismiss();
         }
-        if (sucess)
+        if (sucess) {
             showalertdialog();
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
-        else
+        } else {
             Toast.makeText(mWifiConfigActivity, "wifi configruation  not done", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void showalertdialog() {
@@ -245,8 +246,10 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         for (int i = 0; i < scanResultsWifi.size(); i++) {
             popupMenuItem.add(scanResultsWifi.get(i).SSID);
         }
-
+        mWifiConfigActivity.unregisterReceiver(wifiReceiver);
         popup.show();
+
+
     }
 
     @Override

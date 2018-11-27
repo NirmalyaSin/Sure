@@ -145,7 +145,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         if(!isWeightReceived) {
             //Set text value to kg
             mWeightDetailsOnclick.onClick(btn_kg);
-
+            isWeightReceived = true;
             if (scaleId.equals(dataId)) {
                 showUserSelectionDialog(dataId, weight);
             } else {
@@ -171,6 +171,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             public void onClick(DialogInterface dialog, int which) {
                 LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
                 goToDashboard();
+                dialog.dismiss();
             }
         });
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -178,6 +179,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             public void onClick(DialogInterface dialog, int which) {
                 LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
                 goToDashboard();
+                dialog.dismiss();
             }
         });
 
@@ -201,6 +203,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                 //Set userID
                 boolean setUser = userIdManager.setUserId(dataId, weight, scaleUserId);
                 Log.d("@@SetUser = ", "" + setUser);
+                dialog.dismiss();
             }
         });
         alertDialog.setNegativeButton("Someone Else", new DialogInterface.OnClickListener() {
@@ -209,6 +212,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                 LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "1");
                 LoginShared.setCapturedWeight(WeightDetailsActivity.this, String.valueOf(weight));
                 goToDashboard();
+                dialog.dismiss();
             }
         });
 

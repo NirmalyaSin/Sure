@@ -1,5 +1,8 @@
 package com.surefiz.screens.weightdetails;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.surefiz.R;
+import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -45,38 +50,29 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     //Weight Measurement Units
     public int captureWeight = 0;
     private String data_id = "";
+    private String userName, scaleId;
+    private int scaleUserId;
+    private String calledFrom;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_details);
-        if (LoginShared.getScaleUserId(this) != 1) {
-            LoginShared.setScaleUserId(GeneralToApp.PRIMARY_USER_ID);
-        }
         //Bind ButterKnife to the view
         ButterKnife.bind(this);
+
+        scaleUserId = LoginShared.getScaleUserId(this);
+        userName = LoginShared.getRegistrationDataModel(this).getData()
+                .getUser().get(0).getUserName();
+        scaleId=LoginShared.getRegistrationDataModel(this).getData()
+                .getUser().get(0).getUserMac();
+
+        calledFrom=LoginShared.getWeightPageFrom(this);
+
         //Set onClickListener here
         mWeightDetailsOnclick = new WeightDetailsOnclick(this);
+        //Initialize Loader
         loader = new LoadingData(this);
-
-        btn_go_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("@@Clicked: ", "Skip-Button");
-                if (userIdManager != null) {
-                    Log.e("@@Clicked-1: ", "Skip-Button");
-                    Log.d("@@ScaleUsrMgr :", "Initializing.." + userIdManager.init());
-                }
-            }
-        });
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                goNextAction();
-            }
-        }, GeneralToApp.SCALECONFIG_WAIT_TIME);
-
     }
 
     @Override
@@ -86,25 +82,12 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         capturescaledatasetup();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        //Close UDP Connection
-        ClosePrevConnections();
-    }
-
     private void goNextAction() {
         loader.dismiss();
         btn_go_next.setVisibility(View.VISIBLE);
 
-        if (userIdManager == null) {
-            Toast.makeText(this, "UserIdManager not init yet.", Toast.LENGTH_SHORT).show();
-        }
-        boolean ret = userIdManager.init();
-        if (ret) {
-            Toast.makeText(this, "UserIdManager  init sucessfully.", Toast.LENGTH_SHORT).show();
-
-        }
+        //Close UDP Connection
+        ClosePrevConnections();
     }
 
     public void ClosePrevConnections() {
@@ -114,8 +97,12 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     }
 
     public void capturescaledatasetup() {
+        //Start time Count-down
+        startTimerCountDown();
+        //Initialize Weight
         captureWeight = 0;
         data_id = "";
+
         try {
             udpHelper = new UDPHelper(61111);
             //      udpHelper.setDebug(debug);
@@ -130,6 +117,18 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         }
     }
 
+    private void startTimerCountDown() {
+        loader.show();
+        btn_go_next.setVisibility(View.GONE);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                goNextAction();
+            }
+        }, GeneralToApp.SCALECONFIG_WAIT_TIME);
+    }
+
     @Override
     public void onReceiveRequestUserIDPkg(String dataId, int weight) {
 
@@ -142,36 +141,74 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         //Set text value to kg
         mWeightDetailsOnclick.onClick(btn_kg);
 
-        //Set userID
-        boolean setUser = userIdManager.setUserId(dataId, weight, LoginShared.getScaleUserId(this));
-        Log.d("@@SetUser = ", "" + setUser);
+        if(scaleId.equals(dataId)){
+            showUserSelectionDialog(dataId, weight);
+        }else {
+            showDifferentScaleIdDialog();
+        }
 
-     /*   Log.d("@@CaptureOut = ", "dataId: " + dataId + " weight: " + weight);
-
-        if(data_id.equals("") || !data_id.equals(dataId)) {
-            Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
-            captureWeight = weight;
-            //Set text value to kg
-            mWeightDetailsOnclick.onClick(btn_kg);
-
-            //Set userID
-            boolean setUser = userIdManager.setUserId(dataId, weight, GeneralToApp.PRIMARY_USER_ID);
-            Log.d("@@SetUser = ", ""+setUser);
-        }*/
     }
 
     @Override
     public void onReceiveSetUserIDAckPkg(String dataId, int weight, int status) {
-        Log.d("@@CaptureUser-id: ", "dataId: " + dataId + " weight: " + weight + " status: " + status);
-       /* if (loader.isShowing())
-            loader.dismiss();*/
-
-       /* tv_kg_lb_value.setText(weight);
-
-        for(RequestUserIdInfo info: requestUserIdInfoList){
-            Log.d("@@capture-data: ", info.toString());
-        }*/
+        Log.d("@@CaptureUser-id: ", "dataId: " + dataId
+                + " weight: " + weight + " status: " + status);
 
     }
+
+    public void showDifferentScaleIdDialog(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Received weight from different scale.");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+                goToDashboard();
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+                goToDashboard();
+            }
+        });
+
+        alertDialog.create();
+        alertDialog.show();
+    }
+
+    public void goToDashboard() {
+        Intent intent = new Intent(this, DashBoardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void showUserSelectionDialog(String dataId, int weight){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Weight is given by you or someone else?");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Is this " + userName+"?", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Set userID
+                boolean setUser = userIdManager.setUserId(dataId, weight, scaleUserId);
+                Log.d("@@SetUser = ", "" + setUser);
+            }
+        });
+        alertDialog.setNegativeButton("Someone Else", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "1");
+                LoginShared.setCapturedWeight(WeightDetailsActivity.this, String.valueOf(weight));
+                goToDashboard();
+            }
+        });
+
+        alertDialog.create();
+        alertDialog.show();
+    }
+
 
 }

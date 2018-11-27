@@ -29,11 +29,16 @@ public class SharedUtils {
 	public static final String KEY_SHARED_VIEW_PROFILE = "KEY_SHARED_VIEW_PROFILE";
 	public static final String KEY_SHARED_SCALE_USER_ID = "KEY_SHARED_SCALE_USER_ID";
 	public static final String KEY_SHARED_DEVICE_TOKEN_KEY= "KEY_SHARED_DEVICE_TOKEN_KEY";
+    public static final String KEY_SHARED_DASHBOARD_FROM= "KEY_SHARED_DASHBOARD_FROM";
+    public static final String KEY_SHARED_WEIGHT_PAGE_FROM= "KEY_SHARED_WEIGHT_PAGE_FROM";
+    public static final String KEY_SHARED_CAPTURED_WEIGHT= "KEY_SHARED_CAPTURED_WEIGHT";
 
 
-	public static final String KEY_SHARED_USER_TYPE = "KEY_SHARED_USER_TYPE"; //customer or normal or fb etc
+    public static final String KEY_SHARED_USER_TYPE = "KEY_SHARED_USER_TYPE"; //customer or normal or fb etc
 
 	public static final String KEY_SHARED_NO_DATA = "";
+	public static final String KEY_SHARED_FROM_DEFAULT = "0";
+	public static final String KEY_SHARED_CAPTURED_WEIGHT_DEFAULT = "0.0";
 	public static final int KEY_SHARED_NO_DATA_INDEX=-1;
 
 	/*******************************************************************************/

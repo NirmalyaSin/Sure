@@ -23,6 +23,7 @@ import com.surefiz.R;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.users.UserListActivity;
+import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 
@@ -238,7 +239,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_settings:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                MethodUtils.errorMsg(this, "Under Development");
+//                MethodUtils.errorMsg(this, "Under Development");
+                Intent conIntent = new Intent(this, WifiConfigActivity.class);
+                startActivity(conIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
             case R.id.tv_signout:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

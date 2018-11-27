@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.surefiz.R;
 import com.surefiz.screens.dashboard.DashBoardActivity;
-import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -69,12 +68,18 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         scaleId = LoginShared.getRegistrationDataModel(this).getData()
                 .getUser().get(0).getUserMac();
 
-        calledFrom = LoginShared.getWeightPageFrom(this);
+        //     calledFrom = LoginShared.getWeightPageFrom(this);
 
         //Set onClickListener here
         mWeightDetailsOnclick = new WeightDetailsOnclick(this);
         //Initialize Loader
         loader = new LoadingData(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        calledFrom = LoginShared.getWeightPageFrom(this);
     }
 
     @Override
@@ -85,13 +90,13 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     }
 
     private void goNextAction() {
-        if(loader.isShowing()){
+        if (loader.isShowing()) {
             loader.dismiss();
         }
         btn_go_next.setVisibility(View.VISIBLE);
 
         //Close UDP Connection
-        ClosePrevConnections();
+        //   ClosePrevConnections();
     }
 
     public void ClosePrevConnections() {
@@ -111,8 +116,6 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
         try {
             udpHelper = new UDPHelper(61111);
-            //      udpHelper.setDebug(debug);
-            //     Log.d("@@ScaleUDP :", "Initializing.." +  udpHelper.init());
 
             userIdManager = new UserIdManager(udpHelper);
             userIdManager.setDebug(true);
@@ -143,18 +146,32 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         }
 
         Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
+        Log.d("@@calledFrom = ", "" + calledFrom);
         captureWeight = weight;
 
-        if (!isWeightReceived) {
-            //Set text value to kg
-            mWeightDetailsOnclick.onClick(btn_kg);
-            isWeightReceived = true;
-            if (scaleId.equals(dataId)) {
-                showUserSelectionDialog(dataId, weight);
-            } else {
-                showDifferentScaleIdDialog();
+        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
+
+            Log.d("@@scaleId = ", "" + scaleId);
+            Log.d("@@Weight = ", "" + LoginShared.getCapturedWeight(this));
+            Log.d("@@scaleUserId = ", "" + scaleUserId);
+            //Set userID
+            boolean setUser = userIdManager.setUserId(scaleId,
+                    Integer.parseInt(LoginShared.getCapturedWeight(this)), scaleUserId);
+            Log.d("@@SetUser = ", "" + setUser);
+            Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+        } else {
+            if (!isWeightReceived) {
+                //Set text value to kg
+                mWeightDetailsOnclick.onClick(btn_kg);
+                isWeightReceived = true;
+                if (scaleId.equals(dataId)) {
+                    showUserSelectionDialog(dataId, weight);
+                } else {
+                    showDifferentScaleIdDialog();
+                }
             }
         }
+
 
     }
 

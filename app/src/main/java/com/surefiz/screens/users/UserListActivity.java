@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.surefiz.R;
@@ -21,6 +22,8 @@ import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.users.adapter.UserListAdapter;
 import com.surefiz.screens.users.model.UserList;
 import com.surefiz.screens.users.model.UserListModel;
+import com.surefiz.screens.weightdetails.UserIdManager;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -31,6 +34,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.onecoder.scalewifi.net.socket.udp.UDPHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +48,8 @@ public class UserListActivity extends BaseActivity {
     LoadingData loadingData;
     List<UserList> userLists = new ArrayList<>();
     UserListAdapter adapter;
+    UserIdManager userIdManager;
+    private UDPHelper udpHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,21 @@ public class UserListActivity extends BaseActivity {
         setViewBind();
         callUserListApi();
         addUserDialog();
+        doneUserDialog();
         setRecyclerViewItem();
+    }
+
+    private void doneUserDialog() {
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginShared.setWeightPageFrom(UserListActivity.this,"2");
+                Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
+                startActivity(loginIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
     }
 
     private void addUserDialog() {
@@ -66,10 +86,18 @@ public class UserListActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String success) {
                         if (success.equals("1")) {
-                            Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
-                            startActivity(loginIntent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            finish();
+                            if (LoginShared.getDashboardPageFrom(UserListActivity.this).equals("1")) {
+                                LoginShared.setWeightPageFrom(UserListActivity.this,"2");
+                                Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
+                                startActivity(loginIntent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
+                            } else {
+                                Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
+                                startActivity(loginIntent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
+                            }
                         }
                     }
                 }).show();

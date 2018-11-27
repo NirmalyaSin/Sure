@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.surefiz.R;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
+import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -65,10 +66,10 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         scaleUserId = LoginShared.getScaleUserId(this);
         userName = LoginShared.getRegistrationDataModel(this).getData()
                 .getUser().get(0).getUserName();
-        scaleId=LoginShared.getRegistrationDataModel(this).getData()
+        scaleId = LoginShared.getRegistrationDataModel(this).getData()
                 .getUser().get(0).getUserMac();
 
-        calledFrom=LoginShared.getWeightPageFrom(this);
+        calledFrom = LoginShared.getWeightPageFrom(this);
 
         //Set onClickListener here
         mWeightDetailsOnclick = new WeightDetailsOnclick(this);
@@ -162,7 +163,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
     }
 
-    public void showDifferentScaleIdDialog(){
+    public void showDifferentScaleIdDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("Received weight from different scale.");
         alertDialog.setCancelable(false);
@@ -193,11 +194,11 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         finish();
     }
 
-    public void showUserSelectionDialog(String dataId, int weight){
+    public void showUserSelectionDialog(String dataId, int weight) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("Weight is given by you or someone else?");
         alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton("Is this " + userName+"?", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Is this " + userName + "?", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Set userID
@@ -211,8 +212,12 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             public void onClick(DialogInterface dialog, int which) {
                 LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "1");
                 LoginShared.setCapturedWeight(WeightDetailsActivity.this, String.valueOf(weight));
-                goToDashboard();
+                Intent intent = new Intent(WeightDetailsActivity.this, UserListActivity.class);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                startActivity(intent);
+                finish();
                 dialog.dismiss();
+
             }
         });
 

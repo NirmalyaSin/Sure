@@ -21,5 +21,6 @@ public class DashBoardActivity extends BaseActivity {
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
+        img_topbar_menu.setVisibility(View.VISIBLE);
     }
 }

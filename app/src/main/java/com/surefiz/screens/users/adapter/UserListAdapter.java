@@ -52,8 +52,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         userListViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
-                LoginShared.setScaleUserId(userLists.get(i).getScaleUserId());
+                if (LoginShared.getDashboardPageFrom(activity).equals("0")) {
+                    userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                } else {
+                    userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                    LoginShared.setScaleUserId(userLists.get(i).getScaleUserId());
+                }
             }
         });
 

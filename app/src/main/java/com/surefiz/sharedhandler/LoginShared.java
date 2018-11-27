@@ -85,7 +85,7 @@ public class LoginShared {
 
     //otp varification get set method
 
-    public static void setstatusforOtpvarification(Context context,boolean otpvatified) {
+    public static void setstatusforOtpvarification(Context context, boolean otpvatified) {
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
 
@@ -105,7 +105,7 @@ public class LoginShared {
 
 //wifi config-varification
 
-    public static void setstatusforwifivarification(Context context,boolean wifivarified) {
+    public static void setstatusforwifivarification(Context context, boolean wifivarified) {
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
 
@@ -122,12 +122,12 @@ public class LoginShared {
         return isotp_varified;
     }
 
-    public static void setScaleUserId(int wifivarified) {
+    public static void setScaleUserId(int id) {
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(SharedUtils.KEY_SHARED_SCALE_USER_ID, wifivarified);
+        editor.putInt(SharedUtils.KEY_SHARED_SCALE_USER_ID, id);
         editor.commit();
     }
 

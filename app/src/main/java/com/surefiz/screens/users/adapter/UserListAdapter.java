@@ -1,16 +1,19 @@
 package com.surefiz.screens.users.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.screens.users.model.UserList;
+import com.surefiz.sharedhandler.LoginShared;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -46,6 +49,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                     (userLists.get(i).getUserWeight()) * 2.20462)) + " lbs");
         }
 
+        userListViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                LoginShared.setScaleUserId(userLists.get(i).getScaleUserId());
+            }
+        });
+
     }
 
     @Override
@@ -57,12 +68,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
         TextView tv_name, tv_weight;
         ImageView iv_separature;
+        RelativeLayout rl_main;
 
         public UserListViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_weight = itemView.findViewById(R.id.tv_weight);
             iv_separature = itemView.findViewById(R.id.iv_separature);
+            rl_main = itemView.findViewById(R.id.rl_main);
         }
 
     }

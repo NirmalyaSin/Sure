@@ -95,7 +95,7 @@ public class LoginClickEvent implements View.OnClickListener {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         Call<ResponseBody> loginapicall = apiInterface.call_loginApi(mLoginActivity.editEmail.getText().toString().trim(),
-                mLoginActivity.editPassword.getText().toString(),"2",LoginShared.getDeviceToken(mLoginActivity));
+                mLoginActivity.editPassword.getText().toString(), "2", LoginShared.getDeviceToken(mLoginActivity));
         loginapicall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -126,12 +126,14 @@ public class LoginClickEvent implements View.OnClickListener {
                         }
 
                     } else if (jsonObject.optInt("status") == 4) {
-                        registrationModel = gson.fromJson(responseString, RegistrationModel.class);
+                        /*registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
                         Intent intent = new Intent(mLoginActivity, OtpActivity.class);
                         mLoginActivity.startActivity(intent);
                         mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        mLoginActivity.finish();
+                        mLoginActivity.finish();*/
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
 
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");

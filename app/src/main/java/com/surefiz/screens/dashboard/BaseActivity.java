@@ -69,6 +69,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     DrawerLayout mDrawerLayout;
     @BindView(R.id.btn_add)
     public Button btn_add;
+    @BindView(R.id.btn_done)
+    public Button btn_done;
     private ActionBarDrawerToggle mDrawerToggle;
     private ImageLoader imageLoader;
 

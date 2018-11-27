@@ -63,11 +63,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification());
+            showNotification(remoteMessage.getNotification());
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
+        // message, here is where that should be initiated. See showNotification method below.
     }
     // [END receive_message]
 
@@ -97,7 +97,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param serverNotification FCM serverNotification received.
      */
-    private void sendNotification(RemoteMessage.Notification serverNotification) {
+    private void showNotification(RemoteMessage.Notification serverNotification) {
         Intent intent = new Intent(this, SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,

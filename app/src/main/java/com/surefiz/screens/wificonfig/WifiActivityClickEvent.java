@@ -182,7 +182,9 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     @Override
     public void onApConfigResult(boolean success) {
-        loader.dismiss();
+        if (loader.isShowing()) {
+            loader.dismiss();
+        }
         if (success)
             Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         else
@@ -200,8 +202,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         else
             Toast.makeText(mWifiConfigActivity, "wifi configruation  not done", Toast.LENGTH_LONG).show();
-
-
     }
 
     private void showalertdialog() {

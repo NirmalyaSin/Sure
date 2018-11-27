@@ -2,6 +2,7 @@ package com.surefiz.screens.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -108,9 +109,8 @@ public class LoginClickEvent implements View.OnClickListener {
                     RegistrationModel registrationModel;
 
                     JSONObject jsonObject = new JSONObject(responseString);
-
+                    Log.d("@@LoginData : ", jsonObject.toString());
                     if (jsonObject.optInt("status") == 1) {
-
                         LoginShared.setstatusforOtpvarification(mLoginActivity, true);
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);

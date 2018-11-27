@@ -132,7 +132,7 @@ public class LoginShared {
     }
 
     public static int getScaleUserId(Context context) {
-        int id = 0;
+        int id = 1;
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
         id = prefs.getInt(SharedUtils.KEY_SHARED_SCALE_USER_ID, id);
@@ -167,4 +167,57 @@ public class LoginShared {
     }
 
 
+    /**
+     * CALLING PAGE PREFERENCES
+     */
+    public static void setDashboardPageFrom(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_DASHBOARD_FROM, value);
+        editor.commit();
+    }
+
+    public static String getDashboardPageFrom(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_DASHBOARD_FROM, SharedUtils.KEY_SHARED_FROM_DEFAULT);
+    }
+
+    public static void setWeightPageFrom(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_WEIGHT_PAGE_FROM, value);
+        editor.commit();
+    }
+
+    public static String getWeightPageFrom(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_WEIGHT_PAGE_FROM, SharedUtils.KEY_SHARED_FROM_DEFAULT);
+    }
+
+
+    /*
+    * Set captured weight
+    */
+
+    public static void setCapturedWeight(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_CAPTURED_WEIGHT, value);
+        editor.commit();
+    }
+
+    public static String getCapturedWeight(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_CAPTURED_WEIGHT,
+                SharedUtils.KEY_SHARED_CAPTURED_WEIGHT_DEFAULT);
+    }
 }

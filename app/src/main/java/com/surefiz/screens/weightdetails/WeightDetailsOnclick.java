@@ -18,6 +18,8 @@ public class WeightDetailsOnclick implements View.OnClickListener {
     private void setonclicklistner() {
         weightDetailsActivity.btn_kg.setOnClickListener(this);
         weightDetailsActivity.btn_lbs.setOnClickListener(this);
+        weightDetailsActivity.btn_go_next.setOnClickListener(this);
+        weightDetailsActivity.btnSkipWeight.setOnClickListener(this);
     }
 
     @Override
@@ -43,6 +45,14 @@ public class WeightDetailsOnclick implements View.OnClickListener {
                 double weightLBS = covertInLBS(weightDetailsActivity.captureWeight);
                 weightDetailsActivity.tv_kg_lb_value.setText(new DecimalFormat("##.##").format(weightLBS)+" LBS");
 
+                break;
+
+            case R.id.btn_go_next:
+                weightDetailsActivity.goToDashboard();
+                break;
+
+            case R.id.btnSkipWeight:
+                weightDetailsActivity.goToDashboard();
                 break;
         }
     }

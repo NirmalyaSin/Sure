@@ -111,6 +111,7 @@ public class LoginClickEvent implements View.OnClickListener {
 
                     if (jsonObject.optInt("status") == 1) {
 
+                        LoginShared.setstatusforOtpvarification(mLoginActivity, true);
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
                         if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {

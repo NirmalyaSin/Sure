@@ -54,6 +54,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     private String userName, scaleId;
     private int scaleUserId;
     private String calledFrom;
+    private boolean isWeightReceived;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,6 +105,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         captureWeight = 0;
         data_id = "";
 
+        isWeightReceived = false;
+
         try {
             udpHelper = new UDPHelper(61111);
             //      udpHelper.setDebug(debug);
@@ -139,13 +142,16 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
         Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
         captureWeight = weight;
-        //Set text value to kg
-        mWeightDetailsOnclick.onClick(btn_kg);
 
-        if (scaleId.equals(dataId)) {
-            showUserSelectionDialog(dataId, weight);
-        } else {
-            showDifferentScaleIdDialog();
+        if(!isWeightReceived) {
+            //Set text value to kg
+            mWeightDetailsOnclick.onClick(btn_kg);
+
+            if (scaleId.equals(dataId)) {
+                showUserSelectionDialog(dataId, weight);
+            } else {
+                showDifferentScaleIdDialog();
+            }
         }
 
     }

@@ -20,5 +20,6 @@ public class DashBoardActivity extends BaseActivity {
     private void setHeaderView() {
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        btn_done.setVisibility(View.GONE);
     }
 }

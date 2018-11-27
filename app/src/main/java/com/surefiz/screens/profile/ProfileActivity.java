@@ -73,6 +73,7 @@ public class ProfileActivity extends BaseActivity {
         tv_universal_header.setText("Profile");
         iv_edit.setVisibility(View.VISIBLE);
         btn_add.setVisibility(View.GONE);
+        btn_done.setVisibility(View.GONE);
     }
 
     private void showViewMode() {

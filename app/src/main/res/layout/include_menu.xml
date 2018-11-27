@@ -42,7 +42,7 @@
 
             <TextView
                 android:id="@+id/tv_dashboard"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -52,7 +52,7 @@
 
             <TextView
                 android:id="@+id/tv_weight"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -62,7 +62,7 @@
 
             <TextView
                 android:id="@+id/tv_users"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -72,7 +72,7 @@
 
             <TextView
                 android:id="@+id/tv_profile"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -82,7 +82,7 @@
 
             <TextView
                 android:id="@+id/tv_circle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -92,7 +92,7 @@
 
             <TextView
                 android:id="@+id/tv_message"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -102,7 +102,7 @@
 
             <TextView
                 android:id="@+id/tv_reminder"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -112,7 +112,7 @@
 
             <TextView
                 android:id="@+id/tv_notification"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -122,7 +122,7 @@
 
             <TextView
                 android:id="@+id/tv_settings"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -132,7 +132,7 @@
 
             <TextView
                 android:id="@+id/tv_about"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -142,7 +142,7 @@
 
             <TextView
                 android:id="@+id/tv_signout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"

@@ -192,15 +192,14 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     @Override
     public void onSmartLinkConfigResult(boolean sucess) {
-        loader.dismiss();
+        if (loader.isShowing()) {
+            loader.dismiss();
+        }
         if (sucess)
-//            showalertdialog();
-            if (!loader.isShowing()) {
-                loader.show_with_label("Loading");
-            }
+            showalertdialog();
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(mWifiConfigActivity, "wifi configruation  not done", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(mWifiConfigActivity, "wifi configruation  not done", Toast.LENGTH_LONG).show();
 
 
     }

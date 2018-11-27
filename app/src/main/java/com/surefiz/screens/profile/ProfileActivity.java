@@ -74,6 +74,7 @@ public class ProfileActivity extends BaseActivity {
         iv_edit.setVisibility(View.VISIBLE);
         btn_add.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
+        img_topbar_menu.setVisibility(View.VISIBLE);
     }
 
     private void showViewMode() {

@@ -139,5 +139,12 @@ public class UserListActivity extends BaseActivity {
         tv_universal_header.setText("List of Users");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.VISIBLE);
+        if (LoginShared.getDashboardPageFrom(this).equals("0")) {
+            img_topbar_menu.setVisibility(View.VISIBLE);
+            btn_done.setVisibility(View.GONE);
+        } else {
+            img_topbar_menu.setVisibility(View.GONE);
+            btn_done.setVisibility(View.VISIBLE);
+        }
     }
 }

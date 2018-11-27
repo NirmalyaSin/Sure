@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
+import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -213,7 +214,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_weight:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                MethodUtils.errorMsg(this, "Under Development");
+                LoginShared.setWeightPageFrom(this,"1");
+                Intent insIntent = new Intent(this, InstructionActivity.class);
+                startActivity(insIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
             case R.id.tv_circle:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

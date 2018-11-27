@@ -14,13 +14,16 @@
 
         <Button
             android:id="@+id/btnSkipWeight"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/login_submit_rounded_corner"
             android:text="Skip"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp" />
@@ -29,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Weight Details"
-            android:paddingBottom="@dimen/_10sdp"
             android:textColor="@color/whiteColor"
             android:layout_centerInParent="true"
             android:textSize="@dimen/_14sdp" />
@@ -120,6 +122,7 @@
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_250sdp"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/circle_shape_white">
 
@@ -145,7 +148,6 @@
                     android:textSize="@dimen/_15sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:background="@drawable/login_submit_rounded_corner" />
 

@@ -186,10 +186,10 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                                         .getUser().get(0).getUserMac(),
                                 weight, LoginShared.getScaleUserId(this));
                         Log.d("@@SetUser = ", "" + setUser);
-                    }else {
+                    } else {
                         showUserSelectionDialog(dataId, weight);
                     }
-                }  else {
+                } else {
                     try {
                         showDifferentScaleIdDialog();
                     } catch (Exception e) {

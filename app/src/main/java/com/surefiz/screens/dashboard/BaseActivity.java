@@ -21,6 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.screens.instruction.InstructionActivity;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
@@ -244,7 +245,13 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_signout:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                MethodUtils.errorMsg(this, "Under Development");
+                String deviceToken = LoginShared.getDeviceToken(this);
+                LoginShared.destroySessionTypePreference();
+                LoginShared.setDeviceToken(this, deviceToken);
+                Intent logIntent = new Intent(this, LoginActivity.class);
+                startActivity(logIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
         }
     }

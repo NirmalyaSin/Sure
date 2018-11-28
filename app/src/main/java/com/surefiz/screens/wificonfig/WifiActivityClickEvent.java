@@ -115,9 +115,10 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     private void wificonfigblankvalidation() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (mWifiConfigActivity.checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED &&
-                    mWifiConfigActivity.checkSelfPermission(Manifest.permission.CHANGE_WIFI_MULTICAST_STATE) == PackageManager.PERMISSION_GRANTED &&
-                    mWifiConfigActivity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (mWifiConfigActivity.checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE)
+                    == PackageManager.PERMISSION_GRANTED &&
+                    mWifiConfigActivity.checkSelfPermission(Manifest.permission.CHANGE_WIFI_MULTICAST_STATE)
+                            == PackageManager.PERMISSION_GRANTED) {
 
                 String ssid = mWifiConfigActivity.editSSID.getText().toString();
                 String pwd = mWifiConfigActivity.editPassword.getText().toString();
@@ -137,7 +138,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             } else {
 
                 mWifiConfigActivity.requestPermissions(new String[]{Manifest.permission.ACCESS_WIFI_STATE,
-                        Manifest.permission.CHANGE_WIFI_MULTICAST_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                        Manifest.permission.CHANGE_WIFI_MULTICAST_STATE}, 0);
             }
         } else {
             String ssid = mWifiConfigActivity.editSSID.getText().toString();
@@ -246,6 +247,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         for (int i = 0; i < scanResultsWifi.size(); i++) {
             popupMenuItem.add(scanResultsWifi.get(i).SSID);
         }
+
         mWifiConfigActivity.unregisterReceiver(wifiReceiver);
         popup.show();
 

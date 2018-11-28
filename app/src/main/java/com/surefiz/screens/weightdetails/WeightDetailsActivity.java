@@ -81,7 +81,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         super.onStart();
         calledFrom = LoginShared.getWeightPageFrom(this);
         if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
-            captureWeight=Integer.parseInt(LoginShared.getCapturedWeight(WeightDetailsActivity.this));
+            captureWeight = Integer.parseInt(LoginShared.getCapturedWeight(WeightDetailsActivity.this));
             //Set text value to kg
             mWeightDetailsOnclick.onClick(btn_kg);
             btn_kg.setBackgroundResource(R.drawable.weight_blue_button);
@@ -170,8 +170,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             Log.d("@@SetUser = ", "" + setUser);
 
             Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
-            LoginShared.setWeightPageFrom(WeightDetailsActivity.this,"0");
-            LoginShared.setDashboardPageFrom(WeightDetailsActivity.this,"0");
+            LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+            LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
 
         } else {
             if (!isWeightReceived) {
@@ -240,8 +240,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                 //Set userID
                 boolean setUser = userIdManager.setUserId(dataId, weight, scaleUserId);
                 Log.d("@@SetUser = ", "" + setUser);
-                LoginShared.setWeightPageFrom(WeightDetailsActivity.this,"0");
-                LoginShared.setDashboardPageFrom(WeightDetailsActivity.this,"0");
+                LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+                LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
                 dialog.dismiss();
             }
         });
@@ -255,7 +255,6 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                 startActivity(intent);
                 finish();
                 dialog.dismiss();
-
             }
         });
 

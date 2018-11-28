@@ -80,6 +80,15 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     protected void onStart() {
         super.onStart();
         calledFrom = LoginShared.getWeightPageFrom(this);
+        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
+            captureWeight=Integer.parseInt(LoginShared.getCapturedWeight(WeightDetailsActivity.this));
+            //Set text value to kg
+            mWeightDetailsOnclick.onClick(btn_kg);
+            btn_kg.setBackgroundResource(R.drawable.weight_blue_button);
+            btn_lbs.setBackgroundResource(R.drawable.weight_white_button);
+            btn_kg.setTextColor(getResources().getColor(R.color.whiteColor));
+            btn_lbs.setTextColor(getResources().getColor(R.color.whiteColor));
+        }
     }
 
     @Override
@@ -155,10 +164,15 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             Log.d("@@Weight = ", "" + LoginShared.getCapturedWeight(this));
             Log.d("@@scaleUserId = ", "" + scaleUserId);
             //Set userID
-            boolean setUser = userIdManager.setUserId(scaleId,
-                    Integer.parseInt(LoginShared.getCapturedWeight(this)), scaleUserId);
+            boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
+                            .getUser().get(0).getUserMac(),
+                    Integer.parseInt(LoginShared.getCapturedWeight(this)), LoginShared.getScaleUserId(this));
             Log.d("@@SetUser = ", "" + setUser);
+
             Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+            LoginShared.setWeightPageFrom(WeightDetailsActivity.this,"0");
+            LoginShared.setDashboardPageFrom(WeightDetailsActivity.this,"0");
+
         } else {
             if (!isWeightReceived) {
                 //Set text value to kg
@@ -172,13 +186,16 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             }
         }
 
-
     }
 
     @Override
     public void onReceiveSetUserIDAckPkg(String dataId, int weight, int status) {
         Log.d("@@CaptureUser-id: ", "dataId: " + dataId
                 + " weight: " + weight + " status: " + status);
+
+        if (status == 1) {
+            ClosePrevConnections();
+        }
 
     }
 
@@ -223,6 +240,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                 //Set userID
                 boolean setUser = userIdManager.setUserId(dataId, weight, scaleUserId);
                 Log.d("@@SetUser = ", "" + setUser);
+                LoginShared.setWeightPageFrom(WeightDetailsActivity.this,"0");
+                LoginShared.setDashboardPageFrom(WeightDetailsActivity.this,"0");
                 dialog.dismiss();
             }
         });

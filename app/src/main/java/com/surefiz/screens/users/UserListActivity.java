@@ -69,7 +69,6 @@ public class UserListActivity extends BaseActivity {
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginShared.setWeightPageFrom(UserListActivity.this,"2");
                 Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
                 startActivity(loginIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -87,7 +86,7 @@ public class UserListActivity extends BaseActivity {
                     public void onSuccess(String success) {
                         if (success.equals("1")) {
                             if (LoginShared.getDashboardPageFrom(UserListActivity.this).equals("1")) {
-                                LoginShared.setWeightPageFrom(UserListActivity.this,"2");
+                                LoginShared.setWeightPageFrom(UserListActivity.this, "2");
                                 Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
                                 startActivity(loginIntent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

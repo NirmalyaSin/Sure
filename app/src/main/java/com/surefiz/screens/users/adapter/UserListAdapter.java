@@ -1,6 +1,7 @@
 package com.surefiz.screens.users.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.surefiz.R;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.users.model.UserList;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 
 import java.text.DecimalFormat;
@@ -58,7 +60,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 } else {
                     userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
                     LoginShared.setScaleUserId(userLists.get(i).getScaleUserId());
-                    LoginShared.setWeightPageFrom(activity,"2");
+                    LoginShared.setWeightPageFrom(activity, "2");
+                    Intent loginIntent = new Intent(activity, WeightDetailsActivity.class);
+                    activity.startActivity(loginIntent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    activity.finish();
                 }
             }
         });

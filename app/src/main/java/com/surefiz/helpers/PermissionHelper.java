@@ -40,9 +40,13 @@ public class PermissionHelper implements ActivityCompat.OnRequestPermissionsResu
             Log.d("PERMISSION", "-" + permission);
 
             final AlertDialog.Builder alertDialog = new AlertDialog.Builder(contextActivity);
-
-            // Setting Dialog Message
-            alertDialog.setMessage("Permission is required");
+            if(permission == PERMISSION_FINE_LOCATION) {
+                // Setting Dialog Message
+                alertDialog.setMessage("Location Permission is required to list all available SSIDs.");
+            }else {
+                // Setting Dialog Message
+                alertDialog.setMessage("Permission is required.");
+            }
 
             // Setting Positive "Yes" Button
             alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

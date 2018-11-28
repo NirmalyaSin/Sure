@@ -100,7 +100,12 @@ public class AddUserDialog extends Dialog {
                         JSONObject jObject = jsonObject.getJSONObject("data");
                         int scaleUserId = jObject.optInt("scaleUserId");
                         LoginShared.setScaleUserId(scaleUserId);
-                        LoginShared.setWeightPageFrom(activity, "2");
+                        if (LoginShared.getDashboardPageFrom(activity).equals("0")){
+                            LoginShared.setWeightPageFrom(activity, "3");
+                        }else{
+                            LoginShared.setWeightPageFrom(activity, "2");
+                        }
+
                         moveTutorial.onSuccess("1");
                         dismiss();
                     }

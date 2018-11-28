@@ -178,10 +178,23 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                 //Set text value to kg
                 mWeightDetailsOnclick.onClick(btn_kg);
                 isWeightReceived = true;
+
                 if (scaleId.equals(dataId)) {
-                    showUserSelectionDialog(dataId, weight);
-                } else {
-                    showDifferentScaleIdDialog();
+
+                    if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")) {
+                        boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
+                                        .getUser().get(0).getUserMac(),
+                                weight, LoginShared.getScaleUserId(this));
+                        Log.d("@@SetUser = ", "" + setUser);
+                    }else {
+                        showUserSelectionDialog(dataId, weight);
+                    }
+                }  else {
+                    try {
+                        showDifferentScaleIdDialog();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

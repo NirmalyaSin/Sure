@@ -93,6 +93,7 @@ public class UserListActivity extends BaseActivity {
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 finish();
                             } else {
+                                LoginShared.setWeightPageFrom(UserListActivity.this, "3");
                                 Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
                                 startActivity(loginIntent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

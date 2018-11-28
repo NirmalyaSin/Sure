@@ -2,6 +2,7 @@ package com.surefiz.screens.users;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
@@ -169,9 +170,12 @@ public class UserListActivity extends BaseActivity {
         if (LoginShared.getDashboardPageFrom(this).equals("0")) {
             img_topbar_menu.setVisibility(View.VISIBLE);
             btn_done.setVisibility(View.GONE);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         } else {
             img_topbar_menu.setVisibility(View.GONE);
             btn_done.setVisibility(View.VISIBLE);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
         }
     }
 }

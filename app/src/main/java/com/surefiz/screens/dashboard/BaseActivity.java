@@ -68,7 +68,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.iv_edit)
     public ImageView iv_edit;
     @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+    public DrawerLayout mDrawerLayout;
     @BindView(R.id.btn_add)
     public Button btn_add;
     @BindView(R.id.btn_done)
@@ -215,7 +215,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_weight:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                LoginShared.setWeightPageFrom(this,"1");
+                LoginShared.setWeightPageFrom(this, "1");
+                LoginShared.setScaleUserId(1);
                 Intent insIntent = new Intent(this, InstructionActivity.class);
                 startActivity(insIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -239,11 +240,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_settings:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-//                MethodUtils.errorMsg(this, "Under Development");
-                Intent conIntent = new Intent(this, WifiConfigActivity.class);
-                startActivity(conIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                MethodUtils.errorMsg(this, "Under Development");
                 break;
             case R.id.tv_signout:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

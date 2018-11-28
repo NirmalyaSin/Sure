@@ -49,7 +49,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             userListViewHolder.tv_weight.setText("Weight:  " + "0" + " lbs");
         } else {
             userListViewHolder.tv_weight.setText("Weight:  " + df2.format((Double.parseDouble
-                    (userLists.get(i).getUserWeight()) * 2.20462)) + " lbs");
+                    (userLists.get(i).getUserWeight())/100)*2.20462) + " lbs");
         }
 
         userListViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {

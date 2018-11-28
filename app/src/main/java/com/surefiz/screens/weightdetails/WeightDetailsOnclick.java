@@ -13,10 +13,10 @@ public class WeightDetailsOnclick implements View.OnClickListener {
     public WeightDetailsOnclick(WeightDetailsActivity weightDetailsActivity) {
         this.weightDetailsActivity=weightDetailsActivity;
         setonclicklistner();
-        weightDetailsActivity.btn_kg.setBackgroundResource(R.drawable.weight_blue_button);
-        weightDetailsActivity.btn_lbs.setBackgroundResource(R.drawable.weight_white_button);
-        weightDetailsActivity.btn_kg.setTextColor(weightDetailsActivity.getResources().getColor(R.color.whiteColor));
+        weightDetailsActivity.btn_kg.setBackgroundResource(R.drawable.weight_white_button);
+        weightDetailsActivity.btn_lbs.setBackgroundResource(R.drawable.weight_blue_button);
         weightDetailsActivity.btn_lbs.setTextColor(weightDetailsActivity.getResources().getColor(R.color.whiteColor));
+        weightDetailsActivity.btn_kg.setTextColor(weightDetailsActivity.getResources().getColor(R.color.whiteColor));
     }
 
     private void setonclicklistner() {

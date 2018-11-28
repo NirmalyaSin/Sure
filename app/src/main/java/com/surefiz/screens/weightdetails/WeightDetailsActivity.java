@@ -74,28 +74,29 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         mWeightDetailsOnclick = new WeightDetailsOnclick(this);
         //Initialize Loader
         loader = new LoadingData(this);
+
+        //Initialize scale
+        capturescaledatasetup();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         calledFrom = LoginShared.getWeightPageFrom(this);
-        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
-            captureWeight = Integer.parseInt(LoginShared.getCapturedWeight(WeightDetailsActivity.this));
-            //Set text value to kg
-            mWeightDetailsOnclick.onClick(btn_kg);
-            btn_kg.setBackgroundResource(R.drawable.weight_blue_button);
-            btn_lbs.setBackgroundResource(R.drawable.weight_white_button);
-            btn_kg.setTextColor(getResources().getColor(R.color.whiteColor));
-            btn_lbs.setTextColor(getResources().getColor(R.color.whiteColor));
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //Initialize scale
-        capturescaledatasetup();
+        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
+            captureWeight = Integer.parseInt(LoginShared.getCapturedWeight(WeightDetailsActivity.this));
+            //Set text value to lbs
+            mWeightDetailsOnclick.onClick(btn_lbs);
+            btn_kg.setBackgroundResource(R.drawable.weight_blue_button);
+            btn_lbs.setBackgroundResource(R.drawable.weight_white_button);
+            btn_kg.setTextColor(getResources().getColor(R.color.whiteColor));
+            btn_lbs.setTextColor(getResources().getColor(R.color.whiteColor));
+        }
     }
 
     private void goNextAction() {
@@ -176,11 +177,10 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         } else {
             if (!isWeightReceived) {
                 //Set text value to kg
-                mWeightDetailsOnclick.onClick(btn_kg);
+                mWeightDetailsOnclick.onClick(btn_lbs);
                 isWeightReceived = true;
 
                 if (scaleId.equals(dataId)) {
-
                     if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")) {
                         boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
                                         .getUser().get(0).getUserMac(),

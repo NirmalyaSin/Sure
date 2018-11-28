@@ -130,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="0.0 lbs"
+                            android:text="0.0"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_25sdp" />
 

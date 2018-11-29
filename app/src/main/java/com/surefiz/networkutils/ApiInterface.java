@@ -18,6 +18,7 @@ import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.LOGIN;
+import static com.surefiz.apilist.ApiList.LOGOUT;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.SENDOTP;
 import static com.surefiz.apilist.ApiList.USERLIST;
@@ -124,4 +125,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(FORGOTPASSWORD)
     Call<ResponseBody> call_forgotApi(@Field("user_email") String user_email);
+
+    @FormUrlEncoded
+    @POST(LOGOUT)
+    Call<ResponseBody> call_logoutApi(@Header("x-authorization") String token,
+                                      @Field("userId") String userId,
+                                      @Field("userToken") String userToken);
 }

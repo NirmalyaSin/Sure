@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.TextUtils;
@@ -49,7 +50,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     private ScaleWiFiConfig scaleWiFiConfig;
     WifiReceiver wifiReceiver = new WifiReceiver();
     LoadingData loader;
-    boolean isWifiReceived=false;
+    boolean isWifiReceived = false;
 
 
     public WifiActivityClickEvent(WifiConfigActivity activity) {
@@ -58,6 +59,26 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         permissionHelper = new PermissionHelper(mWifiConfigActivity);
         scaleWiFiConfig = new ScaleWiFiConfig();
         loader = new LoadingData(activity);
+        showConnectedWifiSSID();
+    }
+
+    private void showConnectedWifiSSID() {
+        mWifiManager = (WifiManager) mWifiConfigActivity.getApplicationContext()
+                .getSystemService(Context.WIFI_SERVICE);
+        if (mWifiManager != null) {
+            mWifiManager.getWifiState();
+            WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+            if (wifiInfo != null) {
+                String ssid = wifiInfo.getSSID();
+                if (!TextUtils.isEmpty(ssid) && ssid.length() > 2
+                        && ssid.startsWith("\"") && ssid.endsWith("\"")) {
+                    ssid = ssid.substring(1, ssid.length() - 1);
+                }
+                String bssid = wifiInfo.getBSSID();
+                mWifiConfigActivity.editSSID.setText(ssid);
+                mWifiConfigActivity.editBSSID.setText(bssid);
+            }
+        }
     }
 
 
@@ -127,7 +148,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
                     Toast.makeText(mWifiConfigActivity, "Plz input ssid and pwd.", Toast.LENGTH_SHORT).show();
                 } else {
-                  //  mWifiConfigActivity.unregisterReceiver(wifiReceiver);
+                    //  mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     if (!loader.isShowing()) {
                         loader.show_with_label("Loading");
                     }
@@ -167,8 +188,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     }
 
     public void getAvailableSSID() {
-        mWifiManager = (WifiManager) mWifiConfigActivity.getApplicationContext()
-                .getSystemService(Context.WIFI_SERVICE);
 
         mWifiConfigActivity.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 

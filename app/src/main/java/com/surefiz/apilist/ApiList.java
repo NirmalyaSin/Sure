@@ -14,4 +14,5 @@ public class ApiList {
     public static final String USERLIST= "ApiServices/UserList";
     public static final String ADDUSER= "ApiServices/AddUser";
     public static final String FORGOTPASSWORD= "ApiServices/ForgotPassword";
+    public static final String LOGOUT= "ApiServices/Logout";
 }

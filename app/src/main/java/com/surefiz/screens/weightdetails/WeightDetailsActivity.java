@@ -54,6 +54,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     private int scaleUserId;
     private String calledFrom;
     private boolean isWeightReceived;
+    Handler handler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         setContentView(R.layout.activity_weight_details);
         //Bind ButterKnife to the view
         ButterKnife.bind(this);
+        handler = new Handler();
 
         scaleUserId = LoginShared.getScaleUserId(this);
         userName = LoginShared.getRegistrationDataModel(this).getData()
@@ -75,8 +77,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         //Initialize Loader
         loader = new LoadingData(this);
 
-        //Initialize scale
-        capturescaledatasetup();
+
     }
 
     @Override
@@ -97,6 +98,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             btn_kg.setTextColor(getResources().getColor(R.color.whiteColor));
             btn_lbs.setTextColor(getResources().getColor(R.color.whiteColor));
         }
+
+        //Initialize scale
+        capturescaledatasetup();
     }
 
     private void goNextAction() {
@@ -140,7 +144,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         loader.show();
         btn_go_next.setVisibility(View.GONE);
 
-        new Handler().postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 goNextAction();
@@ -163,7 +167,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
             Log.d("@@scaleId = ", "" + scaleId);
             Log.d("@@Weight = ", "" + LoginShared.getCapturedWeight(this));
-            Log.d("@@scaleUserId = ", "" + scaleUserId);
+            Log.d("@@scaleUserId = ", "" + LoginShared.getScaleUserId(this));
             //Set userID
             boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
                             .getUser().get(0).getUserMac(),
@@ -171,8 +175,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             Log.d("@@SetUser = ", "" + setUser);
 
             Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
-            LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
-            LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+            //LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+            //LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+            btn_go_next.setVisibility(View.VISIBLE);
 
         } else {
             if (!isWeightReceived) {
@@ -186,6 +191,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                                         .getUser().get(0).getUserMac(),
                                 weight, LoginShared.getScaleUserId(this));
                         Log.d("@@SetUser = ", "" + setUser);
+                        Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+                        btn_go_next.setVisibility(View.VISIBLE);
                     } else {
                         showUserSelectionDialog(dataId, weight);
                     }
@@ -208,6 +215,11 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
         if (status == 1) {
             ClosePrevConnections();
+            handler.removeCallbacksAndMessages(null);
+            if (loader.isShowing()) {
+                loader.dismiss();
+            }
+            btn_go_next.setVisibility(View.VISIBLE);
         }
 
     }
@@ -253,8 +265,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                 //Set userID
                 boolean setUser = userIdManager.setUserId(dataId, weight, scaleUserId);
                 Log.d("@@SetUser = ", "" + setUser);
-                LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
-                LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+                //LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+                //LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+                btn_go_next.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
         });

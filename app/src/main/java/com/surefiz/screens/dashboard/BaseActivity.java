@@ -20,17 +20,30 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
+import com.surefiz.apilist.ApiList;
+import com.surefiz.networkutils.ApiInterface;
+import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
+import com.surefiz.utils.progressloader.LoadingData;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -76,6 +89,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public Button btn_done;
     private ActionBarDrawerToggle mDrawerToggle;
     private ImageLoader imageLoader;
+    LoadingData loader;
 
 
     @Override
@@ -83,6 +97,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
+        loader = new LoadingData(this);
         clickEvent();
         initializeImageLoader();
         showData();
@@ -245,14 +260,73 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_signout:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                String deviceToken = LoginShared.getDeviceToken(this);
+                String deviceToken = LoginShared.getDeviceToken(BaseActivity.this);
                 LoginShared.destroySessionTypePreference();
-                LoginShared.setDeviceToken(this, deviceToken);
-                Intent logIntent = new Intent(this, LoginActivity.class);
+                LoginShared.setDeviceToken(BaseActivity.this, deviceToken);
+                Intent logIntent = new Intent(BaseActivity.this, LoginActivity.class);
                 startActivity(logIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+                //callLogoutApi();
                 break;
         }
+    }
+
+    private void callLogoutApi() {
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<ResponseBody> callLogout = apiInterface.call_logoutApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),
+                LoginShared.getRegistrationDataModel(this).getData().getToken());
+
+        callLogout.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    String responseString = response.body().string();
+
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    if (jsonObject.optInt("status") == 1) {
+
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(BaseActivity.this, jsObject.getString("message"));
+
+                        new android.os.Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                String deviceToken = LoginShared.getDeviceToken(BaseActivity.this);
+                                LoginShared.destroySessionTypePreference();
+                                LoginShared.setDeviceToken(BaseActivity.this, deviceToken);
+                                Intent logIntent = new Intent(BaseActivity.this, LoginActivity.class);
+                                startActivity(logIntent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
+                            }
+                        }, GeneralToApp.SPLASH_WAIT_TIME);
+
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(BaseActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    } else {
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(BaseActivity.this, jsObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(BaseActivity.this, getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(BaseActivity.this, getString(R.string.error_occurred));
+            }
+        });
     }
 }

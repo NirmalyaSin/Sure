@@ -17,6 +17,7 @@ import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -82,7 +83,8 @@ public class AddUserDialog extends Dialog {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
+        final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(
+                LoginShared.getRegistrationDataModel(activity).getData().getToken(),
                 LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
                 et_name.getText().toString().trim(), et_email.getText().toString().trim(), "10",
                 "175", "150", "12345678", "0", "9874859685",
@@ -100,14 +102,22 @@ public class AddUserDialog extends Dialog {
                         JSONObject jObject = jsonObject.getJSONObject("data");
                         int scaleUserId = jObject.optInt("scaleUserId");
                         LoginShared.setScaleUserId(scaleUserId);
-                        if (LoginShared.getDashboardPageFrom(activity).equals("0")){
+                        if (LoginShared.getDashboardPageFrom(activity).equals("0")) {
                             LoginShared.setWeightPageFrom(activity, "3");
-                        }else{
+                        } else {
                             LoginShared.setWeightPageFrom(activity, "2");
                         }
 
                         moveTutorial.onSuccess("1");
                         dismiss();
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        Intent loginIntent = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(loginIntent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        activity.finish();
+                    } else {
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(activity, jsObject.getString("message"));
                     }
                 } catch (Exception e) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));

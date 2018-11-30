@@ -290,7 +290,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.date_picker);
         Button date_time_set = (Button) dialog.findViewById(R.id.date_time_set);
         datePicker.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH), null);
-
+        datePicker.setMaxDate(System.currentTimeMillis());
         LinearLayout ll = (LinearLayout) datePicker.getChildAt(0);
         LinearLayout ll2 = (LinearLayout) ll.getChildAt(0);
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;

@@ -64,6 +64,12 @@
         <activity
             android:name=".screens.weightdetails.WeightDetailsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".screens.accountability.AcountabilityActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".screens.accountability.SearchAcountabilityActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".screens.users.UserListActivity" />
 
         <service android:name=".fcm.MyFirebaseInstanceIDService">

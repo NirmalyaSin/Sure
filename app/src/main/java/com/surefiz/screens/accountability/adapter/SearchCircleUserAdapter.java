@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.surefiz.R;
 import com.surefiz.screens.accountability.RequestState;
 import com.surefiz.screens.accountability.models.User;
@@ -46,6 +47,16 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
     public void onBindViewHolder(@NonNull SearchCircleUserViewHolder holder, int position) {
         holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
         Log.d("@@ListUser : ", arrayListCircleUser.get(position).toString());
+
+        String image = arrayListCircleUser.get(position).getUser_image();
+        if(!image.equals("") && !image.equals("null")){
+            Picasso.with(mContext)
+                    .load(image)
+                    .fit()
+                    .placeholder(R.drawable.user_black)
+                    .error(R.drawable.user_black)
+                    .into(holder.imageUserProfile);
+        }
 
         switch (arrayListCircleUser.get(position).getConnectionStatus()){
             case RequestState.STATUS_IDLE:

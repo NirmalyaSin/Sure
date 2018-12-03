@@ -46,7 +46,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
     //    Log.e("@@holder: ", arrayListCircleUser.get(position).toString());
         holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
         String image = arrayListCircleUser.get(position).getUser_image();
-        if(!image.equals("")){
+        if(!image.equals("") && !image.equals("null")){
             Picasso.with(mContext)
                     .load(image)
                     .fit()

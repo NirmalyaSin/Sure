@@ -3,6 +3,7 @@ package com.surefiz.screens.accountability.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,9 +43,17 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
 
     @Override
     public void onBindViewHolder(@NonNull CircleUserViewHolder holder, int position) {
+    //    Log.e("@@holder: ", arrayListCircleUser.get(position).toString());
         holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
-
-     //   Picasso.with(mContext).load(arrayListCircleUser.get(position).g)
+        String image = arrayListCircleUser.get(position).getUser_image();
+        if(!image.equals("")){
+            Picasso.with(mContext)
+                    .load(image)
+                    .fit()
+                    .placeholder(R.drawable.user_black)
+                    .error(R.drawable.user_black)
+                    .into(holder.imageUserProfile);
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.surefiz.screens.accountability.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,9 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
     @Override
     public void onBindViewHolder(@NonNull SearchCircleUserViewHolder holder, int position) {
         holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
+        Log.d("@@ListUser : ", arrayListCircleUser.get(position).toString());
 
-        switch (arrayListCircleUser.get(position).getUser_permission()){
+        switch (arrayListCircleUser.get(position).getConnectionStatus()){
             case RequestState.STATUS_IDLE:
                 holder.btnAddToCircle.setVisibility(View.VISIBLE);
                 holder.btnCancelRequest.setVisibility(View.GONE);
@@ -89,6 +91,13 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
             btnAddToCircle = itemView.findViewById(R.id.btnAddToCircle);
             btnCancelRequest = itemView.findViewById(R.id.btnCancelRequest);
             btnAccepted = itemView.findViewById(R.id.btnAccepted);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnSearchCircleUserClickListener.onViewClick(getAdapterPosition());
+                }
+            });
 
             btnAddToCircle.setOnClickListener(new View.OnClickListener() {
                 @Override

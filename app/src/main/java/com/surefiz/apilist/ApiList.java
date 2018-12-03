@@ -16,5 +16,6 @@ public class ApiList {
     public static final String FORGOTPASSWORD= "ApiServices/ForgotPassword";
     public static final String LOGOUT= "ApiServices/Logout";
 
-    public static final String API_CIRCLE_USER_LIST= "ApiServices/UserList";
+    public static final String API_CIRCLE_USER_LIST= "ApiServices/GetUserList";
+    public static final String API_CIRCLE_SEARCH_USER_LIST= "ApiServices/SearchUser";
 }

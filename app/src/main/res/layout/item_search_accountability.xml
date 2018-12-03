@@ -68,7 +68,8 @@
                 android:textAllCaps="false"
                 android:textColor="@color/whiteColor"
                 android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp" />
+                android:paddingRight="@dimen/_5sdp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnCancelRequest"
@@ -81,7 +82,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textColor="@color/whiteColor"
                 android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp" />
+                android:paddingRight="@dimen/_5sdp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnAddToCircle"

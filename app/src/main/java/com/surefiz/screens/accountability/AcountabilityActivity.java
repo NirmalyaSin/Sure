@@ -1,10 +1,12 @@
 package com.surefiz.screens.accountability;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.surefiz.R;
@@ -45,6 +47,14 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         setRecyclerViewItem();
         loadingData = new LoadingData(this);
 
+        iv_AddPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AcountabilityActivity.this,
+                        SearchAcountabilityActivity.class));
+            }
+        });
+
         callCircleUserListApi();
     }
 
@@ -67,6 +77,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
                 try {
                     if (response.body().getStatus() == 1) {
                         arrayListUsers.addAll(response.body().getData().getUserList());
+                        Log.d("@@UserItem : " , arrayListUsers.get(0).toString());
                     }else {
                         MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
                     }
@@ -103,18 +114,12 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("List of Users");
+        tv_universal_header.setText("Accountability Circle");
         iv_edit.setVisibility(View.GONE);
-        btn_add.setVisibility(View.VISIBLE);
-        if (LoginShared.getDashboardPageFrom(this).equals("0")) {
-            img_topbar_menu.setVisibility(View.VISIBLE);
-            btn_done.setVisibility(View.GONE);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        } else {
-            img_topbar_menu.setVisibility(View.GONE);
-            btn_done.setVisibility(View.VISIBLE);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        }
+        btn_add.setVisibility(View.GONE);
+        btn_done.setVisibility(View.GONE);
+        iv_AddPlus.setVisibility(View.VISIBLE);
+
     }
 
     @Override

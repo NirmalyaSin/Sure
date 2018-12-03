@@ -1,103 +1,158 @@
 package com.surefiz.screens.accountability;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.AddUserDialog;
-import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.accountability.adapter.SearchCircleUserAdapter;
+import com.surefiz.screens.accountability.models.CircleUserResponse;
+import com.surefiz.screens.accountability.models.User;
 import com.surefiz.screens.dashboard.BaseActivity;
-import com.surefiz.screens.instruction.InstructionActivity;
-import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.users.adapter.UserListAdapter;
-import com.surefiz.screens.users.model.UserList;
-import com.surefiz.screens.users.model.UserListModel;
-import com.surefiz.screens.weightdetails.UserIdManager;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import cn.onecoder.scalewifi.net.socket.udp.UDPHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class SearchAcountabilityActivity extends BaseActivity {
-
+public class SearchAcountabilityActivity extends BaseActivity implements SearchCircleUserAdapter.OnSearchCircleUserClickListener {
     public View view;
-    RecyclerView rv_items;
+    private RecyclerView recyclerView;
+    private EditText searchBar;
+    private ImageView imgCancel;
+    private LoadingData loadingData;
+    private ArrayList<User> arrayListUsers = new ArrayList<User>();
+    private SearchCircleUserAdapter mSearchCircleUserAdapter;
 
-    LoadingData loadingData;
-    List<UserList> userLists = new ArrayList<>();
-    UserListAdapter adapter;
-    UserIdManager userIdManager;
-    private UDPHelper udpHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   setContentView(R.layout.activity_search_accountability);
         view = View.inflate(this, R.layout.activity_search_accountability, null);
         addContentView(view);
-        loadingData = new LoadingData(this);
-        setHeaderView();
-        setViewBind();
-   //     callUserListApi();
-    //    setRecyclerViewItem();
+        initializeView();
     }
 
-    private void callUserListApi() {
+    private void initializeView() {
+        setHeaderView();
+        loadingData = new LoadingData(this);
+        recyclerView = view.findViewById(R.id.rv_items);
+        searchBar = view.findViewById(R.id.searchBar);
+        imgCancel = view.findViewById(R.id.imgCancel);
+        recyclerView = view.findViewById(R.id.rv_items);
+        setRecyclerViewItem();
+
+        //Add watcher to monitor search string.
+        searchBar.addTextChangedListener(new TextWatcher() {
+            long lastChange = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+              //  Log.d("@@beforeTextChanged: ", "Searching... start: "+start+" , after: "+after+" , count: "+count+" , Char: "+s);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence key, int start, int before, int count) {
+
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        if (System.currentTimeMillis() - lastChange >= 1000) {
+                            //send request
+                            Log.d("@@onTextChanged: ", "Searching... count: "+count
+                                    +" , Char: "+key);
+                            if(!key.equals("")) {
+                                //Call Api to list users based on the keyword
+                                callSearchCircleUserApi(key.toString());
+
+                            }
+                        }
+                    }
+                }, 1000);
+                lastChange = System.currentTimeMillis();
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            //    Log.d("@@afterTextChanged: ", "Searching... Editable: "+s);
+
+            //    searchBar.requestFocus();
+
+
+              /*  new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                },1000);*/
+
+            }
+        });
+    }
+
+    private void callSearchCircleUserApi(final String keyword) {
         loadingData.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<UserListModel> userListModelCall = apiInterface.call_userListApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
-                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+        final Call<CircleUserResponse> searchCircleUserListApi = apiInterface.call_SearchCircleUserListApi(
+                LoginShared.getRegistrationDataModel(this).getData().getToken(), keyword);
 
-        userListModelCall.enqueue(new Callback<UserListModel>() {
+        searchCircleUserListApi.enqueue(new Callback<CircleUserResponse>() {
             @Override
-            public void onResponse(Call<UserListModel> call, Response<UserListModel> response) {
-                if (loadingData != null && loadingData.isShowing())
+            public void onResponse(Call<CircleUserResponse> call, Response<CircleUserResponse> response) {
+                if (loadingData != null && loadingData.isShowing()) {
                     loadingData.dismiss();
+
+                }
+
+                arrayListUsers.clear();
+
                 try {
                     if (response.body().getStatus() == 1) {
-                        userLists.clear();
-                        userLists.addAll(response.body().getData().getUserList());
-                        adapter.notifyDataSetChanged();
-                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
-                        Intent loginIntent = new Intent(SearchAcountabilityActivity.this, LoginActivity.class);
-                        startActivity(loginIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                    } else {
-                        MethodUtils.errorMsg(SearchAcountabilityActivity.this, response.body().getData().getMessage());
+                        arrayListUsers.addAll(response.body().getData().getUserList());
+                        Log.d("@@UserItem : " , arrayListUsers.get(0).toString());
                     }
 
                 } catch (Exception e) {
-                    MethodUtils.errorMsg(SearchAcountabilityActivity.this, getString(R.string.error_occurred));
+                  //  MethodUtils.errorMsg(SearchAcountabilityActivity.this, getString(R.string.error_occurred));
                 }
+
+                mSearchCircleUserAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<UserListModel> call, Throwable t) {
+            public void onFailure(Call<CircleUserResponse> call, Throwable t) {
                 if (loadingData != null && loadingData.isShowing())
                     loadingData.dismiss();
-                MethodUtils.errorMsg(SearchAcountabilityActivity.this, getString(R.string.error_occurred));
+             //   MethodUtils.errorMsg(SearchAcountabilityActivity.this, getString(R.string.error_occurred));
+            }
+        });
+
+        imgCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchBar.setText("");
             }
         });
 
@@ -105,33 +160,37 @@ public class SearchAcountabilityActivity extends BaseActivity {
     }
 
     private void setRecyclerViewItem() {
-        adapter = new UserListAdapter(this, userLists);
-        rv_items.setAdapter(adapter);
-        rv_items.setItemAnimator(new DefaultItemAnimator());
-        rv_items.setItemAnimator(new DefaultItemAnimator());
+        mSearchCircleUserAdapter = new SearchCircleUserAdapter(this,
+                arrayListUsers, this);
+        recyclerView.setAdapter(mSearchCircleUserAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
-        rv_items.addItemDecoration(decoration);
+        recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        rv_items.setLayoutManager(mLayoutManager);
-    }
-
-    private void setViewBind() {
-        rv_items = view.findViewById(R.id.rv_items);
+        recyclerView.setLayoutManager(mLayoutManager);
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("Search Users");
+        tv_universal_header.setText("Search Circle Users");
         iv_edit.setVisibility(View.GONE);
-        btn_add.setVisibility(View.VISIBLE);
-        /*if (LoginShared.getDashboardPageFrom(this).equals("0")) {
-            img_topbar_menu.setVisibility(View.VISIBLE);
-            btn_done.setVisibility(View.GONE);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        } else {
-            img_topbar_menu.setVisibility(View.GONE);
-            btn_done.setVisibility(View.VISIBLE);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        btn_add.setVisibility(View.GONE);
+        iv_AddPlus.setVisibility(View.GONE);
+        btn_done.setVisibility(View.GONE);
+    }
 
-        }*/
+    @Override
+    public void onViewClick(int position) {
+
+    }
+
+    @Override
+    public void onCancelRequest(int position) {
+
+    }
+
+    @Override
+    public void onAddToCircle(int position) {
+
     }
 }

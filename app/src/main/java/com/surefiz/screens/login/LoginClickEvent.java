@@ -127,12 +127,12 @@ public class LoginClickEvent implements View.OnClickListener {
                             mLoginActivity.finish();
                         }
                     } else if (jsonObject.optInt("status") == 4) {
-                        /*registrationModel = gson.fromJson(responseString, RegistrationModel.class);
+                        registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
                         Intent intent = new Intent(mLoginActivity, OtpActivity.class);
                         mLoginActivity.startActivity(intent);
                         mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        mLoginActivity.finish();*/
+                        mLoginActivity.finish();
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
 

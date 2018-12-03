@@ -135,7 +135,6 @@ public class LoginClickEvent implements View.OnClickListener {
                         mLoginActivity.finish();
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
-
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));

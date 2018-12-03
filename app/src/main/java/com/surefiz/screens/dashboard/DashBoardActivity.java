@@ -615,7 +615,6 @@ public class DashBoardActivity extends BaseActivity {
         chartView.setOptions(options);
     }
 
-
     private void showGoalsAndAcheivementsChart() {
 
         HIOptions options = new HIOptions();

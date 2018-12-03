@@ -175,6 +175,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             Log.d("@@SetUser = ", "" + setUser);
 
             Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+            if (loader.isShowing()) {
+                loader.dismiss();
+            }
             //LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
             //LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
             btn_go_next.setVisibility(View.VISIBLE);
@@ -192,6 +195,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                                 weight, LoginShared.getScaleUserId(this));
                         Log.d("@@SetUser = ", "" + setUser);
                         Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+                        if (loader.isShowing()) {
+                            loader.dismiss();
+                        }
                         btn_go_next.setVisibility(View.VISIBLE);
                     } else {
                         showUserSelectionDialog(dataId, weight);
@@ -221,7 +227,6 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             }
             btn_go_next.setVisibility(View.VISIBLE);
         }
-
     }
 
     public void showDifferentScaleIdDialog() {

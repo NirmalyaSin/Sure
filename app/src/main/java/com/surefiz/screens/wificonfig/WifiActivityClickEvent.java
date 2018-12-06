@@ -68,7 +68,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
         try {
             mWifiManager = (WifiManager) mWifiConfigActivity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            if(mWifiManager != null){
+            if (mWifiManager != null) {
                 WifiManager.MulticastLock lock = mWifiManager.createMulticastLock("Log_Tag");
                 lock.acquire();
             }
@@ -79,8 +79,8 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 lock.setReferenceCounted(true);
                 lock.acquire();
             }*/
-        } catch(Exception e) {
-            Log.d("Wifi Exception",""+e.getMessage().toString());
+        } catch (Exception e) {
+            Log.d("Wifi Exception", "" + e.getMessage().toString());
         }
 
 
@@ -147,7 +147,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 mWifiConfigActivity.startActivity(details);
                 mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 mWifiConfigActivity.finish();
-                LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
+                LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
                 break;
 
         }

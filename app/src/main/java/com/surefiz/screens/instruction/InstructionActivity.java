@@ -1,20 +1,40 @@
 package com.surefiz.screens.instruction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.surefiz.R;
+import com.surefiz.apilist.ApiList;
+import com.surefiz.networkutils.ApiInterface;
+import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.users.UserListActivity;
+import com.surefiz.screens.users.model.UserList;
+import com.surefiz.screens.users.model.UserListModel;
+import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.MethodUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class InstructionActivity extends AppCompatActivity {
     @BindView(R.id.btndone)
     Button btn_button;
     @BindView(R.id.btn_skip)
     Button btn_skip;
+
+    List<UserList> userLists = new ArrayList<>();
 
     InstructionActivityonclick mInstructionActivityonclick;
 
@@ -24,5 +44,55 @@ public class InstructionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_instruction);
         ButterKnife.bind(this);
         mInstructionActivityonclick = new InstructionActivityonclick(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        callUserListApi();
+    }
+
+    private void callUserListApi() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<UserListModel> userListModelCall = apiInterface.call_userListApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+
+        userListModelCall.enqueue(new Callback<UserListModel>() {
+            @Override
+            public void onResponse(Call<UserListModel> call, Response<UserListModel> response) {
+                try {
+                    if (response.body().getStatus() == 1) {
+                        userLists.clear();
+                        userLists.addAll(response.body().getData().getUserList());
+
+                        if(userLists.get(0).getUserWeight().equals("")){
+                            Intent loginIntent = new Intent(InstructionActivity.this, DashBoardActivity.class);
+                            startActivity(loginIntent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        }
+
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(InstructionActivity.this);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(InstructionActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(InstructionActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserListModel> call, Throwable t) {
+             //   MethodUtils.errorMsg(InstructionActivity.this, getString(R.string.error_occurred));
+            }
+        });
     }
 }

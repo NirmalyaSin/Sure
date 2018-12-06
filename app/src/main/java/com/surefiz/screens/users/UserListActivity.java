@@ -175,7 +175,7 @@ public class UserListActivity extends BaseActivity {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         } else {
             img_topbar_menu.setVisibility(View.GONE);
-            btn_done.setVisibility(View.VISIBLE);
+            btn_done.setVisibility(View.GONE);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         }

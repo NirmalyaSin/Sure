@@ -26,6 +26,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     Activity activity;
     List<UserList> userLists;
     private static DecimalFormat df2;
+    private int row_index = -1;
 
     public UserListAdapter(Activity activity, List<UserList> userLists) {
         this.activity = activity;
@@ -49,12 +50,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             userListViewHolder.tv_weight.setText("Weight:  " + "0" + " lbs");
         } else {
             userListViewHolder.tv_weight.setText("Weight:  " + df2.format((Double.parseDouble
-                    (userLists.get(i).getUserWeight())/100)*2.20462) + " lbs");
+                    (userLists.get(i).getUserWeight()) / 100) * 2.20462) + " lbs");
         }
 
         userListViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                row_index = i;
                 if (LoginShared.getDashboardPageFrom(activity).equals("0")) {
                     userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
                 } else {
@@ -66,8 +68,16 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     activity.finish();
                 }
+
+                notifyDataSetChanged();
             }
         });
+
+        if (row_index == i) {
+            userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
+        } else {
+            userListViewHolder.rl_main.setBackgroundColor(Color.TRANSPARENT);
+        }
 
     }
 

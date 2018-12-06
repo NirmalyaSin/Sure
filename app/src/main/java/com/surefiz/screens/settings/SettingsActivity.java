@@ -10,13 +10,14 @@ import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.mydevice.MyDeviceActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
+import com.surefiz.utils.MethodUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     public View view;
-    RelativeLayout rl_config,rl_device;
+    RelativeLayout rl_config, rl_device, rl_privacy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +31,13 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     private void setClickEvent() {
         rl_config.setOnClickListener(this);
         rl_device.setOnClickListener(this);
+        rl_privacy.setOnClickListener(this);
     }
 
     private void initializeView() {
-        rl_config=findViewById(R.id.rl_config);
-        rl_device=findViewById(R.id.rl_device);
+        rl_config = findViewById(R.id.rl_config);
+        rl_device = findViewById(R.id.rl_device);
+        rl_privacy = findViewById(R.id.rl_privacy);
         setHeaderView();
     }
 
@@ -50,7 +53,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rl_config:
                 Intent settingsIntent = new Intent(this, WifiConfigActivity.class);
                 startActivity(settingsIntent);
@@ -62,6 +65,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 startActivity(deviceIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+                break;
+            case R.id.rl_privacy:
+                MethodUtils.errorMsg(SettingsActivity.this, "Under Development");
                 break;
         }
     }

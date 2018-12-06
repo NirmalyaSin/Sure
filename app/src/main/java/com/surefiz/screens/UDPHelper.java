@@ -340,7 +340,6 @@ public class UDPHelper implements SendDataThread.SendDataListener, ReceiveDataTh
             if (this.onDataListener != null) {
                 this.onDataListener.onResult(true, taskId, success);
             }
-
         }
     }
 

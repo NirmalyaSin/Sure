@@ -10,6 +10,22 @@
         android:background="@color/statusBarColor">
 
         <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:background="@drawable/back"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rl_menu"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"

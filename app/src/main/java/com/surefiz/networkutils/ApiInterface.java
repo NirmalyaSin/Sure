@@ -17,6 +17,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
+import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
@@ -113,7 +114,7 @@ public interface ApiInterface {
 
     @GET(API_CIRCLE_SEARCH_USER_LIST + "/{keyword}")
     Call<CircleUserResponse> call_SearchCircleUserListApi(@Header("x-authorization") String token,
-                                                    @Path("keyword") String keyword);
+                                                          @Path("keyword") String keyword);
 
     @FormUrlEncoded
     @POST(API_CIRCLE_USER_LIST)
@@ -151,4 +152,10 @@ public interface ApiInterface {
     @POST(DASHBOARD)
     Call<ResponseBody> call_dashboardApi(@Header("x-authorization") String token,
                                          @Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST(ADDDEVICE)
+    Call<ResponseBody> call_addDeviceApi(@Header("x-authorization") String token,
+                                         @Field("senderId") String senderId,
+                                         @Field("deviceId") String deviceId);
 }

@@ -31,13 +31,24 @@
             android:textSize="@dimen/_14sdp" />
 
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/tv_scale_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_header"
             android:paddingLeft="@dimen/_18sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:text="Scale Id"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_scale_id"
+            android:paddingLeft="@dimen/_18sdp"
             android:paddingTop="@dimen/_20sdp"
-            android:text="Device Id"
+            android:text="Scale ID"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -57,10 +68,9 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:backgroundTint="@android:color/transparent"
-                android:hint="Enter your device ID"
+                android:hint="Enter your scale ID"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:focusable="false"
                 android:paddingBottom="@dimen/_6sdp"
                 android:textColor="@color/whiteColor"
                 android:textColorHint="@color/hintColor"
@@ -78,7 +88,7 @@
             android:text="UPDATE"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </RelativeLayout>
 

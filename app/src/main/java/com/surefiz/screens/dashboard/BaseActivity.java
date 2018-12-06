@@ -91,6 +91,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public Button btn_add;
     @BindView(R.id.btn_done)
     public Button btn_done;
+    @BindView(R.id.rl_back)
+    public RelativeLayout rl_back;
     private ActionBarDrawerToggle mDrawerToggle;
     private ImageLoader imageLoader;
     LoadingData loader;
@@ -245,10 +247,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_circle:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                Intent circleIntent = new Intent(this, AcountabilityActivity.class);
+                MethodUtils.errorMsg(this, "Under Development");
+                /*Intent circleIntent = new Intent(this, AcountabilityActivity.class);
                 startActivity(circleIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                finish();*/
                 break;
             case R.id.tv_message:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

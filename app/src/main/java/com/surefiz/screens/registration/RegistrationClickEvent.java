@@ -162,6 +162,18 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }, "0").show();
                 break;
             case R.id.et_DOB:
+                hideSoftKeyBoard();
+                if (prefferedPopup != null && prefferedPopup.isShowing()) {
+                    prefferedPopup.dismiss();
+                } else if (genderPopup != null && genderPopup.isShowing()) {
+                    genderPopup.dismiss();
+                } else if (heightPopup != null && heightPopup.isShowing()) {
+                    heightPopup.dismiss();
+                } else if (weightPopup != null && weightPopup.isShowing()) {
+                    weightPopup.dismiss();
+                } else if (timePopup != null && timePopup.isShowing()) {
+                    timePopup.dismiss();
+                }
                 ExpiryDialog();
                 break;
             case R.id.et_gender:
@@ -174,6 +186,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     weightPopup.dismiss();
                 } else if (timePopup.isShowing()) {
                     timePopup.dismiss();
+                } else if (genderPopup.isShowing()) {
+                    genderPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -193,6 +207,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
+                } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
+                    prefferedPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -208,6 +224,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
                 break;
             case R.id.et_height:
+                hideSoftKeyBoard();
                 heightList.clear();
                 if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
                     addHeightListAndCall("CM");
@@ -222,6 +239,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
+                } else if (heightPopup != null && heightPopup.isShowing()) {
+                    heightPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -232,6 +251,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }
                 break;
             case R.id.et_weight:
+                hideSoftKeyBoard();
                 weightList.clear();
                 if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
                     addWeightListAndCall("KG");
@@ -247,6 +267,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     heightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
+                } else if (weightPopup != null && weightPopup.isShowing()) {
+                    weightPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -257,6 +279,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }
                 break;
             case R.id.et_time_loss:
+                hideSoftKeyBoard();
                 if (prefferedPopup != null && prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();
                 } else if (genderPopup != null && genderPopup.isShowing()) {
@@ -265,6 +288,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     heightPopup.dismiss();
                 } else if (weightPopup != null && weightPopup.isShowing()) {
                     weightPopup.dismiss();
+                } else if (timePopup != null && timePopup.isShowing()) {
+                    timePopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override

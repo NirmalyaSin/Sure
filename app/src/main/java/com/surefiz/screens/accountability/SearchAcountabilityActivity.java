@@ -78,34 +78,23 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                             //send request
                             Log.d("@@onTextChanged: ", "Searching... count: "+count
                                     +" , Char: "+key);
-                            if(!key.equals("")) {
+                            String keyword = searchBar.getText().toString().trim();
+                            if(!keyword.equals("")) {
                                 //Call Api to list users based on the keyword
                                 callSearchCircleUserApi(key.toString());
-
+                            }else {
+                                arrayListUsers.clear();
+                                mSearchCircleUserAdapter.notifyDataSetChanged();
                             }
                         }
                     }
                 }, 1000);
                 lastChange = System.currentTimeMillis();
-
-
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             //    Log.d("@@afterTextChanged: ", "Searching... Editable: "+s);
-
-            //    searchBar.requestFocus();
-
-
-              /*  new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                },1000);*/
-
             }
         });
     }

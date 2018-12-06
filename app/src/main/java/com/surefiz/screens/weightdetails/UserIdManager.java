@@ -8,12 +8,16 @@ package com.surefiz.screens.weightdetails;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
+
 import cn.onecoder.scalewifi.api.impl.OnUserIdManagerListener;
 import cn.onecoder.scalewifi.net.impl.OnDataListener;
 import cn.onecoder.scalewifi.net.socket.udp.UDPHelper;
 import cn.onecoder.scalewifi.util.HexUtil;
+
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,13 +69,13 @@ public class UserIdManager implements OnDataListener {
             }
 
             if (msg != null) {
-                switch(msg.what) {
+                switch (msg.what) {
                     case 0:
                         if (msg.obj == null || !(msg.obj instanceof byte[])) {
                             return;
                         }
 
-                        byte[] data = (byte[])((byte[])msg.obj);
+                        byte[] data = (byte[]) ((byte[]) msg.obj);
                         String string = new String(data);
 
                         JSONObject jsonObject;
@@ -93,7 +97,7 @@ public class UserIdManager implements OnDataListener {
                                 return;
                             }
 
-                            switch(jsonObject.length()) {
+                            switch (jsonObject.length()) {
                                 case 2:
                                     if (UserIdManager.this.onUserIdManagerListener != null) {
                                         UserIdManager.this.onUserIdManagerListener.onReceiveRequestUserIDPkg(recvDataId, recvWeight);
@@ -134,7 +138,7 @@ public class UserIdManager implements OnDataListener {
                             }
 
                             if (UserIdManager.this.onUserIdManagerListener != null) {
-                                boolean result = (Boolean)msg.obj;
+                                boolean result = (Boolean) msg.obj;
                                 UserIdManager.this.onUserIdManagerListener.onReceiveSetUserIDAckPkg(UserIdManager.this.dataId, UserIdManager.this.weight, result ? 1 : 0);
                             }
                         }
@@ -244,6 +248,7 @@ public class UserIdManager implements OnDataListener {
 
             this.udpHelper.setSendToInetAddress(this.udpHelper.getReceiveFromInetAddress());
             this.isSettingUserId = this.udpHelper.sendDataAsync(jsonObject.toString().getBytes());
+            Log.e("tag", jsonObject.toString());
             if (this.isSettingUserId) {
                 this.dataId = dataId;
                 this.weight = weight;

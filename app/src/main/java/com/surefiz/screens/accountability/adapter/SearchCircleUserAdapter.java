@@ -27,7 +27,8 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
     private ArrayList<User> arrayListCircleUser = new ArrayList<User>();
     private OnSearchCircleUserClickListener mOnSearchCircleUserClickListener;
 
-    public SearchCircleUserAdapter(Context context, ArrayList<User> users, OnSearchCircleUserClickListener clickListener) {
+    public SearchCircleUserAdapter(Context context, ArrayList<User> users,
+                                   OnSearchCircleUserClickListener clickListener) {
         this.mContext = context;
         this.arrayListCircleUser = users;
         this.mOnSearchCircleUserClickListener = clickListener;
@@ -46,10 +47,11 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
     @Override
     public void onBindViewHolder(@NonNull SearchCircleUserViewHolder holder, int position) {
         holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
-        Log.d("@@ListUser : ", arrayListCircleUser.get(position).toString());
+    //    Log.d("@@ListUser : ", arrayListCircleUser.get(position).toString());
 
-        String image = arrayListCircleUser.get(position).getUser_image();
-        if(!image.equals("") && !image.equals("null")){
+        String image = arrayListCircleUser.get(position).getUser_search_image();
+    //    Log.d("@@Image : ", arrayListCircleUser.get(position).getUser_search_image());
+        if(!image.equals("")){
             Picasso.with(mContext)
                     .load(image)
                     .fit()

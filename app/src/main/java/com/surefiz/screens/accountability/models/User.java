@@ -16,6 +16,8 @@ public class User implements Parcelable {
     String user_permission;
     @SerializedName("user_image")
     String user_image;
+    @SerializedName("user_photo")
+    String user_search_image;
     @SerializedName("user_LastLogin")
     String user_LastLogin;
     @SerializedName("connectionStatus")
@@ -25,12 +27,14 @@ public class User implements Parcelable {
     public User() { }
 
     public User(String user_id, String user_name, String user_email, String user_permission,
-                String user_image, String user_LastLogin, String connectionStatus) {
+                String user_image, String user_search_image, String user_LastLogin,
+                String connectionStatus) {
         this.user_id = user_id;
         this.user_name = user_name;
         this.user_email = user_email;
         this.user_permission = user_permission;
         this.user_image = user_image;
+        this.user_search_image = user_search_image;
         this.user_LastLogin = user_LastLogin;
         this.connectionStatus = connectionStatus;
     }
@@ -42,6 +46,7 @@ public class User implements Parcelable {
         user_email = in.readString();
         user_permission = in.readString();
         user_image = in.readString();
+        user_search_image = in.readString();
         user_LastLogin = in.readString();
         connectionStatus = in.readString();
     }
@@ -70,6 +75,7 @@ public class User implements Parcelable {
         dest.writeString(user_email);
         dest.writeString(user_permission);
         dest.writeString(user_image);
+        dest.writeString(user_search_image);
         dest.writeString(user_LastLogin);
         dest.writeString(connectionStatus);
     }
@@ -114,6 +120,14 @@ public class User implements Parcelable {
         this.user_image = user_image;
     }
 
+    public String getUser_search_image() {
+        return user_search_image;
+    }
+
+    public void setUser_search_image(String user_search_image) {
+        this.user_search_image = user_search_image;
+    }
+
     public String getUser_LastLogin() {
         return user_LastLogin;
     }
@@ -142,6 +156,7 @@ public class User implements Parcelable {
                 ", user_email='" + user_email + '\'' +
                 ", user_permission='" + user_permission + '\'' +
                 ", user_image='" + user_image + '\'' +
+                ", user_search_image='" + user_search_image + '\'' +
                 ", user_LastLogin='" + user_LastLogin + '\'' +
                 ", connectionStatus='" + connectionStatus + '\'' +
                 '}';

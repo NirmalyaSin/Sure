@@ -148,8 +148,6 @@ public class UserListActivity extends BaseActivity {
                 MethodUtils.errorMsg(UserListActivity.this, getString(R.string.error_occurred));
             }
         });
-
-
     }
 
     private void setRecyclerViewItem() {

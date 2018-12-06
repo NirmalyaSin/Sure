@@ -23,6 +23,7 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
@@ -81,6 +82,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public TextView tv_universal_header;
     @BindView(R.id.iv_edit)
     public ImageView iv_edit;
+    @BindView(R.id.iv_AddPlus)
+    public ImageView iv_AddPlus;
     @BindView(R.id.drawer_layout)
     public DrawerLayout mDrawerLayout;
     @BindView(R.id.btn_add)
@@ -99,6 +102,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         loader = new LoadingData(this);
         clickEvent();
+        iv_AddPlus.setVisibility(View.GONE);
         initializeImageLoader();
         showData();
         initializeDrawer();
@@ -240,7 +244,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_circle:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                MethodUtils.errorMsg(this, "Under Development");
+                Intent circleIntent = new Intent(this, AcountabilityActivity.class);
+                startActivity(circleIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
             case R.id.tv_message:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

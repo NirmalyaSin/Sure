@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.surefiz.R;
+import com.surefiz.screens.accountability.SearchAcountabilityActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
@@ -32,7 +33,14 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+            //    startActivity(new Intent(SplashActivity.this, SearchAcountabilityActivity.class));
                 navigate();
+
+               /* Intent intent = new Intent(SplashActivity.this, DashBoardActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();*/
+
             }
         }, GeneralToApp.SPLASH_WAIT_TIME);
 

@@ -1,6 +1,7 @@
 package com.surefiz.networkutils;
 
 
+import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.users.model.UserListModel;
 
 import okhttp3.MultipartBody;
@@ -9,13 +10,18 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
+import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
+import static com.surefiz.apilist.ApiList.API_CIRCLE_USER_LIST;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.LOGIN;
@@ -105,6 +111,15 @@ public interface ApiInterface {
     @POST(USERLIST)
     Call<UserListModel> call_userListApi(@Header("x-authorization") String token,
                                          @Field("userId") String userId);
+
+    @GET(API_CIRCLE_SEARCH_USER_LIST + "/{keyword}")
+    Call<CircleUserResponse> call_SearchCircleUserListApi(@Header("x-authorization") String token,
+                                                    @Path("keyword") String keyword);
+
+    @FormUrlEncoded
+    @POST(API_CIRCLE_USER_LIST)
+    Call<CircleUserResponse> call_CircleUserListApi(@Header("x-authorization") String token,
+                                                    @Field("userId") String userId);
 
     @FormUrlEncoded
     @POST(ADDUSER)

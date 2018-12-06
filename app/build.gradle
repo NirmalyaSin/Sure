@@ -50,5 +50,8 @@ dependencies {
     implementation project(path: ':commonutils_2_0')
     implementation files('libs/ScaleWiFiKit_v1.0.2.jar')
     implementation files('libs/ScaleWiFiKit_v1.0.2.jar')
+
+    //Picasso Library
+    implementation 'com.squareup.picasso:picasso:2.5.0'
 }
 apply plugin: 'com.google.gms.google-services'

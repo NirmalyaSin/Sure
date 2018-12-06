@@ -71,6 +71,15 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:src="@drawable/edit_icon" />
 
+        <ImageView
+            android:id="@+id/iv_AddPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:src="@drawable/ic_add_plus" />
+
     </RelativeLayout>
 
 </RelativeLayout>

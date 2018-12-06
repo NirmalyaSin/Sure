@@ -147,7 +147,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 mWifiConfigActivity.startActivity(details);
                 mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 mWifiConfigActivity.finish();
-                LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
+                LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
                 break;
 
         }

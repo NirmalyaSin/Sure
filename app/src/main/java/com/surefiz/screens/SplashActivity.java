@@ -30,6 +30,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         MethodUtils.fullScreen(this);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            LoginShared.setWeightFromNotification(this, "1");
+        }
         if (getIntent().getStringExtra("notificationFlag") != null) {
             notificationPage = getIntent().getStringExtra("notificationFlag");
         }
@@ -52,14 +57,6 @@ public class SplashActivity extends AppCompatActivity {
                     notificationPage = "0";
                     e.printStackTrace();
                 }
-             /*
-                if(LoginShared.getWeightFromNotification(SplashActivity.this).equals("1")){
-                    notificationPage = "1";
-                    LoginShared.setWeightFromNotification(SplashActivity.this, "0");
-                }else {
-                    notificationPage = "0";
-                }
-                */
                 navigate();
 
             }

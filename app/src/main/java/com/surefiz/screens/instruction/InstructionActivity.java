@@ -34,7 +34,7 @@ public class InstructionActivity extends AppCompatActivity {
     @BindView(R.id.btn_skip)
     Button btn_skip;
 
-    List<UserList> userLists = new ArrayList<>();
+    public List<UserList> userLists = new ArrayList<>();
 
     InstructionActivityonclick mInstructionActivityonclick;
 
@@ -66,13 +66,6 @@ public class InstructionActivity extends AppCompatActivity {
                     if (response.body().getStatus() == 1) {
                         userLists.clear();
                         userLists.addAll(response.body().getData().getUserList());
-
-                        if(userLists.get(0).getUserWeight().equals("")){
-                            Intent loginIntent = new Intent(InstructionActivity.this, DashBoardActivity.class);
-                            startActivity(loginIntent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            finish();
-                        }
 
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(InstructionActivity.this);

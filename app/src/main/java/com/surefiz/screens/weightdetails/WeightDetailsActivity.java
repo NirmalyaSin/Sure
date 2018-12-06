@@ -63,12 +63,13 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_details);
-        Log.d("@@LifeCycle : ","onCreate()");
+        Log.d("@@LifeCycle : ", "onCreate()");
         //Bind ButterKnife to the view
         ButterKnife.bind(this);
         handler = new Handler();
         //Initialize Loader
         loader = new LoadingData(this);
+        LoginShared.setWeightFromNotification(this, "0");
 
         scaleUserId = LoginShared.getScaleUserId(this);
         userName = LoginShared.getRegistrationDataModel(this).getData()
@@ -101,33 +102,34 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         //Start time Count-down
         startTimerCountDown();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("@@LifeCycle : ","onStart()");
+        Log.d("@@LifeCycle : ", "onStart()");
         //Initialize scale
         capturescaledatasetup();
 
-     //   calledFrom = LoginShared.getWeightPageFrom(this);
+        //   calledFrom = LoginShared.getWeightPageFrom(this);
     }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        Log.d("@@LifeCycle : ","onPostCreate()");
+        Log.d("@@LifeCycle : ", "onPostCreate()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("@@LifeCycle : ","onPause()");
+        Log.d("@@LifeCycle : ", "onPause()");
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("@@LifeCycle : ","onStop()");
+        Log.d("@@LifeCycle : ", "onStop()");
         //Cancel Loader and timer
         cancelTimerAndLoader();
     }
@@ -135,7 +137,7 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("@@LifeCycle : ","onResume()");
+        Log.d("@@LifeCycle : ", "onResume()");
     }
 
     private void goNextAction() {

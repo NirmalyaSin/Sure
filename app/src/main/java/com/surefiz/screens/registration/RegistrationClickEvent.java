@@ -178,6 +178,17 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 break;
             case R.id.et_gender:
                 hideSoftKeyBoard();
+                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                    addHeightListAndCall("CM");
+                } else {
+                    addHeightListAndCall("INCH");
+                }
+
+                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                    addWeightListAndCall("KG");
+                } else {
+                    addWeightListAndCall("LB");
+                }
                 if (prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();
                 } else if (heightPopup.isShowing()) {
@@ -226,11 +237,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
             case R.id.et_height:
                 hideSoftKeyBoard();
                 heightList.clear();
-                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                /*if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
                     addHeightListAndCall("CM");
                 } else {
                     addHeightListAndCall("INCH");
-                }
+                }*/
                 if (prefferedPopup != null && prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();
                 } else if (genderPopup != null && genderPopup.isShowing()) {
@@ -253,11 +264,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
             case R.id.et_weight:
                 hideSoftKeyBoard();
                 weightList.clear();
-                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
-                    addWeightListAndCall("KG");
-                } else {
-                    addWeightListAndCall("LB");
-                }
 
                 if (prefferedPopup != null && prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();

@@ -1,9 +1,12 @@
 package com.surefiz.screens.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.highsoft.highcharts.common.HIColor;
 import com.highsoft.highcharts.common.HIGradient;
 import com.highsoft.highcharts.common.hichartsclasses.HIArea;
@@ -39,31 +42,103 @@ import com.highsoft.highcharts.common.hichartsclasses.HIYAxis;
 import com.highsoft.highcharts.core.HIChartView;
 import com.highsoft.highcharts.core.HIFunction;
 import com.surefiz.R;
+import com.surefiz.apilist.ApiList;
+import com.surefiz.networkutils.ApiInterface;
+import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.dashboard.model.DashboardModel;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.MethodUtils;
+import com.surefiz.utils.progressloader.LoadingData;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class DashBoardActivity extends BaseActivity {
 
     public View view;
     HIChartView chartView, chartViewLoss, chartViewBmi, chartViewGoals, chartViewSubGoals, chartViewAchiGoals;
+    private LoadingData loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_dash_board, null);
         addContentView(view);
+        loader = new LoadingData(this);
         viewBind();
-        showGoalsAndAcheivementsChart();
-        showGoalsChart();
-        setWeightChart();
-        setWeightLossChart();
-        setBMIChart();
-        setSubGoalsChart();
         setHeaderView();
+        /*callDashBoardApi();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showGoalsAndAcheivementsChart();
+                showGoalsChart();
+                setWeightChart();
+                setWeightLossChart();
+                setBMIChart();
+                setSubGoalsChart();
+            }
+        }, 100);*/
+    }
+
+    private void callDashBoardApi() {
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<ResponseBody> call_dashboardApi = apiInterface.call_dashboardApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+        call_dashboardApi.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                try {
+                    String responseString = response.body().string();
+                    Gson gson = new Gson();
+                    DashboardModel dashboardModel;
+                    JSONObject jsonObject = new JSONObject(responseString);
+
+                    if (jsonObject.optInt("status") == 1) {
+                        dashboardModel = gson.fromJson(responseString, DashboardModel.class);
+                        LoginShared.setDashBoardDataModel(DashBoardActivity.this, dashboardModel);
+
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(DashBoardActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(DashBoardActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    } else {
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(DashBoardActivity.this, jsObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+            }
+        });
     }
 
     private void viewBind() {
@@ -547,7 +622,7 @@ public class DashBoardActivity extends BaseActivity {
 
         HITitle title = new HITitle();
         title.setUseHTML(true);
-        title.setText("<p style='color: #ffffff; text-align: center;'>US and USSR nuclear stockpiles</p>");
+        title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress</p>");
         options.setTitle(title);
 
 //        HISubtitle subtitle = new HISubtitle();

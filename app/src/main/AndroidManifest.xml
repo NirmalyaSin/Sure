@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -25,7 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.SplashActivity">
+        <activity
+            android:name=".screens.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,12 +38,15 @@
         </activity>
         <activity
             android:name=".screens.wificonfig.WifiConfigActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".screens.login.LoginActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".screens.registration.RegistrationActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <provider
@@ -54,15 +61,23 @@
 
         <activity
             android:name=".screens.otp.OtpActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".screens.dashboard.BaseActivity" />
-        <activity android:name=".screens.dashboard.DashBoardActivity" />
+        <activity
+            android:name=".screens.dashboard.BaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screens.dashboard.DashBoardActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screens.profile.ProfileActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".screens.instruction.InstructionActivity" />
+        <activity android:name=".screens.instruction.InstructionActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".screens.weightdetails.WeightDetailsActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".screens.accountability.AcountabilityActivity"
@@ -102,7 +117,7 @@
         <activity
             android:name=".screens.mydevice.MyDeviceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

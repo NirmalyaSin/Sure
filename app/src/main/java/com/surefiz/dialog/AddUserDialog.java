@@ -111,6 +111,9 @@ public class AddUserDialog extends Dialog {
                         moveTutorial.onSuccess("1");
                         dismiss();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(activity);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(activity, deviceToken);
                         Intent loginIntent = new Intent(activity, LoginActivity.class);
                         activity.startActivity(loginIntent);
                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

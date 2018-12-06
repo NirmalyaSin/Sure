@@ -14,6 +14,7 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
+import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -102,6 +103,9 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(ForgotPasswordActivity.this);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(ForgotPasswordActivity.this, deviceToken);
                         Intent loginIntent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

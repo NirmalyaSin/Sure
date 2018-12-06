@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
 
@@ -83,6 +84,38 @@ public class LoginShared {
         return loginModel;
     }
 
+    /**
+     * Set Dashboard Data Model
+     */
+    public static void setDashBoardDataModel(Context context, DashboardModel loginModel) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(loginModel);
+        editor.putString(SharedUtils.KEY_SHARED_DASHBOARD, json);
+        editor.commit();
+
+    }
+
+    //
+    public static DashboardModel getDashBoardDataModel(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        DashboardModel loginModel = null;
+        Gson gson = new Gson();
+        String userDataModelJson = LoginShared.prefs.getString(SharedUtils.KEY_SHARED_DASHBOARD, "");
+
+        if (userDataModelJson.equals(""))
+            loginModel = new DashboardModel();
+        else
+            loginModel = gson.fromJson(userDataModelJson, DashboardModel.class);
+
+        return loginModel;
+    }
+
     //otp varification get set method
 
     public static void setstatusforOtpvarification(Context context, boolean otpvatified) {
@@ -157,6 +190,24 @@ public class LoginShared {
         return prefs.getString(SharedUtils.KEY_SHARED_DEVICE_TOKEN_KEY, SharedUtils.KEY_SHARED_NO_DATA);
     }
 
+    /**
+     * NOTIFICATION WEIGHT
+     */
+    public static void setNotificationWeight(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_NOTIFICATION_WEIGHT, value);
+        editor.commit();
+    }
+
+    public static String getNotificationWeight(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_NOTIFICATION_WEIGHT, SharedUtils.KEY_SHARED_NO_DATA);
+    }
+
 
     public static void destroySessionTypePreference() {
         prefs = context.getSharedPreferences(
@@ -165,7 +216,6 @@ public class LoginShared {
         editor.clear();
         editor.commit();
     }
-
 
     /**
      * CALLING PAGE PREFERENCES
@@ -200,10 +250,25 @@ public class LoginShared {
         return prefs.getString(SharedUtils.KEY_SHARED_WEIGHT_PAGE_FROM, SharedUtils.KEY_SHARED_FROM_DEFAULT);
     }
 
+    public static void setWeightFromNotification(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_WEIGHT_PAGE_FROM_NOTIFICATION, value);
+        editor.commit();
+    }
+
+    public static String getWeightFromNotification(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_WEIGHT_PAGE_FROM_NOTIFICATION, SharedUtils.KEY_SHARED_FROM_DEFAULT);
+    }
+
 
     /*
-    * Set captured weight
-    */
+     * Set captured weight
+     */
 
     public static void setCapturedWeight(Context context, String value) {
         if (LoginShared.context == null || LoginShared.prefs == null)

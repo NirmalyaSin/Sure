@@ -19,6 +19,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 import static com.surefiz.apilist.ApiList.ADDUSER;
+import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_USER_LIST;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
@@ -146,4 +147,9 @@ public interface ApiInterface {
     Call<ResponseBody> call_logoutApi(@Header("x-authorization") String token,
                                       @Field("userId") String userId,
                                       @Field("userToken") String userToken);
+
+    @FormUrlEncoded
+    @POST(DASHBOARD)
+    Call<ResponseBody> call_dashboardApi(@Header("x-authorization") String token,
+                                         @Field("userId") String userId);
 }

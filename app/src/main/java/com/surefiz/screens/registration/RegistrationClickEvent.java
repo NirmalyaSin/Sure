@@ -73,7 +73,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 40; i < 301; i++) {
+        for (int i = 1; i < 261; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(registrationActivity, timeList, registrationActivity.et_time_loss);
@@ -429,6 +429,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(registrationActivity);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(registrationActivity, deviceToken);
                         Intent loginIntent = new Intent(registrationActivity, LoginActivity.class);
                         registrationActivity.startActivity(loginIntent);
                         registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -515,6 +518,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(registrationActivity);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(registrationActivity, deviceToken);
                         Intent loginIntent = new Intent(registrationActivity, LoginActivity.class);
                         registrationActivity.startActivity(loginIntent);
                         registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

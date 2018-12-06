@@ -1,5 +1,6 @@
 package com.surefiz.fcm;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,6 +19,9 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.surefiz.R;
 import com.surefiz.screens.SplashActivity;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
+import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.sharedhandler.SharedUtils;
 import com.surefiz.utils.MethodUtils;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -57,7 +61,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // Handle message within 10 seconds
                 handleNow();
             }
-
         }
 
         // Check if message contains a notification payload.
@@ -98,8 +101,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param serverNotification FCM serverNotification received.
      */
     private void showNotification(RemoteMessage.Notification serverNotification) {
-        Intent intent = new Intent(this, SplashActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(this, WeightDetailsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("notificationFlag","1");
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

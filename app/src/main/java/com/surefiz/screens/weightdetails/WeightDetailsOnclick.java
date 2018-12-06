@@ -3,6 +3,7 @@ package com.surefiz.screens.weightdetails;
 import android.view.View;
 
 import com.surefiz.R;
+import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 
 import java.text.DecimalFormat;
@@ -53,10 +54,14 @@ public class WeightDetailsOnclick implements View.OnClickListener {
 
             case R.id.btn_go_next:
                 weightDetailsActivity.goToDashboard();
+                LoginShared.setWeightPageFrom(weightDetailsActivity,"0");
+                LoginShared.setDashboardPageFrom(weightDetailsActivity,"0");
                 break;
 
             case R.id.btnSkipWeight:
                 weightDetailsActivity.goToDashboard();
+                LoginShared.setWeightPageFrom(weightDetailsActivity,"0");
+                LoginShared.setDashboardPageFrom(weightDetailsActivity,"0");
                 break;
         }
     }

@@ -10,9 +10,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.surefiz.screens.UDPHelper;
+
 import cn.onecoder.scalewifi.api.impl.OnUserIdManagerListener;
 import cn.onecoder.scalewifi.net.impl.OnDataListener;
-import cn.onecoder.scalewifi.net.socket.udp.UDPHelper;
 import cn.onecoder.scalewifi.util.HexUtil;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -173,7 +174,7 @@ public class UserIdManager implements OnDataListener {
         this.udpHelper.setTimeoutInMillis(this.timeoutInMillis);
         this.udpHelper.setOnDataListener(this);
         this.udpHelper.init();
-        init();
+     //   init();
     }
 
     public static boolean isDataIdValid(String dataId) {
@@ -338,7 +339,7 @@ public class UserIdManager implements OnDataListener {
         }
 
         if (this.isInit() && this.isSettingUserId) {
-            this.close();
+        //    this.close();
             this.handler.removeMessages(1);
             Message message = this.handler.obtainMessage();
             message.what = 1;

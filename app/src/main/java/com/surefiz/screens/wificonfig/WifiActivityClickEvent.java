@@ -15,6 +15,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -63,8 +64,28 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     }
 
     private void showConnectedWifiSSID() {
-        mWifiManager = (WifiManager) mWifiConfigActivity.getApplicationContext()
-                .getSystemService(Context.WIFI_SERVICE);
+
+
+        try {
+            mWifiManager = (WifiManager) mWifiConfigActivity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if(mWifiManager != null){
+                WifiManager.MulticastLock lock = mWifiManager.createMulticastLock("Log_Tag");
+                lock.acquire();
+            }
+          /*
+            if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                if (lock == null)
+                    lock = mWifiManager.createMulticastLock("WiFi_Lock");
+                lock.setReferenceCounted(true);
+                lock.acquire();
+            }*/
+        } catch(Exception e) {
+            Log.d("Wifi Exception",""+e.getMessage().toString());
+        }
+
+
+      /*  mWifiManager = (WifiManager) mWifiConfigActivity.getApplicationContext()
+                .getSystemService(Context.WIFI_SERVICE);*/
         if (mWifiManager != null) {
             mWifiManager.getWifiState();
             WifiInfo wifiInfo = mWifiManager.getConnectionInfo();

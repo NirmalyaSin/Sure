@@ -15,6 +15,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 import static com.surefiz.apilist.ApiList.ADDUSER;
+import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.LOGIN;
@@ -131,4 +132,9 @@ public interface ApiInterface {
     Call<ResponseBody> call_logoutApi(@Header("x-authorization") String token,
                                       @Field("userId") String userId,
                                       @Field("userToken") String userToken);
+
+    @FormUrlEncoded
+    @POST(DASHBOARD)
+    Call<ResponseBody> call_dashboardApi(@Header("x-authorization") String token,
+                                         @Field("userId") String userId);
 }

@@ -117,8 +117,8 @@
                     </LinearLayout>
 
                     <RelativeLayout
-                        android:layout_width="@dimen/_250sdp"
-                        android:layout_height="@dimen/_250sdp"
+                        android:layout_width="@dimen/_200sdp"
+                        android:layout_height="@dimen/_200sdp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_30sdp"

@@ -1,8 +1,10 @@
 package com.surefiz.screens.weightdetails;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.surefiz.R;
+import com.surefiz.screens.UDPHelper;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -23,9 +26,9 @@ import com.surefiz.utils.progressloader.LoadingData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.onecoder.scalewifi.api.impl.OnUserIdManagerListener;
-import cn.onecoder.scalewifi.net.socket.udp.UDPHelper;
 
-public class WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListener {
+public class
+WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListener {
 
     @BindView(R.id.btn_kg)
     Button btn_kg;
@@ -46,6 +49,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     private UDPHelper udpHelper;
     private UserIdManager userIdManager;
     private LoadingData loader;
+    WifiManager.MulticastLock multicastLock;
 
     //Weight Measurement Units
     public int captureWeight = 0;
@@ -76,8 +80,6 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         mWeightDetailsOnclick = new WeightDetailsOnclick(this);
         //Initialize Loader
         loader = new LoadingData(this);
-
-
     }
 
     @Override
@@ -89,6 +91,16 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     @Override
     protected void onResume() {
         super.onResume();
+
+        try {
+            if (getIntent().getStringExtra("notificationFlag").equals("1")) {
+                LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+            }
+        }catch (NullPointerException e){
+            Log.d("exception","exception happened weight");
+            e.printStackTrace();
+        }
+
         if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
             captureWeight = Integer.parseInt(LoginShared.getCapturedWeight(WeightDetailsActivity.this));
             //Set text value to lbs
@@ -128,9 +140,13 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
 
         isWeightReceived = false;
 
+        /* WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            multicastLock = wifi.createMulticastLock("multicastLock");
+            multicastLock.setReferenceCounted(true);
+*/
+
         try {
             udpHelper = new UDPHelper(61111);
-
             userIdManager = new UserIdManager(udpHelper);
             userIdManager.setDebug(true);
             userIdManager.setOnUserIdManagerListener(this);
@@ -141,8 +157,14 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
     }
 
     private void startTimerCountDown() {
-        loader.show();
-        btn_go_next.setVisibility(View.GONE);
+        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2") ||
+                LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")) {
+            System.out.print("Sure");
+            btn_go_next.setVisibility(View.VISIBLE);
+        } else {
+            loader.show();
+            btn_go_next.setVisibility(View.GONE);
+        }
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -160,10 +182,11 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         }
 
         Log.d("@@CaptureInner = ", "dataId: " + dataId + " weight: " + weight);
-        Log.d("@@calledFrom = ", "" + calledFrom);
+        Log.d("@@calledFrom = ", "" + LoginShared.getWeightPageFrom(WeightDetailsActivity.this));
         captureWeight = weight;
 
-        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
+        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2") ||
+                LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")) {
 
             Log.d("@@scaleId = ", "" + scaleId);
             Log.d("@@Weight = ", "" + LoginShared.getCapturedWeight(this));
@@ -175,14 +198,15 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
             Log.d("@@SetUser = ", "" + setUser);
 
             Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
-            if (loader.isShowing()) {
-                loader.dismiss();
-            }
-            //LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
-            //LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+            LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+            LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
             btn_go_next.setVisibility(View.VISIBLE);
 
         } else {
+            if(LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2") ||
+                    LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")){
+                isWeightReceived=true;
+            }
             if (!isWeightReceived) {
                 //Set text value to kg
                 mWeightDetailsOnclick.onClick(btn_lbs);
@@ -195,12 +219,15 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
                                 weight, LoginShared.getScaleUserId(this));
                         Log.d("@@SetUser = ", "" + setUser);
                         Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
-                        if (loader.isShowing()) {
-                            loader.dismiss();
-                        }
+                        LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+                        LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
                         btn_go_next.setVisibility(View.VISIBLE);
                     } else {
-                        showUserSelectionDialog(dataId, weight);
+                        try {
+                            showUserSelectionDialog(dataId, weight);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 } else {
                     try {
@@ -290,8 +317,13 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUserId
         });
 
         alertDialog.create();
+
         alertDialog.show();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //   userIdManager.close();
+    }
 }

@@ -105,6 +105,9 @@ public class ProfileClickEvent implements View.OnClickListener {
                         LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         setData();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(activity);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(activity, deviceToken);
                         Intent loginIntent = new Intent(activity, LoginActivity.class);
                         activity.startActivity(loginIntent);
                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -316,6 +319,9 @@ public class ProfileClickEvent implements View.OnClickListener {
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.iv_edit.setVisibility(View.VISIBLE);
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(activity);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(activity, deviceToken);
                         Intent loginIntent = new Intent(activity, LoginActivity.class);
                         activity.startActivity(loginIntent);
                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -384,6 +390,9 @@ public class ProfileClickEvent implements View.OnClickListener {
 
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(activity);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(activity, deviceToken);
                         Intent loginIntent = new Intent(activity, LoginActivity.class);
                         activity.startActivity(loginIntent);
                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

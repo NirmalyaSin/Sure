@@ -188,6 +188,9 @@ public class OtpClickEvent implements View.OnClickListener {
                         otpActivity.startActivity(dashBoardIntent);
                         otpActivity.finish();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(otpActivity);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(otpActivity, deviceToken);
                         Intent loginIntent = new Intent(otpActivity, LoginActivity.class);
                         otpActivity.startActivity(loginIntent);
                         otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

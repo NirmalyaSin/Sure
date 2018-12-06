@@ -125,6 +125,9 @@ public class UserListActivity extends BaseActivity {
                         userLists.addAll(response.body().getData().getUserList());
                         adapter.notifyDataSetChanged();
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(UserListActivity.this);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(UserListActivity.this, deviceToken);
                         Intent loginIntent = new Intent(UserListActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

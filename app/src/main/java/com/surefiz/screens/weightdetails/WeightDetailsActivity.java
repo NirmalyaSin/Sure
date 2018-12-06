@@ -49,7 +49,6 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     private UDPHelper udpHelper;
     private UserIdManager userIdManager;
     private LoadingData loader;
-    WifiManager.MulticastLock multicastLock;
 
     //Weight Measurement Units
     public int captureWeight = 0;
@@ -64,9 +63,12 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_details);
+        Log.d("@@LifeCycle : ","onCreate()");
         //Bind ButterKnife to the view
         ButterKnife.bind(this);
         handler = new Handler();
+        //Initialize Loader
+        loader = new LoadingData(this);
 
         scaleUserId = LoginShared.getScaleUserId(this);
         userName = LoginShared.getRegistrationDataModel(this).getData()
@@ -74,32 +76,17 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         scaleId = LoginShared.getRegistrationDataModel(this).getData()
                 .getUser().get(0).getUserMac();
 
-        //     calledFrom = LoginShared.getWeightPageFrom(this);
-
-        //Set onClickListener here
-        mWeightDetailsOnclick = new WeightDetailsOnclick(this);
-        //Initialize Loader
-        loader = new LoadingData(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        calledFrom = LoginShared.getWeightPageFrom(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        try {
+      /*  try {
             if (getIntent().getStringExtra("notificationFlag").equals("1")) {
                 LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
             }
         }catch (NullPointerException e){
             Log.d("exception","exception happened weight");
             e.printStackTrace();
-        }
+        }*/
+
+        //Set onClickListener here
+        mWeightDetailsOnclick = new WeightDetailsOnclick(this);
 
         if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
             captureWeight = Integer.parseInt(LoginShared.getCapturedWeight(WeightDetailsActivity.this));
@@ -111,8 +98,44 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
             btn_lbs.setTextColor(getResources().getColor(R.color.whiteColor));
         }
 
+        //Start time Count-down
+        startTimerCountDown();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("@@LifeCycle : ","onStart()");
         //Initialize scale
         capturescaledatasetup();
+
+     //   calledFrom = LoginShared.getWeightPageFrom(this);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        Log.d("@@LifeCycle : ","onPostCreate()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("@@LifeCycle : ","onPause()");
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("@@LifeCycle : ","onStop()");
+        //Cancel Loader and timer
+        cancelTimerAndLoader();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("@@LifeCycle : ","onResume()");
     }
 
     private void goNextAction() {
@@ -132,18 +155,10 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     }
 
     public void capturescaledatasetup() {
-        //Start time Count-down
-        startTimerCountDown();
         //Initialize Weight
         captureWeight = 0;
         data_id = "";
-
         isWeightReceived = false;
-
-        /* WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            multicastLock = wifi.createMulticastLock("multicastLock");
-            multicastLock.setReferenceCounted(true);
-*/
 
         try {
             udpHelper = new UDPHelper(61111);
@@ -185,30 +200,23 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         Log.d("@@calledFrom = ", "" + LoginShared.getWeightPageFrom(WeightDetailsActivity.this));
         captureWeight = weight;
 
-        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2") ||
-                LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")) {
+        if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2")) {
 
             Log.d("@@scaleId = ", "" + scaleId);
             Log.d("@@Weight = ", "" + LoginShared.getCapturedWeight(this));
             Log.d("@@scaleUserId = ", "" + LoginShared.getScaleUserId(this));
+            //Set text value to lbs
+            mWeightDetailsOnclick.onClick(btn_lbs);
+
             //Set userID
             boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
                             .getUser().get(0).getUserMac(),
                     Integer.parseInt(LoginShared.getCapturedWeight(this)), LoginShared.getScaleUserId(this));
             Log.d("@@SetUser = ", "" + setUser);
-
             Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
-            LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
-            LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
-            btn_go_next.setVisibility(View.VISIBLE);
-
         } else {
-            if(LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2") ||
-                    LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")){
-                isWeightReceived=true;
-            }
             if (!isWeightReceived) {
-                //Set text value to kg
+                //Set text value to lbs
                 mWeightDetailsOnclick.onClick(btn_lbs);
                 isWeightReceived = true;
 
@@ -219,9 +227,6 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
                                 weight, LoginShared.getScaleUserId(this));
                         Log.d("@@SetUser = ", "" + setUser);
                         Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
-                        LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
-                        LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
-                        btn_go_next.setVisibility(View.VISIBLE);
                     } else {
                         try {
                             showUserSelectionDialog(dataId, weight);
@@ -238,22 +243,30 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
                 }
             }
         }
-
     }
 
     @Override
     public void onReceiveSetUserIDAckPkg(String dataId, int weight, int status) {
         Log.d("@@CaptureUser-id: ", "dataId: " + dataId
                 + " weight: " + weight + " status: " + status);
-
         if (status == 1) {
-            ClosePrevConnections();
-            handler.removeCallbacksAndMessages(null);
-            if (loader.isShowing()) {
-                loader.dismiss();
-            }
-            btn_go_next.setVisibility(View.VISIBLE);
+            cancelTimerAndLoader();
         }
+
+        LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+        LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+    }
+
+    private void cancelTimerAndLoader() {
+
+        if (loader.isShowing()) {
+            loader.dismiss();
+        }
+        handler.removeCallbacksAndMessages(null);
+        btn_go_next.setVisibility(View.VISIBLE);
+
+        //Close UDP Connections
+        ClosePrevConnections();
     }
 
     public void showDifferentScaleIdDialog() {
@@ -303,6 +316,7 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
                 dialog.dismiss();
             }
         });
+
         alertDialog.setNegativeButton("Someone Else", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -324,6 +338,8 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //Cancel Loader and timer
+        cancelTimerAndLoader();
         //   userIdManager.close();
     }
 }

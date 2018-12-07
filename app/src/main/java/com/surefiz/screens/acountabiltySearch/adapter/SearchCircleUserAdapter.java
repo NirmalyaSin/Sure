@@ -1,19 +1,17 @@
-package com.surefiz.screens.accountability.adapter;
+package com.surefiz.screens.acountabiltySearch.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.surefiz.R;
-import com.surefiz.screens.accountability.RequestState;
+import com.surefiz.screens.acountabiltySearch.RequestState;
 import com.surefiz.screens.accountability.models.User;
 
 import java.util.ArrayList;

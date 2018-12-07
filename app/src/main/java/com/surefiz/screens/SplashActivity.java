@@ -5,14 +5,11 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.surefiz.R;
-import com.surefiz.screens.accountability.SearchAcountabilityActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
-import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
@@ -95,12 +92,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
-                    }/* else if(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).get) {
-                    Intent intent = new Intent(this, WeightDetailsActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
-                }*/ else if (notificationPage.equals("1")) {
+                    } else if (notificationPage.equals("1")) {
                         Intent intent = new Intent(this, WeightDetailsActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

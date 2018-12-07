@@ -83,7 +83,7 @@
             android:name=".screens.accountability.AcountabilityActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".screens.accountability.SearchAcountabilityActivity"
+            android:name=".screens.acountabiltySearch.SearchAcountabilityActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".screens.users.UserListActivity" />
 
@@ -117,6 +117,9 @@
         <activity
             android:name=".screens.mydevice.MyDeviceActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <activity android:name=".screens.notifications.NotificationActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 

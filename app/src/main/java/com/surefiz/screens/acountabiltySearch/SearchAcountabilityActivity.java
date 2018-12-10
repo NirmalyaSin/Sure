@@ -1,8 +1,7 @@
-package com.surefiz.screens.accountability;
+package com.surefiz.screens.acountabiltySearch;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +16,10 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.accountability.adapter.SearchCircleUserAdapter;
+import com.surefiz.screens.acountabiltySearch.adapter.SearchCircleUserAdapter;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.accountability.models.User;
+import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -57,7 +57,6 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         recyclerView = view.findViewById(R.id.rv_items);
         searchBar = view.findViewById(R.id.searchBar);
         imgCancel = view.findViewById(R.id.imgCancel);
-        recyclerView = view.findViewById(R.id.rv_items);
         setRecyclerViewItem();
 
         //Add watcher to monitor search string.
@@ -170,16 +169,80 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
 
     @Override
     public void onViewClick(int position) {
-
+        //Not yet defined
     }
 
     @Override
     public void onCancelRequest(int position) {
-
+        //API Call to cancel.
+        callAddToCircleUserApi(position, RequestState.REQUEST_STATUS_CANCEL);
     }
 
     @Override
     public void onAddToCircle(int position) {
+        //API Call to add.
+        callAddToCircleUserApi(position, RequestState.REQUEST_STATUS_SEND);
+    }
 
+    //Service call to send/cancel request to add in circle
+    private void callAddToCircleUserApi(final int listPosition, final String connectionType) {
+        loadingData.show_with_label("Requesting...");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<AddToCircleResponse> call_AddToCircleUserApi = apiInterface.call_AddToCircleUserApi(
+                        LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),
+                arrayListUsers.get(listPosition).getUser_id(),
+                connectionType);
+
+        call_AddToCircleUserApi.enqueue(new Callback<AddToCircleResponse>() {
+            @Override
+            public void onResponse(Call<AddToCircleResponse> call, Response<AddToCircleResponse> response) {
+                if (loadingData != null && loadingData.isShowing()) {
+                    loadingData.dismiss();
+                }
+                Log.d("@@RequestData : " , response.body().toString());
+
+                switch (response.body().getStatus()){
+                    case 1:
+                        if(response.body().getData().getType()
+                                .equals(RequestState.RESPONSE_TYPE_REQUESTED)) {
+                            //Change the status of Connection in Model
+                            arrayListUsers.get(listPosition)
+                                    .setConnectionStatus(RequestState.STATUS_REQUEST_SENT);
+                        }else {
+                            //Change the status of Connection in Model
+                            arrayListUsers.get(listPosition)
+                                    .setConnectionStatus(RequestState.RESPONSE_TYPE_CANCELED);
+                        }
+
+                        break;
+                }
+
+                //Notify adapter for changes
+                mSearchCircleUserAdapter.notifyDataSetChanged();
+                //Show dialog to show response from server
+                MethodUtils.errorMsg(SearchAcountabilityActivity.this,
+                        response.body().getData().getMessage());
+            }
+
+            @Override
+            public void onFailure(Call<AddToCircleResponse> call, Throwable t) {
+                if (loadingData != null && loadingData.isShowing()) {
+                    loadingData.dismiss();
+                }
+                //Show error dialog
+               MethodUtils.errorMsg(SearchAcountabilityActivity.this,
+                       getString(R.string.error_occurred));
+            }
+        });
+
+        imgCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchBar.setText("");
+            }
+        });
     }
 }

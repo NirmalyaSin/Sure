@@ -2,6 +2,8 @@ package com.surefiz.networkutils;
 
 
 import com.surefiz.screens.accountability.models.CircleUserResponse;
+import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
+import com.surefiz.screens.notifications.models.NotificationsResponse;
 import com.surefiz.screens.users.model.UserListModel;
 
 import okhttp3.MultipartBody;
@@ -19,9 +21,12 @@ import retrofit2.http.Path;
 
 import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
-import static com.surefiz.apilist.ApiList.DASHBOARD;
+import static com.surefiz.apilist.ApiList.API_CIRCLE_ACCEPT_REJECT_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
+import static com.surefiz.apilist.ApiList.API_CIRCLE_SEND_CANCEL_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_USER_LIST;
+import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
+import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.LOGIN;
@@ -112,6 +117,20 @@ public interface ApiInterface {
     Call<UserListModel> call_userListApi(@Header("x-authorization") String token,
                                          @Field("userId") String userId);
 
+    @FormUrlEncoded
+    @POST(API_CIRCLE_SEND_CANCEL_REQUEST)
+    Call<AddToCircleResponse> call_AddToCircleUserApi(@Header("x-authorization") String token,
+                                                      @Field("sender") String sender,
+                                                      @Field("receiver") String receiver,
+                                                      @Field("type") String type);
+
+    @FormUrlEncoded
+    @POST(API_CIRCLE_ACCEPT_REJECT_REQUEST)
+    Call<AddToCircleResponse> call_AcceptRejectFriendRequestApi(@Header("x-authorization") String token,
+                                                      @Field("userId") String userId,
+                                                      @Field("requestId") String requestId,
+                                                      @Field("type") String type);
+
     @GET(API_CIRCLE_SEARCH_USER_LIST + "/{keyword}")
     Call<CircleUserResponse> call_SearchCircleUserListApi(@Header("x-authorization") String token,
                                                           @Path("keyword") String keyword);
@@ -120,6 +139,11 @@ public interface ApiInterface {
     @POST(API_CIRCLE_USER_LIST)
     Call<CircleUserResponse> call_CircleUserListApi(@Header("x-authorization") String token,
                                                     @Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST(API_NOTIFICATION_LIST)
+    Call<NotificationsResponse> call_NotificationListApi(@Header("x-authorization") String token,
+                                                         @Field("userId") String userId);
 
     @FormUrlEncoded
     @POST(ADDUSER)

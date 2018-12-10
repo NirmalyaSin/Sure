@@ -2,7 +2,6 @@ package com.surefiz.screens.accountability;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +15,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.adapter.AllCircleUserAdapter;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.accountability.models.User;
+import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;

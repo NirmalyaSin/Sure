@@ -26,7 +26,7 @@
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_20sdp"
             android:typeface="monospace"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -66,7 +66,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -86,7 +86,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -106,7 +106,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -126,7 +126,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -167,7 +167,7 @@
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:alpha="0.5"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout

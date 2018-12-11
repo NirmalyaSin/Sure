@@ -12,7 +12,7 @@ public class NextSubGoal {
     private List<String> label = null;
     @SerializedName("data")
     @Expose
-    private List<Double> data = null;
+    private List<String> data = null;
 
     public List<String> getLabel() {
         return label;
@@ -22,11 +22,11 @@ public class NextSubGoal {
         this.label = label;
     }
 
-    public List<Double> getData() {
+    public List<String> getData() {
         return data;
     }
 
-    public void setData(List<Double> data) {
+    public void setData(List<String> data) {
         this.data = data;
     }
 

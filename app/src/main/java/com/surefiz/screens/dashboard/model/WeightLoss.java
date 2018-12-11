@@ -8,27 +8,27 @@ public class WeightLoss {
 
     @SerializedName("achieved")
     @Expose
-    private Double achieved;
+    private String achieved;
     @SerializedName("toGo")
     @Expose
-    private Double toGo;
+    private String toGo;
     @SerializedName("percentage")
     @Expose
     private Integer percentage;
 
-    public Double getAchieved() {
+    public String getAchieved() {
         return achieved;
     }
 
-    public void setAchieved(Double achieved) {
+    public void setAchieved(String achieved) {
         this.achieved = achieved;
     }
 
-    public Double getToGo() {
+    public String getToGo() {
         return toGo;
     }
 
-    public void setToGo(Double toGo) {
+    public void setToGo(String toGo) {
         this.toGo = toGo;
     }
 

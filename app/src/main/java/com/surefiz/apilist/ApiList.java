@@ -17,6 +17,7 @@ public class ApiList {
     public static final String LOGOUT = "ApiServices/Logout";
     public static final String DASHBOARD = "ApiServices/DashboardChart";
     public static final String ADDDEVICE = "ApiServices/AddDevice";
+    public static final String CONTACTLIST = "ApiServices/ContactList";
 
     public static final String API_CIRCLE_USER_LIST = "ApiServices/ContactList";
     public static final String API_CIRCLE_SEARCH_USER_LIST = "ApiServices/SearchUser";

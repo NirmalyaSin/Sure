@@ -18,6 +18,7 @@ import com.surefiz.screens.accountability.models.User;
 import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -78,8 +79,8 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
                 try {
                     if (response.body().getStatus() == 1) {
                         arrayListUsers.addAll(response.body().getData().getUserList());
-                        Log.d("@@UserItem : " , arrayListUsers.get(0).toString());
-                    }else {
+                        Log.d("@@UserItem : ", arrayListUsers.get(0).toString());
+                    } else {
                         MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
                     }
 
@@ -139,6 +140,10 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     @Override
     public void onPerformanceClick(int position) {
+        Intent intent = new Intent(AcountabilityActivity.this, DashBoardActivity.class);
+        intent.putExtra("id", arrayListUsers.get(position).getUser_id());
+        startActivity(intent);
+        finish();
 
     }
 }

@@ -26,7 +26,14 @@
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_20sdp"
             android:typeface="monospace"
-            android:visibility="visible" />
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -39,6 +46,7 @@
                 android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cv_weight"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_300sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -46,7 +54,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -59,6 +67,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cv_weight_loss"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_300sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -66,7 +75,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -79,6 +88,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cv_bmi"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_300sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -86,7 +96,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -99,6 +109,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cv_goals"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_300sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -106,7 +117,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -119,6 +130,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cv_sub_goals"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_300sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -126,7 +138,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -139,6 +151,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cv_achi_goals"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_300sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -147,7 +160,7 @@
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:alpha="0.7"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.highsoft.highcharts.core.HIChartView
@@ -167,7 +180,7 @@
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:alpha="0.5"
                     android:background="#A9A9A9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
@@ -538,7 +551,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_10sdp"
-                                        android:text="Muscle"
+                                        android:text="BMI"
                                         android:textColor="@color/whiteColor"
                                         android:textSize="@dimen/_13sdp" />
 

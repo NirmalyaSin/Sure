@@ -17,6 +17,7 @@ import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 
+
 public class SplashActivity extends AppCompatActivity {
 
     RegistrationModel loginModel;

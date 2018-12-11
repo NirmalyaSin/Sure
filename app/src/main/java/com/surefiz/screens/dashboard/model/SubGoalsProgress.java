@@ -12,10 +12,10 @@ public class SubGoalsProgress {
     private List<String> weeks = null;
     @SerializedName("expectedWeightToGo")
     @Expose
-    private List<Double> expectedWeightToGo = null;
+    private List<String> expectedWeightToGo = null;
     @SerializedName("acheivedWeight")
     @Expose
-    private List<Double> acheivedWeight = null;
+    private List<String> acheivedWeight = null;
 
     public List<String> getWeeks() {
         return weeks;
@@ -25,19 +25,19 @@ public class SubGoalsProgress {
         this.weeks = weeks;
     }
 
-    public List<Double> getExpectedWeightToGo() {
+    public List<String> getExpectedWeightToGo() {
         return expectedWeightToGo;
     }
 
-    public void setExpectedWeightToGo(List<Double> expectedWeightToGo) {
+    public void setExpectedWeightToGo(List<String> expectedWeightToGo) {
         this.expectedWeightToGo = expectedWeightToGo;
     }
 
-    public List<Double> getAcheivedWeight() {
+    public List<String> getAcheivedWeight() {
         return acheivedWeight;
     }
 
-    public void setAcheivedWeight(List<Double> acheivedWeight) {
+    public void setAcheivedWeight(List<String> acheivedWeight) {
         this.acheivedWeight = acheivedWeight;
     }
 

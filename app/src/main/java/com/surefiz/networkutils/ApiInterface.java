@@ -4,6 +4,7 @@ package com.surefiz.networkutils;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.chat.model.ChatListResponse;
+import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
 import com.surefiz.screens.privacy.model.PrivacyListResponse;
 import com.surefiz.screens.users.model.UserListModel;
@@ -31,6 +32,7 @@ import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
 import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
+import static com.surefiz.apilist.ApiList.CONTACTLIST;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
@@ -205,4 +207,8 @@ public interface ApiInterface {
     Call<ResponseBody> call_addDeviceApi(@Header("x-authorization") String token,
                                          @Field("senderId") String senderId,
                                          @Field("deviceId") String deviceId);
+    @FormUrlEncoded
+    @POST(CONTACTLIST)
+    Call<ContactListModel> call_contactListApi(@Header("x-authorization") String token,
+                                               @Field("userId") String userId);
 }

@@ -83,6 +83,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
                 @Override
                 public void onClick(View v) {
                     mOnCircleViewClickListener.onPerformanceClick(getAdapterPosition());
+
                 }
             });
 

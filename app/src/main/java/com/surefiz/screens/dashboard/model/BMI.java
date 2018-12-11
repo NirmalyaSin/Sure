@@ -12,7 +12,7 @@ public class BMI {
     private List<String> label = null;
     @SerializedName("data")
     @Expose
-    private List<Object> data = null;
+    private List<String> data = null;
 
     public List<String> getLabel() {
         return label;
@@ -22,11 +22,11 @@ public class BMI {
         this.label = label;
     }
 
-    public List<Object> getData() {
+    public List<String> getData() {
         return data;
     }
 
-    public void setData(List<Object> data) {
+    public void setData(List<String> data) {
         this.data = data;
     }
 

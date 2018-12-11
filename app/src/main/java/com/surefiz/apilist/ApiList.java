@@ -18,9 +18,12 @@ public class ApiList {
     public static final String DASHBOARD = "ApiServices/DashboardChart";
     public static final String ADDDEVICE = "ApiServices/AddDevice";
 
-    public static final String API_CIRCLE_USER_LIST = "ApiServices/GetUserList";
+    public static final String API_CIRCLE_USER_LIST = "ApiServices/ContactList";
     public static final String API_CIRCLE_SEARCH_USER_LIST = "ApiServices/SearchUser";
     public static final String API_CIRCLE_SEND_CANCEL_REQUEST = "ApiServices/SendFriendRequest";
     public static final String API_CIRCLE_ACCEPT_REJECT_REQUEST = "ApiServices/AcceptFriendRequest";
     public static final String API_NOTIFICATION_LIST = "ApiServices/NotificationList";
+    public static final String API_CONVERSATION_LIST = "ApiServices/ConversationList";
+    public static final String API_SEND_CHAT = "ApiServices/SendMessage";
+    public static final String API_GET_PRIVACY_LIST = "ApiServices/GetPrivacySetting";
 }

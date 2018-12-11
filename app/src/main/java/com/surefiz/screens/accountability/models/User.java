@@ -22,23 +22,10 @@ public class User implements Parcelable {
     String user_LastLogin;
     @SerializedName("connectionStatus")
     String connectionStatus;
-
+    @SerializedName("onlineStatus")
+    String onlineStatus;
 
     public User() { }
-
-    public User(String user_id, String user_name, String user_email, String user_permission,
-                String user_image, String user_search_image, String user_LastLogin,
-                String connectionStatus) {
-        this.user_id = user_id;
-        this.user_name = user_name;
-        this.user_email = user_email;
-        this.user_permission = user_permission;
-        this.user_image = user_image;
-        this.user_search_image = user_search_image;
-        this.user_LastLogin = user_LastLogin;
-        this.connectionStatus = connectionStatus;
-    }
-
 
     protected User(Parcel in) {
         user_id = in.readString();
@@ -49,6 +36,7 @@ public class User implements Parcelable {
         user_search_image = in.readString();
         user_LastLogin = in.readString();
         connectionStatus = in.readString();
+        onlineStatus = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -78,6 +66,7 @@ public class User implements Parcelable {
         dest.writeString(user_search_image);
         dest.writeString(user_LastLogin);
         dest.writeString(connectionStatus);
+        dest.writeString(onlineStatus);
     }
 
     public String getUser_id() {
@@ -144,6 +133,14 @@ public class User implements Parcelable {
         this.connectionStatus = connectionStatus;
     }
 
+    public String getOnlineStatus() {
+        return onlineStatus;
+    }
+
+    public void setOnlineStatus(String onlineStatus) {
+        this.onlineStatus = onlineStatus;
+    }
+
     public static Creator<User> getCREATOR() {
         return CREATOR;
     }
@@ -159,6 +156,7 @@ public class User implements Parcelable {
                 ", user_search_image='" + user_search_image + '\'' +
                 ", user_LastLogin='" + user_LastLogin + '\'' +
                 ", connectionStatus='" + connectionStatus + '\'' +
+                ", onlineStatus='" + onlineStatus + '\'' +
                 '}';
     }
 }

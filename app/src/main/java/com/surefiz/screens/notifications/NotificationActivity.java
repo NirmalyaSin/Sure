@@ -1,11 +1,14 @@
 package com.surefiz.screens.notifications;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -71,7 +74,7 @@ public class NotificationActivity extends BaseActivity implements
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
         recyclerView.addItemDecoration(decoration);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
@@ -79,9 +82,12 @@ public class NotificationActivity extends BaseActivity implements
         loadingData.show_with_label("Loading...");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        String token = LoginShared.getRegistrationDataModel(this).getData().getToken();
+        String id = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
+        Log.e("@@Sent-Notification : ", "Token = "+token+"\nUser-ID = "+id);
 
-        final Call<NotificationsResponse> call_NotificationListApi = apiInterface.call_NotificationListApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
-                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+        final Call<NotificationsResponse> call_NotificationListApi = apiInterface
+                .call_NotificationListApi(token, id);
 
         call_NotificationListApi.enqueue(new Callback<NotificationsResponse>() {
             @Override
@@ -122,30 +128,30 @@ public class NotificationActivity extends BaseActivity implements
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<AddToCircleResponse> call_AcceptRejectFriendRequestApi = apiInterface.call_AcceptRejectFriendRequestApi(
-                LoginShared.getRegistrationDataModel(this).getData().getToken(),
-                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),
-                arrayListNotifications.get(listPosition).getNotificationId(),
-                type);
+        String token = LoginShared.getRegistrationDataModel(this).getData().getToken();
+        String user_id = LoginShared.getRegistrationDataModel(this).getData().getUser()
+                .get(0).getUserId();
+        String senderId = arrayListNotifications.get(listPosition).getNotificationSenderId();
+        Log.e("@@Sent-Accept : ", "Token = "+token+"\nUser-ID = "+user_id
+                +"\nsenderId = "+senderId+"\nType = "+type);
 
-        call_AcceptRejectFriendRequestApi.enqueue(new Callback<AddToCircleResponse>() {
+        final Call<NotificationsResponse> call_AcceptRejectFriendRequestApi = apiInterface.call_AcceptRejectFriendRequestApi(
+                token.trim(), user_id.trim(), senderId.trim(), type.trim());
+
+        call_AcceptRejectFriendRequestApi.enqueue(new Callback<NotificationsResponse>() {
             @Override
-            public void onResponse(Call<AddToCircleResponse> call, Response<AddToCircleResponse> response) {
+            public void onResponse(Call<NotificationsResponse> call, Response<NotificationsResponse> response) {
                 if (loadingData != null && loadingData.isShowing()) {
                     loadingData.dismiss();
                 }
                 Log.d("@@AcceptRequest : ", response.body().toString());
-
-                if(response.body().getStatus() == 1){
-                    callNotificationListApi();
-                }
                 //Show dialog to show response from server
-                MethodUtils.errorMsg(NotificationActivity.this,
+                showResponseDialog(response.body().getStatus(),
                         response.body().getData().getMessage());
             }
 
             @Override
-            public void onFailure(Call<AddToCircleResponse> call, Throwable t) {
+            public void onFailure(Call<NotificationsResponse> call, Throwable t) {
                 if (loadingData != null && loadingData.isShowing()) {
                     loadingData.dismiss();
                 }
@@ -170,5 +176,20 @@ public class NotificationActivity extends BaseActivity implements
     public void onReject(int position) {
         //Reject request Api Call
         acceptRejectRequestApi(position, RequestState.SEND_REJECT_FRIEND_REQUEST);
+    }
+
+    void showResponseDialog(int status, String message){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(false);
+        dialog.setMessage(message);
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Cancel the dialog.
+                dialog.dismiss();
+                //Call the API to list all Notifications
+                callNotificationListApi();
+            }
+        });
     }
 }

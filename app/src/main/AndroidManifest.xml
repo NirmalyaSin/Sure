@@ -121,6 +121,8 @@
 
         <activity android:name=".screens.notifications.NotificationActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".screens.chat.ChatActivity" />
+        <activity android:name=".screens.privacy.PrivacyActivity" />
     </application>
 
 </manifest>

@@ -3,9 +3,13 @@ package com.surefiz.screens.dashboard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.highsoft.highcharts.common.HIColor;
@@ -45,11 +49,18 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.dashboard.adapter.ContactListAdapter;
+import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.users.UserListActivity;
+import com.surefiz.screens.users.adapter.UserListAdapter;
+import com.surefiz.screens.users.model.UserList;
+import com.surefiz.screens.users.model.UserListModel;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
+import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
@@ -58,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -65,15 +77,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class DashBoardActivity extends BaseActivity {
+public class DashBoardActivity extends BaseActivity implements ContactListAdapter.OnCircleViewClickListener {
 
     public View view;
     HIChartView chartView, chartViewLoss, chartViewBmi, chartViewGoals, chartViewSubGoals, chartViewAchiGoals;
     TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded;
     Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein;
     CardView cv_weight, cv_weight_loss, cv_bmi, cv_goals, cv_sub_goals, cv_achi_goals;
+    RecyclerView rv_items;
     private LoadingData loader;
     HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals;
+    List<UserList> contactLists = new ArrayList<>();
+    ContactListAdapter adapter;
+    String id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +105,18 @@ public class DashBoardActivity extends BaseActivity {
         optionsAchiGoals = new HIOptions();
         viewBind();
         setHeaderView();
-        callDashBoardApi();
+
+        if (getIntent().getStringExtra("id") != null) {
+            id = getIntent().getStringExtra("id");
+            rv_items.setVisibility(View.GONE);
+        } else {
+            id = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
+            rv_items.setVisibility(View.VISIBLE);
+        }
+        callDashBoardApi(id);
+        //callContactsApi();
+        callUserListApi();
+        setRecyclerViewItem();
 //        setWeightChart();
         /*showGoalsAndAcheivementsChart();
         showGoalsChart();
@@ -105,13 +132,102 @@ public class DashBoardActivity extends BaseActivity {
         }, 100);*/
     }
 
+    private void setRecyclerViewItem() {
+        adapter = new ContactListAdapter(this, contactLists, this);
+        rv_items.setAdapter(adapter);
+        rv_items.setItemAnimator(new DefaultItemAnimator());
+        rv_items.setItemAnimator(new DefaultItemAnimator());
+        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        rv_items.addItemDecoration(decoration);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
+        rv_items.setLayoutManager(mLayoutManager);
+    }
 
-    private void callDashBoardApi() {
+    private void callUserListApi() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<UserListModel> userListModelCall = apiInterface.call_userListApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+
+        userListModelCall.enqueue(new Callback<UserListModel>() {
+            @Override
+            public void onResponse(Call<UserListModel> call, Response<UserListModel> response) {
+                try {
+                    if (response.body().getStatus() == 1) {
+                        contactLists.clear();
+                        contactLists.addAll(response.body().getData().getUserList());
+                        adapter.notifyDataSetChanged();
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(DashBoardActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(DashBoardActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    } else {
+                        MethodUtils.errorMsg(DashBoardActivity.this, response.body().getData().getMessage());
+                    }
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserListModel> call, Throwable t) {
+                MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+            }
+        });
+    }
+
+    /*private void callContactsApi() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<ContactListModel> call_contactApi = apiInterface.call_contactListApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+
+        call_contactApi.enqueue(new Callback<ContactListModel>() {
+            @Override
+            public void onResponse(Call<ContactListModel> call, Response<ContactListModel> response) {
+                try {
+                    if (response.body().getStatus() == 1) {
+                        contactLists.clear();
+                        contactLists.addAll(response.body().getData().getUserList());
+                        adapter.notifyDataSetChanged();
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(DashBoardActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(DashBoardActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    } else {
+                        MethodUtils.errorMsg(DashBoardActivity.this, response.body().getData().getMessage());
+                    }
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ContactListModel> call, Throwable t) {
+                MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+            }
+        });
+
+    }*/
+
+
+    private void callDashBoardApi(String id) {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         Call<ResponseBody> call_dashboardApi = apiInterface.call_dashboardApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
-                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+                id);
         call_dashboardApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -250,6 +366,7 @@ public class DashBoardActivity extends BaseActivity {
         cv_goals = findViewById(R.id.cv_goals);
         cv_sub_goals = findViewById(R.id.cv_sub_goals);
         cv_achi_goals = findViewById(R.id.cv_achi_goals);
+        rv_items = findViewById(R.id.rv_items);
     }
 
     private void setSubGoalsChart() {
@@ -325,9 +442,12 @@ public class DashBoardActivity extends BaseActivity {
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData()};*/
 
         Number[] numbers = new Number[series1_data.length];
+        ArrayList<String> colors1 = new ArrayList<>();
+        ArrayList<String> colors2 = new ArrayList<>();
 
         for (int i = 0; i < series1_data.length; i++) {
             numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+            colors1.add("#49b782");
         }
         series1.setData(new ArrayList<>(Arrays.asList(numbers)));
 //        series1.setStack("male");
@@ -338,6 +458,7 @@ public class DashBoardActivity extends BaseActivity {
         Number[] numbers1 = new Number[series2_data.length];
         for (int i = 0; i < series2_data.length; i++) {
             numbers1[i] = Double.parseDouble(String.valueOf(series2_data[i]));
+            colors2.add("#FFAF44");
         }
         series2.setData(new ArrayList<>(Arrays.asList(numbers1)));
 //        series2.setStack("male");
@@ -351,8 +472,11 @@ public class DashBoardActivity extends BaseActivity {
         Number[] series4_data = new Number[]{3, 0, 4, 4, 3};
         series4.setData(new ArrayList<>(Arrays.asList(series4_data)));
         series4.setStack("female");*/
+        series1.setColors(colors1);
+        series1.setColorByPoint(true);
+        series2.setColors(colors2);
+        series2.setColorByPoint(true);
         optionsSubGoals.setSeries(new ArrayList<>(Arrays.asList(series1, series2/*, series3, series4*/)));
-
 
         chartViewSubGoals.setOptions(optionsSubGoals);
         chartViewSubGoals.reload();
@@ -360,7 +484,6 @@ public class DashBoardActivity extends BaseActivity {
 
     private void showGoalsChart() {
         chartViewGoals.plugins = new ArrayList<>(Arrays.asList("drilldown"));
-
 
         HIChart chart = new HIChart();
         chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
@@ -730,7 +853,7 @@ public class DashBoardActivity extends BaseActivity {
         optionsLoss.setExporting(exporting);
 
         HITitle title = new HITitle();
-        title.setText("Browser market");
+        title.setText("Weight Loss");
         optionsLoss.setTitle(title);
 
         HITooltip tooltip = new HITooltip();
@@ -808,9 +931,14 @@ public class DashBoardActivity extends BaseActivity {
 
         HIXAxis xAxis = new HIXAxis();
         xAxis.setAllowDecimals(false);
-        xAxis.setCategories((ArrayList<String>)
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                getWeightProgress().getLabel() != null ||
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                        getWeightProgress().getLabel());
+                        getWeightProgress().getLabel().size() > 0) {
+            xAxis.setCategories((ArrayList<String>)
+                    LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                            getWeightProgress().getLabel());
+        }
         /*HILabels labels = new HILabels();
         HIFunction hiFunction = new HIFunction("function () { return this.value; }");
         labels.setFormatter(hiFunction);
@@ -857,20 +985,22 @@ public class DashBoardActivity extends BaseActivity {
 
         HIArea series1 = new HIArea();
         series1.setName("Progress");
-        CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().toArray(new CharSequence[0]);
-        Number[] numbers = new Number[series1_data.length];
-        for (int i = 0; i < series1_data.length; i++) {
-            numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
-        }
-        //Number[] series1_data = new Number[]{null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950, 10871, 0};
-        series1.setData(new ArrayList<>(Arrays.asList(numbers)));
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData() != null ||
+                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().size() > 0) {
+            CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().toArray(new CharSequence[0]);
+            Number[] numbers = new Number[series1_data.length];
+            for (int i = 0; i < series1_data.length; i++) {
+                numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+            }
+            //Number[] series1_data = new Number[]{null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950, 10871, 0};
+            series1.setData(new ArrayList<>(Arrays.asList(numbers)));
         /*HIArea series2 = new HIArea();
         series2.setName("USSR/Russia");
         Number[] series2_data = new Number[]{null, null, null, null, null, null, null, null, null, null, 5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322, 4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478, 15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049, 33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000, 35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000, 21000, 20000, 19000, 18000, 18000, 17000, 16000};
         series2.setData(new ArrayList<>(Arrays.asList(series2_data)));*/
 //        series1.setData(new ArrayList<>(Arrays.asList(series1_data)));
-        options.setSeries(new ArrayList<>(Arrays.asList(series1/*, series2*/)));
-
+            options.setSeries(new ArrayList<>(Arrays.asList(series1/*, series2*/)));
+        }
 
         chartView.setOptions(options);
         chartView.reload();
@@ -897,8 +1027,11 @@ public class DashBoardActivity extends BaseActivity {
 
         HIXAxis xAxis = new HIXAxis();
         xAxis.setAllowDecimals(false);
-        xAxis.setCategories((ArrayList<String>)
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson());
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson() != null ||
+                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().size() > 0) {
+            xAxis.setCategories((ArrayList<String>)
+                    LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson());
+        }
         optionsAchiGoals.setXAxis(new ArrayList<HIXAxis>() {{
             add(xAxis);
         }});
@@ -906,8 +1039,15 @@ public class DashBoardActivity extends BaseActivity {
         HIYAxis yaxis = new HIYAxis();
         HITitle title1 = new HITitle();
         HILabels labels = new HILabels();
-        String s = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext();
-        title1.setText("<p style='color: #ffffff; '>ffgg</p>");
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext() != null ||
+                !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().equalsIgnoreCase("null") ||
+                !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().isEmpty()) {
+
+            String s = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext();
+            title1.setText("<p style='color: #ffffff; '>" + s + "p>");
+        } else {
+            title1.setText("<p style='color: #ffffff; '>ffgg</p>");
+        }
         labels.setStyle(hicssObject);
         yaxis.setLabels(labels);
         yaxis.setTitle(title1);
@@ -932,15 +1072,33 @@ public class DashBoardActivity extends BaseActivity {
         exporting.setEnabled(false);
         optionsAchiGoals.setExporting(exporting);
 
+        HIResponsive responsive = new HIResponsive();
+
+        HIRules rules1 = new HIRules();
+        HICondition hiCondition = new HICondition();
+        hiCondition.setMaxWidth(500);
+        rules1.setCondition(hiCondition);
+        HashMap<String, HashMap> chartLegend = new HashMap<>();
+        HashMap<String, String> legendOptions = new HashMap<>();
+        legendOptions.put("layout", "horizontal");
+        legendOptions.put("align", "center");
+        legendOptions.put("verticalAlign", "bottom");
+        chartLegend.put("legend", legendOptions);
+        rules1.setChartOptions(chartLegend);
+        responsive.setRules(new ArrayList<>(Collections.singletonList(rules1)));
+        optionsAchiGoals.setResponsive(responsive);
+
         HILine line1 = new HILine();
         line1.setName("Installation");
-        CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().toArray(new CharSequence[0]);
-        Number[] numbers = new Number[series1_data.length];
-        for (int i = 0; i < series1_data.length; i++) {
-            numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
-        }
-        //Number[] series1_data = new Number[]{null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950, 10871, 0};
-        line1.setData(new ArrayList<>(Arrays.asList(numbers)));
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson() != null ||
+                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().size() > 0) {
+            CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().toArray(new CharSequence[0]);
+            Number[] numbers = new Number[series1_data.length];
+            for (int i = 0; i < series1_data.length; i++) {
+                numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+            }
+            //Number[] series1_data = new Number[]{null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950, 10871, 0};
+            line1.setData(new ArrayList<>(Arrays.asList(numbers)));
 
         /*HILine line2 = new HILine();
         line2.setName("Manufacturing");
@@ -958,23 +1116,8 @@ public class DashBoardActivity extends BaseActivity {
         line5.setName("Other");
         line5.setData(new ArrayList<>(Arrays.asList(12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111)));*/
 
-        HIResponsive responsive = new HIResponsive();
-
-        HIRules rules1 = new HIRules();
-        HICondition hiCondition = new HICondition();
-        hiCondition.setMaxWidth(500);
-        rules1.setCondition(hiCondition);
-        HashMap<String, HashMap> chartLegend = new HashMap<>();
-        HashMap<String, String> legendOptions = new HashMap<>();
-        legendOptions.put("layout", "horizontal");
-        legendOptions.put("align", "center");
-        legendOptions.put("verticalAlign", "bottom");
-        chartLegend.put("legend", legendOptions);
-        rules1.setChartOptions(chartLegend);
-        responsive.setRules(new ArrayList<>(Collections.singletonList(rules1)));
-        optionsAchiGoals.setResponsive(responsive);
-
-        optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1/*, line2, line3, line4, line5*/)));
+            optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1/*, line2, line3, line4, line5*/)));
+        }
 
         chartViewAchiGoals.setOptions(optionsAchiGoals);
         chartViewAchiGoals.reload();
@@ -1003,4 +1146,8 @@ public class DashBoardActivity extends BaseActivity {
         img_topbar_menu.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onViewClick(int position) {
+        callDashBoardApi(contactLists.get(position).getServerUserId().toString());
+    }
 }

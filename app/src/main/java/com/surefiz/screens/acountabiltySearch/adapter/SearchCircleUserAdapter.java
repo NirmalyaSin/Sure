@@ -44,7 +44,7 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
 
     @Override
     public void onBindViewHolder(@NonNull SearchCircleUserViewHolder holder, int position) {
-        holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
+        holder.textUserName.setText(arrayListCircleUser.get(position).getUser_search_image());
     //    Log.d("@@ListUser : ", arrayListCircleUser.get(position).toString());
 
         String image = arrayListCircleUser.get(position).getUser_search_image();

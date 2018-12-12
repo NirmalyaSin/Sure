@@ -3,14 +3,18 @@ package com.surefiz.networkutils;
 
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
+import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
+import com.surefiz.screens.privacy.model.PrivacyListResponse;
+import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.users.model.UserListModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,13 +26,19 @@ import retrofit2.http.Path;
 
 import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
+import static com.surefiz.apilist.ApiList.API_ADD_EDIT_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_ACCEPT_REJECT_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEND_CANCEL_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_USER_LIST;
+import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
+import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
+import static com.surefiz.apilist.ApiList.API_GET_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
 import static com.surefiz.apilist.ApiList.BOARDCAST;
 import static com.surefiz.apilist.ApiList.CHANGEPASSWORD;
+import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
+import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.CONTACTLIST;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
@@ -130,10 +140,10 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST(API_CIRCLE_ACCEPT_REJECT_REQUEST)
-    Call<AddToCircleResponse> call_AcceptRejectFriendRequestApi(@Header("x-authorization") String token,
-                                                                @Field("userId") String userId,
-                                                                @Field("requestId") String requestId,
-                                                                @Field("type") String type);
+    Call<NotificationsResponse> call_AcceptRejectFriendRequestApi(@Header("x-authorization") String token,
+                                                      @Field("userId") String userId,
+                                                      @Field("requestId") String requestId,
+                                                      @Field("type") String type);
 
     @GET(API_CIRCLE_SEARCH_USER_LIST + "/{keyword}")
     Call<CircleUserResponse> call_SearchCircleUserListApi(@Header("x-authorization") String token,
@@ -148,6 +158,45 @@ public interface ApiInterface {
     @POST(API_NOTIFICATION_LIST)
     Call<NotificationsResponse> call_NotificationListApi(@Header("x-authorization") String token,
                                                          @Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST(API_CONVERSATION_LIST)
+    Call<ChatListResponse> call_ConversationListApi(@Header("x-authorization") String token,
+                                                    @Field("senderId") String senderId,
+                                                    @Field("receiverId") String receiverId,
+                                                    @Field("pagination") String pagination);
+
+    @FormUrlEncoded
+    @POST(API_SEND_CHAT)
+    Call<ChatListResponse> call_SendChatApi(@Header("x-authorization") String token,
+                                                    @Field("senderId") String senderId,
+                                                    @Field("receiverId") String receiverId,
+                                                    @Field("chatmessage") String chatmessage);
+
+    @FormUrlEncoded
+    @POST(API_GET_PRIVACY_LIST)
+    Call<PrivacyListResponse> call_PrivacyListApi(@Header("x-authorization") String token,
+                                                  @Field("senderId") String senderId);
+
+    @FormUrlEncoded
+    @POST(API_GET_REMINDER_LIST)
+    Call<ReminderListResponse> call_ReminderListApi(@Header("x-authorization") String token,
+                                                    @Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST(API_ADD_EDIT_REMINDER_LIST)
+    Call<ReminderListResponse> call_AddUpdateReminderApi(@Header("x-authorization") String token,
+                                                    @Field("userId") String userId,
+                                                    @Field("reminderText") String reminderText,
+                                                    @Field("dateTime") String dateTime,
+                                                    @Field("type") String type,
+                                                    @Field("Id") String Id);
+    @FormUrlEncoded
+    @POST(API_UPDATE_PRIVACY_LIST)
+    Call<PrivacyListResponse> call_UpdatePrivacyList(@Header("x-authorization") String token,
+                                                  @Field("senderId") String senderId,
+                                                  @Field("selectedIds") String selectedIds,
+                                                  @Field("removedId") String removedId);
 
     @FormUrlEncoded
     @POST(ADDUSER)

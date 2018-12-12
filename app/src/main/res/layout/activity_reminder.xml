@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.users.UserListActivity">
+    tools:context=".screens.reminders.ReminderActivity">
 
     <View
         android:layout_width="match_parent"
@@ -21,11 +21,26 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             tools:itemCount="10"
-            android:layout_marginTop="@dimen/_5sdp"
             tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_notification"
+            tools:listitem="@layout/item_reminder"
             tools:orientation="vertical" />
+
+        <Button
+            android:id="@+id/buttonSaveChanges"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/shape_rectangle_green"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp"
+            android:text="Save"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

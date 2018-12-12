@@ -37,7 +37,6 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
         View rootView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_user_accountability, viewGroup, false);
 
-
         return new CircleUserViewHolder(rootView);
     }
 
@@ -45,7 +44,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
     public void onBindViewHolder(@NonNull CircleUserViewHolder holder, int position) {
     //    Log.e("@@holder: ", arrayListCircleUser.get(position).toString());
         holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
-        String image = arrayListCircleUser.get(position).getUser_image();
+        String image = arrayListCircleUser.get(position).getUser_search_image();
         if(!image.equals("") && !image.equals("null")){
             Picasso.with(mContext)
                     .load(image)
@@ -53,6 +52,11 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
                     .placeholder(R.drawable.user_black)
                     .error(R.drawable.user_black)
                     .into(holder.imageUserProfile);
+        }
+
+        if(arrayListCircleUser.get(position).getOnlineStatus().equals("1")){
+            holder.imageOnlineOffline.setImageDrawable(mContext.getResources()
+                    .getDrawable(R.drawable.ic_dot_online));
         }
     }
 
@@ -65,11 +69,12 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
         CircleImageView imageUserProfile;
         TextView textUserName;
         Button btnPerformance;
-        ImageView imgSendMessage;
+        ImageView imgSendMessage, imageOnlineOffline;
 
         public CircleUserViewHolder(@NonNull View itemView) {
             super(itemView);
             imageUserProfile = itemView.findViewById(R.id.imageUserProfile);
+            imageOnlineOffline = itemView.findViewById(R.id.imageOnlineOffline);
             textUserName = itemView.findViewById(R.id.textUserName);
             btnPerformance = itemView.findViewById(R.id.btnPerformance);
             imgSendMessage = itemView.findViewById(R.id.imgSendMessage);

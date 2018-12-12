@@ -87,7 +87,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 }
             });
 
-            btnAccept.setOnClickListener(new View.OnClickListener() {
+            btnReject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnNotificationClickListener.onReject(getAdapterPosition());

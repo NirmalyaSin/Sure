@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@null"
+    tools:context=".screens.notifications.NotificationActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:layout_margin="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/textMessageLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Message Left"
+            android:textSize="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_rectangle_round_white"
+            android:textColor="@color/registration_color_black" />
+
+        <TextView
+            android:id="@+id/texMessageRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:text="Message Right"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/shape_rectangle_round_green"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/registration_color_black" />
+
+    </RelativeLayout>
+
+</LinearLayout>

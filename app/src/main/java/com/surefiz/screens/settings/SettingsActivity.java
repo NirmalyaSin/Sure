@@ -9,6 +9,7 @@ import com.surefiz.R;
 import com.surefiz.screens.changepassword.ChangePasswordActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.mydevice.MyDeviceActivity;
+import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.utils.MethodUtils;
@@ -67,10 +68,14 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 Intent deviceIntent = new Intent(this, MyDeviceActivity.class);
                 startActivity(deviceIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+               // finish();
                 break;
             case R.id.rl_privacy:
-                MethodUtils.errorMsg(SettingsActivity.this, "Under Development");
+            //    MethodUtils.errorMsg(SettingsActivity.this, "Under Development");
+                Intent privacyIntent = new Intent(this, PrivacyActivity.class);
+                startActivity(privacyIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            //    finish();
                 break;
             case R.id.rl_password:
 //                MethodUtils.errorMsg(SettingsActivity.this, "Under Development");

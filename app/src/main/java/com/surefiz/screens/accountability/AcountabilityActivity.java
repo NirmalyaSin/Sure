@@ -16,6 +16,7 @@ import com.surefiz.screens.accountability.adapter.AllCircleUserAdapter;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.accountability.models.User;
 import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
+import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -110,7 +111,8 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
         recyclerView.addItemDecoration(decoration);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
@@ -130,7 +132,10 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     @Override
     public void onSendMessageClick(int position) {
-
+        //Go to Chat Page
+        Intent chatIntent = new Intent(this, ChatActivity.class);
+        chatIntent.putExtra("reciver_id", arrayListUsers.get(position).getUser_id());
+        startActivity(chatIntent);
     }
 
     @Override

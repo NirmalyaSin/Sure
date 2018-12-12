@@ -18,4 +18,5 @@
     <color name="kprogresshud_grey_color">#449E9E9E</color>
     <color name="blue">#3981F5</color>
     <color name="menu_header">#0F2233</color>
+    <color name="gray">#d4d7d5d5</color>
 </resources>

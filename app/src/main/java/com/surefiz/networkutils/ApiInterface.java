@@ -7,6 +7,7 @@ import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
 import com.surefiz.screens.privacy.model.PrivacyListResponse;
+import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.users.model.UserListModel;
 
 import okhttp3.MultipartBody;
@@ -25,12 +26,14 @@ import retrofit2.http.Path;
 
 import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
+import static com.surefiz.apilist.ApiList.API_ADD_EDIT_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_ACCEPT_REJECT_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEND_CANCEL_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
+import static com.surefiz.apilist.ApiList.API_GET_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
 import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
 import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
@@ -172,6 +175,20 @@ public interface ApiInterface {
     @POST(API_GET_PRIVACY_LIST)
     Call<PrivacyListResponse> call_PrivacyListApi(@Header("x-authorization") String token,
                                                   @Field("senderId") String senderId);
+
+    @FormUrlEncoded
+    @POST(API_GET_REMINDER_LIST)
+    Call<ReminderListResponse> call_ReminderListApi(@Header("x-authorization") String token,
+                                                    @Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST(API_ADD_EDIT_REMINDER_LIST)
+    Call<ReminderListResponse> call_AddUpdateReminderApi(@Header("x-authorization") String token,
+                                                    @Field("userId") String userId,
+                                                    @Field("reminderText") String reminderText,
+                                                    @Field("dateTime") String dateTime,
+                                                    @Field("type") String type,
+                                                    @Field("Id") String Id);
     @FormUrlEncoded
     @POST(API_UPDATE_PRIVACY_LIST)
     Call<PrivacyListResponse> call_UpdatePrivacyList(@Header("x-authorization") String token,

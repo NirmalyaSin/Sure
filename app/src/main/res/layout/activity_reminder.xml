@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.privacy.PrivacyActivity">
+    tools:context=".screens.reminders.ReminderActivity">
 
     <View
         android:layout_width="match_parent"
@@ -24,13 +24,13 @@
             android:layout_weight="1"
             tools:itemCount="10"
             tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_privacy"
+            tools:listitem="@layout/item_reminder"
             tools:orientation="vertical" />
 
         <Button
             android:id="@+id/buttonSaveChanges"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/shape_rectangle_green"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp"

@@ -123,6 +123,9 @@
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".screens.chat.ChatActivity" />
         <activity android:name=".screens.privacy.PrivacyActivity" />
+        <activity android:name=".screens.reminders.ReminderActivity" />
+        <activity android:name=".screens.reminders.AddEditReminderActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

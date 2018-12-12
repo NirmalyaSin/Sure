@@ -28,7 +28,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     private int row_index = -1;
     private int row_user = -1;
 
-    public ContactListAdapter(Activity activity, List<UserList> userLists, OnCircleViewClickListener mOnCircleViewClickListener) {
+    public ContactListAdapter(Activity activity, List<UserList> userLists,
+                              OnCircleViewClickListener mOnCircleViewClickListener) {
         this.activity = activity;
         this.userLists = userLists;
         this.mOnCircleViewClickListener = mOnCircleViewClickListener;
@@ -77,7 +78,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             contactListViewHolder.iv_online.setVisibility(View.GONE);
         }*/
 
-        contactListViewHolder.tv_name.setText(userLists.get(i).getUserName());
+        if (userLists.get(i).getUserName() == null || userLists.get(i).getUserName().equals("") ||
+                userLists.get(i).getUserName().equalsIgnoreCase("null") ||
+                userLists.get(i).getUserName().isEmpty()) {
+            contactListViewHolder.tv_name.setText("No Name");
+        } else {
+            contactListViewHolder.tv_name.setText(userLists.get(i).getUserName());
+        }
 
         contactListViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override

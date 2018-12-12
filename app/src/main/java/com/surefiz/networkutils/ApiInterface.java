@@ -27,6 +27,8 @@ import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEND_CANCEL_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
+import static com.surefiz.apilist.ApiList.BOARDCAST;
+import static com.surefiz.apilist.ApiList.CHANGEPASSWORD;
 import static com.surefiz.apilist.ApiList.CONTACTLIST;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
@@ -129,9 +131,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_CIRCLE_ACCEPT_REJECT_REQUEST)
     Call<AddToCircleResponse> call_AcceptRejectFriendRequestApi(@Header("x-authorization") String token,
-                                                      @Field("userId") String userId,
-                                                      @Field("requestId") String requestId,
-                                                      @Field("type") String type);
+                                                                @Field("userId") String userId,
+                                                                @Field("requestId") String requestId,
+                                                                @Field("type") String type);
 
     @GET(API_CIRCLE_SEARCH_USER_LIST + "/{keyword}")
     Call<CircleUserResponse> call_SearchCircleUserListApi(@Header("x-authorization") String token,
@@ -184,8 +186,22 @@ public interface ApiInterface {
     Call<ResponseBody> call_addDeviceApi(@Header("x-authorization") String token,
                                          @Field("senderId") String senderId,
                                          @Field("deviceId") String deviceId);
+
     @FormUrlEncoded
     @POST(CONTACTLIST)
     Call<ContactListModel> call_contactListApi(@Header("x-authorization") String token,
                                                @Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST(BOARDCAST)
+    Call<ResponseBody> call_boardcastApi(@Header("x-authorization") String token,
+                                         @Field("senderId") String userId,
+                                         @Field("message") String message);
+
+    @FormUrlEncoded
+    @POST(CHANGEPASSWORD)
+    Call<ResponseBody> call_changePasswordApi(@Header("x-authorization") String token,
+                                              @Field("userId") String userId,
+                                              @Field("oldPassword") String oldPassword,
+                                              @Field("newPassword") String newPassword);
 }

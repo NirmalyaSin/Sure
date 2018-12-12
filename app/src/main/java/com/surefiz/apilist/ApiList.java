@@ -18,6 +18,8 @@ public class ApiList {
     public static final String DASHBOARD = "ApiServices/DashboardChart";
     public static final String ADDDEVICE = "ApiServices/AddDevice";
     public static final String CONTACTLIST = "ApiServices/ContactList";
+    public static final String BOARDCAST = "ApiServices/SendBroadcastMessage";
+    public static final String CHANGEPASSWORD = "ApiServices/ChangePassword";
 
     public static final String API_CIRCLE_USER_LIST = "ApiServices/GetUserList";
     public static final String API_CIRCLE_SEARCH_USER_LIST = "ApiServices/SearchUser";

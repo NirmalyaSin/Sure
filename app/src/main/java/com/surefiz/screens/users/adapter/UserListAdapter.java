@@ -45,7 +45,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     @Override
     public void onBindViewHolder(@NonNull UserListViewHolder userListViewHolder, int i) {
         df2 = new DecimalFormat(".##");
-        userListViewHolder.tv_name.setText("Name:   " + userLists.get(i).getUserName());
+        if (userLists.get(i).getUserName() == null ||userLists.get(i).getUserName().equals("") ||
+                userLists.get(i).getUserName().equalsIgnoreCase("null") ||
+                userLists.get(i).getUserName().isEmpty()) {
+            userListViewHolder.tv_name.setText("No Name");
+        } else {
+            userListViewHolder.tv_name.setText("Name:   " + userLists.get(i).getUserName());
+        }
         if (userLists.get(i).getUserWeight().equals("0")) {
             userListViewHolder.tv_weight.setText("Weight:  " + "0" + " lbs");
         } else {

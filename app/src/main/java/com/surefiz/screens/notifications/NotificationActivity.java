@@ -178,7 +178,7 @@ public class NotificationActivity extends BaseActivity implements
         acceptRejectRequestApi(position, RequestState.SEND_REJECT_FRIEND_REQUEST);
     }
 
-    void showResponseDialog(int status, String message){
+    public void showResponseDialog(int status, String message){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setMessage(message);
@@ -191,5 +191,8 @@ public class NotificationActivity extends BaseActivity implements
                 callNotificationListApi();
             }
         });
+
+        dialog.create();
+        dialog.show();
     }
 }

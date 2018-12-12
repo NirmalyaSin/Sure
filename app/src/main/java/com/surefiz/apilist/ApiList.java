@@ -27,4 +27,5 @@ public class ApiList {
     public static final String API_CONVERSATION_LIST = "ApiServices/ConversationList";
     public static final String API_SEND_CHAT = "ApiServices/SendMessage";
     public static final String API_GET_PRIVACY_LIST = "ApiServices/GetPrivacySetting";
+    public static final String API_UPDATE_PRIVACY_LIST = "ApiServices/UpdatePrivacySetting";
 }

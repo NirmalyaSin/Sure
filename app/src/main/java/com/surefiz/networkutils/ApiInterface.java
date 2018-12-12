@@ -13,6 +13,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -32,6 +33,7 @@ import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
 import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
+import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.CONTACTLIST;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
@@ -164,11 +166,18 @@ public interface ApiInterface {
     Call<ChatListResponse> call_SendChatApi(@Header("x-authorization") String token,
                                                     @Field("senderId") String senderId,
                                                     @Field("receiverId") String receiverId,
-                                                    @Field("chatmessage") String chatmessage);@FormUrlEncoded
+                                                    @Field("chatmessage") String chatmessage);
 
+    @FormUrlEncoded
     @POST(API_GET_PRIVACY_LIST)
     Call<PrivacyListResponse> call_PrivacyListApi(@Header("x-authorization") String token,
                                                   @Field("senderId") String senderId);
+    @FormUrlEncoded
+    @POST(API_UPDATE_PRIVACY_LIST)
+    Call<PrivacyListResponse> call_UpdatePrivacyList(@Header("x-authorization") String token,
+                                                  @Field("senderId") String senderId,
+                                                  @Field("selectedIds") String selectedIds,
+                                                  @Field("removedId") String removedId);
 
     @FormUrlEncoded
     @POST(ADDUSER)

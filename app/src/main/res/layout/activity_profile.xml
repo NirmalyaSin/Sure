@@ -242,7 +242,8 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_margin="@dimen/_44sdp"
                     android:background="@drawable/login_submit_rounded_corner"
-                    android:text="SAVE"
+                    android:text="Save"
+                    android:textAllCaps="false"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 

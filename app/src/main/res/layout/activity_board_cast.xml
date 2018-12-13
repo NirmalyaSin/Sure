@@ -36,7 +36,8 @@
         android:layout_below="@+id/et_message"
         android:layout_margin="@dimen/_44sdp"
         android:background="@drawable/login_submit_rounded_corner"
-        android:text="BOARDCAST"
+        android:text="BroadCast"
+        android:textAllCaps="false"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 

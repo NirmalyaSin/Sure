@@ -85,7 +85,8 @@
             android:layout_below="@+id/rl_email"
             android:layout_margin="@dimen/_44sdp"
             android:background="@drawable/login_submit_rounded_corner"
-            android:text="UPDATE"
+            android:text="Update"
+            android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp"
             android:visibility="visible" />

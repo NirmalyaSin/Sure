@@ -439,7 +439,8 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_margin="@dimen/_60sdp"
                 android:background="@drawable/login_submit_rounded_corner"
-                android:text="ADD USER"
+                android:text="Add User"
+                android:textAllCaps="false"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 

@@ -4,13 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,15 +17,12 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
-import com.surefiz.screens.reminders.adapter.ReminderAdapter;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.reminders.model.User;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
-import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -105,6 +97,10 @@ public class AddEditReminderActivity extends BaseActivity implements
         if(type.equals("add")){
             buttonSaveReminder.setVisibility(View.VISIBLE);
             tv_universal_header.setText("Create Reminder");
+            //set field with Current date
+            editReminderDate.setText(getCurrentDate());
+            //set field with Current time
+            editReminderTime.setText(getCurrentTime());
             //Enable Date-Time Picker
             enableDateTimeSelection();
         }else {
@@ -141,6 +137,25 @@ public class AddEditReminderActivity extends BaseActivity implements
                 }
             }
         }
+    }
+
+    private String getCurrentTime() {
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        String currentTime = hour + ":" + minute;
+
+        return currentTime;
+    }
+
+    private String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        String monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
+        String currentDate = day+" "+monthName+" "+year;
+
+        return currentDate;
     }
 
     public void enableDateTimeSelection(){
@@ -239,18 +254,20 @@ public class AddEditReminderActivity extends BaseActivity implements
     }
 
     private void openDatePickerDialog() {
+        //Create instance of Calender
         calendar = Calendar.getInstance(TimeZone.getDefault());
-
-        DatePickerDialog dialog = new DatePickerDialog(this, this,
+        //Create DatePicker instance with current date as default
+        DatePickerDialog datePicker = new DatePickerDialog(this, this,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
+        //Disable previous dates for selection
+        datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        //Set title of the picker
+        datePicker.setTitle("Select date");
+        datePicker.setCancelable(false);
 
-
-        dialog.setTitle("Select date");
-        dialog.setCancelable(false);
-
-        dialog.show();
+        datePicker.show();
     }
 
     @Override

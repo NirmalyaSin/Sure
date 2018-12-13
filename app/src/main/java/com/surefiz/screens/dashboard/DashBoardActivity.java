@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.highsoft.highcharts.common.HIColor;
@@ -21,7 +20,6 @@ import com.highsoft.highcharts.common.hichartsclasses.HIColumn;
 import com.highsoft.highcharts.common.hichartsclasses.HICondition;
 import com.highsoft.highcharts.common.hichartsclasses.HIData;
 import com.highsoft.highcharts.common.hichartsclasses.HIDataLabels;
-import com.highsoft.highcharts.common.hichartsclasses.HIDrilldown;
 import com.highsoft.highcharts.common.hichartsclasses.HIExporting;
 import com.highsoft.highcharts.common.hichartsclasses.HIHover;
 import com.highsoft.highcharts.common.hichartsclasses.HILabel;
@@ -44,20 +42,15 @@ import com.highsoft.highcharts.common.hichartsclasses.HITooltip;
 import com.highsoft.highcharts.common.hichartsclasses.HIXAxis;
 import com.highsoft.highcharts.common.hichartsclasses.HIYAxis;
 import com.highsoft.highcharts.core.HIChartView;
-import com.highsoft.highcharts.core.HIFunction;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.adapter.ContactListAdapter;
-import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.users.UserListActivity;
-import com.surefiz.screens.users.adapter.UserListAdapter;
 import com.surefiz.screens.users.model.UserList;
 import com.surefiz.screens.users.model.UserListModel;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -219,14 +212,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             }
         });
 
-    }*/
+    }*//*8502,8658*/
 
 
     private void callDashBoardApi(String id) {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<ResponseBody> call_dashboardApi = apiInterface.call_dashboardApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+        Call<ResponseBody> call_dashboardApi = apiInterface.call_dashboardApi(
+                LoginShared.getRegistrationDataModel(this).getData().getToken(),
                 id);
         call_dashboardApi.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -414,7 +408,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         yAxis.setAllowDecimals(false);
         yAxis.setMin(0);
         HITitle hiTitle = new HITitle();
-        hiTitle.setText("<p style='color: #ffffff; '>Number of fruits</p>");
+        hiTitle.setText("<p style='color: #ffffff; '>Values</p>");
         hiTitle.setSkew3d(true);
         hiLabels.setStyle(hicssObject);
         yAxis.setTitle(hiTitle);
@@ -532,7 +526,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         HIYAxis yAxis = new HIYAxis();
         HITitle hiTitle = new HITitle();
         HILabels hiLabels = new HILabels();
-        hiTitle.setText("<p style='color: #ffffff; '>Total percent market share</p>");
+        hiTitle.setText("<p style='color: #ffffff; '>Values</p>");
         hiLabels.setStyle(hicssObject);
         yAxis.setTitle(hiTitle);
         yAxis.setLabels(hiLabels);
@@ -748,18 +742,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             add(xAxis);
         }});
 
-        /*HIYAxis yAxis = new HIYAxis();
+        HIYAxis yAxis = new HIYAxis();
         HITitle hiTitle = new HITitle();
-        hiTitle.setText("<p style='color: #ffffff; '>Temperature</p>");
         HILabels hiLabels = new HILabels();
-        HIFunction hiFunction = new HIFunction("function () { return this.value + ''; }");
-        hiLabels.setFormatter(hiFunction);
+        hiTitle.setText("<p style='color: #ffffff; '>Values</p>");
         hiLabels.setStyle(hicssObject);
         yAxis.setTitle(hiTitle);
         yAxis.setLabels(hiLabels);
         optionsBMI.setYAxis(new ArrayList<HIYAxis>() {{
             add(yAxis);
-        }});*/
+        }});
 
         HITooltip tooltip = new HITooltip();
         tooltip.setShared(true);
@@ -779,7 +771,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         optionsBMI.setPlotOptions(plotOptions);
 
         HISpline series1 = new HISpline();
-        series1.setName("Tokyo");
+        series1.setName("Weight");
         HIMarker hiMarker1 = new HIMarker();
         hiMarker1.setSymbol("square");
         HIData data1 = new HIData();
@@ -1046,7 +1038,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             String s = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext();
             title1.setText("<p style='color: #ffffff; '>" + s + "p>");
         } else {
-            title1.setText("<p style='color: #ffffff; '>ffgg</p>");
+            title1.setText("<p style='color: #ffffff; '>Sub Goals Progress</p>");
         }
         labels.setStyle(hicssObject);
         yaxis.setLabels(labels);

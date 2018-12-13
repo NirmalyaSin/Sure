@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.boardcast.BoardCastActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.6"
+        android:background="@drawable/splash_image" />
+
+    <EditText
+        android:id="@+id/et_message"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:background="@drawable/edittext_background"
+        android:gravity="top"
+        android:imeOptions="actionDone"
+        android:inputType="text|textCapSentences|textMultiLine"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/whiteColor"
+        android:textColorHint="@color/whiteColor"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:textSize="@dimen/_12sdp" />
+
+    <Button
+        android:id="@+id/btn_boardcast"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/et_message"
+        android:layout_margin="@dimen/_44sdp"
+        android:background="@drawable/login_submit_rounded_corner"
+        android:text="BOARDCAST"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+
+
+
+</RelativeLayout>

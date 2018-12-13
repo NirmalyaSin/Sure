@@ -35,6 +35,8 @@ import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
+import static com.surefiz.apilist.ApiList.BOARDCAST;
+import static com.surefiz.apilist.ApiList.CHANGEPASSWORD;
 import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
 import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.CONTACTLIST;
@@ -233,8 +235,22 @@ public interface ApiInterface {
     Call<ResponseBody> call_addDeviceApi(@Header("x-authorization") String token,
                                          @Field("senderId") String senderId,
                                          @Field("deviceId") String deviceId);
+
     @FormUrlEncoded
     @POST(CONTACTLIST)
     Call<ContactListModel> call_contactListApi(@Header("x-authorization") String token,
                                                @Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST(BOARDCAST)
+    Call<ResponseBody> call_boardcastApi(@Header("x-authorization") String token,
+                                         @Field("senderId") String userId,
+                                         @Field("message") String message);
+
+    @FormUrlEncoded
+    @POST(CHANGEPASSWORD)
+    Call<ResponseBody> call_changePasswordApi(@Header("x-authorization") String token,
+                                              @Field("userId") String userId,
+                                              @Field("oldPassword") String oldPassword,
+                                              @Field("newPassword") String newPassword);
 }

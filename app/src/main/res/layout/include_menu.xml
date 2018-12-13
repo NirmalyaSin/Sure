@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:text="Dashboard"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:text="Measure Weight"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />
@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:text="Profile"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:textSize="@dimen/_14sdp"
                 android:text="Accountability Circle"
                 android:textColor="#25415D" />
@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:text="Broadcast Message"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:text="Reminders"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:text="Notifications"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />
@@ -125,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:text="Settings"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />
@@ -135,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
                 android:text="About Us"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />
@@ -145,7 +145,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_12sdp"
+                android:paddingTop="@dimen/_14sdp"
+                android:paddingBottom="@dimen/_14sdp"
                 android:text="Signout"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="#25415D" />

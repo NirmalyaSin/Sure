@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.surefiz.R;
+import com.surefiz.screens.changepassword.ChangePasswordActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.mydevice.MyDeviceActivity;
 import com.surefiz.screens.privacy.PrivacyActivity;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     public View view;
-    RelativeLayout rl_config, rl_device, rl_privacy;
+    RelativeLayout rl_config, rl_device, rl_privacy, rl_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,14 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         rl_config.setOnClickListener(this);
         rl_device.setOnClickListener(this);
         rl_privacy.setOnClickListener(this);
+        rl_password.setOnClickListener(this);
     }
 
     private void initializeView() {
         rl_config = findViewById(R.id.rl_config);
         rl_device = findViewById(R.id.rl_device);
         rl_privacy = findViewById(R.id.rl_privacy);
+        rl_password = findViewById(R.id.rl_password);
         setHeaderView();
     }
 
@@ -73,6 +76,13 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 startActivity(privacyIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             //    finish();
+                break;
+            case R.id.rl_password:
+//                MethodUtils.errorMsg(SettingsActivity.this, "Under Development");
+                Intent passwordIntent = new Intent(this, ChangePasswordActivity.class);
+                startActivity(passwordIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
         }
     }

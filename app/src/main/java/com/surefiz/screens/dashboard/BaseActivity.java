@@ -23,7 +23,9 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.accountability.AcountabilityActivity;
+import com.surefiz.screens.boardcast.BoardCastActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
@@ -236,7 +238,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_about:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                MethodUtils.errorMsg(this, "Under Development");
+                Intent aboutIntent = new Intent(this, AboutUsActivity.class);
+                startActivity(aboutIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
             case R.id.tv_weight:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -249,7 +254,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_circle:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-            //    MethodUtils.errorMsg(this, "Under Development");
+                //    MethodUtils.errorMsg(this, "Under Development");
                 Intent circleIntent = new Intent(this, AcountabilityActivity.class);
                 startActivity(circleIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -257,7 +262,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_message:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                MethodUtils.errorMsg(this, "Under Development");
+                Intent messageIntent = new Intent(this, BoardCastActivity.class);
+                startActivity(messageIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
             case R.id.tv_reminder:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -269,7 +277,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_notification:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-          //      MethodUtils.errorMsg(this, "Under Development");
+                //      MethodUtils.errorMsg(this, "Under Development");
                 Intent notificationIntent = new Intent(this, NotificationActivity.class);
                 startActivity(notificationIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -284,14 +292,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_signout:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                String deviceToken = LoginShared.getDeviceToken(BaseActivity.this);
+                /*String deviceToken = LoginShared.getDeviceToken(BaseActivity.this);
                 LoginShared.destroySessionTypePreference();
                 LoginShared.setDeviceToken(BaseActivity.this, deviceToken);
                 Intent logIntent = new Intent(BaseActivity.this, LoginActivity.class);
                 startActivity(logIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                //callLogoutApi();
+                finish();*/
+                callLogoutApi();
                 break;
         }
     }

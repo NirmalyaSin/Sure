@@ -79,6 +79,8 @@ public class AddUserDialog extends Dialog {
         et_weight = findViewById(R.id.et_weight);
         et_time_loss = findViewById(R.id.et_time_loss);
 
+        hideSoftKeyBoard();
+
         addGenderListAndCall();
         addPrefferedListAndCall();
         addHeightListAndCall("INCH");
@@ -458,7 +460,7 @@ public class AddUserDialog extends Dialog {
         final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(
                 LoginShared.getRegistrationDataModel(activity).getData().getToken(),
                 LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
-                et_name.getText().toString().trim(), et_email.getText().toString().trim(), "10",
+                et_name.getText().toString().trim(), et_email.getText().toString().trim(), et_time_loss.getText().toString().trim(),
                 et_height.getText().toString().trim(), et_weight.getText().toString().trim(), "12345678", gender, et_phone.getText().toString().trim(),
                 et_DOB.getText().toString().trim(), "2", units);
         call_addUser.enqueue(new Callback<ResponseBody>() {

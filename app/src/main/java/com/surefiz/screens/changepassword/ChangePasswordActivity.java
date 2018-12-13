@@ -17,6 +17,7 @@ import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.mydevice.MyDeviceActivity;
+import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
@@ -50,6 +51,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
     private void setClickEvent() {
         btn_submit.setOnClickListener(this);
+        rl_back.setOnClickListener(this);
     }
 
     private void viewBind() {
@@ -63,7 +65,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         tv_universal_header.setText("Change Password");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
-        img_topbar_menu.setVisibility(View.VISIBLE);
+        img_topbar_menu.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         rl_back.setVisibility(View.VISIBLE);
         img_topbar_menu.setVisibility(View.GONE);
@@ -89,7 +91,22 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                     callPasswordChangeApi();
                 }
                 break;
+            case R.id.rl_back:
+                Intent loginIntent = new Intent(ChangePasswordActivity.this, SettingsActivity.class);
+                startActivity(loginIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent loginIntent = new Intent(ChangePasswordActivity.this, SettingsActivity.class);
+        startActivity(loginIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 
     private void callPasswordChangeApi() {

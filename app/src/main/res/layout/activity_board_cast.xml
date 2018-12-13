@@ -19,27 +19,28 @@
         android:layout_marginLeft="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_15sdp"
-        android:padding="@dimen/_10sdp"
         android:background="@drawable/edittext_background"
         android:gravity="top"
-        android:textSize="@dimen/_12sdp"
         android:imeOptions="actionDone"
         android:inputType="text|textCapSentences|textMultiLine"
+        android:padding="@dimen/_10sdp"
         android:textColor="@color/whiteColor"
+        android:textColorHint="@color/whiteColor"
         android:textCursorDrawable="@drawable/cursor_color"
-        android:textColorHint="@color/whiteColor" />
+        android:textSize="@dimen/_12sdp" />
 
-
-    <TextView
-        android:id="@+id/tv_boardcast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_60sdp"
+    <Button
+        android:id="@+id/btn_boardcast"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/et_message"
+        android:layout_margin="@dimen/_44sdp"
+        android:background="@drawable/login_submit_rounded_corner"
         android:text="BOARDCAST"
         android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_25sdp" />
+        android:textSize="@dimen/_14sdp" />
+
+
 
 
 </RelativeLayout>

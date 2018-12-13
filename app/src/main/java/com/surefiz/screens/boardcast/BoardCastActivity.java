@@ -3,6 +3,7 @@ package com.surefiz.screens.boardcast;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
     public View view;
     EditText et_message;
-    TextView tv_boardcast;
+    Button btn_boardcast;
     private LoadingData loader;
 
     @Override
@@ -47,11 +48,11 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
     private void viewBind() {
         et_message = findViewById(R.id.et_message);
-        tv_boardcast = findViewById(R.id.tv_boardcast);
+        btn_boardcast = findViewById(R.id.btn_boardcast);
     }
 
     private void clickEventFunc() {
-        tv_boardcast.setOnClickListener(this);
+        btn_boardcast.setOnClickListener(this);
     }
 
     private void callBoardCastApi() {
@@ -114,7 +115,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.tv_boardcast:
+            case R.id.btn_boardcast:
                 if (et_message.getText().toString().trim().equals("")) {
                     MethodUtils.errorMsg(BoardCastActivity.this, "Please enter some text to BoardCast");
                 } else if (!ConnectionDetector.isConnectingToInternet(BoardCastActivity.this)) {
@@ -123,6 +124,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
                     callBoardCastApi();
                 }
                 break;
+
         }
 
     }

@@ -406,6 +406,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void callRegistrationApi() {
         loader.show_with_label("Loading");
         RequestBody gender = null;
+        RequestBody units = null;
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_full.getText().toString().trim());
@@ -413,7 +414,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_password.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
-        RequestBody preffered = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_units.getText().toString().trim());
+        if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
+            units = RequestBody.create(MediaType.parse("text/plain"), "0");
+        } else {
+            units = RequestBody.create(MediaType.parse("text/plain"), "1");
+        }
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
@@ -429,7 +434,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
 
         Call<ResponseBody> registration_api = apiInterface.call_registrationApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, preffered, scale, deviceType, deviceToken);
+                height, weight, time, units, scale, deviceType, deviceToken);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -489,6 +494,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void callRegistrationApiWithImage() {
         loader.show_with_label("Loading");
         RequestBody gender = null;
+        RequestBody units = null;
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), registrationActivity.mCompressedFile);
@@ -499,7 +505,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_password.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
-        RequestBody preffered = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_units.getText().toString().trim());
+        if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
+            units = RequestBody.create(MediaType.parse("text/plain"), "0");
+        } else {
+            units = RequestBody.create(MediaType.parse("text/plain"), "1");
+        }
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
@@ -516,7 +526,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
         Call<ResponseBody> registration_api = apiInterface.call_registrationImageApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, preffered, deviceType, scale, deviceToken, body);
+                height, weight, time, units, deviceType, scale, deviceToken, body);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override

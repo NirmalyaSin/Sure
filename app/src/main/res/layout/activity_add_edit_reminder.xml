@@ -104,18 +104,21 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/buttonSaveReminder"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/shape_rectangle_blue"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp"
+            android:text="Save Reminder"
+            android:textAllCaps="false"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_60sdp"
+            android:gravity="center" />
 
-    <Button
-        android:id="@+id/buttonSaveReminder"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_30sdp"
-        android:background="@null"
-        android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_12sdp"
-        android:text="Save"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/_30sdp"/>
+    </LinearLayout>
 
 </RelativeLayout>

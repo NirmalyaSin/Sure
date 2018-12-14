@@ -25,6 +25,8 @@ public class SharedUtils {
     public static final String KEY_SHARED_DASHBOARD = "KEY_SHARED_DASHBOARD";
     public static final String KEY_SHARED_SCALE_USER_ID = "KEY_SHARED_SCALE_USER_ID";
     public static final String KEY_SHARED_DEVICE_TOKEN_KEY = "KEY_SHARED_DEVICE_TOKEN_KEY";
+    public static final String KEY_SHARED_USER_PROFILE_PIC = "KEY_SHARED_USER_PROFILE_PIC";
+    public static final String KEY_SHARED_USER_NAME = "KEY_SHARED_USER_NAME";
     public static final String KEY_SHARED_NOTIFICATION_WEIGHT = "KEY_SHARED_NOTIFICATION_WEIGHT";
     public static final String KEY_SHARED_DASHBOARD_FROM = "KEY_SHARED_DASHBOARD_FROM";
     public static final String KEY_SHARED_WEIGHT_PAGE_FROM = "KEY_SHARED_WEIGHT_PAGE_FROM";

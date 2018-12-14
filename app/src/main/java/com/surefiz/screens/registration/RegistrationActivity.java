@@ -10,6 +10,8 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +24,7 @@ import com.gun0912.tedpermission.TedPermission;
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.utils.MediaUtils;
+import com.surefiz.utils.MethodUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,6 +93,26 @@ public class RegistrationActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         registrationClickEvent = new RegistrationClickEvent(this);
+
+        et_scale.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (et_scale.getRight() - et_scale.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        MethodUtils.errorMsg(RegistrationActivity.this, "Check your scale or box for the scale id");
+
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {

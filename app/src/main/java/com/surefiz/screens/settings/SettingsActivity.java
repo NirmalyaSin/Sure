@@ -60,6 +60,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.rl_config:
                 Intent settingsIntent = new Intent(this, WifiConfigActivity.class);
+                settingsIntent.putExtra("comeFrom","1");
                 startActivity(settingsIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

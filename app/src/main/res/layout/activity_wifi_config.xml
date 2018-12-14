@@ -12,6 +12,22 @@
         android:background="@color/statusBarColor"
         android:gravity="center_vertical">
 
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:background="@drawable/back"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
         <Button
             android:id="@+id/btn_skip_config"
             android:layout_width="@dimen/_50sdp"
@@ -153,15 +169,15 @@
                             android:id="@+id/iv_showPassword"
                             android:layout_width="@dimen/_24sdp"
                             android:layout_height="@dimen/_24sdp"
-                            android:visibility="gone"
-                            android:src="@drawable/ic_invisible" />
+                            android:src="@drawable/ic_invisible"
+                            android:visibility="visible" />
 
                         <ImageView
                             android:id="@+id/iv_hidePassword"
                             android:layout_width="@dimen/_24sdp"
                             android:layout_height="@dimen/_24sdp"
                             android:src="@drawable/ic_visible"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <Button

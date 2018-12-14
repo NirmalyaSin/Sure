@@ -77,7 +77,7 @@ public class ProfileActivity extends BaseActivity {
         img_topbar_menu.setVisibility(View.VISIBLE);
     }
 
-    private void showViewMode() {
+    public void showViewMode() {
         iv_plus_add_image.setVisibility(View.GONE);
         btn_register.setVisibility(View.GONE);
         et_phone.setEnabled(false);

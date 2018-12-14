@@ -32,6 +32,7 @@ import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
+import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
 
@@ -60,6 +61,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         permissionHelper = new PermissionHelper(mWifiConfigActivity);
         scaleWiFiConfig = new ScaleWiFiConfig();
         loader = new LoadingData(activity);
+
         showConnectedWifiSSID();
     }
 
@@ -239,7 +241,17 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             loader.dismiss();
         }
         if (sucess) {
-            showalertdialog();
+            if (mWifiConfigActivity.getIntent().getStringExtra("comeFrom") != null) {
+                if (mWifiConfigActivity.getIntent().getStringExtra("comeFrom").equals("1")) {
+                    Toast.makeText(mWifiConfigActivity, "wifi configruation done", Toast.LENGTH_LONG).show();
+                    Intent deviceIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
+                    mWifiConfigActivity.startActivity(deviceIntent);
+                    mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    mWifiConfigActivity.finish();
+                }
+            } else {
+                showalertdialog();
+            }
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(mWifiConfigActivity, "wifi configruation  not done", Toast.LENGTH_LONG).show();

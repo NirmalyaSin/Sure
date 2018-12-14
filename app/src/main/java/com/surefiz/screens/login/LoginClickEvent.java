@@ -2,12 +2,22 @@ package com.surefiz.screens.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
+import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
@@ -25,6 +35,8 @@ import com.surefiz.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +46,7 @@ import retrofit2.Retrofit;
 public class LoginClickEvent implements View.OnClickListener {
     LoginActivity mLoginActivity;
     private LoadingData loader;
+    private CallbackManager callbackManager;
 
     public LoginClickEvent(LoginActivity activity) {
         this.mLoginActivity = activity;
@@ -46,7 +59,7 @@ public class LoginClickEvent implements View.OnClickListener {
     private void setClickEvent() {
         mLoginActivity.btnLogin.setOnClickListener(this);
         mLoginActivity.tv_register.setOnClickListener(this);
-        mLoginActivity.iv_facebook.setOnClickListener(this);
+        //mLoginActivity.iv_facebook.setOnClickListener(this);
         mLoginActivity.iv_twiter.setOnClickListener(this);
         mLoginActivity.tv_forgetPassword.setOnClickListener(this);
     }
@@ -62,10 +75,6 @@ public class LoginClickEvent implements View.OnClickListener {
 
             case R.id.btnLogin:
                 blankvalidationandapicall();
-                break;
-
-            case R.id.iv_facebook:
-                MethodUtils.errorMsg(mLoginActivity, "Under Development");
                 break;
 
             case R.id.iv_twiter:
@@ -115,6 +124,8 @@ public class LoginClickEvent implements View.OnClickListener {
                         LoginShared.setWeightPageFrom(mLoginActivity, "0");
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
+                        LoginShared.setUserPhoto(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserPhoto());
+                        LoginShared.setUserName(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserName());
                         if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
                             Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
                             mLoginActivity.startActivity(intent);

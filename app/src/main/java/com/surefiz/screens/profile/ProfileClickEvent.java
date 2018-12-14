@@ -311,13 +311,19 @@ public class ProfileClickEvent implements View.OnClickListener {
                 activity.iv_edit.setVisibility(View.VISIBLE);
                 try {
                     String responseString = response.body().string();
-
+                    Gson gson = new Gson();
+                    ViewProfileModel viewProfileModel;
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
-                        JSONObject jObject = jsonObject.getJSONObject("data");
 
+                        viewProfileModel = gson.fromJson(responseString, ViewProfileModel.class);
+                        LoginShared.setViewProfileDataModel(activity, viewProfileModel);
+                        JSONObject jObject = jsonObject.getJSONObject("data");
+                        LoginShared.setUserPhoto(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserImage());
+                        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.iv_edit.setVisibility(View.VISIBLE);
+                        activity.showViewMode();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(activity);
                         LoginShared.destroySessionTypePreference();
@@ -383,12 +389,17 @@ public class ProfileClickEvent implements View.OnClickListener {
                 activity.iv_edit.setVisibility(View.VISIBLE);
                 try {
                     String responseString = response.body().string();
-
+                    Gson gson = new Gson();
+                    ViewProfileModel viewProfileModel;
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
+                        viewProfileModel = gson.fromJson(responseString, ViewProfileModel.class);
+                        LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         JSONObject jObject = jsonObject.getJSONObject("data");
-
+                        LoginShared.setUserPhoto(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserImage());
+                        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
+                        activity.showViewMode();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(activity);
                         LoginShared.destroySessionTypePreference();

@@ -191,6 +191,42 @@ public class LoginShared {
     }
 
     /**
+     * USER PHOTO
+     */
+    public static void setUserPhoto(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_USER_PROFILE_PIC, value);
+        editor.commit();
+    }
+
+    public static String getUserPhoto(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_USER_PROFILE_PIC, SharedUtils.KEY_SHARED_NO_DATA);
+    }
+
+    /**
+     * USER NAME
+     */
+    public static void setUserName(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_USER_NAME, value);
+        editor.commit();
+    }
+
+    public static String getUserName(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_USER_NAME, SharedUtils.KEY_SHARED_NO_DATA);
+    }
+
+    /**
      * NOTIFICATION WEIGHT
      */
     public static void setNotificationWeight(Context context, String value) {

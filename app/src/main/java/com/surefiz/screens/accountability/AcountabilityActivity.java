@@ -142,7 +142,9 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     public void onPerformanceClick(int position) {
         Intent intent = new Intent(AcountabilityActivity.this, DashBoardActivity.class);
         intent.putExtra("id", arrayListUsers.get(position).getUser_id());
+        intent.putExtra("page", "1");
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
 
     }

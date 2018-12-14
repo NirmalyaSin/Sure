@@ -2,9 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alpha="0.6"
-    android:background="@drawable/splash_image">
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/statusBarColor">
+
+        <TextView
+            android:id="@+id/tv_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Login"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_header"
+        android:alpha="0.6"
+        android:background="@drawable/splash_image" />
 
     <ScrollView
         android:id="@+id/sv_main"
@@ -33,7 +55,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email Id"
+                android:text="Email"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
@@ -97,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:paddingTop="@dimen/_20sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="Forgot Password?"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/_14sdp" />
@@ -106,11 +128,25 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_margin="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@drawable/login_submit_rounded_corner"
                 android:text="LOGIN"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/solid_circle"
+                android:padding="@dimen/_10sdp"
+                android:text="OR"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/blue" />
 
             <requestFocus />
 

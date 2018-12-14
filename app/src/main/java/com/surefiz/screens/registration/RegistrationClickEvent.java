@@ -453,6 +453,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationModel);
                         JSONObject jsObject = jsonObject.getJSONObject("data");
+                        LoginShared.setUserPhoto(registrationActivity,LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
+                        LoginShared.setUserName(registrationActivity,LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {
@@ -547,6 +549,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationModel);
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
+                        LoginShared.setUserPhoto(registrationActivity,LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
+                        LoginShared.setUserName(registrationActivity,LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {

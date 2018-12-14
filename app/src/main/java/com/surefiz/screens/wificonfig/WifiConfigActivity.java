@@ -1,13 +1,20 @@
 package com.surefiz.screens.wificonfig;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
+import com.surefiz.screens.mydevice.MyDeviceActivity;
+import com.surefiz.screens.settings.SettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +34,8 @@ public class WifiConfigActivity extends AppCompatActivity {
     ImageView iv_showPassword;
     @BindView(R.id.iv_hidePassword)
     ImageView iv_hidePassword;
+    @BindView(R.id.rl_back)
+    RelativeLayout rl_back;
 
     private WifiActivityClickEvent wifiActivityClickEvent;
 
@@ -35,6 +44,27 @@ public class WifiConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_config);
         ButterKnife.bind(this);
+        setViewAndFunctionality();
+        editPassword.setTransformationMethod
+                (HideReturnsTransformationMethod.getInstance());
         wifiActivityClickEvent = new WifiActivityClickEvent(this);
+    }
+
+    private void setViewAndFunctionality() {
+        if (getIntent().getStringExtra("comeFrom") != null)
+            if (getIntent().getStringExtra("comeFrom").equals("1")) {
+                rl_back.setVisibility(View.VISIBLE);
+                btn_skip_config.setVisibility(View.GONE);
+
+                rl_back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent deviceIntent = new Intent(WifiConfigActivity.this, SettingsActivity.class);
+                        startActivity(deviceIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                });
+            }
     }
 }

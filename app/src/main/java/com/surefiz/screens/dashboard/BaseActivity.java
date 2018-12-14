@@ -125,17 +125,32 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showData() {
-        tv_user_name.setText(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserName());
+        tv_user_name.setText(LoginShared.getUserName(this));
         showImage();
     }
 
     private void showImage() {
-        if (LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto().equals("") ||
+        /*if (LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto().equals("") ||
                 LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto().equalsIgnoreCase("null") ||
                 LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto() == null) {
             img_topbar_menu_profile.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.prof_img_placeholder));
+        } else if (!LoginShared.getViewProfileDataModel(this).getData().getUser().get(0).getUserImage().equals("") ||
+                !LoginShared.getViewProfileDataModel(this).getData().getUser().get(0).getUserImage().equalsIgnoreCase("null") ||
+                LoginShared.getViewProfileDataModel(this).getData().getUser().get(0).getUserImage() != null) {
+            String url = LoginShared.getViewProfileDataModel(this).getData().getUser().get(0).getUserImage();
+            url = url.replace(" ", "20%");
+            imageLoader.displayImage(url, img_topbar_menu_profile);
         } else {
             String url = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto();
+            url = url.replace(" ", "20%");
+            imageLoader.displayImage(url, img_topbar_menu_profile);
+        }*/
+        if (LoginShared.getUserPhoto(this).equals("") ||
+                LoginShared.getUserPhoto(this).equalsIgnoreCase("null") ||
+                LoginShared.getUserPhoto(this) == null) {
+            img_topbar_menu_profile.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.prof_img_placeholder));
+        } else {
+            String url = LoginShared.getUserPhoto(this);
             url = url.replace(" ", "20%");
             imageLoader.displayImage(url, img_topbar_menu_profile);
         }
@@ -209,6 +224,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_topbar_menu:
+                showData();
                 if (isDrawerOpen())
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
                 else {
@@ -269,7 +285,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_reminder:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-         //       MethodUtils.errorMsg(this, "Under Development");
+                //       MethodUtils.errorMsg(this, "Under Development");
                 Intent reminderIntent = new Intent(this, ReminderActivity.class);
                 startActivity(reminderIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

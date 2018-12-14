@@ -2,6 +2,7 @@ package com.surefiz.screens.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +47,7 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.dashboard.adapter.ContactListAdapter;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.login.LoginActivity;
@@ -101,6 +103,21 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         if (getIntent().getStringExtra("id") != null) {
             id = getIntent().getStringExtra("id");
+            if (getIntent().getStringExtra("page").equals("1")) {
+                rl_back.setVisibility(View.VISIBLE);
+                tv_universal_header.setText("Performance");
+                img_topbar_menu.setVisibility(View.GONE);
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                rl_back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(DashBoardActivity.this, AcountabilityActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                });
+            }
             rv_items.setVisibility(View.GONE);
         } else {
             id = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();

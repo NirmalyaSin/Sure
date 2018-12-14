@@ -31,7 +31,11 @@ public class SplashActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            LoginShared.setWeightFromNotification(this, "1");
+            if (getIntent().hasExtra("_fbSourceApplicationHasBeenSet")) {
+                System.out.print("SureFIZ");
+            } else {
+                LoginShared.setWeightFromNotification(this, "1");
+            }
         }
         if (getIntent().getStringExtra("notificationFlag") != null) {
             notificationPage = getIntent().getStringExtra("notificationFlag");

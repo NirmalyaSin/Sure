@@ -139,8 +139,9 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                         if(oldPagination==0){
                             arrayListConversation.clear();
                         }
-                       Collections.sort(response.body().getData().getConversations());
-                 //      Collections.reverse(response.body().getData().getConversations());
+               //        Collections.sort(response.body().getData().getConversations());
+                        Collections.reverse(response.body().getData().getConversations());
+
                        arrayListConversation.addAll(0, response.body().getData().getConversations());
                     }
 

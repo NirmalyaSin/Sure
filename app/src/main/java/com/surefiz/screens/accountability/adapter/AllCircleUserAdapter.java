@@ -49,8 +49,8 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
             Picasso.with(mContext)
                     .load(image)
                     .fit()
-                    .placeholder(R.drawable.user_black)
-                    .error(R.drawable.user_black)
+                    .placeholder(R.drawable.prof_img_placeholder)
+                    .error(R.drawable.prof_img_placeholder)
                     .into(holder.imageUserProfile);
         }
 

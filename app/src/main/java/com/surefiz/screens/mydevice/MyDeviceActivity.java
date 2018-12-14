@@ -24,6 +24,7 @@ import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
+import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -130,6 +131,10 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
+                        RegistrationModel registrationModel = LoginShared.getRegistrationDataModel(MyDeviceActivity.this);
+                        registrationModel.getData().getUser().get(0).setUserMac(et_id.getText().toString().trim());
+                        LoginShared.setRegistrationDataModel(MyDeviceActivity.this, registrationModel);
+
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
                         MethodUtils.errorMsg(MyDeviceActivity.this, jsObject.getString("message"));

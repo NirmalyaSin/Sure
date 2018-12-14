@@ -127,19 +127,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         //callContactsApi();
         callUserListApi();
         setRecyclerViewItem();
-//        setWeightChart();
-        /*showGoalsAndAcheivementsChart();
-        showGoalsChart();
-        setWeightChart();
-        setWeightLossChart();
-        setBMIChart();
-        setSubGoalsChart();*/
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (getIntent().getStringExtra("id") != null) {
+            if (getIntent().getStringExtra("page").equals("1")) {
+                Intent intent = new Intent(DashBoardActivity.this, AcountabilityActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             }
-        }, 100);*/
+        }
     }
 
     private void setRecyclerViewItem() {
@@ -448,7 +448,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         HIColumn series1 = new HIColumn();
         series1.setName("Expected Weight To Go");
 //        series1.setColor(HIColor.initWithHexValue("#49b782"));
-        CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo().toArray(new CharSequence[0]);
+        Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo().toArray(new Number[0]);
         /*Object[] series1_data = new Object[]{
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData()};*/
 
@@ -465,7 +465,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         HIColumn series2 = new HIColumn();
         series2.setName("Acheived Weight");
 //        series2.setColor(HIColor.initWithHexValue("#FFAF44"));
-        CharSequence[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight().toArray(new CharSequence[0]);
+        Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight().toArray(new Number[0]);
         Number[] numbers1 = new Number[series2_data.length];
         for (int i = 0; i < series2_data.length; i++) {
             numbers1[i] = Double.parseDouble(String.valueOf(series2_data[i]));
@@ -580,8 +580,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         tooltip.setPointFormat("<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>");
         optionsGoals.setTooltip(tooltip);*/
 
-        CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getNextSubGoal().
-                getData().toArray(new CharSequence[0]);
+        Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getNextSubGoal().
+                getData().toArray(new Number[0]);
         /*Object[] series1_data = new Object[]{
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData()};*/
 //        Number[] numbers = new Number[series1_data.length];
@@ -804,7 +804,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         //Number[] series1_data = new Number[]{null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950, 10871, 0};
         series1.setData(new ArrayList<>(Arrays.asList(numbers)));*/
 
-        CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData().toArray(new CharSequence[0]);
+        Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData().toArray(new Number[0]);
         /*Object[] series1_data = new Object[]{
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData()};*/
         Number[] numbers = new Number[series1_data.length];
@@ -885,11 +885,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         pie.setName("Brands");
         HashMap<String, Object> map1 = new HashMap<>();
         map1.put("name", "Acheived");
-        map1.put("y", Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getAchieved()));
+        map1.put("y", LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getAchieved());
 
         HashMap<String, Object> map2 = new HashMap<>();
         map2.put("name", "ToGo");
-        map2.put("y", Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getToGo()));
+        map2.put("y", LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getToGo());
         map2.put("sliced", true);
         map2.put("selected", true);
 
@@ -996,7 +996,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         series1.setName("Progress");
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData() != null ||
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().size() > 0) {
-            CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().toArray(new CharSequence[0]);
+            Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().toArray(new Number[0]);
             Number[] numbers = new Number[series1_data.length];
             for (int i = 0; i < series1_data.length; i++) {
                 numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
@@ -1101,7 +1101,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         line1.setName("Installation");
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson() != null ||
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().size() > 0) {
-            CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().toArray(new CharSequence[0]);
+            Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().toArray(new Number[0]);
             Number[] numbers = new Number[series1_data.length];
             for (int i = 0; i < series1_data.length; i++) {
                 numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));

@@ -9,7 +9,7 @@ public class Goals {
 
     @SerializedName("minigoalsjson")
     @Expose
-    private List<String> minigoalsjson = null;
+    private List<Double> minigoalsjson = null;
     @SerializedName("miniweeksjson")
     @Expose
     private List<String> miniweeksjson = null;
@@ -18,7 +18,7 @@ public class Goals {
     private String miniweighttext;
     @SerializedName("TargetWeight")
     @Expose
-    private String targetWeight;
+    private Integer targetWeight;
     @SerializedName("ms1")
     @Expose
     private Integer ms1;
@@ -32,11 +32,11 @@ public class Goals {
     @Expose
     private Integer me2;
 
-    public List<String> getMinigoalsjson() {
+    public List<Double> getMinigoalsjson() {
         return minigoalsjson;
     }
 
-    public void setMinigoalsjson(List<String> minigoalsjson) {
+    public void setMinigoalsjson(List<Double> minigoalsjson) {
         this.minigoalsjson = minigoalsjson;
     }
 
@@ -56,11 +56,11 @@ public class Goals {
         this.miniweighttext = miniweighttext;
     }
 
-    public String getTargetWeight() {
+    public Integer getTargetWeight() {
         return targetWeight;
     }
 
-    public void setTargetWeight(String targetWeight) {
+    public void setTargetWeight(Integer targetWeight) {
         this.targetWeight = targetWeight;
     }
 

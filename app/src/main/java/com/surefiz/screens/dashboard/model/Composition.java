@@ -9,35 +9,35 @@ public class Composition {
 
     @SerializedName("overallData")
     @Expose
-    private List<String> overallData = null;
+    private List<Double> overallData = null;
     @SerializedName("muscle")
     @Expose
-    private String muscle;
+    private Double muscle;
     @SerializedName("fat")
     @Expose
-    private String fat;
+    private Double fat;
 
-    public List<String> getOverallData() {
+    public List<Double> getOverallData() {
         return overallData;
     }
 
-    public void setOverallData(List<String> overallData) {
+    public void setOverallData(List<Double> overallData) {
         this.overallData = overallData;
     }
 
-    public String getMuscle() {
+    public Double getMuscle() {
         return muscle;
     }
 
-    public void setMuscle(String muscle) {
+    public void setMuscle(Double muscle) {
         this.muscle = muscle;
     }
 
-    public String getFat() {
+    public Double getFat() {
         return fat;
     }
 
-    public void setFat(String fat) {
+    public void setFat(Double fat) {
         this.fat = fat;
     }
 

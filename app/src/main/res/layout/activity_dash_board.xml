@@ -178,6 +178,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:alpha="0.5"
                     android:background="#A9A9A9"
                     android:visibility="visible"

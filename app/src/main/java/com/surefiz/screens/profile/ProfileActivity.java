@@ -85,6 +85,7 @@ public class ProfileActivity extends BaseActivity {
         et_gender.setEnabled(false);
         et_DOB.setEnabled(false);
         et_units.setEnabled(false);
+        profile_image.setEnabled(false);
     }
 
     private void initView() {

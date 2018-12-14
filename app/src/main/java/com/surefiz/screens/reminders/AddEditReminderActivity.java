@@ -113,6 +113,9 @@ public class AddEditReminderActivity extends BaseActivity implements
                     editReminderText.setText(mReminder.getMessage());
                     editReminderDate.setText(mReminder.getDate());
                     editReminderTime.setText(mReminder.getTime());
+                    editReminderDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    editReminderTime.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
                     //Disable Edit Functionality
                     editReminderText.setFocusable(false);
                     editReminderText.setFocusableInTouchMode(false);

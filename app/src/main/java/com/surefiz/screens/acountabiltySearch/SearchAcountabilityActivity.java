@@ -1,5 +1,7 @@
 package com.surefiz.screens.acountabiltySearch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -165,6 +167,14 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         btn_add.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
+        img_topbar_menu.setVisibility(View.GONE);
+        rl_back.setVisibility(View.VISIBLE);
+        rl_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -202,29 +212,20 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                 if (loadingData != null && loadingData.isShowing()) {
                     loadingData.dismiss();
                 }
-                Log.d("@@RequestData : " , response.body().toString());
-
-                switch (response.body().getStatus()){
-                    case 1:
-                        if(response.body().getData().getType()
-                                .equals(RequestState.RESPONSE_TYPE_REQUESTED)) {
-                            //Change the status of Connection in Model
-                            arrayListUsers.get(listPosition)
-                                    .setConnectionStatus(RequestState.STATUS_REQUEST_SENT);
-                        }else {
-                            //Change the status of Connection in Model
-                            arrayListUsers.get(listPosition)
-                                    .setConnectionStatus(RequestState.RESPONSE_TYPE_CANCELED);
-                        }
-
-                        break;
+                if(response.body()!=null) {
+                    Log.d("@@RequestData : ", response.body().toString());
                 }
 
-                //Notify adapter for changes
-                mSearchCircleUserAdapter.notifyDataSetChanged();
-                //Show dialog to show response from server
-                MethodUtils.errorMsg(SearchAcountabilityActivity.this,
-                        response.body().getData().getMessage());
+                if(response.body().getStatus()==1){
+                    //Show success dialog
+                    showResponseDialog(response.body().getStatus(),
+                            response.body().getData().getMessage());
+                }else {
+                    //Show dialog to show response from server
+                    MethodUtils.errorMsg(SearchAcountabilityActivity.this,
+                            response.body().getData().getMessage());
+                }
+
             }
 
             @Override
@@ -244,5 +245,23 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                 searchBar.setText("");
             }
         });
+    }
+
+    public void showResponseDialog(int status, String message){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(false);
+        dialog.setMessage(message);
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Cancel the dialog.
+                dialog.dismiss();
+                //Call Privacy list Api Again
+                callSearchCircleUserApi(searchBar.getText().toString().trim());
+            }
+        });
+
+        dialog.create();
+        dialog.show();
     }
 }

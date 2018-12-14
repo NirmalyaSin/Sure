@@ -44,7 +44,7 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
 
     @Override
     public void onBindViewHolder(@NonNull SearchCircleUserViewHolder holder, int position) {
-        holder.textUserName.setText(arrayListCircleUser.get(position).getUser_search_image());
+        holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
     //    Log.d("@@ListUser : ", arrayListCircleUser.get(position).toString());
 
         String image = arrayListCircleUser.get(position).getUser_search_image();
@@ -53,8 +53,8 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
             Picasso.with(mContext)
                     .load(image)
                     .fit()
-                    .placeholder(R.drawable.user_black)
-                    .error(R.drawable.user_black)
+                    .placeholder(R.drawable.prof_img_placeholder)
+                    .error(R.drawable.prof_img_placeholder)
                     .into(holder.imageUserProfile);
         }
 

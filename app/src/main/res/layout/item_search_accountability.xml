@@ -23,7 +23,7 @@
                 android:id="@+id/imageUserProfile"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
-                android:src="@drawable/user_black"/>
+                android:src="@drawable/prof_img_placeholder"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -66,6 +66,7 @@
                 android:text="Request Sent"
                 android:layout_gravity="end"
                 android:textAllCaps="false"
+                android:alpha="0.6"
                 android:textColor="@color/whiteColor"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"

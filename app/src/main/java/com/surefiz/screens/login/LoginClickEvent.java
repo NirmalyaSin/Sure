@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -22,6 +24,11 @@ import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import org.json.JSONObject;
 
@@ -34,10 +41,26 @@ import retrofit2.Retrofit;
 public class LoginClickEvent implements View.OnClickListener {
     LoginActivity mLoginActivity;
     private LoadingData loader;
+    private FirebaseAuth mAuth;
+    private TwitterAuthClient mTwitterAuthClient;
+
 
     public LoginClickEvent(LoginActivity activity) {
         this.mLoginActivity = activity;
         loader = new LoadingData(mLoginActivity);
+/*
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(
+                mLoginActivity.getResources().getString(R.string.twitter_consumer_key),
+                mLoginActivity.getResources().getString(R.string.twitter_consumer_secret));
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        //Twitter Auth-Client
+        mTwitterAuthClient = new TwitterAuthClient();*/
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+     //   FirebaseUser currentUser = mAuth.getCurrentUser();
+    //    updateUI(currentUser);
+
         //    hideSoftKeyBoard();
         setClickEvent();
     }
@@ -70,6 +93,9 @@ public class LoginClickEvent implements View.OnClickListener {
 
             case R.id.iv_twiter:
                 MethodUtils.errorMsg(mLoginActivity, "Under Development");
+                //Perform Twitter login
+           //     performTwiterLogin();
+
                 break;
 
             case R.id.tv_register:
@@ -77,6 +103,25 @@ public class LoginClickEvent implements View.OnClickListener {
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
+    }
+
+    private void performTwiterLogin() {
+        mTwitterAuthClient.authorize(mLoginActivity,
+            new com.twitter.sdk.android.core.Callback<TwitterSession>() {
+
+                @Override
+                public void success(Result<TwitterSession> twitterSessionResult) {
+                    // Success
+                    Log.d("@@TwiterLogin: ",
+                            "user = "+twitterSessionResult.data.getUserName()
+                                    +"\nResponse = "+twitterSessionResult.response.body());
+                }
+
+                @Override
+                public void failure(TwitterException e) {
+                    e.printStackTrace();
+                }
+            });
     }
 
     private void blankvalidationandapicall() {

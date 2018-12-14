@@ -7,7 +7,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.surefiz.R;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,4 +40,5 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         loginClickEvent = new LoginClickEvent(this);
     }
+
 }

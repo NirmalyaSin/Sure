@@ -18,6 +18,7 @@ import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
@@ -139,22 +140,26 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                         if(oldPagination==0){
                             arrayListConversation.clear();
                         }
-                       Collections.sort(response.body().getData().getConversations());
-                 //      Collections.reverse(response.body().getData().getConversations());
+               //        Collections.sort(response.body().getData().getConversations());
+                        Collections.reverse(response.body().getData().getConversations());
+
                        arrayListConversation.addAll(0, response.body().getData().getConversations());
+
+                        mChatAdapter.notifyDataSetChanged();
+                        if(oldPagination==0){
+                            recyclerView.smoothScrollToPosition(arrayListConversation.size());
+                        }
+                    }else {
+                        MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
                     }
 
-                    mChatAdapter.notifyDataSetChanged();
-                    if(oldPagination==0){
-                        recyclerView.smoothScrollToPosition(arrayListConversation.size());
-                    }
                 }
 
                 @Override
                 public void onFailure(Call<ChatListResponse> call, Throwable t) {
                     if (loadingData != null && loadingData.isShowing())
                         loadingData.dismiss();
-                //    MethodUtils.errorMsg(ChatActivity.this, getString(R.string.error_occurred));
+                    MethodUtils.errorMsg(ChatActivity.this, getString(R.string.error_occurred));
                 }
             });
         }

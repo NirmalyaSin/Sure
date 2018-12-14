@@ -23,7 +23,7 @@
                 android:id="@+id/imageUserProfile"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
-                android:src="@drawable/user_black"/>
+                android:src="@drawable/prof_img_placeholder"/>
 
             <ImageView
                 android:id="@+id/imageOnlineOffline"

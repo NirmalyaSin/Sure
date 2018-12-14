@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Conversation implements Comparable<Conversation>{
+public class Conversation /*implements Comparable<Conversation>*/{
     @SerializedName("senderId")
     Integer senderId;
     @SerializedName("reciverId")
@@ -67,8 +67,8 @@ public class Conversation implements Comparable<Conversation>{
                 '}';
     }
 
-    @Override
+   /* @Override
     public int compareTo(@NonNull Conversation object) {
         return dateTime.compareTo(object.dateTime);
-    }
+    }*/
 }

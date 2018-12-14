@@ -74,7 +74,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void getHashKey() {
         PackageInfo info;
         try {
-            info = getPackageManager().getPackageInfo("com.surefiz", PackageManager.GET_SIGNATURES);
+            info = getPackageManager().getPackageInfo("com.surefiz",
+                    PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md;
                 md = MessageDigest.getInstance("SHA");

@@ -25,4 +25,8 @@
     <string name="go_next_action">Go DashBoard</string>
     <string name="skip">Skip</string>
     <string name="fcm_default_notification_channel_id" translatable="false">surefiz_general</string>
+
+    <!-- Twitter consumer key and secret -->
+    <string name="twitter_consumer_key" translatable="false">yyHhnmp0arMveGG8P7xGxE8Vm</string>
+    <string name="twitter_consumer_secret" translatable="false">Hvi5rMmOGJ9yKXa6VbdJ5bfV7YuL4OAvexL8FSCvAMTtkAQzcx</string>
 </resources>

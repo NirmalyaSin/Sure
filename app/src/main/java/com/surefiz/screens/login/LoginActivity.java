@@ -33,6 +33,10 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import com.google.firebase.auth.FirebaseUser;
+import com.surefiz.R;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -181,4 +185,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
 //        loginwithSocial(socialName, socialId, getString(R.string.fb_login_type));
     }
+
 }

@@ -201,12 +201,20 @@
                     android:layout_weight="1"
                     android:gravity="left">
 
+                    <!--<com.twitter.sdk.android.core.identity.TwitterLoginButton
+                        android:id="@+id/iv_twiter"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:background="@drawable/ic_twitter"
+                        android:scaleType="fitXY"/>-->
+
                     <ImageView
                         android:id="@+id/iv_twiter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_twitter" />
+
                 </RelativeLayout>
             </LinearLayout>
 

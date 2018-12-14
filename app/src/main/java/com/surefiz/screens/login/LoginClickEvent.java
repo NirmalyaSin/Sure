@@ -2,22 +2,13 @@ package com.surefiz.screens.login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
-import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
@@ -27,15 +18,17 @@ import com.surefiz.screens.forgotpassword.ForgotPasswordActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+
 
 import org.json.JSONObject;
-
-import java.util.Arrays;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -46,11 +39,25 @@ import retrofit2.Retrofit;
 public class LoginClickEvent implements View.OnClickListener {
     LoginActivity mLoginActivity;
     private LoadingData loader;
-    private CallbackManager callbackManager;
+    private FirebaseAuth mAuth;
+    private TwitterAuthClient mTwitterAuthClient;
 
     public LoginClickEvent(LoginActivity activity) {
         this.mLoginActivity = activity;
         loader = new LoadingData(mLoginActivity);
+/*
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(
+                mLoginActivity.getResources().getString(R.string.twitter_consumer_key),
+                mLoginActivity.getResources().getString(R.string.twitter_consumer_secret));
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        //Twitter Auth-Client
+        mTwitterAuthClient = new TwitterAuthClient();*/
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+     //   FirebaseUser currentUser = mAuth.getCurrentUser();
+    //    updateUI(currentUser);
+
         //    hideSoftKeyBoard();
         setClickEvent();
     }
@@ -79,6 +86,9 @@ public class LoginClickEvent implements View.OnClickListener {
 
             case R.id.iv_twiter:
                 MethodUtils.errorMsg(mLoginActivity, "Under Development");
+                //Perform Twitter login
+           //     performTwiterLogin();
+
                 break;
 
             case R.id.tv_register:
@@ -86,6 +96,25 @@ public class LoginClickEvent implements View.OnClickListener {
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
+    }
+
+    private void performTwiterLogin() {
+        mTwitterAuthClient.authorize(mLoginActivity,
+            new com.twitter.sdk.android.core.Callback<TwitterSession>() {
+
+                @Override
+                public void success(Result<TwitterSession> twitterSessionResult) {
+                    // Success
+                    Log.d("@@TwiterLogin: ",
+                            "user = "+twitterSessionResult.data.getUserName()
+                                    +"\nResponse = "+twitterSessionResult.response.body());
+                }
+
+                @Override
+                public void failure(TwitterException e) {
+                    e.printStackTrace();
+                }
+            });
     }
 
     private void blankvalidationandapicall() {

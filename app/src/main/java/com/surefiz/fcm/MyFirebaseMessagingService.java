@@ -1,8 +1,10 @@
 package com.surefiz.fcm;
 
+import android.app.ActivityManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -17,11 +19,21 @@ import com.firebase.jobdispatcher.Job;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.surefiz.R;
+import com.surefiz.application.MyApplicationClass;
 import com.surefiz.screens.SplashActivity;
+import com.surefiz.screens.chat.ChatActivity;
+import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.Map;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    private MyApplicationClass myApplicationClass;
 
     private static final String TAG = "MyFirebaseMsgService";
 
@@ -33,7 +45,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-       LoginShared.setWeightFromNotification(this, "1");
+        LoginShared.setWeightFromNotification(this, "1");
+        myApplicationClass = (MyApplicationClass) getApplication();
 
 
         Log.d(TAG, "FromDataPush: " + remoteMessage.getData());
@@ -41,10 +54,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
+            ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+            Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            componentInfo.getPackageName();
+            JSONObject jsonObject = null;
+            JSONObject jObject = null;
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-                LoginShared.setWeightFromNotification(this,"1");
+                try {
+                    jsonObject = new JSONObject(remoteMessage.getData().toString());
+                    jObject = jsonObject.getJSONObject("pushData");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (jObject.optInt("pushType") == 2) {
+                    if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.chat.ChatActivity")) {
+                        Conversation conversation = new Conversation();
+                        conversation.setDateTime(jObject.optString("dateTime"));
+                        conversation.setMessage(jObject.optString("message"));
+                        conversation.setMessageFrom(jObject.optString("messageFrom"));
+                        conversation.setReciverId(Integer.parseInt(jObject.optString("receiverId")));
+                        conversation.setSenderId(Integer.parseInt(jObject.optString("senderId")));
+                        myApplicationClass.chatListNotification.add(conversation);
+                    }
+                } else {
+                    LoginShared.setWeightFromNotification(this, "1");
+                }
                 scheduleJob();
             } else {
                 // Handle message within 10 seconds
@@ -54,8 +92,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
+            ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+            Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            componentInfo.getPackageName();
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            showNotification(remoteMessage.getNotification());
+            if (!taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.chat.ChatActivity")) {
+                showNotification(remoteMessage.getNotification(), remoteMessage.getData());
+            }
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -88,14 +133,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * Create and show a simple notification containing the received FCM message.
      *
      * @param serverNotification FCM serverNotification received.
+     * @param data
      */
-    private void showNotification(RemoteMessage.Notification serverNotification) {
+    private void showNotification(RemoteMessage.Notification serverNotification, Map<String, String> data) {
         Log.d("@@Notify : ", "message Received");
-        Intent intent = new Intent(this, SplashActivity.class);
-        intent.putExtra("notificationFlag", "1");
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent;
+        JSONObject jsonObject = null;
+        JSONObject jObject = null;
+        try {
+            jsonObject = new JSONObject(data.toString());
+            jObject = jsonObject.getJSONObject("pushData");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (jObject.optInt("pushType") == 2) {
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.putExtra("notificationFlag", "1");
+            intent.putExtra("reciver_id",jObject.optString("senderId"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        } else {
+            Intent intent = new Intent(this, SplashActivity.class);
+            intent.putExtra("notificationFlag", "1");
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        }
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
 

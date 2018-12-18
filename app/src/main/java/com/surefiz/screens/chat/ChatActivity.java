@@ -1,6 +1,7 @@
 package com.surefiz.screens.chat;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.application.MyApplicationClass;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.chat.adapter.ChatAdapter;
@@ -41,12 +43,17 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
     private int oldPagination;
     private EditText editTextMessage;
     private ImageView imageSendMsg;
+    public Handler handler;
+    private MyApplicationClass myApplicationClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_chat, null);
         addContentView(view);
+        handler = new Handler();
+        myApplicationClass = (MyApplicationClass) getApplication();
+        LoginShared.setWeightFromNotification(this, "0");
         //Receive receiverId from previous page.
         receiver_id = getIntent().getStringExtra("reciver_id");
         //Initialize Views
@@ -76,6 +83,20 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                 }
             }
         });
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                /*draftModelArrayList.clear();
+                getJsonData();*/
+                if (myApplicationClass.chatListNotification.size() > 0) {
+                    arrayListConversation.addAll(myApplicationClass.chatListNotification);
+                    mChatAdapter.notifyDataSetChanged();
+                    recyclerView.scrollToPosition(arrayListConversation.size() - 1);
+                    myApplicationClass.chatListNotification.clear();
+                }
+                handler.postDelayed(this, 500);
+            }
+        }, 500);
     }
 
     private void setRecyclerViewItem() {
@@ -149,6 +170,7 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                         if (oldPagination == 0) {
                             recyclerView.smoothScrollToPosition(arrayListConversation.size());
                         }
+                        myApplicationClass.chatListNotification.clear();
                     } else {
                         MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
                     }

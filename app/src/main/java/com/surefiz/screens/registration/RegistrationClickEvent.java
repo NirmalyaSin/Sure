@@ -415,9 +415,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
-            units = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else {
+            units = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
@@ -508,9 +508,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
-            units = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else {
+            units = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");

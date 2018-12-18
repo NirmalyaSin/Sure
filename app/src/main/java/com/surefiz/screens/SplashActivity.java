@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.surefiz.R;
+import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
@@ -17,22 +18,42 @@ import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class SplashActivity extends AppCompatActivity {
 
     RegistrationModel loginModel;
     private String notificationPage;
+    private String receiver_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         MethodUtils.fullScreen(this);
+        //bundle.get("pushData")
+        //pushData
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            if (getIntent().hasExtra("_fbSourceApplicationHasBeenSet")) {
+            JSONObject jsonObject1 = null;
+            if (getIntent().hasExtra("_fbSourceApplicationHasBeenSet") && !getIntent().hasExtra("pushData")) {
                 System.out.print("SureFIZ");
+            } else if (getIntent().hasExtra("pushData")) {
+                String value = bundle.get("pushData").toString();
+                try {
+                    jsonObject1 = new JSONObject(value);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (jsonObject1.optInt("pushType") == 2) {
+                    receiver_id = jsonObject1.optString("senderId");
+                    LoginShared.setWeightFromNotification(this, "2");
+                } else {
+                    LoginShared.setWeightFromNotification(this, "1");
+                }
             } else {
                 LoginShared.setWeightFromNotification(this, "1");
             }
@@ -75,6 +96,12 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+            } else if (LoginShared.getWeightFromNotification(this).equals("2")) {
+                Intent intent = new Intent(this, ChatActivity.class);
+                intent.putExtra("reciver_id", receiver_id);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             }
 
         } else {
@@ -97,12 +124,12 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
-                    } else if (notificationPage.equals("1")) {
+                    } /*else if (notificationPage.equals("1")) {
                         Intent intent = new Intent(this, WeightDetailsActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
-                    } else {
+                    }*/ else {
                         Intent intent = new Intent(this, DashBoardActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

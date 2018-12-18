@@ -30,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScrollListener{
+public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScrollListener {
     public View view;
     private RecyclerView recyclerView;
     private LoadingData loadingData;
@@ -67,9 +67,9 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
             @Override
             public void onClick(View v) {
                 String message = editTextMessage.getText().toString().trim();
-                if(message.equals("")){
+                if (message.equals("")) {
                     editTextMessage.setError("Enter message");
-                }else {
+                } else {
                     //Send Chat message
                     callSendChatApi(message);
                     editTextMessage.setText("");
@@ -109,7 +109,7 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
     }
 
     private void callChatListApi(final String receiverId, final int newPagination) {
-        if(oldPagination <newPagination || oldPagination==0){
+        if (oldPagination < newPagination || oldPagination == 0) {
             //Replace Old value with newer one.
             oldPagination = newPagination;
             //Show loader
@@ -121,9 +121,9 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
             String senderId = LoginShared.getRegistrationDataModel(this).getData().getUser()
                     .get(0).getUserId();
 
-            Log.d("@@Sent-List-Chat : ","token = " +"\nsenderId ="+senderId
-                    +"\nreceiverId = "+receiverId+"\noldPagination = "+oldPagination
-                    +"\nnewPagination = "+newPagination);
+            Log.d("@@Sent-List-Chat : ", "token = " + "\nsenderId =" + senderId
+                    + "\nreceiverId = " + receiverId + "\noldPagination = " + oldPagination
+                    + "\nnewPagination = " + newPagination);
 
             final Call<ChatListResponse> call_ConversationListApi = apiInterface
                     .call_ConversationListApi(token, senderId, receiverId, String.valueOf(newPagination));
@@ -134,22 +134,22 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                     if (loadingData != null && loadingData.isShowing()) {
                         loadingData.dismiss();
                     }
-                    Log.d("@@ChatList : " , response.body().toString());
+                    Log.d("@@ChatList : ", response.body().toString());
 
                     if (response.body().getStatus() == 1) {
-                        if(oldPagination==0){
+                        if (oldPagination == 0) {
                             arrayListConversation.clear();
                         }
-               //        Collections.sort(response.body().getData().getConversations());
+                        //        Collections.sort(response.body().getData().getConversations());
                         Collections.reverse(response.body().getData().getConversations());
 
-                       arrayListConversation.addAll(0, response.body().getData().getConversations());
+                        arrayListConversation.addAll(0, response.body().getData().getConversations());
 
                         mChatAdapter.notifyDataSetChanged();
-                        if(oldPagination==0){
+                        if (oldPagination == 0) {
                             recyclerView.smoothScrollToPosition(arrayListConversation.size());
                         }
-                    }else {
+                    } else {
                         MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
                     }
 
@@ -167,7 +167,7 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
 
     private void callSendChatApi(final String message) {
         //Show loader
-     //   loadingData.show_with_label("Loading...");
+        //   loadingData.show_with_label("Loading...");
         //Call API Using Retrofit
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -175,41 +175,44 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
         String senderId = LoginShared.getRegistrationDataModel(this).getData().getUser()
                 .get(0).getUserId();
 
-        Log.d("@@Sent-Chat : ","token = " +"\nsenderId ="+senderId
-                +"\nreceiverId = "+receiver_id+"\nMessage = "+message);
+        Log.d("@@Sent-Chat : ", "token = " + "\nsenderId =" + senderId
+                + "\nreceiverId = " + receiver_id + "\nMessage = " + message);
 
         final Call<ChatListResponse> call_SendChatApi = apiInterface
                 .call_SendChatApi(token, senderId, receiver_id, message);
 
         call_SendChatApi.enqueue(new Callback<ChatListResponse>() {
-                @Override
-                public void onResponse(Call<ChatListResponse> call, Response<ChatListResponse> response) {
+            @Override
+            public void onResponse(Call<ChatListResponse> call, Response<ChatListResponse> response) {
                   /*  if (loadingData != null && loadingData.isShowing()) {
                         loadingData.dismiss();
                     }*/
+
+                if (response.body().getStatus() != null) {
 
                     if (response.body().getStatus() == 1) {
                         oldPagination = INITIAL_PAGINATION;
                         callChatListApi(receiver_id, INITIAL_PAGINATION);
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ChatListResponse> call, Throwable t) {
-                    if (loadingData != null && loadingData.isShowing())
-                        loadingData.dismiss();
-                    //    MethodUtils.errorMsg(ChatActivity.this, getString(R.string.error_occurred));
-                }
-            });
+            @Override
+            public void onFailure(Call<ChatListResponse> call, Throwable t) {
+                if (loadingData != null && loadingData.isShowing())
+                    loadingData.dismiss();
+                //    MethodUtils.errorMsg(ChatActivity.this, getString(R.string.error_occurred));
+            }
+        });
     }
 
     @Override
     public void onScrollToTop(int scrollPosition) {
         //Calculate next pagination
-        int div = arrayListConversation.size()/25;
-        int pagination = div*25;
-        Log.d("@@Scroll-Call : " , "\nIntegerDivision = "+div
-                +"\npagination = "+pagination);
+        int div = arrayListConversation.size() / 25;
+        int pagination = div * 25;
+        Log.d("@@Scroll-Call : ", "\nIntegerDivision = " + div
+                + "\npagination = " + pagination);
         //Call next pagination
         callChatListApi(receiver_id, pagination);
     }

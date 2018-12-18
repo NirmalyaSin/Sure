@@ -78,8 +78,10 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
                 try {
                     if (response.body().getStatus() == 1) {
-                        arrayListUsers.addAll(response.body().getData().getUserList());
-                        Log.d("@@UserItem : ", arrayListUsers.get(0).toString());
+                        if (response.body().getData().getUserList() != null) {
+                            arrayListUsers.addAll(response.body().getData().getUserList());
+                            Log.d("@@UserItem : ", arrayListUsers.get(0).toString());
+                        }
                     } else {
                         MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
                     }
@@ -122,7 +124,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         btn_add.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.VISIBLE);
-
     }
 
     @Override

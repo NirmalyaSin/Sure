@@ -18,7 +18,7 @@ public class Goals {
     private String miniweighttext;
     @SerializedName("TargetWeight")
     @Expose
-    private Integer targetWeight;
+    private Double targetWeight;
     @SerializedName("ms1")
     @Expose
     private Integer ms1;
@@ -56,11 +56,11 @@ public class Goals {
         this.miniweighttext = miniweighttext;
     }
 
-    public Integer getTargetWeight() {
+    public Double getTargetWeight() {
         return targetWeight;
     }
 
-    public void setTargetWeight(Integer targetWeight) {
+    public void setTargetWeight(Double targetWeight) {
         this.targetWeight = targetWeight;
     }
 

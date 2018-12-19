@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -70,6 +72,33 @@ public class RegistrationClickEvent implements View.OnClickListener {
         addWeightListAndCall("LB");
         addTimeListAndCall();
         setClickEvent();
+
+        registrationActivity.et_units.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                    addHeightListAndCall("CM");
+                } else {
+                    addHeightListAndCall("INCH");
+                }
+
+                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                    addWeightListAndCall("KG");
+                } else {
+                    addWeightListAndCall("LB");
+                }
+            }
+        });
     }
 
     private void addTimeListAndCall() {
@@ -80,6 +109,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addHeightListAndCall(String change) {
+        heightList.clear();
         if (change.equals("INCH")) {
             for (int i = 1; i < 109; i++) {
                 heightList.add(i + " " + change);
@@ -93,6 +123,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addWeightListAndCall(String change) {
+        weightList.clear();
         if (change.equals("LB")) {
             for (int i = 5; i < 1001; i++) {
                 weightList.add(i + " " + change);
@@ -236,7 +267,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 break;
             case R.id.et_height:
                 hideSoftKeyBoard();
-                heightList.clear();
+//                heightList.clear();
                 /*if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
                     addHeightListAndCall("CM");
                 } else {
@@ -263,7 +294,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 break;
             case R.id.et_weight:
                 hideSoftKeyBoard();
-                weightList.clear();
+//                weightList.clear();
 
                 if (prefferedPopup != null && prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();
@@ -347,6 +378,17 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     monthInString = "0" + monthInString;
                 if (dayInString.length() == 1) {
                     dayInString = "0" + dayInString;
+                }
+                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                    addHeightListAndCall("CM");
+                } else {
+                    addHeightListAndCall("INCH");
+                }
+
+                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                    addWeightListAndCall("KG");
+                } else {
+                    addWeightListAndCall("LB");
                 }
                 registrationActivity.et_DOB.setText(dayInString + "-" + monthInString + "-" + year);
 
@@ -453,8 +495,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationModel);
                         JSONObject jsObject = jsonObject.getJSONObject("data");
-                        LoginShared.setUserPhoto(registrationActivity,LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
-                        LoginShared.setUserName(registrationActivity,LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
+                        LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
+                        LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {
@@ -549,8 +591,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationModel);
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
-                        LoginShared.setUserPhoto(registrationActivity,LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
-                        LoginShared.setUserName(registrationActivity,LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
+                        LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
+                        LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {

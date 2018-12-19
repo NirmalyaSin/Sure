@@ -21,8 +21,10 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.surefiz.R;
 import com.surefiz.application.MyApplicationClass;
 import com.surefiz.screens.SplashActivity;
+import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 
@@ -79,7 +81,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         conversation.setReciverId(Integer.parseInt(jObject.optString("receiverId")));
                         conversation.setSenderId(Integer.parseInt(jObject.optString("senderId")));
                         myApplicationClass.chatListNotification.add(conversation);
+                        LoginShared.setWeightFromNotification(this, "2");
                     }
+                } else if (jObject.optInt("pushType") == 3) {
+                    LoginShared.setWeightFromNotification(this, "3");
+                } else if (jObject.optInt("pushType") == 4) {
+                    LoginShared.setWeightFromNotification(this, "4");
                 } else {
                     LoginShared.setWeightFromNotification(this, "1");
                 }
@@ -149,7 +156,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (jObject.optInt("pushType") == 2) {
             Intent intent = new Intent(this, ChatActivity.class);
             intent.putExtra("notificationFlag", "1");
-            intent.putExtra("reciver_id",jObject.optString("senderId"));
+            intent.putExtra("reciver_id", jObject.optString("senderId"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        } else if (jObject.optInt("pushType") == 3) {
+            Intent intent = new Intent(this, NotificationActivity.class);
+            intent.putExtra("notificationFlag", "1");
+            intent.putExtra("reciver_id", jObject.optString("senderId"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        } else if (jObject.optInt("pushType") == 4) {
+            Intent intent = new Intent(this, AcountabilityActivity.class);
+            intent.putExtra("notificationFlag", "1");
+            intent.putExtra("reciver_id", jObject.optString("senderId"));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,

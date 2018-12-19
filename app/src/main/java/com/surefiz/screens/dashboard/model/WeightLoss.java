@@ -14,7 +14,7 @@ public class WeightLoss {
     private Double toGo;
     @SerializedName("percentage")
     @Expose
-    private Integer percentage;
+    private Double percentage;
 
     public Double getAchieved() {
         return achieved;
@@ -32,11 +32,11 @@ public class WeightLoss {
         this.toGo = toGo;
     }
 
-    public Integer getPercentage() {
+    public Double getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Integer percentage) {
+    public void setPercentage(Double percentage) {
         this.percentage = percentage;
     }
 

@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.surefiz.R;
+import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
@@ -51,6 +53,10 @@ public class SplashActivity extends AppCompatActivity {
                 if (jsonObject1.optInt("pushType") == 2) {
                     receiver_id = jsonObject1.optString("senderId");
                     LoginShared.setWeightFromNotification(this, "2");
+                } else if (jsonObject1.optInt("pushType") == 3) {
+                    LoginShared.setWeightFromNotification(this, "3");
+                } else if (jsonObject1.optInt("pushType") == 4) {
+                    LoginShared.setWeightFromNotification(this, "4");
                 } else {
                     LoginShared.setWeightFromNotification(this, "1");
                 }
@@ -102,10 +108,19 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+            } else if (LoginShared.getWeightFromNotification(this).equals("3")) {
+                Intent intent = new Intent(this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            } else if (LoginShared.getWeightFromNotification(this).equals("4")) {
+                Intent intent = new Intent(this, AcountabilityActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             }
 
         } else {
-
             if (LoginShared.getRegistrationDataModel(this) != null) {
                 if (LoginShared.getRegistrationDataModel(this).getData() != null) {
                     if (LoginShared.getRegistrationDataModel(this).getData().getToken().equals("") ||

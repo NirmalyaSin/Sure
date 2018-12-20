@@ -134,7 +134,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                             @Override
                             public void run() {
                                 String deviceToken = LoginShared.getDeviceToken(ChangePasswordActivity.this);
-                                LoginShared.destroySessionTypePreference();
+                                LoginShared.destroySessionTypePreference(ChangePasswordActivity.this);
                                 LoginShared.setDeviceToken(ChangePasswordActivity.this, deviceToken);
                                 Intent loginIntent = new Intent(ChangePasswordActivity.this, SettingsActivity.class);
                                 startActivity(loginIntent);
@@ -145,7 +145,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ChangePasswordActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(ChangePasswordActivity.this);
                         LoginShared.setDeviceToken(ChangePasswordActivity.this, deviceToken);
                         Intent loginIntent = new Intent(ChangePasswordActivity.this, LoginActivity.class);
                         startActivity(loginIntent);

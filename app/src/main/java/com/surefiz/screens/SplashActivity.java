@@ -15,6 +15,7 @@ import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
+import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -119,16 +120,22 @@ public class SplashActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
-
         } else {
             if (LoginShared.getRegistrationDataModel(this) != null) {
                 if (LoginShared.getRegistrationDataModel(this).getData() != null) {
                     if (LoginShared.getRegistrationDataModel(this).getData().getToken().equals("") ||
                             LoginShared.getRegistrationDataModel(this).getData().getToken() == null) {
-                        Intent loginIntent = new Intent(this, LoginActivity.class);
-                        startActivity(loginIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        if(LoginShared.getWelcome(this)) {
+                            Intent loginIntent = new Intent(this, LoginActivity.class);
+                            startActivity(loginIntent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        }else {
+                            Intent loginIntent = new Intent(this, WelcomeActivity.class);
+                            startActivity(loginIntent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        }
                     } else if (!LoginShared.getstatusforOtpvarification(this)) {
                         Intent intent = new Intent(this, OtpActivity.class);
                         startActivity(intent);
@@ -151,16 +158,30 @@ public class SplashActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
+                    if(LoginShared.getWelcome(this)) {
+                        Intent loginIntent = new Intent(this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }else {
+                        Intent loginIntent = new Intent(this, WelcomeActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                }
+            } else {
+                if(LoginShared.getWelcome(this)) {
                     Intent loginIntent = new Intent(this, LoginActivity.class);
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
+                }else {
+                    Intent loginIntent = new Intent(this, WelcomeActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 }
-            } else {
-                Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivity(loginIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
@@ -245,12 +246,21 @@ public class LoginShared {
     }
 
 
-    public static void destroySessionTypePreference() {
+    public static void destroySessionTypePreference(Context context) {
         prefs = context.getSharedPreferences(
                 SharedUtils.TYPE_DEAD_ON_LOGOUT_SHARED, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+        //Set Preference for welcome page
+        boolean isWelcome = getWelcome(context);
+        //Get Device Token
+        String deviceToken = getDeviceToken(context);
+        //Clear the session
         editor.clear();
-        editor.commit();
+        editor.apply();
+        //Set Preference for welcome page
+        setWelcome(context, isWelcome);
+        //Set Device token again
+        setDeviceToken(context, deviceToken);
     }
 
     /**
@@ -320,5 +330,20 @@ public class LoginShared {
             activateShared(context);
         return prefs.getString(SharedUtils.KEY_SHARED_CAPTURED_WEIGHT,
                 SharedUtils.KEY_SHARED_CAPTURED_WEIGHT_DEFAULT);
+    }
+
+    public static void setWelcome(Context context, boolean value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(SharedUtils.KEY_SHARED_IS_WELCOME, value);
+        editor.commit();
+    }
+
+    public static boolean getWelcome(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getBoolean(SharedUtils.KEY_SHARED_IS_WELCOME, false);
     }
 }

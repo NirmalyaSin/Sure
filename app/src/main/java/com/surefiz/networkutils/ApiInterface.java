@@ -3,6 +3,7 @@ package com.surefiz.networkutils;
 
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
+import com.surefiz.screens.bmidetails.model.BMIResponse;
 import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
@@ -27,6 +28,7 @@ import retrofit2.http.Path;
 import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.API_ADD_EDIT_REMINDER_LIST;
+import static com.surefiz.apilist.ApiList.API_BMI_DATA;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_ACCEPT_REJECT_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEND_CANCEL_REQUEST;
@@ -165,6 +167,12 @@ public interface ApiInterface {
                                                     @Field("senderId") String senderId,
                                                     @Field("receiverId") String receiverId,
                                                     @Field("pagination") String pagination);
+
+    @FormUrlEncoded
+    @POST(API_BMI_DATA)
+    Call<BMIResponse> call_BMIDetailsApi(@Header("x-authorization") String token,
+                                         @Field("serverUserId") String serverUserId,
+                                         @Field("scaleUserId") String scaleUserId);
 
     @FormUrlEncoded
     @POST(API_SEND_CHAT)

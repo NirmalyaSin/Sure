@@ -510,7 +510,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         }, GeneralToApp.SPLASH_WAIT_TIME);
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(registrationActivity);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(registrationActivity);
                         LoginShared.setDeviceToken(registrationActivity, deviceToken);
                         Intent loginIntent = new Intent(registrationActivity, LoginActivity.class);
                         registrationActivity.startActivity(loginIntent);
@@ -606,7 +606,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         }, GeneralToApp.SPLASH_WAIT_TIME);
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(registrationActivity);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(registrationActivity);
                         LoginShared.setDeviceToken(registrationActivity, deviceToken);
                         Intent loginIntent = new Intent(registrationActivity, LoginActivity.class);
                         registrationActivity.startActivity(loginIntent);

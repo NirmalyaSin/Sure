@@ -1,5 +1,6 @@
 package com.surefiz.screens.boardcast;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -78,7 +79,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(BoardCastActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(BoardCastActivity.this);
                         LoginShared.setDeviceToken(BoardCastActivity.this, deviceToken);
                         Intent loginIntent = new Intent(BoardCastActivity.this, LoginActivity.class);
                         startActivity(loginIntent);

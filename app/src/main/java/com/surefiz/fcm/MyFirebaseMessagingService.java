@@ -22,6 +22,7 @@ import com.surefiz.R;
 import com.surefiz.application.MyApplicationClass;
 import com.surefiz.screens.SplashActivity;
 import com.surefiz.screens.accountability.AcountabilityActivity;
+import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.notifications.NotificationActivity;
@@ -49,10 +50,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         LoginShared.setWeightFromNotification(this, "1");
         myApplicationClass = (MyApplicationClass) getApplication();
-
-
         Log.d(TAG, "FromDataPush: " + remoteMessage.getData());
-
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
@@ -87,7 +85,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jObject.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
-                } else {
+                }
+                else {
                     LoginShared.setWeightFromNotification(this, "1");
                 }
                 scheduleJob();
@@ -177,7 +176,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        } else {
+        } else if (jObject.optInt("pushType") == 5) {
+            Intent intent = new Intent(this, BMIDetailsActivity.class);
+            intent.putExtra("notificationFlag", "1");
+            intent.putExtra("serverUserId", jObject.optString("serverUserId"));
+            intent.putExtra("ScaleUserId", jObject.optString("ScaleUserId"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        }else {
             Intent intent = new Intent(this, SplashActivity.class);
             intent.putExtra("notificationFlag", "1");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -13,7 +13,7 @@
     <string name="no_internet">No internet connection</string>
 
     <string name="edittext_hint"><font size="20">_</font></string>
-    <string name="wifi_config">Please configure your scale with\nWiFi Password</string>
+    <string name="wifi_config">Choose the wireless network on which you want your scale to  be connected.\nPlease make sure it is not a 5G Wifi.\nIf your router has 5G WiFi, It has two networks, on 5G and the other non-5G.\nPlease pick the non-5G</string>
 
     <string name="instruction_page_text">To Know Your Weight follow the steps below :</string>
     <string name="step_on_scale"> 1. Step on the scale and measure your weight</string>

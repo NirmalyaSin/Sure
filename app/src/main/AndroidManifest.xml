@@ -173,6 +173,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".screens.welcome.WelcomeActivity" />
+        <activity android:name=".screens.bmidetails.BMIDetailsActivity" />
     </application>
 
 </manifest>

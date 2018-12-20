@@ -104,7 +104,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                         }, GeneralToApp.SPLASH_WAIT_TIME);
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ForgotPasswordActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(ForgotPasswordActivity.this);
                         LoginShared.setDeviceToken(ForgotPasswordActivity.this, deviceToken);
                         Intent loginIntent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                         startActivity(loginIntent);

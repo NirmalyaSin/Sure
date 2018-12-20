@@ -32,4 +32,5 @@ public class ApiList {
     public static final String API_UPDATE_PRIVACY_LIST = "ApiServices/UpdatePrivacySetting";
     public static final String API_GET_REMINDER_LIST = "ApiServices/GetReminderList";
     public static final String API_ADD_EDIT_REMINDER_LIST = "ApiServices/addEditReminder";
+    public static final String API_BMI_DATA = "ApiServices/BMIDetails";
 }

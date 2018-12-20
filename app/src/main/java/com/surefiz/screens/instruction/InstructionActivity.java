@@ -69,7 +69,7 @@ public class InstructionActivity extends AppCompatActivity {
 
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(InstructionActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(InstructionActivity.this);
                         LoginShared.setDeviceToken(InstructionActivity.this, deviceToken);
                         Intent loginIntent = new Intent(InstructionActivity.this, LoginActivity.class);
                         startActivity(loginIntent);

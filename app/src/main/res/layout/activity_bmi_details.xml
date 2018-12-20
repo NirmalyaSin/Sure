@@ -49,14 +49,14 @@
         <ScrollView
             android:id="@+id/sv_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:orientation="vertical">
 
@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:gravity="center_horizontal"
                     android:text="Your BMI"
@@ -138,11 +138,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:gravity="center"
                         android:layout_marginTop="@dimen/_20sdp">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
+                            android:gravity="end"
                             android:layout_height="wrap_content"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp"
@@ -152,6 +154,8 @@
                             android:id="@+id/textBMI"
                             android:layout_width="0dp"
                             android:layout_weight="1"
+                            android:gravity="start"
+                            android:layout_marginLeft="@dimen/_20sdp"
                             android:layout_height="wrap_content"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_13sdp"
@@ -168,6 +172,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:gravity="end"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp"
                             android:text="Sub-Goal-1 :"/>
@@ -177,6 +182,8 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:layout_marginLeft="@dimen/_20sdp"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_13sdp"
                             android:text=""/>
@@ -194,6 +201,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp"
+                            android:gravity="end"
                             android:text="Sub-Goal-2 :"/>
 
                         <TextView
@@ -201,6 +209,8 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:layout_marginLeft="@dimen/_20sdp"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_13sdp"
                             android:text=""/>
@@ -218,6 +228,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp"
+                            android:gravity="end"
                             android:text="Percentage :"/>
 
                         <TextView
@@ -225,6 +236,8 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:layout_marginLeft="@dimen/_20sdp"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_13sdp"
                             android:text=""/>

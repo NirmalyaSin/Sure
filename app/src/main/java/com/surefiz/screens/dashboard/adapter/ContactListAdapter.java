@@ -97,6 +97,20 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         } else {
             contactListViewHolder.iv_online.setVisibility(View.GONE);
         }*/
+        if (LoginShared.getUserPhoto(activity).equals("") || LoginShared.getUserPhoto(activity) == null ||
+                LoginShared.getUserPhoto(activity).equalsIgnoreCase("null") ||
+                LoginShared.getUserPhoto(activity).isEmpty()) {
+            contactListViewHolder.profile_image.setImageResource
+                    (R.drawable.prof_img_placeholder);
+        } else {
+
+            if (LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId().equals(userLists.get(i).getServerUserId().toString())) {
+                imageLoader.displayImage(LoginShared.getUserPhoto(activity), contactListViewHolder.profile_image);
+            } else {
+                contactListViewHolder.profile_image.setImageResource
+                        (R.drawable.prof_img_placeholder);
+            }
+        }
 
         if (userLists.get(i).
 

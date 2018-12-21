@@ -405,7 +405,7 @@ public class AddUserDialogForOTP extends Dialog {
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jObject = jsonObject.getJSONObject("data");
                         dismiss();
-                        activity.otpClickEvent.showUserAddDialog();
+                        activity.otpClickEvent.showUserAddDialog("User Added Successfully.Do you want to Add More Users?", "Yes", "No");
                         /*Intent dashBoardIntent = new Intent(activity, WifiConfigActivity.class);
                         activity.startActivity(dashBoardIntent);
                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -473,6 +473,7 @@ public class AddUserDialogForOTP extends Dialog {
 
         alertDialog.show();
     }
+
     private void ExpiryDialog() {
 
         Calendar mCalendar;

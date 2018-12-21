@@ -95,8 +95,8 @@ public class BMIDetailsActivity extends AppCompatActivity {
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         String token = LoginShared.getRegistrationDataModel(this).getData().getToken();
 
-        Log.d("@@Sent-BMI-Data : ", "token = " + token+"\nserverUserId =" + serverUserId
-                + "\nscaleUserId = " + scaleUserId );
+        Log.d("@@Sent-BMI-Data : ", "token = " + token + "\nserverUserId =" + serverUserId
+                + "\nscaleUserId = " + scaleUserId);
 
         final Call<BMIResponse> call_BMIDetailsApi = apiInterface
                 .call_BMIDetailsApi(token, serverUserId, scaleUserId);
@@ -120,16 +120,15 @@ public class BMIDetailsActivity extends AppCompatActivity {
                     textSubGoal2.setText(String.valueOf(response.body().getData().getBMIDetails().getSubgoal2()));
                     textPercentage.setText(String.valueOf(response.body().getData().getBMIDetails().getPercentage()));
 
-                } else if (response.body().getStatus() == 2 ||response.body().getStatus() == 3 ){
-                   LoginShared.destroySessionTypePreference(BMIDetailsActivity.this);
-                   startActivity(new Intent(BMIDetailsActivity.this, LoginActivity.class));
+                } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    LoginShared.destroySessionTypePreference(BMIDetailsActivity.this);
+                    startActivity(new Intent(BMIDetailsActivity.this, LoginActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
-                }else {
+                } else {
                     MethodUtils.errorMsg(BMIDetailsActivity.this,
                             response.body().getData().getMessage());
                 }
-
             }
 
             @Override

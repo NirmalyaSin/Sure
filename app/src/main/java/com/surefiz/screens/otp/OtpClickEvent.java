@@ -189,7 +189,7 @@ public class OtpClickEvent implements View.OnClickListener {
 
 //                        MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
                         LoginShared.setstatusforOtpvarification(otpActivity, true);
-                        showUserAddDialog();
+                        showUserAddDialog("Do you want to Add More Users?","Yes","Not now");
                         /*Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
                         otpActivity.startActivity(dashBoardIntent);
                         otpActivity.finish();*/
@@ -221,12 +221,12 @@ public class OtpClickEvent implements View.OnClickListener {
 
     }
 
-    public void showUserAddDialog() {
+    public void showUserAddDialog(String title, String positive, String negative) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(otpActivity);
         alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage("Do you want to add more users?");
+        alertDialog.setMessage(title);
         alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(positive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -234,7 +234,7 @@ public class OtpClickEvent implements View.OnClickListener {
             }
         });
 
-        alertDialog.setNegativeButton("Not now", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(negative, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

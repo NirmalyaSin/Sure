@@ -279,5 +279,6 @@ public interface ApiInterface {
     Call<ResponseBody> call_sendWeightManagement(@Header("x-authorization") String token,
                                                  @Field("serverUserId") String serverUserId,
                                                  @Field("desiredWeight") String desiredWeight,
-                                                 @Field("timeToLoseWeight") String timeToLoseWeight);
+                                                 @Field("timeToLoseWeight") String timeToLoseWeight,
+                                                 @Field("preferredunits") String preferredunits);
 }

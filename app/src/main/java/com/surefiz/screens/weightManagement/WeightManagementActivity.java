@@ -155,7 +155,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         }
         if (units.equalsIgnoreCase("LB")) {
             units_value = "LB/INCH";
-        }else{
+        } else {
             units_value = "KG/CM";
         }
         weight_value = jsnObject.optString("desiredWeight");
@@ -287,15 +287,21 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void sendWeightManagementDetails() {
-        String weight="";
+        String weight = "";
+        String units = "";
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        weight=et_weight.getText().toString().trim();
+        weight = et_weight.getText().toString().trim();
         String[] splited = weight.split(" ");
+        if (et_units.getText().toString().trim().equals("KG/CM")) {
+            units = "1";
+        } else {
+            units = "0";
+        }
         Call<ResponseBody> call_sendWeightManagementApi = apiInterface.call_sendWeightManagement(LoginShared.getRegistrationDataModel(WeightManagementActivity.this).getData().getToken(),
                 LoginShared.getRegistrationDataModel(WeightManagementActivity.this).getData().getUser().get(0).getUserId(),
-                splited[0], et_time_loss.getText().toString().trim());
+                splited[0], et_time_loss.getText().toString().trim(), units);
         call_sendWeightManagementApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -317,7 +323,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                                 finish();
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
-
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(WeightManagementActivity.this);

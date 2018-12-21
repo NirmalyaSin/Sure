@@ -183,8 +183,14 @@ public class ProfileClickEvent implements View.OnClickListener {
         } else {
             activity.et_units.setText("LB/INCH");
         }
+        String unit = "";
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getPreferredUnits().equals("1")) {
+            unit = "CM";
+        } else {
+            unit = "INCH";
+        }
         activity.et_email.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserEmail());
-        activity.et_height.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getHeight());
+        activity.et_height.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getHeight() + " " + unit);
         activity.profile_image.setEnabled(false);
         showImage();
     }

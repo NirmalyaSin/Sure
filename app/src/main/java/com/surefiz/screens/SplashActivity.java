@@ -125,6 +125,9 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }else if (LoginShared.getWeightFromNotification(this).equals("5")) {
                 Intent intent = new Intent(this, BMIDetailsActivity.class);
+                intent.putExtra("notificationFlag", "1");
+                intent.putExtra("serverUserId", jsonObject1.optString("serverUserId"));
+                intent.putExtra("ScaleUserId", jsonObject1.optString("ScaleUserId"));
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

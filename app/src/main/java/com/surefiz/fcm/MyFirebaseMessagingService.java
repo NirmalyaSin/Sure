@@ -195,9 +195,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     PendingIntent.FLAG_ONE_SHOT);
         } else if (jObject.optInt("pushType") == 5) {
             Intent intent = new Intent(this, BMIDetailsActivity.class);
-           /* intent.putExtra("notificationFlag", "1");
+            intent.putExtra("notificationFlag", "1");
             intent.putExtra("serverUserId", jObject.optString("serverUserId"));
-            intent.putExtra("ScaleUserId", jObject.optString("ScaleUserId"));*/
+            intent.putExtra("ScaleUserId", jObject.optString("ScaleUserId"));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,

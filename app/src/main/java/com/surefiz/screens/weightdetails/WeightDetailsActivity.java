@@ -360,6 +360,9 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
             Log.d("@@BMI-Broadcast : ", "Received");
             Intent intent2 = new Intent(WeightDetailsActivity.this,
                     BMIDetailsActivity.class);
+            intent2.putExtra("notificationFlag", "1");
+            intent2.putExtra("serverUserId", intent.getStringExtra("serverUserId"));
+            intent2.putExtra("ScaleUserId", intent.getStringExtra("ScaleUserId"));
             startActivity(intent2);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();

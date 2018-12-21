@@ -287,13 +287,15 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void sendWeightManagementDetails() {
+        String weight="";
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-
+        weight=et_weight.getText().toString().trim();
+        String[] splited = weight.split(" ");
         Call<ResponseBody> call_sendWeightManagementApi = apiInterface.call_sendWeightManagement(LoginShared.getRegistrationDataModel(WeightManagementActivity.this).getData().getToken(),
                 LoginShared.getRegistrationDataModel(WeightManagementActivity.this).getData().getUser().get(0).getUserId(),
-                et_weight.getText().toString().trim(), et_time_loss.getText().toString().trim());
+                splited[0], et_time_loss.getText().toString().trim());
         call_sendWeightManagementApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

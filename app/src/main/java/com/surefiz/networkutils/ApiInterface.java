@@ -280,5 +280,5 @@ public interface ApiInterface {
                                                  @Field("serverUserId") String serverUserId,
                                                  @Field("desiredWeight") String desiredWeight,
                                                  @Field("timeToLoseWeight") String timeToLoseWeight,
-                                                 @Field("preferredunits") String preferredunits);
+                                                 @Field("preferredUnits") String preferredunits);
 }

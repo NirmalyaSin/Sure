@@ -301,7 +301,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         }
         Call<ResponseBody> call_sendWeightManagementApi = apiInterface.call_sendWeightManagement(LoginShared.getRegistrationDataModel(WeightManagementActivity.this).getData().getToken(),
                 LoginShared.getRegistrationDataModel(WeightManagementActivity.this).getData().getUser().get(0).getUserId(),
-                splited[0], et_time_loss.getText().toString().trim(), units);
+                weight, et_time_loss.getText().toString().trim(), units);
         call_sendWeightManagementApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -112,29 +112,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             }
         }
 
-        if (userLists.get(i).
-
-                getUserName() == null || userLists.get(i).
-
-                getUserName().
-
-                equals("") ||
-                userLists.get(i).
-
-                        getUserName().
-
-                        equalsIgnoreCase("null") ||
-                userLists.get(i).
-
-                        getUserName().
-
-                        isEmpty())
-
-        {
+        if (userLists.get(i).getUserName() == null || userLists.get(i).getUserName().equals("") || userLists.get(i).getUserName().equalsIgnoreCase("null") || userLists.get(i).getUserName().isEmpty()) {
             contactListViewHolder.tv_name.setText("No Name");
-        } else
-
-        {
+        } else {
             contactListViewHolder.tv_name.setText(userLists.get(i).getUserName());
         }
 

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class BMIDetails {
     @SerializedName("Weight")
-    Double Weight;
+    String Weight;
     @SerializedName("BMI")
     Double BMI;
     @SerializedName("subgoal1")
@@ -13,16 +13,26 @@ public class BMIDetails {
     Double subgoal2;
     @SerializedName("percentage")
     Double percentage;
+    @SerializedName("weighttolose")
+    Double weighttolose;
 
     public BMIDetails() {
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return Weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(String weight) {
         Weight = weight;
+    }
+
+    public Double getWeighttolose() {
+        return weighttolose;
+    }
+
+    public void setWeighttolose(Double weighttolose) {
+        this.weighttolose = weighttolose;
     }
 
     public Double getBMI() {
@@ -60,11 +70,12 @@ public class BMIDetails {
     @Override
     public String toString() {
         return "BMIDetails{" +
-                "Weight=" + Weight +
+                "Weight='" + Weight + '\'' +
                 ", BMI=" + BMI +
                 ", subgoal1=" + subgoal1 +
                 ", subgoal2=" + subgoal2 +
                 ", percentage=" + percentage +
+                ", weighttolose=" + weighttolose +
                 '}';
     }
 }

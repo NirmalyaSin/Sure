@@ -421,7 +421,7 @@ public class AddUserDialogForOTP extends Dialog {
                         moveTutorial.onSuccess("1");*/
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(activity);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(activity);
                         LoginShared.setDeviceToken(activity, deviceToken);
                         Intent loginIntent = new Intent(activity, LoginActivity.class);
                         activity.startActivity(loginIntent);

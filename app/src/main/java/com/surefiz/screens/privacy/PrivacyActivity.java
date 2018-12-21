@@ -2,6 +2,7 @@ package com.surefiz.screens.privacy;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +15,13 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.privacy.adapter.PrivacyAdapter;
 import com.surefiz.screens.privacy.model.PrivacyListResponse;
 import com.surefiz.screens.privacy.model.PrivacySetting;
+import com.surefiz.screens.reminders.AddEditReminderActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -141,6 +145,16 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                 if (response.body().getStatus() == 1) {
                     //Add Items to the list
                     arrayListPrivacySetting.addAll(response.body().getData().getPrivacySettings());
+                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    String deviceToken = LoginShared.getDeviceToken(PrivacyActivity.this);
+                    LoginShared.destroySessionTypePreference(PrivacyActivity.this);
+                    LoginShared.setDeviceToken(PrivacyActivity.this, deviceToken);
+                    Intent loginIntent = new Intent(PrivacyActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                }else {
+                    MethodUtils.errorMsg(PrivacyActivity.this, response.body().getData().getMessage());
                 }
                 //Refresh the list
                 mPrivacyAdapter.notifyDataSetChanged();
@@ -186,6 +200,14 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                     //Show Alert dialog
                    showResponseDialog(response.body().getStatus(),
                            response.body().getData().getMessage());
+                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    String deviceToken = LoginShared.getDeviceToken(PrivacyActivity.this);
+                    LoginShared.destroySessionTypePreference(PrivacyActivity.this);
+                    LoginShared.setDeviceToken(PrivacyActivity.this, deviceToken);
+                    Intent loginIntent = new Intent(PrivacyActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 }else {
                     MethodUtils.errorMsg(PrivacyActivity.this,
                             response.body().getData().getMessage());

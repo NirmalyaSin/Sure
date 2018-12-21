@@ -2,6 +2,7 @@ package com.surefiz.screens.acountabiltySearch;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -23,6 +24,9 @@ import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.accountability.models.User;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -122,6 +126,14 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                     if (response.body().getStatus() == 1) {
                         arrayListUsers.addAll(response.body().getData().getUserList());
                         Log.d("@@UserItem : " , arrayListUsers.get(0).toString());
+                    }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(SearchAcountabilityActivity.this);
+                        LoginShared.destroySessionTypePreference(SearchAcountabilityActivity.this);
+                        LoginShared.setDeviceToken(SearchAcountabilityActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(SearchAcountabilityActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
                     }
 
                 } catch (Exception e) {
@@ -220,6 +232,14 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                     //Show success dialog
                     showResponseDialog(response.body().getStatus(),
                             response.body().getData().getMessage());
+                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    String deviceToken = LoginShared.getDeviceToken(SearchAcountabilityActivity.this);
+                    LoginShared.destroySessionTypePreference(SearchAcountabilityActivity.this);
+                    LoginShared.setDeviceToken(SearchAcountabilityActivity.this, deviceToken);
+                    Intent loginIntent = new Intent(SearchAcountabilityActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 }else {
                     //Show dialog to show response from server
                     MethodUtils.errorMsg(SearchAcountabilityActivity.this,

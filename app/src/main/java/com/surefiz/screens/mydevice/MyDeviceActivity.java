@@ -151,7 +151,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(MyDeviceActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(MyDeviceActivity.this);
                         LoginShared.setDeviceToken(MyDeviceActivity.this, deviceToken);
                         Intent loginIntent = new Intent(MyDeviceActivity.this, LoginActivity.class);
                         startActivity(loginIntent);

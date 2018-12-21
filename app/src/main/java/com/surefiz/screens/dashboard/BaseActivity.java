@@ -346,7 +346,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void run() {
                                 String deviceToken = LoginShared.getDeviceToken(BaseActivity.this);
-                                LoginShared.destroySessionTypePreference();
+                                LoginShared.destroySessionTypePreference(BaseActivity.this);
                                 LoginShared.setDeviceToken(BaseActivity.this, deviceToken);
                                 Intent logIntent = new Intent(BaseActivity.this, LoginActivity.class);
                                 startActivity(logIntent);

@@ -178,7 +178,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         adapter.notifyDataSetChanged();
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(DashBoardActivity.this);
                         LoginShared.setDeviceToken(DashBoardActivity.this, deviceToken);
                         Intent loginIntent = new Intent(DashBoardActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
@@ -279,7 +279,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(DashBoardActivity.this);
                         LoginShared.setDeviceToken(DashBoardActivity.this, deviceToken);
                         Intent loginIntent = new Intent(DashBoardActivity.this, LoginActivity.class);
                         startActivity(loginIntent);

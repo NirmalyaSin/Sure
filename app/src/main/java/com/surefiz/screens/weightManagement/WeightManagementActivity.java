@@ -114,7 +114,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(WeightManagementActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(WeightManagementActivity.this);
                         LoginShared.setDeviceToken(WeightManagementActivity.this, deviceToken);
                         Intent loginIntent = new Intent(WeightManagementActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
@@ -319,7 +319,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(WeightManagementActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(WeightManagementActivity.this);
                         LoginShared.setDeviceToken(WeightManagementActivity.this, deviceToken);
                         Intent loginIntent = new Intent(WeightManagementActivity.this, LoginActivity.class);
                         startActivity(loginIntent);

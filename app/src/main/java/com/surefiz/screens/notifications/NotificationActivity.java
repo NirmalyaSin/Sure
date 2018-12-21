@@ -2,6 +2,7 @@ package com.surefiz.screens.notifications;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +15,12 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.acountabiltySearch.RequestState;
+import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.notifications.adapter.NotificationAdapter;
 import com.surefiz.screens.notifications.models.Notification;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
@@ -102,7 +106,15 @@ public class NotificationActivity extends BaseActivity implements
                 try {
                     if (response.body().getStatus() == 1) {
                         arrayListNotifications.addAll(response.body().getData().getNotifications());
-                    } else {
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(NotificationActivity.this);
+                        LoginShared.destroySessionTypePreference(NotificationActivity.this);
+                        LoginShared.setDeviceToken(NotificationActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(NotificationActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }else {
                         MethodUtils.errorMsg(NotificationActivity.this, response.body().getData().getMessage());
                     }
 
@@ -146,9 +158,23 @@ public class NotificationActivity extends BaseActivity implements
                     loadingData.dismiss();
                 }
                 Log.d("@@AcceptRequest : ", response.body().toString());
-                //Show dialog to show response from server
-                showResponseDialog(response.body().getStatus(),
-                        response.body().getData().getMessage());
+
+                if(response.body().getStatus()==1) {
+                    //Show dialog to show response from server
+                    showResponseDialog(response.body().getStatus(),
+                            response.body().getData().getMessage());
+                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    String deviceToken = LoginShared.getDeviceToken(NotificationActivity.this);
+                    LoginShared.destroySessionTypePreference(NotificationActivity.this);
+                    LoginShared.setDeviceToken(NotificationActivity.this, deviceToken);
+                    Intent loginIntent = new Intent(NotificationActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                }else {
+                    //Show error dialog
+                    MethodUtils.errorMsg(NotificationActivity.this, response.body().getData().getMessage());
+                }
             }
 
             @Override

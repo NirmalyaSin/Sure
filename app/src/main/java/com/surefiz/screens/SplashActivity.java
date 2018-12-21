@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.surefiz.R;
 import com.surefiz.screens.accountability.AcountabilityActivity;
+import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
@@ -15,6 +16,7 @@ import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
+import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -29,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
     RegistrationModel loginModel;
     private String notificationPage;
     private String receiver_id;
+    private JSONObject jsonObject1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            JSONObject jsonObject1 = null;
+            jsonObject1 = null;
             if (getIntent().hasExtra("_fbSourceApplicationHasBeenSet") && !getIntent().hasExtra("pushData")) {
                 System.out.print("SureFIZ");
             } else if (getIntent().hasExtra("pushData")) {
@@ -57,6 +60,8 @@ public class SplashActivity extends AppCompatActivity {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jsonObject1.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
+                }else if (jsonObject1.optInt("pushType") == 5) {
+                    LoginShared.setWeightFromNotification(this, "5");
                 } else {
                     LoginShared.setWeightFromNotification(this, "1");
                 }
@@ -118,17 +123,28 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+            }else if (LoginShared.getWeightFromNotification(this).equals("5")) {
+                Intent intent = new Intent(this, BMIDetailsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             }
-
         } else {
             if (LoginShared.getRegistrationDataModel(this) != null) {
                 if (LoginShared.getRegistrationDataModel(this).getData() != null) {
                     if (LoginShared.getRegistrationDataModel(this).getData().getToken().equals("") ||
                             LoginShared.getRegistrationDataModel(this).getData().getToken() == null) {
-                        Intent loginIntent = new Intent(this, LoginActivity.class);
-                        startActivity(loginIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        if(LoginShared.getWelcome(this)) {
+                            Intent loginIntent = new Intent(this, LoginActivity.class);
+                            startActivity(loginIntent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        }else {
+                            Intent loginIntent = new Intent(this, WelcomeActivity.class);
+                            startActivity(loginIntent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        }
                     } else if (!LoginShared.getstatusforOtpvarification(this)) {
                         Intent intent = new Intent(this, OtpActivity.class);
                         startActivity(intent);
@@ -151,16 +167,30 @@ public class SplashActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
+                    if(LoginShared.getWelcome(this)) {
+                        Intent loginIntent = new Intent(this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }else {
+                        Intent loginIntent = new Intent(this, WelcomeActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                }
+            } else {
+                if(LoginShared.getWelcome(this)) {
                     Intent loginIntent = new Intent(this, LoginActivity.class);
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
+                }else {
+                    Intent loginIntent = new Intent(this, WelcomeActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 }
-            } else {
-                Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivity(loginIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
             }
         }
     }

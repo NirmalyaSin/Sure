@@ -14,6 +14,8 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.screens.reminders.adapter.ReminderAdapter;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.reminders.model.User;
@@ -118,6 +120,14 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
                 if (response.body().getStatus() == 1) {
                     //Add Items to the list
                     arrayListReminder.addAll(response.body().getData().getReminderList());
+                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    String deviceToken = LoginShared.getDeviceToken(ReminderActivity.this);
+                    LoginShared.destroySessionTypePreference(ReminderActivity.this);
+                    LoginShared.setDeviceToken(ReminderActivity.this, deviceToken);
+                    Intent loginIntent = new Intent(ReminderActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 }else {
                     //Show dialog with proper message
                     MethodUtils.errorMsg(ReminderActivity.this, response.body()

@@ -126,7 +126,7 @@ public class UserListActivity extends BaseActivity {
                         adapter.notifyDataSetChanged();
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(UserListActivity.this);
-                        LoginShared.destroySessionTypePreference();
+                        LoginShared.destroySessionTypePreference(UserListActivity.this);
                         LoginShared.setDeviceToken(UserListActivity.this, deviceToken);
                         Intent loginIntent = new Intent(UserListActivity.this, LoginActivity.class);
                         startActivity(loginIntent);

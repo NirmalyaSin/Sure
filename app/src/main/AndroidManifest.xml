@@ -172,6 +172,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".screens.weightManagement.WeightManagementActivity"></activity>
+        <activity android:name=".screens.welcome.WelcomeActivity" />
+        <activity android:name=".screens.bmidetails.BMIDetailsActivity" />
     </application>
 
 </manifest>

@@ -19,6 +19,8 @@ import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -82,7 +84,15 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
                             arrayListUsers.addAll(response.body().getData().getUserList());
                             Log.d("@@UserItem : ", arrayListUsers.get(0).toString());
                         }
-                    } else {
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(AcountabilityActivity.this);
+                        LoginShared.destroySessionTypePreference(AcountabilityActivity.this);
+                        LoginShared.setDeviceToken(AcountabilityActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(AcountabilityActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }else {
                         MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
                     }
 

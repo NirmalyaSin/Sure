@@ -57,20 +57,31 @@ public class BMIDetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bmi_details);
-
-
         //Bind ButterKnife to the view
         ButterKnife.bind(this);
         //Initialize Loader
         loader = new LoadingData(this);
 
-        Intent intent = getIntent();
+       /* Intent intent = getIntent();
         if (intent != null) {
             String serverUserId = intent.getStringExtra("serverUserId");
             String scaleUserId = intent.getStringExtra("ScaleUserId");
             //Call Api to list the BMI-Data
             callBMIApi(serverUserId, scaleUserId);
-        }
+        }*/
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String userId = LoginShared.getRegistrationDataModel(this).getData()
+                .getUser().get(0).getUserId();
+        String scaleId = LoginShared.getRegistrationDataModel(this).getData()
+                .getUser().get(0).getUserMac();
+        //Call Api to list the BMI-Data
+        callBMIApi(userId, scaleId);
+
         //Set onClickListener here
         mBMIDetailsOnclick = new BMIDetailsOnclick(this);
     }

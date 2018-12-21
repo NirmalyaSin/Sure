@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.reminders.model.User;
 import com.surefiz.sharedhandler.LoginShared;
@@ -221,6 +223,14 @@ public class AddEditReminderActivity extends BaseActivity implements
                     //Open dialog to show success message and close the page
                     showResponseDialog(response.body().getStatus(),
                             response.body().getData().getMessage());
+                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    String deviceToken = LoginShared.getDeviceToken(AddEditReminderActivity.this);
+                    LoginShared.destroySessionTypePreference(AddEditReminderActivity.this);
+                    LoginShared.setDeviceToken(AddEditReminderActivity.this, deviceToken);
+                    Intent loginIntent = new Intent(AddEditReminderActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 }else {
                     if(type.equals("Add")) {
                         editReminderText.setText("");

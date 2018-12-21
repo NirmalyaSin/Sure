@@ -1,13 +1,16 @@
 package com.surefiz.screens.weightdetails;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import com.surefiz.R;
 import com.surefiz.screens.UDPHelper;
+import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -130,6 +134,8 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     protected void onStop() {
         super.onStop();
         Log.d("@@LifeCycle : ", "onStop()");
+        //Un-Register BMI Receiver
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(myBMIReceiver);
         //Cancel Loader and timer
         cancelTimerAndLoader();
     }
@@ -138,6 +144,9 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     protected void onResume() {
         super.onResume();
         Log.d("@@LifeCycle : ", "onResume()");
+        //Register BMI receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(myBMIReceiver,
+                new IntentFilter("new_bmi_data"));
     }
 
     private void goNextAction() {
@@ -344,4 +353,16 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         cancelTimerAndLoader();
         //   userIdManager.close();
     }
+
+    private BroadcastReceiver myBMIReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("@@BMI-Broadcast : ", "Received");
+            Intent intent2 = new Intent(WeightDetailsActivity.this,
+                    BMIDetailsActivity.class);
+            startActivity(intent2);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        }
+    };
 }

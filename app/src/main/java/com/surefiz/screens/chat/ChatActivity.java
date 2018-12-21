@@ -1,5 +1,6 @@
 package com.surefiz.screens.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +20,8 @@ import com.surefiz.screens.chat.adapter.ChatAdapter;
 import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -171,7 +174,15 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                             recyclerView.smoothScrollToPosition(arrayListConversation.size());
                         }
                         myApplicationClass.chatListNotification.clear();
-                    } else {
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(ChatActivity.this);
+                        LoginShared.destroySessionTypePreference(ChatActivity.this);
+                        LoginShared.setDeviceToken(ChatActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(ChatActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }else {
                         MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
                     }
 
@@ -215,6 +226,16 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                     if (response.body().getStatus() == 1) {
                         oldPagination = INITIAL_PAGINATION;
                         callChatListApi(receiver_id, INITIAL_PAGINATION);
+                    }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(ChatActivity.this);
+                        LoginShared.destroySessionTypePreference(ChatActivity.this);
+                        LoginShared.setDeviceToken(ChatActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(ChatActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }else {
+                        MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
                     }
                 }
             }

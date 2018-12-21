@@ -82,7 +82,9 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginLeft="@dimen/_20sdp"
                         android:layout_marginRight="@dimen/_20sdp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal">
 
                         <Button
                             android:id="@+id/btn_kg"
@@ -94,19 +96,22 @@
                             android:paddingBottom="@dimen/_5sdp"
                             android:text="KG"
                             android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_14sdp"
+                            android:visibility="gone"/>
 
                         <View
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
                             android:layout_margin="@dimen/_5sdp"
-                            android:paddingTop="@dimen/_5sdp" />
+                            android:paddingTop="@dimen/_5sdp"
+                            android:visibility="gone"/>
 
                         <Button
                             android:id="@+id/btn_lbs"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/_100sdp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_gravity="center_horizontal"
                             android:background="@drawable/weight_blue_button"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingBottom="@dimen/_5sdp"

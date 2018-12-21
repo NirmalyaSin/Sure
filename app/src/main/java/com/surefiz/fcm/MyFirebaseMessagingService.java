@@ -11,6 +11,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -39,6 +40,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private MyApplicationClass myApplicationClass;
 
     private static final String TAG = "MyFirebaseMsgService";
+    private JSONObject jObject;
 
     /**
      * Called when message is received.
@@ -60,7 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             ComponentName componentInfo = taskInfo.get(0).topActivity;
             componentInfo.getPackageName();
             JSONObject jsonObject = null;
-            JSONObject jObject = null;
+            jObject = null;
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
@@ -85,8 +87,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jObject.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
-                }
-                else {
+                }else if (jObject.optInt("pushType") == 5) {
+                    LoginShared.setWeightFromNotification(this, "5");
+                } else {
                     LoginShared.setWeightFromNotification(this, "1");
                 }
                 scheduleJob();
@@ -106,11 +109,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             if (!taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.chat.ChatActivity")) {
                 showNotification(remoteMessage.getNotification(), remoteMessage.getData());
+            }else if (!taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.bmidetails.BMIDetailsActivity")) {
+                showNotification(remoteMessage.getNotification(), remoteMessage.getData());
+            }else if (!taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.weightdetails.WeightDetailsActivity")) {
+                sendBroadcastToPage(jObject.optInt("pushType"));
             }
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See showNotification method below.
+    }
+
+    public void sendBroadcastToPage(int pushType) {
+        if(pushType==5){
+            Intent intent = new Intent("new_bmi_data");
+            intent.putExtra("notificationFlag", "1");
+            intent.putExtra("serverUserId", jObject.optString("serverUserId"));
+            intent.putExtra("ScaleUserId", jObject.optString("ScaleUserId"));
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+        }
     }
     // [END receive_message]
 
@@ -178,9 +195,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     PendingIntent.FLAG_ONE_SHOT);
         } else if (jObject.optInt("pushType") == 5) {
             Intent intent = new Intent(this, BMIDetailsActivity.class);
-            intent.putExtra("notificationFlag", "1");
+           /* intent.putExtra("notificationFlag", "1");
             intent.putExtra("serverUserId", jObject.optString("serverUserId"));
-            intent.putExtra("ScaleUserId", jObject.optString("ScaleUserId"));
+            intent.putExtra("ScaleUserId", jObject.optString("ScaleUserId"));*/
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,

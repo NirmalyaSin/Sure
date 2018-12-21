@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.surefiz.R;
 import com.surefiz.screens.accountability.AcountabilityActivity;
+import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
@@ -30,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
     RegistrationModel loginModel;
     private String notificationPage;
     private String receiver_id;
+    private JSONObject jsonObject1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            JSONObject jsonObject1 = null;
+            jsonObject1 = null;
             if (getIntent().hasExtra("_fbSourceApplicationHasBeenSet") && !getIntent().hasExtra("pushData")) {
                 System.out.print("SureFIZ");
             } else if (getIntent().hasExtra("pushData")) {
@@ -58,6 +60,8 @@ public class SplashActivity extends AppCompatActivity {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jsonObject1.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
+                }else if (jsonObject1.optInt("pushType") == 5) {
+                    LoginShared.setWeightFromNotification(this, "5");
                 } else {
                     LoginShared.setWeightFromNotification(this, "1");
                 }
@@ -116,6 +120,11 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             } else if (LoginShared.getWeightFromNotification(this).equals("4")) {
                 Intent intent = new Intent(this, AcountabilityActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }else if (LoginShared.getWeightFromNotification(this).equals("5")) {
+                Intent intent = new Intent(this, BMIDetailsActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

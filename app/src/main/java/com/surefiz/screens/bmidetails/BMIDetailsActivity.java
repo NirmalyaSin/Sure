@@ -1,8 +1,12 @@
 package com.surefiz.screens.bmidetails;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -15,6 +19,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.bmidetails.model.BMIResponse;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -75,16 +80,18 @@ public class BMIDetailsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-       /* String userId = LoginShared.getRegistrationDataModel(this).getData()
-                .getUser().get(0).getUserId();
-        String scaleId = LoginShared.getRegistrationDataModel(this).getData()
-                .getUser().get(0).getUserMac();
-        //Call Api to list the BMI-Data
-        callBMIApi(userId, scaleId);*/
+    protected void onResume() {
+        super.onResume();
+        //Register Receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(myBMIReceiver,
+                new IntentFilter("new_bmi_data"));
+    }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Un-Register Receiver
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(myBMIReceiver);
     }
 
     //Api to get the BMI data
@@ -146,4 +153,17 @@ public class BMIDetailsActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
+
+    private BroadcastReceiver myBMIReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("@@BMI-Broadcast : ", "Received on BMI-Page");
+
+            String serverUserId = intent.getStringExtra("serverUserId");
+            String scaleUserId = intent.getStringExtra("ScaleUserId");
+
+            //Call Api for BMI
+            callBMIApi(serverUserId, scaleUserId);
+        }
+    };
 }

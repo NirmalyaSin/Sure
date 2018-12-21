@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -55,12 +58,15 @@ public class ProfileClickEvent implements View.OnClickListener {
     private ImageLoader imageLoader;
     private List<String> prefferedList = new ArrayList<>();
     private String filePath = "";
+    private List<String> heightList = new ArrayList<>();
+    private UniversalPopup heightPopup;
 
     public ProfileClickEvent(ProfileActivity activity) {
         this.activity = activity;
         loader = new LoadingData(activity);
         initializeImageLoader();
         setClickEvent();
+        addHeightListAndCall("INCH");
 
         if (!ConnectionDetector.isConnectingToInternet(activity)) {
             MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
@@ -70,6 +76,42 @@ public class ProfileClickEvent implements View.OnClickListener {
 
         addGenderListAndCall();
         addPrefferedListAndCall();
+
+        activity.et_units.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                heightList.clear();
+                if (activity.et_units.getText().toString().equals("KG/CM")) {
+                    addHeightListAndCall("CM");
+                } else {
+                    addHeightListAndCall("INCH");
+                }
+            }
+        });
+    }
+
+    private void addHeightListAndCall(String change) {
+        heightList.clear();
+        if (change.equals("INCH")) {
+            for (int i = 1; i < 109; i++) {
+                heightList.add(i + " " + change);
+            }
+        } else {
+            for (int i = 1; i < 276; i++) {
+                heightList.add(i + " " + change);
+            }
+        }
+        heightPopup = new UniversalPopup(activity, heightList, activity.et_height);
     }
 
     private void initializeImageLoader() {
@@ -136,6 +178,13 @@ public class ProfileClickEvent implements View.OnClickListener {
         activity.et_gender.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender());
         activity.et_phone.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserPhoneNumber());
         activity.et_full.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getPreferredUnits().equals("1")) {
+            activity.et_units.setText("KG/CM");
+        } else {
+            activity.et_units.setText("LB/INCH");
+        }
+        activity.et_email.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserEmail());
+        activity.et_height.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getHeight());
         activity.profile_image.setEnabled(false);
         showImage();
     }
@@ -163,6 +212,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         activity.profile_image.setOnClickListener(this);
         activity.iv_plus_add_image.setOnClickListener(this);
         activity.et_units.setOnClickListener(this);
+        activity.et_height.setOnClickListener(this);
         activity.btn_register.setOnClickListener(this);
     }
 
@@ -186,6 +236,11 @@ public class ProfileClickEvent implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.et_gender:
                 hideSoftKeyBoard();
+                if (activity.et_units.getText().toString().equals("KG/CM")) {
+                    addHeightListAndCall("CM");
+                } else {
+                    addHeightListAndCall("INCH");
+                }
                 if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
                 } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
@@ -203,7 +258,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 ExpiryDialog();
                 break;
             case R.id.et_units:
-                hideSoftKeyBoard();
+               /* hideSoftKeyBoard();
                 if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
                 } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
@@ -215,7 +270,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                             showAndDismissPrefferedPopup();
                         }
                     }, 100);
-                }
+                }*/
                 break;
             case R.id.iv_edit:
                 activity.iv_plus_add_image.setVisibility(View.VISIBLE);
@@ -227,6 +282,8 @@ public class ProfileClickEvent implements View.OnClickListener {
                 activity.et_gender.setEnabled(true);
                 activity.et_DOB.setEnabled(true);
                 activity.et_units.setEnabled(true);
+                activity.et_email.setEnabled(true);
+                activity.et_height.setEnabled(true);
                 activity.profile_image.setEnabled(true);
                 activity.et_full.setSelection(activity.et_full.getText().length());
                 InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -247,6 +304,23 @@ public class ProfileClickEvent implements View.OnClickListener {
                         filePath = path;
                     }
                 }, "1").show();
+                break;
+            case R.id.et_height:
+                hideSoftKeyBoard();
+                if (prefferedPopup != null && prefferedPopup.isShowing()) {
+                    prefferedPopup.dismiss();
+                } else if (genderPopup != null && genderPopup.isShowing()) {
+                    genderPopup.dismiss();
+                } else if (heightPopup != null && heightPopup.isShowing()) {
+                    heightPopup.dismiss();
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showAndDismissHeightPopup();
+                        }
+                    }, 100);
+                }
                 break;
             case R.id.btn_register:
                 if (activity.et_full.getText().toString().equals("")) {
@@ -273,6 +347,15 @@ public class ProfileClickEvent implements View.OnClickListener {
         }
     }
 
+    private void showAndDismissHeightPopup() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                heightPopup.showAsDropDown(activity.et_height);
+            }
+        }, 100);
+    }
+
     private void sendProfileImageUpdateApi() {
         loader.show_with_label("Loading");
         RequestBody gender = null;
@@ -281,11 +364,11 @@ public class ProfileClickEvent implements View.OnClickListener {
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), activity.et_full.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), activity.et_phone.getText().toString().trim());
-        if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
-            preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
-        } else {
+        //if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
+        //preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
+        /*} else {
             preffered = RequestBody.create(MediaType.parse("text/plain"), "0");
-        }
+        }*/
         if (activity.et_gender.getText().toString().trim().equals("Male")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else if (activity.et_gender.getText().toString().trim().equals("Female")) {
@@ -293,6 +376,10 @@ public class ProfileClickEvent implements View.OnClickListener {
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
+        RequestBody user_email = RequestBody.create(MediaType.parse("text/plain"), activity.et_email.getText().toString().trim());
+        String str = activity.et_height.getText().toString().trim();
+        String[] splited = str.split(" ");
+        RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0]);
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "Android");
         RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId());
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), activity.et_DOB.getText().toString().trim());
@@ -301,7 +388,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 activity.mCompressedFile.getName(), reqFile);
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, gender, phone, dob, preffered, deviceType, body);
+                userId, fullName, gender, phone, dob, deviceType, user_email, Height, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -324,6 +411,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.iv_edit.setVisibility(View.VISIBLE);
                         activity.showViewMode();
+                        setData();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(activity);
                         LoginShared.destroySessionTypePreference();
@@ -377,9 +465,12 @@ public class ProfileClickEvent implements View.OnClickListener {
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "Android");
         RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId());
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), activity.et_DOB.getText().toString().trim());
-
+        RequestBody user_email = RequestBody.create(MediaType.parse("text/plain"), activity.et_email.getText().toString().trim());
+        String str = activity.et_height.getText().toString().trim();
+        String[] splited = str.split(" ");
+        RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0].toString());
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, gender, phone, dob, preffered, deviceType);
+                userId, fullName, gender, phone, dob, deviceType, user_email, Height);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -400,6 +491,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                         LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.showViewMode();
+                        setData();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(activity);
                         LoginShared.destroySessionTypePreference();

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.weightManagement.WeightManagementActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.6"
+        android:background="@drawable/splash_image" />
+
+    <TextView
+        android:id="@+id/tv_units"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_18sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:text="Preffered Units"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_units"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_units"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+        android:background="@drawable/edit_text_background">
+
+        <EditText
+            android:id="@+id/et_units"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@android:color/transparent"
+            android:focusableInTouchMode="false"
+            android:hint="Select Preffered unit"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/_6sdp"
+            android:textColor="@color/whiteColor"
+            android:textColorHint="@color/hintColor"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="@dimen/_10sdp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_units"
+        android:paddingLeft="@dimen/_18sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:text="Desired Weight"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_weight"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+        android:background="@drawable/edit_text_background">
+
+        <EditText
+            android:id="@+id/et_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@android:color/transparent"
+            android:focusableInTouchMode="false"
+            android:hint="Desired Weight"
+            android:inputType="text|textNoSuggestions"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/_6sdp"
+            android:textColor="@color/whiteColor"
+            android:textColorHint="@color/hintColor"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="@dimen/_10sdp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_time_loss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_weight"
+        android:paddingLeft="@dimen/_18sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:text="Time To Lose Weight "
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_time_loss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_time_loss"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+        android:background="@drawable/edit_text_background">
+
+        <EditText
+            android:id="@+id/et_time_loss"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@android:color/transparent"
+            android:focusableInTouchMode="false"
+            android:hint="Enter Lose Weight Time"
+            android:inputType="text|textNoSuggestions"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/_6sdp"
+            android:textColor="@color/whiteColor"
+            android:textColorHint="@color/hintColor"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="@dimen/_10sdp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/rl_time_loss"
+        android:layout_margin="@dimen/_44sdp"
+        android:background="@drawable/login_submit_rounded_corner"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+</RelativeLayout>

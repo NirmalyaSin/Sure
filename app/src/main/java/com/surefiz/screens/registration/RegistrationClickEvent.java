@@ -86,6 +86,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
+                heightList.clear();
+                weightList.clear();
                 if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
                     addHeightListAndCall("CM");
                 } else {

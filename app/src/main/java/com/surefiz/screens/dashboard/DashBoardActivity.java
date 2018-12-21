@@ -84,7 +84,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals;
     List<UserList> contactLists = new ArrayList<>();
     ContactListAdapter adapter;
-    String id = "";
+    public String id = "";
+    public int row_user = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +118,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         finish();
                     }
                 });
+                rv_items.setVisibility(View.GONE);
+            } else {
+                rl_back.setVisibility(View.GONE);
+                img_topbar_menu.setVisibility(View.VISIBLE);
+                tv_universal_header.setText("Dashboard");
+                rv_items.setVisibility(View.VISIBLE);
+                row_user=1;
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
-            rv_items.setVisibility(View.GONE);
         } else {
             id = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
             rv_items.setVisibility(View.VISIBLE);
@@ -143,7 +151,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
     private void setRecyclerViewItem() {
-        adapter = new ContactListAdapter(this, contactLists, this);
+        adapter = new ContactListAdapter(this, contactLists, this,row_user);
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
         rv_items.setItemAnimator(new DefaultItemAnimator());

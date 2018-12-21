@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
+import com.surefiz.screens.accountability.AcountabilityActivity;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.users.model.UserList;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
@@ -45,7 +47,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     @Override
     public void onBindViewHolder(@NonNull UserListViewHolder userListViewHolder, int i) {
         df2 = new DecimalFormat(".##");
-        if (userLists.get(i).getUserName() == null ||userLists.get(i).getUserName().equals("") ||
+        if (userLists.get(i).getUserName() == null || userLists.get(i).getUserName().equals("") ||
                 userLists.get(i).getUserName().equalsIgnoreCase("null") ||
                 userLists.get(i).getUserName().isEmpty()) {
             userListViewHolder.tv_name.setText("No Name");
@@ -65,6 +67,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 row_index = i;
                 if (LoginShared.getDashboardPageFrom(activity).equals("0")) {
                     userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                    Intent intent = new Intent(activity, DashBoardActivity.class);
+                    intent.putExtra("id", userLists.get(i).getServerUserId().toString());
+                    intent.putExtra("page", "0");
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    activity.finish();
                 } else {
                     userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
                     LoginShared.setScaleUserId(userLists.get(i).getScaleUserId());

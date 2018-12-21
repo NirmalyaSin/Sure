@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null"
     android:gravity="center_horizontal|bottom"
     android:orientation="vertical"
     android:weightSum="1.0">
@@ -23,59 +22,57 @@
             android:layout_gravity="center"
             android:layout_weight="0.33"
             android:gravity="center"
-            android:visibility="gone"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#123456" />
+            android:textColor="#123456"
+            android:visibility="gone" />
 
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:src="@drawable/stripe" />
+            android:src="@drawable/stripe"
+            android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_openCamera"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="0.41"
+                android:gravity="center"
+                android:text="Camera"
+                android:background="@color/whiteColor"
+                android:textColor="@color/registration_color_black"
+                android:textSize="@dimen/_20sdp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/stripe"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_openGallery"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.41"
+                android:gravity="center"
+                android:text="Gallery"
+                android:background="@color/whiteColor"
+                android:textColor="@color/registration_color_black"
+                android:textSize="@dimen/_20sdp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_openCamera"
-            android:layout_width="match_parent"
+            android:id="@+id/tvCancel"
+            android:layout_width="330dp"
             android:layout_height="0dp"
-            android:layout_weight="0.41"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.1"
             android:gravity="center"
-            android:text="Camera"
-            android:background="@drawable/layout_camera_bg"
-            android:layout_marginBottom="5dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/registration_color_black" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:src="@drawable/stripe" />
-
-        <TextView
-            android:id="@+id/tv_openGallery"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.41"
-            android:gravity="center"
-            android:text="Gallery"
-            android:background="@drawable/layout_camera_bg"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/registration_color_black"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvCancel"
-        android:layout_width="330dp"
-        android:layout_height="0dp"
-        android:layout_below="@+id/ll_headerContainer"
-        android:layout_weight="0.1"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/layout_bg"
-        android:gravity="center"
-        android:text="Cancel"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/holo_red_dark"
-        android:textStyle="bold"/>
+            android:text="Cancel"
+            android:background="@color/whiteColor"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
 </LinearLayout>

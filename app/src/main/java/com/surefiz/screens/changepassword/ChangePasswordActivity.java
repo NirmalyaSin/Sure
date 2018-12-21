@@ -133,9 +133,6 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                String deviceToken = LoginShared.getDeviceToken(ChangePasswordActivity.this);
-                                LoginShared.destroySessionTypePreference();
-                                LoginShared.setDeviceToken(ChangePasswordActivity.this, deviceToken);
                                 Intent loginIntent = new Intent(ChangePasswordActivity.this, SettingsActivity.class);
                                 startActivity(loginIntent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

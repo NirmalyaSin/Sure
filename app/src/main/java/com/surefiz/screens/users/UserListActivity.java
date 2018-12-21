@@ -70,7 +70,7 @@ public class UserListActivity extends BaseActivity {
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
+                Intent loginIntent = new Intent(UserListActivity.this, DashBoardActivity.class);
                 startActivity(loginIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -175,9 +175,8 @@ public class UserListActivity extends BaseActivity {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         } else {
             img_topbar_menu.setVisibility(View.GONE);
-            btn_done.setVisibility(View.GONE);
+            btn_done.setVisibility(View.VISIBLE);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
         }
     }
 }

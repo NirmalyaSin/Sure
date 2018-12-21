@@ -46,6 +46,7 @@ public class NotificationActivity extends BaseActivity implements
         view = View.inflate(this, R.layout.activity_notifications, null);
         addContentView(view);
         initializeView();
+        LoginShared.setWeightFromNotification(this, "0");
     }
 
 
@@ -84,7 +85,7 @@ public class NotificationActivity extends BaseActivity implements
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         String token = LoginShared.getRegistrationDataModel(this).getData().getToken();
         String id = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
-        Log.e("@@Sent-Notification : ", "Token = "+token+"\nUser-ID = "+id);
+        Log.e("@@Sent-Notification : ", "Token = " + token + "\nUser-ID = " + id);
 
         final Call<NotificationsResponse> call_NotificationListApi = apiInterface
                 .call_NotificationListApi(token, id);
@@ -96,12 +97,12 @@ public class NotificationActivity extends BaseActivity implements
                     loadingData.dismiss();
                     arrayListNotifications.clear();
                 }
-                Log.d("@@NotificationList : " , response.body().toString());
+                Log.d("@@NotificationList : ", response.body().toString());
 
                 try {
                     if (response.body().getStatus() == 1) {
                         arrayListNotifications.addAll(response.body().getData().getNotifications());
-                    }else {
+                    } else {
                         MethodUtils.errorMsg(NotificationActivity.this, response.body().getData().getMessage());
                     }
 
@@ -132,8 +133,8 @@ public class NotificationActivity extends BaseActivity implements
         String user_id = LoginShared.getRegistrationDataModel(this).getData().getUser()
                 .get(0).getUserId();
         String senderId = arrayListNotifications.get(listPosition).getNotificationSenderId();
-        Log.e("@@Sent-Accept : ", "Token = "+token+"\nUser-ID = "+user_id
-                +"\nsenderId = "+senderId+"\nType = "+type);
+        Log.e("@@Sent-Accept : ", "Token = " + token + "\nUser-ID = " + user_id
+                + "\nsenderId = " + senderId + "\nType = " + type);
 
         final Call<NotificationsResponse> call_AcceptRejectFriendRequestApi = apiInterface.call_AcceptRejectFriendRequestApi(
                 token.trim(), user_id.trim(), senderId.trim(), type.trim());
@@ -178,7 +179,7 @@ public class NotificationActivity extends BaseActivity implements
         acceptRejectRequestApi(position, RequestState.SEND_REJECT_FRIEND_REQUEST);
     }
 
-    public void showResponseDialog(int status, String message){
+    public void showResponseDialog(int status, String message) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setMessage(message);

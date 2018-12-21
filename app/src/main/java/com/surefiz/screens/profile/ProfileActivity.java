@@ -55,6 +55,8 @@ public class ProfileActivity extends BaseActivity {
     EditText et_full;
     EditText et_gender;
     EditText et_units;
+    EditText et_email;
+    EditText et_height;
     Button btn_register;
 
     @Override
@@ -85,6 +87,8 @@ public class ProfileActivity extends BaseActivity {
         et_gender.setEnabled(false);
         et_DOB.setEnabled(false);
         et_units.setEnabled(false);
+        et_email.setEnabled(false);
+        et_height.setEnabled(false);
         profile_image.setEnabled(false);
     }
 
@@ -96,6 +100,8 @@ public class ProfileActivity extends BaseActivity {
         et_full = view.findViewById(R.id.et_full);
         et_gender = view.findViewById(R.id.et_gender);
         et_units = view.findViewById(R.id.et_units);
+        et_email = view.findViewById(R.id.et_email);
+        et_height = view.findViewById(R.id.et_height);
         btn_register = view.findViewById(R.id.btn_register);
     }
 

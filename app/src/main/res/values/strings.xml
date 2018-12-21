@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SureFiz</string>
+    <string name="app_name_otp">SureFiz</string>
     <string name="facebook_app_id">2086076151705154</string>
     <string name="fb_login_protocol_scheme">fb2086076151705154</string>
 

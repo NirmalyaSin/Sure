@@ -44,14 +44,15 @@
 
         <Button
             android:id="@+id/btn_done"
-            android:layout_width="@dimen/_50sdp"
+            android:layout_width="@dimen/_90sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_toRightOf="@+id/rl_menu"
             android:background="@drawable/login_submit_rounded_corner"
-            android:text="Done"
+            android:text="Dashboard"
+            android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp" />
 

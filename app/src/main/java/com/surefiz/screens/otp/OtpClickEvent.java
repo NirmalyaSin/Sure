@@ -1,9 +1,12 @@
 package com.surefiz.screens.otp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -12,11 +15,13 @@ import com.google.gson.JsonObject;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.AddUserDialogForOTP;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.users.UserListActivity;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -182,11 +187,12 @@ public class OtpClickEvent implements View.OnClickListener {
 
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
-                        MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
+//                        MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
                         LoginShared.setstatusforOtpvarification(otpActivity, true);
-                        Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
+                        showUserAddDialog();
+                        /*Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
                         otpActivity.startActivity(dashBoardIntent);
-                        otpActivity.finish();
+                        otpActivity.finish();*/
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(otpActivity);
                         LoginShared.destroySessionTypePreference();
@@ -213,6 +219,35 @@ public class OtpClickEvent implements View.OnClickListener {
             }
         });
 
+    }
+
+    public void showUserAddDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(otpActivity);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage("Do you want to add more users?");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                new AddUserDialogForOTP(otpActivity).show();
+            }
+        });
+
+        alertDialog.setNegativeButton("Not now", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
+                otpActivity.startActivity(dashBoardIntent);
+                otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                otpActivity.finish();
+            }
+        });
+
+        alertDialog.create();
+
+        alertDialog.show();
     }
 
     private void hideSoftKeyBoard() {

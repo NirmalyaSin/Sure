@@ -47,6 +47,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         addContentView(view);
         setHeaderView();
         setRecyclerViewItem();
+        LoginShared.setWeightFromNotification(this, "0");
         loadingData = new LoadingData(this);
 
         iv_AddPlus.setOnClickListener(new View.OnClickListener() {

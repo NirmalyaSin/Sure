@@ -1,8 +1,10 @@
 package com.surefiz.dialog;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.Editable;
@@ -24,9 +26,9 @@ import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.users.UserListActivity;
+import com.surefiz.screens.otp.OtpActivity;
+import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -37,16 +39,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class AddUserDialog extends Dialog {
-    Activity activity;
+public class AddUserDialogForOTP extends Dialog {
+    OtpActivity activity;
     ImageView iv_cross;
     EditText et_name;
     EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss;
@@ -61,7 +61,7 @@ public class AddUserDialog extends Dialog {
     private List<String> timeList = new ArrayList<>();
     private int month, year, day;
 
-    public AddUserDialog(Activity activity, MoveTutorial moveTutorial) {
+    public AddUserDialogForOTP(OtpActivity activity) {
         super(activity, R.style.DialogStyle);
         this.activity = activity;
         this.moveTutorial = moveTutorial;
@@ -121,7 +121,7 @@ public class AddUserDialog extends Dialog {
         iv_cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                showConfirmDialog();
             }
         });
 
@@ -367,6 +367,112 @@ public class AddUserDialog extends Dialog {
         }, 100);
     }
 
+    private void addUserApi() {
+        String gender = "";
+        String units = "";
+        if (et_gender.getText().toString().trim().equals("Male")) {
+            gender = "1";
+        } else if (et_gender.getText().toString().trim().equals("Female")) {
+            gender = "0";
+        } else {
+            gender = "2";
+        }
+
+        if (et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
+            units = "0";
+        } else {
+            units = "1";
+        }
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(
+                LoginShared.getRegistrationDataModel(activity).getData().getToken(),
+                LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
+                et_name.getText().toString().trim(), et_email.getText().toString().trim(), et_time_loss.getText().toString().trim(),
+                et_height.getText().toString().trim(), et_weight.getText().toString().trim(), "12345678", gender, et_phone.getText().toString().trim(),
+                et_DOB.getText().toString().trim(), "2", units);
+        call_addUser.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    String responseString = response.body().string();
+
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    if (jsonObject.optInt("status") == 1) {
+                        JSONObject jObject = jsonObject.getJSONObject("data");
+                        dismiss();
+                        activity.otpClickEvent.showUserAddDialog();
+                        /*Intent dashBoardIntent = new Intent(activity, WifiConfigActivity.class);
+                        activity.startActivity(dashBoardIntent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        activity.finish();*/
+                        /*int scaleUserId = jObject.optInt("scaleUserId");
+                        LoginShared.setScaleUserId(scaleUserId);
+                        if (LoginShared.getDashboardPageFrom(activity).equals("0")) {
+                            LoginShared.setWeightPageFrom(activity, "3");
+                        } else {
+                            LoginShared.setWeightPageFrom(activity, "2");
+                        }
+
+                        moveTutorial.onSuccess("1");*/
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(activity);
+                        LoginShared.destroySessionTypePreference();
+                        LoginShared.setDeviceToken(activity, deviceToken);
+                        Intent loginIntent = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(loginIntent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        activity.finish();
+                    } else {
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(activity, jsObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+            }
+        });
+    }
+
+    public void showConfirmDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage("Do you want to Cancel?");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                dismiss();
+                Intent dashBoardIntent = new Intent(activity, WifiConfigActivity.class);
+                activity.startActivity(dashBoardIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                activity.finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.create();
+
+        alertDialog.show();
+    }
     private void ExpiryDialog() {
 
         Calendar mCalendar;
@@ -478,78 +584,5 @@ public class AddUserDialog extends Dialog {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-    }
-
-    private void addUserApi() {
-        String gender = "";
-        String units = "";
-        if (et_gender.getText().toString().trim().equals("Male")) {
-            gender = "1";
-        } else if (et_gender.getText().toString().trim().equals("Female")) {
-            gender = "0";
-        } else {
-            gender = "2";
-        }
-
-        if (et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
-            units = "0";
-        } else {
-            units = "1";
-        }
-        loader.show_with_label("Loading");
-        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
-        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-
-        final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(
-                LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
-                et_name.getText().toString().trim(), et_email.getText().toString().trim(), et_time_loss.getText().toString().trim(),
-                et_height.getText().toString().trim(), et_weight.getText().toString().trim(), "12345678", gender, et_phone.getText().toString().trim(),
-                et_DOB.getText().toString().trim(), "2", units);
-        call_addUser.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (loader != null && loader.isShowing())
-                    loader.dismiss();
-                try {
-                    String responseString = response.body().string();
-
-                    JSONObject jsonObject = new JSONObject(responseString);
-                    if (jsonObject.optInt("status") == 1) {
-                        JSONObject jObject = jsonObject.getJSONObject("data");
-                        int scaleUserId = jObject.optInt("scaleUserId");
-                        LoginShared.setScaleUserId(scaleUserId);
-                        if (LoginShared.getDashboardPageFrom(activity).equals("0")) {
-                            LoginShared.setWeightPageFrom(activity, "3");
-                        } else {
-                            LoginShared.setWeightPageFrom(activity, "2");
-                        }
-
-                        moveTutorial.onSuccess("1");
-                        dismiss();
-                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
-                        String deviceToken = LoginShared.getDeviceToken(activity);
-                        LoginShared.destroySessionTypePreference();
-                        LoginShared.setDeviceToken(activity, deviceToken);
-                        Intent loginIntent = new Intent(activity, LoginActivity.class);
-                        activity.startActivity(loginIntent);
-                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        activity.finish();
-                    } else {
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
-                        MethodUtils.errorMsg(activity, jsObject.getString("message"));
-                    }
-                } catch (Exception e) {
-                    MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                if (loader != null && loader.isShowing())
-                    loader.dismiss();
-                MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
-            }
-        });
     }
 }

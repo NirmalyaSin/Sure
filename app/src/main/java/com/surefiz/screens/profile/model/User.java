@@ -33,6 +33,12 @@ public class User {
     @SerializedName("user_LastLogin")
     @Expose
     private String userLastLogin;
+    @SerializedName("preferredUnits")
+    @Expose
+    private String preferredUnits;
+    @SerializedName("height")
+    @Expose
+    private String height;
 
     public String getUserId() {
         return userId;
@@ -104,6 +110,22 @@ public class User {
 
     public void setUserLastLogin(String userLastLogin) {
         this.userLastLogin = userLastLogin;
+    }
+
+    public String getPreferredUnits() {
+        return preferredUnits;
+    }
+
+    public void setPreferredUnits(String preferredUnits) {
+        this.preferredUnits = preferredUnits;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
     }
 
 }

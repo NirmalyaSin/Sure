@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 
 public class OtpActivity extends AppCompatActivity {
 
-    OtpClickEvent otpClickEvent;
+    public OtpClickEvent otpClickEvent;
     @BindView(R.id.et_first)
     EditText et_first;
     @BindView(R.id.et_second)

@@ -1,6 +1,7 @@
 package com.surefiz.networkutils;
 
 
+import com.google.zxing.ResultPoint;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.chat.model.ChatListResponse;
@@ -43,10 +44,12 @@ import static com.surefiz.apilist.ApiList.CONTACTLIST;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
+import static com.surefiz.apilist.ApiList.GET_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.LOGOUT;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.SENDOTP;
+import static com.surefiz.apilist.ApiList.SEND_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.USERLIST;
 import static com.surefiz.apilist.ApiList.VIEWPROFILE;
 
@@ -111,8 +114,9 @@ public interface ApiInterface {
                                                 @Part("gender") RequestBody gender,
                                                 @Part("phoneNumber") RequestBody phoneNumber,
                                                 @Part("dob") RequestBody dob,
-                                                @Part("prefferedUnits") RequestBody prefferedUnits,
                                                 @Part("deviceType") RequestBody deviceType,
+                                                @Part("user_email") RequestBody user_email,
+                                                @Part("Height") RequestBody Height,
                                                 @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -123,8 +127,9 @@ public interface ApiInterface {
                                            @Part("gender") RequestBody gender,
                                            @Part("phoneNumber") RequestBody phoneNumber,
                                            @Part("dob") RequestBody dob,
-                                           @Part("prefferedUnits") RequestBody prefferedUnits,
-                                           @Part("deviceType") RequestBody deviceType);
+                                           @Part("deviceType") RequestBody deviceType,
+                                           @Part("user_email") RequestBody user_email,
+                                           @Part("Height") RequestBody Height);
 
     @FormUrlEncoded
     @POST(USERLIST)
@@ -141,9 +146,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_CIRCLE_ACCEPT_REJECT_REQUEST)
     Call<NotificationsResponse> call_AcceptRejectFriendRequestApi(@Header("x-authorization") String token,
-                                                      @Field("userId") String userId,
-                                                      @Field("requestId") String requestId,
-                                                      @Field("type") String type);
+                                                                  @Field("userId") String userId,
+                                                                  @Field("requestId") String requestId,
+                                                                  @Field("type") String type);
 
     @GET(API_CIRCLE_SEARCH_USER_LIST + "/{keyword}")
     Call<CircleUserResponse> call_SearchCircleUserListApi(@Header("x-authorization") String token,
@@ -169,9 +174,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_SEND_CHAT)
     Call<ChatListResponse> call_SendChatApi(@Header("x-authorization") String token,
-                                                    @Field("senderId") String senderId,
-                                                    @Field("receiverId") String receiverId,
-                                                    @Field("chatmessage") String chatmessage);
+                                            @Field("senderId") String senderId,
+                                            @Field("receiverId") String receiverId,
+                                            @Field("chatmessage") String chatmessage);
 
     @FormUrlEncoded
     @POST(API_GET_PRIVACY_LIST)
@@ -186,17 +191,18 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_ADD_EDIT_REMINDER_LIST)
     Call<ReminderListResponse> call_AddUpdateReminderApi(@Header("x-authorization") String token,
-                                                    @Field("userId") String userId,
-                                                    @Field("reminderText") String reminderText,
-                                                    @Field("dateTime") String dateTime,
-                                                    @Field("type") String type,
-                                                    @Field("Id") String Id);
+                                                         @Field("userId") String userId,
+                                                         @Field("reminderText") String reminderText,
+                                                         @Field("dateTime") String dateTime,
+                                                         @Field("type") String type,
+                                                         @Field("Id") String Id);
+
     @FormUrlEncoded
     @POST(API_UPDATE_PRIVACY_LIST)
     Call<PrivacyListResponse> call_UpdatePrivacyList(@Header("x-authorization") String token,
-                                                  @Field("senderId") String senderId,
-                                                  @Field("selectedIds") String selectedIds,
-                                                  @Field("removedId") String removedId);
+                                                     @Field("senderId") String senderId,
+                                                     @Field("selectedIds") String selectedIds,
+                                                     @Field("removedId") String removedId);
 
     @FormUrlEncoded
     @POST(ADDUSER)
@@ -253,4 +259,17 @@ public interface ApiInterface {
                                               @Field("userId") String userId,
                                               @Field("oldPassword") String oldPassword,
                                               @Field("newPassword") String newPassword);
+
+    @FormUrlEncoded
+    @POST(GET_WEIGHT_MANAGEMENT)
+    Call<ResponseBody> call_getWeightManagement(@Header("x-authorization") String token,
+                                                @Field("serverUserId") String serverUserId,
+                                                @Field("scaleUserId") String scaleUserId);
+
+    @FormUrlEncoded
+    @POST(SEND_WEIGHT_MANAGEMENT)
+    Call<ResponseBody> call_sendWeightManagement(@Header("x-authorization") String token,
+                                                 @Field("serverUserId") String serverUserId,
+                                                 @Field("desiredWeight") String desiredWeight,
+                                                 @Field("timeToLoseWeight") String timeToLoseWeight);
 }

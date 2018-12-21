@@ -124,10 +124,17 @@ public class SplashActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }else if (LoginShared.getWeightFromNotification(this).equals("5")) {
+             //   LoginShared.setWeightFromNotification(this, "0");
+                String serverUserId = "";
+                String scaleUserId = "";
+                if(jsonObject1!=null){
+                    serverUserId = jsonObject1.optString("serverUserId");
+                    scaleUserId = jsonObject1.optString("ScaleUserId");
+                }
                 Intent intent = new Intent(this, BMIDetailsActivity.class);
                 intent.putExtra("notificationFlag", "1");
-                intent.putExtra("serverUserId", jsonObject1.optString("serverUserId"));
-                intent.putExtra("ScaleUserId", jsonObject1.optString("ScaleUserId"));
+                intent.putExtra("serverUserId", serverUserId);
+                intent.putExtra("ScaleUserId", scaleUserId);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

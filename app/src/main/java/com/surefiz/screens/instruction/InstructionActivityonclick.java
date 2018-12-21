@@ -24,12 +24,19 @@ public class InstructionActivityonclick implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btndone:
-                if(instructionActivity.userLists.get(0)!=null) {
-                    if (instructionActivity.userLists.get(0).getUserWeight().equals("0")) {
-                        Intent loginIntent = new Intent(instructionActivity, DashBoardActivity.class);
-                        instructionActivity.startActivity(loginIntent);
-                        instructionActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        instructionActivity.finish();
+                if(instructionActivity.userLists.size()>0) {
+                    if (instructionActivity.userLists.get(0) != null) {
+                        if (instructionActivity.userLists.get(0).getUserWeight().equals("0")) {
+                            Intent loginIntent = new Intent(instructionActivity, DashBoardActivity.class);
+                            instructionActivity.startActivity(loginIntent);
+                            instructionActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            instructionActivity.finish();
+                        } else {
+                            Intent weightdetails = new Intent(instructionActivity, WeightDetailsActivity.class);
+                            instructionActivity.startActivity(weightdetails);
+                            instructionActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            instructionActivity.finish();
+                        }
                     } else {
                         Intent weightdetails = new Intent(instructionActivity, WeightDetailsActivity.class);
                         instructionActivity.startActivity(weightdetails);

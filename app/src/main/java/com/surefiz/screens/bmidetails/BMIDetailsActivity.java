@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,7 +20,6 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.bmidetails.model.BMIResponse;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -51,12 +51,9 @@ public class BMIDetailsActivity extends AppCompatActivity {
     TextView textSubGoal2;
     @BindView(R.id.textPercentage)
     TextView textPercentage;
-
-    private BMIDetailsOnclick mBMIDetailsOnclick;
+    @BindView(R.id.textWeightLose)
+    TextView textWeightLose;
     private LoadingData loader;
-
-    //Weight Measurement Units
-    public double capturedBMIWeight = 0.0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,16 +63,30 @@ public class BMIDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //Initialize Loader
         loader = new LoadingData(this);
-
+        LoginShared.setWeightFromNotification(this, "0");
         Intent intent = getIntent();
         if (intent != null) {
             String serverUserId = intent.getStringExtra("serverUserId");
             String scaleUserId = intent.getStringExtra("ScaleUserId");
+            Log.d("@@BMI-page : ", "Received-Data"+"\nserverUserId = "+serverUserId
+                    +"\nscaleUserId = "+scaleUserId);
             //Call Api to list the BMI-Data
             callBMIApi(serverUserId, scaleUserId);
         }
-        //Set onClickListener here
-        mBMIDetailsOnclick = new BMIDetailsOnclick(this);
+
+        btn_go_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToDashboard();
+            }
+        });
+
+        btnSkipWeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToDashboard();
+            }
+        });
 
     }
 
@@ -117,15 +128,13 @@ public class BMIDetailsActivity extends AppCompatActivity {
                 Log.d("@@BMI-Data : ", response.body().toString());
 
                 if (response.body().getStatus() == 1) {
-                    //Set the BMI Data
-                    capturedBMIWeight = response.body().getData().getBMIDetails().getWeight();
-                    //Convert to lbs
-                    mBMIDetailsOnclick.onClick(btn_lbs);
                     //Set values in View
+                    tv_kg_lb_value.setText(response.body().getData().getBMIDetails().getWeight());
                     textBMI.setText(String.valueOf(response.body().getData().getBMIDetails().getBMI()));
                     textSubGoal1.setText(String.valueOf(response.body().getData().getBMIDetails().getSubgoal1()));
                     textSubGoal2.setText(String.valueOf(response.body().getData().getBMIDetails().getSubgoal2()));
                     textPercentage.setText(String.valueOf(response.body().getData().getBMIDetails().getPercentage()));
+                    textWeightLose.setText(String.valueOf(response.body().getData().getBMIDetails().getPercentage()));
 
                 } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     LoginShared.destroySessionTypePreference(BMIDetailsActivity.this);
@@ -157,11 +166,10 @@ public class BMIDetailsActivity extends AppCompatActivity {
     private BroadcastReceiver myBMIReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("@@BMI-Broadcast : ", "Received on BMI-Page");
-
             String serverUserId = intent.getStringExtra("serverUserId");
             String scaleUserId = intent.getStringExtra("ScaleUserId");
-
+            Log.d("@@BMI-Broadcast : ", "Received on BMI-Page"+"\nserverUserId = "+serverUserId
+                    +"\nscaleUserId = "+scaleUserId);
             //Call Api for BMI
             callBMIApi(serverUserId, scaleUserId);
         }

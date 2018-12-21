@@ -357,12 +357,16 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     private BroadcastReceiver myBMIReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("@@BMI-Broadcast : ", "Received");
-            Intent intent2 = new Intent(WeightDetailsActivity.this,
-                    BMIDetailsActivity.class);
+            String serverUserId = intent.getStringExtra("serverUserId");
+            String scaleUserId = intent.getStringExtra("ScaleUserId");
+
+            Log.d("@@BMI-Broadcast : ", "Received"+"\nserverUserId = "+serverUserId
+                    +"\nscaleUserId = "+scaleUserId);
+
+            Intent intent2 = new Intent(WeightDetailsActivity.this, BMIDetailsActivity.class);
             intent2.putExtra("notificationFlag", "1");
-            intent2.putExtra("serverUserId", intent.getStringExtra("serverUserId"));
-            intent2.putExtra("ScaleUserId", intent.getStringExtra("ScaleUserId"));
+            intent2.putExtra("serverUserId", serverUserId);
+            intent2.putExtra("ScaleUserId", scaleUserId);
             startActivity(intent2);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();

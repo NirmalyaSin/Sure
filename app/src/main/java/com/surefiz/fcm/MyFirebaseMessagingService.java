@@ -107,13 +107,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             ComponentName componentInfo = taskInfo.get(0).topActivity;
             componentInfo.getPackageName();
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            if (!taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.chat.ChatActivity")) {
-                showNotification(remoteMessage.getNotification(), remoteMessage.getData());
-            }else if (!taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.bmidetails.BMIDetailsActivity")) {
-                showNotification(remoteMessage.getNotification(), remoteMessage.getData());
-            }else if (!taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.weightdetails.WeightDetailsActivity")) {
+
+            if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.bmidetails.BMIDetailsActivity")) {
                 sendBroadcastToPage(jObject.optInt("pushType"));
+            } else if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.weightdetails.WeightDetailsActivity")) {
+                sendBroadcastToPage(jObject.optInt("pushType"));
+            }else if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.chat.ChatActivity")) {
+               //Nothing to do
+            }else {
+                showNotification(remoteMessage.getNotification(), remoteMessage.getData());
             }
+
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM

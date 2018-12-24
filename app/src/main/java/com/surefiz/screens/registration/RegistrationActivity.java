@@ -10,9 +10,12 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,6 +26,7 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
+import com.surefiz.screens.termcondition.TermAndConditionActivity;
 import com.surefiz.utils.MediaUtils;
 import com.surefiz.utils.MethodUtils;
 
@@ -85,14 +89,20 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_scale;
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
+    @BindView(R.id.checkBoxTermsCondition)
+    CheckBox checkBoxTermsCondition;
+    @BindView(R.id.textTermsCondition)
+    TextView textTermsCondition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
         ButterKnife.bind(this);
+
+        setTermsAndCondition();
         registrationClickEvent = new RegistrationClickEvent(this);
+
 
         et_scale.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -113,6 +123,14 @@ public class RegistrationActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void setTermsAndCondition() {
+        checkBoxTermsCondition.setText("");
+        textTermsCondition.setText(Html.fromHtml("I have read and agree to the " +
+                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms & Condition</font></a>"));
+        textTermsCondition.setClickable(true);
+        textTermsCondition.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {

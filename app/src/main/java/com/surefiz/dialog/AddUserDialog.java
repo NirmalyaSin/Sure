@@ -458,8 +458,8 @@ public class AddUserDialog extends Dialog {
     }
 
     private void addPrefferedListAndCall() {
-        prefferedList.add("KG/CM");
         prefferedList.add("LB/INCH");
+        prefferedList.add("KG/CM");
 
         prefferedPopup = new UniversalPopup(activity, prefferedList, et_units);
     }
@@ -505,7 +505,8 @@ public class AddUserDialog extends Dialog {
                 LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
                 et_name.getText().toString().trim(), et_email.getText().toString().trim(), et_time_loss.getText().toString().trim(),
                 et_height.getText().toString().trim(), et_weight.getText().toString().trim(), "12345678", gender, et_phone.getText().toString().trim(),
-                et_DOB.getText().toString().trim(), "2", units);
+                et_DOB.getText().toString().trim(), "2", units,
+                LoginShared.getDeviceToken(activity));
         call_addUser.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

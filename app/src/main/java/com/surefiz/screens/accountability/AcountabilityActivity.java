@@ -81,9 +81,11 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
                 try {
                     if (response.body().getStatus() == 1) {
-                        if (response.body().getData().getUserList() != null) {
+                        if (response.body().getData().getUserList().size()>0) {
                             arrayListUsers.addAll(response.body().getData().getUserList());
                             Log.d("@@UserItem : ", arrayListUsers.get(0).toString());
+                        }else {
+                            MethodUtils.errorMsg(AcountabilityActivity.this, "No User Found.");
                         }
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(AcountabilityActivity.this);

@@ -139,8 +139,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addPrefferedListAndCall() {
-        prefferedList.add("KG/CM");
         prefferedList.add("LB/INCH");
+        prefferedList.add("KG/CM");
 
         prefferedPopup = new UniversalPopup(registrationActivity, prefferedList, registrationActivity.et_units);
     }
@@ -430,7 +430,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Scale id must be contains 10 digit numeric number");
         } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
             MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
-        } else {
+        } else if(!registrationActivity.checkBoxTermsCondition.isChecked()) {
+            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition.");
+        }else {
             if (registrationActivity.mCompressedFile != null) {
                 callRegistrationApiWithImage();
             } else {

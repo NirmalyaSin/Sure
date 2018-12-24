@@ -27,7 +27,6 @@ public class UniversalPopup extends PopupWindow implements View.OnClickListener 
     private void initXML(Activity activity) {
         popUpView = activity.getLayoutInflater().inflate(R.layout.popup_filter, null);
         setContentView(popUpView);
-
         UniversalPopUpResponsive filterPopUpResponsive = new UniversalPopUpResponsive( activity, popUpView, universalList, et, this);
 
         setWidth(filterPopUpResponsive.popUpWidth);

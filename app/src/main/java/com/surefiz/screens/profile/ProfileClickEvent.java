@@ -231,9 +231,9 @@ public class ProfileClickEvent implements View.OnClickListener {
     }
 
     private void addPrefferedListAndCall() {
-        prefferedList.add("KG/CM");
-        prefferedList.add("LB/INCH");
 
+        prefferedList.add("LB/INCH");
+        prefferedList.add("KG/CM");
         prefferedPopup = new UniversalPopup(activity, prefferedList, activity.et_units);
     }
 

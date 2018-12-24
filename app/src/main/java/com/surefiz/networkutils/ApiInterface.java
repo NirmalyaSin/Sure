@@ -227,7 +227,8 @@ public interface ApiInterface {
                                        @Field("phoneNumber") String phoneNumber,
                                        @Field("dob") String dob,
                                        @Field("deviceType") String deviceType,
-                                       @Field("prefferedUnits") String prefferedUnits);
+                                       @Field("prefferedUnits") String prefferedUnits,
+                                       @Field("device_Token") String device_Token);
 
     @FormUrlEncoded
     @POST(FORGOTPASSWORD)

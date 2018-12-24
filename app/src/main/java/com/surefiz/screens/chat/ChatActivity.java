@@ -222,7 +222,6 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                     }*/
 
                 if (response.body().getStatus() != null) {
-
                     if (response.body().getStatus() == 1) {
                         oldPagination = INITIAL_PAGINATION;
                         callChatListApi(receiver_id, INITIAL_PAGINATION);

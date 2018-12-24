@@ -1,10 +1,8 @@
 package com.surefiz.screens.chat.model;
 
-import android.support.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
-public class Conversation /*implements Comparable<Conversation>*/{
+public class Conversation {
     @SerializedName("senderId")
     Integer senderId;
     @SerializedName("reciverId")

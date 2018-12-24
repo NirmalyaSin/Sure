@@ -163,9 +163,9 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void addPrefferedListAndCall() {
-        prefferedList.add("KG/CM");
-        prefferedList.add("LB/INCH");
 
+        prefferedList.add("LB/INCH");
+        prefferedList.add("KG/CM");
         prefferedPopup = new UniversalPopup(WeightManagementActivity.this, prefferedList, et_units);
     }
 
@@ -182,6 +182,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             for (int i = 5; i < 1001; i++) {
                 weightList.add(i + " " + change);
             }
+
         } else {
             for (int i = 5; i < 455; i++) {
                 weightList.add(i + " " + change);

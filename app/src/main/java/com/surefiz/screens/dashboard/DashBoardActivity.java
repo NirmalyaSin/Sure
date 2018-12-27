@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.highsoft.highcharts.common.HIColor;
 import com.highsoft.highcharts.common.HIGradient;
+import com.highsoft.highcharts.common.HIStop;
 import com.highsoft.highcharts.common.hichartsclasses.HIArea;
 import com.highsoft.highcharts.common.hichartsclasses.HICSSObject;
 import com.highsoft.highcharts.common.hichartsclasses.HIChart;
@@ -64,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -86,6 +88,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     ContactListAdapter adapter;
     public String id = "";
     public int row_user = -1;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,9 +135,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             rv_items.setVisibility(View.VISIBLE);
         }
         callDashBoardApi(id);
+
+        setRecyclerViewItem();
         //callContactsApi();
         callUserListApi();
-        setRecyclerViewItem();
     }
 
     @Override
@@ -157,7 +161,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         rv_items.setItemAnimator(new DefaultItemAnimator());
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
         rv_items.addItemDecoration(decoration);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv_items.setLayoutManager(mLayoutManager);
     }
 
@@ -174,8 +178,23 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 try {
                     if (response.body().getStatus() == 1) {
                         contactLists.clear();
+                  //      Collections.reverse(response.body().getData().getUserList());
                         contactLists.addAll(response.body().getData().getUserList());
                         adapter.notifyDataSetChanged();
+
+                        if(id!=null && !id.equals("")){
+                            for(int i=0; i<contactLists.size(); i++){
+                                if(String.valueOf(contactLists.get(i).getServerUserId()).equals(id)){
+                                  //  rv_items.smoothScrollToPosition(i);
+                                    mLayoutManager.scrollToPositionWithOffset(i,0);
+                                    break;
+                                }
+                            }
+                        }else {
+                           // rv_items.smoothScrollToPosition(0);
+                            mLayoutManager.scrollToPositionWithOffset(0,0);
+                        }
+
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
                         LoginShared.destroySessionTypePreference(DashBoardActivity.this);
@@ -391,7 +410,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void setSubGoalsChart() {
 
         HIChart chart = new HIChart();
-        chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
+    //    chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
+
+        HIGradient gradient = new HIGradient(1, 1, 1, 1);
+
+        LinkedList<HIStop> stops = new LinkedList<>();
+        stops.add(new HIStop(0, HIColor.initWithHexValue("#ff3300")));
+        stops.add(new HIStop(1, HIColor.initWithHexValue("#3399ff")));
+        //    stops.add(new HIStop(1, HIColor.initWithRGB(60, 60, 60)));
+
+        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
         chart.setType("column");
         HILegend hiLegend = new HILegend();
         HICSSObject hicssObject = new HICSSObject();
@@ -505,7 +534,14 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         chartViewGoals.plugins = new ArrayList<>(Arrays.asList("drilldown"));
 
         HIChart chart = new HIChart();
-        chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
+        //Required for gradient Background
+        HIGradient gradient = new HIGradient(0, 0, 0, 1);
+        LinkedList<HIStop> stops = new LinkedList<>();
+        stops.add(new HIStop(0, HIColor.initWithRGB(255, 204, 102)));
+        stops.add(new HIStop(1, HIColor.initWithRGB(51, 204, 51)));
+        //Set Color
+        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
         HILegend hiLegend = new HILegend();
         HICSSObject hicssObject = new HICSSObject();
         hicssObject.setColor("#ffffff");
@@ -732,9 +768,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void setBMIChart() {
         chartView.plugins = new ArrayList<>(Arrays.asList("series-label"));
 
-
         HIChart chart = new HIChart();
-        chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
+        //Required for gradient Background
+        HIGradient gradient = new HIGradient(0, 0, 0, 1);
+        LinkedList<HIStop> stops = new LinkedList<>();
+        stops.add(new HIStop(0, HIColor.initWithRGB(0, 255, 0)));
+        stops.add(new HIStop(1, HIColor.initWithRGB(0, 51, 0)));
+        //Set Color
+        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
         chart.setType("spline");
         HILegend hiLegend = new HILegend();
         HICSSObject hicssObject = new HICSSObject();
@@ -843,8 +885,14 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void setWeightLossChart() {
 
         HIChart chart = new HIChart();
-//        chart.setPlotBackgroundColor(HIColor.initWithHexValue("#000000"));
-//        chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
+
+        //Required for gradient Background
+        HIGradient gradient = new HIGradient(0, 0, 0, 1);
+        LinkedList<HIStop> stops = new LinkedList<>();
+        stops.add(new HIStop(0, HIColor.initWithRGB(255, 0, 255)));
+        stops.add(new HIStop(1, HIColor.initWithRGB(255, 204, 102)));
+        //Set Color
+        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
 
         chart.setPlotShadow(false);
         chart.setType("pie");
@@ -929,7 +977,14 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         HIChart chart = new HIChart();
         chart.setType("area");
-        chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
+        //Required for gradient Background
+        HIGradient gradient = new HIGradient(0, 0, 0, 1);
+        LinkedList<HIStop> stops = new LinkedList<>();
+        stops.add(new HIStop(0, HIColor.initWithRGB(255, 51, 0)));
+        stops.add(new HIStop(1, HIColor.initWithRGB(51, 153, 255)));
+        //Set Color
+        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
         options.setChart(chart);
         HILegend hiLegend = new HILegend();
         HICSSObject hicssObject = new HICSSObject();
@@ -1028,7 +1083,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         HIChart chart = new HIChart();
         chart.setType("line");
-        chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
+ //       chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
+
+        HIGradient gradient = new HIGradient(1, 1, 1, 1);
+
+        LinkedList<HIStop> stops = new LinkedList<>();
+        stops.add(new HIStop(0, HIColor.initWithHexValue("#ff3300")));
+        stops.add(new HIStop(1, HIColor.initWithHexValue("#3399ff")));
+        //    stops.add(new HIStop(1, HIColor.initWithRGB(60, 60, 60)));
+
+        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
         optionsAchiGoals.setChart(chart);
         HICSSObject hicssObject = new HICSSObject();
         hicssObject.setColor("#ffffff");

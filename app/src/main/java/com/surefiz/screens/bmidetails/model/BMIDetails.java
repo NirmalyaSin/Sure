@@ -15,6 +15,8 @@ public class BMIDetails {
     Double percentage;
     @SerializedName("weighttolose")
     Double weighttolose;
+    @SerializedName("name")
+    String name;
 
     public BMIDetails() {
     }
@@ -67,6 +69,14 @@ public class BMIDetails {
         this.percentage = percentage;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "BMIDetails{" +
@@ -76,6 +86,7 @@ public class BMIDetails {
                 ", subgoal2=" + subgoal2 +
                 ", percentage=" + percentage +
                 ", weighttolose=" + weighttolose +
+                ", name=" + name +
                 '}';
     }
 }

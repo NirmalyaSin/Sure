@@ -44,6 +44,7 @@ import com.highsoft.highcharts.common.hichartsclasses.HITooltip;
 import com.highsoft.highcharts.common.hichartsclasses.HIXAxis;
 import com.highsoft.highcharts.common.hichartsclasses.HIYAxis;
 import com.highsoft.highcharts.core.HIChartView;
+import com.highsoft.highcharts.core.HIFunction;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
@@ -52,6 +53,7 @@ import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.dashboard.adapter.ContactListAdapter;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.singlechart.SingleChartActivity;
 import com.surefiz.screens.users.model.UserList;
 import com.surefiz.screens.users.model.UserListModel;
 import com.surefiz.sharedhandler.LoginShared;
@@ -309,6 +311,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         MethodUtils.errorMsg(DashBoardActivity.this, jsObject.getString("message"));
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
                 }
             }
@@ -405,6 +408,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         cv_sub_goals = findViewById(R.id.cv_sub_goals);
         cv_achi_goals = findViewById(R.id.cv_achi_goals);
         rv_items = findViewById(R.id.rv_items);
+
+
+       /* cv_weight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashBoardActivity.this,
+                        SingleChartActivity.class);
+                startActivity(intent);
+            }
+        });*/
     }
 
     private void setSubGoalsChart() {
@@ -1002,7 +1015,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 //        options.setSubtitle(subtitle);
 
         HIXAxis xAxis = new HIXAxis();
-        xAxis.setAllowDecimals(false);
+        xAxis.setVisible(false);
+        xAxis.setMin(0);
+        xAxis.setAllowDecimals(true);
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                 getWeightProgress().getLabel() != null ||
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
@@ -1020,22 +1035,33 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             add(xAxis);
         }});
 
-        /*HIYAxis yAxis = new HIYAxis();
-        HITitle hiTitle = new HITitle();
+        Number minY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                getWeightProgress().getData().get(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                getWeightProgress().getData().size()-1));
+
+        Number maxY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                getWeightProgress().getData().get(0));
+
+        HIYAxis yAxis = new HIYAxis();
+     //   yAxis.setMax(maxY);
+        yAxis.setMin(minY);
+
+        yAxis.setVisible(false);
+       /* HITitle hiTitle = new HITitle();
         hiTitle.setUseHTML(true);
-        hiTitle.setText("<p style='color: #ffffff; '>Nuclear weapon states</p>");
+    //    hiTitle.setText("<p style='color: #ffffff; '>Nuclear weapon states</p>");
         HILabels hiLabels = new HILabels();
-        HIFunction hiFunction1 = new HIFunction("function () { return this.value / 1000 + 'k'; }");
+        HIFunction hiFunction1 = new HIFunction("function () { return this.value ; }");
         hiLabels.setFormatter(hiFunction1);
         hiLabels.setStyle(hicssObject);
         yAxis.setTitle(hiTitle);
-        yAxis.setLabels(hiLabels);
+        yAxis.setLabels(hiLabels);*/
         options.setYAxis(new ArrayList<HIYAxis>() {{
             add(yAxis);
-        }});*/
+        }});
 
         HITooltip tooltip = new HITooltip();
-        tooltip.setPointFormat("{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}");
+        tooltip.setPointFormat("{series.name} produced <b>{point.y:,100.0f}</b><br/>warheads in {point.x}");
         options.setTooltip(tooltip);
 
         HIExporting exporting = new HIExporting();
@@ -1044,7 +1070,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         HIPlotOptions plotOptions = new HIPlotOptions();
         HIArea hiArea = new HIArea();
-        hiArea.setPointStart(1940);
+       // hiArea.setPointStart(1940);
+        hiArea.setPointStart(0);
         HIMarker marker = new HIMarker();
         marker.setEnabled(false);
         marker.setSymbol("circle");
@@ -1057,9 +1084,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         HIArea series1 = new HIArea();
         series1.setName("Progress");
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData() != null ||
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().size() > 0) {
-            Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().toArray(new Number[0]);
+     //   series1.setNegativeFillColor(HIColor.initWithHexValue("#07FFFCFC"));
+    //    series1.setNegativeFillColor(HIColor.initWithHexValue("#ffffff"));
+    //    series1.setFillColor(HIColor.initWithHexValue("#ffffff"));
+
+        series1.setFillOpacity(0.2);
+        // series1.setPointStart(0);
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData()
+                .getChartList().getWeightProgress().getData() != null ||
+                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData()
+                        .getChartList().getWeightProgress().getData().size() > 0) {
+
+            Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
+                    .getData().getChartList().getWeightProgress().getData().toArray(new Number[0]);
             Number[] numbers = new Number[series1_data.length];
             for (int i = 0; i < series1_data.length; i++) {
                 numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
@@ -1076,6 +1113,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         chartView.setOptions(options);
         chartView.reload();
+
     }
 
     private void showGoalsAndAcheivementsChart() {

@@ -53,6 +53,8 @@ public class BMIDetailsActivity extends AppCompatActivity {
     TextView textPercentage;
     @BindView(R.id.textWeightLose)
     TextView textWeightLose;
+    @BindView(R.id.textTitleBMI)
+    TextView textTitleBMI;
     private LoadingData loader;
 
     @Override
@@ -129,12 +131,20 @@ public class BMIDetailsActivity extends AppCompatActivity {
 
                 if (response.body().getStatus() == 1) {
                     //Set values in View
-                    tv_kg_lb_value.setText(response.body().getData().getBMIDetails().getWeight());
-                    textBMI.setText(String.valueOf(response.body().getData().getBMIDetails().getBMI()));
-                    textSubGoal1.setText(String.valueOf(response.body().getData().getBMIDetails().getSubgoal1()));
-                    textSubGoal2.setText(String.valueOf(response.body().getData().getBMIDetails().getSubgoal2()));
-                    textPercentage.setText(String.valueOf(response.body().getData().getBMIDetails().getPercentage()));
-                    textWeightLose.setText(String.valueOf(response.body().getData().getBMIDetails().getPercentage()));
+                    tv_kg_lb_value.setText(response.body().getData()
+                            .getBMIDetails().getWeight());
+                    textBMI.setText(String.valueOf(response.body().getData()
+                            .getBMIDetails().getBMI()));
+                    textSubGoal1.setText(String.valueOf(response.body().getData()
+                            .getBMIDetails().getSubgoal1()));
+                    textSubGoal2.setText(String.valueOf(response.body().getData()
+                            .getBMIDetails().getSubgoal2()));
+                    textPercentage.setText(String.valueOf(response.body().getData()
+                            .getBMIDetails().getPercentage()));
+                    textWeightLose.setText(String.valueOf(response.body().getData()
+                            .getBMIDetails().getPercentage()));
+                    textTitleBMI.setText(String.valueOf(response.body().getData()
+                            .getBMIDetails().getName())+" BMI Details");
 
                 } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     LoginShared.destroySessionTypePreference(BMIDetailsActivity.this);

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.singlechart.SingleChartActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.6"
+            android:background="@drawable/splash_image" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_weight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.7"
+            android:background="#A9A9A9"
+            android:visibility="visible"
+            app:cardCornerRadius="@dimen/_5sdp">
+
+            <com.highsoft.highcharts.core.HIChartView
+                android:id="@+id/highChartView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/gradient_weight_progress" />
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+</RelativeLayout>

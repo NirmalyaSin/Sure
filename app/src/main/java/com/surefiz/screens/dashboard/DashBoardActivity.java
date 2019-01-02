@@ -1074,13 +1074,22 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         options.setXAxis(new ArrayList<HIXAxis>() {{
             add(xAxis);
         }});
+        Number minY = null;
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                getWeightProgress().getData().size() > 0) {
 
-        Number minY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                getWeightProgress().getData().get(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                getWeightProgress().getData().size() - 1));
+            int minIndex = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                    getWeightProgress().getData().indexOf(Collections.min(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                    getWeightProgress().getData()));
 
-        Number maxY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                getWeightProgress().getData().get(0));
+            minY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                    getWeightProgress().getData().get(minIndex));
+        } else {
+            minY = 0;
+        }
+
+        /*Number maxY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                getWeightProgress().getData().get(0));*/
 
         HIYAxis yAxis = new HIYAxis();
         //   yAxis.setMax(maxY);
@@ -1207,7 +1216,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         HITitle title1 = new HITitle();
         HILabels labels = new HILabels();
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext() != null ||
-                !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().equalsIgnoreCase("null") ||
+                !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().
+                        equalsIgnoreCase("null") ||
                 !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().isEmpty()) {
 
             String s = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext();
@@ -1298,7 +1308,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         line5.setName("Other");
         line5.setData(new ArrayList<>(Arrays.asList(12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111)));*/
 
-            optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1,line2/*, line2, line3, line4, line5*/)));
+            optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1, line2/*, line2, line3, line4, line5*/)));
         }
 
         chartViewAchiGoals.setOptions(optionsAchiGoals);

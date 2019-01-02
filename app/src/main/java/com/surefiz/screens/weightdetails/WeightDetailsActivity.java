@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -22,6 +21,7 @@ import com.surefiz.R;
 import com.surefiz.screens.UDPHelper;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -62,6 +62,9 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     private String calledFrom;
     private boolean isWeightReceived;
     Handler handler;
+    private boolean isTimerOff = true;
+    private String timerValue = "0";
+    private String fromPush = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +77,16 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         //Initialize Loader
         loader = new LoadingData(this);
         LoginShared.setWeightFromNotification(this, "0");
+        if (getIntent().getStringExtra("timerValue") != null) {
+            timerValue = getIntent().getStringExtra("timerValue");
+        } else {
+            timerValue = "0";
+        }
+        if (getIntent().getStringExtra("fromPush") != null) {
+            fromPush = getIntent().getStringExtra("fromPush");
+        } else {
+            fromPush = "";
+        }
 
         scaleUserId = LoginShared.getScaleUserId(this);
         userName = LoginShared.getRegistrationDataModel(this).getData()
@@ -153,6 +166,10 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         if (loader.isShowing()) {
             loader.dismiss();
         }
+        isTimerOff = false;
+        if (fromPush.equals("1")) {
+            showcancelationDialog();
+        }
         btn_go_next.setVisibility(View.VISIBLE);
 
         //Close UDP Connection
@@ -192,12 +209,32 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
             btn_go_next.setVisibility(View.GONE);
         }
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                goNextAction();
+        if (timerValue != null) {
+            if (Integer.parseInt(timerValue) * 1000 > 0) {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        goNextAction();
+                    }
+                }, Integer.parseInt(timerValue) * 1000);
+            } else {
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        goNextAction();
+                    }
+                }, GeneralToApp.SCALECONFIG_WAIT_TIME);
             }
-        }, GeneralToApp.SCALECONFIG_WAIT_TIME);
+        } else {
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    goNextAction();
+                }
+            }, GeneralToApp.SCALECONFIG_WAIT_TIME);
+        }
     }
 
     @Override
@@ -220,11 +257,16 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
             mWeightDetailsOnclick.onClick(btn_lbs);
 
             //Set userID
-            boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
-                            .getUser().get(0).getUserMac(),
-                    Integer.parseInt(LoginShared.getCapturedWeight(this)), LoginShared.getScaleUserId(this));
-            Log.d("@@SetUser = ", "" + setUser);
-            Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+            if (isTimerOff) {
+                boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
+                                .getUser().get(0).getUserMac(),
+                        Integer.parseInt(LoginShared.getCapturedWeight(this)), LoginShared.getScaleUserId(this));
+                Log.d("@@SetUser = ", "" + setUser);
+                Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+            } else {
+                showcancelationDialog();
+            }
+
         } else {
             if (!isWeightReceived) {
                 //Set text value to lbs
@@ -233,11 +275,16 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
 
                 if (scaleId.equals(dataId)) {
                     if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")) {
-                        boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
-                                        .getUser().get(0).getUserMac(),
-                                weight, LoginShared.getScaleUserId(this));
-                        Log.d("@@SetUser = ", "" + setUser);
-                        Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+                        if (isTimerOff) {
+                            boolean setUser = userIdManager.setUserId(LoginShared.getRegistrationDataModel(this).getData()
+                                            .getUser().get(0).getUserMac(),
+                                    weight, LoginShared.getScaleUserId(this));
+
+                            Log.d("@@SetUser = ", "" + setUser);
+                            Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+                        } else {
+                            showcancelationDialog();
+                        }
                     } else {
                         try {
                             showUserSelectionDialog(dataId, weight);
@@ -262,6 +309,8 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
                 + " weight: " + weight + " status: " + status);
         if (status == 1) {
             cancelTimerAndLoader();
+        } else {
+            showcancelationDialog();
         }
 
         LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
@@ -273,6 +322,7 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         if (loader.isShowing()) {
             loader.dismiss();
         }
+        isTimerOff = false;
         handler.removeCallbacksAndMessages(null);
         btn_go_next.setVisibility(View.VISIBLE);
 
@@ -319,12 +369,16 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Set userID
-                boolean setUser = userIdManager.setUserId(dataId, weight, scaleUserId);
-                Log.d("@@SetUser = ", "" + setUser);
-                //LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
-                //LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
-                btn_go_next.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+                if (isTimerOff) {
+                    boolean setUser = userIdManager.setUserId(dataId, weight, scaleUserId);
+                    Log.d("@@SetUser = ", "" + setUser);
+                    //LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+                    //LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
+                    btn_go_next.setVisibility(View.VISIBLE);
+                    dialog.dismiss();
+                } else {
+                    showcancelationDialog();
+                }
             }
         });
 
@@ -338,6 +392,37 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
                 startActivity(intent);
                 finish();
                 dialog.dismiss();
+            }
+        });
+
+        alertDialog.create();
+
+        alertDialog.show();
+    }
+
+    public void showcancelationDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Sorry!" + userName + "Cannot connect to scale. Please try again.");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Try Again?", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(WeightDetailsActivity.this, InstructionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(WeightDetailsActivity.this, DashBoardActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             }
         });
 
@@ -360,8 +445,8 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
             String serverUserId = intent.getStringExtra("serverUserId");
             String scaleUserId = intent.getStringExtra("ScaleUserId");
 
-            Log.d("@@BMI-Broadcast : ", "Received"+"\nserverUserId = "+serverUserId
-                    +"\nscaleUserId = "+scaleUserId);
+            Log.d("@@BMI-Broadcast : ", "Received" + "\nserverUserId = " + serverUserId
+                    + "\nscaleUserId = " + scaleUserId);
 
             Intent intent2 = new Intent(WeightDetailsActivity.this, BMIDetailsActivity.class);
             intent2.putExtra("notificationFlag", "1");

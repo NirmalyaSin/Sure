@@ -269,6 +269,7 @@
                         android:hint="Enter your scale id"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="10"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"

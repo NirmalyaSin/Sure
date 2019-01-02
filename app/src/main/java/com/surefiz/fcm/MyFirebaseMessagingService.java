@@ -26,15 +26,22 @@ import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private MyApplicationClass myApplicationClass;
@@ -87,7 +94,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jObject.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
-                }else if (jObject.optInt("pushType") == 5) {
+                } else if (jObject.optInt("pushType") == 5) {
                     LoginShared.setWeightFromNotification(this, "5");
                 } else {
                     LoginShared.setWeightFromNotification(this, "1");
@@ -112,9 +119,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 sendBroadcastToPage(jObject.optInt("pushType"));
             } else if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.weightdetails.WeightDetailsActivity")) {
                 sendBroadcastToPage(jObject.optInt("pushType"));
-            }else if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.chat.ChatActivity")) {
-               //Nothing to do
-            }else {
+            } else if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.chat.ChatActivity")) {
+                //Nothing to do
+            } else {
                 showNotification(remoteMessage.getNotification(), remoteMessage.getData());
             }
 
@@ -125,7 +132,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     public void sendBroadcastToPage(int pushType) {
-        if(pushType==5){
+        if (pushType == 5) {
             Intent intent = new Intent("new_bmi_data");
             intent.putExtra("notificationFlag", "1");
             intent.putExtra("serverUserId", jObject.optString("serverUserId"));
@@ -164,7 +171,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     private void showNotification(RemoteMessage.Notification serverNotification, Map<String, String> data) {
         Log.d("@@Notify : ", "message Received");
-        PendingIntent pendingIntent;
+        PendingIntent pendingIntent = null;
         JSONObject jsonObject = null;
         JSONObject jObject = null;
         try {
@@ -206,12 +213,51 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        }else {
-            Intent intent = new Intent(this, SplashActivity.class);
+        } else {
+            String dateStr = jObject.optString("lastServerUpdateDate") + " " + jObject.optString("lastServerUpdateTime");
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+            try {
+                Date date = dateFormat.parse(dateStr);
+                dateFormat.setTimeZone(TimeZone.getDefault());
+                Date currentDate = new Date();
+                long diff = currentDate.getTime() - date.getTime();
+                int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
+                if (dayDiff == 0) {
+                    int diffSecond = (int) (diff / 1000);
+                    if (diffSecond < 120) {
+                        Intent intent = new Intent(this, WeightDetailsActivity.class);
+                        intent.putExtra("notificationFlag", "1");
+                        intent.putExtra("timerValue", diffSecond);
+                        intent.putExtra("fromPush", "1");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                                PendingIntent.FLAG_ONE_SHOT);
+                    } else {
+                        Intent intent = new Intent(this, DashBoardActivity.class);
+                        intent.putExtra("notificationFlag", "1");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                                PendingIntent.FLAG_ONE_SHOT);
+                    }
+                } else {
+                    Intent intent = new Intent(this, DashBoardActivity.class);
+                    intent.putExtra("notificationFlag", "1");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                            PendingIntent.FLAG_ONE_SHOT);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            /*Intent intent = new Intent(this, WeightDetailsActivity.class);
             intent.putExtra("notificationFlag", "1");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                    PendingIntent.FLAG_ONE_SHOT);
+                    PendingIntent.FLAG_ONE_SHOT);*/
         }
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();

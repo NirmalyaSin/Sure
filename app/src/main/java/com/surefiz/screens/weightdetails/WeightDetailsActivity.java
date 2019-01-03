@@ -167,9 +167,9 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
             loader.dismiss();
         }
         isTimerOff = false;
-        if (fromPush.equals("1")) {
+        /*if (fromPush.equals("1")) {
             showcancelationDialog();
-        }
+        }*/
         btn_go_next.setVisibility(View.VISIBLE);
 
         //Close UDP Connection
@@ -402,7 +402,7 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
 
     public void showcancelationDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Sorry!" + userName + "Cannot connect to scale. Please try again.");
+        alertDialog.setMessage("Sorry! " + userName + " Cannot connect to scale. Please try again.");
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Try Again?", new DialogInterface.OnClickListener() {
             @Override

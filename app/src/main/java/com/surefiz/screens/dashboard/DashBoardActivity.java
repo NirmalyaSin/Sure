@@ -46,6 +46,7 @@ import com.highsoft.highcharts.common.hichartsclasses.HIXAxis;
 import com.highsoft.highcharts.common.hichartsclasses.HIYAxis;
 import com.highsoft.highcharts.core.HIChartView;
 import com.highsoft.highcharts.core.HIFunction;
+import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
@@ -54,6 +55,7 @@ import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.dashboard.adapter.ContactListAdapter;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.singlechart.SingleChartActivity;
 import com.surefiz.screens.users.model.UserList;
 import com.surefiz.screens.users.model.UserListModel;
@@ -137,11 +139,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             id = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
             rv_items.setVisibility(View.VISIBLE);
         }
-        callDashBoardApi(id);
+
+        if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
+            MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
+        } else {
+            callDashBoardApi(id);
+            callUserListApi();
+        }
 
         setRecyclerViewItem();
         //callContactsApi();
-        callUserListApi();
     }
 
     @Override
@@ -1340,6 +1347,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     @Override
     public void onViewClick(int position) {
-        callDashBoardApi(contactLists.get(position).getServerUserId().toString());
+        if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
+            MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
+        } else {
+            callDashBoardApi(contactLists.get(position).getServerUserId().toString());
+        }
     }
 }

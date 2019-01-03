@@ -30,11 +30,7 @@
         <activity
             android:name=".screens.SplashActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".screens.wificonfig.WifiConfigActivity"
@@ -171,22 +167,49 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.weightManagement.WeightManagementActivity"></activity>
-        <activity android:name=".screens.welcome.WelcomeActivity" />
-        <activity android:name=".screens.bmidetails.BMIDetailsActivity" />
+        <activity
+            android:name=".screens.weightManagement.WeightManagementActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".screens.welcome.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".screens.bmidetails.BMIDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".screens.NotificationHandleClassOnForeground"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".screens.termcondition.TermAndConditionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
 
-        <activity android:name=".screens.termcondition.TermAndConditionActivity">
-        <intent-filter>
-            <category android:name="android.intent.category.DEFAULT" />
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="com.surefiz.screens.termcondition.TermAndConditionActivity" />
-        </intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="com.surefiz.screens.termcondition.TermAndConditionActivity" />
+            </intent-filter>
         </activity>
-        <activity android:name=".screens.singlechart.SingleChartActivity"
+        <activity
+            android:name=".screens.singlechart.SingleChartActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".screens.progressstatus.ProgressStatusActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

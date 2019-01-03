@@ -49,6 +49,7 @@ import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.GET_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.LOGOUT;
+import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.SENDOTP;
 import static com.surefiz.apilist.ApiList.SEND_WEIGHT_MANAGEMENT;
@@ -282,4 +283,9 @@ public interface ApiInterface {
                                                  @Field("desiredWeight") String desiredWeight,
                                                  @Field("timeToLoseWeight") String timeToLoseWeight,
                                                  @Field("preferredUnits") String preferredunits);
+
+    @FormUrlEncoded
+    @POST(PROGRESS_STATUS)
+    Call<ResponseBody> call_ProgressDetailsApi(@Header("x-authorization") String token,
+                                         @Field("userId") String serverUserId);
 }

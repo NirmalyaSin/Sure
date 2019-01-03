@@ -21,6 +21,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.surefiz.R;
 import com.surefiz.application.MyApplicationClass;
+import com.surefiz.screens.NotificationHandleClassOnForeground;
 import com.surefiz.screens.SplashActivity;
 import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
@@ -28,6 +29,7 @@ import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
+import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -36,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,6 +99,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "4");
                 } else if (jObject.optInt("pushType") == 5) {
                     LoginShared.setWeightFromNotification(this, "5");
+                } else if (jObject.optInt("pushType") == 6) {
+                    LoginShared.setWeightFromNotification(this, "6");
                 } else {
                     LoginShared.setWeightFromNotification(this, "1");
                 }
@@ -191,7 +196,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } else if (jObject.optInt("pushType") == 3) {
             Intent intent = new Intent(this, NotificationActivity.class);
             intent.putExtra("notificationFlag", "1");
-            intent.putExtra("reciver_id", jObject.optString("senderId"));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
@@ -199,7 +203,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } else if (jObject.optInt("pushType") == 4) {
             Intent intent = new Intent(this, AcountabilityActivity.class);
             intent.putExtra("notificationFlag", "1");
-            intent.putExtra("reciver_id", jObject.optString("senderId"));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
@@ -213,10 +216,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
+        } else if (jObject.optInt("pushType") == 6) {
+            Intent intent = new Intent(this, ProgressStatusActivity.class);
+            intent.putExtra("notificationFlag", "1");
+            intent.putExtra("userId", jObject.optString("userId"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
         } else {
-            String dateStr = jObject.optString("lastServerUpdateDate") + " " + jObject.optString("lastServerUpdateTime");
+            /*String dateStr = jObject.optString("lastServerUpdateDate") + " " + jObject.optString("lastServerUpdateTime");
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+            DateFormat dateFormat1 = new SimpleDateFormat("MM/dd/yyyy");
 
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -226,7 +238,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Date currentDate = new Date();
                 long diff = currentDate.getTime() - date.getTime();
                 int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
-                if (dayDiff == 0) {
+                if (dateFormat1.format(currentDate).equals(jObject.optString("lastServerUpdateDate"))) {
+
                     int diffSecond = (int) (diff / 1000);
                     if (diffSecond < 120) {
                         Intent intent = new Intent(this, WeightDetailsActivity.class);
@@ -252,12 +265,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
-            /*Intent intent = new Intent(this, WeightDetailsActivity.class);
+            }*/
+            Intent intent = new Intent(this, NotificationHandleClassOnForeground.class);
             intent.putExtra("notificationFlag", "1");
+            intent.putExtra("lastServerUpdateDate", jObject.optString("lastServerUpdateDate"));
+            intent.putExtra("lastServerUpdateTime", jObject.optString("lastServerUpdateTime"));
+
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                    PendingIntent.FLAG_ONE_SHOT);*/
+                    PendingIntent.FLAG_ONE_SHOT);
         }
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();

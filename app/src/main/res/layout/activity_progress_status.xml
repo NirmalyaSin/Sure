@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.progressstatus.ProgressStatusActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/statusBarColor">
+
+        <TextView
+            android:id="@+id/tv_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Progress Status"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_header">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.6"
+            android:background="@drawable/splash_image" />
+
+        <TextView
+            android:id="@+id/btn_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:text="Your Progress Details"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/_10sdp"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_below="@+id/btn_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:src="@color/whiteColor" />
+
+        <RelativeLayout
+            android:id="@+id/rl_progress"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"
+            android:layout_below="@+id/profile_image"
+            android:layout_margin="@dimen/_15sdp"
+            android:background="@android:color/transparent">
+
+            <TextView
+                android:id="@+id/tv_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="Progress Status: "
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/tv_progress_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_progress"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="Good"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <View
+                android:id="@id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_below="@+id/tv_progress"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:alpha="0.4"
+                android:background="@color/kprogresshud_default_color" />
+
+            <TextView
+                android:id="@+id/tv_progress_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view1"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="Progress Details: "
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_progress_details"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:inputType="textMultiLine"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:scrollbars="none"
+                android:paddingRight="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:textSize="@dimen/_14sdp"
+                android:text="cahjhsdahhsdadashdsahjdsahjdsddsfsdfsgsggsggsgsgsahjsdahjsdhjdshdsahjasdhjdahjdahjdsahjddsahdshjdsahjdsahjdsahjsdhjsddsahdsahjdsahjdsahjdsahjsdahsddsahjdsahjdsahjdsahjdsahjsdahjdsahjsdahjsddshdsahjdsahjsdahjdsahjdsahjdsahjdsahjdsahjdsahjdsahjdsahjdsahjsdhjdsahjdsahjdsahjdsahj"
+                android:textColor="@color/whiteColor"
+                android:textCursorDrawable="@drawable/cursor_color" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_below="@+id/rl_progress"
+            android:background="@drawable/login_submit_rounded_corner"
+            android:text="DASHBOARD"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -287,5 +287,6 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(PROGRESS_STATUS)
     Call<ResponseBody> call_ProgressDetailsApi(@Header("x-authorization") String token,
-                                         @Field("userId") String serverUserId);
+                                               @Field("userId") String serverUserId,
+                                               @Field("contentId") String contentId);
 }

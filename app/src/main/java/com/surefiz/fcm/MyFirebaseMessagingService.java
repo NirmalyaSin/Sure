@@ -220,6 +220,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent intent = new Intent(this, ProgressStatusActivity.class);
             intent.putExtra("notificationFlag", "1");
             intent.putExtra("userId", jObject.optString("userId"));
+            intent.putExtra("contentId", jObject.optString("contentId"));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,

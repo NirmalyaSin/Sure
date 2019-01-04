@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
     private String notificationPage;
     private String receiver_id;
     private JSONObject jsonObject1;
-    private String getServerDate = "", getServerTime = "", progressUserId="";
+    private String getServerDate = "", getServerTime = "", progressUserId="",contentId="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,7 @@ public class SplashActivity extends AppCompatActivity {
                 } else if (jsonObject1.optInt("pushType") == 6) {
                     LoginShared.setWeightFromNotification(this, "6");
                     progressUserId=jsonObject1.optString("userId");
+                    contentId=jsonObject1.optString("contentId");
                 } else {
                     LoginShared.setWeightFromNotification(this, "1");
                     getServerDate = jsonObject1.optString("lastServerUpdateDate");
@@ -144,12 +145,14 @@ public class SplashActivity extends AppCompatActivity {
                             finish();
                         } else {
                             Intent intent = new Intent(this, DashBoardActivity.class);
+                            intent.putExtra("expired", "1");
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             finish();
                         }
                     } else {
                         Intent intent = new Intent(this, DashBoardActivity.class);
+                        intent.putExtra("expired", "1");
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
@@ -195,6 +198,7 @@ public class SplashActivity extends AppCompatActivity {
             } else if (LoginShared.getWeightFromNotification(this).equals("6")) {
                 Intent intent = new Intent(this, ProgressStatusActivity.class);
                 intent.putExtra("userId", progressUserId);
+                intent.putExtra("contentId", contentId);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

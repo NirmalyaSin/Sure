@@ -32,7 +32,6 @@ public class NotificationHandleClassOnForeground extends Activity {
             dateFormat.setTimeZone(TimeZone.getDefault());
             Date currentDate = new Date();
             long diff = currentDate.getTime() - date.getTime();
-            int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
             if (dateFormat1.format(currentDate).equals(getIntent().getStringExtra("lastServerUpdateDate"))) {
 
                 int diffSecond = (int) (diff / 1000);
@@ -52,12 +51,14 @@ public class NotificationHandleClassOnForeground extends Activity {
                     finish();
                 } else {
                     Intent intent = new Intent(this, DashBoardActivity.class);
+                    intent.putExtra("expired", "1");
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                 }
             } else {
                 Intent intent = new Intent(this, DashBoardActivity.class);
+                intent.putExtra("expired", "1");
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

@@ -49,6 +49,7 @@ import com.highsoft.highcharts.core.HIFunction;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.ErrorMessageDialog;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.AcountabilityActivity;
@@ -59,6 +60,7 @@ import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.singlechart.SingleChartActivity;
 import com.surefiz.screens.users.model.UserList;
 import com.surefiz.screens.users.model.UserListModel;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -109,6 +111,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         optionsAchiGoals = new HIOptions();
         viewBind();
         setHeaderView();
+        LoginShared.setWeightPageFrom(DashBoardActivity.this, "0");
+
+        if (getIntent().getStringExtra("expired") != null) {
+            if (getIntent().getStringExtra("expired").equals("1")) {
+                MethodUtils.errorMsg(DashBoardActivity.this, "Your weight details notification has been expired.");
+            }
+        }
 
         if (getIntent().getStringExtra("id") != null) {
             id = getIntent().getStringExtra("id");

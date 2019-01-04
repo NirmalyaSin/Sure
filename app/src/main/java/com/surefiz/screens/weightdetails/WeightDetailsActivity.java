@@ -61,7 +61,7 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     private int scaleUserId;
     private String calledFrom;
     private boolean isWeightReceived;
-    Handler handler;
+    Handler handler, handler1;
     private boolean isTimerOff = true;
     private String timerValue = "0";
     private String fromPush = "";
@@ -74,6 +74,7 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         //Bind ButterKnife to the view
         ButterKnife.bind(this);
         handler = new Handler();
+        handler1 = new Handler();
         //Initialize Loader
         loader = new LoadingData(this);
         LoginShared.setWeightFromNotification(this, "0");
@@ -202,8 +203,15 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
     private void startTimerCountDown() {
         if (LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("2") ||
                 LoginShared.getWeightPageFrom(WeightDetailsActivity.this).equals("3")) {
+//            loader.show();
             System.out.print("Sure");
             btn_go_next.setVisibility(View.VISIBLE);
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showcancelationDialog();
+                }
+            }, 6000);
         } else {
             loader.show();
             btn_go_next.setVisibility(View.GONE);
@@ -263,10 +271,10 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
                         Integer.parseInt(LoginShared.getCapturedWeight(this)), LoginShared.getScaleUserId(this));
                 Log.d("@@SetUser = ", "" + setUser);
                 Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+                handler1.removeCallbacksAndMessages(null);
             } else {
                 showcancelationDialog();
             }
-
         } else {
             if (!isWeightReceived) {
                 //Set text value to lbs
@@ -282,6 +290,7 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
 
                             Log.d("@@SetUser = ", "" + setUser);
                             Toast.makeText(this, "User id submitted to server.", Toast.LENGTH_LONG).show();
+                            handler1.removeCallbacksAndMessages(null);
                         } else {
                             showcancelationDialog();
                         }
@@ -402,12 +411,13 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
 
     public void showcancelationDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Sorry! " + userName + " Cannot connect to scale. Please try again.");
+        alertDialog.setMessage("Sorry! Cannot connect to scale. Please try again.");
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Try Again?", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
                 Intent intent = new Intent(WeightDetailsActivity.this, InstructionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -418,6 +428,8 @@ WeightDetailsActivity extends AppCompatActivity implements OnUserIdManagerListen
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+                LoginShared.setDashboardPageFrom(WeightDetailsActivity.this, "0");
                 dialog.dismiss();
                 Intent intent = new Intent(WeightDetailsActivity.this, DashBoardActivity.class);
                 startActivity(intent);

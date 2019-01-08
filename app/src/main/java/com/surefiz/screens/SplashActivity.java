@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
     private String notificationPage;
     private String receiver_id;
     private JSONObject jsonObject1;
-    private String getServerDate = "", getServerTime = "", progressUserId="",contentId="";
+    private String getServerDate = "", getServerTime = "", progressUserId = "", contentId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +66,22 @@ public class SplashActivity extends AppCompatActivity {
                 if (jsonObject1.optInt("pushType") == 2) {
                     receiver_id = jsonObject1.optString("senderId");
                     LoginShared.setWeightFromNotification(this, "2");
-                } else if (jsonObject1.optInt("pushType") == 3) {
+                }/* else if (jsonObject1.optInt("pushType") == 3) {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jsonObject1.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
-                } else if (jsonObject1.optInt("pushType") == 5) {
+                }*/ else if (jsonObject1.optInt("pushType") == 5) {
                     LoginShared.setWeightFromNotification(this, "5");
                 } else if (jsonObject1.optInt("pushType") == 6) {
                     LoginShared.setWeightFromNotification(this, "6");
-                    progressUserId=jsonObject1.optString("userId");
-                    contentId=jsonObject1.optString("contentId");
-                } else {
+                    progressUserId = jsonObject1.optString("userId");
+                    contentId = jsonObject1.optString("contentId");
+                } else if (jsonObject1.optInt("pushType") == 1) {
                     LoginShared.setWeightFromNotification(this, "1");
                     getServerDate = jsonObject1.optString("lastServerUpdateDate");
                     getServerTime = jsonObject1.optString("lastServerUpdateTime");
+                } else {
+                    LoginShared.setWeightFromNotification(this, "7");
                 }
             } else {
                 LoginShared.setWeightFromNotification(this, "0");
@@ -170,7 +172,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            } else if (LoginShared.getWeightFromNotification(this).equals("3")) {
+            } /*else if (LoginShared.getWeightFromNotification(this).equals("3")) {
                 Intent intent = new Intent(this, NotificationActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -180,7 +182,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            } else if (LoginShared.getWeightFromNotification(this).equals("5")) {
+            }*/ else if (LoginShared.getWeightFromNotification(this).equals("5")) {
                 //   LoginShared.setWeightFromNotification(this, "0");
                 String serverUserId = "";
                 String scaleUserId = "";
@@ -199,6 +201,11 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, ProgressStatusActivity.class);
                 intent.putExtra("userId", progressUserId);
                 intent.putExtra("contentId", contentId);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            } else if (LoginShared.getWeightFromNotification(this).equals("7")) {
+                Intent intent = new Intent(this, DashBoardActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

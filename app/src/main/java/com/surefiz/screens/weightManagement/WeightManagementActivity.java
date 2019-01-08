@@ -17,6 +17,8 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.AddUserDialogForOTP;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
+import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
+import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
@@ -30,6 +32,7 @@ import com.surefiz.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +51,10 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     private List<String> timeList = new ArrayList<>();
     private List<String> prefferedList = new ArrayList<>();
     private UniversalPopup weightPopup, timePopup, prefferedPopup;
+    private WeigtUniversalPopup weigtUniversalPopupPreffered;
     private String weight_value = "", time_value = "", units_value = "";
+    String units = "", weight = "";
+    String[] splited;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +148,9 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     private void setData(JSONObject jsnObject) {
         et_weight.setText(jsnObject.optString("desiredWeight"));
         et_time_loss.setText(jsnObject.optString("timeToLoseWeight"));
-        String units = jsnObject.optString("preferredUnits");
+        units = jsnObject.optString("preferredUnits");
+        weight = et_weight.getText().toString().trim();
+        splited = weight.split(" ");
         if (units.equalsIgnoreCase("LB")) {
             addWeightListAndCall("LB");
         } else {
@@ -166,7 +174,29 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
         prefferedList.add("LB/INCH");
         prefferedList.add("KG/CM");
-        prefferedPopup = new UniversalPopup(WeightManagementActivity.this, prefferedList, et_units);
+        weigtUniversalPopupPreffered = new WeigtUniversalPopup(WeightManagementActivity.this, prefferedList, et_units, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+                weight = et_weight.getText().toString().trim();
+                splited = weight.split(" ");
+                if (value.equals("KG/CM")) {
+                    units = "KG";
+                } else {
+                    units = "LB";
+                }
+                if (units.equals(splited[1])) {
+                } else {
+                    if (value.equals("KG/CM")) {
+                        et_weight.setText(String.valueOf(Math.round(Double.parseDouble(splited[0]) * 0.45359237)) + " KG");
+                        units = "KG";
+                    }
+                    if (value.equals("LB/INCH")) {
+                        units = "LB";
+                        et_weight.setText(String.valueOf((Math.round(Double.parseDouble(splited[0]) / 0.45359237)) + " LB"));
+                    }
+                }
+            }
+        });
     }
 
     private void addTimeListAndCall() {
@@ -188,7 +218,27 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 weightList.add(i + " " + change);
             }
         }
-        weightPopup = new UniversalPopup(WeightManagementActivity.this, weightList, et_weight);
+        weightPopup = new UniversalPopup(WeightManagementActivity.this, weightList, et_weight);/*, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+                splited = value.split(" ");
+
+//                if (splited[1].equals("LB")) {
+                if (et_units.getText().toString().equals("KG/CM")) {
+                    et_weight.setText(String.valueOf(Double.parseDouble(splited[0]) * 0.45359237) + "KG");
+                } else {
+
+                }
+//                }
+//                if (splited[1].equals("KG")) {
+                if (et_units.getText().toString().equals("LB/INCH")) {
+                    et_weight.setText(String.valueOf(Double.parseDouble(splited[0]) * 2.2046226218) + "LB");
+                } else {
+
+                }
+//                }
+            }
+        });*/
     }
 
     private void setClickEvent() {
@@ -261,8 +311,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
-                } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
+                } else if (weigtUniversalPopupPreffered != null && weigtUniversalPopupPreffered.isShowing()) {
+                    weigtUniversalPopupPreffered.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -282,7 +332,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                prefferedPopup.showAsDropDown(et_units);
+                weigtUniversalPopupPreffered.showAsDropDown(et_units);
             }
         }, 100);
     }

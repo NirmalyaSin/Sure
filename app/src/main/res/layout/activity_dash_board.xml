@@ -722,7 +722,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="Performance Status :"
+                                android:text="Performance Status"
                                 android:textColor="@color/whiteColor"
                                 android:textSize="@dimen/_15sdp" />
                         </RelativeLayout>

@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Progress Status"
+            android:text="SureFiz"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -35,162 +35,110 @@
         android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:layout_marginBottom="@dimen/_65sdp"
-        android:fillViewport="true">
+        android:layout_above="@+id/btn_dashboard"
+        android:layout_below="@id/rl_header"
+        android:layout_marginBottom="@dimen/_5sdp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_95sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp">
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:paddingTop="@dimen/_10sdp"
                 android:text="Your Progress Details"
-                android:maxLines="3"
-                android:lines="3"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
-            <RelativeLayout
+            <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_below="@id/tv_name"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_15sdp" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_image"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <LinearLayout
                 android:id="@+id/rl_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_image"
+                android:layout_below="@id/tv_desc"
                 android:layout_margin="@dimen/_15sdp"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_15sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:text="Progress Status: "
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tv_progress_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv_progress"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:text="Good"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    android:visibility="gone" />
-
-                <View
-                    android:id="@id/view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_below="@+id/tv_progress"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:alpha="0.4"
-                    android:background="@color/kprogresshud_default_color"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tv_progress_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/view1"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:text="Progress Details: "
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-
-                <TextView
-                    android:id="@+id/tv_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_progress_details"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="@android:color/transparent"
-                    android:cursorVisible="false"
-                    android:editable="false"
-                    android:inputType="textMultiLine"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:scrollbars="none"
-                    android:text=""
-                    android:textColor="@color/whiteColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:id="@+id/tv_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_desc"
-                    android:paddingTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="Weight:"
-                    android:textSize="@dimen/_14sdp"
-                    android:textColor="@color/whiteColor" />
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:id="@+id/tv_muscle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_weight"
-                    android:paddingTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="Muscle:"
-                    android:textSize="@dimen/_14sdp"
-                    android:textColor="@color/whiteColor" />
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:id="@+id/tv_fats"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_muscle"
-                    android:paddingTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="Fats:"
-                    android:textSize="@dimen/_14sdp"
-                    android:textColor="@color/whiteColor" />
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:id="@+id/tv_water"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_fats"
-                    android:paddingTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="Water:"
-                    android:textSize="@dimen/_14sdp"
-                    android:textColor="@color/whiteColor" />
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:id="@+id/tv_bmi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_water"
-                    android:paddingTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="BMI:"
-                    android:textSize="@dimen/_14sdp"
-                    android:textColor="@color/whiteColor" />
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
 
-                <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/profile_image"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
-                    android:layout_below="@+id/tv_bmi"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_15sdp" />
+                <TextView
+                    android:id="@+id/tv_link2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
 
-            </RelativeLayout>
-
-        </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
     <Button

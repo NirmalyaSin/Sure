@@ -93,16 +93,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         myApplicationClass.chatListNotification.add(conversation);
                         LoginShared.setWeightFromNotification(this, "2");
                     }
-                } else if (jObject.optInt("pushType") == 3) {
+                } /*else if (jObject.optInt("pushType") == 3) {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jObject.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
-                } else if (jObject.optInt("pushType") == 5) {
+                }*/ else if (jObject.optInt("pushType") == 5) {
                     LoginShared.setWeightFromNotification(this, "5");
                 } else if (jObject.optInt("pushType") == 6) {
                     LoginShared.setWeightFromNotification(this, "6");
-                } else {
+                } else if (jObject.optInt("pushType") == 1) {
                     LoginShared.setWeightFromNotification(this, "1");
+                } else {
+                    LoginShared.setWeightFromNotification(this, "7");
                 }
                 scheduleJob();
             } else {
@@ -193,7 +195,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        } else if (jObject.optInt("pushType") == 3) {
+        } /*else if (jObject.optInt("pushType") == 3) {
             Intent intent = new Intent(this, NotificationActivity.class);
             intent.putExtra("notificationFlag", "1");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -207,7 +209,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        } else if (jObject.optInt("pushType") == 5) {
+        }*/ else if (jObject.optInt("pushType") == 5) {
             Intent intent = new Intent(this, BMIDetailsActivity.class);
             intent.putExtra("notificationFlag", "1");
             intent.putExtra("serverUserId", jObject.optString("serverUserId"));
@@ -225,7 +227,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        } else {
+        } else if (jObject.optInt("pushType") == 1) {
             /*String dateStr = jObject.optString("lastServerUpdateDate") + " " + jObject.optString("lastServerUpdateTime");
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
@@ -272,6 +274,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.putExtra("lastServerUpdateDate", jObject.optString("lastServerUpdateDate"));
             intent.putExtra("lastServerUpdateTime", jObject.optString("lastServerUpdateTime"));
 
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        } else {
+            Intent intent = new Intent(this, DashBoardActivity.class);
+            intent.putExtra("notificationFlag", "1");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);

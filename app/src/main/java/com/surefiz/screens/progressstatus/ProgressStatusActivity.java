@@ -2,10 +2,13 @@ package com.surefiz.screens.progressstatus;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +46,7 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
 
     private LoadingData loader;
     private String userId = "", contentId = "";
-    //9180
+    //9180,9211,9015
     @BindView(R.id.tv_desc)
     TextView tv_desc;
     @BindView(R.id.btn_dashboard)
@@ -60,6 +63,8 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
     TextView tv_water;
     @BindView(R.id.tv_bmi)
     TextView tv_bmi;
+    @BindView(R.id.tv_link2)
+    TextView tv_link2;
     @BindView(R.id.profile_image)
     ImageView profile_image;
     private ImageLoader imageLoader;
@@ -79,18 +84,19 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
             userId = getIntent().getStringExtra("userId");
             contentId = getIntent().getStringExtra("contentId");
         }
+
 //        tv_desc.setMovementMethod(new ScrollingMovementMethod());
         loader = new LoadingData(ProgressStatusActivity.this);
 
-        if (contentId.equals("1")) {
-            if (!ConnectionDetector.isConnectingToInternet(ProgressStatusActivity.this)) {
-                MethodUtils.errorMsg(ProgressStatusActivity.this, ProgressStatusActivity.this.getString(R.string.no_internet));
-            } else {
-                getProgressStatus();
-            }
+//        if (contentId.equals("1")) {
+        if (!ConnectionDetector.isConnectingToInternet(ProgressStatusActivity.this)) {
+            MethodUtils.errorMsg(ProgressStatusActivity.this, ProgressStatusActivity.this.getString(R.string.no_internet));
         } else {
-            showDashBoardDialog();
+            getProgressStatus();
         }
+      /* } else {
+            showDashBoardDialog();
+        }*/
         setClickEvent();
     }
 
@@ -132,7 +138,8 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         JSONObject object = jsObject.optJSONObject("progressDetails");
-                        setData(object);
+                        setData(object, object.optString("progressDetailsLink1"),
+                                object.optString("progressDetailsLink2"));
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ProgressStatusActivity.this);
@@ -162,12 +169,14 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
         });
     }
 
-    private void setData(JSONObject object) {
+    private void setData(JSONObject object, String progressDetailsLink1, String progressDetailsLink2) {
         if (object.optString("Header_Details") != null) {
             tv_name.setText(object.optString("Header_Details"));
         }
         if (object.optString("progressDetails") != null) {
-            tv_desc.setText(object.optString("progressDetails"));
+            tv_desc.setText(Html.fromHtml(object.optString("progressDetails") + " \n" + progressDetailsLink1));
+            Linkify.addLinks(tv_desc, Linkify.WEB_URLS);
+            tv_desc.setLinkTextColor(Color.parseColor("#3981F5"));
         }
         JSONObject jsonObject = object.optJSONObject("baseline");
 
@@ -185,6 +194,12 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
         }
         if (jsonObject.optString("BMI") != null) {
             tv_bmi.setText("BMI: " + jsonObject.optString("BMI"));
+        }
+
+        if (jsonObject.optString("progressDetailsLink2") != null) {
+            tv_link2.setText(Html.fromHtml(progressDetailsLink2));
+            Linkify.addLinks(tv_link2, Linkify.WEB_URLS);
+            tv_link2.setLinkTextColor(Color.parseColor("#3981F5"));
         }
         if (object.optString("image") != null) {
             String url = object.optString("image");

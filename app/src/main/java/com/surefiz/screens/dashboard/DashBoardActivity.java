@@ -300,7 +300,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     if (jsonObject.optInt("status") == 1) {
                         dashboardModel = gson.fromJson(responseString, DashboardModel.class);
                         LoginShared.setDashBoardDataModel(DashBoardActivity.this, dashboardModel);
-                        checkForShowView();
+//                        checkForShowView();
 
                         runOnUiThread(new Thread(new Runnable() {
                             @Override

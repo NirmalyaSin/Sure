@@ -82,6 +82,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".screens.accountability.AcountabilityActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".screens.acountabiltySearch.SearchAcountabilityActivity"

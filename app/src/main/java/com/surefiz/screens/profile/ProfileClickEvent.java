@@ -178,6 +178,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         activity.et_gender.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender());
         activity.et_phone.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserPhoneNumber());
         activity.et_full.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
+        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getPreferredUnits().equals("1")) {
             activity.et_units.setText("KG/CM");
         } else {
@@ -206,6 +207,8 @@ public class ProfileClickEvent implements View.OnClickListener {
         } else {
             String url = LoginShared.getViewProfileDataModel(activity).getData().getUser().
                     get(0).getUserImage();
+            LoginShared.setUserPhoto(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().
+                    get(0).getUserImage());
             url = url.replace(" ", "20%");
             imageLoader.displayImage(url, activity.profile_image);
         }

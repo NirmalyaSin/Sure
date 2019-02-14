@@ -991,7 +991,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         optionsLoss.setTitle(title);
 
         HITooltip tooltip = new HITooltip();
-        tooltip.setPointFormat("{series.name}: <b>{point.percentage:.1f}%</b>");
+        //tooltip.setPointFormat("{series.name}: <b>{point.percentage:.1f}%</b>");
         optionsLoss.setTooltip(tooltip);
 
         HIPlotOptions plotoptions = new HIPlotOptions();
@@ -1015,8 +1015,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         HashMap<String, Object> map2 = new HashMap<>();
         map2.put("name", "ToGo");
         map2.put("y", LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getToGo());
-        map2.put("sliced", true);
-        map2.put("selected", true);
+        /*map2.put("sliced", true);
+        map2.put("selected", true);*/
+
 
         /*HashMap<String, Object> map3 = new HashMap<>();
         map3.put("name", "Firefox");

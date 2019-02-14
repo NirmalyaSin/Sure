@@ -4,44 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@null"
+    android:orientation="vertical"
     tools:context=".screens.accountability.AcountabilityActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_margin="@dimen/_10sdp"
         android:background="@null"
         android:gravity="center_vertical"
-        android:layout_margin="@dimen/_10sdp">
+        android:orientation="horizontal">
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageUserProfile"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
-                android:src="@drawable/prof_img_placeholder"/>
+                android:src="@drawable/prof_img_placeholder" />
 
             <ImageView
                 android:id="@+id/imageOnlineOffline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_dot_offline"
-                android:layout_gravity="end|bottom"/>
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_dot_offline" />
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_gravity="center_vertical">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textUserName"
@@ -49,36 +50,36 @@
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="User Name"
-                android:textSize="@dimen/_14sdp"
-                android:textColor="@color/whiteColor" />
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
 
             <Button
                 android:id="@+id/btnPerformance"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/shape_rectangle_blue"
-                android:text="Performance"
-                android:textAllCaps="false"
-                android:textColor="@color/whiteColor"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"/>
+                android:text="Performance"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/imgSendMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_message"
-            android:layout_gravity="center_vertical"/>
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/chat" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:background="@color/whiteColor"
-        android:layout_marginBottom="@dimen/_5sdp"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"/>
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@color/whiteColor" />
 </LinearLayout>

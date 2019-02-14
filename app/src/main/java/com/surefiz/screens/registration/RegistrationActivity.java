@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,13 +23,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
+import com.surefiz.apilist.ApiList;
 import com.surefiz.interfaces.OnImageSet;
+import com.surefiz.networkutils.ApiInterface;
+import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.termcondition.TermAndConditionActivity;
+import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MediaUtils;
 import com.surefiz.utils.MethodUtils;
+import com.surefiz.utils.progressloader.LoadingData;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +54,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.zelory.compressor.Compressor;
 import id.zelory.compressor.FileUtil;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -54,11 +73,21 @@ public class RegistrationActivity extends AppCompatActivity {
     private Uri fileUri = null;
     public File mCompressedFile = null;
     private OnImageSet onImageSet;
+    private LoadingData loader;
+    private ImageLoader imageLoader;
 
     public static final int CAMERA = 1, GALLERY = 2;
     public RegistrationClickEvent registrationClickEvent;
     @BindView(R.id.tv_upload)
     TextView tv_upload;
+    @BindView(R.id.tv_password)
+    TextView tv_password;
+    @BindView(R.id.rl_password)
+    RelativeLayout rl_password;
+    @BindView(R.id.tv_scale)
+    TextView tv_scale;
+    @BindView(R.id.rl_scale)
+    RelativeLayout rl_scale;
     @BindView(R.id.et_DOB)
     EditText et_DOB;
     @BindView(R.id.et_gender)
@@ -99,6 +128,9 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         ButterKnife.bind(this);
+        loader = new LoadingData(RegistrationActivity.this);
+        initializeImageLoader();
+        viewShowFromLogin();
 
         setTermsAndCondition();
         registrationClickEvent = new RegistrationClickEvent(this);
@@ -123,6 +155,119 @@ public class RegistrationActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void initializeImageLoader() {
+        DisplayImageOptions opts = new DisplayImageOptions.Builder().cacheInMemory(true).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(RegistrationActivity.this)
+                .defaultDisplayImageOptions(DisplayImageOptions.createSimple()).defaultDisplayImageOptions(opts)
+                .build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+    }
+
+    private void viewShowFromLogin() {
+        if (getIntent().getStringExtra("completeStatus").equals("0")) {
+            tv_password.setVisibility(View.GONE);
+            rl_password.setVisibility(View.GONE);
+            tv_scale.setVisibility(View.GONE);
+            rl_scale.setVisibility(View.GONE);
+        } else {
+            tv_password.setVisibility(View.VISIBLE);
+            rl_password.setVisibility(View.VISIBLE);
+            tv_scale.setVisibility(View.VISIBLE);
+            rl_scale.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void getProfileDataAndSet() {
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> call_view_profile = apiInterface.call_viewprofileApi(LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserId());
+
+        call_view_profile.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                try {
+                    String responseString = response.body().string();
+                    Gson gson = new Gson();
+                    ViewProfileModel viewProfileModel;
+
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    if (jsonObject.optInt("status") == 1) {
+                        viewProfileModel = gson.fromJson(responseString, ViewProfileModel.class);
+                        LoginShared.setViewProfileDataModel(RegistrationActivity.this, viewProfileModel);
+                        setData();
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(RegistrationActivity.this);
+                        LoginShared.destroySessionTypePreference(RegistrationActivity.this);
+                        LoginShared.setDeviceToken(RegistrationActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                        RegistrationActivity.this.startActivity(loginIntent);
+                        RegistrationActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        RegistrationActivity.this.finish();
+                    } else {
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(RegistrationActivity.this, jsObject.getString("message"));
+                    }
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(RegistrationActivity.this, RegistrationActivity.this.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(RegistrationActivity.this, getString(R.string.error_occurred));
+            }
+        });
+    }
+
+    private void setData() {
+        et_DOB.setText(MethodUtils.profileDOB(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob()));
+        et_gender.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender());
+        et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
+        et_full.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
+        LoginShared.setUserName(RegistrationActivity.this, LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equals("1")) {
+            et_units.setText("KG/CM");
+        } else {
+            et_units.setText("LB/INCH");
+        }
+        String unit = "";
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equals("1")) {
+            unit = "CM";
+        } else {
+            unit = "INCH";
+        }
+        et_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
+        et_height.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getHeight() + " " + unit);
+        showImage();
+    }
+
+    private void showImage() {
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().
+                get(0).getUserImage().equals("") ||
+                LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().
+                        get(0).getUserImage().equalsIgnoreCase("null") ||
+                LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().
+                        get(0).getUserImage() == null) {
+            profile_image.setImageDrawable(ContextCompat.getDrawable(RegistrationActivity.this, R.drawable.prof_img_placeholder));
+        } else {
+            String url = LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().
+                    get(0).getUserImage();
+            LoginShared.setUserPhoto(RegistrationActivity.this, LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().
+                    get(0).getUserImage());
+            url = url.replace(" ", "20%");
+            imageLoader.displayImage(url, RegistrationActivity.this.profile_image);
+        }
     }
 
     private void setTermsAndCondition() {

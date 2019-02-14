@@ -28,6 +28,10 @@ public class User {
     @Expose
     private String userLastLogin;
 
+    @SerializedName("user_Profile_Complete_Status")
+    @Expose
+    private Integer userProfileCompleteStatus;
+
     public String getUserId() {
         return userId;
     }
@@ -82,6 +86,14 @@ public class User {
 
     public void setUserLastLogin(String userLastLogin) {
         this.userLastLogin = userLastLogin;
+    }
+
+    public Integer getUserProfileCompleteStatus() {
+        return userProfileCompleteStatus;
+    }
+
+    public void setUserProfileCompleteStatus(Integer userProfileCompleteStatus) {
+        this.userProfileCompleteStatus = userProfileCompleteStatus;
     }
 
 }

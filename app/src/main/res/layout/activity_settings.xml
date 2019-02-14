@@ -67,7 +67,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="Configure WiFi"
+                android:text="WiFi Password Setting"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 
@@ -104,7 +104,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="Privacy"
+                android:text="Accountability Circle Privacy"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 
@@ -141,7 +141,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="Change Password"
+                android:text="Change Account Password"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 

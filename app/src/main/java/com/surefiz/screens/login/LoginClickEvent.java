@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.AddLoginUserDetails;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -55,8 +56,8 @@ public class LoginClickEvent implements View.OnClickListener {
         mTwitterAuthClient = new TwitterAuthClient();*/
 
         // Check if user is signed in (non-null) and update UI accordingly.
-     //   FirebaseUser currentUser = mAuth.getCurrentUser();
-    //    updateUI(currentUser);
+        //   FirebaseUser currentUser = mAuth.getCurrentUser();
+        //    updateUI(currentUser);
 
         //    hideSoftKeyBoard();
         setClickEvent();
@@ -87,12 +88,14 @@ public class LoginClickEvent implements View.OnClickListener {
             case R.id.iv_twiter:
                 MethodUtils.errorMsg(mLoginActivity, "Under Development");
                 //Perform Twitter login
-           //     performTwiterLogin();
+                //     performTwiterLogin();
 
                 break;
 
             case R.id.tv_register:
-                mLoginActivity.startActivity(new Intent(mLoginActivity, RegistrationActivity.class));
+                Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
+                regIntent.putExtra("completeStatus", "1");
+                mLoginActivity.startActivity(regIntent);
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
@@ -100,21 +103,21 @@ public class LoginClickEvent implements View.OnClickListener {
 
     private void performTwiterLogin() {
         mTwitterAuthClient.authorize(mLoginActivity,
-            new com.twitter.sdk.android.core.Callback<TwitterSession>() {
+                new com.twitter.sdk.android.core.Callback<TwitterSession>() {
 
-                @Override
-                public void success(Result<TwitterSession> twitterSessionResult) {
-                    // Success
-                    Log.d("@@TwiterLogin: ",
-                            "user = "+twitterSessionResult.data.getUserName()
-                                    +"\nResponse = "+twitterSessionResult.response.body());
-                }
+                    @Override
+                    public void success(Result<TwitterSession> twitterSessionResult) {
+                        // Success
+                        Log.d("@@TwiterLogin: ",
+                                "user = " + twitterSessionResult.data.getUserName()
+                                        + "\nResponse = " + twitterSessionResult.response.body());
+                    }
 
-                @Override
-                public void failure(TwitterException e) {
-                    e.printStackTrace();
-                }
-            });
+                    @Override
+                    public void failure(TwitterException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     private void blankvalidationandapicall() {
@@ -130,6 +133,7 @@ public class LoginClickEvent implements View.OnClickListener {
     }
 
     private void callapiforlogin() {
+//        {"status":1,"data":{"status":1,"message":"You have successfully logged in.","token":"29c41fc29c0ec161708b345901f2dbf6","user":[{"user_id":"101","user_name":"John101  John","user_email":"john101@surefiz.com","user_password":"123456","user_photo":"https:\/\/www.surefiz.com\/img\/profiles\/user-101\/1542293673.jpg","user_mac":"1000000010","user_permission":"ReadOnly","user_LastLogin":"2019-02-14 05:11:55","user_Profile_Complete_Status":1}]}}
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -155,16 +159,25 @@ public class LoginClickEvent implements View.OnClickListener {
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
                         LoginShared.setUserPhoto(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserName());
-                        if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                            Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
-                            mLoginActivity.startActivity(intent);
+                        if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
+                                getUserProfileCompleteStatus() == 0) {
+//                            new AddLoginUserDetails(mLoginActivity).show();
+                            Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
+                            regIntent.putExtra("completeStatus", "0");
+                            mLoginActivity.startActivity(regIntent);
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            mLoginActivity.finish();
                         } else {
-                            Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
-                            mLoginActivity.startActivity(intent);
-                            mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            mLoginActivity.finish();
+                            if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
+                                Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                                mLoginActivity.startActivity(intent);
+                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                mLoginActivity.finish();
+                            } else {
+                                Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
+                                mLoginActivity.startActivity(intent);
+                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                mLoginActivity.finish();
+                            }
                         }
                     } else if (jsonObject.optInt("status") == 4) {
                         registrationModel = gson.fromJson(responseString, RegistrationModel.class);

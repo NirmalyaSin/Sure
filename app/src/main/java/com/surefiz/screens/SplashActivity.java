@@ -137,7 +137,7 @@ public class SplashActivity extends AppCompatActivity {
                     Date currentDate = new Date();
                     long diff = currentDate.getTime() - date.getTime();
                     int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
-                    if (dateFormat1.format(currentDate).equals(getServerDate)) {
+                    //if (dateFormat1.format(currentDate).equals(getServerDate)) {
                         int diffSecond = (int) (diff / 1000);
                         if (diffSecond < 120) {
                             Intent intent = new Intent(this, WeightDetailsActivity.class);
@@ -153,13 +153,14 @@ public class SplashActivity extends AppCompatActivity {
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             finish();
                         }
-                    } else {
+                    //}
+                    /*else {
                         Intent intent = new Intent(this, DashBoardActivity.class);
                         intent.putExtra("expired", "1");
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
-                    }
+                    }*/
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

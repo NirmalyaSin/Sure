@@ -244,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="DOB"
+                    android:text="Age"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -263,9 +263,8 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:focusableInTouchMode="false"
-                        android:hint="Select DOB"
-                        android:inputType="text|textNoSuggestions"
+                        android:hint="Enter Age"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"

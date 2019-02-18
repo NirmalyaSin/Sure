@@ -126,10 +126,8 @@ public class LoginClickEvent implements View.OnClickListener {
                 callapiforlogin();
             } else
                 Toast.makeText(mLoginActivity, "pass not blank", Toast.LENGTH_LONG).show();
-
         } else
             Toast.makeText(mLoginActivity, "Email not blank", Toast.LENGTH_LONG).show();
-
     }
 
     private void callapiforlogin() {

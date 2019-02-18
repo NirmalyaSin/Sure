@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -122,6 +123,10 @@ public class RegistrationActivity extends AppCompatActivity {
     CheckBox checkBoxTermsCondition;
     @BindView(R.id.textTermsCondition)
     TextView textTermsCondition;
+    @BindView(R.id.linearLayout1)
+    LinearLayout linearLayout1;
+    @BindView(R.id.et_management)
+    EditText et_management;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,13 +175,21 @@ public class RegistrationActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("completeStatus").equals("0")) {
             tv_password.setVisibility(View.GONE);
             rl_password.setVisibility(View.GONE);
-            tv_scale.setVisibility(View.GONE);
-            rl_scale.setVisibility(View.GONE);
+            profile_image.setVisibility(View.GONE);
+            iv_plus_add_image.setVisibility(View.GONE);
+            tv_upload.setVisibility(View.GONE);
+            linearLayout1.setVisibility(View.GONE);
+            //tv_scale.setVisibility(View.GONE);
+            //rl_scale.setVisibility(View.GONE);
         } else {
             tv_password.setVisibility(View.VISIBLE);
             rl_password.setVisibility(View.VISIBLE);
-            tv_scale.setVisibility(View.VISIBLE);
-            rl_scale.setVisibility(View.VISIBLE);
+            profile_image.setVisibility(View.VISIBLE);
+            iv_plus_add_image.setVisibility(View.VISIBLE);
+            tv_upload.setVisibility(View.VISIBLE);
+            linearLayout1.setVisibility(View.VISIBLE);
+            //tv_scale.setVisibility(View.VISIBLE);
+            //rl_scale.setVisibility(View.VISIBLE);
         }
     }
 

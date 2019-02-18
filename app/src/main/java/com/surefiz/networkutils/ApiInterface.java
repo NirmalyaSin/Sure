@@ -72,6 +72,7 @@ public interface ApiInterface {
                                                  @Part("prefferedUnits") RequestBody prefferedUnits,
                                                  @Part("deviceType") RequestBody deviceType,
                                                  @Part("scaleMacId") RequestBody scaleMacId,
+                                                 @Part("type") RequestBody type,
                                                  @Part("device_Token") RequestBody device_Token,
                                                  @Part MultipartBody.Part attachment);
 
@@ -88,6 +89,7 @@ public interface ApiInterface {
                                             @Part("timeToloseWeight") RequestBody timeToloseWeight,
                                             @Part("prefferedUnits") RequestBody prefferedUnits,
                                             @Part("scaleMacId") RequestBody scaleMacId,
+                                            @Part("type") RequestBody type,
                                             @Part("deviceType") RequestBody deviceType,
                                             @Part("device_Token") RequestBody device_Token);
 

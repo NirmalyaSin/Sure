@@ -58,16 +58,18 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private List<String> heightList = new ArrayList<>();
     private List<String> weightList = new ArrayList<>();
     private List<String> timeList = new ArrayList<>();
+    private List<String> managementList = new ArrayList<>();
     private String filePath = "";
     private LoadingData loader;
     private int month, year, day;
-    private UniversalPopup genderPopup, prefferedPopup, heightPopup, weightPopup, timePopup;
+    private UniversalPopup genderPopup, prefferedPopup, heightPopup, weightPopup, timePopup, managementPopup;
 
     public RegistrationClickEvent(RegistrationActivity registrationActivity) {
         this.registrationActivity = registrationActivity;
         loader = new LoadingData(registrationActivity);
         addGenderListAndCall();
         addPrefferedListAndCall();
+        addManagementListAndCall();
         addHeightListAndCall("INCH");
         addWeightListAndCall("LB");
         addTimeListAndCall();
@@ -101,6 +103,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }
             }
         });
+    }
+
+    private void addManagementListAndCall() {
+        managementList.add("Lose and Mantain Weight");
+        managementList.add("Maintain Current Weight");
+
+        managementPopup = new UniversalPopup(registrationActivity, managementList, registrationActivity.et_management);
     }
 
     private void addTimeListAndCall() {
@@ -155,7 +164,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
     private void setClickEvent() {
         registrationActivity.tv_upload.setOnClickListener(this);
-        registrationActivity.et_DOB.setOnClickListener(this);
+        //registrationActivity.et_DOB.setOnClickListener(this);
         registrationActivity.et_gender.setOnClickListener(this);
         registrationActivity.et_units.setOnClickListener(this);
         registrationActivity.et_height.setOnClickListener(this);
@@ -165,6 +174,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         registrationActivity.iv_plus_add_image.setOnClickListener(this);
         registrationActivity.btn_register.setOnClickListener(this);
         registrationActivity.rl_back.setOnClickListener(this);
+        registrationActivity.et_management.setOnClickListener(this);
     }
 
     @Override
@@ -206,6 +216,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
+                }else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
                 }
                 ExpiryDialog();
                 break;
@@ -232,6 +244,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     timePopup.dismiss();
                 } else if (genderPopup.isShowing()) {
                     genderPopup.dismiss();
+                } else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -253,6 +267,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     timePopup.dismiss();
                 } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();
+                } else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -285,6 +301,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     timePopup.dismiss();
                 } else if (heightPopup != null && heightPopup.isShowing()) {
                     heightPopup.dismiss();
+                } else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -308,6 +326,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     timePopup.dismiss();
                 } else if (weightPopup != null && weightPopup.isShowing()) {
                     weightPopup.dismiss();
+                } else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -316,6 +336,31 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         }
                     }, 100);
                 }
+                break;
+
+            case R.id.et_management:
+                hideSoftKeyBoard();
+                if (prefferedPopup != null && prefferedPopup.isShowing()) {
+                    prefferedPopup.dismiss();
+                } else if (genderPopup != null && genderPopup.isShowing()) {
+                    genderPopup.dismiss();
+                } else if (heightPopup != null && heightPopup.isShowing()) {
+                    heightPopup.dismiss();
+                } else if (timePopup != null && timePopup.isShowing()) {
+                    timePopup.dismiss();
+                } else if (weightPopup != null && weightPopup.isShowing()) {
+                    weightPopup.dismiss();
+                } else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showAndDismissManagementPopup();
+                        }
+                    }, 100);
+                }
+
                 break;
             case R.id.et_time_loss:
                 hideSoftKeyBoard();
@@ -329,7 +374,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
-                } else {
+                }else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                }  else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -412,12 +459,14 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
         } else if (registrationActivity.et_scale.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your scale Id");
+        }else if(registrationActivity.et_management.getText().toString().equals("")){
+            MethodUtils.errorMsg(registrationActivity, "Please select any option");
         } else if (registrationActivity.et_units.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your Preffered Units");
         } else if (registrationActivity.et_gender.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
         } else if (registrationActivity.et_DOB.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select your DOB");
+            MethodUtils.errorMsg(registrationActivity, "Please select your Age");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
         } else if (registrationActivity.et_weight.getText().toString().equals("")) {
@@ -430,9 +479,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Scale id must be contains 10 digit numeric number");
         } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
             MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
-        } else if(!registrationActivity.checkBoxTermsCondition.isChecked()) {
+        } else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
             MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition.");
-        }else {
+        } else {
             if (registrationActivity.mCompressedFile != null) {
                 callRegistrationApiWithImage();
             } else {
@@ -460,6 +509,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_password.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
+        RequestBody type = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_management.getText().toString().trim());
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else {
@@ -480,7 +530,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
 
         Call<ResponseBody> registration_api = apiInterface.call_registrationApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, units, scale, deviceType, deviceToken);
+                height, weight, time, units, scale,type, deviceType, deviceToken);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -553,6 +603,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_password.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
+        RequestBody type = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_management.getText().toString().trim());
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else {
@@ -574,7 +625,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
         Call<ResponseBody> registration_api = apiInterface.call_registrationImageApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, units, deviceType, scale, deviceToken, body);
+                height, weight, time, units, deviceType, scale,type, deviceToken, body);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -652,6 +703,15 @@ public class RegistrationClickEvent implements View.OnClickListener {
             @Override
             public void run() {
                 weightPopup.showAsDropDown(registrationActivity.et_weight);
+            }
+        }, 100);
+    }
+
+    private void showAndDismissManagementPopup() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                managementPopup.showAsDropDown(registrationActivity.et_management);
             }
         }, 100);
     }

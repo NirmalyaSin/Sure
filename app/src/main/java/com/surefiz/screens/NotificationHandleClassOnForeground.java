@@ -32,10 +32,10 @@ public class NotificationHandleClassOnForeground extends Activity {
             dateFormat.setTimeZone(TimeZone.getDefault());
             Date currentDate = new Date();
             long diff = currentDate.getTime() - date.getTime();
-            if (dateFormat1.format(currentDate).equals(getIntent().getStringExtra("lastServerUpdateDate"))) {
+            //if (dateFormat1.format(currentDate).equals(getIntent().getStringExtra("lastServerUpdateDate"))) {
 
-                int diffSecond = (int) (diff / 1000);
-                if (diffSecond < 120) {
+            int diffSecond = (int) (diff / 1000);
+            if (diffSecond < 120) {
                    /* Intent intent = new Intent(this, WeightDetailsActivity.class);
                     intent.putExtra("notificationFlag", "1");
                     intent.putExtra("timerValue", diffSecond);
@@ -43,19 +43,12 @@ public class NotificationHandleClassOnForeground extends Activity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     pendingIntent = PendingIntent.getActivity(this, 0, intent,
                             PendingIntent.FLAG_ONE_SHOT);*/
-                    Intent intent = new Intent(this, WeightDetailsActivity.class);
-                    intent.putExtra("timerValue", diffSecond);
-                    intent.putExtra("fromPush", "1");
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
-                } else {
-                    Intent intent = new Intent(this, DashBoardActivity.class);
-                    intent.putExtra("expired", "1");
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
-                }
+                Intent intent = new Intent(this, WeightDetailsActivity.class);
+                intent.putExtra("timerValue", diffSecond);
+                intent.putExtra("fromPush", "1");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             } else {
                 Intent intent = new Intent(this, DashBoardActivity.class);
                 intent.putExtra("expired", "1");
@@ -63,6 +56,13 @@ public class NotificationHandleClassOnForeground extends Activity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
+            /*} else {
+                Intent intent = new Intent(this, DashBoardActivity.class);
+                intent.putExtra("expired", "1");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }*/
         } catch (ParseException e) {
             e.printStackTrace();
         }

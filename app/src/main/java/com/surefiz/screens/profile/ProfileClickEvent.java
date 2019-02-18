@@ -38,6 +38,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -60,6 +63,7 @@ public class ProfileClickEvent implements View.OnClickListener {
     private String filePath = "";
     private List<String> heightList = new ArrayList<>();
     private UniversalPopup heightPopup;
+
 
     public ProfileClickEvent(ProfileActivity activity) {
         this.activity = activity;
@@ -216,7 +220,7 @@ public class ProfileClickEvent implements View.OnClickListener {
 
     private void setClickEvent() {
         activity.et_gender.setOnClickListener(this);
-        activity.et_DOB.setOnClickListener(this);
+        //activity.et_DOB.setOnClickListener(this);
         activity.iv_edit.setOnClickListener(this);
         activity.profile_image.setOnClickListener(this);
         activity.iv_plus_add_image.setOnClickListener(this);
@@ -341,7 +345,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 } else if (activity.et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
                 } else if (activity.et_DOB.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your DOB");
+                    MethodUtils.errorMsg(activity, "Please select your Age");
                 } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else {

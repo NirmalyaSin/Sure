@@ -157,6 +157,7 @@ public class LoginClickEvent implements View.OnClickListener {
                         LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
                         LoginShared.setUserPhoto(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserName());
+                        LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId()));
                         if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
                                 getUserProfileCompleteStatus() == 0) {
 //                            new AddLoginUserDetails(mLoginActivity).show();

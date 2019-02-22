@@ -46,6 +46,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import okhttp3.Credentials;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private MyApplicationClass myApplicationClass;
 
@@ -131,7 +133,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             } else {
                 showNotification(remoteMessage.getNotification(), remoteMessage.getData());
             }
-
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM

@@ -216,7 +216,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
-                }else if (managementPopup != null && managementPopup.isShowing()) {
+                } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
                 }
                 ExpiryDialog();
@@ -374,9 +374,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
-                }else if (managementPopup != null && managementPopup.isShowing()) {
+                } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }  else {
+                } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -459,7 +459,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
         } else if (registrationActivity.et_scale.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your scale Id");
-        }else if(registrationActivity.et_management.getText().toString().equals("")){
+        } else if (registrationActivity.et_management.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select any option");
         } else if (registrationActivity.et_units.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your Preffered Units");
@@ -530,7 +530,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
 
         Call<ResponseBody> registration_api = apiInterface.call_registrationApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, units, scale,type, deviceType, deviceToken);
+                height, weight, time, units, scale, type, deviceType, deviceToken);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -551,6 +551,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
+                        LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {
@@ -625,7 +626,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
         Call<ResponseBody> registration_api = apiInterface.call_registrationImageApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, units, deviceType, scale,type, deviceToken, body);
+                height, weight, time, units, deviceType, scale, type, deviceToken, body);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -648,6 +649,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
                         LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
+                        LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {

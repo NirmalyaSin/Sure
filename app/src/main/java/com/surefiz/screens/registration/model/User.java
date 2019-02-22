@@ -9,12 +9,18 @@ public class User {
     @SerializedName("user_id")
     @Expose
     private String userId;
+    @SerializedName("scaleUserId")
+    @Expose
+    private String scaleUserId;
     @SerializedName("user_name")
     @Expose
     private String userName;
     @SerializedName("user_email")
     @Expose
     private String userEmail;
+    @SerializedName("user_password")
+    @Expose
+    private String userPassword;
     @SerializedName("user_photo")
     @Expose
     private String userPhoto;
@@ -40,6 +46,14 @@ public class User {
         this.userId = userId;
     }
 
+    public String getScaleUserId() {
+        return scaleUserId;
+    }
+
+    public void setScaleUserId(String scaleUserId) {
+        this.scaleUserId = scaleUserId;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -54,6 +68,14 @@ public class User {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public String getUserPhoto() {

@@ -53,6 +53,8 @@ public class ProfileActivity extends BaseActivity {
     EditText et_DOB;
     EditText et_phone;
     EditText et_full;
+    EditText et_middle;
+    EditText et_last;
     EditText et_gender;
     EditText et_units;
     EditText et_email;
@@ -84,6 +86,8 @@ public class ProfileActivity extends BaseActivity {
         btn_register.setVisibility(View.GONE);
         et_phone.setEnabled(false);
         et_full.setEnabled(false);
+        et_middle.setEnabled(false);
+        et_last.setEnabled(false);
         et_gender.setEnabled(false);
         et_DOB.setEnabled(false);
         et_units.setEnabled(false);
@@ -98,6 +102,8 @@ public class ProfileActivity extends BaseActivity {
         et_DOB = view.findViewById(R.id.et_DOB);
         et_phone = view.findViewById(R.id.et_phone);
         et_full = view.findViewById(R.id.et_full);
+        et_middle = view.findViewById(R.id.et_middle);
+        et_last = view.findViewById(R.id.et_last);
         et_gender = view.findViewById(R.id.et_gender);
         et_units = view.findViewById(R.id.et_units);
         et_email = view.findViewById(R.id.et_email);

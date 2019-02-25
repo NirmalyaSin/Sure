@@ -178,11 +178,15 @@ public class ProfileClickEvent implements View.OnClickListener {
     }
 
     private void setData() {
-        activity.et_DOB.setText(MethodUtils.profileDOB(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserDob()));
+        activity.et_DOB.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserDob());
         activity.et_gender.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender());
         activity.et_phone.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserPhoneNumber());
         activity.et_full.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
-        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
+        activity.et_middle.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMiddleName());
+        activity.et_last.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLastName());
+        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName() + " " +
+                LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMiddleName() + " " +
+                LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLastName());
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getPreferredUnits().equals("1")) {
             activity.et_units.setText("KG/CM");
         } else {
@@ -292,6 +296,8 @@ public class ProfileClickEvent implements View.OnClickListener {
                 activity.et_full.requestFocus();
                 activity.et_phone.setEnabled(true);
                 activity.et_full.setEnabled(true);
+                activity.et_middle.setEnabled(true);
+                activity.et_last.setEnabled(true);
                 activity.et_gender.setEnabled(true);
                 activity.et_DOB.setEnabled(true);
                 activity.et_units.setEnabled(true);
@@ -376,6 +382,8 @@ public class ProfileClickEvent implements View.OnClickListener {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), activity.et_full.getText().toString().trim());
+        RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
+        RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), activity.et_phone.getText().toString().trim());
         //if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
         //preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
@@ -401,7 +409,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 activity.mCompressedFile.getName(), reqFile);
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, gender, phone, dob, deviceType, user_email, Height, body);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -420,7 +428,9 @@ public class ProfileClickEvent implements View.OnClickListener {
                         LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         JSONObject jObject = jsonObject.getJSONObject("data");
                         LoginShared.setUserPhoto(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserImage());
-                        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
+                        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName() + " " +
+                                LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMiddleName() + " " +
+                                LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLastName());
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.iv_edit.setVisibility(View.VISIBLE);
                         activity.showViewMode();
@@ -461,6 +471,8 @@ public class ProfileClickEvent implements View.OnClickListener {
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"),
                 activity.et_full.getText().toString().trim());
+        RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
+        RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"),
                 activity.et_phone.getText().toString().trim());
         if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
@@ -483,7 +495,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         String[] splited = str.split(" ");
         RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0].toString());
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, gender, phone, dob, deviceType, user_email, Height);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -501,7 +513,9 @@ public class ProfileClickEvent implements View.OnClickListener {
                         LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         JSONObject jObject = jsonObject.getJSONObject("data");
                         LoginShared.setUserPhoto(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserImage());
-                        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
+                        LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName() + " " +
+                                LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMiddleName() + " " +
+                                LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLastName());
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.showViewMode();
                         setData();

@@ -45,7 +45,7 @@ public class AddLoginUserDetails extends Dialog {
     Activity activity;
     ImageView iv_cross;
     EditText et_name;
-    EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss;
+    EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss,et_middle,et_last;
     Button btn_submit;
     LoadingData loader;
     private UniversalPopup genderPopup, prefferedPopup, heightPopup, weightPopup, timePopup;
@@ -67,6 +67,8 @@ public class AddLoginUserDetails extends Dialog {
         iv_cross = findViewById(R.id.iv_cross);
         btn_submit = findViewById(R.id.btn_submit);
         et_name = findViewById(R.id.et_name);
+        et_middle = findViewById(R.id.et_middle);
+        et_last = findViewById(R.id.et_last);
         et_email = findViewById(R.id.et_email);
         et_phone = findViewById(R.id.et_phone);
         et_units = findViewById(R.id.et_units);
@@ -136,7 +138,7 @@ public class AddLoginUserDetails extends Dialog {
                 } else if (et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
                 } else if (et_DOB.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your DOB");
+                    MethodUtils.errorMsg(activity, "Please select your Age");
                 } else if (et_height.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter your height");
                 } else if (et_weight.getText().toString().equals("")) {
@@ -151,7 +153,7 @@ public class AddLoginUserDetails extends Dialog {
             }
         });
 
-        et_DOB.setOnClickListener(new View.OnClickListener() {
+        /*et_DOB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideSoftKeyBoard();
@@ -169,7 +171,7 @@ public class AddLoginUserDetails extends Dialog {
                 ExpiryDialog();
 
             }
-        });
+        });*/
         et_gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -498,7 +500,7 @@ public class AddLoginUserDetails extends Dialog {
         final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(
                 LoginShared.getRegistrationDataModel(activity).getData().getToken(),
                 LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
-                et_name.getText().toString().trim(), et_email.getText().toString().trim(), et_time_loss.getText().toString().trim(),
+                et_name.getText().toString().trim(),et_middle.getText().toString().trim(),et_last.getText().toString().trim(), et_email.getText().toString().trim(), et_time_loss.getText().toString().trim(),
                 et_height.getText().toString().trim(), et_weight.getText().toString().trim(), "12345678", gender, et_phone.getText().toString().trim(),
                 et_DOB.getText().toString().trim(), "2", units,
                 LoginShared.getDeviceToken(activity));

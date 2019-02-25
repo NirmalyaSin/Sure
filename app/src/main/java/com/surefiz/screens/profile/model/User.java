@@ -9,6 +9,9 @@ public class User {
     @SerializedName("user_id")
     @Expose
     private String userId;
+    @SerializedName("scaleUserId")
+    @Expose
+    private String scaleUserId;
     @SerializedName("user_name")
     @Expose
     private String userName;
@@ -18,6 +21,15 @@ public class User {
     @SerializedName("user_permission")
     @Expose
     private String userPermission;
+    @SerializedName("user_LastLogin")
+    @Expose
+    private String userLastLogin;
+    @SerializedName("middle_name")
+    @Expose
+    private String middleName;
+    @SerializedName("last_name")
+    @Expose
+    private String lastName;
     @SerializedName("user_phoneNumber")
     @Expose
     private String userPhoneNumber;
@@ -30,15 +42,24 @@ public class User {
     @SerializedName("user_image")
     @Expose
     private String userImage;
-    @SerializedName("user_LastLogin")
-    @Expose
-    private String userLastLogin;
     @SerializedName("preferredUnits")
     @Expose
     private String preferredUnits;
     @SerializedName("height")
     @Expose
     private String height;
+    @SerializedName("target_weight")
+    @Expose
+    private String targetWeight;
+    @SerializedName("time")
+    @Expose
+    private String time;
+    @SerializedName("type")
+    @Expose
+    private String type;
+    @SerializedName("scaleid")
+    @Expose
+    private String scaleid;
 
     public String getUserId() {
         return userId;
@@ -46,6 +67,14 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getScaleUserId() {
+        return scaleUserId;
+    }
+
+    public void setScaleUserId(String scaleUserId) {
+        this.scaleUserId = scaleUserId;
     }
 
     public String getUserName() {
@@ -70,6 +99,30 @@ public class User {
 
     public void setUserPermission(String userPermission) {
         this.userPermission = userPermission;
+    }
+
+    public String getUserLastLogin() {
+        return userLastLogin;
+    }
+
+    public void setUserLastLogin(String userLastLogin) {
+        this.userLastLogin = userLastLogin;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUserPhoneNumber() {
@@ -104,14 +157,6 @@ public class User {
         this.userImage = userImage;
     }
 
-    public String getUserLastLogin() {
-        return userLastLogin;
-    }
-
-    public void setUserLastLogin(String userLastLogin) {
-        this.userLastLogin = userLastLogin;
-    }
-
     public String getPreferredUnits() {
         return preferredUnits;
     }
@@ -126,6 +171,38 @@ public class User {
 
     public void setHeight(String height) {
         this.height = height;
+    }
+
+    public String getTargetWeight() {
+        return targetWeight;
+    }
+
+    public void setTargetWeight(String targetWeight) {
+        this.targetWeight = targetWeight;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getScaleid() {
+        return scaleid;
+    }
+
+    public void setScaleid(String scaleid) {
+        this.scaleid = scaleid;
     }
 
 }

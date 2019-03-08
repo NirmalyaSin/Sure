@@ -27,6 +27,13 @@
     <string name="skip">Skip</string>
     <string name="fcm_default_notification_channel_id" translatable="false">surefiz_general</string>
 
+    <!-- weight managment strings -->
+    <string name="weight_popupheader">Please Select Weight Managment Goal Type</string>
+    <string name="weight_goal">Weight managment Goal</string>
+    <string name="user_selection">User Selection</string>
+    <string name="select_weight_goal">Select Weight Managment Goal</string>
+    <string name="select_input_choice">Select Your input choice</string>
+    
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">yyHhnmp0arMveGG8P7xGxE8Vm</string>
     <string name="twitter_consumer_secret" translatable="false">Hvi5rMmOGJ9yKXa6VbdJ5bfV7YuL4OAvexL8FSCvAMTtkAQzcx</string>

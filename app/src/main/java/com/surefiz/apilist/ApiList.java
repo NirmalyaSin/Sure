@@ -36,4 +36,5 @@ public class ApiList {
     public static final String SEND_WEIGHT_MANAGEMENT = "ApiServices/sendWeightManagement";
     public static final String API_BMI_DATA = "ApiServices/BMIDetails";
     public static final String PROGRESS_STATUS = "ApiServices/ProgressStatus";
+    public static final String ACCEPTSERVERWEIGHT="Acceptserverweight";
 }

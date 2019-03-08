@@ -4,15 +4,25 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -59,11 +69,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private List<String> weightList = new ArrayList<>();
     private List<String> timeList = new ArrayList<>();
     private List<String> managementList = new ArrayList<>();
-    private String filePath = "";
+    private int user_selection_val=0;
+    private  int weight_managment_goal=0;
+    private String filePath = "",userselectiontext="",weightmanagment="";
     private LoadingData loader;
     private int month, year, day;
     private UniversalPopup genderPopup, prefferedPopup, heightPopup, weightPopup, timePopup, managementPopup;
-
     public RegistrationClickEvent(RegistrationActivity registrationActivity) {
         this.registrationActivity = registrationActivity;
         loader = new LoadingData(registrationActivity);
@@ -74,7 +85,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
         addWeightListAndCall("LB");
         addTimeListAndCall();
         setClickEvent();
-
         registrationActivity.et_units.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -353,12 +363,23 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
                 } else {
-                    new Handler().postDelayed(new Runnable() {
+
+                    registrationActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showAndDismissManagementPopup();
+                            // if (!isFinishing()) {
+                            showCustomPopupforWeightmanagemnt();                        }
+                        // }
+                    });
+
+
+                   /* new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                           // showAndDismissManagementPopup();
+                            showCustomPopupforWeightmanagemnt();
                         }
-                    }, 100);
+                    }, 100);*/
                 }
 
                 break;
@@ -386,6 +407,158 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }
                 break;
 
+        }
+    }
+
+    private void showCustomPopupforWeightmanagemnt() {
+         String[] values = new String[] { "Lose and Maintain Weight", "Maintain Current Weight"};
+         String[] userselection = new String[] { "Input by me", "Server will Create that"};
+
+         Display display = registrationActivity.getWindowManager().getDefaultDisplay();
+         Point size = new Point();
+         display.getSize(size);
+         int width = size.x;
+
+         EditText et_select_weight_managment,et_select_user;
+         Button btn_weightsave;
+         ListView list,lv_userselection;
+         LinearLayout ll_user_selection;
+
+         LayoutInflater layoutInflater=(LayoutInflater) registrationActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+         View customView = layoutInflater.inflate(R.layout.custom_popup_for_weight_managment,null);
+         PopupWindow popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        btn_weightsave=customView.findViewById(R.id.btn_weightsave);
+        et_select_weight_managment=customView.findViewById(R.id.et_select_weight_managment);
+        list=customView.findViewById(R.id.weight_choice_list);
+        ll_user_selection=customView.findViewById(R.id.ll_user_selection);
+        lv_userselection=customView.findViewById(R.id.lv_userselection);
+        et_select_user=customView.findViewById(R.id.et_select_user);
+        // Assign adapter to ListView
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(registrationActivity, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        list.setAdapter(adapter);
+        ArrayAdapter<String> adapteruser = new ArrayAdapter<String>(registrationActivity, android.R.layout.simple_list_item_1, android.R.id.text1, userselection);
+        lv_userselection.setAdapter(adapteruser);
+        if(weight_managment_goal!=0){
+            et_select_weight_managment.setText(weightmanagment);
+        }
+        if(user_selection_val!=0){
+            ll_user_selection.setVisibility(View.VISIBLE);
+            et_select_user.setText(userselectiontext);
+        }
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (values[position].equalsIgnoreCase("Maintain Current Weight")) {
+                    ll_user_selection.setVisibility(View.GONE);
+                    et_select_weight_managment.setText(values[position]);
+                    list.setVisibility(View.GONE);
+                    weightmanagment=values[position];
+                    weight_managment_goal=1;
+                    user_selection_val=0;
+                }else{
+                    et_select_weight_managment.setText(values[position]);
+                    ll_user_selection.setVisibility(View.VISIBLE);
+                    list.setVisibility(View.GONE);
+                    weightmanagment=values[position];
+                    weight_managment_goal=2;
+                }
+            }
+        });
+        lv_userselection.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                et_select_user.setText(userselection[position]);
+                lv_userselection.setVisibility(View.GONE);
+                if (userselection[position].equalsIgnoreCase("Input by me")){
+                    user_selection_val=1;
+                    userselectiontext=userselection[position];
+                }else {
+                    user_selection_val = 2;
+                    userselectiontext=userselection[position];
+                }
+            }
+        });
+
+         et_select_weight_managment.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 if (lv_userselection.getVisibility()==View.VISIBLE)
+                     lv_userselection.setVisibility(View.GONE);
+                     list.setVisibility(View.VISIBLE);
+                 //addManagementListAndCall();
+               //  managementPopup.showAsDropDown(et_select_weight_managment);
+             }
+         });
+
+         et_select_user.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 if (list.getVisibility()==View.VISIBLE)
+                     list.setVisibility(View.GONE);
+                 lv_userselection.setVisibility(View.VISIBLE);
+             }
+         });
+          btn_weightsave.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  if (weight_managment_goal!=0) {
+                      if (weight_managment_goal==1) {
+                          popupWindow.dismiss();
+                          updatemainviewafterpopupselection();
+                      }else if(user_selection_val!=0){
+                          popupWindow.dismiss();
+                          updatemainviewafterpopupselection();
+                      }
+                  }
+              }
+          });
+        popupWindow.setWidth(width-35);
+        registrationActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+               // if (!isFinishing()) {
+                    popupWindow.showAtLocation(registrationActivity.rl_main_registration, Gravity.CENTER, 0, 0);
+                }
+           // }
+        });
+
+        // popupWindow.showAtLocation(registrationActivity.rl_main_registration, Gravity.CENTER, 0, 0);
+
+    }
+
+    private void updatemainviewafterpopupselection() {
+        if (weight_managment_goal==1){
+            registrationActivity.tv_weight.setVisibility(View.GONE);
+            registrationActivity.et_weight.setVisibility(View.GONE);
+            registrationActivity.tv_time_loss.setVisibility(View.GONE);
+            registrationActivity.et_time_loss.setVisibility(View.GONE);
+
+            registrationActivity.tv_userSelection.setVisibility(View.GONE);
+            registrationActivity.rl_userselection.setVisibility(View.GONE);
+            registrationActivity.et_userselection.setVisibility(View.GONE);
+
+            registrationActivity.et_management.setText(weightmanagment);
+
+        }else if(weight_managment_goal==2){
+            registrationActivity.tv_userSelection.setVisibility(View.VISIBLE);
+            registrationActivity.rl_userselection.setVisibility(View.VISIBLE);
+            registrationActivity.et_userselection.setVisibility(View.VISIBLE);
+            registrationActivity.et_userselection.setText(userselectiontext);
+            registrationActivity.et_management.setText(weightmanagment);
+            if (user_selection_val==1){
+                registrationActivity.tv_weight.setVisibility(View.VISIBLE);
+                registrationActivity.et_weight.setVisibility(View.VISIBLE);
+                registrationActivity.tv_time_loss.setVisibility(View.VISIBLE);
+                registrationActivity.et_time_loss.setVisibility(View.VISIBLE);
+            }else{
+                registrationActivity.tv_weight.setVisibility(View.GONE);
+                registrationActivity.et_weight.setVisibility(View.GONE);
+                registrationActivity.tv_time_loss.setVisibility(View.GONE);
+                registrationActivity.et_time_loss.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -447,8 +620,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
     private void validationAndApiCall() {
-        if (registrationActivity.et_full.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your name");
+        if (registrationActivity.et_first_name.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
+        }else if (registrationActivity.et_middle_name.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, "Please enter your middle name");
+        } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(registrationActivity, "Please enter your last name");
         } else if (registrationActivity.et_email.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your email");
         } else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
@@ -460,8 +637,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (registrationActivity.et_scale.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your scale Id");
         } else if (registrationActivity.et_management.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select any option");
-        } else if (registrationActivity.et_units.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, "Please select Weight Managment goal");
+        }
+         /*else if (registrationActivity.et_userselection.getVisibility()==View.VISIBLE && registrationActivity.et_userselection.getText().toString().equals("")) {
+          MethodUtils.errorMsg(registrationActivity, "Please select any option");
+        }*/else if (registrationActivity.et_units.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your Preffered Units");
         } else if (registrationActivity.et_gender.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
@@ -469,9 +649,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please select your Age");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
-        } else if (registrationActivity.et_weight.getText().toString().equals("")) {
+        } else if (registrationActivity.et_weight.getVisibility()==View.VISIBLE &&registrationActivity.et_weight.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
-        } else if (registrationActivity.et_time_loss.getText().toString().equals("")) {
+        } else if (registrationActivity.et_time_loss.getVisibility()==View.VISIBLE &&registrationActivity.et_time_loss.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
         } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
             MethodUtils.errorMsg(registrationActivity, "Password must be more than 8 characters");
@@ -502,14 +682,48 @@ public class RegistrationClickEvent implements View.OnClickListener {
         loader.show_with_label("Loading");
         RequestBody gender = null;
         RequestBody units = null;
+        RequestBody type=null;
+        RequestBody userselectionbody=null;
+        RequestBody weight=null;
+        RequestBody time=null;
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_full.getText().toString().trim());
+        RequestBody first_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_first_name.getText().toString().trim());
+        RequestBody middle_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_middle_name.getText().toString().trim());
+        RequestBody last_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_last_name.getText().toString().trim());
+
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_email.getText().toString().trim());
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_password.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
-        RequestBody type = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_management.getText().toString().trim());
+
+     /*   if (registrationActivity.et_management.getText().toString().trim().equalsIgnoreCase("Maintain Current Weight"))
+           type = RequestBody.create(MediaType.parse("text/plain"), "2");
+        else
+            type = RequestBody.create(MediaType.parse("text/plain"), "1");*/
+
+       if (weight_managment_goal==2) {
+           type = RequestBody.create(MediaType.parse("text/plain"), "2");
+           if (user_selection_val == 1) {
+               userselectionbody = RequestBody.create(MediaType.parse("text/plain"), "0");
+               weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
+               time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
+           } else {
+               userselectionbody = RequestBody.create(MediaType.parse("text/plain"), "1");
+               weight = RequestBody.create(MediaType.parse("text/plain"), "");
+               time = RequestBody.create(MediaType.parse("text/plain"), "");
+
+           }
+
+
+       }
+       else {
+           type = RequestBody.create(MediaType.parse("text/plain"), "1");
+           userselectionbody = RequestBody.create(MediaType.parse("text/plain"), "0");
+           weight = RequestBody.create(MediaType.parse("text/plain"), "");
+           time = RequestBody.create(MediaType.parse("text/plain"), "");
+       }
+
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else {
@@ -524,13 +738,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
         }
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_DOB.getText().toString().trim());
         RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim());
-        RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
-        RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
+       // RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
+      //  RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
 
-        Call<ResponseBody> registration_api = apiInterface.call_registrationApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, units, scale, type, deviceType, deviceToken);
+        Call<ResponseBody> registration_api = apiInterface.call_registrationApi(first_name,middle_name,last_name,email, password, gender, phone, dob,
+                height, weight, time, units, scale, type, deviceType, deviceToken,userselectionbody);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -594,17 +808,23 @@ public class RegistrationClickEvent implements View.OnClickListener {
         loader.show_with_label("Loading");
         RequestBody gender = null;
         RequestBody units = null;
+        RequestBody type=null;
+        RequestBody userselectionbody=null;
+        RequestBody weight=null;
+        RequestBody time=null;
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), registrationActivity.mCompressedFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("userImage",
                 registrationActivity.mCompressedFile.getName(), reqFile);
-        RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_full.getText().toString().trim());
+        RequestBody first_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_first_name.getText().toString().trim());
+        RequestBody middle_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_middle_name.getText().toString().trim());
+        RequestBody last_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_last_name.getText().toString().trim());
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_email.getText().toString().trim());
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_password.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody scale = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale.getText().toString().trim());
-        RequestBody type = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_management.getText().toString().trim());
+     //   RequestBody type = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_management.getText().toString().trim());
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else {
@@ -617,16 +837,41 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
+
+
+        if (weight_managment_goal==2) {
+            type = RequestBody.create(MediaType.parse("text/plain"), "2");
+
+            if (user_selection_val == 1) {
+                userselectionbody = RequestBody.create(MediaType.parse("text/plain"), "0");
+                weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
+                time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
+            } else {
+                userselectionbody = RequestBody.create(MediaType.parse("text/plain"), "1");
+                weight = RequestBody.create(MediaType.parse("text/plain"), "");
+                time = RequestBody.create(MediaType.parse("text/plain"), "");
+
+            }
+
+        }else {
+            type = RequestBody.create(MediaType.parse("text/plain"), "1");
+            userselectionbody = RequestBody.create(MediaType.parse("text/plain"), "0");
+            weight = RequestBody.create(MediaType.parse("text/plain"), "");
+            time = RequestBody.create(MediaType.parse("text/plain"), "");
+
+
+        }
+
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_DOB.getText().toString().trim());
         RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim());
-        RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
-        RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
+      //  RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
+       // RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
 
 
-        Call<ResponseBody> registration_api = apiInterface.call_registrationImageApi(fullName, email, password, gender, phone, dob,
-                height, weight, time, units, deviceType, scale, type, deviceToken, body);
+        Call<ResponseBody> registration_api = apiInterface.call_registrationImageApi(first_name,middle_name,last_name,email, password, gender, phone, dob,
+                height, weight, time, units, deviceType, scale, type, deviceToken,userselectionbody, body);
 
         registration_api.enqueue(new Callback<ResponseBody>() {
             @Override

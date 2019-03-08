@@ -107,8 +107,8 @@ public class RegistrationActivity extends AppCompatActivity {
     ImageView iv_plus_add_image;
     @BindView(R.id.btn_register)
     Button btn_register;
-    @BindView(R.id.et_full)
-    EditText et_full;
+    @BindView(R.id.et_first_name)
+    EditText et_first_name;
     @BindView(R.id.et_email)
     EditText et_email;
     @BindView(R.id.et_password)
@@ -127,6 +127,26 @@ public class RegistrationActivity extends AppCompatActivity {
     LinearLayout linearLayout1;
     @BindView(R.id.et_management)
     EditText et_management;
+    @BindView(R.id.rl_main_registration)
+    RelativeLayout rl_main_registration;
+    @BindView(R.id.tv_weight)
+    TextView tv_weight;
+    @BindView(R.id.tv_userSelection)
+    TextView tv_userSelection;
+    @BindView(R.id.rl_userselection)
+    RelativeLayout rl_userselection;
+    @BindView(R.id.et_userselection)
+    EditText et_userselection;
+    @BindView(R.id.tv_time_loss)
+    TextView tv_time_loss;
+    @BindView(R.id.et_middle_name)
+    EditText et_middle_name;
+    @BindView(R.id.et_last_name)
+    EditText et_last_name;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,7 +267,7 @@ public class RegistrationActivity extends AppCompatActivity {
         et_DOB.setText(MethodUtils.profileDOB(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob()));
         et_gender.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender());
         et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
-        et_full.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
+        et_first_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
         LoginShared.setUserName(RegistrationActivity.this, LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equals("1")) {
             et_units.setText("KG/CM");

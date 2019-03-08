@@ -45,7 +45,7 @@ import retrofit2.Retrofit;
 public class WeightManagementActivity extends BaseActivity implements View.OnClickListener {
     public View view;
     EditText et_weight, et_time_loss, et_units;
-    Button btn_submit;
+    Button btn_submit,btn_accept,btn_decline;
     private LoadingData loader;
     private List<String> weightList = new ArrayList<>();
     private List<String> timeList = new ArrayList<>();
@@ -55,11 +55,14 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     private String weight_value = "", time_value = "", units_value = "";
     String units = "", weight = "";
     String[] splited;
+    String isnotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_weight_management, null);
+         isnotification= LoginShared.getWeightFromNotification(this);
+
         addContentView(view);
         loader = new LoadingData(this);
         initializeView();
@@ -67,11 +70,39 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         addTimeListAndCall();
         addPrefferedListAndCall();
         if (!ConnectionDetector.isConnectingToInternet(WeightManagementActivity.this)) {
-            MethodUtils.errorMsg(WeightManagementActivity.this,
-                    getString(R.string.no_internet));
+            MethodUtils.errorMsg(WeightManagementActivity.this,getString(R.string.no_internet));
         } else {
             getWeightManagementApi();
         }
+
+        if (isnotification.equals("7")){
+            btn_submit.setVisibility(View.GONE);
+            btn_accept.setVisibility(View.VISIBLE);
+            btn_decline.setVisibility(View.VISIBLE);
+            rl_back.setVisibility(View.GONE);
+        }
+        btn_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callApiforweightUpdate();
+
+            }
+        });
+        btn_decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_time_loss.setEnabled(true);
+                et_units.setEnabled(true);
+                et_weight.setEnabled(true);
+
+              //  btn_submit.setVisibility(View.VISIBLE);
+                btn_accept.setText("Update");
+                btn_decline.setOnClickListener(null);
+                btn_decline.setAlpha((float) 0.4);
+              //  btn_decline.setBackgroundColor(getResources().getColor(R.color.hintColor));
+
+            }
+        });
 
         et_units.addTextChangedListener(new TextWatcher() {
             @Override
@@ -95,6 +126,46 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
             }
         });
+    }
+
+    private void callApiforweightUpdate() {
+        if( btn_accept.getText().equals("Update")){
+            sendWeightManagementDetails();
+
+        }else {
+            loader.show_with_label("Loading");
+            Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+            final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+            Call<ResponseBody> callApifor_server_weight = apiInterface.call_Apiforserver_weight(LoginShared.getRegistrationDataModel(this).getData().getToken(), "application/json",
+                    LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(), "1");
+            callApifor_server_weight.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (loader != null && loader.isShowing())
+                        loader.dismiss();
+                    try {
+                        String responseString = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseString);
+                        if (jsonObject.optInt("status") == 1) {
+                            JSONObject jsObject = jsonObject.getJSONObject("data");
+                        }
+
+
+                    } catch (Exception e) {
+                        MethodUtils.errorMsg(WeightManagementActivity.this, getString(R.string.error_occurred));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if (loader != null && loader.isShowing())
+                        loader.dismiss();
+                    MethodUtils.errorMsg(WeightManagementActivity.this, getString(R.string.error_occurred));
+
+
+                }
+            });
+        }
     }
 
     private void getWeightManagementApi() {
@@ -251,6 +322,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     private void initializeView() {
         setHeaderView();
+        btn_accept = findViewById(R.id.btn_accept);
+        btn_decline= findViewById(R.id.btn_decline);
         et_weight = findViewById(R.id.et_weight);
         et_time_loss = findViewById(R.id.et_time_loss);
         et_units = findViewById(R.id.et_units);
@@ -423,11 +496,15 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
-        startActivity(loginIntent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        finish();
+        if(isnotification.equals("7")){
+
+        }else {
+            super.onBackPressed();
+            Intent loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
+            startActivity(loginIntent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        }
     }
 
     public void showWeightUpdateDialog() {

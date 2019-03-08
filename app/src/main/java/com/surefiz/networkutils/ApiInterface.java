@@ -26,6 +26,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
+import static com.surefiz.apilist.ApiList.ACCEPTSERVERWEIGHT;
 import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.API_ADD_EDIT_REMINDER_LIST;
@@ -60,7 +61,9 @@ public interface ApiInterface {
 
     @Multipart
     @POST(REGISTRATION)
-    Call<ResponseBody> call_registrationImageApi(@Part("fullName") RequestBody fullName,
+    Call<ResponseBody> call_registrationImageApi(@Part("firstName") RequestBody firstname,
+                                                 @Part("middleName") RequestBody middleName,
+                                                 @Part("lastName") RequestBody lastName,
                                                  @Part("emailId") RequestBody emailId,
                                                  @Part("password") RequestBody password,
                                                  @Part("gender") RequestBody gender,
@@ -74,11 +77,14 @@ public interface ApiInterface {
                                                  @Part("scaleMacId") RequestBody scaleMacId,
                                                  @Part("type") RequestBody type,
                                                  @Part("device_Token") RequestBody device_Token,
+                                                 @Part("mantain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
                                                  @Part MultipartBody.Part attachment);
 
     @Multipart
     @POST(REGISTRATION)
-    Call<ResponseBody> call_registrationApi(@Part("fullName") RequestBody fullName,
+    Call<ResponseBody> call_registrationApi(@Part("firstName") RequestBody firstname,
+                                            @Part("middleName") RequestBody middleName,
+                                            @Part("lastName") RequestBody lastName,
                                             @Part("emailId") RequestBody emailId,
                                             @Part("password") RequestBody password,
                                             @Part("gender") RequestBody gender,
@@ -91,7 +97,8 @@ public interface ApiInterface {
                                             @Part("scaleMacId") RequestBody scaleMacId,
                                             @Part("type") RequestBody type,
                                             @Part("deviceType") RequestBody deviceType,
-                                            @Part("device_Token") RequestBody device_Token);
+                                            @Part("device_Token") RequestBody device_Token,
+                                            @Part("mantain_Weight_By_Server") RequestBody mantain_Weight_By_Server);
 
     @FormUrlEncoded
     @POST(SENDOTP)
@@ -297,4 +304,11 @@ public interface ApiInterface {
     Call<ResponseBody> call_ProgressDetailsApi(@Header("x-authorization") String token,
                                                @Field("userId") String serverUserId,
                                                @Field("contentId") String contentId);
+
+    @FormUrlEncoded
+    @POST(ACCEPTSERVERWEIGHT)
+    Call<ResponseBody> call_Apiforserver_weight(@Header("x-authorization") String token,
+                                                @Field("Content-Type") String serverUserId,
+                                                @Field("userId") String userId,
+                                                @Field("acceptationStatus") String acceptationStatus);
 }

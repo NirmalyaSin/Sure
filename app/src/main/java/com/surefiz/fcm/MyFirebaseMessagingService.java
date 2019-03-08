@@ -30,6 +30,7 @@ import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
+import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -105,6 +106,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "6");
                 } else if (jObject.optInt("pushType") == 1) {
                     LoginShared.setWeightFromNotification(this, "1");
+                }else if (jObject.optInt("pushType") == 7) {
+                    LoginShared.setWeightFromNotification(this, "7");
                 } else {
                     LoginShared.setWeightFromNotification(this, "7");
                 }
@@ -278,6 +281,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
+        }else if (jObject.optInt("pushType") == 7) {
+            Intent intent = new Intent(this, WeightManagementActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
         } else {
             Intent intent = new Intent(this, DashBoardActivity.class);
             intent.putExtra("notificationFlag", "1");
@@ -287,7 +295,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-
         String channelId = getString(R.string.fcm_default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =

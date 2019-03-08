@@ -137,4 +137,30 @@
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 
+    <Button
+        android:id="@+id/btn_accept"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/rl_time_loss"
+        android:layout_margin="@dimen/_44sdp"
+        android:background="@drawable/login_submit_rounded_corner"
+        android:text="Accept"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+    <Button
+        android:id="@+id/btn_decline"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/btn_accept"
+        android:background="@drawable/login_submit_rounded_corner"
+        android:text="Decline"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/_44sdp"
+        android:layout_marginLeft="@dimen/_44sdp"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
 </RelativeLayout>

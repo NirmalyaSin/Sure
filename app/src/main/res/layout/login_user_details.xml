@@ -115,7 +115,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_full"
+                android:id="@+id/tv_frist_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_18sdp"
@@ -124,7 +124,7 @@
                 android:textSize="@dimen/_14sdp" />
 
             <RelativeLayout
-                android:id="@+id/rl_full"
+                android:id="@+id/rl_fristname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_18sdp"

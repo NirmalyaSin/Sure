@@ -346,4 +346,19 @@ public class LoginShared {
             activateShared(context);
         return prefs.getBoolean(SharedUtils.KEY_SHARED_IS_WELCOME, false);
     }
+
+    public static void setweightpush(Context context, boolean value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(SharedUtils.KEY_SHARED_IS_WELCOME, value);
+        editor.commit();
+    }
+
+    public static boolean getWeightpush(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getBoolean(SharedUtils.KEY_SHARED_IS_WELCOME, false);
+    }
 }

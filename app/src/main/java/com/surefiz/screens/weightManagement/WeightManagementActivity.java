@@ -22,6 +22,7 @@ import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
@@ -76,6 +77,9 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         }
 
         if (isnotification.equals("7")){
+            et_time_loss.setEnabled(false);
+            et_units.setEnabled(false);
+            et_weight.setEnabled(false);
             btn_submit.setVisibility(View.GONE);
             btn_accept.setVisibility(View.VISIBLE);
             btn_decline.setVisibility(View.VISIBLE);
@@ -150,6 +154,15 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                             JSONObject jsObject = jsonObject.getJSONObject("data");
                         }
 
+                        Intent dashboard;
+                      //  if (isnotification.equals("7")){
+                            dashboard = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
+                       // }else
+                          //  dashboard = new Intent(WeightManagementActivity.this, SettingsActivity.class);
+
+                        startActivity(dashboard);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
 
                     } catch (Exception e) {
                         MethodUtils.errorMsg(WeightManagementActivity.this, getString(R.string.error_occurred));
@@ -441,7 +454,13 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
+                                Intent loginIntent;
+                                if (isnotification.equals("7")){
+                                   loginIntent = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
+
+                                }else
+                                    loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
+
                                 startActivity(loginIntent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 finish();

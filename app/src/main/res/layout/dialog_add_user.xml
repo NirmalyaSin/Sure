@@ -324,17 +324,17 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_gender"
+                android:id="@+id/tv_management"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_18sdp"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Gender"
+                android:text="Weight Management Goal"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
             <RelativeLayout
-                android:id="@+id/rl_gender"
+                android:id="@+id/rl_management"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_18sdp"
@@ -343,48 +343,13 @@
                 android:background="@drawable/edit_text_background">
 
                 <EditText
-                    android:id="@+id/et_gender"
+                    android:id="@+id/et_management"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:backgroundTint="@android:color/transparent"
                     android:focusableInTouchMode="false"
-                    android:hint="Select Gender"
-                    android:inputType="text|textNoSuggestions"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_DOB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
-                android:paddingTop="@dimen/_20sdp"
-                android:text="Age"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
-
-            <RelativeLayout
-                android:id="@+id/rl_DOB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
-
-                <EditText
-                    android:id="@+id/et_DOB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="Enter Age"
+                    android:hint="Please Select Weight Management Goal"
                     android:inputType="number"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/_6sdp"
@@ -395,33 +360,34 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_height"
+                android:id="@+id/tv_userSelection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_18sdp"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Height"
+                android:text="User Selection"
+                android:visibility="gone"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
             <RelativeLayout
-                android:id="@+id/rl_height"
+                android:id="@+id/rl_userselection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:layout_marginRight="@dimen/_18sdp"
+                android:visibility="gone"
                 android:background="@drawable/edit_text_background">
 
                 <EditText
-                    android:id="@+id/et_height"
+                    android:id="@+id/et_userselection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:backgroundTint="@android:color/transparent"
                     android:focusableInTouchMode="false"
-                    android:hint="Select Height"
-                    android:inputType="text|textNoSuggestions"
+                    android:hint="User Selection"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/_6sdp"
                     android:textColor="@color/whiteColor"
@@ -501,6 +467,113 @@
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:text="Height"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:hint="Select Height"
+                    android:inputType="text|textNoSuggestions"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:text="Gender"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:hint="Select Gender"
+                    android:inputType="text|textNoSuggestions"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_DOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:text="Age"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_DOB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_DOB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Enter Age"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
+
 
             <Button
                 android:id="@+id/btn_submit"

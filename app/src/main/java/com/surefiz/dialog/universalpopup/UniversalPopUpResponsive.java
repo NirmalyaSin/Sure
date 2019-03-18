@@ -65,6 +65,7 @@ public class UniversalPopUpResponsive extends ResolutionHelper {
                 public void onClick(View v) {
                     et.setText(tv.getText().toString());
                     popupWindow.dismiss();
+
                 }
             });
 

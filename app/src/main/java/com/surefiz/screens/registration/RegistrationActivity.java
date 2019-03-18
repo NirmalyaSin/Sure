@@ -125,6 +125,8 @@ public class RegistrationActivity extends AppCompatActivity {
     TextView textTermsCondition;
     @BindView(R.id.linearLayout1)
     LinearLayout linearLayout1;
+    @BindView(R.id.rl_weight)
+    RelativeLayout rl_weight;
     @BindView(R.id.et_management)
     EditText et_management;
     @BindView(R.id.rl_main_registration)
@@ -139,6 +141,8 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_userselection;
     @BindView(R.id.tv_time_loss)
     TextView tv_time_loss;
+    @BindView(R.id.rl_time_loss)
+    RelativeLayout rl_time_loss;
     @BindView(R.id.et_middle_name)
     EditText et_middle_name;
     @BindView(R.id.et_last_name)

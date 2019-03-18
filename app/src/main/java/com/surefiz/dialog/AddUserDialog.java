@@ -16,12 +16,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
+import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
 import com.surefiz.interfaces.MoveTutorial;
+import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -49,11 +53,19 @@ public class AddUserDialog extends Dialog {
     Activity activity;
     ImageView iv_cross;
     EditText et_name;
-    EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss,et_middle,et_last;
+    EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss, et_middle,
+            et_last, et_management, et_userselection;
     Button btn_submit;
+    RelativeLayout rl_userselection, rl_weight, rl_time_loss;
+    TextView tv_userSelection, tv_management, tv_weight, tv_time_loss;
     LoadingData loader;
     MoveTutorial moveTutorial;
+    private int user_selection_val = 0;
+    private int weight_managment_goal = 0;
     private UniversalPopup genderPopup, prefferedPopup, heightPopup, weightPopup, timePopup;
+    private WeigtUniversalPopup managementPopup, selectionPopup;
+    private List<String> managementList = new ArrayList<>();
+    private List<String> selectionList = new ArrayList<>();
     private List<String> genderList = new ArrayList<>();
     private List<String> prefferedList = new ArrayList<>();
     private List<String> heightList = new ArrayList<>();
@@ -82,11 +94,22 @@ public class AddUserDialog extends Dialog {
         et_height = findViewById(R.id.et_height);
         et_weight = findViewById(R.id.et_weight);
         et_time_loss = findViewById(R.id.et_time_loss);
+        et_management = findViewById(R.id.et_management);
+        et_userselection = findViewById(R.id.et_userselection);
+        rl_userselection = findViewById(R.id.rl_userselection);
+        tv_userSelection = findViewById(R.id.tv_userSelection);
+        tv_management = findViewById(R.id.tv_management);
+        tv_weight = findViewById(R.id.tv_weight);
+        rl_weight = findViewById(R.id.rl_weight);
+        tv_time_loss = findViewById(R.id.tv_time_loss);
+        rl_time_loss = findViewById(R.id.rl_time_loss);
 
         hideSoftKeyBoard();
 
         addGenderListAndCall();
         addPrefferedListAndCall();
+        addManagementListAndCall();
+        addSelectionListAndCall();
         addHeightListAndCall("INCH");
         addWeightListAndCall("LB");
         addTimeListAndCall();
@@ -131,7 +154,9 @@ public class AddUserDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if (et_name.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter user name");
+                    MethodUtils.errorMsg(activity, "Please enter User First name");
+                } else if (et_last.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Please enter User Last name");
                 } else if (et_email.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter user email");
                 } else if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
@@ -140,6 +165,8 @@ public class AddUserDialog extends Dialog {
                     MethodUtils.errorMsg(activity, "Please enter your phone number");
                 } else if (et_units.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select your Preffered Units");
+                } else if (et_management.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Please select Weight Managment goal");
                 } else if (et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
                 } else if (et_DOB.getText().toString().equals("")) {
@@ -202,11 +229,92 @@ public class AddUserDialog extends Dialog {
                     timePopup.dismiss();
                 } else if (genderPopup.isShowing()) {
                     genderPopup.dismiss();
+                } else if (managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                } else if (selectionPopup.isShowing()) {
+                    selectionPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             showAndDismissGenderPopup();
+                        }
+                    }, 100);
+                }
+            }
+        });
+
+        et_management.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftKeyBoard();
+                if (prefferedPopup != null && prefferedPopup.isShowing()) {
+                    prefferedPopup.dismiss();
+                } else if (genderPopup != null && genderPopup.isShowing()) {
+                    genderPopup.dismiss();
+                } else if (heightPopup != null && heightPopup.isShowing()) {
+                    heightPopup.dismiss();
+                } else if (timePopup != null && timePopup.isShowing()) {
+                    timePopup.dismiss();
+                } else if (weightPopup != null && weightPopup.isShowing()) {
+                    weightPopup.dismiss();
+                } else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
+                    selectionPopup.dismiss();
+                } else {
+
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // if (!isFinishing()) {
+                            //showCustomPopupforWeightmanagemnt();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // showAndDismissManagementPopup();
+                                    //showCustomPopupforWeightmanagemnt();
+                                    showAndDismissManagementPopup();
+                                }
+                            }, 100);
+                        }
+                        // }
+                    });
+
+
+                   /* new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                           // showAndDismissManagementPopup();
+                            showCustomPopupforWeightmanagemnt();
+                        }
+                    }, 100);*/
+                }
+            }
+        });
+        et_userselection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftKeyBoard();
+                if (prefferedPopup != null && prefferedPopup.isShowing()) {
+                    prefferedPopup.dismiss();
+                } else if (genderPopup != null && genderPopup.isShowing()) {
+                    genderPopup.dismiss();
+                } else if (weightPopup != null && weightPopup.isShowing()) {
+                    weightPopup.dismiss();
+                } else if (timePopup != null && timePopup.isShowing()) {
+                    timePopup.dismiss();
+                } else if (heightPopup != null && heightPopup.isShowing()) {
+                    heightPopup.dismiss();
+                } else if (managementPopup != null && managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
+                    selectionPopup.dismiss();
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showAndDismissSelectionPopup();
                         }
                     }, 100);
                 }
@@ -226,6 +334,10 @@ public class AddUserDialog extends Dialog {
                     timePopup.dismiss();
                 } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();
+                } else if (managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                } else if (selectionPopup.isShowing()) {
+                    selectionPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -261,6 +373,10 @@ public class AddUserDialog extends Dialog {
                     timePopup.dismiss();
                 } else if (heightPopup != null && heightPopup.isShowing()) {
                     heightPopup.dismiss();
+                } else if (managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                } else if (selectionPopup.isShowing()) {
+                    selectionPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -287,6 +403,10 @@ public class AddUserDialog extends Dialog {
                     timePopup.dismiss();
                 } else if (weightPopup != null && weightPopup.isShowing()) {
                     weightPopup.dismiss();
+                } else if (managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                } else if (selectionPopup.isShowing()) {
+                    selectionPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -312,6 +432,10 @@ public class AddUserDialog extends Dialog {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
+                } else if (managementPopup.isShowing()) {
+                    managementPopup.dismiss();
+                } else if (selectionPopup.isShowing()) {
+                    selectionPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -329,6 +453,15 @@ public class AddUserDialog extends Dialog {
             @Override
             public void run() {
                 timePopup.showAsDropDown(et_time_loss);
+            }
+        }, 100);
+    }
+
+    private void showAndDismissSelectionPopup() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                selectionPopup.showAsDropDown(et_userselection);
             }
         }, 100);
     }
@@ -445,14 +578,23 @@ public class AddUserDialog extends Dialog {
         heightPopup = new UniversalPopup(activity, heightList, et_height);
     }
 
+    private void showAndDismissManagementPopup() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                managementPopup.showAsDropDown(et_management);
+            }
+        }, 100);
+    }
+
     private void addWeightListAndCall(String change) {
         weightList.clear();
         if (change.equals("LB")) {
-            for (int i = 5; i < 1001; i++) {
+            for (int i = 5; i < 301; i++) {
                 weightList.add(i + " " + change);
             }
         } else {
-            for (int i = 5; i < 455; i++) {
+            for (int i = 5; i < 151; i++) {
                 weightList.add(i + " " + change);
             }
         }
@@ -464,6 +606,61 @@ public class AddUserDialog extends Dialog {
         prefferedList.add("KG/CM");
 
         prefferedPopup = new UniversalPopup(activity, prefferedList, et_units);
+    }
+
+    private void addManagementListAndCall() {
+        managementList.add("Lose and Mantain Weight");
+        managementList.add("Maintain Current Weight");
+
+        managementPopup = new WeigtUniversalPopup(activity, managementList, et_management, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+                if (value.equals("Lose and Mantain Weight")) {
+                    tv_userSelection.setVisibility(View.VISIBLE);
+                    rl_userselection.setVisibility(View.VISIBLE);
+                    tv_weight.setVisibility(View.VISIBLE);
+                    rl_weight.setVisibility(View.VISIBLE);
+                    tv_time_loss.setVisibility(View.VISIBLE);
+                    rl_time_loss.setVisibility(View.VISIBLE);
+                    weight_managment_goal = 2;
+                    user_selection_val = 0;
+                } else {
+                    tv_userSelection.setVisibility(View.GONE);
+                    rl_userselection.setVisibility(View.GONE);
+                    tv_weight.setVisibility(View.GONE);
+                    rl_weight.setVisibility(View.GONE);
+                    tv_time_loss.setVisibility(View.GONE);
+                    rl_time_loss.setVisibility(View.GONE);
+                    et_userselection.setText("");
+                    weight_managment_goal = 1;
+                    user_selection_val = 0;
+                }
+            }
+        });
+    }
+
+    private void addSelectionListAndCall() {
+        selectionList.add("I will Provide the Info");
+        selectionList.add("I want SureFiz™ to suggest");
+
+        selectionPopup = new WeigtUniversalPopup(activity, selectionList, et_userselection, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+                if (value.equals("I will Provide the Info")) {
+                    tv_weight.setVisibility(View.VISIBLE);
+                    rl_weight.setVisibility(View.VISIBLE);
+                    tv_time_loss.setVisibility(View.VISIBLE);
+                    rl_time_loss.setVisibility(View.VISIBLE);
+                    user_selection_val = 1;
+                } else {
+                    tv_weight.setVisibility(View.GONE);
+                    rl_weight.setVisibility(View.GONE);
+                    tv_time_loss.setVisibility(View.GONE);
+                    rl_time_loss.setVisibility(View.GONE);
+                    user_selection_val = 2;
+                }
+            }
+        });
     }
 
     private void addGenderListAndCall() {
@@ -485,6 +682,10 @@ public class AddUserDialog extends Dialog {
     private void addUserApi() {
         String gender = "";
         String units = "";
+        String type="";
+        String mantain_Weight_By_Server="";
+        String weight = "";
+        String time = "";
         if (et_gender.getText().toString().trim().equals("Male")) {
             gender = "1";
         } else if (et_gender.getText().toString().trim().equals("Female")) {
@@ -498,6 +699,25 @@ public class AddUserDialog extends Dialog {
         } else {
             units = "1";
         }
+
+        if (weight_managment_goal == 2) {
+            type = "2";
+
+            if (user_selection_val == 1) {
+                mantain_Weight_By_Server =  "0";
+                weight = et_weight.getText().toString().trim();
+                time = et_time_loss.getText().toString().trim();
+            } else {
+                mantain_Weight_By_Server = "1";
+                weight = "";
+                time ="";
+            }
+        } else {
+            type =  "1";
+            mantain_Weight_By_Server =  "0";
+            weight = "";
+            time =  "";
+        }
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -505,10 +725,10 @@ public class AddUserDialog extends Dialog {
         final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(
                 LoginShared.getRegistrationDataModel(activity).getData().getToken(),
                 LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
-                et_name.getText().toString().trim(),et_middle.getText().toString().trim(),et_last.getText().toString().trim(), et_email.getText().toString().trim(), et_time_loss.getText().toString().trim(),
-                et_height.getText().toString().trim(), et_weight.getText().toString().trim(), "12345678", gender, et_phone.getText().toString().trim(),
+                et_name.getText().toString().trim(), et_middle.getText().toString().trim(), et_last.getText().toString().trim(), et_email.getText().toString().trim(), time,
+                et_height.getText().toString().trim(), weight, "12345678", gender, et_phone.getText().toString().trim(),
                 et_DOB.getText().toString().trim(), "2", units,
-                LoginShared.getDeviceToken(activity));
+                LoginShared.getDeviceToken(activity),type,mantain_Weight_By_Server);
         call_addUser.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

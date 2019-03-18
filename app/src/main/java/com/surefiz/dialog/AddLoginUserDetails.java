@@ -148,7 +148,7 @@ public class AddLoginUserDetails extends Dialog {
                 } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else {
-                    addUserApi();
+                    //addUserApi();
                 }
             }
         });
@@ -477,7 +477,7 @@ public class AddLoginUserDetails extends Dialog {
         }
     }
 
-    private void addUserApi() {
+    /*private void addUserApi() {
         String gender = "";
         String units = "";
         if (et_gender.getText().toString().trim().equals("Male")) {
@@ -548,5 +548,5 @@ public class AddLoginUserDetails extends Dialog {
                 MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
             }
         });
-    }
+    }*/
 }

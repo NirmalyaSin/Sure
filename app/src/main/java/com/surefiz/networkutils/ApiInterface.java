@@ -244,7 +244,9 @@ public interface ApiInterface {
                                        @Field("dob") String dob,
                                        @Field("deviceType") String deviceType,
                                        @Field("prefferedUnits") String prefferedUnits,
-                                       @Field("device_Token") String device_Token);
+                                       @Field("device_Token") String device_Token,
+                                       @Field("type") String type,
+                                       @Field("mantain_Weight_By_Server")String mantain_Weight_By_Server);
 
     @FormUrlEncoded
     @POST(FORGOTPASSWORD)

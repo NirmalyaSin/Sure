@@ -30,6 +30,7 @@ import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
+import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -282,7 +283,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
         }else if (jObject.optInt("pushType") == 7) {
-            Intent intent = new Intent(this, WeightManagementActivity.class);
+            Intent intent = new Intent(this, UserConfirmationActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);

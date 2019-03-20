@@ -46,7 +46,7 @@ import retrofit2.Retrofit;
 public class WeightManagementActivity extends BaseActivity implements View.OnClickListener {
     public View view;
     EditText et_weight, et_time_loss, et_units;
-    Button btn_submit,btn_accept,btn_decline;
+    Button btn_submit, btn_accept, btn_decline;
     private LoadingData loader;
     private List<String> weightList = new ArrayList<>();
     private List<String> timeList = new ArrayList<>();
@@ -62,7 +62,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_weight_management, null);
-         isnotification= LoginShared.getWeightFromNotification(this);
+        isnotification = LoginShared.getWeightFromNotification(this);
 
         addContentView(view);
         loader = new LoadingData(this);
@@ -71,12 +71,12 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         addTimeListAndCall();
         addPrefferedListAndCall();
         if (!ConnectionDetector.isConnectingToInternet(WeightManagementActivity.this)) {
-            MethodUtils.errorMsg(WeightManagementActivity.this,getString(R.string.no_internet));
+            MethodUtils.errorMsg(WeightManagementActivity.this, getString(R.string.no_internet));
         } else {
             getWeightManagementApi();
         }
 
-        if (isnotification.equals("7")){
+        if (isnotification.equals("7")) {
             et_time_loss.setEnabled(false);
             et_units.setEnabled(false);
             et_weight.setEnabled(false);
@@ -99,11 +99,11 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 et_units.setEnabled(true);
                 et_weight.setEnabled(true);
 
-              //  btn_submit.setVisibility(View.VISIBLE);
+                //  btn_submit.setVisibility(View.VISIBLE);
                 btn_accept.setText("Update");
                 btn_decline.setOnClickListener(null);
                 btn_decline.setAlpha((float) 0.4);
-              //  btn_decline.setBackgroundColor(getResources().getColor(R.color.hintColor));
+                //  btn_decline.setBackgroundColor(getResources().getColor(R.color.hintColor));
 
             }
         });
@@ -133,10 +133,10 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void callApiforweightUpdate() {
-        if( btn_accept.getText().equals("Update")){
+        if (btn_accept.getText().equals("Update")) {
             sendWeightManagementDetails();
 
-        }else {
+        } else {
             loader.show_with_label("Loading");
             Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
             final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -155,10 +155,10 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                         }
 
                         Intent dashboard;
-                      //  if (isnotification.equals("7")){
-                            dashboard = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
-                       // }else
-                          //  dashboard = new Intent(WeightManagementActivity.this, SettingsActivity.class);
+                        //  if (isnotification.equals("7")){
+                        dashboard = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
+                        // }else
+                        //  dashboard = new Intent(WeightManagementActivity.this, SettingsActivity.class);
 
                         startActivity(dashboard);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -336,7 +336,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     private void initializeView() {
         setHeaderView();
         btn_accept = findViewById(R.id.btn_accept);
-        btn_decline= findViewById(R.id.btn_decline);
+        btn_decline = findViewById(R.id.btn_decline);
         et_weight = findViewById(R.id.et_weight);
         et_time_loss = findViewById(R.id.et_time_loss);
         et_units = findViewById(R.id.et_units);
@@ -455,10 +455,10 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                             @Override
                             public void run() {
                                 Intent loginIntent;
-                                if (isnotification.equals("7")){
-                                   loginIntent = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
+                                if (isnotification.equals("7")) {
+                                    loginIntent = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
 
-                                }else
+                                } else
                                     loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
 
                                 startActivity(loginIntent);
@@ -515,9 +515,9 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-        if(isnotification.equals("7")){
+        if (isnotification.equals("7")) {
 
-        }else {
+        } else {
             super.onBackPressed();
             Intent loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
             startActivity(loginIntent);

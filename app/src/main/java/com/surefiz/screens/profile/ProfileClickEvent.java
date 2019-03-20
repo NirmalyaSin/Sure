@@ -24,12 +24,15 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.OpenCameraOrGalleryDialog;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
+import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
 import com.surefiz.interfaces.OnImageSet;
+import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
+import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -63,6 +66,10 @@ public class ProfileClickEvent implements View.OnClickListener {
     private String filePath = "";
     private List<String> heightList = new ArrayList<>();
     private UniversalPopup heightPopup;
+    private String weight_value = "", time_value = "", units_value = "";
+    private WeigtUniversalPopup weigtUniversalPopupPreffered;
+    String units = "", height = "";
+    String[] splited;
 
 
     public ProfileClickEvent(ProfileActivity activity) {
@@ -70,7 +77,8 @@ public class ProfileClickEvent implements View.OnClickListener {
         loader = new LoadingData(activity);
         initializeImageLoader();
         setClickEvent();
-        addHeightListAndCall("INCH");
+        addPrefferedListAndCall();
+        //addHeightListAndCall("INCH");
 
         if (!ConnectionDetector.isConnectingToInternet(activity)) {
             MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
@@ -79,7 +87,6 @@ public class ProfileClickEvent implements View.OnClickListener {
         }
 
         addGenderListAndCall();
-        addPrefferedListAndCall();
 
         activity.et_units.addTextChangedListener(new TextWatcher() {
             @Override
@@ -245,7 +252,29 @@ public class ProfileClickEvent implements View.OnClickListener {
 
         prefferedList.add("LB/INCH");
         prefferedList.add("KG/CM");
-        prefferedPopup = new UniversalPopup(activity, prefferedList, activity.et_units);
+        weigtUniversalPopupPreffered = new WeigtUniversalPopup(activity, prefferedList, activity.et_units, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+                height = activity.et_height.getText().toString().trim();
+                splited = height.split(" ");
+                if (value.equals("KG/CM")) {
+                    units = "CM";
+                } else {
+                    units = "INCH";
+                }
+                if (units.equals(splited[1])) {
+                } else {
+                    if (value.equals("KG/CM")) {
+                        activity.et_height.setText(String.valueOf(Math.round(Double.parseDouble(splited[0]) * 2.54)) + " CM");
+                        units = "CM";
+                    }
+                    if (value.equals("LB/INCH")) {
+                        units = "INCH";
+                        activity.et_height.setText(String.valueOf((Math.round(Double.parseDouble(splited[0]) * 0.393701)) + " INCH"));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -260,8 +289,8 @@ public class ProfileClickEvent implements View.OnClickListener {
                 }
                 if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
-                } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
+                } else if (weigtUniversalPopupPreffered != null && weigtUniversalPopupPreffered.isShowing()) {
+                    weigtUniversalPopupPreffered.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -275,11 +304,11 @@ public class ProfileClickEvent implements View.OnClickListener {
                 ExpiryDialog();
                 break;
             case R.id.et_units:
-               /* hideSoftKeyBoard();
+                hideSoftKeyBoard();
                 if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
-                } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
+                } else if (weigtUniversalPopupPreffered != null && weigtUniversalPopupPreffered.isShowing()) {
+                    weigtUniversalPopupPreffered.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -287,7 +316,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                             showAndDismissPrefferedPopup();
                         }
                     }, 100);
-                }*/
+                }
                 break;
             case R.id.iv_edit:
                 activity.iv_plus_add_image.setVisibility(View.VISIBLE);
@@ -326,8 +355,8 @@ public class ProfileClickEvent implements View.OnClickListener {
                 break;
             case R.id.et_height:
                 hideSoftKeyBoard();
-                if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
+                if (weigtUniversalPopupPreffered != null && weigtUniversalPopupPreffered.isShowing()) {
+                    weigtUniversalPopupPreffered.dismiss();
                 } else if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
                 } else if (heightPopup != null && heightPopup.isShowing()) {
@@ -385,11 +414,11 @@ public class ProfileClickEvent implements View.OnClickListener {
         RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), activity.et_phone.getText().toString().trim());
-        //if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
-        //preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
-        /*} else {
+        if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
+            preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else {
             preffered = RequestBody.create(MediaType.parse("text/plain"), "0");
-        }*/
+        }
         if (activity.et_gender.getText().toString().trim().equals("Male")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else if (activity.et_gender.getText().toString().trim().equals("Female")) {
@@ -407,9 +436,14 @@ public class ProfileClickEvent implements View.OnClickListener {
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), activity.mCompressedFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("userImage",
                 activity.mCompressedFile.getName(), reqFile);
+        MultipartBody.Part body1=MultipartBody.Part.createFormData("middleName",
+                activity.mCompressedFile.getName(),reqFile);
+        MultipartBody.Part body2=MultipartBody.Part.createFormData("middleName",
+                activity.mCompressedFile.getName(),reqFile);
+        
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, body);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -423,7 +457,6 @@ public class ProfileClickEvent implements View.OnClickListener {
                     ViewProfileModel viewProfileModel;
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
-
                         viewProfileModel = gson.fromJson(responseString, ViewProfileModel.class);
                         LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         JSONObject jObject = jsonObject.getJSONObject("data");
@@ -495,7 +528,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         String[] splited = str.split(" ");
         RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0].toString());
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -558,7 +591,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                prefferedPopup.showAsDropDown(activity.et_units);
+                weigtUniversalPopupPreffered.showAsDropDown(activity.et_units);
             }
         }, 100);
     }

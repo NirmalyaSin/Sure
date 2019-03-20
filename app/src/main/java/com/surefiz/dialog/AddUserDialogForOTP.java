@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -54,12 +55,11 @@ public class AddUserDialogForOTP extends Dialog {
     OtpActivity activity;
     ImageView iv_cross;
     EditText et_name;
-    EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss,et_middle,et_last
-            ,et_management,et_userselection;
+    EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss, et_middle, et_last, et_management, et_userselection;
     Button btn_submit;
-    RelativeLayout rl_userselection,rl_weight,rl_time_loss;
-    TextView tv_userSelection,tv_management,tv_weight,tv_time_loss;
-    private WeigtUniversalPopup managementPopup,selectionPopup;
+    RelativeLayout rl_userselection, rl_weight, rl_time_loss;
+    TextView tv_userSelection, tv_management, tv_weight, tv_time_loss;
+    private WeigtUniversalPopup managementPopup, selectionPopup;
     LoadingData loader;
     MoveTutorial moveTutorial;
     private int user_selection_val = 0;
@@ -156,9 +156,9 @@ public class AddUserDialogForOTP extends Dialog {
             public void onClick(View v) {
                 if (et_name.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter user name");
-                } else if(et_last.getText().toString().equals("")) {
+                } else if (et_last.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter User Last name");
-                }else if (et_email.getText().toString().equals("")) {
+                } else if (et_email.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter user email");
                 } else if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
                     MethodUtils.errorMsg(activity, "Please enter a valid email address");
@@ -166,9 +166,9 @@ public class AddUserDialogForOTP extends Dialog {
                     MethodUtils.errorMsg(activity, "Please enter your phone number");
                 } else if (et_units.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select your Preffered Units");
-                }  else if (et_management.getText().toString().equals("")) {
+                } else if (et_management.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select Weight Managment goal");
-                }else if (et_gender.getText().toString().equals("")) {
+                } else if (et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
                 } else if (et_DOB.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select your Age");
@@ -200,9 +200,9 @@ public class AddUserDialogForOTP extends Dialog {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
-                }else if (managementPopup != null && managementPopup.isShowing()) {
+                } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }else if (selectionPopup != null && selectionPopup.isShowing()) {
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
                     selectionPopup.dismiss();
                 }
                 ExpiryDialog();
@@ -236,9 +236,9 @@ public class AddUserDialogForOTP extends Dialog {
                     genderPopup.dismiss();
                 } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }else if (selectionPopup != null && selectionPopup.isShowing()) {
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
                     selectionPopup.dismiss();
-                }else {
+                } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -264,9 +264,9 @@ public class AddUserDialogForOTP extends Dialog {
                     prefferedPopup.dismiss();
                 } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }else if (selectionPopup != null && selectionPopup.isShowing()) {
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
                     selectionPopup.dismiss();
-                }else {
+                } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -303,9 +303,9 @@ public class AddUserDialogForOTP extends Dialog {
                     heightPopup.dismiss();
                 } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }else if (selectionPopup != null && selectionPopup.isShowing()) {
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
                     selectionPopup.dismiss();
-                }else {
+                } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -331,10 +331,9 @@ public class AddUserDialogForOTP extends Dialog {
                     weightPopup.dismiss();
                 } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }else if (selectionPopup != null && selectionPopup.isShowing()) {
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
                     selectionPopup.dismiss();
-                }
-                else {
+                } else {
 
                     activity.runOnUiThread(new Runnable() {
                         @Override
@@ -380,7 +379,7 @@ public class AddUserDialogForOTP extends Dialog {
                     heightPopup.dismiss();
                 } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }else if (selectionPopup != null && selectionPopup.isShowing()) {
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
                     selectionPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
@@ -408,9 +407,9 @@ public class AddUserDialogForOTP extends Dialog {
                     timePopup.dismiss();
                 } else if (weightPopup != null && weightPopup.isShowing()) {
                     weightPopup.dismiss();
-                }else if (managementPopup != null && managementPopup.isShowing()) {
+                } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }else if (selectionPopup != null && selectionPopup.isShowing()) {
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
                     selectionPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
@@ -437,9 +436,9 @@ public class AddUserDialogForOTP extends Dialog {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
-                }else if (managementPopup != null && managementPopup.isShowing()) {
+                } else if (managementPopup != null && managementPopup.isShowing()) {
                     managementPopup.dismiss();
-                }else if (selectionPopup != null && selectionPopup.isShowing()) {
+                } else if (selectionPopup != null && selectionPopup.isShowing()) {
                     selectionPopup.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
@@ -460,7 +459,7 @@ public class AddUserDialogForOTP extends Dialog {
         managementPopup = new WeigtUniversalPopup(activity, managementList, et_management, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-                if(value.equals("Lose and Mantain Weight")){
+                if (value.equals("Lose and Mantain Weight")) {
                     tv_userSelection.setVisibility(View.VISIBLE);
                     rl_userselection.setVisibility(View.VISIBLE);
                     tv_weight.setVisibility(View.VISIBLE);
@@ -469,7 +468,7 @@ public class AddUserDialogForOTP extends Dialog {
                     rl_time_loss.setVisibility(View.VISIBLE);
                     weight_managment_goal = 2;
                     user_selection_val = 0;
-                }else{
+                } else {
                     tv_userSelection.setVisibility(View.GONE);
                     rl_userselection.setVisibility(View.GONE);
                     tv_weight.setVisibility(View.GONE);
@@ -491,13 +490,13 @@ public class AddUserDialogForOTP extends Dialog {
         selectionPopup = new WeigtUniversalPopup(activity, selectionList, et_userselection, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-                if(value.equals("I will Provide the Info")){
+                if (value.equals("I will Provide the Info")) {
                     tv_weight.setVisibility(View.VISIBLE);
                     rl_weight.setVisibility(View.VISIBLE);
                     tv_time_loss.setVisibility(View.VISIBLE);
                     rl_time_loss.setVisibility(View.VISIBLE);
                     user_selection_val = 1;
-                }else{
+                } else {
                     tv_weight.setVisibility(View.GONE);
                     rl_weight.setVisibility(View.GONE);
                     tv_time_loss.setVisibility(View.GONE);
@@ -574,8 +573,8 @@ public class AddUserDialogForOTP extends Dialog {
     private void addUserApi() {
         String gender = "";
         String units = "";
-        String type="";
-        String mantain_Weight_By_Server="";
+        String type = "";
+        String mantain_Weight_By_Server = "";
         String weight = "";
         String time = "";
         if (et_gender.getText().toString().trim().equals("Male")) {
@@ -596,19 +595,19 @@ public class AddUserDialogForOTP extends Dialog {
             type = "2";
 
             if (user_selection_val == 1) {
-                mantain_Weight_By_Server =  "0";
+                mantain_Weight_By_Server = "0";
                 weight = et_weight.getText().toString().trim();
                 time = et_time_loss.getText().toString().trim();
             } else {
                 mantain_Weight_By_Server = "1";
                 weight = "";
-                time ="";
+                time = "";
             }
         } else {
-            type =  "1";
-            mantain_Weight_By_Server =  "0";
+            type = "1";
+            mantain_Weight_By_Server = "0";
             weight = "";
-            time =  "";
+            time = "";
         }
 
 
@@ -619,10 +618,10 @@ public class AddUserDialogForOTP extends Dialog {
         final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(
                 LoginShared.getRegistrationDataModel(activity).getData().getToken(),
                 LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
-                et_name.getText().toString().trim(),et_middle.getText().toString().trim(),et_last.getText().toString().trim(), et_email.getText().toString().trim(), time,
+                et_name.getText().toString().trim(), et_middle.getText().toString().trim(), et_last.getText().toString().trim(), et_email.getText().toString().trim(), time,
                 et_height.getText().toString().trim(), weight, "12345678", gender, et_phone.getText().toString().trim(),
                 et_DOB.getText().toString().trim(), "2", units,
-                LoginShared.getDeviceToken(activity),type,mantain_Weight_By_Server);
+                LoginShared.getDeviceToken(activity), type, mantain_Weight_By_Server);
         call_addUser.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -635,7 +634,8 @@ public class AddUserDialogForOTP extends Dialog {
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jObject = jsonObject.getJSONObject("data");
                         dismiss();
-                        activity.otpClickEvent.showUserAddDialog("User Added Successfully.Do you want to Add More Users?", "Yes", "No");
+                        activity.otpClickEvent.showUserAddDialog(
+                                "User Added Successfully.Do you want to Add More Users?", "Yes", "No");
                         /*Intent dashBoardIntent = new Intent(activity, WifiConfigActivity.class);
                         activity.startActivity(dashBoardIntent);
                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

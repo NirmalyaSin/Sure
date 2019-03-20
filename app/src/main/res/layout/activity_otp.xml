@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Validate OTP"
+            android:text="Activation"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -37,7 +37,9 @@
         android:layout_below="@+id/rl_header"
         android:layout_centerHorizontal="true"
         android:paddingTop="@dimen/_20sdp"
-        android:text="Enter the OTP received on your email."
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:text="Please check the Activation Code Notification, and enter the code here"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 

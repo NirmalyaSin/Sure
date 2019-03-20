@@ -195,12 +195,12 @@ public class OtpClickEvent implements View.OnClickListener {
                                 LoginShared.getRegistrationDataModel(otpActivity).getData() != null &&
                                 LoginShared.getRegistrationDataModel(otpActivity).getData().getToken().equals("") &&
                                 LoginShared.getRegistrationDataModel(otpActivity).getData().getToken() == null &&
-                                LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0) {
+                                LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).
+                                        getUserProfileCompleteStatus() == 0) {
                             Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
                             regIntent.putExtra("completeStatus", "0");
                             otpActivity.startActivity(regIntent);
                             otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
                         } else {
                             showUserAddDialog("Do you want to Add More Users?", "Yes", "Not now");
                         }

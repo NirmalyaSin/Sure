@@ -20,4 +20,5 @@
     <color name="menu_header">#0F2233</color>
     <color name="gray">#d4d7d5d5</color>
     <color name="popupbg">#3D5625</color>
+    <color name="lightGray">#AAAAAA</color>
 </resources>

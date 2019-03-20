@@ -18,6 +18,7 @@ import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
+import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
@@ -81,7 +82,7 @@ public class SplashActivity extends AppCompatActivity {
                     LoginShared.setWeightFromNotification(this, "1");
                     getServerDate = jsonObject1.optString("lastServerUpdateDate");
                     getServerTime = jsonObject1.optString("lastServerUpdateTime");
-                } else {
+                } else if (jsonObject1.optInt("pushType") == 7) {
                     LoginShared.setWeightFromNotification(this, "7");
                 }
             } else {
@@ -207,7 +208,7 @@ public class SplashActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             } else if (LoginShared.getWeightFromNotification(this).equals("7")) {
-                Intent intent = new Intent(this, DashBoardActivity.class);
+                Intent intent = new Intent(this, UserConfirmationActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

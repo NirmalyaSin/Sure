@@ -242,7 +242,7 @@
                     android:text="Preffered Units"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <RelativeLayout
                     android:id="@+id/rl_units"
@@ -252,8 +252,7 @@
                     android:layout_marginTop="@dimen/_9sdp"
                     android:layout_marginRight="@dimen/_18sdp"
                     android:background="@drawable/edit_text_background"
-
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <EditText
                         android:id="@+id/et_units"

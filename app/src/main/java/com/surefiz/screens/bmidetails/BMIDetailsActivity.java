@@ -11,18 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.bmidetails.model.BMIDetails;
 import com.surefiz.screens.bmidetails.model.BMIResponse;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
+
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,28 +38,24 @@ import retrofit2.Retrofit;
 
 public class BMIDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.btn_kg)
-    Button btn_kg;
     @BindView(R.id.btnSkipWeight)
     Button btnSkipWeight;
-    @BindView(R.id.btn_lbs)
-    Button btn_lbs;
-    @BindView(R.id.btn_go_next)
-    Button btn_go_next;
-    @BindView(R.id.tv_kg_lb_value)
-    TextView tv_kg_lb_value;
-    @BindView(R.id.textBMI)
-    TextView textBMI;
-    @BindView(R.id.textSubGoal1)
-    TextView textSubGoal1;
-    @BindView(R.id.textSubGoal2)
-    TextView textSubGoal2;
-    @BindView(R.id.textPercentage)
-    TextView textPercentage;
-    @BindView(R.id.textWeightLose)
-    TextView textWeightLose;
-    @BindView(R.id.textTitleBMI)
-    TextView textTitleBMI;
+    @BindView(R.id.txt_bmi_weight)
+    TextView txt_bmi_weight;
+    @BindView(R.id.txt_bmi_bmiversion)
+    TextView txt_bmi_bmiversion;
+    @BindView(R.id.txt_bmi_weight_value)
+    TextView txt_bmi_weight_value;
+    @BindView(R.id.txt_bmi_weighttolose)
+    TextView txt_bmi_weighttolose;
+    @BindView(R.id.txt_bmi_subgoal1)
+    TextView txt_bmi_subgoal1;
+    @BindView(R.id.txt_bmi_subgoal2)
+    TextView txt_bmi_subgoal2;
+    @BindView(R.id.donut_progress)
+    DonutProgress donut_progress;
+    @BindView(R.id.img_bmi_progress)
+    ImageView img_bmi_progress;
     private LoadingData loader;
 
     @Override
@@ -70,18 +71,18 @@ public class BMIDetailsActivity extends AppCompatActivity {
         if (intent != null) {
             String serverUserId = intent.getStringExtra("serverUserId");
             String scaleUserId = intent.getStringExtra("ScaleUserId");
-            Log.d("@@BMI-page : ", "Received-Data"+"\nserverUserId = "+serverUserId
-                    +"\nscaleUserId = "+scaleUserId);
+            Log.d("@@BMI-page : ", "Received-Data" + "\nserverUserId = " + serverUserId
+                    + "\nscaleUserId = " + scaleUserId);
             //Call Api to list the BMI-Data
             callBMIApi(serverUserId, scaleUserId);
         }
 
-        btn_go_next.setOnClickListener(new View.OnClickListener() {
+       /* btn_go_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToDashboard();
             }
-        });
+        });*/
 
         btnSkipWeight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,20 +132,81 @@ public class BMIDetailsActivity extends AppCompatActivity {
 
                 if (response.body().getStatus() == 1) {
                     //Set values in View
-                    tv_kg_lb_value.setText(response.body().getData()
-                            .getBMIDetails().getWeight());
-                    textBMI.setText(String.valueOf(response.body().getData()
-                            .getBMIDetails().getBMI()));
-                    textSubGoal1.setText(String.valueOf(response.body().getData()
-                            .getBMIDetails().getSubgoal1()));
-                    textSubGoal2.setText(String.valueOf(response.body().getData()
-                            .getBMIDetails().getSubgoal2()));
-                    textPercentage.setText(String.valueOf(response.body().getData()
-                            .getBMIDetails().getPercentage()));
-                    textWeightLose.setText(String.valueOf(response.body().getData()
-                            .getBMIDetails().getPercentage()));
-                    textTitleBMI.setText(String.valueOf(response.body().getData()
-                            .getBMIDetails().getName())+" BMI Details");
+                    BMIDetails dmBmiDetails = response.body().getData().getBMIDetails();
+                    txt_bmi_bmiversion.setText("BMI " + dmBmiDetails.getBMI());
+
+                    donut_progress.setProgress(Float.parseFloat(dmBmiDetails.getPercentage()));
+
+                    if (dmBmiDetails.getWeight().contains(" ")) {
+                        String split[] = dmBmiDetails.getWeight().split(Pattern.quote(" "));
+                        if (split.length > 0) {
+                            txt_bmi_weight.setText(split[0]);
+                        }
+                    } else
+                        txt_bmi_weight.setText(dmBmiDetails.getWeight());
+                    txt_bmi_weight_value.setText(dmBmiDetails.getPreferredUnit().equals("1") ? "KG" : "LBS");
+
+                    txt_bmi_weighttolose.setText(dmBmiDetails.getWeighttolose());
+
+                    txt_bmi_subgoal1.setText(dmBmiDetails.getSubgoal1());
+                    txt_bmi_subgoal2.setText(dmBmiDetails.getSubgoal2());
+
+                    int imageDrawable = 0;
+
+                    switch (dmBmiDetails.getSubgoalImageName()) {
+                        case "progress-bar2":
+                            imageDrawable = R.drawable.progress_bar2;
+                            break;
+                        case "progress-bar4":
+                            imageDrawable = R.drawable.progress_bar4;
+                            break;
+                        case "progress-bar6":
+                            imageDrawable = R.drawable.progress_bar6;
+                            break;
+                        case "progress-bar8":
+                            imageDrawable = R.drawable.progress_bar8;
+                            break;
+                        case "progress-bar10":
+                            imageDrawable = R.drawable.progress_bar10;
+                            break;
+                        case "progress-bar12":
+                            imageDrawable = R.drawable.progress_bar12;
+                            break;
+                        case "progress-bar14":
+                            imageDrawable = R.drawable.progress_bar14;
+                            break;
+                        case "progress-bar16":
+                            imageDrawable = R.drawable.progress_bar16;
+                            break;
+                        case "progress-bar18":
+                            imageDrawable = R.drawable.progress_bar18;
+                            break;
+                        case "progress-bar20":
+                            imageDrawable = R.drawable.progress_bar20;
+                            break;
+                        case "progress-bar22":
+                            imageDrawable = R.drawable.progress_bar22;
+                            break;
+                        case "progress-bar24":
+                            imageDrawable = R.drawable.progress_bar24;
+                            break;
+                        case "progress-bar26":
+                            imageDrawable = R.drawable.progress_bar26;
+                            break;
+                        case "progress-bar28":
+                            imageDrawable = R.drawable.progress_bar28;
+                            break;
+                        case "progress-full":
+                            imageDrawable = R.drawable.progress_full;
+                            break;
+                        case "progress-empty":
+                            imageDrawable = R.drawable.progress_empty;
+                            break;
+                    }
+
+                    if (imageDrawable != 0)
+                        img_bmi_progress.setImageResource(imageDrawable);
+
 
                 } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     LoginShared.destroySessionTypePreference(BMIDetailsActivity.this);
@@ -178,8 +240,8 @@ public class BMIDetailsActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String serverUserId = intent.getStringExtra("serverUserId");
             String scaleUserId = intent.getStringExtra("ScaleUserId");
-            Log.d("@@BMI-Broadcast : ", "Received on BMI-Page"+"\nserverUserId = "+serverUserId
-                    +"\nscaleUserId = "+scaleUserId);
+            Log.d("@@BMI-Broadcast : ", "Received on BMI-Page" + "\nserverUserId = " + serverUserId
+                    + "\nscaleUserId = " + scaleUserId);
             //Call Api for BMI
             callBMIApi(serverUserId, scaleUserId);
         }

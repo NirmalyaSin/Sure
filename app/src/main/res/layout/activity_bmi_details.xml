@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.bmidetails.BMIDetailsActivity">
+
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -35,268 +38,188 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_header">
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_header"
+        android:alpha="0.6"
+        android:background="@drawable/splash_image" />
 
-        <View
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_bmi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_header"
+        android:layout_margin="@dimen/_10sdp"
+        app:cardBackgroundColor="@color/blue"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.6"
-            android:background="@drawable/splash_image" />
+            android:layout_margin="@dimen/_5sdp">
 
-        <ScrollView
-            android:id="@+id/sv_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/rl_bmi_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+
+                <ImageView
+                    android:id="@+id/img_bmi_battery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/battery" />
+
+                <ImageView
+                    android:id="@+id/img_bmi_wifi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_toLeftOf="@id/img_bmi_battery"
+                    android:src="@drawable/wifi" />
+
+
+                <TextView
+                    android:id="@+id/txt_bmi_bmiversion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_18sdp" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textTitleBMI"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:gravity="center_horizontal"
-                    android:text="Your BMI Details"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_18sdp" />
+                android:layout_above="@id/txt_bmi_weighttolose"
+                android:layout_below="@id/rl_bmi_top"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginRight="@dimen/_20sdp"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:visibility="gone">
-
-                        <Button
-                            android:id="@+id/btn_kg"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/weight_white_button"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:text="KG"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp"
-                            android:visibility="gone"/>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:visibility="gone"/>
-
-                        <Button
-                            android:id="@+id/btn_lbs"
-                            android:layout_width="@dimen/_100sdp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/weight_blue_button"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:text="LBS"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp" />
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="@dimen/_150sdp"
-                        android:layout_height="@dimen/_150sdp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:background="@drawable/circle_shape_white">
-
-                        <TextView
-                            android:id="@+id/tv_kg_lb_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:text="0.0"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_25sdp" />
-
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/_20sdp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp"
-                            android:text="BMI :"/>
-
-                        <TextView
-                            android:id="@+id/textBMI"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="start"
-                            android:layout_marginLeft="@dimen/_20sdp"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_13sdp"
-                            android:text=""/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/_5sdp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp"
-                            android:text="Sub-Goal-1 :"/>
-
-                        <TextView
-                            android:id="@+id/textSubGoal1"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:layout_marginLeft="@dimen/_20sdp"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_13sdp"
-                            android:text=""/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/_5sdp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp"
-                            android:gravity="end"
-                            android:text="Sub-Goal-2 :"/>
-
-                        <TextView
-                            android:id="@+id/textSubGoal2"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:layout_marginLeft="@dimen/_20sdp"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_13sdp"
-                            android:text=""/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/_5sdp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp"
-                            android:gravity="end"
-                            android:text="Percentage :"/>
-
-                        <TextView
-                            android:id="@+id/textPercentage"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:layout_marginLeft="@dimen/_20sdp"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_13sdp"
-                            android:text=""/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/_5sdp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp"
-                            android:gravity="end"
-                            android:text="Weight Lose :"/>
-
-                        <TextView
-                            android:id="@+id/textWeightLose"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:layout_marginLeft="@dimen/_20sdp"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_13sdp"
-                            android:text=""/>
-
-                    </LinearLayout>
-
-
-                    <Button
-                        android:id="@+id/btn_go_next"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/_30sdp"
-                        android:background="@drawable/login_submit_rounded_corner"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:text="@string/go_next_action"
-                        android:textAllCaps="false"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:textColor="@color/whiteColor"
-                        android:textSize="@dimen/_15sdp" />
+                    <com.github.lzyzsd.circleprogress.DonutProgress
+                        android:id="@+id/donut_progress"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_gravity="center"
+                        app:donut_circle_starting_degree="270"
+                        app:donut_finished_color="@android:color/white"
+                        app:donut_text_color="@android:color/white"
+                        app:donut_unfinished_color="@color/gray" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_bmi_weight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/_40sdp" />
+
+                        <TextView
+                            android:id="@+id/txt_bmi_weight_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/_18sdp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
-        </ScrollView>
-    </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_bmi_weighttolose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/rl_bmi_bottom"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_18sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_bmi_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_bmi_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/progress_bar24" />
+
+                    <TextView
+                        android:id="@+id/txt_bmi_subgoal2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_bmi_progress"
+                        android:layout_alignRight="@id/img_bmi_progress"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_bmi_progress"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="SUB GOAL"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:id="@+id/txt_bmi_subgoal1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_bmi_progress"
+                        android:layout_alignLeft="@id/img_bmi_progress"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
 </RelativeLayout>

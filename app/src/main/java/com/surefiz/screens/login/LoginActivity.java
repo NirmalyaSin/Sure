@@ -69,6 +69,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginClickEvent = new LoginClickEvent(this);
         iv_facebook.setOnClickListener(this);
         //getHashKey();
+
+        // REMOVE
+        editEmail.setText("tapas@capitalnumbers.com");
+        editPassword.setText("12345678");
     }
 
     private void getHashKey() {

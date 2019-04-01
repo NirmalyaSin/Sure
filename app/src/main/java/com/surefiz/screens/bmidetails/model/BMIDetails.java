@@ -6,17 +6,25 @@ public class BMIDetails {
     @SerializedName("Weight")
     String Weight;
     @SerializedName("BMI")
-    Double BMI;
+    String BMI;
     @SerializedName("subgoal1")
-    Double subgoal1;
+    String subgoal1;
     @SerializedName("subgoal2")
-    Double subgoal2;
+    String subgoal2;
     @SerializedName("percentage")
-    Double percentage;
+    String percentage;
     @SerializedName("weighttolose")
-    Double weighttolose;
+    String weighttolose;
     @SerializedName("name")
     String name;
+    @SerializedName("preferredUnit")
+    String preferredUnit;
+    @SerializedName("batteryStaus")
+    String batteryStaus;
+
+    @SerializedName("subgoalImageName")
+    String subgoalImageName;
+
 
     public BMIDetails() {
     }
@@ -29,43 +37,43 @@ public class BMIDetails {
         Weight = weight;
     }
 
-    public Double getWeighttolose() {
+    public String getWeighttolose() {
         return weighttolose;
     }
 
-    public void setWeighttolose(Double weighttolose) {
+    public void setWeighttolose(String weighttolose) {
         this.weighttolose = weighttolose;
     }
 
-    public Double getBMI() {
+    public String getBMI() {
         return BMI;
     }
 
-    public void setBMI(Double BMI) {
+    public void setBMI(String BMI) {
         this.BMI = BMI;
     }
 
-    public Double getSubgoal1() {
+    public String getSubgoal1() {
         return subgoal1;
     }
 
-    public void setSubgoal1(Double subgoal1) {
+    public void setSubgoal1(String subgoal1) {
         this.subgoal1 = subgoal1;
     }
 
-    public Double getSubgoal2() {
+    public String getSubgoal2() {
         return subgoal2;
     }
 
-    public void setSubgoal2(Double subgoal2) {
+    public void setSubgoal2(String subgoal2) {
         this.subgoal2 = subgoal2;
     }
 
-    public Double getPercentage() {
+    public String getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Double percentage) {
+    public void setPercentage(String percentage) {
         this.percentage = percentage;
     }
 
@@ -77,6 +85,30 @@ public class BMIDetails {
         this.name = name;
     }
 
+    public String getPreferredUnit() {
+        return preferredUnit;
+    }
+
+    public void setPreferredUnit(String preferredUnit) {
+        this.preferredUnit = preferredUnit;
+    }
+
+    public String getBatteryStaus() {
+        return batteryStaus;
+    }
+
+    public void setBatteryStaus(String batteryStaus) {
+        this.batteryStaus = batteryStaus;
+    }
+
+    public String getSubgoalImageName() {
+        return subgoalImageName;
+    }
+
+    public void setSubgoalImageName(String subgoalImageName) {
+        this.subgoalImageName = subgoalImageName;
+    }
+
     @Override
     public String toString() {
         return "BMIDetails{" +
@@ -86,6 +118,9 @@ public class BMIDetails {
                 ", subgoal2=" + subgoal2 +
                 ", percentage=" + percentage +
                 ", weighttolose=" + weighttolose +
+                ", preferredUnit=" + preferredUnit +
+                ", batteryStaus=" + batteryStaus +
+                ", subgoalImageName=" + subgoalImageName +
                 ", name=" + name +
                 '}';
     }

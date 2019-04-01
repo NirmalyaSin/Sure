@@ -50,7 +50,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
-    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.firebase:firebase-messaging:17.5.0'
     //   implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
     implementation 'com.highsoft.highcharts:highcharts:6.2'
@@ -60,6 +60,8 @@ dependencies {
     implementation files('libs/ScaleWiFiKit_v1.0.2.jar')
     implementation files('libs/ScaleWiFiKit_v1.0.2.jar')
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    implementation'com.github.lzyzsd:circleprogress:1.2.1'
 
     //Library for Twitter login
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'

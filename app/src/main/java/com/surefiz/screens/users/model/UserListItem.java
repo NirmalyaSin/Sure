@@ -2,7 +2,9 @@ package com.surefiz.screens.users.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UserListItem{
+import java.io.Serializable;
+
+public class UserListItem implements Serializable {
 
 	@SerializedName("userWeight")
 	private String userWeight;

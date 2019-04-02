@@ -1,19 +1,25 @@
 package com.surefiz.screens.users.adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
+import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -26,15 +32,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     List<UserListItem> userLists;
     private static DecimalFormat df2;
     private int row_index = -1;
+    private OnUiEventClick onUiEventClick;
 
-    public UserListAdapter(Activity activity, List<UserListItem> userLists) {
+    public UserListAdapter(Activity activity, List<UserListItem> userLists,
+                           OnUiEventClick onUiEventClick) {
         this.activity = activity;
         this.userLists = userLists;
+        this.onUiEventClick = onUiEventClick;
     }
 
     @NonNull
     @Override
-    public UserListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public UserListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.user_list_item, viewGroup, false);
 
@@ -65,6 +74,34 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         } else {
             userListViewHolder.tv_status.setText("Weight:   " + userLists.get(i).getUserWeight());
         }
+
+        userListViewHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setTitle("Delete user Confirmation")
+                        .setMessage("Do you want to delete " + userLists.get(i).getUserName() + "?")
+                        .setCancelable(false)
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                Intent intent = new Intent();
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("user", userLists.get(i));
+                                intent.putExtra("bundle", bundle);
+                                onUiEventClick.onUiClick(intent, 1);
+                            }
+
+                        }).setNegativeButton("No!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
 
 
         /*if (userLists.get(i).getUserWeight().equals("0")) {
@@ -118,6 +155,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         TextView tv_name, tv_weight, tv_status;
         ImageView iv_separature;
         RelativeLayout rl_main;
+        Button btn_delete;
 
         public UserListViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);

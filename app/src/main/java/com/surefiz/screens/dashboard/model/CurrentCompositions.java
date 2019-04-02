@@ -11,7 +11,7 @@ public class CurrentCompositions {
     private String userName;
     @SerializedName("scaleMacAddress")
     @Expose
-    private Integer scaleMacAddress;
+    private String scaleMacAddress;
     @SerializedName("weight")
     @Expose
     private String weight;
@@ -48,11 +48,11 @@ public class CurrentCompositions {
         this.userName = userName;
     }
 
-    public Integer getScaleMacAddress() {
+    public String getScaleMacAddress() {
         return scaleMacAddress;
     }
 
-    public void setScaleMacAddress(Integer scaleMacAddress) {
+    public void setScaleMacAddress(String scaleMacAddress) {
         this.scaleMacAddress = scaleMacAddress;
     }
 

@@ -12,6 +12,7 @@ public class ApiList {
     public static final String VIEWPROFILE = "ApiServices/userProfile";
     public static final String EDITPROFILE = "ApiServices/EditUserProfile";
     public static final String USERLIST = "ApiServices/UserList";
+    public static final String DELETEUSERLIST = "ApiServices/Deleteuser";
     public static final String ADDUSER = "ApiServices/AddUser";
     public static final String FORGOTPASSWORD = "ApiServices/ForgotPassword";
     public static final String LOGOUT = "ApiServices/Logout";
@@ -36,5 +37,5 @@ public class ApiList {
     public static final String SEND_WEIGHT_MANAGEMENT = "ApiServices/sendWeightManagement";
     public static final String API_BMI_DATA = "ApiServices/BMIDetails";
     public static final String PROGRESS_STATUS = "ApiServices/ProgressStatus";
-    public static final String ACCEPTSERVERWEIGHT="Acceptserverweight";
+    public static final String ACCEPTSERVERWEIGHT = "Acceptserverweight";
 }

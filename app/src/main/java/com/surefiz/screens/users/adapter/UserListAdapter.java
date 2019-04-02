@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -70,9 +71,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         }
 
         if (userLists.get(i).getIsUserHaveCompleteInfo() == 0) {
-            userListViewHolder.tv_status.setText("Profile");
+            userListViewHolder.txt_profile_status.setText("Incomplete");
+            userListViewHolder.txt_profile_status.setTextColor(ContextCompat.getColor(activity, R.color.red_delete));
         } else {
-            userListViewHolder.tv_status.setText("Weight:   " + userLists.get(i).getUserWeight());
+            userListViewHolder.txt_profile_status.setText("Complete");
+            userListViewHolder.txt_profile_status.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
         }
 
         userListViewHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
@@ -86,9 +89,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();
                                 Intent intent = new Intent();
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("user", userLists.get(i));
-                                intent.putExtra("bundle", bundle);
+                                intent.putExtra("user", userLists.get(i).getServerUserId());
+                                intent.putExtra("position", i);
                                 onUiEventClick.onUiClick(intent, 1);
                             }
 
@@ -152,7 +154,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     public class UserListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_name, tv_weight, tv_status;
+        TextView tv_name, tv_weight, txt_profile_status;
         ImageView iv_separature;
         RelativeLayout rl_main;
         Button btn_delete;
@@ -163,7 +165,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             tv_weight = itemView.findViewById(R.id.tv_weight);
             iv_separature = itemView.findViewById(R.id.iv_separature);
             rl_main = itemView.findViewById(R.id.rl_main);
-            tv_status = itemView.findViewById(R.id.tv_status);
+            txt_profile_status = itemView.findViewById(R.id.txt_profile_status);
+            btn_delete = itemView.findViewById(R.id.btn_delete);
         }
 
     }

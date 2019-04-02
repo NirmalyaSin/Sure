@@ -2,6 +2,7 @@ package com.surefiz.screens.users;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +10,13 @@ import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.AddUserDialog;
 import com.surefiz.interfaces.MoveTutorial;
+import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
@@ -41,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class UserListActivity extends BaseActivity {
+public class UserListActivity extends BaseActivity implements OnUiEventClick {
 
     public View view;
     RecyclerView rv_items;
@@ -51,6 +54,7 @@ public class UserListActivity extends BaseActivity {
     UserListAdapter adapter;
     UserIdManager userIdManager;
     private UDPHelper udpHelper;
+    private Button btn_add_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,7 @@ public class UserListActivity extends BaseActivity {
     }
 
     private void addUserDialog() {
-        btn_add.setOnClickListener(new View.OnClickListener() {
+        btn_add_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AddUserDialog(UserListActivity.this, new MoveTutorial() {
@@ -124,6 +128,58 @@ public class UserListActivity extends BaseActivity {
                         userLists.clear();
                         userLists.addAll(response.body().getData().getUserList());
                         adapter.notifyDataSetChanged();
+                        /*if (response.body().getData().getSubUserAddStatus() == 0) {
+                            btn_add_user.setEnabled(false);
+                            btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_edit_rounded_corner_blue));
+                            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this,android.R.color.black));
+                        } else {
+                            btn_add_user.setEnabled(true);
+                            btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_submit_rounded_corner));
+                            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this,android.R.color.white));
+                        }*/
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(UserListActivity.this);
+                        LoginShared.destroySessionTypePreference(UserListActivity.this);
+                        LoginShared.setDeviceToken(UserListActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(UserListActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    } else {
+                        MethodUtils.errorMsg(UserListActivity.this, response.body().getData().getMessage());
+                    }
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(UserListActivity.this, getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserListModel> call, Throwable t) {
+                if (loadingData != null && loadingData.isShowing())
+                    loadingData.dismiss();
+                MethodUtils.errorMsg(UserListActivity.this, getString(R.string.error_occurred));
+            }
+        });
+    }
+
+    private void callUserDeleteApi(int userId, int position) {
+        loadingData.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<UserListModel> userListModelCall = apiInterface.call_delteUserApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                "" + userId);
+
+        userListModelCall.enqueue(new Callback<UserListModel>() {
+            @Override
+            public void onResponse(Call<UserListModel> call, Response<UserListModel> response) {
+                if (loadingData != null && loadingData.isShowing())
+                    loadingData.dismiss();
+                try {
+                    if (response.body().getStatus() == 1) {
+                        if (adapter != null)
+                            adapter.notifyItemRemoved(position);
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(UserListActivity.this);
                         LoginShared.destroySessionTypePreference(UserListActivity.this);
@@ -151,7 +207,7 @@ public class UserListActivity extends BaseActivity {
     }
 
     private void setRecyclerViewItem() {
-        adapter = new UserListAdapter(this, userLists);
+        adapter = new UserListAdapter(this, userLists, this);
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
         rv_items.setItemAnimator(new DefaultItemAnimator());
@@ -163,12 +219,13 @@ public class UserListActivity extends BaseActivity {
 
     private void setViewBind() {
         rv_items = view.findViewById(R.id.rv_items);
+        btn_add_user = findViewById(R.id.btn_add_user);
     }
 
     private void setHeaderView() {
         tv_universal_header.setText("List of Users");
         iv_edit.setVisibility(View.GONE);
-        btn_add.setVisibility(View.VISIBLE);
+        btn_add.setVisibility(View.GONE);
         if (LoginShared.getDashboardPageFrom(this).equals("0")) {
             img_topbar_menu.setVisibility(View.VISIBLE);
             btn_done.setVisibility(View.GONE);
@@ -177,6 +234,17 @@ public class UserListActivity extends BaseActivity {
             img_topbar_menu.setVisibility(View.GONE);
             btn_done.setVisibility(View.VISIBLE);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+    }
+
+    @Override
+    public void onUiClick(Intent intent, int eventCode) {
+        if (eventCode == 1) {
+            if (intent != null) {
+                int usrId = intent.getIntExtra("user", 0);
+                int position = intent.getIntExtra("position", 0);
+                callUserDeleteApi(usrId, position);
+            }
         }
     }
 }

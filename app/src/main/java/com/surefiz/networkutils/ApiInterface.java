@@ -45,6 +45,7 @@ import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
 import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.CONTACTLIST;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
+import static com.surefiz.apilist.ApiList.DELETEUSERLIST;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.GET_WEIGHT_MANAGEMENT;
@@ -155,6 +156,11 @@ public interface ApiInterface {
                                          @Field("userId") String userId);
 
     @FormUrlEncoded
+    @POST(DELETEUSERLIST)
+    Call<UserListModel> call_delteUserApi(@Header("x-authorization") String token,
+                                          @Field("userId") String userId);
+
+    @FormUrlEncoded
     @POST(API_CIRCLE_SEND_CANCEL_REQUEST)
     Call<AddToCircleResponse> call_AddToCircleUserApi(@Header("x-authorization") String token,
                                                       @Field("sender") String sender,
@@ -248,7 +254,7 @@ public interface ApiInterface {
                                        @Field("prefferedUnits") String prefferedUnits,
                                        @Field("device_Token") String device_Token,
                                        @Field("type") String type,
-                                       @Field("mantain_Weight_By_Server")String mantain_Weight_By_Server);
+                                       @Field("mantain_Weight_By_Server") String mantain_Weight_By_Server);
 
     @FormUrlEncoded
     @POST(FORGOTPASSWORD)

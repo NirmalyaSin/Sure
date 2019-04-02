@@ -12,31 +12,69 @@
         android:paddingTop="@dimen/_12sdp"
         android:textColor="@color/whiteColor" />
 
-    <TextView
-        android:id="@+id/tv_weight"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/rl_weight"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_name"
-        android:paddingLeft="@dimen/_12sdp"
-        android:paddingTop="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_12sdp"
-        android:textColor="@color/whiteColor" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tv_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_12sdp"
+            android:paddingTop="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_12sdp"
+            android:textColor="@color/whiteColor" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/red_rounded_corner_delete_button_background"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteColor" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_status"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_name"
-        android:paddingLeft="@dimen/_12sdp"
-        android:paddingTop="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_12sdp"
-        android:textColor="@color/whiteColor" />
+        android:layout_below="@+id/rl_weight"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_weight"
+            android:paddingLeft="@dimen/_12sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="Profile Complete Status:"
+            android:textColor="@color/whiteColor" />
+
+        <TextView
+            android:id="@+id/txt_profile_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Complete" />
+
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/iv_separature"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_10sdp"
-        android:layout_below="@+id/tv_weight"
+        android:layout_below="@+id/ll_status"
         android:src="@drawable/stripe" />
 
 </RelativeLayout>

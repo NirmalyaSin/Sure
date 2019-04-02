@@ -6,19 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".screens.users.UserListActivity">
 
-    <RelativeLayout
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:alpha="0.6"
+        android:background="@drawable/splash_image" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.6"
-            android:background="@drawable/splash_image" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_add_user"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/_10sdp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_items"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
-    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_add_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/login_submit_rounded_corner"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_35sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingRight="@dimen/_35sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="Add User"
+        android:textAllCaps="true"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
 </RelativeLayout>
+

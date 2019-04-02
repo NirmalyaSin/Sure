@@ -20,7 +20,6 @@ import com.highsoft.highcharts.common.hichartsclasses.HICSSObject;
 import com.highsoft.highcharts.common.hichartsclasses.HIChart;
 import com.highsoft.highcharts.common.hichartsclasses.HIColumn;
 import com.highsoft.highcharts.common.hichartsclasses.HICondition;
-import com.highsoft.highcharts.common.hichartsclasses.HIData;
 import com.highsoft.highcharts.common.hichartsclasses.HIDataLabels;
 import com.highsoft.highcharts.common.hichartsclasses.HIExporting;
 import com.highsoft.highcharts.common.hichartsclasses.HIHover;
@@ -33,7 +32,6 @@ import com.highsoft.highcharts.common.hichartsclasses.HIOptions;
 import com.highsoft.highcharts.common.hichartsclasses.HIOptions3d;
 import com.highsoft.highcharts.common.hichartsclasses.HIPie;
 import com.highsoft.highcharts.common.hichartsclasses.HIPlotOptions;
-import com.highsoft.highcharts.common.hichartsclasses.HIPoint;
 import com.highsoft.highcharts.common.hichartsclasses.HIResponsive;
 import com.highsoft.highcharts.common.hichartsclasses.HIRules;
 import com.highsoft.highcharts.common.hichartsclasses.HISeries;
@@ -45,22 +43,17 @@ import com.highsoft.highcharts.common.hichartsclasses.HITooltip;
 import com.highsoft.highcharts.common.hichartsclasses.HIXAxis;
 import com.highsoft.highcharts.common.hichartsclasses.HIYAxis;
 import com.highsoft.highcharts.core.HIChartView;
-import com.highsoft.highcharts.core.HIFunction;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.ErrorMessageDialog;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.dashboard.adapter.ContactListAdapter;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.progressstatus.ProgressStatusActivity;
-import com.surefiz.screens.singlechart.SingleChartActivity;
-import com.surefiz.screens.users.model.UserList;
+import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.users.model.UserListModel;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -91,7 +84,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     RecyclerView rv_items;
     private LoadingData loader;
     HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals;
-    List<UserList> contactLists = new ArrayList<>();
+    List<UserListItem> contactLists = new ArrayList<>();
     ContactListAdapter adapter;
     public String id = "";
     public int row_user = -1;
@@ -1360,7 +1353,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
             MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
         } else {
-            callDashBoardApi(contactLists.get(position).getServerUserId().toString());
+            callDashBoardApi("" + contactLists.get(position).getServerUserId());
         }
     }
 }

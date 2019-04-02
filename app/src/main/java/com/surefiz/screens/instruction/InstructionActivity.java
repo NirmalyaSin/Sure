@@ -13,7 +13,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.users.UserListActivity;
-import com.surefiz.screens.users.model.UserList;
+import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.users.model.UserListModel;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -34,7 +34,7 @@ public class InstructionActivity extends AppCompatActivity {
     @BindView(R.id.btn_skip)
     Button btn_skip;
 
-    public List<UserList> userLists = new ArrayList<>();
+    public List<UserListItem> userLists = new ArrayList<>();
 
     InstructionActivityonclick mInstructionActivityonclick;
 

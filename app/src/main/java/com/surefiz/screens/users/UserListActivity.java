@@ -21,7 +21,7 @@ import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.users.adapter.UserListAdapter;
-import com.surefiz.screens.users.model.UserList;
+import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.users.model.UserListModel;
 import com.surefiz.screens.weightdetails.UserIdManager;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
@@ -47,7 +47,7 @@ public class UserListActivity extends BaseActivity {
     RecyclerView rv_items;
 
     LoadingData loadingData;
-    List<UserList> userLists = new ArrayList<>();
+    List<UserListItem> userLists = new ArrayList<>();
     UserListAdapter adapter;
     UserIdManager userIdManager;
     private UDPHelper udpHelper;

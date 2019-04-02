@@ -8,9 +8,8 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Santanu"
-        android:paddingTop="@dimen/_12sdp"
         android:paddingLeft="@dimen/_12sdp"
+        android:paddingTop="@dimen/_12sdp"
         android:textColor="@color/whiteColor" />
 
     <TextView
@@ -18,9 +17,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_name"
-        android:text="Santanu"
-        android:paddingTop="@dimen/_12sdp"
         android:paddingLeft="@dimen/_12sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        android:textColor="@color/whiteColor" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:paddingLeft="@dimen/_12sdp"
+        android:paddingTop="@dimen/_12sdp"
         android:paddingBottom="@dimen/_12sdp"
         android:textColor="@color/whiteColor" />
 

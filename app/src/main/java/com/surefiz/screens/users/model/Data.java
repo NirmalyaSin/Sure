@@ -1,33 +1,41 @@
-
 package com.surefiz.screens.users.model;
 
-import java.util.List;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+import java.util.List;
 
-    @SerializedName("message")
-    @Expose
-    private String message;
-    @SerializedName("userList")
-    @Expose
-    private List<UserList> userList = null;
+public class Data{
 
-    public String getMessage() {
-        return message;
-    }
+	@SerializedName("userList")
+	private List<UserListItem> userList;
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	@SerializedName("“SubUserAddStatus”")
+	private int subUserAddStatus;
 
-    public List<UserList> getUserList() {
-        return userList;
-    }
+	@SerializedName("message")
+	private String message;
 
-    public void setUserList(List<UserList> userList) {
-        this.userList = userList;
-    }
+	public void setUserList(List<UserListItem> userList){
+		this.userList = userList;
+	}
 
+	public List<UserListItem> getUserList(){
+		return userList;
+	}
+
+	public void setSubUserAddStatus(int subUserAddStatus){
+		this.subUserAddStatus = subUserAddStatus;
+	}
+
+	public int getSubUserAddStatus(){
+		return subUserAddStatus;
+	}
+
+	public void setMessage(String message){
+		this.message = message;
+	}
+
+	public String getMessage(){
+		return message;
+	}
 }

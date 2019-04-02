@@ -13,24 +13,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
-import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
-import com.surefiz.screens.users.UserListActivity;
-import com.surefiz.screens.users.model.UserList;
+import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
     Activity activity;
-    List<UserList> userLists;
+    List<UserListItem> userLists;
     private static DecimalFormat df2;
     private int row_index = -1;
 
-    public UserListAdapter(Activity activity, List<UserList> userLists) {
+    public UserListAdapter(Activity activity, List<UserListItem> userLists) {
         this.activity = activity;
         this.userLists = userLists;
     }
@@ -54,12 +51,28 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         } else {
             userListViewHolder.tv_name.setText("Name:   " + userLists.get(i).getUserName());
         }
-        if (userLists.get(i).getUserWeight().equals("0")) {
+
+        if (userLists.get(i).getUserWeight() == null || userLists.get(i).getUserWeight().equals("") ||
+                userLists.get(i).getUserWeight().equalsIgnoreCase("null") ||
+                userLists.get(i).getUserName().isEmpty()) {
+            userListViewHolder.tv_weight.setText("No Weight");
+        } else {
+            userListViewHolder.tv_weight.setText("Weight:   " + userLists.get(i).getUserWeight());
+        }
+
+        if (userLists.get(i).getIsUserHaveCompleteInfo() == 0) {
+            userListViewHolder.tv_status.setText("Profile");
+        } else {
+            userListViewHolder.tv_status.setText("Weight:   " + userLists.get(i).getUserWeight());
+        }
+
+
+        /*if (userLists.get(i).getUserWeight().equals("0")) {
             userListViewHolder.tv_weight.setText("Weight:  " + "0" + " lbs");
         } else {
             userListViewHolder.tv_weight.setText("Weight:  " + df2.format((Double.parseDouble
                     (userLists.get(i).getUserWeight()) / 100) * 2.20462) + " lbs");
-        }
+        }*/
 
         userListViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +81,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 if (LoginShared.getDashboardPageFrom(activity).equals("0")) {
                     userListViewHolder.rl_main.setBackgroundColor(Color.parseColor("#D8D8D8"));
                     Intent intent = new Intent(activity, DashBoardActivity.class);
-                    intent.putExtra("id", userLists.get(i).getServerUserId().toString());
+                    intent.putExtra("id", "" + userLists.get(i).getServerUserId());
                     intent.putExtra("page", "0");
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -102,7 +115,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     public class UserListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_name, tv_weight;
+        TextView tv_name, tv_weight, tv_status;
         ImageView iv_separature;
         RelativeLayout rl_main;
 
@@ -112,6 +125,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             tv_weight = itemView.findViewById(R.id.tv_weight);
             iv_separature = itemView.findViewById(R.id.iv_separature);
             rl_main = itemView.findViewById(R.id.rl_main);
+            tv_status = itemView.findViewById(R.id.tv_status);
         }
 
     }

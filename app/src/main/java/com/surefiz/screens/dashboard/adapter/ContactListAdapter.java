@@ -16,21 +16,21 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.screens.dashboard.DashBoardActivity;
-import com.surefiz.screens.users.model.UserList;
+import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.sharedhandler.LoginShared;
 
 import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactListViewHolder> {
     DashBoardActivity activity;
-    List<UserList> userLists;
+    List<UserListItem> userLists;
     private ImageLoader imageLoader;
     private OnCircleViewClickListener mOnCircleViewClickListener;
     private int row_index = -1;
     private int row_user = -1;
     private int row_other = -1;
 
-    public ContactListAdapter(DashBoardActivity activity, List<UserList> userLists,
+    public ContactListAdapter(DashBoardActivity activity, List<UserListItem> userLists,
                               OnCircleViewClickListener mOnCircleViewClickListener, int row_user) {
         this.activity = activity;
         this.userLists = userLists;
@@ -58,7 +58,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
         if (row_user != 1) {
             if (LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId().
-                    equals(userLists.get(i).getServerUserId().toString())) {
+                    equals(""+userLists.get(i).getServerUserId())) {
                 row_index = i;
                 row_user = 1;
             } else {
@@ -68,7 +68,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
         if (row_other != 1) {
 
-            if (activity.id.equals(userLists.get(i).getServerUserId().toString())) {
+            if (activity.id.equals(""+userLists.get(i).getServerUserId())) {
                 row_index = i;
                 row_user = 1;
                 row_other = 1;
@@ -104,7 +104,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                     (R.drawable.prof_img_placeholder);
         } else {
 
-            if (LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId().equals(userLists.get(i).getServerUserId().toString())) {
+            if (LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId().equals(""+userLists.get(i).getServerUserId())) {
                 imageLoader.displayImage(LoginShared.getUserPhoto(activity), contactListViewHolder.profile_image);
             } else {
                 contactListViewHolder.profile_image.setImageResource

@@ -37,4 +37,7 @@
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">yyHhnmp0arMveGG8P7xGxE8Vm</string>
     <string name="twitter_consumer_secret" translatable="false">Hvi5rMmOGJ9yKXa6VbdJ5bfV7YuL4OAvexL8FSCvAMTtkAQzcx</string>
+    <string name="please_choose_option">Please Choose Any Option</string>
+    <string name="i_am_having_all_info">I am having all the info.</string>
+    <string name="only_email_name">Only Email &amp; Name</string>
 </resources>

@@ -15,6 +15,7 @@ import android.widget.Button;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.AddUserDialog;
+import com.surefiz.dialog.ChooseOptionDialog;
 import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.networkutils.ApiInterface;
@@ -86,26 +87,7 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
         btn_add_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AddUserDialog(UserListActivity.this, new MoveTutorial() {
-                    @Override
-                    public void onSuccess(String success) {
-                        if (success.equals("1")) {
-                            if (LoginShared.getDashboardPageFrom(UserListActivity.this).equals("1")) {
-                                LoginShared.setWeightPageFrom(UserListActivity.this, "2");
-                                Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
-                                startActivity(loginIntent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                finish();
-                            } else {
-                                LoginShared.setWeightPageFrom(UserListActivity.this, "3");
-                                Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
-                                startActivity(loginIntent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                finish();
-                            }
-                        }
-                    }
-                }).show();
+                new ChooseOptionDialog(UserListActivity.this, UserListActivity.this).show();
             }
         });
     }
@@ -245,6 +227,27 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
                 int position = intent.getIntExtra("position", 0);
                 callUserDeleteApi(usrId, position);
             }
+        } else if (eventCode == 101) {
+            new AddUserDialog(UserListActivity.this, new MoveTutorial() {
+                @Override
+                public void onSuccess(String success) {
+                    if (success.equals("1")) {
+                        if (LoginShared.getDashboardPageFrom(UserListActivity.this).equals("1")) {
+                            LoginShared.setWeightPageFrom(UserListActivity.this, "2");
+                            Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
+                            startActivity(loginIntent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        } else {
+                            LoginShared.setWeightPageFrom(UserListActivity.this, "3");
+                            Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
+                            startActivity(loginIntent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        }
+                    }
+                }
+            }).show();
         }
     }
 }

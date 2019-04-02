@@ -61,7 +61,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         }
 
         if (userLists.get(i).getIsUserHaveCompleteInfo() == 0) {
-            userListViewHolder.tv_status.setText("Profile");
+            userListViewHolder.tv_status.setText("Profile Complete Status:");
         } else {
             userListViewHolder.tv_status.setText("Weight:   " + userLists.get(i).getUserWeight());
         }

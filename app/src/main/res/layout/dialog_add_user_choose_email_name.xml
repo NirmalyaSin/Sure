@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_60sdp"
-        android:background="@color/purple"
+        android:background="@color/statusBarColor"
         >
 
         <TextView
@@ -222,6 +222,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/cb_terms_condi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

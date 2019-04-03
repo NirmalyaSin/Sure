@@ -1,29 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:alpha="0.6"
-    android:background="#000000"
+    android:background="#555555"
     android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:background="@color/statusBarColor"
+        >
+
+        <TextView
+            android:id="@+id/tv_adduser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add User"
+            android:textSize="@dimen/_17sdp"
+            android:textStyle="bold"
+            android:textColor="@color/whiteColor"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+
+            />
+        <ImageView
+            android:id="@+id/iv_cross"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cross48"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            />
+    </RelativeLayout>
 
 
-    <ImageView
-        android:id="@+id/iv_cross"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
-        android:layout_gravity="top|right"
-        android:src="@drawable/cross_icon" />
+
+    <!--<ImageView
+         android:id="@+id/iv_cross"
+         android:layout_width="@dimen/_35sdp"
+         android:layout_height="@dimen/_35sdp"
+         android:layout_gravity="top|right"
+         android:src="@drawable/cross_icon" />
 
     <TextView
-        android:id="@+id/tv_header_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Please enter some details of you"
-        android:textColor="#007AFE"
-        android:textSize="@dimen/_14sdp" />
+         android:id="@+id/tv_header_title"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center_horizontal"
+         android:text="Please enter some details of you"
+         android:textColor="#007AFE"
+         android:textSize="@dimen/_14sdp" />
 
-    <!--<LinearLayout
+     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -105,7 +135,8 @@
         android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -296,11 +327,47 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/cb_terms_conditions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_16sdp"
+                >
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/whiteColor"
+                    android:button="@drawable/checkbox_selector"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_terms_condition"
+                    android:textColor="@color/whiteColor"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </LinearLayout>
+
+
+            <!--<LinearLayout
                 android:id="@+id/ll_adduser_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone">-->
+            <LinearLayout
+                android:id="@+id/ll_adduser_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -727,9 +794,24 @@
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/_10sdp" />
                 </RelativeLayout>
+
             </LinearLayout>
+         <!--   </LinearLayout>-->
 
             <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/login_submit_rounded_corner"
+                android:text="Add User"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/_15sdp"
+                />
+
+            <!--<Button
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -738,7 +820,7 @@
                 android:text="Add User"
                 android:textAllCaps="false"
                 android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_14sdp" /> -->
 
             <View
                 android:layout_width="match_parent"

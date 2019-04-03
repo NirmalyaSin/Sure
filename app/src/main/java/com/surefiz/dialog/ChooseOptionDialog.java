@@ -28,11 +28,16 @@ public class ChooseOptionDialog extends Dialog {
                 Intent intent = new Intent();
                 intent.putExtra("userDialog", true);
                 onUiEventClick.onUiClick(intent, 101);
+                dismiss();
             }
         });
         findViewById(R.id.btn_option_email).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("userDialog", false);
+                onUiEventClick.onUiClick(intent, 101);
+                dismiss();
             }
         });
     }

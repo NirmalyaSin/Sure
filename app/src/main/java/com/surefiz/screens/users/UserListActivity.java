@@ -2,13 +2,10 @@ package com.surefiz.screens.users;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -37,8 +34,6 @@ import com.surefiz.utils.progressloader.LoadingData;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.onecoder.scalewifi.net.socket.udp.UDPHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -228,26 +223,34 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
                 callUserDeleteApi(usrId, position);
             }
         } else if (eventCode == 101) {
-            new AddUserDialog(UserListActivity.this, new MoveTutorial() {
-                @Override
-                public void onSuccess(String success) {
-                    if (success.equals("1")) {
-                        if (LoginShared.getDashboardPageFrom(UserListActivity.this).equals("1")) {
-                            LoginShared.setWeightPageFrom(UserListActivity.this, "2");
-                            Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
-                            startActivity(loginIntent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            finish();
-                        } else {
-                            LoginShared.setWeightPageFrom(UserListActivity.this, "3");
-                            Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
-                            startActivity(loginIntent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            finish();
+            if (intent != null) {
+                boolean isDialog = intent.getBooleanExtra("userDialog", false);
+                if (isDialog) {
+                    new AddUserDialog(UserListActivity.this, new MoveTutorial() {
+                        @Override
+                        public void onSuccess(String success) {
+                            if (success.equals("1")) {
+                                if (LoginShared.getDashboardPageFrom(UserListActivity.this).equals("1")) {
+                                    LoginShared.setWeightPageFrom(UserListActivity.this, "2");
+                                    Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
+                                    startActivity(loginIntent);
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    finish();
+                                } else {
+                                    LoginShared.setWeightPageFrom(UserListActivity.this, "3");
+                                    Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
+                                    startActivity(loginIntent);
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    finish();
+                                }
+                            }
                         }
-                    }
+                    }).show();
+                } else {
+
                 }
-            }).show();
+            }
+
         }
     }
 }

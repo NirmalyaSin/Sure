@@ -114,55 +114,57 @@
             android:orientation="vertical">
 
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_frist_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="First Name "
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_fristname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/tv_frist_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_18sdp"
-                        android:text="First Name "
-                        android:textColor="@color/whiteColor"
-                        android:textSize="@dimen/_14sdp" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/star16"
-                        />
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Enter First Name"
+                    android:inputType="text|textCapSentences"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
 
-                </LinearLayout>
-                <RelativeLayout
-                    android:id="@+id/rl_fristname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_18sdp"
-                    android:layout_marginTop="@dimen/_9sdp"
-                    android:layout_marginRight="@dimen/_18sdp"
-                    android:background="@drawable/edit_text_background">
-
-                    <EditText
-                        android:id="@+id/et_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:backgroundTint="@android:color/transparent"
-                        android:hint="Enter First Name"
-                        android:inputType="text|textCapSentences"
-                        android:maxLines="1"
-                        android:paddingBottom="@dimen/_6sdp"
-                        android:textColor="@color/whiteColor"
-                        android:textColorHint="@color/hintColor"
-                        android:textCursorDrawable="@drawable/cursor_color"
-                        android:textSize="@dimen/_10sdp" />
-                </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                android:paddingTop="@dimen/_20sdp">
 
                 <TextView
                     android:id="@+id/tv_middle"
@@ -204,21 +206,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
-            <TextView
-                android:id="@+id/tv_last"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
-                android:text="Last Name "
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/star16"
-                />
+                android:paddingTop="@dimen/_20sdp">
+
+                <TextView
+                    android:id="@+id/tv_last"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Last Name "
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16" />
             </LinearLayout>
 
             <RelativeLayout
@@ -250,8 +252,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                android:paddingTop="@dimen/_20sdp">
 
                 <TextView
                     android:id="@+id/tv_email"
@@ -261,10 +262,11 @@
                     android:text="Email Id"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
+                    android:src="@drawable/star16" />
 
             </LinearLayout>
 
@@ -292,427 +294,440 @@
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-
-                >
-                <TextView
-                    android:id="@+id/tv_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="Phone Number"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
-
-                <EditText
-                    android:id="@+id/et_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="Enter Phone Number"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/ll_adduser_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/tv_units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="Preffered Units"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_units"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
-
-                <EditText
-                    android:id="@+id/et_units"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:focusableInTouchMode="false"
-                    android:hint="Select Preffered unit"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Phone Number"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
 
-                <TextView
-                    android:id="@+id/tv_management"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="Weight Management Goal"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
 
+                </LinearLayout>
 
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_management"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
-
-                <EditText
-                    android:id="@+id/et_management"
+                <RelativeLayout
+                    android:id="@+id/rl_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:focusableInTouchMode="false"
-                    android:hint="Please Select Weight Management Goal"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_10sdp">
+                    <EditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:hint="Enter Phone Number"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_userSelection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:paddingTop="@dimen/_20sdp"
-                    android:text="User Selection"
-                    android:visibility="gone"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-
-            </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/rl_userselection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:visibility="gone"
-                android:background="@drawable/edit_text_background">
-
-                <EditText
-                    android:id="@+id/et_userselection"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:focusableInTouchMode="false"
-                    android:hint="User Selection"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                    <TextView
+                        android:id="@+id/tv_units"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Preffered Units"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
 
-                <TextView
-                    android:id="@+id/tv_weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="Desired Weight"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
-            </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/rl_weight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
 
-                <EditText
-                    android:id="@+id/et_weight"
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_units"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:focusableInTouchMode="false"
-                    android:hint="Desired Weight"
-                    android:inputType="text|textNoSuggestions"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                    <EditText
+                        android:id="@+id/et_units"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="Select Preffered unit"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_time_loss"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="Time To Lose Weight "
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
-
-
-            </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/rl_time_loss"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
-
-                <EditText
-                    android:id="@+id/et_time_loss"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:focusableInTouchMode="false"
-                    android:hint="Enter Lose Weight Time"
-                    android:inputType="text|textNoSuggestions"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                    <TextView
+                        android:id="@+id/tv_management"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Weight Management Goal"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
 
-                <TextView
-                    android:id="@+id/tv_height"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="Height"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
 
-            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/et_height"
+                <RelativeLayout
+                    android:id="@+id/rl_management"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:focusableInTouchMode="false"
-                    android:hint="Select Height"
-                    android:inputType="text|textNoSuggestions"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                    <EditText
+                        android:id="@+id/et_management"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="Please Select Weight Management Goal"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_gender"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="Gender"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
+                    android:paddingTop="@dimen/_10sdp">
 
-            </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/rl_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
+                    <TextView
+                        android:id="@+id/tv_userSelection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:paddingTop="@dimen/_20sdp"
+                        android:text="User Selection"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="gone" />
 
-                <EditText
-                    android:id="@+id/et_gender"
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_userselection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:focusableInTouchMode="false"
-                    android:hint="Select Gender"
-                    android:inputType="text|textNoSuggestions"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_20sdp"
-                >
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background"
+                    android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/tv_DOB"
+                    <EditText
+                        android:id="@+id/et_userselection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="User Selection"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="Age"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/star16"/>
-            </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/rl_DOB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:background="@drawable/edit_text_background">
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
 
-                <EditText
-                    android:id="@+id/et_DOB"
+                    <TextView
+                        android:id="@+id/tv_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Desired Weight"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="Enter Age"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
 
+                    <EditText
+                        android:id="@+id/et_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="Desired Weight"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
+
+                    <TextView
+                        android:id="@+id/tv_time_loss"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Time To Lose Weight "
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_time_loss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_time_loss"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="Enter Lose Weight Time"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
+
+                    <TextView
+                        android:id="@+id/tv_height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Height"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_height"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="Select Height"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
+
+                    <TextView
+                        android:id="@+id/tv_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Gender"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="Select Gender"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_20sdp">
+
+                    <TextView
+                        android:id="@+id/tv_DOB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Age"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_DOB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_DOB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:hint="Enter Age"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_submit"

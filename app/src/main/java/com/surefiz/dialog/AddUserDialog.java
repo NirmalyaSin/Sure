@@ -73,11 +73,13 @@ public class AddUserDialog extends Dialog {
     private List<String> weightList = new ArrayList<>();
     private List<String> timeList = new ArrayList<>();
     private int month, year, day;
+    private boolean isFullList;
 
-    public AddUserDialog(Activity activity, MoveTutorial moveTutorial) {
+    public AddUserDialog(Activity activity, MoveTutorial moveTutorial, boolean isFullList) {
         super(activity, R.style.DialogStyle);
         this.activity = activity;
         this.moveTutorial = moveTutorial;
+        this.isFullList = isFullList;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_add_user);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -447,6 +449,17 @@ public class AddUserDialog extends Dialog {
                 }
             }
         });
+        showFields();
+    }
+
+    private void showFields() {
+        if (isFullList) {
+            findViewById(R.id.ll_adduser_email).setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            findViewById(R.id.ll_adduser_email).setVisibility(View.GONE);
+        }
     }
 
     private void showAndDismissTimePopup() {
@@ -683,8 +696,8 @@ public class AddUserDialog extends Dialog {
     private void addUserApi() {
         String gender = "";
         String units = "";
-        String type="";
-        String mantain_Weight_By_Server="";
+        String type = "";
+        String mantain_Weight_By_Server = "";
         String weight = "";
         String time = "";
         if (et_gender.getText().toString().trim().equals("Male")) {
@@ -705,19 +718,19 @@ public class AddUserDialog extends Dialog {
             type = "2";
 
             if (user_selection_val == 1) {
-                mantain_Weight_By_Server =  "0";
+                mantain_Weight_By_Server = "0";
                 weight = et_weight.getText().toString().trim();
                 time = et_time_loss.getText().toString().trim();
             } else {
                 mantain_Weight_By_Server = "1";
                 weight = "";
-                time ="";
+                time = "";
             }
         } else {
-            type =  "1";
-            mantain_Weight_By_Server =  "0";
+            type = "1";
+            mantain_Weight_By_Server = "0";
             weight = "";
-            time =  "";
+            time = "";
         }
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
@@ -729,7 +742,7 @@ public class AddUserDialog extends Dialog {
                 et_name.getText().toString().trim(), et_middle.getText().toString().trim(), et_last.getText().toString().trim(), et_email.getText().toString().trim(), time,
                 et_height.getText().toString().trim(), weight, "12345678", gender, et_phone.getText().toString().trim(),
                 et_DOB.getText().toString().trim(), "2", units,
-                LoginShared.getDeviceToken(activity),type,mantain_Weight_By_Server);
+                LoginShared.getDeviceToken(activity), type, mantain_Weight_By_Server);
         call_addUser.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

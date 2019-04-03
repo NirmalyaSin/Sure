@@ -14,6 +14,7 @@ public class ChooseOptionDialog extends Dialog {
     private OnUiEventClick onUiEventClick;
 
 
+
     public ChooseOptionDialog(Activity activity, OnUiEventClick onUiEventClick) {
         super(activity, android.R.style.Theme_Material_NoActionBar_TranslucentDecor);
         this.activity = activity;

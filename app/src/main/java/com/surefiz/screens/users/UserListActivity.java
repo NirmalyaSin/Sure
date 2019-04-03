@@ -225,30 +225,26 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
         } else if (eventCode == 101) {
             if (intent != null) {
                 boolean isDialog = intent.getBooleanExtra("userDialog", false);
-                if (isDialog) {
-                    new AddUserDialog(UserListActivity.this, new MoveTutorial() {
-                        @Override
-                        public void onSuccess(String success) {
-                            if (success.equals("1")) {
-                                if (LoginShared.getDashboardPageFrom(UserListActivity.this).equals("1")) {
-                                    LoginShared.setWeightPageFrom(UserListActivity.this, "2");
-                                    Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
-                                    startActivity(loginIntent);
-                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    finish();
-                                } else {
-                                    LoginShared.setWeightPageFrom(UserListActivity.this, "3");
-                                    Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
-                                    startActivity(loginIntent);
-                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    finish();
-                                }
+                new AddUserDialog(UserListActivity.this, new MoveTutorial() {
+                    @Override
+                    public void onSuccess(String success) {
+                        if (success.equals("1")) {
+                            if (LoginShared.getDashboardPageFrom(UserListActivity.this).equals("1")) {
+                                LoginShared.setWeightPageFrom(UserListActivity.this, "2");
+                                Intent loginIntent = new Intent(UserListActivity.this, WeightDetailsActivity.class);
+                                startActivity(loginIntent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
+                            } else {
+                                LoginShared.setWeightPageFrom(UserListActivity.this, "3");
+                                Intent loginIntent = new Intent(UserListActivity.this, InstructionActivity.class);
+                                startActivity(loginIntent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
                             }
                         }
-                    }).show();
-                } else {
-
-                }
+                    }
+                }, isDialog).show();
             }
 
         }

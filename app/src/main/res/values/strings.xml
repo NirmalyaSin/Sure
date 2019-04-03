@@ -40,4 +40,9 @@
     <string name="please_choose_option">Please Choose Any Option</string>
     <string name="i_am_having_all_info">I am having all the info.</string>
     <string name="only_email_name">Only Email &amp; Name</string>
+    <string name="all_terms_condition">I agree to all <font color='#3981F5'><b>Terms and Condition</b></font></string>
+
+
+
+
 </resources>

@@ -3,6 +3,7 @@ package com.surefiz.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.surefiz.R;
@@ -14,7 +15,7 @@ public class ChooseOptionDialog extends Dialog {
 
 
     public ChooseOptionDialog(Activity activity, OnUiEventClick onUiEventClick) {
-        super(activity, R.style.DialogStyle);
+        super(activity, android.R.style.Theme_Material_NoActionBar_TranslucentDecor);
         this.activity = activity;
         this.onUiEventClick = onUiEventClick;
         setContentView(R.layout.popup_please_choose_any_option);

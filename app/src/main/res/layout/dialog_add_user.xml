@@ -113,49 +113,67 @@
             android:layout_marginTop="@dimen/_40sdp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_frist_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
-                android:text="First Name "
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
 
-            <RelativeLayout
-                android:id="@+id/rl_fristname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:layout_marginRight="@dimen/_18sdp"
-                android:background="@drawable/edit_text_background">
-
-                <EditText
-                    android:id="@+id/et_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="Enter First Name"
-                    android:inputType="text|textCapSentences"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/whiteColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/_10sdp" />
-            </RelativeLayout>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_frist_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="First Name "
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16"
+                        />
 
-            <TextView
-                android:id="@+id/tv_middle"
-                android:layout_width="wrap_content"
+                </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_fristname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:hint="Enter First Name"
+                        android:inputType="text|textCapSentences"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Middle Name "
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
+
+                <TextView
+                    android:id="@+id/tv_middle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Middle Name "
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_middle"
@@ -182,15 +200,26 @@
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_20sdp"
+                >
             <TextView
                 android:id="@+id/tv_last"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_18sdp"
-                android:paddingTop="@dimen/_20sdp"
                 android:text="Last Name "
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/star16"
+                />
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_last"
@@ -217,15 +246,27 @@
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_email"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Email Id"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Email Id"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_email"
@@ -251,16 +292,27 @@
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Phone Number"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+
+                >
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Phone Number"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_phone"
@@ -287,15 +339,27 @@
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_units"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Preffered Units"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
+
+                <TextView
+                    android:id="@+id/tv_units"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Preffered Units"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_units"
@@ -323,15 +387,28 @@
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_management"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Weight Management Goal"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
+
+                <TextView
+                    android:id="@+id/tv_management"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Weight Management Goal"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_management"
@@ -359,17 +436,23 @@
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_userSelection"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
-                android:paddingTop="@dimen/_20sdp"
-                android:text="User Selection"
-                android:visibility="gone"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                android:paddingTop="@dimen/_10sdp">
 
+                <TextView
+                    android:id="@+id/tv_userSelection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:paddingTop="@dimen/_20sdp"
+                    android:text="User Selection"
+                    android:visibility="gone"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
             <RelativeLayout
                 android:id="@+id/rl_userselection"
                 android:layout_width="match_parent"
@@ -396,16 +479,26 @@
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_weight"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Desired Weight"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
 
+                <TextView
+                    android:id="@+id/tv_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Desired Weight"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+            </LinearLayout>
             <RelativeLayout
                 android:id="@+id/rl_weight"
                 android:layout_width="match_parent"
@@ -432,16 +525,29 @@
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_time_loss"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Time To Lose Weight "
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
 
+                <TextView
+                    android:id="@+id/tv_time_loss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Time To Lose Weight "
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+
+
+            </LinearLayout>
             <RelativeLayout
                 android:id="@+id/rl_time_loss"
                 android:layout_width="match_parent"
@@ -467,15 +573,28 @@
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
-            <TextView
-                android:id="@+id/tv_height"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Height"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
+
+                <TextView
+                    android:id="@+id/tv_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Height"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_height"
@@ -503,16 +622,27 @@
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_gender"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Gender"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
 
+                <TextView
+                    android:id="@+id/tv_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Gender"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+
+            </LinearLayout>
             <RelativeLayout
                 android:id="@+id/rl_gender"
                 android:layout_width="match_parent"
@@ -538,17 +668,26 @@
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_DOB"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_18sdp"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Age"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_14sdp" />
+                >
 
+                <TextView
+                    android:id="@+id/tv_DOB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="Age"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16"/>
+            </LinearLayout>
             <RelativeLayout
                 android:id="@+id/rl_DOB"
                 android:layout_width="match_parent"

@@ -5,9 +5,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -58,7 +62,7 @@ public class AddUserDialogForOTP extends Dialog {
     EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss, et_middle, et_last, et_management, et_userselection;
     Button btn_submit;
     RelativeLayout rl_userselection, rl_weight, rl_time_loss;
-    TextView tv_userSelection, tv_management, tv_weight, tv_time_loss;
+    TextView tv_userSelection, tv_management, tv_weight, tv_time_loss, tv_termsnCon;
     private WeigtUniversalPopup managementPopup, selectionPopup;
     LoadingData loader;
     MoveTutorial moveTutorial;
@@ -104,6 +108,7 @@ public class AddUserDialogForOTP extends Dialog {
         rl_weight = findViewById(R.id.rl_weight);
         tv_time_loss = findViewById(R.id.tv_time_loss);
         rl_time_loss = findViewById(R.id.rl_time_loss);
+        tv_termsnCon = findViewById(R.id.tv_termsnCon);
 
         hideSoftKeyBoard();
 
@@ -450,7 +455,14 @@ public class AddUserDialogForOTP extends Dialog {
                 }
             }
         });
+
+
+
     }
+
+
+
+
 
     private void addManagementListAndCall() {
         managementList.add("Lose and Mantain Weight");
@@ -816,4 +828,6 @@ public class AddUserDialogForOTP extends Dialog {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+
 }

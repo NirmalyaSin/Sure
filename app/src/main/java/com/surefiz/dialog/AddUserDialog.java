@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -59,7 +63,7 @@ public class AddUserDialog extends Dialog {
             et_last, et_management, et_userselection;
     Button btn_submit;
     RelativeLayout rl_userselection, rl_weight, rl_time_loss;
-    TextView tv_userSelection, tv_management, tv_weight, tv_time_loss;
+    TextView tv_userSelection, tv_management, tv_weight, tv_time_loss, tv_termsnCon;
     LoadingData loader;
     MoveTutorial moveTutorial;
     private int user_selection_val = 0;
@@ -107,6 +111,7 @@ public class AddUserDialog extends Dialog {
         rl_weight = findViewById(R.id.rl_weight);
         tv_time_loss = findViewById(R.id.tv_time_loss);
         rl_time_loss = findViewById(R.id.rl_time_loss);
+        tv_termsnCon = findViewById(R.id.tv_termsnCon);
 
         hideSoftKeyBoard();
 
@@ -464,6 +469,11 @@ public class AddUserDialog extends Dialog {
             }
         });
         showFields();
+
+        final SpannableString termsNCondition = new SpannableString("I agree to all the Terms and Conditions");
+        termsNCondition.setSpan(new ForegroundColorSpan(Color.WHITE), 0, termsNCondition.length() - 20, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tv_termsnCon.setText(termsNCondition);
+
     }
 
     private void showFields() {

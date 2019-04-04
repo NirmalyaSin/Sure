@@ -479,10 +479,8 @@ public class AddUserDialog extends Dialog {
     private void showFields() {
         if (isFullList) {
             findViewById(R.id.ll_adduser_email).setVisibility(View.VISIBLE);
-            findViewById(R.id.cb_terms_conditions).setVisibility(View.GONE);
         } else {
             findViewById(R.id.ll_adduser_email).setVisibility(View.GONE);
-            findViewById(R.id.cb_terms_conditions).setVisibility(View.VISIBLE);
         }
     }
 

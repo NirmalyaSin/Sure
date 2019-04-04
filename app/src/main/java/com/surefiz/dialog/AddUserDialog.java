@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -156,35 +157,48 @@ public class AddUserDialog extends Dialog {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CheckBox ckb = findViewById(R.id.ckb_add_user);
                 if (et_name.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter User First name");
                 } else if (et_last.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter User Last name");
                 } else if (et_email.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter user email");
-                } else if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
-                    MethodUtils.errorMsg(activity, "Please enter a valid email address");
-                } else if (et_phone.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your phone number");
-                } else if (et_units.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your Preffered Units");
-                } else if (et_management.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select Weight Managment goal");
-                } else if (et_gender.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select any gender type");
-                } else if (et_DOB.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your Age");
-                } else if (et_height.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your height");
-                } else if (et_weight.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your desired weight");
-                } else if (et_time_loss.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your time to lose weight");
-                } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
-                    MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
-                } else {
-                    addUserApi();
                 }
+                if (isFullList) {
+                    if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
+                        MethodUtils.errorMsg(activity, "Please enter a valid email address");
+                    } else if (et_phone.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(activity, "Please enter your phone number");
+                    } else if (et_units.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(activity, "Please select your Preffered Units");
+                    } else if (et_management.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(activity, "Please select Weight Managment goal");
+                    } else if (et_gender.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(activity, "Please select any gender type");
+                    } else if (et_DOB.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(activity, "Please select your Age");
+                    } else if (et_height.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(activity, "Please enter your height");
+                    } else if (et_weight.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(activity, "Please enter your desired weight");
+                    } else if (et_time_loss.getText().toString().equals("")) {
+                        MethodUtils.errorMsg(activity, "Please select your time to lose weight");
+                    } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
+                        MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
+                    } else if (!ckb.isChecked()) {
+                        MethodUtils.errorMsg(activity, "Please accept terms and conditions");
+                    } else {
+                        addUserApi();
+                    }
+                } else {
+                    if (!ckb.isChecked()) {
+                        MethodUtils.errorMsg(activity, "Please accept terms and conditions");
+                    } else {
+                        addUserApi();
+                    }
+                }
+
             }
         });
 
@@ -455,10 +469,10 @@ public class AddUserDialog extends Dialog {
     private void showFields() {
         if (isFullList) {
             findViewById(R.id.ll_adduser_email).setVisibility(View.VISIBLE);
-        }
-        else
-        {
+            findViewById(R.id.cb_terms_conditions).setVisibility(View.GONE);
+        } else {
             findViewById(R.id.ll_adduser_email).setVisibility(View.GONE);
+            findViewById(R.id.cb_terms_conditions).setVisibility(View.VISIBLE);
         }
     }
 
@@ -736,13 +750,27 @@ public class AddUserDialog extends Dialog {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> call_addUser = apiInterface.call_adduserApi(
-                LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
-                et_name.getText().toString().trim(), et_middle.getText().toString().trim(), et_last.getText().toString().trim(), et_email.getText().toString().trim(), time,
-                et_height.getText().toString().trim(), weight, "12345678", gender, et_phone.getText().toString().trim(),
-                et_DOB.getText().toString().trim(), "2", units,
-                LoginShared.getDeviceToken(activity), type, mantain_Weight_By_Server);
+        Call<ResponseBody> call_addUser = null;
+
+        if (isFullList) {
+            call_addUser = apiInterface.call_adduserApi(
+                    LoginShared.getRegistrationDataModel(activity).getData().getToken(),
+                    LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
+                    et_name.getText().toString().trim(), et_middle.getText().toString().trim(), et_last.getText().toString().trim(), et_email.getText().toString().trim(), time,
+                    et_height.getText().toString().trim(), weight, "12345678", gender, et_phone.getText().toString().trim(),
+                    et_DOB.getText().toString().trim(), "2", units,
+                    LoginShared.getDeviceToken(activity), type, mantain_Weight_By_Server);
+        } else {
+            call_addUser = apiInterface.call_adduserApi(
+                    LoginShared.getRegistrationDataModel(activity).getData().getToken(),
+                    LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
+                    et_name.getText().toString().trim(), et_middle.getText().toString().trim(), et_last.getText().toString().trim(), et_email.getText().toString().trim(), "",
+                    "", "", "12345678", "", "",
+                    "", "2", "",
+                    LoginShared.getDeviceToken(activity), "", "");
+        }
+
+
         call_addUser.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

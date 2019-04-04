@@ -78,7 +78,7 @@ public interface ApiInterface {
                                                  @Part("scaleMacId") RequestBody scaleMacId,
                                                  @Part("type") RequestBody type,
                                                  @Part("device_Token") RequestBody device_Token,
-                                                 @Part("mantain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
+                                                 @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
                                                  @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -99,7 +99,7 @@ public interface ApiInterface {
                                             @Part("type") RequestBody type,
                                             @Part("deviceType") RequestBody deviceType,
                                             @Part("device_Token") RequestBody device_Token,
-                                            @Part("mantain_Weight_By_Server") RequestBody mantain_Weight_By_Server);
+                                            @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server);
 
     @FormUrlEncoded
     @POST(SENDOTP)
@@ -254,7 +254,7 @@ public interface ApiInterface {
                                        @Field("prefferedUnits") String prefferedUnits,
                                        @Field("device_Token") String device_Token,
                                        @Field("type") String type,
-                                       @Field("mantain_Weight_By_Server") String mantain_Weight_By_Server);
+                                       @Field("maintain_Weight_By_Server") String mantain_Weight_By_Server);
 
     @FormUrlEncoded
     @POST(FORGOTPASSWORD)

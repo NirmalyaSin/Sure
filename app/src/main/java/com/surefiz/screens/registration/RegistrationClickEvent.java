@@ -48,6 +48,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -834,7 +835,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_DOB.getText().toString().trim());
-        RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim());
+        RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim().split(Pattern.quote(" "))[0]);
         // RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
         //  RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");

@@ -8,9 +8,11 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Window;
@@ -470,9 +472,15 @@ public class AddUserDialog extends Dialog {
         });
         showFields();
 
-        final SpannableString termsNCondition = new SpannableString("I agree to all the Terms and Conditions");
+
+        tv_termsnCon.setText(Html.fromHtml("I agree to all the  " +
+                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms & Condition</font></a>"));
+        tv_termsnCon.setClickable(true);
+        tv_termsnCon.setMovementMethod(LinkMovementMethod.getInstance());
+
+      /*  final SpannableString termsNCondition = new SpannableString("I agree to all the Terms and Conditions");
         termsNCondition.setSpan(new ForegroundColorSpan(Color.WHITE), 0, termsNCondition.length() - 20, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv_termsnCon.setText(termsNCondition);
+        tv_termsnCon.setText(termsNCondition); */
 
     }
 

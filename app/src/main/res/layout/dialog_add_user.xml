@@ -789,7 +789,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_12sdp"
                     android:text="@string/all_terms_condition"
-                    android:textColor="@color/sky_blue"
+                    android:textColor="@color/whiteColor"
+                    android:textColorLink="@color/sky_blue"
                     android:textSize="@dimen/_10sdp" />
 
             </LinearLayout>

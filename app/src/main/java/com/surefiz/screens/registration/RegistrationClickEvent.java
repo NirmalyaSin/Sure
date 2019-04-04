@@ -554,7 +554,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     list.setVisibility(View.GONE);
                     weightmanagment = values[position];
                     weight_managment_goal = 1;
-                    user_selection_val = 0;
+                    user_selection_val = 1;
                 } else {
                     et_select_weight_managment.setText(values[position]);
                     ll_user_selection.setVisibility(View.VISIBLE);
@@ -747,9 +747,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please select your Age");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
-        } else if (registrationActivity.et_weight.getVisibility() == View.VISIBLE && registrationActivity.et_weight.getText().toString().equals("")) {
+        } else if (weight_managment_goal==2 && registrationActivity.et_weight.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
-        } else if (registrationActivity.et_time_loss.getVisibility() == View.VISIBLE && registrationActivity.et_time_loss.getText().toString().equals("")) {
+        } else if (weight_managment_goal==2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
         } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
             MethodUtils.errorMsg(registrationActivity, "Password must be more than 8 characters");

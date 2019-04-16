@@ -40,6 +40,8 @@ public class BMIDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.btnSkipWeight)
     Button btnSkipWeight;
+    @BindView(R.id.btnDashboard)
+    Button btnDashboard;
     @BindView(R.id.txt_bmi_weight)
     TextView txt_bmi_weight;
     @BindView(R.id.txt_bmi_bmiversion)
@@ -87,6 +89,12 @@ public class BMIDetailsActivity extends AppCompatActivity {
         btnSkipWeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                goToDashboard();
+            }
+        });
+        btnDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 goToDashboard();
             }
         });

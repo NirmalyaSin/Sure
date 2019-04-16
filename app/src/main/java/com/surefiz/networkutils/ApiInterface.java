@@ -186,7 +186,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_NOTIFICATION_LIST)
     Call<NotificationsResponse> call_NotificationListApi(@Header("x-authorization") String token,
-                                                         @Field("userId") String userId);
+                                                         @Field("userId") String userId,
+                                                         @Field("type") String type,
+                                                         @Field("page") String page);
 
     @FormUrlEncoded
     @POST(API_CONVERSATION_LIST)

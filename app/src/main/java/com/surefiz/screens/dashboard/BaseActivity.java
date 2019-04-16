@@ -34,6 +34,7 @@ import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.reminders.ReminderActivity;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.screens.users.UserListActivity;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;

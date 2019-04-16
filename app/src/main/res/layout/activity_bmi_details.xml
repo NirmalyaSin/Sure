@@ -22,8 +22,22 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
+            android:visibility="gone"
             android:background="@drawable/login_submit_rounded_corner"
             android:text="Skip"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp" />
+
+        <Button
+            android:id="@+id/btnDashboard"
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:background="@drawable/login_submit_rounded_corner"
+            android:text="Dashboard"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp" />
@@ -182,8 +196,7 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/progress_bar24" />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:id="@+id/txt_bmi_subgoal2"

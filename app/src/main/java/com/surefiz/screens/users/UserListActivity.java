@@ -2,6 +2,7 @@ package com.surefiz.screens.users;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -105,15 +106,15 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
                         userLists.clear();
                         userLists.addAll(response.body().getData().getUserList());
                         adapter.notifyDataSetChanged();
-                        /*if (response.body().getData().getSubUserAddStatus() == 0) {
+                        if (response.body().getData().getSubUserAddStatus() == 0) {
                             btn_add_user.setEnabled(false);
                             btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_edit_rounded_corner_blue));
-                            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this,android.R.color.black));
+                            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.black));
                         } else {
                             btn_add_user.setEnabled(true);
                             btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_submit_rounded_corner));
-                            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this,android.R.color.white));
-                        }*/
+                            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.white));
+                        }
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(UserListActivity.this);
                         LoginShared.destroySessionTypePreference(UserListActivity.this);
@@ -184,7 +185,7 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
     }
 
     private void setRecyclerViewItem() {
-        adapter = new UserListAdapter(this, userLists, this);
+        adapter = new UserListAdapter(this, userLists, false,this);
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
         rv_items.setItemAnimator(new DefaultItemAnimator());
@@ -197,6 +198,7 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
     private void setViewBind() {
         rv_items = view.findViewById(R.id.rv_items);
         btn_add_user = findViewById(R.id.btn_add_user);
+        findViewById(R.id.rl_header_sub).setVisibility(View.GONE);
     }
 
     private void setHeaderView() {

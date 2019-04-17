@@ -22,33 +22,19 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.surefiz.R;
 import com.surefiz.application.MyApplicationClass;
 import com.surefiz.screens.NotificationHandleClassOnForeground;
-import com.surefiz.screens.SplashActivity;
-import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
-import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
-import com.surefiz.screens.weightManagement.WeightManagementActivity;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
-import com.surefiz.utils.MethodUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
-
-import okhttp3.Credentials;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private MyApplicationClass myApplicationClass;

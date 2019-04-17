@@ -52,6 +52,7 @@ import static com.surefiz.apilist.ApiList.GET_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.LOGOUT;
 import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
+import static com.surefiz.apilist.ApiList.READ_NOTIFICATION;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.SENDOTP;
 import static com.surefiz.apilist.ApiList.SEND_WEIGHT_MANAGEMENT;
@@ -189,6 +190,13 @@ public interface ApiInterface {
                                                          @Field("userId") String userId,
                                                          @Field("type") String type,
                                                          @Field("page") String page);
+
+    @FormUrlEncoded
+    @POST(READ_NOTIFICATION)
+    Call<NotificationsResponse> call_readNotification(@Header("x-authorization") String token,
+                                                      @Field("Userid") String userId,
+                                                      @Field("notificationType") String notificationType,
+                                                      @Field("notificationId") String notificationId);
 
     @FormUrlEncoded
     @POST(API_CONVERSATION_LIST)

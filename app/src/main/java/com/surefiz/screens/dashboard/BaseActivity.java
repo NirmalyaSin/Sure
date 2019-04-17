@@ -84,6 +84,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public TextView tv_signout;
     @BindView(R.id.img_topbar_menu)
     public ImageButton img_topbar_menu;
+    @BindView(R.id.iv_friend_request)
+    public ImageView iv_friend_request;
     @BindView(R.id.tv_universal_header)
     public TextView tv_universal_header;
     @BindView(R.id.iv_edit)

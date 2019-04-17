@@ -23,16 +23,24 @@ import com.surefiz.screens.acountabiltySearch.RequestState;
 import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.notifications.adapter.NotificationAdapter;
 import com.surefiz.screens.notifications.models.Notification;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
+import com.surefiz.screens.progressstatus.ProgressStatusActivity;
+import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +56,7 @@ public class NotificationActivity extends BaseActivity implements
     private NotificationAdapter mNotificationAdapter;
     private LinearLayout ll_notification_tab;
     private TextView txt_stepped, txt_performance, txt_battery;
+    private boolean isFromDashboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +69,6 @@ public class NotificationActivity extends BaseActivity implements
 
 
     private void initializeView() {
-        setHeaderView();
         loadingData = new LoadingData(this);
         recyclerView = view.findViewById(R.id.recyclerView);
         ll_notification_tab = findViewById(R.id.ll_notification_tab);
@@ -72,33 +80,42 @@ public class NotificationActivity extends BaseActivity implements
         txt_battery.setOnClickListener(this);
         setRecyclerViewItem();
         //Call Api to list all notification
-        if (getIntent().getBooleanExtra("fromDashboard", false)) {
+        isFromDashboard = getIntent().getBooleanExtra("fromDashboard", false);
+        if (isFromDashboard) {
             ll_notification_tab.setVisibility(View.GONE);
             callNotificationListApi("4");
         } else {
             ll_notification_tab.setVisibility(View.VISIBLE);
             txt_stepped.performClick();
         }
+        setHeaderView();
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("Notification");
+        tv_universal_header.setText(isFromDashboard ? "Friend Requests" : "Notification");
+        btn_add.setVisibility(View.VISIBLE);
+        btn_add.setText("Clear All");
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callClearNotificationAPI();
+            }
+        });
         iv_edit.setVisibility(View.GONE);
-        btn_add.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
+        iv_friend_request.setVisibility(View.GONE);
     }
 
     private void setRecyclerViewItem() {
         mNotificationAdapter = new NotificationAdapter(this,
                 arrayListNotifications, this);
-        recyclerView.setAdapter(mNotificationAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(mNotificationAdapter);
     }
 
     private void callNotificationListApi(String type) {
@@ -212,7 +229,10 @@ public class NotificationActivity extends BaseActivity implements
 
     @Override
     public void onViewClick(int position) {
-
+        if (arrayListNotifications.size() >= position) {
+            Notification item = arrayListNotifications.get(position);
+            callReadNotification(item, position);
+        }
     }
 
     @Override
@@ -283,5 +303,101 @@ public class NotificationActivity extends BaseActivity implements
         }
 
 
+    }
+
+    private void callClearNotificationAPI() {
+
+    }
+
+    private void callReadNotification(final Notification item, final int adapterPosition) {
+        loadingData.show_with_label("Loading...");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        String token = LoginShared.getRegistrationDataModel(this).getData().getToken();
+        String id = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
+        Log.e("@@Sent-Notification : ", "Token = " + token + "\nUser-ID = " + id);
+
+        final Call<NotificationsResponse> call_NotificationListApi = apiInterface
+                .call_readNotification(token, id, item.getNotificationType(), item.getNotificationId());
+
+        call_NotificationListApi.enqueue(new Callback<NotificationsResponse>() {
+            @Override
+            public void onResponse(Call<NotificationsResponse> call, Response<NotificationsResponse> response) {
+                if (loadingData != null && loadingData.isShowing()) {
+                    loadingData.dismiss();
+                }
+                try {
+                    if (response.body().getStatus() == 1) {
+                        arrayListNotifications.remove(adapterPosition);
+                        mNotificationAdapter.notifyItemRemoved(adapterPosition);
+                        notificationClick(item);
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(NotificationActivity.this);
+                        LoginShared.destroySessionTypePreference(NotificationActivity.this);
+                        LoginShared.setDeviceToken(NotificationActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(NotificationActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    } else {
+                        MethodUtils.errorMsg(NotificationActivity.this, response.body().getData().getMessage());
+                    }
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(NotificationActivity.this, getString(R.string.error_occurred));
+                }
+
+                mNotificationAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<NotificationsResponse> call, Throwable t) {
+                if (loadingData != null && loadingData.isShowing())
+                    loadingData.dismiss();
+                MethodUtils.errorMsg(NotificationActivity.this, getString(R.string.error_occurred));
+            }
+        });
+    }
+
+    private void notificationClick(Notification item) {
+        switch (item.getNotificationType()) {
+            case "1":
+                if (item.getNotificationDate() != null && item.getNotificationTime() != null) {
+//                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    try {
+                        Date date = dateFormat.parse(item.getNotificationDate() + " " + item.getNotificationTime());
+                        dateFormat.setTimeZone(TimeZone.getDefault());
+                        Date currentDate = new Date();
+                        long diff = currentDate.getTime() - date.getTime();
+                        int diffSecond = (int) (diff / 1000);
+                        if (diffSecond < 100) {
+                            Intent intent = new Intent(this, WeightDetailsActivity.class);
+                            intent.putExtra("timerValue", diffSecond);
+                            intent.putExtra("fromPush", "1");
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        } else {
+                            MethodUtils.errorMsg(this, "Sorry! Cannot connect to scale. Please try later.");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case "2":
+            case "3":
+                if (item.getContentId() != null) {
+                    Intent intent = new Intent(this, ProgressStatusActivity.class);
+                    intent.putExtra("userId", LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+                    intent.putExtra("contentId", item.getContentId());
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                }
+                break;
+        }
     }
 }

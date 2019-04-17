@@ -42,11 +42,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationAdapterViewHolder holder, int position) {
         holder.textMessage.setText(arrayListNotifications.get(position).getNotificationText());
         switch (arrayListNotifications.get(position).getNotificationType()){
-            case "Message":
-                holder.linearAcceptRejectButton.setVisibility(View.GONE);
-                break;
-            case "Friend Request":
+            case "4":
                 holder.linearAcceptRejectButton.setVisibility(View.VISIBLE);
+                break;
+            default:
+                holder.linearAcceptRejectButton.setVisibility(View.GONE);
                 break;
         }
 

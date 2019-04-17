@@ -52,6 +52,7 @@ import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.dashboard.adapter.ContactListAdapter;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.users.model.UserListModel;
 import com.surefiz.sharedhandler.LoginShared;
@@ -1346,6 +1347,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         btn_add.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.VISIBLE);
+        iv_friend_request.setVisibility(View.VISIBLE);
+        iv_friend_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DashBoardActivity.this, NotificationActivity.class);
+                intent.putExtra("fromDashboard", true);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

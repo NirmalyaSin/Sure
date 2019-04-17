@@ -14,19 +14,21 @@ public class Notification implements Parcelable {
     String notificationText;
     @SerializedName("notificationReadStatus")
     String notificationReadStatus;
-    @SerializedName("notificationDate")
+    @SerializedName("lastServerUpdateDate")
     String notificationDate;
-    @SerializedName("notificationTime")
+    @SerializedName("lastServerUpdateTime")
     String notificationTime;
     @SerializedName("notificationType")
     String notificationType;
+    @SerializedName("contentId")
+    String contentId;
 
     public Notification() {
     }
 
     public Notification(String notificationId, String notificationSenderId,
                         String notificationText, String notificationReadStatus,
-                        String notificationDate, String notificationTime, String notificationType) {
+                        String notificationDate, String notificationTime, String notificationType, String contentId) {
         this.notificationId = notificationId;
         this.notificationSenderId = notificationSenderId;
         this.notificationText = notificationText;
@@ -34,6 +36,7 @@ public class Notification implements Parcelable {
         this.notificationDate = notificationDate;
         this.notificationTime = notificationTime;
         this.notificationType = notificationType;
+        this.contentId = contentId;
     }
 
     protected Notification(Parcel in) {
@@ -44,6 +47,7 @@ public class Notification implements Parcelable {
         notificationDate = in.readString();
         notificationTime = in.readString();
         notificationType = in.readString();
+        contentId = in.readString();
     }
 
     public static final Creator<Notification> CREATOR = new Creator<Notification>() {
@@ -72,6 +76,7 @@ public class Notification implements Parcelable {
         dest.writeString(notificationDate);
         dest.writeString(notificationTime);
         dest.writeString(notificationType);
+        dest.writeString(contentId);
     }
 
     public String getNotificationId() {
@@ -130,6 +135,14 @@ public class Notification implements Parcelable {
         this.notificationType = notificationType;
     }
 
+    public String getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
+
     public static Creator<Notification> getCREATOR() {
         return CREATOR;
     }
@@ -144,6 +157,7 @@ public class Notification implements Parcelable {
                 ", notificationDate='" + notificationDate + '\'' +
                 ", notificationTime='" + notificationTime + '\'' +
                 ", notificationType='" + notificationType + '\'' +
+                ", contentId='" + contentId + '\'' +
                 '}';
     }
 }

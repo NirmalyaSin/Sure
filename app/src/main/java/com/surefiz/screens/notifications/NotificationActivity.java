@@ -57,6 +57,7 @@ public class NotificationActivity extends BaseActivity implements
     private LinearLayout ll_notification_tab;
     private TextView txt_stepped, txt_performance, txt_battery;
     private boolean isFromDashboard;
+    private int selectedTab = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +85,11 @@ public class NotificationActivity extends BaseActivity implements
         if (isFromDashboard) {
             ll_notification_tab.setVisibility(View.GONE);
             callNotificationListApi("4");
+            selectedTab = 4;
         } else {
             ll_notification_tab.setVisibility(View.VISIBLE);
             txt_stepped.performClick();
+            selectedTab = 1;
         }
         setHeaderView();
     }
@@ -98,7 +101,7 @@ public class NotificationActivity extends BaseActivity implements
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callClearNotificationAPI();
+                callClearNotification();
             }
         });
         iv_edit.setVisibility(View.GONE);
@@ -231,7 +234,7 @@ public class NotificationActivity extends BaseActivity implements
     public void onViewClick(int position) {
         if (arrayListNotifications.size() >= position) {
             Notification item = arrayListNotifications.get(position);
-            callReadNotification(item, position);
+            callReadNotification(item.getNotificationId(), item.getNotificationType(), position);
         }
     }
 
@@ -269,6 +272,7 @@ public class NotificationActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_notification_stepped:
+                selectedTab = 1;
                 txt_battery.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
                 txt_performance.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
                 txt_stepped.setBackgroundColor(ContextCompat.getColor(this, R.color.registration_color_white));
@@ -279,6 +283,7 @@ public class NotificationActivity extends BaseActivity implements
                 callNotificationListApi("1");
                 break;
             case R.id.txt_notification_performance:
+                selectedTab = 2;
                 txt_battery.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
                 txt_performance.setBackgroundColor(ContextCompat.getColor(this, R.color.registration_color_white));
                 txt_stepped.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
@@ -289,6 +294,7 @@ public class NotificationActivity extends BaseActivity implements
                 callNotificationListApi("2");
                 break;
             case R.id.txt_notification_battery:
+                selectedTab = 3;
                 txt_battery.setBackgroundColor(ContextCompat.getColor(this, R.color.registration_color_white));
                 txt_performance.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
                 txt_stepped.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
@@ -305,11 +311,32 @@ public class NotificationActivity extends BaseActivity implements
 
     }
 
-    private void callClearNotificationAPI() {
+    private void callClearNotification() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(false);
+        dialog.setMessage("Do you want to clear all notifications?");
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Cancel the dialog.
+                dialog.dismiss();
+                //Call the API to list all Notifications
+                callReadNotification("", "" + selectedTab, 0);
+            }
+        });
 
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        dialog.create();
+        dialog.show();
     }
 
-    private void callReadNotification(final Notification item, final int adapterPosition) {
+    private void callReadNotification(String notificationId, String notificationType, final int adapterPosition) {
         loadingData.show_with_label("Loading...");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -318,7 +345,7 @@ public class NotificationActivity extends BaseActivity implements
         Log.e("@@Sent-Notification : ", "Token = " + token + "\nUser-ID = " + id);
 
         final Call<NotificationsResponse> call_NotificationListApi = apiInterface
-                .call_readNotification(token, id, item.getNotificationType(), item.getNotificationId());
+                .call_readNotification(token, id, notificationType, notificationId);
 
         call_NotificationListApi.enqueue(new Callback<NotificationsResponse>() {
             @Override
@@ -328,9 +355,15 @@ public class NotificationActivity extends BaseActivity implements
                 }
                 try {
                     if (response.body().getStatus() == 1) {
-                        arrayListNotifications.remove(adapterPosition);
-                        mNotificationAdapter.notifyItemRemoved(adapterPosition);
-                        notificationClick(item);
+                        if (notificationId.isEmpty()) {
+                            arrayListNotifications.clear();
+                            mNotificationAdapter.notifyDataSetChanged();
+                        } else {
+                            Notification item = arrayListNotifications.get(adapterPosition);
+                            arrayListNotifications.remove(adapterPosition);
+                            mNotificationAdapter.notifyItemRemoved(adapterPosition);
+                            notificationClick(item);
+                        }
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(NotificationActivity.this);
                         LoginShared.destroySessionTypePreference(NotificationActivity.this);

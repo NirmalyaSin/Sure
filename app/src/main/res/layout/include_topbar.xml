@@ -76,6 +76,7 @@
             android:layout_toRightOf="@+id/tv_universal_header"
             android:background="@drawable/login_submit_rounded_corner"
             android:text="Add"
+            android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp" />
 

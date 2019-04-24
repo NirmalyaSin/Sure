@@ -16,12 +16,14 @@ import com.highsoft.highcharts.common.HIColor;
 import com.highsoft.highcharts.common.HIGradient;
 import com.highsoft.highcharts.common.HIStop;
 import com.highsoft.highcharts.common.hichartsclasses.HIArea;
+import com.highsoft.highcharts.common.hichartsclasses.HIBackground;
 import com.highsoft.highcharts.common.hichartsclasses.HICSSObject;
 import com.highsoft.highcharts.common.hichartsclasses.HIChart;
 import com.highsoft.highcharts.common.hichartsclasses.HIColumn;
 import com.highsoft.highcharts.common.hichartsclasses.HICondition;
 import com.highsoft.highcharts.common.hichartsclasses.HIDataLabels;
 import com.highsoft.highcharts.common.hichartsclasses.HIExporting;
+import com.highsoft.highcharts.common.hichartsclasses.HIGauge;
 import com.highsoft.highcharts.common.hichartsclasses.HIHover;
 import com.highsoft.highcharts.common.hichartsclasses.HILabel;
 import com.highsoft.highcharts.common.hichartsclasses.HILabels;
@@ -30,7 +32,9 @@ import com.highsoft.highcharts.common.hichartsclasses.HILine;
 import com.highsoft.highcharts.common.hichartsclasses.HIMarker;
 import com.highsoft.highcharts.common.hichartsclasses.HIOptions;
 import com.highsoft.highcharts.common.hichartsclasses.HIOptions3d;
+import com.highsoft.highcharts.common.hichartsclasses.HIPane;
 import com.highsoft.highcharts.common.hichartsclasses.HIPie;
+import com.highsoft.highcharts.common.hichartsclasses.HIPlotBands;
 import com.highsoft.highcharts.common.hichartsclasses.HIPlotOptions;
 import com.highsoft.highcharts.common.hichartsclasses.HIResponsive;
 import com.highsoft.highcharts.common.hichartsclasses.HIRules;
@@ -51,6 +55,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.dashboard.adapter.ContactListAdapter;
 import com.surefiz.screens.dashboard.model.DashboardModel;
+import com.surefiz.screens.dashboard.model.Guagechart;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.users.model.UserListItem;
@@ -78,10 +83,11 @@ import retrofit2.Retrofit;
 public class DashBoardActivity extends BaseActivity implements ContactListAdapter.OnCircleViewClickListener {
 
     public View view;
-    HIChartView chartView, chartViewLoss, chartViewBmi, chartViewGoals, chartViewSubGoals, chartViewAchiGoals;
+    HIChartView chartView, chartViewLoss, chartViewBmi, chartViewGoals, chartViewSubGoals,
+            chartViewAchiGoals, chartGauge;
     TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded;
     Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein;
-    CardView cv_weight, cv_weight_loss, cv_bmi, cv_goals, cv_sub_goals, cv_achi_goals;
+    CardView cv_weight, cv_weight_loss, cv_bmi, cv_goals, cv_sub_goals, cv_achi_goals, cv_gauge;
     RecyclerView rv_items;
     private LoadingData loader;
     HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals;
@@ -295,7 +301,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         dashboardModel = gson.fromJson(responseString, DashboardModel.class);
                         LoginShared.setDashBoardDataModel(DashBoardActivity.this, dashboardModel);
 //                        checkForShowView();
-
                         runOnUiThread(new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -303,12 +308,35 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 setWeightLossChart();
                                 setBMIChart();
                                 showGoalsChart();
-                                setSubGoalsChart();
-                                showGoalsAndAcheivementsChart();
                                 setOtherOptions();
                             }
                         }));
 
+                        if (dashboardModel.getData().getProgress() == 0) {
+                            // Create new Meter
+                            runOnUiThread(new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    cv_gauge.setVisibility(View.VISIBLE);
+                                    cv_sub_goals.setVisibility(View.GONE);
+                                    cv_achi_goals.setVisibility(View.GONE);
+                                    implementHighChart(dashboardModel.getData().getChartList().getGuagechart());
+                                }
+                            }));
+
+                        } else {
+                            runOnUiThread(new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    cv_gauge.setVisibility(View.GONE);
+                                    cv_sub_goals.setVisibility(View.VISIBLE);
+                                    cv_achi_goals.setVisibility(View.VISIBLE);
+                                    setSubGoalsChart();
+                                    showGoalsAndAcheivementsChart();
+
+                                }
+                            }));
+                        }
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
                         LoginShared.destroySessionTypePreference(DashBoardActivity.this);
@@ -372,6 +400,12 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         } else {
             cv_achi_goals.setVisibility(View.GONE);
         }
+
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("guagechart")) {
+            cv_gauge.setVisibility(View.VISIBLE);
+        } else {
+            cv_gauge.setVisibility(View.GONE);
+        }
     }
 
     private void setOtherOptions() {
@@ -401,6 +435,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         chartViewSubGoals.setOptions(optionsSubGoals);
         chartViewAchiGoals = (HIChartView) findViewById(R.id.hc_achi_goals);
         chartViewAchiGoals.setOptions(optionsAchiGoals);
+        chartGauge = findViewById(R.id.hc_gauge);
+        chartGauge.setOptions(optionsAchiGoals);
         tv_name = findViewById(R.id.tv_name);
         tv_mac = findViewById(R.id.tv_mac);
         tv_weight_dynamic = findViewById(R.id.tv_weight_dynamic);
@@ -418,6 +454,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         cv_goals = findViewById(R.id.cv_goals);
         cv_sub_goals = findViewById(R.id.cv_sub_goals);
         cv_achi_goals = findViewById(R.id.cv_achi_goals);
+        cv_gauge = findViewById(R.id.cv_gauge);
         rv_items = findViewById(R.id.rv_items);
 
 
@@ -1364,6 +1401,97 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
         } else {
             callDashBoardApi("" + contactLists.get(position).getServerUserId());
+        }
+    }
+
+    private void implementHighChart(Guagechart gaugeChart) {
+        if (gaugeChart != null) {
+
+            HIOptions options = new HIOptions();
+
+            HIChart chart = new HIChart();
+            chart.setType("gauge");
+            chart.setPlotBorderWidth(0);
+            chart.setPlotShadow(false);
+            options.setChart(chart);
+
+            HITitle title = new HITitle();
+            title.setText("Maintenance Mode");
+            options.setTitle(title);
+
+            HIPane pane = new HIPane();
+            pane.setStartAngle(-150);
+            pane.setEndAngle(150);
+            HIBackground background1 = new HIBackground();
+            HIGradient gradient = new HIGradient();
+            LinkedList<HIStop> stops = new LinkedList<>();
+            stops.add(new HIStop(0, HIColor.initWithHexValue("FFF")));
+            stops.add(new HIStop(1, HIColor.initWithHexValue("333")));
+            background1.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+            background1.setBorderWidth(0);
+            background1.setOuterRadius("109%");
+            HIBackground background2 = new HIBackground();
+            background2.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+            background2.setBorderWidth(1);
+            background2.setOuterRadius("107%");
+            HIBackground background3 = new HIBackground();
+            HIBackground background4 = new HIBackground();
+            background4.setBackgroundColor(HIColor.initWithHexValue("DDD"));
+            background4.setBorderWidth(0);
+            background4.setOuterRadius("105%");
+            background4.setInnerRadius("103%");
+            pane.setBackground(new ArrayList<>(Arrays.asList(background1, background2, background3, background4)));
+            options.setPane(pane);
+
+            HIYAxis yaxis = new HIYAxis();
+            yaxis.setMin(Integer.parseInt(gaugeChart.getGtw()));
+            yaxis.setMax(Integer.parseInt(gaugeChart.getMaxweight()));
+            yaxis.setMinorTickWidth(1);
+            yaxis.setMinorTickLength(10);
+            yaxis.setMinorTickPosition("inside");
+            yaxis.setMinorTickColor(HIColor.initWithHexValue("666"));
+            yaxis.setTickPixelInterval(30);
+            yaxis.setTickWidth(2);
+            yaxis.setTickPosition("inside");
+            yaxis.setTickLength(10);
+            yaxis.setTickColor(HIColor.initWithHexValue("666"));
+            yaxis.setLabels(new HILabels());
+            yaxis.getLabels().setStep(2);
+            yaxis.setTitle(new HITitle());
+            yaxis.getTitle().setText("km/h");
+            HIPlotBands plotband1 = new HIPlotBands();
+
+
+            // calculations
+            int greenStart = Integer.parseInt(gaugeChart.getGtw());
+            int greenEnd = (Integer.parseInt(gaugeChart.getGtw()) + Integer.parseInt(gaugeChart.getDiff()));
+
+            int yellowEnd = (Integer.parseInt(gaugeChart.getGtw()) + (2 * Integer.parseInt(gaugeChart.getDiff())));
+
+            int redEnd = Integer.parseInt(gaugeChart.getMaxweight());
+            plotband1.setFrom(greenStart);
+            plotband1.setTo(greenEnd);
+            plotband1.setColor(HIColor.initWithHexValue("55BF3B"));
+            HIPlotBands plotband2 = new HIPlotBands();
+            plotband2.setFrom(greenEnd);
+            plotband2.setTo(yellowEnd);
+            plotband2.setColor(HIColor.initWithHexValue("DDDF0D"));
+            HIPlotBands plotband3 = new HIPlotBands();
+            plotband3.setFrom(yellowEnd);
+            plotband3.setTo(redEnd);
+            plotband3.setColor(HIColor.initWithHexValue("DF5353"));
+            yaxis.setPlotBands(new ArrayList<>(Arrays.asList(plotband1, plotband2, plotband3)));
+            options.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
+
+            HIGauge gauge = new HIGauge();
+            gauge.setName("Speed");
+            gauge.setTooltip(new HITooltip());
+            gauge.getTooltip().setValueSuffix(" km/h");
+            gauge.setData(new ArrayList<>(Collections.singletonList(gaugeChart.getGtw())));
+
+            options.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
+            chartGauge.setOptions(options);
+            chartGauge.reload();
         }
     }
 }

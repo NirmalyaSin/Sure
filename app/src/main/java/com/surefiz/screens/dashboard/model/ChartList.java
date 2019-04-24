@@ -27,6 +27,10 @@ public class ChartList {
     @SerializedName("goals")
     @Expose
     private Goals goals;
+
+    @SerializedName("guagechart")
+    private Guagechart guagechart = new Guagechart();
+
     @SerializedName("currentCompositions")
     @Expose
     private CurrentCompositions currentCompositions;
@@ -95,4 +99,19 @@ public class ChartList {
         this.currentCompositions = currentCompositions;
     }
 
+    public BMI getbMI() {
+        return bMI;
+    }
+
+    public void setbMI(BMI bMI) {
+        this.bMI = bMI;
+    }
+
+    public Guagechart getGuagechart() {
+        return guagechart;
+    }
+
+    public void setGuagechart(Guagechart guagechart) {
+        this.guagechart = guagechart;
+    }
 }

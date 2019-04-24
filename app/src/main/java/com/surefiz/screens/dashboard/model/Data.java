@@ -2,6 +2,7 @@
 package com.surefiz.screens.dashboard.model;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,6 +17,17 @@ public class Data {
     @SerializedName("chartList")
     @Expose
     private ChartList chartList;
+
+    @SerializedName("progress")
+    int progress = 0;
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
 
     public String getMessage() {
         return message;

@@ -21,6 +21,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.SplashActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
@@ -188,22 +189,25 @@ public class OtpClickEvent implements View.OnClickListener {
                     if (jsonObject.optInt("status") == 1) {
 
                         JSONObject jsObject = jsonObject.getJSONObject("data");
-
+                        Intent regIntent = new Intent(otpActivity, LoginActivity.class);
+                        otpActivity.startActivity(regIntent);
+                        otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        otpActivity.finishAffinity();
 //                        MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
-                        LoginShared.setstatusforOtpvarification(otpActivity, true);
+                        /*LoginShared.setstatusforOtpvarification(otpActivity, true);
                         if (LoginShared.getRegistrationDataModel(otpActivity) != null &&
                                 LoginShared.getRegistrationDataModel(otpActivity).getData() != null &&
                                 LoginShared.getRegistrationDataModel(otpActivity).getData().getToken().equals("") &&
                                 LoginShared.getRegistrationDataModel(otpActivity).getData().getToken() == null &&
                                 LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).
                                         getUserProfileCompleteStatus() == 0) {
-                            Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
+                            Intent regIntent = new Intent(otpActivity, LoginActivity.class);
                             regIntent.putExtra("completeStatus", "0");
                             otpActivity.startActivity(regIntent);
                             otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else {
                             showUserAddDialog("Do you want to Add More Users?", "Yes", "Not now");
-                        }
+                        }*/
                         /*Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
                         otpActivity.startActivity(dashBoardIntent);
                         otpActivity.finish();*/

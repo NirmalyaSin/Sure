@@ -7,6 +7,7 @@ public class ApiList {
 
 
     public static final String REGISTRATION = "ApiServices/Registration";
+    public static final String GROUPINVITE = "ApiServices/Group_invite";
     public static final String SENDOTP = "ApiServices/OtpValidation";
     public static final String LOGIN = "ApiServices/Login";
     public static final String VIEWPROFILE = "ApiServices/userProfile";

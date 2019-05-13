@@ -49,6 +49,7 @@ import static com.surefiz.apilist.ApiList.DELETEUSERLIST;
 import static com.surefiz.apilist.ApiList.EDITPROFILE;
 import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.GET_WEIGHT_MANAGEMENT;
+import static com.surefiz.apilist.ApiList.GROUPINVITE;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.LOGOUT;
 import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
@@ -76,10 +77,15 @@ public interface ApiInterface {
                                                  @Part("timeToloseWeight") RequestBody timeToloseWeight,
                                                  @Part("prefferedUnits") RequestBody prefferedUnits,
                                                  @Part("deviceType") RequestBody deviceType,
-                                                 @Part("scaleMacId") RequestBody scaleMacId,
                                                  @Part("type") RequestBody type,
                                                  @Part("device_Token") RequestBody device_Token,
                                                  @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
+                                                 @Part("count") RequestBody count,
+                                                 @Part("regtype") RequestBody regtype,
+                                                 @Part("state") RequestBody state,
+                                                 @Part("city") RequestBody city,
+                                                 @Part("zipcode") RequestBody zipcode,
+                                                 @Part("address") RequestBody address,
                                                  @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -96,11 +102,23 @@ public interface ApiInterface {
                                             @Part("desiredWeight") RequestBody desiredWeight,
                                             @Part("timeToloseWeight") RequestBody timeToloseWeight,
                                             @Part("prefferedUnits") RequestBody prefferedUnits,
-                                            @Part("scaleMacId") RequestBody scaleMacId,
-                                            @Part("type") RequestBody type,
                                             @Part("deviceType") RequestBody deviceType,
+                                            @Part("type") RequestBody type,
                                             @Part("device_Token") RequestBody device_Token,
-                                            @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server);
+                                            @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
+                                            @Part("count") RequestBody count,
+                                            @Part("regtype") RequestBody regtype,
+                                            @Part("state") RequestBody state,
+                                            @Part("city") RequestBody city,
+                                            @Part("zipcode") RequestBody zipcode,
+                                            @Part("address") RequestBody address);
+
+    @FormUrlEncoded
+    @POST(GROUPINVITE)
+    Call<ResponseBody> call_groupApi(@Field("mainuserid") String mainuserid,
+                                     @Field("mainusername") String mainusername,
+                                     @Field("name") String name,
+                                     @Field("email") String email);
 
     @FormUrlEncoded
     @POST(SENDOTP)

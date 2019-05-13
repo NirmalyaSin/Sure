@@ -76,6 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private OnImageSet onImageSet;
     private LoadingData loader;
     private ImageLoader imageLoader;
+    int regType = -1;
 
     public static final int CAMERA = 1, GALLERY = 2;
     public RegistrationClickEvent registrationClickEvent;
@@ -85,12 +86,6 @@ public class RegistrationActivity extends AppCompatActivity {
     TextView tv_password;
     @BindView(R.id.rl_password)
     RelativeLayout rl_password;
-    @BindView(R.id.tv_scale)
-    TextView tv_scale;
-    @BindView(R.id.rl_scale)
-    RelativeLayout rl_scale;
-    @BindView(R.id.et_DOB)
-    EditText et_DOB;
     @BindView(R.id.et_gender)
     EditText et_gender;
     @BindView(R.id.et_units)
@@ -115,8 +110,6 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_password;
     @BindView(R.id.et_phone)
     EditText et_phone;
-    @BindView(R.id.et_scale)
-    EditText et_scale;
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
     @BindView(R.id.checkBoxTermsCondition)
@@ -149,7 +142,20 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_last_name;
 
 
-
+    @BindView(R.id.et_age)
+    EditText age;
+    @BindView(R.id.et_address)
+    EditText address;
+    @BindView(R.id.et_city)
+    EditText city;
+    @BindView(R.id.et_state)
+    EditText state;
+    @BindView(R.id.et_zipcode)
+    EditText zipcode;
+    @BindView(R.id.ll_signup_member)
+    LinearLayout ll_signup_member;
+    @BindView(R.id.et_member)
+    EditText et_member;
 
 
     @Override
@@ -160,30 +166,9 @@ public class RegistrationActivity extends AppCompatActivity {
         loader = new LoadingData(RegistrationActivity.this);
         initializeImageLoader();
         viewShowFromLogin();
-
+        viewShowFromSignup();
         setTermsAndCondition();
         registrationClickEvent = new RegistrationClickEvent(this);
-
-
-        et_scale.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (et_scale.getRight() - et_scale.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        // your action here
-                        MethodUtils.errorMsg(RegistrationActivity.this, "Check your scale or box for the scale id");
-
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
     }
 
     private void initializeImageLoader() {
@@ -215,6 +200,20 @@ public class RegistrationActivity extends AppCompatActivity {
             //tv_scale.setVisibility(View.VISIBLE);
             //rl_scale.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void viewShowFromSignup() {
+        if (getIntent().hasExtra("membership"))
+            if (getIntent().getStringExtra("membership").equals("single")) {
+                regType = 1;
+                ll_signup_member.setVisibility(View.GONE);
+            } else if (getIntent().getStringExtra("membership").equals("group")) {
+                regType = 2;
+                ll_signup_member.setVisibility(View.VISIBLE);
+            } else {
+                regType = 3;
+                ll_signup_member.setVisibility(View.VISIBLE);
+            }
     }
 
     private void getProfileDataAndSet() {
@@ -268,7 +267,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void setData() {
-        et_DOB.setText(MethodUtils.profileDOB(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob()));
         et_gender.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender());
         et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
         et_first_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());

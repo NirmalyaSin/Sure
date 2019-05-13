@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.6"
+        android:background="@drawable/splash_image" />
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/statusBarColor">
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/back"
+                android:scaleType="centerInside"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Family Add User"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_family"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_header"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/login_edit_rounded_corner"
+        android:padding="@dimen/_10sdp"
+        android:text="You can add sub-user now but you have a skip option. You can add sub-users later from the menu sub-user section."
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+
+    <Button
+        android:id="@+id/btn_register_family_add"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@id/txt_family"
+        android:layout_marginLeft="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_44sdp"
+        android:background="@drawable/login_submit_rounded_corner"
+        android:text="Add Sub User (2)"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+    <Button
+        android:id="@+id/btn_register_skip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@id/btn_register_family_add"
+        android:layout_marginLeft="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_44sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@drawable/login_edit_rounded_corner_grey"
+        android:text="Skip This Step"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+</RelativeLayout>

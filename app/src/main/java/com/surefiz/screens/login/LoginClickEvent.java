@@ -17,6 +17,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.forgotpassword.ForgotPasswordActivity;
 import com.surefiz.screens.otp.OtpActivity;
+import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
@@ -93,7 +94,7 @@ public class LoginClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.tv_register:
-                Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
+                Intent regIntent = new Intent(mLoginActivity, MembershipActivity.class);
                 regIntent.putExtra("completeStatus", "1");
                 mLoginActivity.startActivity(regIntent);
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -161,7 +162,7 @@ public class LoginClickEvent implements View.OnClickListener {
                         if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
                                 getUserProfileCompleteStatus() == 0) {
 //                            new AddLoginUserDetails(mLoginActivity).show();
-                            Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
+                            Intent regIntent = new Intent(mLoginActivity, MembershipActivity.class);
                             regIntent.putExtra("completeStatus", "0");
                             mLoginActivity.startActivity(regIntent);
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -255,31 +255,16 @@ public class RegistrationClickEvent implements View.OnClickListener {
             case R.id.tv_upload:
                 break;
             case R.id.btn_register:
-                Intent loginIntent = new Intent(registrationActivity, GroupInviteActivity.class);
-                loginIntent.putExtra("count", Integer.parseInt(registrationActivity.et_member.getText().toString()));
-                registrationActivity.startActivity(loginIntent);
-                registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                registrationActivity.finish();
-//                validationAndApiCall();
+                validationAndApiCall();
                 break;
             case R.id.rl_back:
                 registrationActivity.onBackPressed();
                 break;
             case R.id.profile_image:
-                new OpenCameraOrGalleryDialog(registrationActivity, new OnImageSet() {
-                    @Override
-                    public void onSuccess(String path) {
-                        filePath = path;
-                    }
-                }, "0").show();
+                new OpenCameraOrGalleryDialog(registrationActivity, path -> filePath = path, "0").show();
                 break;
             case R.id.iv_plus_add_image:
-                new OpenCameraOrGalleryDialog(registrationActivity, new OnImageSet() {
-                    @Override
-                    public void onSuccess(String path) {
-                        filePath = path;
-                    }
-                }, "0").show();
+                new OpenCameraOrGalleryDialog(registrationActivity, path -> filePath = path, "0").show();
                 break;
             case R.id.et_gender:
                 hideSoftKeyBoard();
@@ -1007,13 +992,36 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent loginIntent = new Intent(registrationActivity, OtpActivity.class);
-                                registrationActivity.startActivity(loginIntent);
-                                registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                registrationActivity.finish();
+                        new android.os.Handler().postDelayed(() -> {
+                            switch (registrationActivity.regType) {
+                                case 1:
+                                    Intent loginIntent = new Intent(registrationActivity, OtpActivity.class);
+                                    registrationActivity.startActivity(loginIntent);
+                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    registrationActivity.finishAffinity();
+                                    break;
+                                case 2:
+                                    if (registrationActivity.et_member.getText().toString().equals("0")) {
+                                        loginIntent = new Intent(registrationActivity, OtpActivity.class);
+                                    } else {
+                                        loginIntent = new Intent(registrationActivity, GroupInviteActivity.class);
+                                        loginIntent.putExtra("count", Integer.parseInt(registrationActivity.et_member.getText().toString()));
+                                    }
+                                    registrationActivity.startActivity(loginIntent);
+                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    registrationActivity.finishAffinity();
+                                    break;
+                                case 3:
+                                    if (registrationActivity.et_member.getText().toString().equals("0")) {
+                                        loginIntent = new Intent(registrationActivity, OtpActivity.class);
+                                    } else {
+                                        loginIntent = new Intent(registrationActivity, FamilyInviteActivity.class);
+                                        loginIntent.putExtra("count", Integer.parseInt(registrationActivity.et_member.getText().toString()));
+                                    }
+                                    registrationActivity.startActivity(loginIntent);
+                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    registrationActivity.finishAffinity();
+                                    break;
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {

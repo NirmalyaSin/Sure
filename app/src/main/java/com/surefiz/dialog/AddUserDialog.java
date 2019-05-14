@@ -792,6 +792,7 @@ public class AddUserDialog extends Dialog {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
+
                 try {
                     String responseString = response.body().string();
 

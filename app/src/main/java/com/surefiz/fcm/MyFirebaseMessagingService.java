@@ -52,7 +52,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         LoginShared.setWeightFromNotification(this, "1");
         myApplicationClass = (MyApplicationClass) getApplication();
-        Log.d(TAG, "FromDataPush: " + remoteMessage.getData());
+        Log.e(TAG, "FromDataPush: " + remoteMessage.getData());
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
@@ -93,8 +93,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "6");
                 } else if (jObject.optInt("pushType") == 1) {
                     LoginShared.setWeightFromNotification(this, "1");
-                }else if (jObject.optInt("pushType") == 7) {
+                } else if (jObject.optInt("pushType") == 7) {
                     LoginShared.setWeightFromNotification(this, "7");
+                } else if (jObject.optInt("pushType") == 9) {
+                    LoginShared.setOTP(this, jObject.optString("OTP"));
                 } else {
                     LoginShared.setWeightFromNotification(this, "7");
                 }
@@ -268,7 +270,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        }else if (jObject.optInt("pushType") == 7) {
+        } else if (jObject.optInt("pushType") == 7) {
             Intent intent = new Intent(this, UserConfirmationActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,

@@ -125,15 +125,15 @@ public class RegistrationActivity extends AppCompatActivity {
     @BindView(R.id.rl_main_registration)
     RelativeLayout rl_main_registration;
     @BindView(R.id.tv_weight)
-    TextView tv_weight;
+    LinearLayout tv_weight;
     @BindView(R.id.tv_userSelection)
-    TextView tv_userSelection;
+    LinearLayout tv_userSelection;
     @BindView(R.id.rl_userselection)
     RelativeLayout rl_userselection;
     @BindView(R.id.et_userselection)
     EditText et_userselection;
     @BindView(R.id.tv_time_loss)
-    TextView tv_time_loss;
+    LinearLayout tv_time_loss;
     @BindView(R.id.rl_time_loss)
     RelativeLayout rl_time_loss;
     @BindView(R.id.et_middle_name)

@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.surefiz.R;
+import com.surefiz.sharedhandler.LoginShared;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +32,16 @@ public class OtpActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         otpClickEvent = new OtpClickEvent(this);
+        setOTP();
+    }
 
+    private void setOTP() {
+        String otpFromNotification = LoginShared.getOTP(this);
+        if (!otpFromNotification.isEmpty() && otpFromNotification.length() == 4) {
+            et_first.setText("" + otpFromNotification.charAt(0));
+            et_second.setText("" + otpFromNotification.charAt(1));
+            et_third.setText("" + otpFromNotification.charAt(2));
+            et_fourth.setText("" + otpFromNotification.charAt(3));
+        }
     }
 }

@@ -1458,7 +1458,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             yaxis.setLabels(new HILabels());
             yaxis.getLabels().setStep(2);
             yaxis.setTitle(new HITitle());
-            yaxis.getTitle().setText("km/h");
+            yaxis.getTitle().setText("Latest Weight");
             HIPlotBands plotband1 = new HIPlotBands();
 
 
@@ -1484,9 +1484,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             options.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
 
             HIGauge gauge = new HIGauge();
-            gauge.setName("Speed");
+            gauge.setName("Latest Weight");
             gauge.setTooltip(new HITooltip());
-            gauge.getTooltip().setValueSuffix(" km/h");
+            gauge.getTooltip().setValueSuffix(" lbs");
             gauge.setData(new ArrayList<>(Collections.singletonList(gaugeChart.getGtw())));
 
             options.setSeries(new ArrayList<>(Collections.singletonList(gauge)));

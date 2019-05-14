@@ -228,6 +228,24 @@ public class LoginShared {
     }
 
     /**
+     * OTP
+     */
+    public static void setOTP(Context context, String value) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_OTP, value);
+        editor.commit();
+    }
+
+    public static String getOTP(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_OTP, SharedUtils.KEY_SHARED_NO_DATA);
+    }
+
+    /**
      * NOTIFICATION WEIGHT
      */
     public static void setNotificationWeight(Context context, String value) {

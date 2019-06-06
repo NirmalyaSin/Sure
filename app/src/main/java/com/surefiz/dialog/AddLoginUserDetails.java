@@ -81,7 +81,7 @@ public class AddLoginUserDetails extends Dialog {
         hideSoftKeyBoard();
 
         addGenderListAndCall();
-        addPrefferedListAndCall();
+        addPreferredListAndCall();
         addHeightListAndCall("INCH");
         addWeightListAndCall("LB");
         addTimeListAndCall();
@@ -134,7 +134,7 @@ public class AddLoginUserDetails extends Dialog {
                 } else if (et_phone.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter your phone number");
                 } else if (et_units.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your Preffered Units");
+                    MethodUtils.errorMsg(activity, "Please select your Preferred Units");
                 } else if (et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
                 } else if (et_DOB.getText().toString().equals("")) {
@@ -225,7 +225,7 @@ public class AddLoginUserDetails extends Dialog {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            showAndDismissPrefferedPopup();
+                            showAndDismissPreferredPopup();
                         }
                     }, 100);
                 }
@@ -355,7 +355,7 @@ public class AddLoginUserDetails extends Dialog {
         }, 100);
     }
 
-    private void showAndDismissPrefferedPopup() {
+    private void showAndDismissPreferredPopup() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -429,7 +429,7 @@ public class AddLoginUserDetails extends Dialog {
     private void addHeightListAndCall(String change) {
         heightList.clear();
         if (change.equals("INCH")) {
-            for (int i = 1; i < 109; i++) {
+            for (int i = 35; i < 401; i++) {
                 heightList.add(i + " " + change);
             }
         } else {
@@ -454,7 +454,7 @@ public class AddLoginUserDetails extends Dialog {
         weightPopup = new UniversalPopup(activity, weightList, et_weight);
     }
 
-    private void addPrefferedListAndCall() {
+    private void addPreferredListAndCall() {
         prefferedList.add("LB/INCH");
         prefferedList.add("KG/CM");
 

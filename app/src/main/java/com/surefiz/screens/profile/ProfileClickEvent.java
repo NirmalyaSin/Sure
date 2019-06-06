@@ -67,7 +67,7 @@ public class ProfileClickEvent implements View.OnClickListener {
     private List<String> heightList = new ArrayList<>();
     private UniversalPopup heightPopup;
     private String weight_value = "", time_value = "", units_value = "";
-    private WeigtUniversalPopup weigtUniversalPopupPreffered;
+    private WeigtUniversalPopup weigtUniversalPopupPreferred;
     String units = "", height = "";
     String[] splited;
 
@@ -77,7 +77,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         loader = new LoadingData(activity);
         initializeImageLoader();
         setClickEvent();
-        addPrefferedListAndCall();
+        addPreferredListAndCall();
         //addHeightListAndCall("INCH");
 
         if (!ConnectionDetector.isConnectingToInternet(activity)) {
@@ -248,11 +248,11 @@ public class ProfileClickEvent implements View.OnClickListener {
         genderPopup = new UniversalPopup(activity, genderList, activity.et_gender);
     }
 
-    private void addPrefferedListAndCall() {
+    private void addPreferredListAndCall() {
 
         prefferedList.add("LB/INCH");
         prefferedList.add("KG/CM");
-        weigtUniversalPopupPreffered = new WeigtUniversalPopup(activity, prefferedList, activity.et_units, new OnWeightCallback() {
+        weigtUniversalPopupPreferred = new WeigtUniversalPopup(activity, prefferedList, activity.et_units, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
                 height = activity.et_height.getText().toString().trim();
@@ -289,8 +289,8 @@ public class ProfileClickEvent implements View.OnClickListener {
                 }
                 if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
-                } else if (weigtUniversalPopupPreffered != null && weigtUniversalPopupPreffered.isShowing()) {
-                    weigtUniversalPopupPreffered.dismiss();
+                } else if (weigtUniversalPopupPreferred != null && weigtUniversalPopupPreferred.isShowing()) {
+                    weigtUniversalPopupPreferred.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -307,13 +307,13 @@ public class ProfileClickEvent implements View.OnClickListener {
                 hideSoftKeyBoard();
                 if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
-                } else if (weigtUniversalPopupPreffered != null && weigtUniversalPopupPreffered.isShowing()) {
-                    weigtUniversalPopupPreffered.dismiss();
+                } else if (weigtUniversalPopupPreferred != null && weigtUniversalPopupPreferred.isShowing()) {
+                    weigtUniversalPopupPreferred.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            showAndDismissPrefferedPopup();
+                            showAndDismissPreferredPopup();
                         }
                     }, 100);
                 }
@@ -355,8 +355,8 @@ public class ProfileClickEvent implements View.OnClickListener {
                 break;
             case R.id.et_height:
                 hideSoftKeyBoard();
-                if (weigtUniversalPopupPreffered != null && weigtUniversalPopupPreffered.isShowing()) {
-                    weigtUniversalPopupPreffered.dismiss();
+                if (weigtUniversalPopupPreferred != null && weigtUniversalPopupPreferred.isShowing()) {
+                    weigtUniversalPopupPreferred.dismiss();
                 } else if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
                 } else if (heightPopup != null && heightPopup.isShowing()) {
@@ -376,7 +376,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 } else if (activity.et_phone.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter your phone number");
                 } else if (activity.et_units.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your Preffered Units");
+                    MethodUtils.errorMsg(activity, "Please select your Preferred Units");
                 } else if (activity.et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
                 } else if (activity.et_DOB.getText().toString().equals("")) {
@@ -587,11 +587,11 @@ public class ProfileClickEvent implements View.OnClickListener {
         }
     }
 
-    private void showAndDismissPrefferedPopup() {
+    private void showAndDismissPreferredPopup() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                weigtUniversalPopupPreffered.showAsDropDown(activity.et_units);
+                weigtUniversalPopupPreferred.showAsDropDown(activity.et_units);
             }
         }, 100);
     }

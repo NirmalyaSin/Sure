@@ -224,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_18sdp"
                 android:paddingTop="@dimen/_20sdp"
-                android:text="Preffered Units"
+                android:text="Preferred Units"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
@@ -244,7 +244,7 @@
                     android:background="@null"
                     android:backgroundTint="@android:color/transparent"
                     android:focusableInTouchMode="false"
-                    android:hint="Select Preffered unit"
+                    android:hint="Select Preferred unit"
                     android:inputType="number"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/_6sdp"

@@ -91,10 +91,47 @@
             android:background="@color/whiteColor" />
 
         <RelativeLayout
-            android:id="@+id/rl_privacy"
+            android:id="@+id/rl_apconfig"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/view2"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="AP Config"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:src="@drawable/ic_right_arrow" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view22"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_below="@+id/rl_apconfig"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@color/whiteColor" />
+
+        <RelativeLayout
+            android:id="@+id/rl_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view22"
             android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal">
 
@@ -200,6 +237,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@color/whiteColor" />
+
 
     </RelativeLayout>
 

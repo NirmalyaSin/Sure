@@ -15,13 +15,13 @@
 
     <string name="edittext_hint"><font size="20">_</font></string>
     <string name="wifi_config">Choose the wireless network on which you want your scale to  be connected.\nPlease make sure it is not a 5G Wifi.\nIf your router has 5G WiFi, It has two networks, on 5G and the other non-5G.\nPlease pick the non-5G</string>
-
+    <string name="ap_config">To AP configuration follow the below step.\n 1) Enter the WiFI SSID and password.\n2)Lock WiFi Info\n 3) Go to the WiFi setting and pick the scale WiFi.\n4)Tap on the “AP Configure” Button.</string>
     <string name="instruction_page_text">To Know Your Weight follow the steps below :</string>
     <string name="step_on_scale"> 1. Step on the scale and measure your weight</string>
     <string name="scale_blinking"> 2. Scale start blinking and with your weight &amp; stop</string>
     <string name="step_down"> 3. Step down from scale.</string>
     <string name="yes_it_down">Yes! it"'s" done</string>
-    <string name="configrution">Your Configrution completed successfully.</string>
+    <string name="configrution">Your Configuration completed successfully.</string>
     <string name="youe_weight">Your Weight</string>
     <string name="go_next_action">Go DashBoard</string>
     <string name="skip">Skip</string>
@@ -43,8 +43,6 @@
     <string name="all_terms_condition">I agree to all the Terms and Conditions</string>
 
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
-
-
 
 
 </resources>

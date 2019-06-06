@@ -285,6 +285,27 @@ public interface ApiInterface {
                                        @Field("maintain_Weight_By_Server") String mantain_Weight_By_Server);
 
     @FormUrlEncoded
+    @POST(ADDUSER)
+    Call<ResponseBody> call_adduserRegisterApi(@Header("x-authorization") String token,
+                                               @Field("current_UserId") String current_UserId,
+                                               @Field("firstName") String fullName,
+                                               @Field("middleName") String middleName,
+                                               @Field("lastName") String lastName,
+                                               @Field("emailId") String emailId,
+                                               @Field("requredTime") String requredTime,
+                                               @Field("currentHeight") String currentHeight,
+                                               @Field("targetWeight") String targetWeight,
+                                               @Field("password") String password,
+                                               @Field("gender") String Gender,
+                                               @Field("phoneNumber") String phoneNumber,
+                                               @Field("dob") String dob,
+                                               @Field("deviceType") String deviceType,
+                                               @Field("prefferedUnits") String prefferedUnits,
+                                               @Field("device_Token") String device_Token,
+                                               @Field("type") String type,
+                                               @Field("maintain_Weight_By_Server") String mantain_Weight_By_Server);
+
+    @FormUrlEncoded
     @POST(FORGOTPASSWORD)
     Call<ResponseBody> call_forgotApi(@Field("user_email") String user_email);
 

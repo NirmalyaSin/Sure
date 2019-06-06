@@ -118,7 +118,7 @@ public class AddUserDialog extends Dialog {
         hideSoftKeyBoard();
 
         addGenderListAndCall();
-        addPrefferedListAndCall();
+        addPreferredListAndCall();
         addManagementListAndCall();
         addSelectionListAndCall();
         addHeightListAndCall("INCH");
@@ -178,7 +178,7 @@ public class AddUserDialog extends Dialog {
                     } else if (et_phone.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your phone number");
                     } else if (et_units.getText().toString().equals("")) {
-                        MethodUtils.errorMsg(activity, "Please select your Preffered Units");
+                        MethodUtils.errorMsg(activity, "Please select your Preferred Units");
                     } else if (et_management.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please select Weight Managment goal");
                     } else if (et_gender.getText().toString().equals("")) {
@@ -366,7 +366,7 @@ public class AddUserDialog extends Dialog {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            showAndDismissPrefferedPopup();
+                            showAndDismissPreferredPopup();
                         }
                     }, 100);
                 }
@@ -537,7 +537,7 @@ public class AddUserDialog extends Dialog {
         }, 100);
     }
 
-    private void showAndDismissPrefferedPopup() {
+    private void showAndDismissPreferredPopup() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -645,7 +645,7 @@ public class AddUserDialog extends Dialog {
         weightPopup = new UniversalPopup(activity, weightList, et_weight);
     }
 
-    private void addPrefferedListAndCall() {
+    private void addPreferredListAndCall() {
         prefferedList.add("LB/INCH");
         prefferedList.add("KG/CM");
 

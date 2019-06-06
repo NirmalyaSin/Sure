@@ -1,60 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_header"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/statusBarColor"
-        android:gravity="center_vertical">
-
-        <RelativeLayout
-            android:id="@+id/rl_back"
-            android:layout_width="@dimen/_70sdp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="@dimen/_22sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:background="@drawable/back"
-                android:scaleType="centerInside" />
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/btn_skip_config"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:text="Skip"
-            android:textAllCaps="false"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Set WiFi Password"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_14sdp" />
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_header">
+        android:layout_height="wrap_content">
 
         <View
             android:layout_width="match_parent"
@@ -85,7 +38,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/_40sdp"
                     android:gravity="start"
-                    android:text="@string/wifi_config"
+                    android:text="@string/ap_config"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_12sdp" />
 
@@ -181,17 +134,34 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnConfigure"
+                        android:id="@+id/btnlockwifi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_30sdp"
                         android:layout_marginRight="@dimen/_30sdp"
-                        android:layout_marginBottom="@dimen/_40sdp"
                         android:background="@drawable/login_submit_rounded_corner"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:text="Configure"
+                        android:text="Lock WiFi Details"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/btnConfigure"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_30sdp"
+                        android:layout_marginBottom="@dimen/_40sdp"
+                        android:background="@drawable/login_edit_rounded_corner_blue"
+                        android:enabled="false"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="AP Configure"
                         android:textAllCaps="false"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />

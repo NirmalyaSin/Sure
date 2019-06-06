@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Activation"
+            android:text="One Time Password"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -39,7 +39,7 @@
         android:paddingTop="@dimen/_20sdp"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
-        android:text="Please check the Activation Code Notification, and enter the code here"
+        android:text="One Time Password will be auto-filled in the boxes below. If the boxes do not show the activation code please check your email and enter the One Time Password manually"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 
@@ -76,7 +76,7 @@
                 android:cursorVisible="false"
                 android:gravity="center|bottom"
                 android:hint="@string/edittext_hint"
-                android:inputType="numberPassword"
+                android:inputType="number"
                 android:maxLines="1"
                 android:maxLength="1"
                 android:paddingBottom="@dimen/_6sdp"
@@ -104,7 +104,7 @@
                 android:cursorVisible="false"
                 android:gravity="center|bottom"
                 android:hint="@string/edittext_hint"
-                android:inputType="numberPassword"
+                android:inputType="number"
                 android:maxLines="1"
                 android:maxLength="1"
                 android:paddingBottom="@dimen/_6sdp"
@@ -132,7 +132,7 @@
                 android:cursorVisible="false"
                 android:gravity="center|bottom"
                 android:hint="@string/edittext_hint"
-                android:inputType="numberPassword"
+                android:inputType="number"
                 android:maxLines="1"
                 android:maxLength="1"
                 android:paddingBottom="@dimen/_6sdp"
@@ -160,7 +160,7 @@
                 android:cursorVisible="false"
                 android:gravity="center|bottom"
                 android:hint="@string/edittext_hint"
-                android:inputType="numberPassword"
+                android:inputType="number"
                 android:maxLines="1"
                 android:maxLength="1"
                 android:paddingBottom="@dimen/_6sdp"

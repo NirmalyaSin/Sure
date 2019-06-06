@@ -82,7 +82,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         this.registrationActivity = registrationActivity;
         loader = new LoadingData(registrationActivity);
         addGenderListAndCall();
-        addPrefferedListAndCall();
+        addPreferredListAndCall();
         addManagementListAndCall();
         addSelectionListAndCall();
         addHeightListAndCall("INCH");
@@ -185,11 +185,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void addHeightListAndCall(String change) {
         heightList.clear();
         if (change.equals("INCH")) {
-            for (int i = 1; i < 109; i++) {
+            for (int i = 35; i <=400; i++) {
                 heightList.add(i + " " + change);
             }
         } else {
-            for (int i = 1; i < 276; i++) {
+            for (int i = 1; i <=400; i++) {
                 heightList.add(i + " " + change);
             }
         }
@@ -218,7 +218,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         weightPopup = new UniversalPopup(registrationActivity, weightList, registrationActivity.et_weight);
     }
 
-    private void addPrefferedListAndCall() {
+    private void addPreferredListAndCall() {
         prefferedList.add("LB/INCH");
         prefferedList.add("KG/CM");
 
@@ -322,7 +322,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            showAndDismissPrefferedPopup();
+                            showAndDismissPreferredPopup();
                         }
                     }, 100);
                 }
@@ -687,7 +687,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
           MethodUtils.errorMsg(registrationActivity, "Please select any option");
         }*/
         else if (registrationActivity.et_units.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select your Preffered Units");
+            MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
         } else if (registrationActivity.et_gender.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
         } else if (registrationActivity.age.getText().toString().equals("")) {
@@ -701,7 +701,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
             MethodUtils.errorMsg(registrationActivity, "Password must be more than 8 characters");
         } else if (registrationActivity.address.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your full address");
+            MethodUtils.errorMsg(registrationActivity, "Please enter your street address");
         } else if (registrationActivity.city.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your city name");
         } else if (registrationActivity.state.getText().toString().equals("")) {
@@ -1099,7 +1099,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         }, 100);
     }
 
-    private void showAndDismissPrefferedPopup() {
+    private void showAndDismissPreferredPopup() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

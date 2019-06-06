@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.surefiz.R;
+import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.changepassword.ChangePasswordActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.mydevice.MyDeviceActivity;
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     public View view;
-    RelativeLayout rl_config, rl_device, rl_privacy, rl_password, rl_weight;
+    RelativeLayout rl_config, rl_device, rl_privacy, rl_password, rl_weight, rl_apconfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         rl_privacy.setOnClickListener(this);
         rl_password.setOnClickListener(this);
         rl_weight.setOnClickListener(this);
+        rl_apconfig.setOnClickListener(this);
     }
 
     private void initializeView() {
@@ -45,6 +47,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         rl_privacy = findViewById(R.id.rl_privacy);
         rl_password = findViewById(R.id.rl_password);
         rl_weight = findViewById(R.id.rl_weight);
+        rl_apconfig = findViewById(R.id.rl_apconfig);
         setHeaderView();
     }
 
@@ -93,6 +96,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 startActivity(weightIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+                break;
+            case R.id.rl_apconfig:
+                Intent apconfigIntent = new Intent(this, ApConfigActivity.class);
+                startActivity(apconfigIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
     }

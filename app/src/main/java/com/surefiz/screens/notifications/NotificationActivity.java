@@ -428,7 +428,6 @@ public class NotificationActivity extends BaseActivity implements
                     intent.putExtra("contentId", item.getContentId());
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
                 }
                 break;
         }

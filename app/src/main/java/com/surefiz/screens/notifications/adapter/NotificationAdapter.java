@@ -73,26 +73,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             btnReject = itemView.findViewById(R.id.btnReject);
             btnAccept = itemView.findViewById(R.id.btnAccept);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnNotificationClickListener.onViewClick(getAdapterPosition());
-                }
-            });
+            itemView.setOnClickListener(v -> mOnNotificationClickListener.onViewClick(getAdapterPosition()));
 
-            btnAccept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnNotificationClickListener.onAccept(getAdapterPosition());
-                }
-            });
+            btnAccept.setOnClickListener(v -> mOnNotificationClickListener.onAccept(getAdapterPosition()));
 
-            btnReject.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnNotificationClickListener.onReject(getAdapterPosition());
-                }
-            });
+            btnReject.setOnClickListener(v -> mOnNotificationClickListener.onReject(getAdapterPosition()));
         }
     }
 

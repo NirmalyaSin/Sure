@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
+import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.settings.SettingsActivity;
@@ -230,8 +231,22 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         }
         if (success)
             Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(mWifiConfigActivity, "wificonfig  not done", Toast.LENGTH_LONG).show();
+        else {
+            AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
+            alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
+            alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                    (dialog, which) -> dialog.dismiss());
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                        LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
+                        Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
+                        instruc.putExtra("wifi", true);
+                        mWifiConfigActivity.startActivity(instruc);
+                    });
+            alertDialog.show();
+        }
     }
 
 
@@ -254,7 +269,21 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             }
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(mWifiConfigActivity, "wifi configruation  not done", Toast.LENGTH_LONG).show();
+            AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
+            alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
+            alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                    (dialog, which) -> dialog.dismiss());
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                        LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
+                        Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
+                        instruc.putExtra("wifi", true);
+                        mWifiConfigActivity.startActivity(instruc);
+                        mWifiConfigActivity.finish();
+                    });
+            alertDialog.show();
         }
     }
 

@@ -3,6 +3,7 @@ package com.surefiz.screens.apconfig;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
@@ -29,6 +30,8 @@ import android.widget.Toast;
 import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.instruction.InstructionActivity;
+import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import java.util.ArrayList;
@@ -281,12 +284,32 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private void showalertdialog(boolean success) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getResources().getString(R.string.app_name));
-        alertDialog.setMessage(success ? "Your AP Configuration completed successfully." : "Your Configuration failed to complete.");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                (dialog, which) -> {
-                    dialog.dismiss();
-                    finish();
-                });
+        if (!success) {
+            alertDialog.setMessage("Your Configuration failed to complete.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                    });
+        } else {
+            if (getIntent().getBooleanExtra("wifi", false)) {
+                alertDialog.setMessage(getResources().getString(R.string.configrution));
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Update Weight",
+                        (dialog, which) -> {
+                            dialog.dismiss();
+                            LoginShared.setstatusforwifivarification(this, true);
+                            Intent instruc = new Intent(this, InstructionActivity.class);
+                            startActivity(instruc);
+                            finish();
+                        });
+            } else {
+                alertDialog.setMessage("Your AP Configuration completed successfully.");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        (dialog, which) -> {
+                            dialog.dismiss();
+                            finish();
+                        });
+            }
+        }
         alertDialog.show();
     }
 

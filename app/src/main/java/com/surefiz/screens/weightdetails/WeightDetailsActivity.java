@@ -114,13 +114,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     }
 
     private void setHeader() {
-        findViewById(R.id.rl_header_sub).setVisibility(View.VISIBLE);
-        findViewById(R.id.btn_skip).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToDashboard();
-            }
-        });
+        findViewById(R.id.btn_skip).setOnClickListener(view -> goToDashboard());
+        findViewById(R.id.rl_back).setOnClickListener(view -> onBackPressed());
     }
 
     private void viewBind() {

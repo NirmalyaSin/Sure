@@ -1,59 +1,67 @@
-
 package com.surefiz.screens.dashboard.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class CurrentCompositions {
 
-    @SerializedName("userName")
-    @Expose
-    private String userName;
-    @SerializedName("scaleMacAddress")
-    @Expose
-    private String scaleMacAddress;
-    @SerializedName("weight")
-    @Expose
-    private String weight;
-    @SerializedName("height")
-    @Expose
-    private String height;
     @SerializedName("bodyFat")
-    @Expose
-    private String bodyFat;
-    @SerializedName("boneKg")
-    @Expose
-    private String boneKg;
+    private BodyFat bodyFat;
+
     @SerializedName("muscle")
-    @Expose
-    private String muscle;
-    @SerializedName("BMI")
-    @Expose
-    private String bMI;
-    @SerializedName("water")
-    @Expose
-    private String water;
+    private BodyFat muscle;
+
     @SerializedName("protein")
-    @Expose
-    private String protein;
+    private BodyFat protein;
+
+    @SerializedName("weight")
+    private String weight;
+
+    @SerializedName("boneKg")
+    private BodyFat boneKg;
+
     @SerializedName("recordedOn")
-    @Expose
     private String recordedOn;
 
-    public String getUserName() {
-        return userName;
+    @SerializedName("userName")
+    private String userName;
+
+    @SerializedName("battery")
+    private int battery;
+
+    @SerializedName("water")
+    private BodyFat water;
+
+    @SerializedName("scaleMacAddress")
+    private int scaleMacAddress;
+
+    @SerializedName("height")
+    private String height;
+
+    @SerializedName("BMI")
+    private BodyFat bMI;
+
+    public BodyFat getBodyFat() {
+        return bodyFat;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setBodyFat(BodyFat bodyFat) {
+        this.bodyFat = bodyFat;
     }
 
-    public String getScaleMacAddress() {
-        return scaleMacAddress;
+    public BodyFat getMuscle() {
+        return muscle;
     }
 
-    public void setScaleMacAddress(String scaleMacAddress) {
-        this.scaleMacAddress = scaleMacAddress;
+    public void setMuscle(BodyFat muscle) {
+        this.muscle = muscle;
+    }
+
+    public BodyFat getProtein() {
+        return protein;
+    }
+
+    public void setProtein(BodyFat protein) {
+        this.protein = protein;
     }
 
     public String getWeight() {
@@ -64,60 +72,12 @@ public class CurrentCompositions {
         this.weight = weight;
     }
 
-    public String getHeight() {
-        return height;
-    }
-
-    public void setHeight(String height) {
-        this.height = height;
-    }
-
-    public String getBodyFat() {
-        return bodyFat;
-    }
-
-    public void setBodyFat(String bodyFat) {
-        this.bodyFat = bodyFat;
-    }
-
-    public String getBoneKg() {
+    public BodyFat getBoneKg() {
         return boneKg;
     }
 
-    public void setBoneKg(String boneKg) {
+    public void setBoneKg(BodyFat boneKg) {
         this.boneKg = boneKg;
-    }
-
-    public String getMuscle() {
-        return muscle;
-    }
-
-    public void setMuscle(String muscle) {
-        this.muscle = muscle;
-    }
-
-    public String getBMI() {
-        return bMI;
-    }
-
-    public void setBMI(String bMI) {
-        this.bMI = bMI;
-    }
-
-    public String getWater() {
-        return water;
-    }
-
-    public void setWater(String water) {
-        this.water = water;
-    }
-
-    public String getProtein() {
-        return protein;
-    }
-
-    public void setProtein(String protein) {
-        this.protein = protein;
     }
 
     public String getRecordedOn() {
@@ -128,4 +88,51 @@ public class CurrentCompositions {
         this.recordedOn = recordedOn;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getBattery() {
+        return battery;
+    }
+
+    public void setBattery(int battery) {
+        this.battery = battery;
+    }
+
+    public BodyFat getWater() {
+        return water;
+    }
+
+    public void setWater(BodyFat water) {
+        this.water = water;
+    }
+
+    public int getScaleMacAddress() {
+        return scaleMacAddress;
+    }
+
+    public void setScaleMacAddress(int scaleMacAddress) {
+        this.scaleMacAddress = scaleMacAddress;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public BodyFat getbMI() {
+        return bMI;
+    }
+
+    public void setbMI(BodyFat bMI) {
+        this.bMI = bMI;
+    }
 }

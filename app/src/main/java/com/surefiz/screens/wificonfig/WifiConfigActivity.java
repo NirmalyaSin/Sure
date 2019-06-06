@@ -53,14 +53,11 @@ public class WifiConfigActivity extends AppCompatActivity {
                 rl_back.setVisibility(View.VISIBLE);
                 btn_skip_config.setVisibility(View.GONE);
 
-                rl_back.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent deviceIntent = new Intent(WifiConfigActivity.this, SettingsActivity.class);
-                        startActivity(deviceIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                    }
+                rl_back.setOnClickListener(v -> {
+                    Intent deviceIntent = new Intent(WifiConfigActivity.this, SettingsActivity.class);
+                    startActivity(deviceIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
                 });
             }
     }

@@ -252,7 +252,7 @@
                             android:layout_below="@+id/tv_name"
                             android:paddingLeft="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
-                            android:text="Scale Mac Address:"
+                            android:text="Scale Id:"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_12sdp" />
 

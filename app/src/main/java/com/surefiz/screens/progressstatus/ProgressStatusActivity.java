@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,7 +68,10 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
     TextView tv_link2;
     @BindView(R.id.profile_image)
     ImageView profile_image;
+    @BindView(R.id.rl_back)
+    RelativeLayout rl_back;
     private ImageLoader imageLoader;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +102,7 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
             showDashBoardDialog();
         }*/
         setClickEvent();
+
     }
 
     private void showDashBoardDialog() {
@@ -118,6 +123,7 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
 
     private void setClickEvent() {
         btn_dashboard.setOnClickListener(this);
+        rl_back.setOnClickListener(this);
     }
 
     private void getProgressStatus() {
@@ -222,6 +228,8 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 break;
+            case R.id.rl_back:
+                onBackPressed();
         }
     }
 }

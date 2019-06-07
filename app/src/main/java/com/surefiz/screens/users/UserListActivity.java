@@ -198,7 +198,6 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
     private void setViewBind() {
         rv_items = view.findViewById(R.id.rv_items);
         btn_add_user = findViewById(R.id.btn_add_user);
-        findViewById(R.id.rl_header_sub).setVisibility(View.GONE);
     }
 
     private void setHeaderView() {

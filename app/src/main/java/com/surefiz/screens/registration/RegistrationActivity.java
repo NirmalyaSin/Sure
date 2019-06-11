@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -69,17 +70,11 @@ import static android.os.Build.VERSION_CODES.M;
 public class RegistrationActivity extends AppCompatActivity {
     public static final String PICTURE_NAME = "SureFIZProfile";
     public static final String FOLDER_NAME = "SureFIZ";
-    private File mFile = null;
-
-    private Uri fileUri = null;
-    public File mCompressedFile = null;
-    private OnImageSet onImageSet;
-    private LoadingData loader;
-    private ImageLoader imageLoader;
-    int regType = -1;
-
     public static final int CAMERA = 1, GALLERY = 2;
+    public File mCompressedFile = null;
     public RegistrationClickEvent registrationClickEvent;
+    public boolean isInCompleteProfile = false;
+    int regType = -1;
     @BindView(R.id.tv_upload)
     TextView tv_upload;
     @BindView(R.id.tv_password)
@@ -100,6 +95,8 @@ public class RegistrationActivity extends AppCompatActivity {
     de.hdodenhof.circleimageview.CircleImageView profile_image;
     @BindView(R.id.iv_plus_add_image)
     ImageView iv_plus_add_image;
+    @BindView(R.id.star_image_password)
+    ImageView star_image_password;
     @BindView(R.id.btn_register)
     Button btn_register;
     @BindView(R.id.et_first_name)
@@ -140,8 +137,6 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_middle_name;
     @BindView(R.id.et_last_name)
     EditText et_last_name;
-
-
     @BindView(R.id.et_age)
     EditText age;
     @BindView(R.id.et_address)
@@ -156,7 +151,38 @@ public class RegistrationActivity extends AppCompatActivity {
     LinearLayout ll_signup_member;
     @BindView(R.id.et_member)
     EditText et_member;
+    @BindView(R.id.ll_scale_id)
+    LinearLayout ll_scale_id;
+    @BindView(R.id.rl_scale_id)
+    RelativeLayout rl_scale_id;
+    @BindView(R.id.et_scale_id)
+    EditText et_scale_id;
+    @BindView(R.id.ll_password)
+    LinearLayout ll_password;
+    @BindView(R.id.rl_street_address)
+    RelativeLayout rl_street_address;
+    @BindView(R.id.ll_street_address)
+    LinearLayout ll_street_address;
+    @BindView(R.id.rl_city)
+    RelativeLayout rl_city;
+    @BindView(R.id.ll_city)
+    LinearLayout ll_city;
+    @BindView(R.id.rl_state)
+    RelativeLayout rl_state;
+    @BindView(R.id.ll_state)
+    LinearLayout ll_state;
+    @BindView(R.id.rl_zip_code)
+    RelativeLayout rl_zip_code;
+    @BindView(R.id.ll_zip_code)
+    LinearLayout ll_zip_code;
+    @BindView(R.id.btn_skip_config)
+    Button btn_skip_config;
 
+    private File mFile = null;
+    private Uri fileUri = null;
+    private OnImageSet onImageSet;
+    private LoadingData loader;
+    private ImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,20 +209,50 @@ public class RegistrationActivity extends AppCompatActivity {
     private void viewShowFromLogin() {
         if (getIntent().getStringExtra("completeStatus").equals("0")) {
             tv_password.setVisibility(View.GONE);
+            star_image_password.setVisibility(View.GONE);
+            ll_password.setVisibility(View.GONE);
             rl_password.setVisibility(View.GONE);
-            profile_image.setVisibility(View.GONE);
-            iv_plus_add_image.setVisibility(View.GONE);
-            tv_upload.setVisibility(View.GONE);
+            profile_image.setVisibility(View.VISIBLE);
+            iv_plus_add_image.setVisibility(View.VISIBLE);
+            tv_upload.setVisibility(View.VISIBLE);
             linearLayout1.setVisibility(View.GONE);
+
             //tv_scale.setVisibility(View.GONE);
             //rl_scale.setVisibility(View.GONE);
+
+            //----------Addited By Arup---------//
+
+            ll_scale_id.setVisibility(View.VISIBLE);
+            rl_scale_id.setVisibility(View.VISIBLE);
+
+            rl_street_address.setVisibility(View.GONE);
+            ll_street_address.setVisibility(View.GONE);
+            rl_city.setVisibility(View.GONE);
+            ll_city.setVisibility(View.GONE);
+            rl_state.setVisibility(View.GONE);
+            ll_state.setVisibility(View.GONE);
+            rl_zip_code.setVisibility(View.GONE);
+            ll_zip_code.setVisibility(View.GONE);
+            ll_signup_member.setVisibility(View.GONE);
+
+            btn_register.setText("Update");
+            isInCompleteProfile = true;
+            btn_skip_config.setVisibility(View.VISIBLE);
+
+
+            getProfileDataAndSet();
+
+            //--------------END----------------//
         } else {
             tv_password.setVisibility(View.VISIBLE);
+            star_image_password.setVisibility(View.GONE);
             rl_password.setVisibility(View.VISIBLE);
             profile_image.setVisibility(View.VISIBLE);
             iv_plus_add_image.setVisibility(View.VISIBLE);
             tv_upload.setVisibility(View.VISIBLE);
             linearLayout1.setVisibility(View.VISIBLE);
+            btn_skip_config.setVisibility(View.GONE);
+
             //tv_scale.setVisibility(View.VISIBLE);
             //rl_scale.setVisibility(View.VISIBLE);
         }
@@ -224,6 +280,8 @@ public class RegistrationActivity extends AppCompatActivity {
         final Call<ResponseBody> call_view_profile = apiInterface.call_viewprofileApi(LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getToken(),
                 LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserId());
 
+        System.out.println("@@ProfileInfo :" + call_view_profile);
+
         call_view_profile.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -235,10 +293,15 @@ public class RegistrationActivity extends AppCompatActivity {
                     ViewProfileModel viewProfileModel;
 
                     JSONObject jsonObject = new JSONObject(responseString);
+
+                    Log.d("@@ProfileDataAndSet : ", jsonObject.toString());
+
                     if (jsonObject.optInt("status") == 1) {
                         viewProfileModel = gson.fromJson(responseString, ViewProfileModel.class);
                         LoginShared.setViewProfileDataModel(RegistrationActivity.this, viewProfileModel);
+
                         setData();
+
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(RegistrationActivity.this);
                         LoginShared.destroySessionTypePreference(RegistrationActivity.this);
@@ -267,24 +330,63 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void setData() {
-        et_gender.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender());
-        et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
         et_first_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
+        et_middle_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getMiddleName());
+        et_last_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getLastName());
+
+        et_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
+        et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
+        et_gender.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender());
+
+        if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob())) {
+            age.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob());
+        } else {
+            age.setText("");
+        }
+
         LoginShared.setUserName(RegistrationActivity.this, LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
-        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equals("1")) {
+
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equalsIgnoreCase("1")) {
             et_units.setText("KG/CM");
         } else {
             et_units.setText("LB/INCH");
         }
         String unit = "";
-        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equals("1")) {
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equalsIgnoreCase("1")) {
             unit = "CM";
         } else {
             unit = "INCH";
         }
-        et_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
-        et_height.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getHeight() + " " + unit);
+
+        if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getHeight())) {
+            et_height.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getHeight() + " " + unit);
+        } else {
+            et_height.setText("");
+        }
+
+        if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTime())) {
+            et_time_loss.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTime() + " " + "Weeks");
+        } else {
+            et_time_loss.setText("");
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("type", LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getType());
+        bundle.putString("weight", LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTargetWeight());
+        bundle.putString("time", LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTime());
+
+        registrationClickEvent.setValuesForListItem(bundle);
+
         showImage();
+    }
+
+
+    public boolean checkIsZeroValue(String value) {
+        if (value.equalsIgnoreCase("0") || value.equalsIgnoreCase("0.0") || value.equalsIgnoreCase("0.00")) {
+            return true;
+        }
+
+        return false;
     }
 
     private void showImage() {

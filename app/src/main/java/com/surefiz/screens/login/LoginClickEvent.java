@@ -144,6 +144,8 @@ public class LoginClickEvent implements View.OnClickListener {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
 
+                Log.d("@@LoginData : ", call.request().body().toString());
+
                 try {
                     String responseString = response.body().string();
                     Gson gson = new Gson();
@@ -162,10 +164,12 @@ public class LoginClickEvent implements View.OnClickListener {
                         if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
                                 getUserProfileCompleteStatus() == 0) {
 //                            new AddLoginUserDetails(mLoginActivity).show();
-                            Intent regIntent = new Intent(mLoginActivity, MembershipActivity.class);
+                            //Intent regIntent = new Intent(mLoginActivity, MembershipActivity.class);
+                            Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
                             regIntent.putExtra("completeStatus", "0");
                             mLoginActivity.startActivity(regIntent);
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            mLoginActivity.finish();
                         } else {
                             if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
                                 Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);

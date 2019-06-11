@@ -27,6 +27,19 @@
                 android:scaleType="centerInside" />
         </RelativeLayout>
 
+        <Button
+            android:id="@+id/btn_skip_config"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/login_submit_rounded_corner"
+            android:text="Skip"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp" />
+
         <TextView
             android:id="@+id/tv_registration"
             android:layout_width="wrap_content"
@@ -275,6 +288,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -290,6 +304,7 @@
                         android:textSize="@dimen/_14sdp" />
 
                     <ImageView
+                        android:id="@+id/star_image_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/star16" />
@@ -366,6 +381,57 @@
                         android:textSize="@dimen/_10sdp" />
                 </RelativeLayout>
 
+
+                <LinearLayout
+                    android:id="@+id/ll_scale_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_18sdp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_scale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Scale ID"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_scale_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/et_scale_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:hint="Enter Scale Id"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
                 <!-- <TextView
                      android:id="@+id/tv_scale"
                      android:layout_width="wrap_content"
@@ -402,6 +468,8 @@
                          android:textCursorDrawable="@drawable/cursor_color"
                          android:textSize="@dimen/_10sdp" />
                  </RelativeLayout>-->
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -777,6 +845,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_street_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -797,6 +866,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_street_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_18sdp"
@@ -821,6 +891,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -830,7 +901,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
-                        android:paddingTop="@dimen/_18sdp"
                         android:text="City"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
@@ -842,6 +912,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_18sdp"
@@ -866,6 +937,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -886,6 +958,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_18sdp"
@@ -910,6 +983,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_zip_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -930,6 +1004,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_zip_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_18sdp"

@@ -66,12 +66,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
         loginClickEvent = new LoginClickEvent(this);
         iv_facebook.setOnClickListener(this);
         //getHashKey();
 
         // REMOVE
-        editEmail.setText("debopam@capitalnumbers.com");
+        editEmail.setText("arup.cn@mailinator.com");
         editPassword.setText("12345678");
         /*editEmail.setText("khokhar@rasimo.com");
         editPassword.setText("12345678");*/

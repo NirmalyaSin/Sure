@@ -43,6 +43,7 @@ import static com.surefiz.apilist.ApiList.BOARDCAST;
 import static com.surefiz.apilist.ApiList.CHANGEPASSWORD;
 import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
 import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
+import static com.surefiz.apilist.ApiList.COMPLETE_USER_INFO;
 import static com.surefiz.apilist.ApiList.CONTACTLIST;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
 import static com.surefiz.apilist.ApiList.DELETEUSERLIST;
@@ -112,6 +113,49 @@ public interface ApiInterface {
                                             @Part("city") RequestBody city,
                                             @Part("zipcode") RequestBody zipcode,
                                             @Part("address") RequestBody address);
+
+    @Multipart
+    @POST(COMPLETE_USER_INFO)
+    Call<ResponseBody> call_completeUserInfoApi(@Header("x-authorization") String token,
+                                                @Part("current_UserId") RequestBody currentUserId,
+                                                @Part("firstName") RequestBody first_name,
+                                                @Part("middleName") RequestBody middle_name,
+                                                @Part("lastName") RequestBody last_name,
+                                                @Part("emailId") RequestBody emailId,
+                                                @Part("requredTime") RequestBody timeToloseWeight,
+                                                @Part("currentHeight") RequestBody height,
+                                                @Part("targetWeight") RequestBody desiredWeight,
+                                                @Part("gender") RequestBody gender,
+                                                @Part("phoneNumber") RequestBody phoneNumber,
+                                                @Part("dob") RequestBody dob,
+                                                @Part("Scaleid") RequestBody scaleId,
+                                                @Part("type") RequestBody type,
+                                                @Part("mantain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
+                                                @Part("prefferedUnits") RequestBody prefferedUnits,
+                                                @Part("deviceType") RequestBody deviceType,
+                                                @Part("device_Token") RequestBody device_Token);
+
+    @Multipart
+    @POST(COMPLETE_USER_INFO)
+    Call<ResponseBody> call_completeUserInfoImageApi(@Header("x-authorization") String token,
+                                                     @Part("current_UserId") RequestBody currentUserId,
+                                                     @Part("firstName") RequestBody first_name,
+                                                     @Part("middleName") RequestBody middle_name,
+                                                     @Part("lastName") RequestBody last_name,
+                                                     @Part("emailId") RequestBody emailId,
+                                                     @Part("requredTime") RequestBody timeToloseWeight,
+                                                     @Part("currentHeight") RequestBody height,
+                                                     @Part("targetWeight") RequestBody desiredWeight,
+                                                     @Part("gender") RequestBody gender,
+                                                     @Part("phoneNumber") RequestBody phoneNumber,
+                                                     @Part("dob") RequestBody dob,
+                                                     @Part("Scaleid") RequestBody scaleId,
+                                                     @Part("type") RequestBody type,
+                                                     @Part("mantain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
+                                                     @Part("prefferedUnits") RequestBody prefferedUnits,
+                                                     @Part("deviceType") RequestBody deviceType,
+                                                     @Part("device_Token") RequestBody device_Token,
+                                                     @Part MultipartBody.Part attachment);
 
     @FormUrlEncoded
     @POST(GROUPINVITE)

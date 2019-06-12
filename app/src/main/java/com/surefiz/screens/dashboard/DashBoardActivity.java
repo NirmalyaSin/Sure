@@ -9,8 +9,11 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -85,19 +88,22 @@ import retrofit2.Retrofit;
 public class DashBoardActivity extends BaseActivity implements ContactListAdapter.OnCircleViewClickListener {
 
     public View view;
+    public String id = "";
+    public int row_user = -1;
     HIChartView chartView, chartViewLoss, chartViewBmi, chartViewGoals, chartViewSubGoals,
             chartViewAchiGoals, chartGauge;
     TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded;
     Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein;
     CardView cv_weight, cv_weight_loss, cv_bmi, cv_goals, cv_sub_goals, cv_achi_goals, cv_gauge;
     RecyclerView rv_items;
-    private LoadingData loader;
     HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals;
     List<UserListItem> contactLists = new ArrayList<>();
     ContactListAdapter adapter;
-    public String id = "";
-    public int row_user = -1;
+    private LoadingData loader;
     private LinearLayoutManager mLayoutManager;
+    private TextView tv_battery_low_status;
+    private RelativeLayout rl_battery_image;
+    private ImageView img_battery_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,6 +265,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     DashboardModel dashboardModel;
                     JSONObject jsonObject = new JSONObject(responseString);
 
+                    Log.d("@@DashboardData : ", jsonObject.toString());
+
                     if (jsonObject.optInt("status") == 1) {
                         dashboardModel = gson.fromJson(responseString, DashboardModel.class);
                         LoginShared.setDashBoardDataModel(DashBoardActivity.this, dashboardModel);
@@ -388,20 +396,56 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         btn_protein.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getStatus());
         btn_protein.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getColourCode()));
         tv_recorded.setText("Recorded on " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getRecordedOn());
+
+        showBatteryStatus();
+    }
+
+    private void showBatteryStatus() {
+
+        int imageDrawable = 0;
+
+        switch (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery()) {
+            case 0:
+            case 1:
+                tv_battery_low_status.setVisibility(View.VISIBLE);
+                rl_battery_image.setVisibility(View.GONE);
+                break;
+            case 2:
+                imageDrawable = R.drawable.battery2;
+                break;
+
+            case 3:
+                imageDrawable = R.drawable.battery3;
+                break;
+
+            case 4:
+                imageDrawable = R.drawable.battery4;
+                break;
+        }
+
+        showBatteryImage(imageDrawable);
+    }
+
+    private void showBatteryImage(int imageDrawable) {
+        if (imageDrawable!=0) {
+            tv_battery_low_status.setVisibility(View.GONE);
+            rl_battery_image.setVisibility(View.VISIBLE);
+            img_battery_status.setImageResource(imageDrawable);
+        }
     }
 
     private void viewBind() {
-        chartView =  findViewById(R.id.hc_weight);
+        chartView = findViewById(R.id.hc_weight);
         chartView.setOptions(options);
-        chartViewLoss =  findViewById(R.id.hc_weight_loss);
+        chartViewLoss = findViewById(R.id.hc_weight_loss);
         chartViewLoss.setOptions(optionsLoss);
-        chartViewBmi =  findViewById(R.id.hc_bmi);
+        chartViewBmi = findViewById(R.id.hc_bmi);
         chartViewBmi.setOptions(optionsBMI);
-        chartViewGoals =  findViewById(R.id.hc_goals);
+        chartViewGoals = findViewById(R.id.hc_goals);
         chartViewGoals.setOptions(optionsGoals);
-        chartViewSubGoals =  findViewById(R.id.hc_sub_goals);
+        chartViewSubGoals = findViewById(R.id.hc_sub_goals);
         chartViewSubGoals.setOptions(optionsSubGoals);
-        chartViewAchiGoals =  findViewById(R.id.hc_achi_goals);
+        chartViewAchiGoals = findViewById(R.id.hc_achi_goals);
         chartViewAchiGoals.setOptions(optionsAchiGoals);
         chartGauge = findViewById(R.id.hc_gauge);
         chartGauge.setOptions(optionsAchiGoals);
@@ -424,6 +468,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         cv_achi_goals = findViewById(R.id.cv_achi_goals);
         cv_gauge = findViewById(R.id.cv_gauge);
         rv_items = findViewById(R.id.rv_items);
+
+        tv_battery_low_status = findViewById(R.id.tv_battery_low_status);
+        rl_battery_image = findViewById(R.id.rl_battery_image);
+        img_battery_status = findViewById(R.id.img_battery_status);
+
 
 
        /* cv_weight.setOnClickListener(new View.OnClickListener() {

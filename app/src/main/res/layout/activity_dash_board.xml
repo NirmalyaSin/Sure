@@ -62,8 +62,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/_5sdp"
-                        android:onClick="onClick"
-                        android:background="@drawable/gradient_weight_progress" />
+                        android:background="@drawable/gradient_weight_progress"
+                        android:onClick="onClick" />
 
                 </android.support.v7.widget.CardView>
 
@@ -198,9 +198,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_500sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:alpha="0.5"
                     android:background="#A9A9A9"
                     android:visibility="visible"
@@ -718,6 +718,7 @@
                             android:layout_marginRight="@dimen/_6sdp"
                             android:background="@drawable/edit_text_background" />
 
+
                         <TextView
                             android:id="@+id/tv_recorded"
                             android:layout_width="match_parent"
@@ -730,11 +731,64 @@
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_12sdp" />
 
+
+                        <RelativeLayout
+                            android:id="@+id/rl_battery_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_recorded"
+                            android:layout_marginLeft="@dimen/_4sdp"
+                            android:layout_marginRight="@dimen/_4sdp"
+                            android:background="@color/sky_blue"
+                            android:paddingStart="@dimen/_6sdp"
+                            android:paddingTop="@dimen/_6sdp"
+                            android:paddingBottom="@dimen/_6sdp">
+
+
+                            <TextView
+                                android:id="@+id/tv_battery_low_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="@string/battery_status_low"
+                                android:textColor="@color/whiteColor"
+                                android:textSize="@dimen/_12sdp" />
+
+                            <RelativeLayout
+                                android:id="@+id/rl_battery_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_battery_status"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:text="@string/battery_status_low"
+                                    android:textColor="@color/whiteColor"
+                                    android:textSize="@dimen/_12sdp" />
+
+                                <ImageView
+                                    android:id="@+id/img_battery_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toEndOf="@+id/tv_battery_status"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:paddingRight="@dimen/_10sdp"
+                                    android:scaleType="fitXY" />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
-                            android:layout_below="@+id/tv_recorded"
+                            android:layout_below="@+id/rl_battery_status"
                             android:layout_marginLeft="@dimen/_4sdp"
+                            android:layout_marginTop="@dimen/_6sdp"
                             android:layout_marginRight="@dimen/_4sdp"
                             android:background="#40CBDC">
 

@@ -4,29 +4,40 @@ import com.google.gson.annotations.SerializedName;
 
 public class BMIDetails {
     @SerializedName("Weight")
-    String Weight;
+    private String Weight;
     @SerializedName("BMI")
-    String BMI;
+    private String BMI;
     @SerializedName("subgoal1")
-    String subgoal1;
+    private String subgoal1;
     @SerializedName("subgoal2")
-    String subgoal2;
+    private String subgoal2;
     @SerializedName("percentage")
-    String percentage;
+    private String percentage;
     @SerializedName("weighttolose")
-    String weighttolose;
+    private String weighttolose;
     @SerializedName("name")
-    String name;
+    private String name;
     @SerializedName("preferredUnit")
-    String preferredUnit;
+    private String preferredUnit;
     @SerializedName("batteryStaus")
-    String batteryStaus;
+    private String batteryStaus;
 
     @SerializedName("subgoalImageName")
-    String subgoalImageName;
+    private String subgoalImageName;
+
+    @SerializedName("batteryimage")
+    private String batteryimage = "";
 
 
     public BMIDetails() {
+    }
+
+    public String getBatteryimage() {
+        return batteryimage;
+    }
+
+    public void setBatteryimage(String batteryimage) {
+        this.batteryimage = batteryimage;
     }
 
     public String getWeight() {

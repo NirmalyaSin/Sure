@@ -38,10 +38,8 @@ import retrofit2.Retrofit;
 
 public class BMIDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.btnSkipWeight)
-    Button btnSkipWeight;
-    @BindView(R.id.btnDashboard)
-    Button btnDashboard;
+    @BindView(R.id.img_bmi_back)
+    ImageView img_bmi_back;
     @BindView(R.id.txt_bmi_weight)
     TextView txt_bmi_weight;
     @BindView(R.id.txt_bmi_bmiversion)
@@ -58,6 +56,8 @@ public class BMIDetailsActivity extends AppCompatActivity {
     DonutProgress donut_progress;
     @BindView(R.id.img_bmi_progress)
     ImageView img_bmi_progress;
+    @BindView(R.id.img_bmi_battery)
+    ImageView img_bmi_battery;
     private LoadingData loader;
 
     @Override
@@ -79,25 +79,7 @@ public class BMIDetailsActivity extends AppCompatActivity {
             callBMIApi(serverUserId, scaleUserId);
         }
 
-       /* btn_go_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToDashboard();
-            }
-        });*/
-
-        btnSkipWeight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToDashboard();
-            }
-        });
-        btnDashboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToDashboard();
-            }
-        });
+        img_bmi_back.setOnClickListener(view -> onBackPressed());
 
     }
 
@@ -215,6 +197,24 @@ public class BMIDetailsActivity extends AppCompatActivity {
                     if (imageDrawable != 0)
                         img_bmi_progress.setImageResource(imageDrawable);
 
+                    switch (dmBmiDetails.getBatteryimage()) {
+                        case "battery0.png":
+                            img_bmi_battery.setImageResource(R.drawable.battery0);
+                            break;
+                        case "battery1.png":
+                            img_bmi_battery.setImageResource(R.drawable.battery1);
+                            break;
+                        case "battery2.png":
+                            img_bmi_battery.setImageResource(R.drawable.battery2);
+                            break;
+                        case "battery3.png":
+                            img_bmi_battery.setImageResource(R.drawable.battery3);
+                            break;
+                        case "battery4.png":
+                            img_bmi_battery.setImageResource(R.drawable.battery4);
+                            break;
+                    }
+
 
                 } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     LoginShared.destroySessionTypePreference(BMIDetailsActivity.this);
@@ -234,13 +234,6 @@ public class BMIDetailsActivity extends AppCompatActivity {
                 MethodUtils.errorMsg(BMIDetailsActivity.this, getString(R.string.error_occurred));
             }
         });
-    }
-
-    public void goToDashboard() {
-        Intent intent = new Intent(this, DashBoardActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        finish();
     }
 
     private BroadcastReceiver myBMIReceiver = new BroadcastReceiver() {

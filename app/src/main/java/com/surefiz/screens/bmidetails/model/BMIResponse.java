@@ -30,14 +30,6 @@ public class BMIResponse {
         this.data = data;
     }
 
-    @Override
-    public String toString() {
-        return "ChatListResponse{" +
-                "status=" + status +
-                ", data=" + data +
-                '}';
-    }
-
     public class Data{
         @SerializedName("message")
         String message;

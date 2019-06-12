@@ -25,6 +25,7 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.accountability.AcountabilityActivity;
+import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.boardcast.BoardCastActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
@@ -264,14 +265,19 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_weight:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                LoginShared.setWeightPageFrom(this, "1");
+                Intent insIntent = new Intent(this, BMIDetailsActivity.class);
+                startActivity(insIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+
+                /*LoginShared.setWeightPageFrom(this, "1");
                 LoginShared.setScaleUserId
                         (Integer.parseInt(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).
                                 getScaleUserId()));
                 Intent insIntent = new Intent(this, InstructionActivity.class);
                 startActivity(insIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                finish();*/
                 break;
             case R.id.tv_circle:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

@@ -240,46 +240,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         });
     }
 
-    /*private void callContactsApi() {
-        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
-        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<ContactListModel> call_contactApi = apiInterface.call_contactListApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
-                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
-
-        call_contactApi.enqueue(new Callback<ContactListModel>() {
-            @Override
-            public void onResponse(Call<ContactListModel> call, Response<ContactListModel> response) {
-                try {
-                    if (response.body().getStatus() == 1) {
-                        contactLists.clear();
-                        contactLists.addAll(response.body().getData().getUserList());
-                        adapter.notifyDataSetChanged();
-                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
-                        String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
-                        LoginShared.destroySessionTypePreference();
-                        LoginShared.setDeviceToken(DashBoardActivity.this, deviceToken);
-                        Intent loginIntent = new Intent(DashBoardActivity.this, LoginActivity.class);
-                        startActivity(loginIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                    } else {
-                        MethodUtils.errorMsg(DashBoardActivity.this, response.body().getData().getMessage());
-                    }
-
-                } catch (Exception e) {
-                    MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ContactListModel> call, Throwable t) {
-                MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
-            }
-        });
-
-    }*//*8502,8658*/
-
-
     private void callDashBoardApi(String id) {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class UserListActivity extends BaseActivity implements OnUiEventClick {
+public class UserListActivity extends AppCompatActivity implements OnUiEventClick {
 
     public View view;
     RecyclerView rv_items;
@@ -57,9 +58,8 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_user_list, null);
-        addContentView(view);
+        setContentView(view);
         loadingData = new LoadingData(this);
-        setHeaderView();
         setViewBind();
         callUserListApi();
         addUserDialog();
@@ -68,24 +68,18 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
     }
 
     private void doneUserDialog() {
-        btn_done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent loginIntent = new Intent(UserListActivity.this, DashBoardActivity.class);
-                startActivity(loginIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
+        findViewById(R.id.btn_skip).setOnClickListener(v -> {
+            Intent loginIntent = new Intent(UserListActivity.this, DashBoardActivity.class);
+            startActivity(loginIntent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
         });
+        findViewById(R.id.rl_back).setOnClickListener(view1 ->
+                onBackPressed());
     }
 
     private void addUserDialog() {
-        btn_add_user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ChooseOptionDialog(UserListActivity.this, UserListActivity.this).show();
-            }
-        });
+        btn_add_user.setOnClickListener(v -> new ChooseOptionDialog(UserListActivity.this, UserListActivity.this).show());
     }
 
     private void callUserListApi() {
@@ -185,7 +179,7 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
     }
 
     private void setRecyclerViewItem() {
-        adapter = new UserListAdapter(this, userLists, false,this);
+        adapter = new UserListAdapter(this, userLists, false, this);
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
         rv_items.setItemAnimator(new DefaultItemAnimator());
@@ -200,7 +194,7 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
         btn_add_user = findViewById(R.id.btn_add_user);
     }
 
-    private void setHeaderView() {
+    /*private void setHeaderView() {
         tv_universal_header.setText("List of Users");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
@@ -213,7 +207,7 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
             btn_done.setVisibility(View.VISIBLE);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
-    }
+    }*/
 
     @Override
     public void onUiClick(Intent intent, int eventCode) {

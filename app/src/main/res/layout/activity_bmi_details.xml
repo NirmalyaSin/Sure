@@ -8,54 +8,9 @@
     tools:context=".screens.bmidetails.BMIDetailsActivity">
 
 
-    <RelativeLayout
-        android:id="@+id/rl_header"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/statusBarColor"
-        android:gravity="center_vertical">
-
-        <Button
-            android:id="@+id/btnSkipWeight"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:visibility="gone"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:text="Skip"
-            android:textAllCaps="false"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp" />
-
-        <Button
-            android:id="@+id/btnDashboard"
-            android:layout_width="@dimen/_75sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:text="Dashboard"
-            android:textAllCaps="false"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="BMI Details"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_14sdp" />
-
-    </RelativeLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_header"
         android:alpha="0.6"
         android:background="@drawable/splash_image" />
 
@@ -63,7 +18,6 @@
         android:id="@+id/card_bmi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_header"
         android:layout_margin="@dimen/_10sdp"
         app:cardBackgroundColor="@color/blue"
         app:cardCornerRadius="@dimen/_10sdp">
@@ -79,6 +33,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true">
 
+                <ImageView
+                    android:id="@+id/img_bmi_back"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/back_bmi" />
 
                 <ImageView
                     android:id="@+id/img_bmi_battery"

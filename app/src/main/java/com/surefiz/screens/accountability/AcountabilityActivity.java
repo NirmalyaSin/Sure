@@ -16,11 +16,13 @@ import com.surefiz.screens.accountability.adapter.AllCircleUserAdapter;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.accountability.models.User;
 import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
+import com.surefiz.screens.boardcast.BoardCastActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
+import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -51,15 +53,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         setRecyclerViewItem();
         LoginShared.setWeightFromNotification(this, "0");
         loadingData = new LoadingData(this);
-
-        iv_AddPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AcountabilityActivity.this,
-                        SearchAcountabilityActivity.class));
-            }
-        });
-
         callCircleUserListApi();
     }
 
@@ -81,10 +74,10 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
                 try {
                     if (response.body().getStatus() == 1) {
-                        if (response.body().getData().getUserList().size()>0) {
+                        if (response.body().getData().getUserList().size() > 0) {
                             arrayListUsers.addAll(response.body().getData().getUserList());
                             Log.d("@@UserItem : ", arrayListUsers.get(0).toString());
-                        }else {
+                        } else {
                             MethodUtils.errorMsg(AcountabilityActivity.this, "No User Found.");
                         }
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
@@ -95,7 +88,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
-                    }else {
+                    } else {
                         MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
                     }
 
@@ -136,7 +129,24 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
-        iv_AddPlus.setVisibility(View.VISIBLE);
+        iv_AddPlus.setVisibility(View.GONE);
+        findViewById(R.id.iv_setting).setVisibility(View.VISIBLE);
+        findViewById(R.id.iv_setting).setOnClickListener(view1 -> {
+            Intent privacyIntent = new Intent(this, PrivacyActivity.class);
+            startActivity(privacyIntent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
+        findViewById(R.id.ll_acc_friend).setOnClickListener(view1 -> {
+            startActivity(new Intent(AcountabilityActivity.this,
+                    SearchAcountabilityActivity.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
+        findViewById(R.id.ll_acc_message).setOnClickListener(view1 -> {
+            Intent messageIntent = new Intent(this, BoardCastActivity.class);
+            startActivity(messageIntent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        });
     }
 
     @Override

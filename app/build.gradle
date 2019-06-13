@@ -67,5 +67,8 @@ dependencies {
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     //Picasso Library
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    // New chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
 apply plugin: 'com.google.gms.google-services'

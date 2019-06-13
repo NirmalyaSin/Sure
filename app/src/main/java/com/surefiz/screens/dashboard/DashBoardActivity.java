@@ -16,6 +16,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.google.gson.Gson;
 import com.highsoft.highcharts.common.HIColor;
 import com.highsoft.highcharts.common.HIGradient;
@@ -90,7 +99,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     public View view;
     public String id = "";
     public int row_user = -1;
-    HIChartView chartView, chartViewLoss, chartViewBmi, chartViewGoals, chartViewSubGoals,
+    PieChart chartViewLoss;
+    HIChartView chartView, chartViewBmi, chartViewGoals, chartViewSubGoals,
             chartViewAchiGoals, chartGauge;
     TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded;
     Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein;
@@ -427,7 +437,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
     private void showBatteryImage(int imageDrawable) {
-        if (imageDrawable!=0) {
+        if (imageDrawable != 0) {
             tv_battery_low_status.setVisibility(View.GONE);
             rl_battery_image.setVisibility(View.VISIBLE);
             img_battery_status.setImageResource(imageDrawable);
@@ -438,7 +448,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         chartView = findViewById(R.id.hc_weight);
         chartView.setOptions(options);
         chartViewLoss = findViewById(R.id.hc_weight_loss);
-        chartViewLoss.setOptions(optionsLoss);
+//        chartViewLoss.setOptions(optionsLoss);
         chartViewBmi = findViewById(R.id.hc_bmi);
         chartViewBmi.setOptions(optionsBMI);
         chartViewGoals = findViewById(R.id.hc_goals);
@@ -1001,6 +1011,106 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     private void setWeightLossChart() {
 
+        chartViewLoss.setUsePercentValues(true);
+        chartViewLoss.getDescription().setEnabled(false);
+        chartViewLoss.setExtraOffsets(5, 10, 5, 5);
+
+        chartViewLoss.setDragDecelerationFrictionCoef(0.95f);
+
+//        chartViewLoss.setCenterText(generateCenterSpannableText());
+
+        chartViewLoss.setDrawHoleEnabled(true);
+        chartViewLoss.setHoleColor(Color.TRANSPARENT);
+
+        chartViewLoss.setTransparentCircleColor(Color.WHITE);
+        chartViewLoss.setTransparentCircleAlpha(110);
+
+        chartViewLoss.setHoleRadius(58f);
+        chartViewLoss.setTransparentCircleRadius(61f);
+
+        chartViewLoss.setDrawCenterText(true);
+
+        chartViewLoss.setRotationAngle(0);
+        // enable rotation of the chartViewLoss by touch
+        chartViewLoss.setRotationEnabled(false);
+        chartViewLoss.setHighlightPerTapEnabled(false);
+
+
+        // chartViewLoss.setUnit(" €");
+        // chartViewLoss.setDrawUnitsInChart(true);
+
+        // add a selection listener
+//        chartViewLoss.setOnChartValueSelectedListener(this);
+
+        /*seekBarX.setProgress(4);
+        seekBarY.setProgress(10);*/
+
+        chartViewLoss.animateY(1400, Easing.EaseInOutQuad);
+
+        Legend l = chartViewLoss.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(-20f);
+        l.setYEntrySpace(-10f);
+        l.setYOffset(0f);
+        l.setCustom(new ArrayList<>());
+
+        // entry label styling
+        chartViewLoss.setEntryLabelColor(Color.WHITE);
+        chartViewLoss.setEntryLabelTextSize(12f);
+
+        // calculations
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        double achieved = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getAchieved();
+        double toGo = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getToGo();
+        double percentage = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getPercentage();
+
+        double total = achieved + toGo;
+        float toGoChart = (float) ((total / 100) * toGo);
+        float achievedChart = (float) ((total / 100) * achieved);
+        PieEntry pieEntry = new PieEntry(toGoChart, "To Go: " + toGo);
+        entries.add(pieEntry);
+        pieEntry = new PieEntry(achievedChart, "Achieved: " + achieved);
+        entries.add(pieEntry);
+
+        chartViewLoss.setCenterText("" + percentage + "%");
+        chartViewLoss.setCenterTextColor(Color.BLACK);
+        chartViewLoss.setCenterTextSize(35f);
+
+        PieDataSet dataSet = new PieDataSet(entries, "Weight Loss");
+
+        dataSet.setDrawIcons(false);
+
+        dataSet.setSliceSpace(3f);
+        dataSet.setIconsOffset(new MPPointF(0, 40));
+        dataSet.setSelectionShift(5f);
+
+        // add a lot of colors
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.rgb(250, 66, 82));
+        colors.add(Color.rgb(40, 181, 233));
+
+        dataSet.setColors(colors);
+        //dataSet.setSelectionShift(0f);
+
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter(chartViewLoss));
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.TRANSPARENT);
+        chartViewLoss.setData(data);
+
+        // undo all highlights
+        chartViewLoss.highlightValues(null);
+
+        chartViewLoss.invalidate();
+
+
+
+/*
+
         HIChart chart = new HIChart();
 
         //Required for gradient Background
@@ -1063,11 +1173,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         HashMap<String, Object> map2 = new HashMap<>();
         map2.put("name", "ToGo");
         map2.put("y", LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getToGo());
-        /*map2.put("sliced", true);
-        map2.put("selected", true);*/
+        *//*map2.put("sliced", true);
+        map2.put("selected", true);*//*
 
 
-        /*HashMap<String, Object> map3 = new HashMap<>();
+         *//*HashMap<String, Object> map3 = new HashMap<>();
         map3.put("name", "Firefox");
         map3.put("y", 10.38);
 
@@ -1081,14 +1191,14 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         HashMap<String, Object> map6 = new HashMap<>();
         map6.put("name", "Proprietary or Undetectable");
-        map6.put("y", 0.2);*/
+        map6.put("y", 0.2);*//*
 
-        pie.setData(new ArrayList<>(Arrays.asList(map1, map2/*, map3, map4, map5, map6*/)));
+        pie.setData(new ArrayList<>(Arrays.asList(map1, map2*//*, map3, map4, map5, map6*//*)));
 
         optionsLoss.setSeries(new ArrayList<>(Collections.singletonList(pie)));
 
         chartViewLoss.setOptions(optionsLoss);
-        chartViewLoss.reload();
+        chartViewLoss.reload();*/
     }
 
     private void setWeightChart() {
@@ -1349,7 +1459,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     getMinigoalsjson().toArray(new Number[0]);
             Number[] numbers2 = new Number[series1_data.length];
             for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1(); i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2(); i++) {
-                numbers2[i] = Double.parseDouble(String.valueOf(series2_data[i]));
+                numbers2[i] = series2_data[i] == null ? 0 : Double.parseDouble(String.valueOf(series2_data[i]));
             }
 
             HILine line2 = new HILine();

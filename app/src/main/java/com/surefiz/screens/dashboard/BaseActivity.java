@@ -265,19 +265,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_weight:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                Intent insIntent = new Intent(this, BMIDetailsActivity.class);
-                startActivity(insIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-
-                /*LoginShared.setWeightPageFrom(this, "1");
+                LoginShared.setWeightPageFrom(this, "1");
                 LoginShared.setScaleUserId
                         (Integer.parseInt(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).
                                 getScaleUserId()));
                 Intent insIntent = new Intent(this, InstructionActivity.class);
                 startActivity(insIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();*/
+                finish();
                 break;
             case R.id.tv_circle:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

@@ -99,14 +99,24 @@
             android:src="@drawable/ic_add_plus" />
 
         <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:src="@drawable/iv_setting"
+            android:visibility="gone" />
+
+        <ImageView
             android:id="@+id/iv_friend_request"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="@dimen/_10sdp"
-            android:visibility="gone"
-            android:src="@drawable/ic_friend_request" />
+            android:src="@drawable/ic_friend_request"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

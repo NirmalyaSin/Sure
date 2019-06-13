@@ -79,7 +79,11 @@ public class BMIDetailsActivity extends AppCompatActivity {
             callBMIApi(serverUserId, scaleUserId);
         }
 
-        img_bmi_back.setOnClickListener(view -> onBackPressed());
+        img_bmi_back.setOnClickListener(view -> {
+            startActivity(new Intent(this, DashBoardActivity.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finishAffinity();
+        });
 
     }
 

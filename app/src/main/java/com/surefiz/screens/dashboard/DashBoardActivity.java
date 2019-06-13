@@ -407,14 +407,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         btn_protein.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getColourCode()));
         tv_recorded.setText("Recorded on " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getRecordedOn());
 
-        showBatteryStatus();
+        System.out.println("BatteryStatus: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
+        showBatteryStatus(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
     }
 
-    private void showBatteryStatus() {
+    private void showBatteryStatus(int batteryStatus) {
 
         int imageDrawable = 0;
 
-        switch (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery()) {
+        switch (batteryStatus) {
             case 0:
             case 1:
                 tv_battery_low_status.setVisibility(View.VISIBLE);
@@ -433,7 +434,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 break;
         }
 
-        showBatteryImage(imageDrawable);
+        if (imageDrawable != 0) {
+            showBatteryImage(imageDrawable);
+        }
     }
 
     private void showBatteryImage(int imageDrawable) {

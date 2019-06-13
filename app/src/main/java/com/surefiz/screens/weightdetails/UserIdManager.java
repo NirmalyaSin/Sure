@@ -42,6 +42,7 @@ public class UserIdManager implements OnDataListener {
     private boolean isSettingUserId = false;
     private OnUserIdManagerListener onUserIdManagerListener;
     private ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
+
     private Runnable setUserIdTimeoutRunnable = new Runnable() {
         public void run() {
             if (UserIdManager.this.debug) {
@@ -51,6 +52,7 @@ public class UserIdManager implements OnDataListener {
             sendResultMsg(false);
         }
     };
+
     private Runnable retrySetUserIdRunnable = new Runnable() {
         public void run() {
             if (UserIdManager.this.debug) {

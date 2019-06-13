@@ -237,7 +237,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             btn_register.setText("Update");
             isInCompleteProfile = true;
-            btn_skip_config.setVisibility(View.VISIBLE);
+            //btn_skip_config.setVisibility(View.GONE);
 
 
             getProfileDataAndSet();
@@ -251,7 +251,7 @@ public class RegistrationActivity extends AppCompatActivity {
             iv_plus_add_image.setVisibility(View.VISIBLE);
             tv_upload.setVisibility(View.VISIBLE);
             linearLayout1.setVisibility(View.VISIBLE);
-            btn_skip_config.setVisibility(View.GONE);
+            //btn_skip_config.setVisibility(View.GONE);
 
             //tv_scale.setVisibility(View.VISIBLE);
             //rl_scale.setVisibility(View.VISIBLE);

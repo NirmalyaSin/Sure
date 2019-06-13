@@ -46,6 +46,9 @@ public class NotificationHandleClassOnForeground extends Activity {
                 Intent intent = new Intent(this, WeightDetailsActivity.class);
                 intent.putExtra("timerValue", diffSecond);
                 intent.putExtra("fromPush", "1");
+                if (getIntent().getBooleanExtra("shouldOpenWeightAssignView",false)) {
+                    intent.putExtra("shouldOpenWeightAssignView", true);
+                }
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

@@ -3,7 +3,6 @@ package com.surefiz.screens.users;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +18,6 @@ import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
@@ -61,7 +59,11 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
         setContentView(view);
         loadingData = new LoadingData(this);
         setViewBind();
+
+        //if (!getIntent().getBooleanExtra("isFromPushNotification", false)) {
         callUserListApi();
+        //}
+
         addUserDialog();
         doneUserDialog();
         setRecyclerViewItem();
@@ -194,20 +196,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
         btn_add_user = findViewById(R.id.btn_add_user);
     }
 
-    /*private void setHeaderView() {
-        tv_universal_header.setText("List of Users");
-        iv_edit.setVisibility(View.GONE);
-        btn_add.setVisibility(View.GONE);
-        if (LoginShared.getDashboardPageFrom(this).equals("0")) {
-            img_topbar_menu.setVisibility(View.VISIBLE);
-            btn_done.setVisibility(View.GONE);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        } else {
-            img_topbar_menu.setVisibility(View.GONE);
-            btn_done.setVisibility(View.VISIBLE);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        }
-    }*/
+
 
     @Override
     public void onUiClick(Intent intent, int eventCode) {

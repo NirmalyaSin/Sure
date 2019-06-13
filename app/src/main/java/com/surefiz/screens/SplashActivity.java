@@ -20,6 +20,7 @@ import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
+import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
@@ -83,6 +84,10 @@ public class SplashActivity extends AppCompatActivity {
                     LoginShared.setWeightFromNotification(this, "1");
                     getServerDate = jsonObject1.optString("lastServerUpdateDate");
                     getServerTime = jsonObject1.optString("lastServerUpdateTime");
+                } else if (jsonObject1.optInt("pushType") == 10) {
+                    LoginShared.setWeightFromNotification(this, "10");
+                    getServerDate = jsonObject1.optString("lastServerUpdateDate");
+                    getServerTime = jsonObject1.optString("lastServerUpdateTime");
                 } else if (jsonObject1.optInt("pushType") == 7) {
                     LoginShared.setWeightFromNotification(this, "7");
                 }
@@ -125,7 +130,7 @@ public class SplashActivity extends AppCompatActivity {
         Log.d("@@SNotification : ", String.valueOf(notificationPage));
 
         if (!LoginShared.getWeightFromNotification(this).equals("0")) {
-            if (LoginShared.getWeightFromNotification(this).equals("1")) {
+            if (LoginShared.getWeightFromNotification(this).equals("1") || LoginShared.getWeightFromNotification(this).equals("1")) {
                 String dateStr = getServerDate + " " + getServerTime;
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
@@ -140,21 +145,26 @@ public class SplashActivity extends AppCompatActivity {
                     long diff = currentDate.getTime() - date.getTime();
                     int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
                     //if (dateFormat1.format(currentDate).equals(getServerDate)) {
-                        int diffSecond = (int) (diff / 1000);
-                        if (diffSecond < 120) {
-                            Intent intent = new Intent(this, WeightDetailsActivity.class);
-                            intent.putExtra("timerValue", diffSecond);
-                            intent.putExtra("fromPush", "1");
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            finish();
-                        } else {
-                            Intent intent = new Intent(this, DashBoardActivity.class);
-                            intent.putExtra("expired", "1");
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            finish();
+                    int diffSecond = (int) (diff / 1000);
+                    if (diffSecond < 120) {
+                        Intent intent = new Intent(this, WeightDetailsActivity.class);
+                        intent.putExtra("timerValue", diffSecond);
+                        intent.putExtra("fromPush", "1");
+
+                        if (LoginShared.getWeightFromNotification(this).equals("10")) {
+                            intent.putExtra("shouldOpenWeightAssignView", true);
                         }
+
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(this, DashBoardActivity.class);
+                        intent.putExtra("expired", "1");
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
                     //}
                     /*else {
                         Intent intent = new Intent(this, DashBoardActivity.class);
@@ -213,7 +223,13 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            }
+            } /*else if (LoginShared.getWeightFromNotification(this).equals("10")) {
+                Intent intent = new Intent(this, UserListActivity.class);
+                intent.putExtra("isFromPushNotification", true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }*/
         } else if (LoginShared.getRegistrationDataModel(this) != null &&
                 LoginShared.getRegistrationDataModel(this).getData() != null &&
                 LoginShared.getRegistrationDataModel(this).getData().getToken().equals("") &&

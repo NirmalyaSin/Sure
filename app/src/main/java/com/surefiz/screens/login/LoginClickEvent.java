@@ -144,8 +144,6 @@ public class LoginClickEvent implements View.OnClickListener {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
 
-                Log.d("@@LoginData : ", call.request().body().toString());
-
                 try {
                     String responseString = response.body().string();
                     Gson gson = new Gson();

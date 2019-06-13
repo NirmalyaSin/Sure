@@ -196,7 +196,7 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_500sdp"
+                    android:layout_height="@dimen/_535sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_10sdp"
@@ -757,14 +757,16 @@
                             <RelativeLayout
                                 android:id="@+id/rl_battery_image"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/_6sdp"
+                                android:paddingBottom="@dimen/_6sdp">
 
                                 <TextView
                                     android:id="@+id/tv_battery_status"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:text="@string/battery_status_low"
+                                    android:text="@string/battery_status"
                                     android:textColor="@color/whiteColor"
                                     android:textSize="@dimen/_12sdp" />
 
@@ -801,8 +803,6 @@
                                 android:textColor="@color/whiteColor"
                                 android:textSize="@dimen/_15sdp" />
                         </RelativeLayout>
-
-
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -35,6 +36,7 @@ import com.surefiz.utils.progressloader.LoadingData;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import cn.onecoder.scalewifi.net.socket.udp.UDPHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,7 +63,11 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
         loadingData = new LoadingData(this);
         setHeaderView();
         setViewBind();
+
+        //if (!getIntent().getBooleanExtra("isFromPushNotification", false)) {
         callUserListApi();
+        //}
+
         addUserDialog();
         doneUserDialog();
         setRecyclerViewItem();
@@ -185,7 +191,7 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
     }
 
     private void setRecyclerViewItem() {
-        adapter = new UserListAdapter(this, userLists, false,this);
+        adapter = new UserListAdapter(this, userLists, false, this);
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
         rv_items.setItemAnimator(new DefaultItemAnimator());
@@ -200,7 +206,11 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
         btn_add_user = findViewById(R.id.btn_add_user);
     }
 
+
     private void setHeaderView() {
+
+        findViewById(R.id.rl_header_user_list).setVisibility(View.GONE);
+
         tv_universal_header.setText("List of Users");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
@@ -213,7 +223,9 @@ public class UserListActivity extends BaseActivity implements OnUiEventClick {
             btn_done.setVisibility(View.VISIBLE);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
+
     }
+
 
     @Override
     public void onUiClick(Intent intent, int eventCode) {

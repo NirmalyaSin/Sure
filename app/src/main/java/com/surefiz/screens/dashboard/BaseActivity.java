@@ -99,6 +99,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_done)
     public Button btn_done;
     @BindView(R.id.rl_back)
+
+
     public RelativeLayout rl_back;
     private ActionBarDrawerToggle mDrawerToggle;
     private ImageLoader imageLoader;

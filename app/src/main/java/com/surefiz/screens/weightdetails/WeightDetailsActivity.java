@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -23,6 +24,7 @@ import com.surefiz.screens.UDPHelper;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.users.adapter.UserListAdapter;
 import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.users.model.UserListModel;
@@ -67,6 +69,11 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     private RecyclerView rv_items;
     private Button btn_go_next;
 
+    private RelativeLayout rl_user_data;
+    private Button btn_weight_assign_yes;
+    private Button btn_weight_assign_no;
+    private RelativeLayout rl_weight_assign;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +84,10 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         setHeader();
         viewBind();
         setRecyclerViewItem();
-        callUserListApi();
+
+        if (!getIntent().getBooleanExtra("shouldOpenWeightAssignView", false)) {
+            callUserListApi();
+        }
 
         handler = new Handler();
         handler1 = new Handler();
@@ -97,8 +107,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
 //        scaleUserId = LoginShared.getScaleUserId(this);
         userName = LoginShared.getRegistrationDataModel(this).getData()
                 .getUser().get(0).getUserName();
-        scaleId = LoginShared.getRegistrationDataModel(this).getData()
-                .getUser().get(0).getUserMac();
+        scaleId = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserMac();
 
         try {
             if (getIntent().getStringExtra("notificationFlag").equals("1")) {
@@ -124,6 +133,53 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         rv_items = findViewById(R.id.rv_items);
         btn_go_next = findViewById(R.id.btn_go_next);
         findViewById(R.id.btn_add_user).setVisibility(View.GONE);
+
+
+        rl_weight_assign = findViewById(R.id.rl_weight_assign);
+        rl_user_data = findViewById(R.id.rl_user_data);
+        btn_weight_assign_yes = findViewById(R.id.btn_weight_assign_yes);
+        btn_weight_assign_no = findViewById(R.id.btn_weight_assign_no);
+
+        showWeightAssignView(getIntent());
+    }
+
+
+    private void showWeightAssignView(Intent intent) {
+        if (intent.getBooleanExtra("shouldOpenWeightAssignView", false)) {
+            rl_weight_assign.setVisibility(View.VISIBLE);
+            rl_user_data.setVisibility(View.GONE);
+            setOtherEventListners();
+        } else {
+            rl_user_data.setVisibility(View.VISIBLE);
+            rl_weight_assign.setVisibility(View.GONE);
+        }
+    }
+
+    private void setOtherEventListners() {
+        btn_weight_assign_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(WeightDetailsActivity.this, DashBoardActivity.class);
+                finishAffinity();
+                startActivity(loginIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        btn_weight_assign_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        showWeightAssignView(intent);
+
     }
 
     private void setRecyclerViewItem() {
@@ -194,6 +250,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
             scaleUserId = intent.getIntExtra("id", 0);
             if (isWeightReceived) {
                 saveWeightToSDK();
+
             }
         }
     }

@@ -7,10 +7,11 @@
     tools:context=".screens.users.UserListActivity">
 
     <RelativeLayout
-        android:id="@+id/rl_header"
+        android:id="@+id/rl_header_user_list"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/statusBarColor">
+        android:background="@color/statusBarColor"
+        android:visibility="visible">
 
         <RelativeLayout
             android:id="@+id/rl_back"
@@ -54,53 +55,107 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_header"
+        android:layout_below="@id/rl_header_user_list"
         android:alpha="0.6"
         android:background="@drawable/splash_image" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_items"
+    <RelativeLayout
+        android:id="@+id/rl_weight_assign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/rl_add_user"
-        android:layout_below="@id/rl_header" />
+        android:layout_below="@+id/rl_header_user_list"
+        android:visibility="gone"
+        android:padding="@dimen/_15sdp">
+
+        <TextView
+            android:id="@+id/tv_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Do you want to assign your weight?"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_18sdp"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_weight"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/btn_weight_assign_yes"
+                android:layout_width="@dimen/_75sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:text="Yes"
+                android:textAllCaps="false"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/login_submit_rounded_corner"
+                android:textColor="@color/whiteColor"/>
+
+            <Button
+                android:id="@+id/btn_weight_assign_no"
+                android:layout_width="@dimen/_75sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_toEndOf="@+id/btn_weight_assign_yes"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/login_submit_rounded_corner"
+                android:text="No"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"/>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_add_user"
+        android:id="@+id/rl_user_data"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/_30sdp">
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_header_user_list"
+        android:visibility="visible">
 
-        <Button
-            android:id="@+id/btn_add_user"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/login_edit_rounded_corner_blue"
-            android:gravity="center"
-            android:paddingLeft="@dimen/_35sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingRight="@dimen/_35sdp"
-            android:paddingBottom="@dimen/_10sdp"
-            android:text="Add User"
-            android:textAllCaps="true"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_14sdp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_items"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/rl_add_user" />
 
-        <Button
-            android:id="@+id/btn_go_next"
+        <RelativeLayout
+            android:id="@+id/rl_add_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:text="@string/go_next_action"
-            android:textAllCaps="false"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_15sdp"
-            android:visibility="gone" />
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_30sdp">
+
+            <Button
+                android:id="@+id/btn_add_user"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/login_edit_rounded_corner_blue"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_35sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingRight="@dimen/_35sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="Add User"
+                android:textAllCaps="true"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <Button
+                android:id="@+id/btn_go_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/login_submit_rounded_corner"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@string/go_next_action"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="gone" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
 

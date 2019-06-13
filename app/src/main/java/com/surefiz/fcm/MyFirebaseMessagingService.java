@@ -28,6 +28,7 @@ import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
+import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
 
 import org.json.JSONException;
@@ -98,6 +99,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "7");
                 } else if (jObject.optInt("pushType") == 9) {
                     LoginShared.setOTP(this, jObject.optString("OTP"));
+                }else if (jObject.optInt("pushType") == 10) {
+                    LoginShared.setWeightFromNotification(this, "10");
                 } else {
                     LoginShared.setWeightFromNotification(this, "7");
                 }
@@ -276,6 +279,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
+        }else if (jObject.optInt("pushType") == 10) {
+
+
+            Intent intent = new Intent(this, NotificationHandleClassOnForeground.class);
+            intent.putExtra("notificationFlag", "1");
+            intent.putExtra("shouldOpenWeightAssignView", true);
+            intent.putExtra("lastServerUpdateDate", jObject.optString("lastServerUpdateDate"));
+            intent.putExtra("lastServerUpdateTime", jObject.optString("lastServerUpdateTime"));
+
+            /*Intent intent = new Intent(this, UserListActivity.class);
+            intent.putExtra("isFromPushNotification",true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);*/
         } else {
             Intent intent = new Intent(this, DashBoardActivity.class);
             intent.putExtra("notificationFlag", "1");

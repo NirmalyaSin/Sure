@@ -130,7 +130,7 @@ public class SplashActivity extends AppCompatActivity {
         Log.d("@@SNotification : ", String.valueOf(notificationPage));
 
         if (!LoginShared.getWeightFromNotification(this).equals("0")) {
-            if (LoginShared.getWeightFromNotification(this).equals("1") || LoginShared.getWeightFromNotification(this).equals("1")) {
+            if (LoginShared.getWeightFromNotification(this).equals("1") || LoginShared.getWeightFromNotification(this).equals("10")) {
                 String dateStr = getServerDate + " " + getServerTime;
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");

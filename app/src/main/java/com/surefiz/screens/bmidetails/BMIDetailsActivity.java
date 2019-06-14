@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,6 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
@@ -27,6 +36,7 @@ import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -52,13 +62,27 @@ public class BMIDetailsActivity extends AppCompatActivity {
     TextView txt_bmi_subgoal1;
     @BindView(R.id.txt_bmi_subgoal2)
     TextView txt_bmi_subgoal2;
-    @BindView(R.id.donut_progress)
-    DonutProgress donut_progress;
+    /*@BindView(R.id.donut_progress)
+    DonutProgress donut_progress;*/
     @BindView(R.id.img_bmi_progress)
     ImageView img_bmi_progress;
     @BindView(R.id.img_bmi_battery)
     ImageView img_bmi_battery;
+    @BindView(R.id.bmiProgressChart)
+    PieChart bmiProgressChart;
     private LoadingData loader;
+    private BroadcastReceiver myBMIReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String serverUserId = intent.getStringExtra("serverUserId");
+            String scaleUserId = intent.getStringExtra("ScaleUserId");
+            Log.d("@@BMI-Broadcast : ", "Received on BMI-Page" + "\nserverUserId = " + serverUserId
+                    + "\nscaleUserId = " + scaleUserId);
+            //Call Api for BMI
+            callBMIApi(serverUserId, scaleUserId);
+        }
+    };
+    private int numberOfSlices = 40;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +108,113 @@ public class BMIDetailsActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finishAffinity();
         });
+
+
+        //setBMIProgressChart("10.8");
+    }
+
+    private void setBMIProgressChart(String bmiPercentage) {
+        bmiProgressChart.setUsePercentValues(true);
+        bmiProgressChart.getDescription().setEnabled(false);
+        bmiProgressChart.setExtraOffsets(5, 10, 5, 5);
+        bmiProgressChart.setDragDecelerationFrictionCoef(0.95f);
+        bmiProgressChart.setDrawHoleEnabled(true);
+        bmiProgressChart.setHoleColor(Color.TRANSPARENT);
+        bmiProgressChart.setTransparentCircleColor(Color.WHITE);
+        bmiProgressChart.setTransparentCircleAlpha(110);
+        bmiProgressChart.setHoleRadius(58f);
+        bmiProgressChart.setTransparentCircleRadius(61f);
+        bmiProgressChart.setDrawCenterText(true);
+        bmiProgressChart.setRotationAngle(270);
+        bmiProgressChart.setRotationEnabled(false);
+        bmiProgressChart.setHighlightPerTapEnabled(false);
+
+
+        bmiProgressChart.animateY(1400, Easing.EaseInOutQuad);
+
+        Legend l = bmiProgressChart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(-20f);
+        l.setYEntrySpace(-10f);
+        l.setYOffset(0f);
+        l.setCustom(new ArrayList<>());
+
+        bmiProgressChart.setEntryLabelColor(Color.WHITE);
+        bmiProgressChart.setEntryLabelTextSize(12f);
+
+        // calculation of values to be displayed
+        ArrayList<PieEntry> entries = setChartValues();
+
+
+        bmiProgressChart.setCenterText(bmiPercentage + "%");
+        bmiProgressChart.setCenterTextColor(Color.WHITE);
+        bmiProgressChart.setCenterTextSize(15f);
+
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
+
+        dataSet.setDrawIcons(false);
+
+        dataSet.setSliceSpace(3f);
+        dataSet.setIconsOffset(new MPPointF(0, 40));
+        dataSet.setSelectionShift(5f);
+
+
+        // Setting the color code for the slices
+        ArrayList<Integer> colors = setColorForChart(bmiPercentage);
+
+        dataSet.setColors(colors);
+
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter(bmiProgressChart));
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.TRANSPARENT);
+        bmiProgressChart.setData(data);
+
+        // undo all highlights
+        bmiProgressChart.highlightValues(null);
+        bmiProgressChart.invalidate();
+    }
+
+    private ArrayList<Integer> setColorForChart(String bmiPercentage) {
+
+        float bmiValue = Float.parseFloat(bmiPercentage);
+        //float val = (numberOfSlices/100.0f)*bmiValue;
+        int achievedSlices = (int) ((numberOfSlices / 100.0f) * bmiValue);
+        int leftOverSlices = numberOfSlices - achievedSlices;
+        ArrayList<Integer> colors = new ArrayList<>();
+
+        // Achieved steps should be displayed in White color
+        for (int i = 0; i < achievedSlices; i++) {
+            colors.add(Color.rgb(255, 255, 255));
+        }
+
+
+        // Leftover steps will be displayed in Transparent color
+        for (int i = 0; i < leftOverSlices; i++) {
+            colors.add(Color.argb(40, 0, 0, 0));
+        }
+
+        return colors;
+
+    }
+
+
+    private ArrayList<PieEntry> setChartValues() {
+        ArrayList<PieEntry> entries = new ArrayList<>();
+
+        // Making the Progress bar basis on total number of steps
+        // numberOfSlices= 40 for time being
+
+        for (int i = 0; i < numberOfSlices; i++) {
+            PieEntry pieEntry = new PieEntry((float) 100 / numberOfSlices);
+            entries.add(pieEntry);
+        }
+
+        return entries;
 
     }
 
@@ -129,7 +260,9 @@ public class BMIDetailsActivity extends AppCompatActivity {
                     BMIDetails dmBmiDetails = response.body().getData().getBMIDetails();
                     txt_bmi_bmiversion.setText("BMI " + dmBmiDetails.getBMI());
 
-                    donut_progress.setProgress(Float.parseFloat(dmBmiDetails.getPercentage()));
+                    //donut_progress.setProgress(Float.parseFloat(dmBmiDetails.getPercentage()));
+
+                    setBMIProgressChart(dmBmiDetails.getPercentage());
 
                     if (dmBmiDetails.getWeight().contains(" ")) {
                         String split[] = dmBmiDetails.getWeight().split(Pattern.quote(" "));
@@ -239,16 +372,4 @@ public class BMIDetailsActivity extends AppCompatActivity {
             }
         });
     }
-
-    private BroadcastReceiver myBMIReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String serverUserId = intent.getStringExtra("serverUserId");
-            String scaleUserId = intent.getStringExtra("ScaleUserId");
-            Log.d("@@BMI-Broadcast : ", "Received on BMI-Page" + "\nserverUserId = " + serverUserId
-                    + "\nscaleUserId = " + scaleUserId);
-            //Call Api for BMI
-            callBMIApi(serverUserId, scaleUserId);
-        }
-    };
 }

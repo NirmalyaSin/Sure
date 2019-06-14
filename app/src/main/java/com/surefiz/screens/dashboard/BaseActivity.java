@@ -310,6 +310,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_settings:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                //Intent settingsIntent = new Intent(this, BMIDetailsActivity.class);
                 startActivity(settingsIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

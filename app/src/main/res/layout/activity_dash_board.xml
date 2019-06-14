@@ -219,9 +219,10 @@
 
                 </android.support.v7.widget.CardView>
 
+                <!--_535sdp-->
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_535sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_10sdp"
@@ -804,9 +805,7 @@
                                     android:paddingLeft="@dimen/_10sdp"
                                     android:paddingRight="@dimen/_10sdp"
                                     android:scaleType="fitXY" />
-
                             </RelativeLayout>
-
                         </RelativeLayout>
 
 
@@ -817,14 +816,15 @@
                             android:layout_marginLeft="@dimen/_4sdp"
                             android:layout_marginTop="@dimen/_6sdp"
                             android:layout_marginRight="@dimen/_4sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
                             android:background="#40CBDC">
 
                             <TextView
                                 android:id="@+id/tv_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
                                 android:text="Performance Status"
+                                android:layout_centerInParent="true"
                                 android:textColor="@color/whiteColor"
                                 android:textSize="@dimen/_15sdp" />
                         </RelativeLayout>

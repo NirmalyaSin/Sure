@@ -82,7 +82,7 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
-                    <com.github.lzyzsd.circleprogress.DonutProgress
+                    <!--<com.github.lzyzsd.circleprogress.DonutProgress
                         android:id="@+id/donut_progress"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_100sdp"
@@ -90,7 +90,17 @@
                         app:donut_circle_starting_degree="270"
                         app:donut_finished_color="@android:color/white"
                         app:donut_text_color="@android:color/white"
-                        app:donut_unfinished_color="@color/gray" />
+                        app:donut_unfinished_color="@color/gray"
+                        android:visibility="gone"/>-->
+
+
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/bmiProgressChart"
+                        android:layout_width="@dimen/_200sdp"
+                        android:layout_height="@dimen/_200sdp"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent" />
 
                 </LinearLayout>
 

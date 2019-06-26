@@ -181,6 +181,7 @@
                     android:backgroundTint="@android:color/transparent"
                     android:hint="Enter First Name"
                     android:inputType="text|textCapSentences"
+                    android:maxLength="15"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/_6sdp"
                     android:textColor="@color/whiteColor"
@@ -223,6 +224,7 @@
                     android:backgroundTint="@android:color/transparent"
                     android:hint="Enter Middle Name"
                     android:inputType="text|textCapSentences"
+                    android:maxLength="15"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/_6sdp"
                     android:textColor="@color/whiteColor"
@@ -269,6 +271,7 @@
                     android:backgroundTint="@android:color/transparent"
                     android:hint="Enter Last Name"
                     android:inputType="text|textCapSentences"
+                    android:maxLength="15"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/_6sdp"
                     android:textColor="@color/whiteColor"
@@ -323,7 +326,6 @@
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
-
 
 
             <LinearLayout
@@ -843,6 +845,7 @@
                     android:textSize="@dimen/_10sdp" />
 
             </LinearLayout>
+
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"

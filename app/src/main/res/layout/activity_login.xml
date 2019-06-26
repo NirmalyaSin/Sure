@@ -26,15 +26,15 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_header"
         android:alpha="0.6"
-        android:visibility="gone"
-        android:background="@drawable/splash_image" />
+        android:background="@drawable/splash_image"
+        android:visibility="gone" />
 
     <ScrollView
         android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.6"
         android:layout_marginTop="?android:attr/actionBarSize"
+        android:alpha="0.6"
         android:background="@drawable/splash_image"
         android:fillViewport="true">
 
@@ -149,8 +149,8 @@
                 android:background="@drawable/solid_circle"
                 android:padding="@dimen/_10sdp"
                 android:text="OR"
-                android:textSize="@dimen/_10sdp"
-                android:textColor="@color/blue" />
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_10sdp" />
 
             <requestFocus />
 

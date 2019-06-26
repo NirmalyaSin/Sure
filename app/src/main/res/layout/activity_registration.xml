@@ -37,9 +37,9 @@
             android:background="@drawable/login_submit_rounded_corner"
             android:text="Skip"
             android:textAllCaps="false"
-            android:visibility="gone"
             android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_registration"
@@ -153,6 +153,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter first Name"
                         android:inputType="text|textCapSentences"
+                        android:maxLength="15"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -188,6 +189,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter middle Name"
                         android:inputType="text|textCapSentences"
+                        android:maxLength="15"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -234,6 +236,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter last Name"
                         android:inputType="text|textCapSentences"
+                        android:maxLength="15"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -365,9 +368,9 @@
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter Password"
                         android:inputType="textPassword"
+                        android:maxLength="16"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
-                        android:maxLength="16"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
                         android:textCursorDrawable="@drawable/cursor_color"

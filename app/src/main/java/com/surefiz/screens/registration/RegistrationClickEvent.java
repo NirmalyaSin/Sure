@@ -205,7 +205,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 heightList.add(i + " " + change);
             }
         } else {
-            for (int i = 90; i <= 280; i++) {
+            for (int i = 88; i <= 280; i++) {
                 heightList.add(i + " " + change);
             }
         }
@@ -223,11 +223,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void addWeightListAndCall(String change) {
         weightList.clear();
         if (change.equals("LB")) {
-            for (int i = 5; i < 400; i++) {
+            for (int i = 35; i <= 400; i++) {
                 weightList.add(i + " " + change);
             }
         } else {
-            for (int i = 5; i < 150; i++) {
+            for (int i = 10; i <= 182; i++) {
                 weightList.add(i + " " + change);
             }
         }
@@ -715,7 +715,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (registrationActivity.age.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your Age");
         } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter non-zero value for Age");
+            MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
         } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
@@ -723,7 +723,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
         } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Password must be between 8 and 16 characters");
+            MethodUtils.errorMsg(registrationActivity, "Password must be minimum 8 characters");
         } else if (registrationActivity.address.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your street address");
         } else if (registrationActivity.city.getText().toString().equals("")) {
@@ -763,19 +763,14 @@ public class RegistrationClickEvent implements View.OnClickListener {
         }
     }
 
-    public boolean isNonZeroValue(String value) {
+    private boolean isNonZeroValue(String value) {
         int nonZeroValue = 0;
         try {
             nonZeroValue = Integer.valueOf(value);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return false;
         }
-        if (nonZeroValue > 0) {
-            return true;
-        }
-
-        return false;
+        return (nonZeroValue >= 9 && nonZeroValue <= 99);
     }
 
 
@@ -813,7 +808,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (registrationActivity.age.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your Age");
         } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter non-zero value for Age");
+            MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
         } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {

@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:alpha="0.6"
     android:background="#000000"
     android:orientation="vertical">
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_60sdp"
-        android:background="@color/statusBarColor"
-        >
+        android:background="@color/statusBarColor">
 
         <TextView
             android:id="@+id/tv_adduser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
             android:text="Add User"
+            android:textColor="@color/whiteColor"
             android:textSize="@dimen/_19sdp"
             android:textStyle="bold"
-            android:textColor="@color/whiteColor"
-            android:gravity="center"
-            android:layout_centerInParent="true"
 
             />
+
         <ImageView
             android:id="@+id/iv_cross_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cross48"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_20sdp"
             android:padding="@dimen/_20sdp"
-            />
+            android:src="@drawable/cross48" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="@dimen/_40sdp"
-        android:layout_marginBottom="@dimen/_40sdp">
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/tv_frist_name"
                 android:layout_width="wrap_content"
@@ -55,13 +55,14 @@
                 android:text="First Name "
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star16"
-                />
+                android:src="@drawable/star16" />
 
         </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/rl_fristname"
             android:layout_width="match_parent"
@@ -79,6 +80,7 @@
                 android:backgroundTint="@android:color/transparent"
                 android:hint="Enter First Name"
                 android:inputType="text|textCapSentences"
+                android:maxLength="15"
                 android:maxLines="1"
                 android:paddingBottom="@dimen/_6sdp"
                 android:textColor="@color/whiteColor"
@@ -86,12 +88,12 @@
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/_20sdp"
-            >
+            android:paddingTop="@dimen/_20sdp">
 
             <TextView
                 android:id="@+id/tv_middle"
@@ -121,6 +123,7 @@
                 android:backgroundTint="@android:color/transparent"
                 android:hint="Enter Middle Name"
                 android:inputType="text|textCapSentences"
+                android:maxLength="15"
                 android:maxLines="1"
                 android:paddingBottom="@dimen/_6sdp"
                 android:textColor="@color/whiteColor"
@@ -128,12 +131,13 @@
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/_20sdp"
-            >
+            android:paddingTop="@dimen/_20sdp">
+
             <TextView
                 android:id="@+id/tv_last"
                 android:layout_width="wrap_content"
@@ -142,11 +146,11 @@
                 android:text="Last Name "
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star16"
-                />
+                android:src="@drawable/star16" />
         </LinearLayout>
 
         <RelativeLayout
@@ -166,6 +170,7 @@
                 android:backgroundTint="@android:color/transparent"
                 android:hint="Enter Last Name"
                 android:inputType="text|textCapSentences"
+                android:maxLength="15"
                 android:maxLines="1"
                 android:paddingBottom="@dimen/_6sdp"
                 android:textColor="@color/whiteColor"
@@ -178,8 +183,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/_20sdp"
-            >
+            android:paddingTop="@dimen/_20sdp">
 
             <TextView
                 android:id="@+id/tv_email"
@@ -189,10 +193,11 @@
                 android:text="Email Id"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star16"/>
+                android:src="@drawable/star16" />
 
         </LinearLayout>
 
@@ -225,27 +230,27 @@
             android:id="@+id/cb_terms_condi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginRight="@dimen/_16sdp"
-            >
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_20sdp">
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/whiteColor"
                 android:button="@drawable/checkbox_selector"
+                android:textColor="@color/whiteColor"
 
                 />
+
             <TextView
                 android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:text="@string/all_terms_condition"
                 android:textColor="@color/whiteColor"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"/>
+                android:textSize="@dimen/_13sdp" />
 
         </LinearLayout>
 
@@ -253,14 +258,13 @@
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_15sdp"
             android:background="@drawable/login_submit_rounded_corner"
             android:text="Add User"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_15sdp"
-            android:textStyle="bold"
-            android:layout_margin="@dimen/_15sdp"
-            />
+            android:textStyle="bold" />
 
 
     </LinearLayout>

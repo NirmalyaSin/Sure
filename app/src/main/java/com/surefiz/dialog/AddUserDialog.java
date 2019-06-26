@@ -648,11 +648,11 @@ public class AddUserDialog extends Dialog {
     private void addHeightListAndCall(String change) {
         heightList.clear();
         if (change.equals("INCH")) {
-            for (int i = 1; i < 109; i++) {
+            for (int i = 35; i <= 110; i++) {
                 heightList.add(i + " " + change);
             }
         } else {
-            for (int i = 1; i < 276; i++) {
+            for (int i = 88; i <= 280; i++) {
                 heightList.add(i + " " + change);
             }
         }
@@ -671,11 +671,11 @@ public class AddUserDialog extends Dialog {
     private void addWeightListAndCall(String change) {
         weightList.clear();
         if (change.equals("LB")) {
-            for (int i = 5; i < 301; i++) {
+            for (int i = 35; i <= 400; i++) {
                 weightList.add(i + " " + change);
             }
         } else {
-            for (int i = 5; i < 151; i++) {
+            for (int i = 10; i <= 182; i++) {
                 weightList.add(i + " " + change);
             }
         }

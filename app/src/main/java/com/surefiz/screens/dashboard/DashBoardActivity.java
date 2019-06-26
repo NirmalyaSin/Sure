@@ -1395,7 +1395,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
                     getMinigoalsjson().toArray(new Number[0]);
             Number[] numbers = new Number[series1_data.length];
-            for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs1(); i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs2(); i++) {
+            for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
+                    .getData().getChartList().getGoals().getMs1();
+                 i < LoginShared.getDashBoardDataModel(DashBoardActivity.this)
+                         .getData().getChartList().getGoals().getMs2(); i++) {
                 numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
             }
             //Number[] series1_data = new Number[]{null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950, 10871, 0};

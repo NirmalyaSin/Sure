@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class ProfileActivity extends BaseActivity {
     EditText et_height;
     Button btn_register;
     Switch switch_visibility;
+    RelativeLayout rl_visibility;
     private File mFile = null;
     private Uri fileUri = null;
     private OnImageSet onImageSet;
@@ -113,6 +115,7 @@ public class ProfileActivity extends BaseActivity {
         et_height = view.findViewById(R.id.et_height);
         btn_register = view.findViewById(R.id.btn_register);
         switch_visibility = view.findViewById(R.id.switch_visibility);
+        rl_visibility = view.findViewById(R.id.rl_visibility);
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {

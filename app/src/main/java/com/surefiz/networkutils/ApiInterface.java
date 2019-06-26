@@ -196,6 +196,7 @@ public interface ApiInterface {
                                                 @Part("user_email") RequestBody user_email,
                                                 @Part("Height") RequestBody Height,
                                                 @Part("prefferedUnits") RequestBody prefferedUnits,
+                                                @Part("mainuservisibility") RequestBody mainuservisibility,
                                                 @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -211,7 +212,8 @@ public interface ApiInterface {
                                            @Part("deviceType") RequestBody deviceType,
                                            @Part("user_email") RequestBody user_email,
                                            @Part("Height") RequestBody Height,
-                                           @Part("prefferedUnits") RequestBody prefferedUnits);
+                                           @Part("prefferedUnits") RequestBody prefferedUnits,
+                                           @Part("mainuservisibility") RequestBody mainuservisibility);
 
     @FormUrlEncoded
     @POST(USERLIST)

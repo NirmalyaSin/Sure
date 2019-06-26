@@ -24,6 +24,9 @@ public class UserListItem implements Serializable {
 	@SerializedName("serverUserId")
 	private int serverUserId;
 
+	@SerializedName("mainuservisibility")
+	private int mainuservisibility;
+
 	public void setUserWeight(String userWeight){
 		this.userWeight = userWeight;
 	}
@@ -70,5 +73,9 @@ public class UserListItem implements Serializable {
 
 	public int getServerUserId(){
 		return serverUserId;
+	}
+
+	public int getMainuservisibility() {
+		return mainuservisibility;
 	}
 }

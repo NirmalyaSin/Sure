@@ -1,5 +1,6 @@
 package com.surefiz.screens.profile;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -192,6 +193,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void setData() {
 
         if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserDob())) {
@@ -201,7 +203,17 @@ public class ProfileClickEvent implements View.OnClickListener {
         }
 
 
-        activity.et_gender.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender());
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("1")){
+            activity.et_gender.setText("Male");
+        }else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("0")){
+            activity.et_gender.setText("Female");
+        }else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("2")){
+            activity.et_gender.setText("Non-binary");
+        }
+
+
+
+
         activity.et_phone.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserPhoneNumber());
         activity.et_full.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
         activity.et_middle.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMiddleName());
@@ -226,6 +238,19 @@ public class ProfileClickEvent implements View.OnClickListener {
             activity.et_height.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getHeight() + " " + unit);
         } else {
             activity.et_height.setText("");
+        }
+
+
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            activity.rl_visibility.setVisibility(View.GONE);
+            activity.switch_visibility.setChecked(true);
+        } else {
+            if(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMainuservisibility().equals("1")){
+                activity.switch_visibility.setChecked(true);
+            }else {
+                activity.switch_visibility.setChecked(false);
+            }
+            activity.rl_visibility.setVisibility(View.VISIBLE);
         }
 
         activity.profile_image.setEnabled(false);
@@ -451,6 +476,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         loader.show_with_label("Loading");
         RequestBody gender = null;
         RequestBody preffered = null;
+        RequestBody mainuservisibility = null;
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), activity.et_full.getText().toString().trim());
@@ -476,17 +502,26 @@ public class ProfileClickEvent implements View.OnClickListener {
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "Android");
         RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId());
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), activity.et_DOB.getText().toString().trim());
+
+        if (activity.switch_visibility.isChecked()){
+            mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "1");
+        }else {
+            mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "0");
+        }
+
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), activity.mCompressedFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("userImage",
                 activity.mCompressedFile.getName(), reqFile);
-        MultipartBody.Part body1 = MultipartBody.Part.createFormData("middleName",
+
+
+        /*MultipartBody.Part body1 = MultipartBody.Part.createFormData("middleName",
                 activity.mCompressedFile.getName(), reqFile);
         MultipartBody.Part body2 = MultipartBody.Part.createFormData("middleName",
-                activity.mCompressedFile.getName(), reqFile);
+                activity.mCompressedFile.getName(), reqFile);*/
 
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, body);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered,mainuservisibility, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -543,6 +578,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         loader.show_with_label("Loading");
         RequestBody gender = null;
         RequestBody preffered = null;
+        RequestBody mainuservisibility = null;
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), activity.et_full.getText().toString().trim());
@@ -562,6 +598,15 @@ public class ProfileClickEvent implements View.OnClickListener {
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         }
+
+
+        if (activity.switch_visibility.isChecked()){
+            mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "1");
+        }else {
+            mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "0");
+        }
+
+
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "Android");
         RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId());
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), activity.et_DOB.getText().toString().trim());
@@ -570,7 +615,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         String[] splited = str.split(" ");
         RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0].toString());
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered,mainuservisibility);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override

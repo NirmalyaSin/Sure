@@ -895,8 +895,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         HIXAxis xAxis = new HIXAxis();
         HILabels labels = new HILabels();
+        xAxis.setLineWidth(1);
         xAxis.setAllowDecimals(false);
-        // String[] categoriesList = new String[]{LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getLabel()};
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().
                 getLabel() != null ||
                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
@@ -905,24 +905,24 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                             getBMI().getLabel());
         }
-        xAxis.setVisible(false);
-//        labels.setStyle(hicssObject);
-//        xAxis.setLabels(labels);
+
         optionsBMI.setXAxis(new ArrayList<HIXAxis>() {{
             add(xAxis);
         }});
+        xAxis.setVisible(true);
 
         HIYAxis yAxis = new HIYAxis();
         HITitle hiTitle = new HITitle();
         HILabels hiLabels = new HILabels();
         hiTitle.setText("<p style='color: #ffffff; '>Values</p>");
         hiLabels.setStyle(hicssObject);
+        yAxis.setLineWidth(1);
         yAxis.setTitle(hiTitle);
         yAxis.setLabels(hiLabels);
         optionsBMI.setYAxis(new ArrayList<HIYAxis>() {{
             add(yAxis);
         }});
-        yAxis.setVisible(false);
+        yAxis.setVisible(true);
 
         HITooltip tooltip = new HITooltip();
         tooltip.setShared(true);
@@ -968,42 +968,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         HISpline series1 = new HISpline();
         series1.setName("Weight");
         series1.setColor(HIColor.initWithRGB(255, 255, 255));
-//        series1.setLineColor(HIColor.initWithRGB(255,255,255));
-        /*HIMarker hiMarker1 = new HIMarker();
-        hiMarker1.setSymbol("square");
-        HIData data1 = new HIData();
-        data1.setY(26.5);
-        HIMarker hiMarker2 = new HIMarker();
-        hiMarker2.setSymbol("url(https://www.highcharts.com/samples/graphics/sun.png)");*/
-
-       /* CharSequence[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightProgress().getData().toArray(new CharSequence[0]);
-        Number[] numbers = new Number[series1_data.length];
-        for (int i = 0; i < series1_data.length; i++) {
-            numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
-        }
-        //Number[] series1_data = new Number[]{null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950, 10871, 0};
-        series1.setData(new ArrayList<>(Arrays.asList(numbers)));*/
 
         Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData().toArray(new Number[0]);
-        /*Object[] series1_data = new Object[]{
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData()};*/
         Number[] numbers = new Number[series1_data.length];
         for (int i = 0; i < series1_data.length; i++) {
             numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
         }
         series1.setData(new ArrayList<>(Arrays.asList(numbers)));
-
-        /*HISpline series2 = new HISpline();
-        series2.setName("London");
-        HIMarker hiMarker3 = new HIMarker();
-        hiMarker3.setSymbol("diamond");
-        HIData data2 = new HIData();
-        data2.setY(3.9);
-        HIMarker hiMarker4 = new HIMarker();
-        hiMarker4.setSymbol("url(https://www.highcharts.com/samples/graphics/snow.png)");
-
-        Object[] series2_data = new Object[]{data2, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8};
-        series2.setData(new ArrayList<>(Arrays.asList(series2_data)));*/
 
         optionsBMI.setSeries(new ArrayList<>(Arrays.asList(series1/*, series2*/)));
 
@@ -1039,15 +1010,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         chartViewLoss.setHighlightPerTapEnabled(false);
 
 
-        // chartViewLoss.setUnit(" €");
-        // chartViewLoss.setDrawUnitsInChart(true);
-
-        // add a selection listener
-//        chartViewLoss.setOnChartValueSelectedListener(this);
-
-        /*seekBarX.setProgress(4);
-        seekBarY.setProgress(10);*/
-
         chartViewLoss.animateY(1400, Easing.EaseInOutQuad);
 
         Legend l = chartViewLoss.getLegend();
@@ -1061,7 +1023,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         l.setCustom(new ArrayList<>());
 
         // entry label styling
-        chartViewLoss.setEntryLabelColor(Color.WHITE);
+        chartViewLoss.setEntryLabelColor(Color.TRANSPARENT);
         chartViewLoss.setEntryLabelTextSize(12f);
 
         // calculations
@@ -1082,7 +1044,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         chartViewLoss.setCenterTextColor(Color.BLACK);
         chartViewLoss.setCenterTextSize(35f);
 
-        PieDataSet dataSet = new PieDataSet(entries, "Weight Loss");
+        PieDataSet dataSet = new PieDataSet(entries, "Weight Loss Achievement");
 
         dataSet.setDrawIcons(false);
 
@@ -1228,10 +1190,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress</p>");
         options.setTitle(title);
 
-//        HISubtitle subtitle = new HISubtitle();
-//        subtitle.setText("<p style='color: #ffffff;'>Source: <a style='color: #ffffff;' href=\"http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf\">thebulletin.metapress.com</a></p>");
-//        options.setSubtitle(subtitle);
-
         HIXAxis xAxis = new HIXAxis();
         xAxis.setVisible(false);
         xAxis.setMin(0);
@@ -1244,11 +1202,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                             getWeightProgress().getLabel());
         }
-        /*HILabels labels = new HILabels();
-        HIFunction hiFunction = new HIFunction("function () { return this.value; }");
-        labels.setFormatter(hiFunction);
-        labels.setStyle(hicssObject);
-        xAxis.setLabels(labels);*/
         options.setXAxis(new ArrayList<HIXAxis>() {{
             add(xAxis);
         }});
@@ -1274,15 +1227,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         yAxis.setMin(minY);
 
         yAxis.setVisible(false);
-       /* HITitle hiTitle = new HITitle();
-        hiTitle.setUseHTML(true);
-    //    hiTitle.setText("<p style='color: #ffffff; '>Nuclear weapon states</p>");
-        HILabels hiLabels = new HILabels();
-        HIFunction hiFunction1 = new HIFunction("function () { return this.value ; }");
-        hiLabels.setFormatter(hiFunction1);
-        hiLabels.setStyle(hicssObject);
-        yAxis.setTitle(hiTitle);
-        yAxis.setLabels(hiLabels);*/
         options.setYAxis(new ArrayList<HIYAxis>() {{
             add(yAxis);
         }});

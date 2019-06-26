@@ -240,7 +240,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private void autoConnect() {
         unregisterReceiver(wifiReceiver);
         final String scaleName = "WS915_V2.6_V1.5-";
-        int scaleId = /*LoginShared.getScaleUserId(this)*/1000000080;
+        int scaleId = LoginShared.getScaleUserId(this);
         String networkSSID = scaleName + scaleId;
         ScanResult scanResult = null;
         for (ScanResult result : scanResultsWifi) {

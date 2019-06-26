@@ -76,8 +76,8 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
         });
-        findViewById(R.id.rl_back).setOnClickListener(view1 ->
-                onBackPressed());
+        /*findViewById(R.id.rl_back).setOnClickListener(view1 ->
+                onBackPressed());*/
     }
 
     private void addUserDialog() {

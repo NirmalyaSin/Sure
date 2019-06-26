@@ -184,7 +184,7 @@ public class AddUserDialog extends Dialog {
                     } else if (et_gender.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please select any gender type");
                     } else if (et_DOB.getText().toString().equals("")) {
-                        MethodUtils.errorMsg(activity, "Please select your Age");
+                        MethodUtils.errorMsg(activity, "Please enter your Age");
                     } else if (et_height.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your height");
                     } else if (et_weight.getText().toString().equals("")) {
@@ -196,9 +196,20 @@ public class AddUserDialog extends Dialog {
                     } else if (!ckb.isChecked()) {
                         MethodUtils.errorMsg(activity, "Please accept terms and conditions");
                     } else {
+                        int age = Integer.parseInt(et_DOB.getText().toString());
+                        if (!(age >= 7 && age <= 99)) {
+                            MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
+                            return;
+                        }
                         addUserApi();
                     }
                 } else {
+                    int age = Integer.parseInt(et_DOB.getText().toString());
+                    if (!(age >= 7 && age <= 99)) {
+                        MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
+                        return;
+                    }
+
                     if (!ckb.isChecked()) {
                         MethodUtils.errorMsg(activity, "Please accept terms and conditions");
                     } else {

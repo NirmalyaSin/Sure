@@ -115,11 +115,11 @@ public class ProfileClickEvent implements View.OnClickListener {
     private void addHeightListAndCall(String change) {
         heightList.clear();
         if (change.equals("INCH")) {
-            for (int i = 1; i < 109; i++) {
+            for (int i = 35; i < 110; i++) {
                 heightList.add(i + " " + change);
             }
         } else {
-            for (int i = 1; i < 276; i++) {
+            for (int i = 90; i < 280; i++) {
                 heightList.add(i + " " + change);
             }
         }
@@ -410,10 +410,17 @@ public class ProfileClickEvent implements View.OnClickListener {
                 } else if (activity.et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
                 } else if (activity.et_DOB.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your Age");
+                    MethodUtils.errorMsg(activity, "Please enter your Age");
                 } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else {
+                    int age = Integer.parseInt(activity.et_DOB.getText().toString());
+                    if (!(age >= 7 && age <= 99)) {
+                        MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
+                        return;
+                    }
+
+
                     if (activity.mCompressedFile != null) {
                         sendProfileImageUpdateApi();
                     } else {

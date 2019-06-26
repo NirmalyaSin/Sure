@@ -360,7 +360,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                                 Intent logIntent = new Intent(BaseActivity.this, LoginActivity.class);
                                 startActivity(logIntent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                finish();
+                                finishAffinity();
                             }
                         }, GeneralToApp.SPLASH_WAIT_TIME);
 

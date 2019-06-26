@@ -756,7 +756,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter Age"
-                        android:inputType="number"
+                        android:inputType="numberSigned"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"

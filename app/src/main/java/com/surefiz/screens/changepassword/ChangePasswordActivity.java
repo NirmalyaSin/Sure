@@ -85,6 +85,9 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                     MethodUtils.errorMsg(this, "Please confirm your new password");
                 } else if (!et_new.getText().toString().trim().equals(et_retype.getText().toString().trim())) {
                     MethodUtils.errorMsg(this, "Please check your new and confirm password");
+                } else if (!(et_new.getText().toString().trim().length() >= 8
+                        && et_new.getText().toString().trim().length() <= 16)) {
+                    MethodUtils.errorMsg(this, "Password must be between 8 and 16 characters");
                 } else if (!ConnectionDetector.isConnectingToInternet(this)) {
                     MethodUtils.errorMsg(this, getString(R.string.no_internet));
                 } else {

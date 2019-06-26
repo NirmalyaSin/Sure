@@ -102,6 +102,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
 
             // Delete button
+            userListViewHolder.btn_delete.setVisibility(View.INVISIBLE);
             userListViewHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

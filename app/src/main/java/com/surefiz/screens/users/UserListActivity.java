@@ -81,6 +81,13 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void addUserDialog() {
+        /*btn_add_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ChooseOptionDialog(UserListActivity.this, UserListActivity.this).show()
+            }
+        });*/
+
         btn_add_user.setOnClickListener(v -> new ChooseOptionDialog(UserListActivity.this, UserListActivity.this).show());
     }
 

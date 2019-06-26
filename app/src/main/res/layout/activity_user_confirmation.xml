@@ -68,9 +68,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_weight"
-        android:paddingLeft="@dimen/_18sdp"
+        android:paddingStart="@dimen/_18sdp"
+        android:paddingEnd="@dimen/_18sdp"
         android:paddingTop="@dimen/_20sdp"
-        android:text="Time To Lose Weight "
+        android:text="Time To Lose Weight Calculated After The First Weight"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 

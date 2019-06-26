@@ -288,6 +288,43 @@
                         android:textSize="@dimen/_10sdp" />
                 </RelativeLayout>
 
+
+                <TextView
+                    android:id="@+id/tv__confirm_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:paddingTop="@dimen/_20sdp"
+                    android:text="Re-Enter Email"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl__confirm_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_confirm_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:hint="Re-Enter Email Id"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+
                 <LinearLayout
                     android:id="@+id/ll_password"
                     android:layout_width="match_parent"
@@ -1114,7 +1151,7 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_margin="@dimen/_44sdp"
                     android:background="@drawable/login_submit_rounded_corner"
-                    android:text="Register"
+                    android:text="Sign Up"
                     android:textAllCaps="false"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />

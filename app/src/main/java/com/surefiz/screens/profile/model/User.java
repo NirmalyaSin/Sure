@@ -60,6 +60,9 @@ public class User {
     @SerializedName("scaleid")
     @Expose
     private String scaleid;
+    @SerializedName("mainuservisibility")
+    @Expose
+    private String mainuservisibility;
 
     public String getUserId() {
         return userId;
@@ -205,4 +208,11 @@ public class User {
         this.scaleid = scaleid;
     }
 
+    public String getMainuservisibility() {
+        return mainuservisibility;
+    }
+
+    public void setMainuservisibility(String mainuservisibility) {
+        this.mainuservisibility = mainuservisibility;
+    }
 }

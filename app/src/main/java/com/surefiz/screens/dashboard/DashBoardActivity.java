@@ -213,10 +213,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             @Override
             public void onResponse(Call<UserListModel> call, Response<UserListModel> response) {
                 try {
+
+                    Log.d("@@UserListInfo : ", response.body().getData().getUserList().toString());
+
+
                     if (response.body().getStatus() == 1) {
                         contactLists.clear();
                         //      Collections.reverse(response.body().getData().getUserList());
-                        contactLists.addAll(response.body().getData().getUserList());
+                        //contactLists.addAll(response.body().getData().getUserList());
+                        contactLists.addAll(checkMainUserVisibility(response.body().getData().getUserList()));
                         adapter.notifyDataSetChanged();
 
                         if (id != null && !id.equals("")) {
@@ -255,6 +260,33 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             }
         });
     }
+
+
+    // This method is to check wheather any sub-user wants to be displayed on Main users family
+    private List<UserListItem> checkMainUserVisibility(List<UserListItem> userList) {
+
+        List<UserListItem> tempUserList = new ArrayList<>();
+
+        if (userList.get(0).getScaleUserId() == 1) {
+
+            tempUserList.add(userList.get(0));
+
+            for (int i = 1; i < userList.size(); i++) {
+                if (userList.get(i).getMainuservisibility() == 1) {
+                    tempUserList.add(userList.get(i));
+                }
+
+                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
+            }
+        } else {
+
+            tempUserList.addAll(userList);
+        }
+
+        return tempUserList;
+    }
+
+
 
     private void callDashBoardApi(String id) {
         loader.show_with_label("Loading");

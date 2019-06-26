@@ -107,7 +107,11 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
                 try {
                     if (response.body().getStatus() == 1) {
                         userLists.clear();
-                        userLists.addAll(response.body().getData().getUserList());
+
+                        //userLists.addAll(response.body().getData().getUserList());
+                        userLists.addAll(checkMainUserVisibility(response.body().getData().getUserList()));
+
+                        //printUserdata(response.body().getData().getUserList());
                         adapter.notifyDataSetChanged();
                         if (response.body().getData().getSubUserAddStatus() == 0) {
                             btn_add_user.setEnabled(false);
@@ -142,6 +146,31 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
                 MethodUtils.errorMsg(UserListActivity.this, getString(R.string.error_occurred));
             }
         });
+    }
+
+
+    // This method is to check wheather any sub-user wants to be displayed on Main users family
+    private List<UserListItem> checkMainUserVisibility(List<UserListItem> userList) {
+
+        List<UserListItem> tempUserList = new ArrayList<>();
+
+        if (userList.get(0).getScaleUserId() == 1) {
+
+            tempUserList.add(userList.get(0));
+
+            for (int i = 1; i < userList.size(); i++) {
+                if (userList.get(i).getMainuservisibility() == 1) {
+                    tempUserList.add(userList.get(i));
+                }
+
+                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
+            }
+        } else {
+
+            tempUserList.addAll(userList);
+        }
+
+        return tempUserList;
     }
 
     private void callUserDeleteApi(int userId, int position) {
@@ -202,7 +231,6 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
         rv_items = view.findViewById(R.id.rv_items);
         btn_add_user = findViewById(R.id.btn_add_user);
     }
-
 
 
     @Override

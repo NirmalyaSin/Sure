@@ -237,8 +237,8 @@ public class RegistrationActivity extends AppCompatActivity {
             ll_zip_code.setVisibility(View.GONE);
             ll_signup_member.setVisibility(View.GONE);
 
-            //btn_register.setText("Update");
-            btn_register.setText("Register");
+            btn_register.setText("Update");
+            //btn_register.setText("Register");
             isInCompleteProfile = true;
             //btn_skip_config.setVisibility(View.GONE);
 

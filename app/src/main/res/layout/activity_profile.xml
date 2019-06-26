@@ -379,6 +379,42 @@
                         android:textSize="@dimen/_10sdp" />
                 </RelativeLayout>
 
+
+                <RelativeLayout
+                    android:id="@+id/rl_visibility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <TextView
+                        android:id="@+id/tv_visibility"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/sky_blue"
+                        android:layout_toStartOf="@+id/switch_visibility"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:text="@string/visibility"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <Switch
+                        android:id="@+id/switch_visibility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:enabled="false"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:checked="false"
+                        android:theme="@style/SCBSwitch" />
+                </RelativeLayout>
+
                 <Button
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.gun0912.tedpermission.PermissionListener;
@@ -41,11 +42,8 @@ import static android.os.Build.VERSION_CODES.M;
 public class ProfileActivity extends BaseActivity {
     public static final String PICTURE_NAME = "SureFIZProfile";
     public static final String FOLDER_NAME = "SureFIZ";
-    private File mFile = null;
-    private Uri fileUri = null;
-    public File mCompressedFile = null;
-    private OnImageSet onImageSet;
     public static final int CAMERA = 1, GALLERY = 2;
+    public File mCompressedFile = null;
     public View view;
     ProfileClickEvent profileClickEvent;
     de.hdodenhof.circleimageview.CircleImageView profile_image;
@@ -60,6 +58,10 @@ public class ProfileActivity extends BaseActivity {
     EditText et_email;
     EditText et_height;
     Button btn_register;
+    Switch switch_visibility;
+    private File mFile = null;
+    private Uri fileUri = null;
+    private OnImageSet onImageSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class ProfileActivity extends BaseActivity {
         et_email.setEnabled(false);
         et_height.setEnabled(false);
         profile_image.setEnabled(false);
+        switch_visibility.setEnabled(false);
     }
 
     private void initView() {
@@ -109,6 +112,7 @@ public class ProfileActivity extends BaseActivity {
         et_email = view.findViewById(R.id.et_email);
         et_height = view.findViewById(R.id.et_height);
         btn_register = view.findViewById(R.id.btn_register);
+        switch_visibility = view.findViewById(R.id.switch_visibility);
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {

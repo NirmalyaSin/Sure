@@ -45,6 +45,7 @@
 
     <string name="battery_status_low"><b>Battery Low!</b> Please change the battery in scale immediately.</string>
     <string name="battery_status">Battery Status:</string>
+    <string name="visibility">Visibility</string>
 
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 

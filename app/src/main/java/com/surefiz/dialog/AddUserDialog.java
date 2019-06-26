@@ -61,7 +61,7 @@ public class AddUserDialog extends Dialog {
     Activity activity;
     ImageView iv_cross;
     EditText et_name;
-    EditText et_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss, et_middle,
+    EditText et_email, et_re_enter_email, et_phone, et_units, et_gender, et_DOB, et_height, et_weight, et_time_loss, et_middle,
             et_last, et_management, et_userselection;
     Button btn_submit;
     RelativeLayout rl_userselection, rl_weight, rl_time_loss;
@@ -97,6 +97,7 @@ public class AddUserDialog extends Dialog {
         et_middle = findViewById(R.id.et_middle);
         et_last = findViewById(R.id.et_last);
         et_email = findViewById(R.id.et_email);
+        et_re_enter_email = findViewById(R.id.et_re_enter_email);
         et_phone = findViewById(R.id.et_phone);
         et_units = findViewById(R.id.et_units);
         et_gender = findViewById(R.id.et_gender);
@@ -171,10 +172,16 @@ public class AddUserDialog extends Dialog {
                     MethodUtils.errorMsg(activity, "Please enter User Last name");
                 } else if (et_email.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter user email");
+                } else if (et_re_enter_email.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Please enter confirm user email");
                 }
                 if (isFullList) {
                     if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
                         MethodUtils.errorMsg(activity, "Please enter a valid email address");
+                    } else if (!MethodUtils.isValidEmail(et_re_enter_email.getText().toString())) {
+                        MethodUtils.errorMsg(activity, "Please re-enter a valid email address");
+                    } else if (!et_re_enter_email.getText().toString().equals(et_email.getText().toString())) {
+                        MethodUtils.errorMsg(activity, "Email and Confirm email is not same");
                     } else if (et_phone.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your phone number");
                     } else if (et_units.getText().toString().equals("")) {
@@ -184,7 +191,7 @@ public class AddUserDialog extends Dialog {
                     } else if (et_gender.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please select any gender type");
                     } else if (et_DOB.getText().toString().equals("")) {
-                        MethodUtils.errorMsg(activity, "Please enter your Age");
+                        MethodUtils.errorMsg(activity, "Please enter non-zero value for Age");
                     } else if (et_height.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your height");
                     } else if (et_weight.getText().toString().equals("")) {
@@ -219,6 +226,8 @@ public class AddUserDialog extends Dialog {
 
             }
         });
+
+
 
         /*et_DOB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -503,6 +512,23 @@ public class AddUserDialog extends Dialog {
         }
     }
 
+
+    public boolean isNonZeroValue(String value) {
+        int nonZeroValue = 0;
+        try {
+            nonZeroValue = Integer.valueOf(value);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
+        }
+        if (nonZeroValue > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+
     private void showAndDismissTimePopup() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -721,7 +747,8 @@ public class AddUserDialog extends Dialog {
     private void addGenderListAndCall() {
         genderList.add("Male");
         genderList.add("Female");
-        genderList.add("Others");
+        genderList.add("Non-binary");
+        //genderList.add("Others");
 
         genderPopup = new UniversalPopup(activity, genderList, et_gender);
     }

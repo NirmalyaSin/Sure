@@ -35,6 +35,7 @@ import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.familyinvite.FamilyInviteActivity;
 import com.surefiz.screens.groupinvite.GroupInviteActivity;
@@ -190,7 +191,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i < 261; i++) {
+        //for (int i = 1; i < 261; i++) {
+        for (int i = 1; i <= 104; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(registrationActivity, timeList, registrationActivity.et_time_loss);
@@ -242,7 +244,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void addGenderListAndCall() {
         genderList.add("Male");
         genderList.add("Female");
-        genderList.add("Others");
+        genderList.add("Non-binary");
+        //genderList.add("Others");
 
         genderPopup = new UniversalPopup(registrationActivity, genderList, registrationActivity.et_gender);
     }
@@ -711,6 +714,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
         } else if (registrationActivity.age.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your Age");
+        } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
+            MethodUtils.errorMsg(registrationActivity, "Please enter non-zero value for Age");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
         } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
@@ -758,6 +763,21 @@ public class RegistrationClickEvent implements View.OnClickListener {
         }
     }
 
+    public boolean isNonZeroValue(String value) {
+        int nonZeroValue = 0;
+        try {
+            nonZeroValue = Integer.valueOf(value);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
+        }
+        if (nonZeroValue > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     //--This method is responsible for validating all the fields for IncompleteProfile Update
 
@@ -770,6 +790,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please enter your email");
         } else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
             MethodUtils.errorMsg(registrationActivity, "Please enter a valid email address");
+        } else if (registrationActivity.et_confirm_email.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, "Please enter confirm email");
+        } else if (!MethodUtils.isValidEmail(registrationActivity.et_confirm_email.getText().toString())) {
+            MethodUtils.errorMsg(registrationActivity, "Please enter a valid confirm email address");
+        } else if (!registrationActivity.et_confirm_email.getText().toString().equals(registrationActivity.et_email.getText().toString())) {
+            MethodUtils.errorMsg(registrationActivity, "Email and Confirm Email is not same.");
         }/* else if (registrationActivity.et_password.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your password");
         }*/ else if (registrationActivity.et_scale_id.getText().toString().equals("")) {
@@ -786,6 +812,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
         } else if (registrationActivity.age.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your Age");
+        } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
+            MethodUtils.errorMsg(registrationActivity, "Please enter non-zero value for Age");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
         } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
@@ -865,7 +893,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-
         RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserId());
 
         //String name = registrationActivity.et_first_name.getText().toString().trim() + "%20" + registrationActivity.et_last_name.getText().toString().trim();
@@ -938,16 +965,21 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     if (jsonObject.optInt("status") == 1) {
 
                         //MethodUtils.errorMsg(registrationActivity, jsonObject.getString("message"));
+                        if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
+                            MethodUtils.errorMsg(registrationActivity, jsonObject.getJSONObject("data").getString("message"));
+                        }
 
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
 
                                 if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
+
                                     Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
                                     registrationActivity.startActivity(intent);
                                     registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                     registrationActivity.finish();
+
                                 } else {
                                     Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
                                     registrationActivity.startActivity(intent);
@@ -1407,6 +1439,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         //LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
                         //MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
+                        if (!LoginShared.getstatusforwifivarification(registrationActivity))
+                            MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override

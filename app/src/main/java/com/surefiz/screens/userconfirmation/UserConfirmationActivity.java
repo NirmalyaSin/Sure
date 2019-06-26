@@ -80,7 +80,6 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     private void showViewMode() {
         et_weight.setEnabled(false);
         et_time_loss.setEnabled(false);
-        et_time_loss.setEnabled(false);
         btn_accept.setEnabled(true);
         btn_provide.setEnabled(true);
     }
@@ -362,7 +361,8 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i < 261; i++) {
+        //for (int i = 1; i < 261; i++) {
+        for (int i = 1; i <= 104; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(UserConfirmationActivity.this, timeList, et_time_loss);

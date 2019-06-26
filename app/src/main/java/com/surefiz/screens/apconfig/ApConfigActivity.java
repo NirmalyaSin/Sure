@@ -43,13 +43,13 @@ import cn.onecoder.scalewifi.api.impl.OnScaleWiFiConfigResultListener;
 
 public class ApConfigActivity extends BaseActivity implements View.OnClickListener, OnScaleWiFiConfigResultListener,
         PopupMenu.OnMenuItemClickListener {
+    public View view;
+    LoadingData loader;
+    WifiReceiver wifiReceiver = new WifiReceiver();
     private EditText editSSID, editBSSID, editPassword;
     private Button btnlockwifi, btnConfigure;
-    public View view;
     private PopupMenu popup;
-    LoadingData loader;
     private WifiManager mWifiManager;
-    WifiReceiver wifiReceiver = new WifiReceiver();
     private List<ScanResult> scanResultsWifi = new ArrayList<>();
     private ScaleWiFiConfig scaleWiFiConfig;
     private boolean isAutoConnecting = false;
@@ -200,21 +200,6 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         return true;
     }
 
-    class WifiReceiver extends BroadcastReceiver {
-        public void onReceive(Context c, Intent intent) {
-            scanResultsWifi.clear();
-//            Toast.makeText(mWifiConfigActivity, "Wifi List Received", Toast.LENGTH_LONG).show();
-            scanResultsWifi = mWifiManager.getScanResults();
-            if (loader.isShowing()) {
-                loader.dismiss();
-            }
-            if (isAutoConnecting)
-                autoConnect();
-            else
-                ShowSSIDList();
-        }
-    }
-
     void ShowSSIDList() {
         popup = new PopupMenu(this, editSSID, Gravity.CENTER);
         popup.setOnMenuItemClickListener(this);
@@ -315,15 +300,32 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onApConfigResult(boolean success) {
-        showalertdialog(success);
         if (loader.isShowing())
             loader.dismiss();
+
+        showalertdialog(success);
     }
 
     @Override
     public void onSmartLinkConfigResult(boolean success) {
-        showalertdialog(success);
         if (loader.isShowing())
             loader.dismiss();
+
+        showalertdialog(success);
+    }
+
+    class WifiReceiver extends BroadcastReceiver {
+        public void onReceive(Context c, Intent intent) {
+            scanResultsWifi.clear();
+//            Toast.makeText(mWifiConfigActivity, "Wifi List Received", Toast.LENGTH_LONG).show();
+            scanResultsWifi = mWifiManager.getScanResults();
+            if (loader.isShowing()) {
+                loader.dismiss();
+            }
+            if (isAutoConnecting)
+                autoConnect();
+            else
+                ShowSSIDList();
+        }
     }
 }

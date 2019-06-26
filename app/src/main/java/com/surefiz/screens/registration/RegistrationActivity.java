@@ -103,6 +103,8 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_first_name;
     @BindView(R.id.et_email)
     EditText et_email;
+    @BindView(R.id.et_confirm_email)
+    EditText et_confirm_email;
     @BindView(R.id.et_password)
     EditText et_password;
     @BindView(R.id.et_phone)
@@ -235,7 +237,8 @@ public class RegistrationActivity extends AppCompatActivity {
             ll_zip_code.setVisibility(View.GONE);
             ll_signup_member.setVisibility(View.GONE);
 
-            btn_register.setText("Update");
+            //btn_register.setText("Update");
+            btn_register.setText("Register");
             isInCompleteProfile = true;
             //btn_skip_config.setVisibility(View.GONE);
 
@@ -335,6 +338,7 @@ public class RegistrationActivity extends AppCompatActivity {
         et_last_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getLastName());
 
         et_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
+        et_confirm_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
         et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
         et_gender.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender());
 

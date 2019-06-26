@@ -268,12 +268,14 @@ public class ProfileClickEvent implements View.OnClickListener {
         activity.et_units.setOnClickListener(this);
         activity.et_height.setOnClickListener(this);
         activity.btn_register.setOnClickListener(this);
+        activity.switch_visibility.setOnClickListener(this);
     }
 
     private void addGenderListAndCall() {
         genderList.add("Male");
         genderList.add("Female");
-        genderList.add("Others");
+        genderList.add("Non-binary");
+        //genderList.add("Others");
 
         genderPopup = new UniversalPopup(activity, genderList, activity.et_gender);
     }
@@ -363,6 +365,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 activity.et_email.setEnabled(true);
                 activity.et_height.setEnabled(true);
                 activity.profile_image.setEnabled(true);
+                activity.switch_visibility.setEnabled(true);
                 activity.et_full.setSelection(activity.et_full.getText().length());
                 InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(activity.et_full, InputMethodManager.SHOW_IMPLICIT);
@@ -410,7 +413,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 } else if (activity.et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
                 } else if (activity.et_DOB.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your Age");
+                    MethodUtils.errorMsg(activity, "Please enter non-zero value for Age");
                 } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else {
@@ -431,6 +434,23 @@ public class ProfileClickEvent implements View.OnClickListener {
                 break;
         }
     }
+
+
+    public boolean isNonZeroValue(String value) {
+        int nonZeroValue = 0;
+        try {
+            nonZeroValue = Integer.valueOf(value);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
+        }
+        if (nonZeroValue > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     private void showAndDismissHeightPopup() {
         new Handler().postDelayed(new Runnable() {

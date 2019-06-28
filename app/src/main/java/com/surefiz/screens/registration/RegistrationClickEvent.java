@@ -874,7 +874,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
     private boolean lengthScale(final String scale) {
         //return scale.length() <= 10;
-        return scale.length() > 0 && scale.length() <= 10;
+        return scale.length() == 10;
     }
 
     private void callCompleteUserInfoApi() {

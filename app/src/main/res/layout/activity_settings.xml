@@ -30,7 +30,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="My Device"
+                android:text="Register / Update Your Device"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 
@@ -215,7 +215,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="Weight Management"
+                android:text="Weight Management Options"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 

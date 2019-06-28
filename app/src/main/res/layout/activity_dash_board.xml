@@ -92,6 +92,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:text="Weight Loss"
+                            android:visibility="gone"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/_18sdp" />
 

@@ -359,7 +359,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_back:
-                if (getIntent().getBooleanExtra("isInitiatedFromProfile",false)) {
+                if (getIntent().getBooleanExtra("isInitiatedFromProfile", false)) {
                     finish();
                 } else {
                     Intent loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
@@ -413,6 +413,11 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
                 break;
             case R.id.btn_submit:
+                if (et_weight.getText().toString().trim().equals(weight_value)
+                        && et_time_loss.getText().toString().trim().equals(time_value)) {
+                    MethodUtils.errorMsg(this, "Please update the value");
+                    return;
+                }
                 showWeightUpdateDialog();
                 break;
         }

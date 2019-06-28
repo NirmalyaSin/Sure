@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -96,7 +98,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     public View view;
     public String id = "";
     public int row_user = -1;
-    PieChart chartViewLoss;
+    PieChart chartViewLoss, pieChatBodyComposition;
     HIChartView chartView, chartViewBmi, chartViewGoals, chartViewSubGoals,
             chartViewAchiGoals, chartGauge;
     TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded;
@@ -314,7 +316,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             public void run() {
                                 setWeightChart();
                                 setWeightLossChart();
+                                setPieChatBodyComposition();
                                 setBMIChart();
+                                cv_sub_goals.setVisibility(View.VISIBLE);
+                                setSubGoalsChart();
                                 showGoalsChart();
                                 setOtherOptions();
                             }
@@ -326,7 +331,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 @Override
                                 public void run() {
                                     cv_gauge.setVisibility(View.VISIBLE);
-                                    cv_sub_goals.setVisibility(View.GONE);
+                                    //cv_sub_goals.setVisibility(View.GONE);
                                     cv_achi_goals.setVisibility(View.GONE);
                                     implementHighChart(dashboardModel.getData().getChartList().getGuagechart());
                                 }
@@ -337,7 +342,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 @Override
                                 public void run() {
                                     cv_gauge.setVisibility(View.GONE);
-                                    cv_sub_goals.setVisibility(View.VISIBLE);
+                                    //cv_sub_goals.setVisibility(View.VISIBLE);
                                     cv_achi_goals.setVisibility(View.VISIBLE);
                                     setSubGoalsChart();
                                     showGoalsAndAcheivementsChart();
@@ -479,6 +484,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         chartView = findViewById(R.id.hc_weight);
         chartView.setOptions(options);
         chartViewLoss = findViewById(R.id.hc_weight_loss);
+        pieChatBodyComposition = findViewById(R.id.pieChatBodyComposition);
 //        chartViewLoss.setOptions(optionsLoss);
         chartViewBmi = findViewById(R.id.hc_bmi);
         chartViewBmi.setOptions(optionsBMI);
@@ -1012,6 +1018,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         chartViewBmi.reload();
     }
 
+
     private void setWeightLossChart() {
 
         chartViewLoss.setUsePercentValues(true);
@@ -1193,6 +1200,107 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         chartViewLoss.setOptions(optionsLoss);
         chartViewLoss.reload();*/
+    }
+
+
+    private void setPieChatBodyComposition() {
+        pieChatBodyComposition.setUsePercentValues(true);
+        pieChatBodyComposition.getDescription().setEnabled(false);
+        pieChatBodyComposition.setExtraOffsets(5, 10, 5, 5);
+        pieChatBodyComposition.setDragDecelerationFrictionCoef(0.95f);
+        pieChatBodyComposition.setDrawHoleEnabled(true);
+        pieChatBodyComposition.setHoleColor(Color.TRANSPARENT);
+        pieChatBodyComposition.setTransparentCircleColor(Color.WHITE);
+        pieChatBodyComposition.setTransparentCircleAlpha(110);
+        pieChatBodyComposition.setHoleRadius(58f);
+        pieChatBodyComposition.setTransparentCircleRadius(61f);
+        pieChatBodyComposition.setDrawCenterText(true);
+        pieChatBodyComposition.setRotationAngle(270);
+        pieChatBodyComposition.setRotationEnabled(false);
+        pieChatBodyComposition.setHighlightPerTapEnabled(false);
+
+
+        pieChatBodyComposition.animateY(1400, Easing.EaseInOutQuad);
+
+        Legend l = pieChatBodyComposition.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(-20f);
+        l.setYEntrySpace(-10f);
+        l.setYOffset(0f);
+        l.setCustom(new ArrayList<>());
+        //l.setCustom(new ArrayList<>());
+
+
+        pieChatBodyComposition.setEntryLabelColor(Color.WHITE);
+        pieChatBodyComposition.setEntryLabelTextSize(12f);
+
+        // calculation of values to be displayed
+        ArrayList<PieEntry> entries = new ArrayList<>();
+
+        double muscelValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getMuscle();
+        PieEntry muscelEntry = new PieEntry((float) muscelValue);
+        entries.add(muscelEntry);
+
+        double boneValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().get(1);
+        PieEntry boneEntry = new PieEntry((float) boneValue);
+        entries.add(boneEntry);
+
+        double fatValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getFat();
+        PieEntry fatEntry = new PieEntry((float) fatValue);
+        entries.add(fatEntry);
+
+
+        String centerText = "<font color=#977D06><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#FA4252><b> Fat " + fatValue + "%<b></font>";
+        pieChatBodyComposition.setCenterText(Html.fromHtml(centerText));
+        //pieChatBodyComposition.setCenterText("Muscle " + muscelValue + "%" + "\nFat " + fatValue + "%");
+        pieChatBodyComposition.setCenterTextColor(Color.WHITE);
+        pieChatBodyComposition.setCenterTextSize(18f);
+
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
+
+
+        dataSet.setDrawIcons(false);
+
+        dataSet.setSliceSpace(1f);
+        dataSet.setIconsOffset(new MPPointF(0, 40));
+        dataSet.setSelectionShift(5f);
+
+
+        // Setting the color code for the slices
+        //ArrayList<Integer> colors = setColorForChart(bmiPercentage);
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.rgb(151, 125, 6));
+        colors.add(Color.rgb(41, 178, 7));
+        colors.add(Color.rgb(250, 66, 82));
+
+
+        dataSet.setColors(colors);
+
+
+        /*ArrayList<LegendEntry> legendEntries = new ArrayList<>();
+        LegendEntry legendEntry = new LegendEntry();
+        legendEntry.label = "Muscle: " + muscelValue + "%";
+        legendEntries.add(legendEntry);
+
+        LegendEntry legendEntryFat = new LegendEntry();
+        legendEntryFat.label = "Fat: " + fatValue + "%";
+        legendEntries.add(legendEntryFat);
+
+        l.setCustom(legendEntries);*/
+
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter(pieChatBodyComposition));
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.TRANSPARENT);
+        pieChatBodyComposition.setData(data);
+
+        // undo all highlights
+        pieChatBodyComposition.highlightValues(null);
+        pieChatBodyComposition.invalidate();
     }
 
     private void setWeightChart() {

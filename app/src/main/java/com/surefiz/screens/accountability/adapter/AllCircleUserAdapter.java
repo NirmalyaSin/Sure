@@ -68,7 +68,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
     public class CircleUserViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imageUserProfile;
         TextView textUserName;
-        Button btnPerformance;
+        Button btnPerformance,btnRemove;
         ImageView imgSendMessage, imageOnlineOffline;
 
         public CircleUserViewHolder(@NonNull View itemView) {
@@ -77,9 +77,18 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
             imageOnlineOffline = itemView.findViewById(R.id.imageOnlineOffline);
             textUserName = itemView.findViewById(R.id.textUserName);
             btnPerformance = itemView.findViewById(R.id.btnPerformance);
+            btnRemove = itemView.findViewById(R.id.btnRemove);
             imgSendMessage = itemView.findViewById(R.id.imgSendMessage);
 
             btnPerformance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnCircleViewClickListener.onPerformanceClick(getAdapterPosition());
+
+                }
+            });
+
+            btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnCircleViewClickListener.onPerformanceClick(getAdapterPosition());
@@ -108,5 +117,6 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
         void onViewClick(int position);
         void onSendMessageClick(int position);
         void onPerformanceClick(int position);
+        void onRemoveClick(int position);
     }
 }

@@ -134,7 +134,7 @@
         android:layout_below="@+id/rl_time_loss"
         android:layout_margin="@dimen/_44sdp"
         android:background="@drawable/login_submit_rounded_corner"
-        android:text="Save"
+        android:text="Update"
         android:textAllCaps="false"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />

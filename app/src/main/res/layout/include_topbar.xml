@@ -80,6 +80,17 @@
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp" />
 
+
+        <ImageView
+            android:id="@+id/iv_weight_managment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_toStartOf="@+id/iv_edit"
+            android:src="@drawable/iv_setting"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/iv_edit"
             android:layout_width="wrap_content"

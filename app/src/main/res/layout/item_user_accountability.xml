@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -53,17 +52,42 @@
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
-            <Button
-                android:id="@+id/btnPerformance"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/shape_rectangle_blue"
-                android:paddingLeft="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp"
-                android:text="Performance"
-                android:textAllCaps="false"
-                android:textColor="@color/whiteColor" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnPerformance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    android:background="@drawable/shape_rectangle_blue"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:text="@string/performance"
+                    android:layout_alignParentStart="true"
+                    android:textAllCaps="false"
+                    android:textColor="@color/whiteColor" />
+
+                <Button
+                    android:id="@+id/btnRemove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    android:background="@drawable/shape_rectangle_blue"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:text="@string/remove"
+                    android:textAllCaps="false"
+                    android:textColor="@color/whiteColor" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <ImageView

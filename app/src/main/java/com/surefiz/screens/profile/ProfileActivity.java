@@ -80,6 +80,7 @@ public class ProfileActivity extends BaseActivity {
     private void setHeaderView() {
         tv_universal_header.setText("Profile");
         iv_edit.setVisibility(View.VISIBLE);
+        findViewById(R.id.iv_weight_managment).setVisibility(View.VISIBLE);
         btn_add.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.VISIBLE);

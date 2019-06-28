@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
@@ -48,14 +49,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
 
         switch (arrayListConversation.get(position).getMessageFrom()){
             case ChatConstant.CHAT_FROM_SENDER:
-                holder.texMessageRight.setVisibility(View.VISIBLE);
-                holder.textMessageLeft.setVisibility(View.GONE);
+                holder.rlMessageRight.setVisibility(View.VISIBLE);
+                holder.rlMessageLeft.setVisibility(View.GONE);
                 holder.texMessageRight.setText(arrayListConversation.get(position).getMessage());
+                holder.textDateTimeRight.setText(arrayListConversation.get(position).getDateTime());
                 break;
             case ChatConstant.CHAT_FROM_RECEIVER:
-                holder.texMessageRight.setVisibility(View.GONE);
-                holder.textMessageLeft.setVisibility(View.VISIBLE);
+                holder.rlMessageRight.setVisibility(View.GONE);
+                holder.rlMessageLeft.setVisibility(View.VISIBLE);
                 holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
+                holder.textDateTimeLeft.setText(arrayListConversation.get(position).getDateTime());
                 break;
         }
     }
@@ -83,12 +86,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
     }
 
     public class ChatAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView textMessageLeft, texMessageRight;
+        TextView textMessageLeft, texMessageRight,textDateTimeLeft,textDateTimeRight;
+        RelativeLayout rlMessageRight, rlMessageLeft;
 
         public ChatAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             textMessageLeft = itemView.findViewById(R.id.textMessageLeft);
             texMessageRight = itemView.findViewById(R.id.texMessageRight);
+            textDateTimeLeft = itemView.findViewById(R.id.textDateTimeLeft);
+            textDateTimeRight = itemView.findViewById(R.id.textDateTimeRight);
+
+            rlMessageLeft = itemView.findViewById(R.id.rlMessageLeft);
+            rlMessageRight = itemView.findViewById(R.id.rlMessageRight);
         }
     }
 

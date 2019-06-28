@@ -1,44 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@null"
+    android:orientation="vertical"
     tools:context=".screens.notifications.NotificationActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
         android:background="@null"
-        android:gravity="center_vertical"
-        android:layout_margin="@dimen/_5sdp">
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/textMessageLeft"
+        <RelativeLayout
+            android:id="@+id/rlMessageLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Message Left"
-            android:textSize="@dimen/_12sdp"
-            android:padding="@dimen/_5sdp"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/shape_rectangle_round_white"
-            android:textColor="@color/registration_color_black" />
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/shape_rectangle_round_white">
 
-        <TextView
-            android:id="@+id/texMessageRight"
+            <TextView
+                android:id="@+id/textMessageLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:padding="@dimen/_1sdp"
+                android:text="Message Left"
+                android:textColor="@color/registration_color_black"
+                android:textSize="@dimen/_12sdp" />
+
+
+            <TextView
+                android:id="@+id/textDateTimeLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textMessageLeft"
+                android:layout_toEndOf="@+id/textMessageLeft"
+                android:gravity="center"
+                android:padding="@dimen/_1sdp"
+                android:text="Time"
+                android:textColor="@color/registration_color_black"
+                android:textSize="@dimen/_12sdp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlMessageRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_alignParentEnd="true"
-            android:text="Message Right"
             android:padding="@dimen/_5sdp"
-            android:background="@drawable/shape_rectangle_round_green"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/registration_color_black" />
+            android:background="@drawable/shape_rectangle_round_green">
+
+            <TextView
+                android:id="@+id/texMessageRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_1sdp"
+                android:text="Message Right"
+                android:textColor="@color/registration_color_black"
+                android:textSize="@dimen/_12sdp" />
+
+
+            <TextView
+                android:id="@+id/textDateTimeRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/texMessageRight"
+                android:layout_toEndOf="@+id/texMessageRight"
+                android:gravity="center"
+                android:padding="@dimen/_1sdp"
+                android:text="Time"
+                android:textColor="@color/registration_color_black"
+                android:textSize="@dimen/_12sdp" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

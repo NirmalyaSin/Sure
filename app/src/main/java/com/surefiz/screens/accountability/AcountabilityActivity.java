@@ -172,4 +172,9 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         finish();
 
     }
+
+    @Override
+    public void onRemoveClick(int position) {
+
+    }
 }

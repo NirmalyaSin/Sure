@@ -359,10 +359,14 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_back:
-                Intent loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
-                startActivity(loginIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                if (getIntent().getBooleanExtra("isInitiatedFromProfile",false)) {
+                    finish();
+                } else {
+                    Intent loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                }
                 break;
             case R.id.et_weight:
                 if (timePopup != null && timePopup.isShowing()) {

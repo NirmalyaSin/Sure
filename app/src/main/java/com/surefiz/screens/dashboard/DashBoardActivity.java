@@ -3,7 +3,6 @@ package com.surefiz.screens.dashboard;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -23,7 +22,6 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.google.gson.Gson;
 import com.highsoft.highcharts.common.HIColor;
@@ -47,7 +45,6 @@ import com.highsoft.highcharts.common.hichartsclasses.HIMarker;
 import com.highsoft.highcharts.common.hichartsclasses.HIOptions;
 import com.highsoft.highcharts.common.hichartsclasses.HIOptions3d;
 import com.highsoft.highcharts.common.hichartsclasses.HIPane;
-import com.highsoft.highcharts.common.hichartsclasses.HIPie;
 import com.highsoft.highcharts.common.hichartsclasses.HIPlotBands;
 import com.highsoft.highcharts.common.hichartsclasses.HIPlotOptions;
 import com.highsoft.highcharts.common.hichartsclasses.HIResponsive;
@@ -196,7 +193,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
         rv_items.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         rv_items.addItemDecoration(decoration);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv_items.setLayoutManager(mLayoutManager);
@@ -285,7 +282,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         return tempUserList;
     }
-
 
 
     private void callDashBoardApi(String id) {
@@ -535,12 +531,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         HIChart chart = new HIChart();
         //    chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
 
-        HIGradient gradient = new HIGradient(1, 1, 1, 1);
+        HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
         LinkedList<HIStop> stops = new LinkedList<>();
-        stops.add(new HIStop(0, HIColor.initWithHexValue("#ff3300")));
-        stops.add(new HIStop(1, HIColor.initWithHexValue("#3399ff")));
-        //    stops.add(new HIStop(1, HIColor.initWithRGB(60, 60, 60)));
+        //stops.add(new HIStop(0, HIColor.initWithHexValue("#ff3300")));
+        //stops.add(new HIStop(1, HIColor.initWithHexValue("#3399ff")));
+        stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
+        stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
 
         chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
 
@@ -1331,14 +1328,18 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         HIChart chart = new HIChart();
         chart.setType("line");
-        //       chart.setBackgroundColor(HIColor.initWithHexValue("#000000"));
 
-        HIGradient gradient = new HIGradient(1, 1, 1, 1);
+        chart.setBackgroundColor(HIColor.initWithHexValue("#554755"));
+
+        HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
         LinkedList<HIStop> stops = new LinkedList<>();
-        stops.add(new HIStop(0, HIColor.initWithHexValue("#ff3300")));
-        stops.add(new HIStop(1, HIColor.initWithHexValue("#3399ff")));
-        //    stops.add(new HIStop(1, HIColor.initWithRGB(60, 60, 60)));
+        //stops.add(new HIStop(0, HIColor.initWithHexValue("#554755")));
+        //stops.add(new HIStop(1, HIColor.initWithHexValue("#3399ff")));
+        //stops.add(new HIStop(1, HIColor.initWithRGB(60, 60, 60)));
+
+        stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
+        stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
 
         chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
 

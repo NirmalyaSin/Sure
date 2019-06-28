@@ -32,20 +32,15 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.ViewProfileModel;
-import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -203,15 +198,13 @@ public class ProfileClickEvent implements View.OnClickListener {
         }
 
 
-        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("1")){
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("1")) {
             activity.et_gender.setText("Male");
-        }else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("0")){
+        } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("0")) {
             activity.et_gender.setText("Female");
-        }else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("2")){
+        } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("2")) {
             activity.et_gender.setText("Non-binary");
         }
-
-
 
 
         activity.et_phone.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserPhoneNumber());
@@ -245,9 +238,9 @@ public class ProfileClickEvent implements View.OnClickListener {
             activity.rl_visibility.setVisibility(View.GONE);
             activity.switch_visibility.setChecked(true);
         } else {
-            if(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMainuservisibility().equals("1")){
+            if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMainuservisibility().equals("1")) {
                 activity.switch_visibility.setChecked(true);
-            }else {
+            } else {
                 activity.switch_visibility.setChecked(false);
             }
             activity.rl_visibility.setVisibility(View.VISIBLE);
@@ -258,11 +251,8 @@ public class ProfileClickEvent implements View.OnClickListener {
     }
 
     private boolean checkIsZeroValue(String value) {
-        if (value.equalsIgnoreCase("0") || value.equalsIgnoreCase("0.0") || value.equalsIgnoreCase("0.00")) {
-            return true;
-        }
+        return value.equalsIgnoreCase("0") || value.equalsIgnoreCase("0.0") || value.equalsIgnoreCase("0.00");
 
-        return false;
     }
 
     private void showImage() {
@@ -294,6 +284,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         activity.et_height.setOnClickListener(this);
         activity.btn_register.setOnClickListener(this);
         activity.switch_visibility.setOnClickListener(this);
+        activity.findViewById(R.id.iv_weight_managment).setOnClickListener(this);
     }
 
     private void addGenderListAndCall() {
@@ -322,12 +313,12 @@ public class ProfileClickEvent implements View.OnClickListener {
                 if (units.equals(splited[1])) {
                 } else {
                     if (value.equals("KG/CM")) {
-                        activity.et_height.setText(String.valueOf(Math.round(Double.parseDouble(splited[0]) * 2.54)) + " CM");
+                        activity.et_height.setText(Math.round(Double.parseDouble(splited[0]) * 2.54) + " CM");
                         units = "CM";
                     }
                     if (value.equals("LB/INCH")) {
                         units = "INCH";
-                        activity.et_height.setText(String.valueOf((Math.round(Double.parseDouble(splited[0]) * 0.393701)) + " INCH"));
+                        activity.et_height.setText((Math.round(Double.parseDouble(splited[0]) * 0.393701)) + " INCH");
                     }
                 }
             }
@@ -449,6 +440,12 @@ public class ProfileClickEvent implements View.OnClickListener {
                     }
                 }
                 break;
+            case R.id.iv_weight_managment:
+                Intent weightIntent = new Intent(activity, WeightManagementActivity.class);
+                weightIntent.putExtra("isInitiatedFromProfile",true);
+                activity.startActivity(weightIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
         }
     }
 
@@ -503,9 +500,9 @@ public class ProfileClickEvent implements View.OnClickListener {
         RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId());
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), activity.et_DOB.getText().toString().trim());
 
-        if (activity.switch_visibility.isChecked()){
+        if (activity.switch_visibility.isChecked()) {
             mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "1");
-        }else {
+        } else {
             mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
 
@@ -521,7 +518,7 @@ public class ProfileClickEvent implements View.OnClickListener {
 
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered,mainuservisibility, body);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -600,9 +597,9 @@ public class ProfileClickEvent implements View.OnClickListener {
         }
 
 
-        if (activity.switch_visibility.isChecked()){
+        if (activity.switch_visibility.isChecked()) {
             mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "1");
-        }else {
+        } else {
             mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
 
@@ -613,9 +610,9 @@ public class ProfileClickEvent implements View.OnClickListener {
         RequestBody user_email = RequestBody.create(MediaType.parse("text/plain"), activity.et_email.getText().toString().trim());
         String str = activity.et_height.getText().toString().trim();
         String[] splited = str.split(" ");
-        RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0].toString());
+        RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0]);
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered,mainuservisibility);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -692,8 +689,8 @@ public class ProfileClickEvent implements View.OnClickListener {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_date_picker);
         dialog.show();
-        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.date_picker);
-        Button date_time_set = (Button) dialog.findViewById(R.id.date_time_set);
+        final DatePicker datePicker = dialog.findViewById(R.id.date_picker);
+        Button date_time_set = dialog.findViewById(R.id.date_time_set);
         datePicker.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH), null);
 
         LinearLayout ll = (LinearLayout) datePicker.getChildAt(0);

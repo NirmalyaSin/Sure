@@ -20,7 +20,7 @@ public class AboutUsActivity extends BaseActivity {
         addContentView(view);
         viewBind();
         setHeaderView();
-        url = "https://www.surefiz.com/AboutUs";
+        url = getIntent().getStringExtra("url");
         loadUrl();
     }
 
@@ -29,7 +29,7 @@ public class AboutUsActivity extends BaseActivity {
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("About Us");
+        tv_universal_header.setText(getIntent().getStringExtra("header"));
         img_topbar_menu.setVisibility(View.VISIBLE);
         btn_done.setVisibility(View.GONE);
         iv_edit.setVisibility(View.GONE);
@@ -54,4 +54,6 @@ public class AboutUsActivity extends BaseActivity {
         });*/
 
     }
+
+
 }

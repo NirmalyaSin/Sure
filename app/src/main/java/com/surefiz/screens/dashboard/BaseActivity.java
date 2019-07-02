@@ -81,6 +81,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public TextView tv_settings;
     @BindView(R.id.tv_about)
     public TextView tv_about;
+    @BindView(R.id.tv_forum)
+    public TextView tv_forum;
     @BindView(R.id.tv_signout)
     public TextView tv_signout;
     @BindView(R.id.img_topbar_menu)
@@ -167,6 +169,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         tv_profile.setOnClickListener(this);
         tv_users.setOnClickListener(this);
         tv_about.setOnClickListener(this);
+        tv_forum.setOnClickListener(this);
         tv_dashboard.setOnClickListener(this);
         tv_weight.setOnClickListener(this);
         tv_circle.setOnClickListener(this);
@@ -261,6 +264,17 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_about:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent aboutIntent = new Intent(this, AboutUsActivity.class);
+                aboutIntent.putExtra("url","https://www.surefiz.com/AboutUs");
+                aboutIntent.putExtra("header","About Us");
+                startActivity(aboutIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+                break;
+            case R.id.tv_forum:
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                aboutIntent = new Intent(this, AboutUsActivity.class);
+                aboutIntent.putExtra("url","https://www.surefiz.com/AboutUs");
+                aboutIntent.putExtra("header","About Us");
                 startActivity(aboutIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

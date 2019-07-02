@@ -141,6 +141,16 @@
                 android:textColor="#25415D" />
 
             <TextView
+                android:id="@+id/tv_forum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_14sdp"
+                android:text="Forum"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="#25415D" />
+
+            <TextView
                 android:id="@+id/tv_signout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

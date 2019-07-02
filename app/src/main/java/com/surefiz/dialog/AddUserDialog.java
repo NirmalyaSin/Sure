@@ -4,16 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,9 +31,7 @@ import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -49,8 +42,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -192,7 +183,10 @@ public class AddUserDialog extends Dialog {
                         MethodUtils.errorMsg(activity, "Please select any gender type");
                     } else if (et_DOB.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter non-zero value for Age");
-                    } else if (et_height.getText().toString().equals("")) {
+                    } else if (!isNonZeroValue(et_DOB.getText().toString().trim())) {
+                        MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
+                    }
+                    else if (et_height.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your height");
                     } else if (et_weight.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your desired weight");
@@ -521,11 +515,8 @@ public class AddUserDialog extends Dialog {
             e.printStackTrace();
             return false;
         }
-        if (nonZeroValue > 0) {
-            return true;
-        }
+        return nonZeroValue > 0;
 
-        return false;
     }
 
 
@@ -592,8 +583,8 @@ public class AddUserDialog extends Dialog {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_date_picker);
         dialog.show();
-        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.date_picker);
-        Button date_time_set = (Button) dialog.findViewById(R.id.date_time_set);
+        final DatePicker datePicker = dialog.findViewById(R.id.date_picker);
+        Button date_time_set = dialog.findViewById(R.id.date_time_set);
         datePicker.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH), null);
         datePicker.setMaxDate(System.currentTimeMillis());
         LinearLayout ll = (LinearLayout) datePicker.getChildAt(0);
@@ -748,7 +739,7 @@ public class AddUserDialog extends Dialog {
         genderList.add("Male");
         genderList.add("Female");
         genderList.add("Non-binary");
-        //genderList.add("Others");
+        genderList.add("Prefer not to say");
 
         genderPopup = new UniversalPopup(activity, genderList, et_gender);
     }
@@ -768,12 +759,15 @@ public class AddUserDialog extends Dialog {
         String mantain_Weight_By_Server = "";
         String weight = "";
         String time = "";
+
         if (et_gender.getText().toString().trim().equals("Male")) {
             gender = "1";
         } else if (et_gender.getText().toString().trim().equals("Female")) {
             gender = "0";
-        } else {
+        } else if (et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = "2";
+        } else if (et_gender.getText().toString().trim().equalsIgnoreCase("Prefer not to say")) {
+            gender = "4";
         }
 
         if (et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {

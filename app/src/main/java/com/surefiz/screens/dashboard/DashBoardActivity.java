@@ -1076,7 +1076,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         pieEntry = new PieEntry(achievedChart, "Achieved: " + achieved);
         entries.add(pieEntry);
 
-        chartViewLoss.setCenterText("" + percentage + "%");
+        chartViewLoss.setCenterText(percentage + "%");
         chartViewLoss.setCenterTextColor(Color.BLACK);
         chartViewLoss.setCenterTextSize(35f);
 

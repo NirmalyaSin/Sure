@@ -87,9 +87,9 @@ public class LoginClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.iv_twiter:
-                MethodUtils.errorMsg(mLoginActivity, "Under Development");
+//                MethodUtils.errorMsg(mLoginActivity, "Under Development");
                 //Perform Twitter login
-                //     performTwiterLogin();
+                performTwiterLogin();
 
                 break;
 

@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.surefiz.R;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
@@ -107,12 +108,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_facebook:
-                /*if (!ConnectionDetector.isConnectingToInternet(this)) {
+                if (!ConnectionDetector.isConnectingToInternet(this)) {
                     MethodUtils.errorMsg(this, this.getString(R.string.no_internet));
                 } else {
                     callFacebooklogin();
-                }*/
-                MethodUtils.errorMsg(LoginActivity.this, "Under Development");
+                }
+//                MethodUtils.errorMsg(LoginActivity.this, "Under Development");
                 break;
         }
 

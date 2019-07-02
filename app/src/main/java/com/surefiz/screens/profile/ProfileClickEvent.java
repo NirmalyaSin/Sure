@@ -204,6 +204,8 @@ public class ProfileClickEvent implements View.OnClickListener {
             activity.et_gender.setText("Female");
         } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("2")) {
             activity.et_gender.setText("Non-binary");
+        } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("4")) {
+            activity.et_gender.setText("Prefer not to say");
         }
 
 
@@ -291,7 +293,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         genderList.add("Male");
         genderList.add("Female");
         genderList.add("Non-binary");
-        //genderList.add("Others");
+        genderList.add("Prefer not to say");
 
         genderPopup = new UniversalPopup(activity, genderList, activity.et_gender);
     }
@@ -325,7 +327,7 @@ public class ProfileClickEvent implements View.OnClickListener {
         });
     }
 
-    @Override
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.et_gender:
@@ -428,7 +430,9 @@ public class ProfileClickEvent implements View.OnClickListener {
                     MethodUtils.errorMsg(activity, "Please select your Preferred Units");
                 } else if (activity.et_gender.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please select any gender type");
-                } else if (isNonZeroValue(activity.et_DOB.getText().toString())) {
+                } else if (activity.et_DOB.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Please enter your Age");
+                } else if (!isNonZeroValue(activity.et_DOB.getText().toString().trim())) {
                     MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
                 } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
@@ -442,7 +446,7 @@ public class ProfileClickEvent implements View.OnClickListener {
                 break;
             case R.id.iv_weight_managment:
                 Intent weightIntent = new Intent(activity, WeightManagementActivity.class);
-                weightIntent.putExtra("isInitiatedFromProfile",true);
+                weightIntent.putExtra("isInitiatedFromProfile", true);
                 activity.startActivity(weightIntent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
@@ -456,6 +460,8 @@ public class ProfileClickEvent implements View.OnClickListener {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
+        System.out.println("nonZeroValue: " + nonZeroValue);
         return (nonZeroValue >= 9 && nonZeroValue <= 99);
     }
 
@@ -489,8 +495,10 @@ public class ProfileClickEvent implements View.OnClickListener {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else if (activity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else {
+        } else if (activity.et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
+        } else if (activity.et_gender.getText().toString().trim().equalsIgnoreCase("Prefer not to say")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "4");
         }
         RequestBody user_email = RequestBody.create(MediaType.parse("text/plain"), activity.et_email.getText().toString().trim());
         String str = activity.et_height.getText().toString().trim();
@@ -592,8 +600,10 @@ public class ProfileClickEvent implements View.OnClickListener {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else if (activity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else {
+        } else if (activity.et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
+        } else if (activity.et_gender.getText().toString().trim().equalsIgnoreCase("Prefer not to say")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "4");
         }
 
 

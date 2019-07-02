@@ -1,5 +1,6 @@
 package com.surefiz.screens.reminders;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -17,6 +18,7 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.notificationclasses.ReminderNotification;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
@@ -69,15 +71,15 @@ public class AddEditReminderActivity extends BaseActivity implements
                 String date = editReminderDate.getText().toString().trim();
                 String time = editReminderTime.getText().toString().trim();
 
-                if(remiderText.equals("")){
+                if (remiderText.equals("")) {
                     editReminderText.setError("Enter reminder message");
-                }else if(date.equals("")){
+                } else if (date.equals("")) {
                     editReminderDate.setError("Select date");
-                }else if(time.equals("")){
+                } else if (time.equals("")) {
                     editReminderTime.setError("Select Time");
-                }else {
-                    String finalDateTime = date+" "+time;
-                    switch (type){
+                } else {
+                    String finalDateTime = date + " " + time;
+                    switch (type) {
                         case "add":
                             //Add new reminder
                             callAddUpdateReminderApi("", "Add", remiderText,
@@ -87,6 +89,7 @@ public class AddEditReminderActivity extends BaseActivity implements
                             //Update existing reminder
                             callAddUpdateReminderApi(mReminder.getId(), "Edit", remiderText,
                                     finalDateTime);
+
                             break;
                     }
                 }
@@ -96,7 +99,7 @@ public class AddEditReminderActivity extends BaseActivity implements
 
     private void setValuesToFields() {
         type = getIntent().getStringExtra("action_type");
-        if(type.equals("add")){
+        if (type.equals("add")) {
             buttonSaveReminder.setVisibility(View.VISIBLE);
             tv_universal_header.setText("Create Reminder");
             //set field with Current date
@@ -105,13 +108,13 @@ public class AddEditReminderActivity extends BaseActivity implements
             editReminderTime.setText(getCurrentTime());
             //Enable Date-Time Picker
             enableDateTimeSelection();
-        }else {
+        } else {
             mReminder = getIntent().getParcelableExtra("reminder");
-            if(type.equals("view")){
+            if (type.equals("view")) {
                 buttonSaveReminder.setVisibility(View.GONE);
                 tv_universal_header.setText("Reminder Details");
 
-                if(mReminder!=null){
+                if (mReminder != null) {
                     editReminderText.setText(mReminder.getMessage());
                     editReminderDate.setText(mReminder.getDate());
                     editReminderTime.setText(mReminder.getTime());
@@ -122,11 +125,11 @@ public class AddEditReminderActivity extends BaseActivity implements
                     editReminderText.setFocusable(false);
                     editReminderText.setFocusableInTouchMode(false);
                 }
-            }else if(type.equals("edit")){
+            } else if (type.equals("edit")) {
                 buttonSaveReminder.setVisibility(View.VISIBLE);
                 tv_universal_header.setText("Update Reminder");
 
-                if(mReminder!=null){
+                if (mReminder != null) {
                     editReminderText.setText(mReminder.getMessage());
                     editReminderDate.setText(mReminder.getDate());
                     editReminderTime.setText(mReminder.getTime());
@@ -158,12 +161,12 @@ public class AddEditReminderActivity extends BaseActivity implements
         String year = String.valueOf(calendar.get(Calendar.YEAR));
         String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
         String monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
-        String currentDate = day+" "+monthName+" "+year;
+        String currentDate = day + " " + monthName + " " + year;
 
         return currentDate;
     }
 
-    public void enableDateTimeSelection(){
+    public void enableDateTimeSelection() {
         editReminderDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +193,7 @@ public class AddEditReminderActivity extends BaseActivity implements
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                finish();
             }
         });
     }
@@ -206,10 +209,14 @@ public class AddEditReminderActivity extends BaseActivity implements
         String userId = LoginShared.getRegistrationDataModel(this).getData().getUser()
                 .get(0).getUserId();
 
-        Log.d("@@Sent-Add-Reminder : ","token = " +"\nuserId ="+userId);
+        Log.d("@@Sent-Add-Reminder : ", "token = " + "\nuserId =" + userId);
+
+        Log.d("@@dateTime : ", dateTime);
+        Log.d("@@dateTime : ", reminderId);
+        Log.d("@@dateTime : ", reminderText);
 
         final Call<ReminderListResponse> call_AddUpdateReminderApi = apiInterface
-                .call_AddUpdateReminderApi(token, userId, reminderText,dateTime, type, reminderId);
+                .call_AddUpdateReminderApi(token, userId, reminderText, dateTime, type, reminderId);
         call_AddUpdateReminderApi.enqueue(new Callback<ReminderListResponse>() {
             @Override
             public void onResponse(Call<ReminderListResponse> call,
@@ -219,11 +226,17 @@ public class AddEditReminderActivity extends BaseActivity implements
                     loadingData.dismiss();
                 }
 
-                if(response.body().getStatus()==1){
+                if (response.body().getStatus() == 1) {
+
+                    //Creates notification for Edited Reminder Only
+                    if (!reminderId.equalsIgnoreCase("")) {
+                        new ReminderNotification(AddEditReminderActivity.this,reminderId, reminderText, dateTime);
+                    }
+
+
                     //Open dialog to show success message and close the page
-                    showResponseDialog(response.body().getStatus(),
-                            response.body().getData().getMessage());
-                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    showResponseDialog(response.body().getStatus(), response.body().getData().getMessage());
+                } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     String deviceToken = LoginShared.getDeviceToken(AddEditReminderActivity.this);
                     LoginShared.destroySessionTypePreference(AddEditReminderActivity.this);
                     LoginShared.setDeviceToken(AddEditReminderActivity.this, deviceToken);
@@ -231,8 +244,8 @@ public class AddEditReminderActivity extends BaseActivity implements
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
-                }else {
-                    if(type.equals("Add")) {
+                } else {
+                    if (type.equals("Add")) {
                         editReminderText.setText("");
                         editReminderDate.setText("");
                         editReminderTime.setText("");
@@ -287,18 +300,18 @@ public class AddEditReminderActivity extends BaseActivity implements
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
         //set field with selected date
-        editReminderDate.setText(dayOfMonth+" "+monthName+" "+year);
+        editReminderDate.setText(dayOfMonth + " " + monthName + " " + year);
         buttonSaveReminder.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         //Set field with selected time
-        editReminderTime.setText( hourOfDay + ":" + minute);
+        editReminderTime.setText(hourOfDay + ":" + minute);
         buttonSaveReminder.setVisibility(View.VISIBLE);
     }
 
-    public void showResponseDialog(int status, String message){
+    public void showResponseDialog(int status, String message) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setMessage(message);
@@ -307,6 +320,9 @@ public class AddEditReminderActivity extends BaseActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 //Cancel the dialog.
                 dialog.dismiss();
+                Intent intent = new Intent();
+                intent.putExtra("action_type",getIntent().getStringExtra("action_type"));
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
@@ -314,4 +330,36 @@ public class AddEditReminderActivity extends BaseActivity implements
         dialog.create();
         dialog.show();
     }
+
+
+    /*private void createReminderNotification(final String reminderId, final String reminderText, final String dateTime) {
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent notificationIntent = new Intent(this, AlarmReceiver.class);
+        notificationIntent.putExtra("notificationText", reminderText);
+        notificationIntent.putExtra("notifyId", Integer.parseInt(reminderId));
+        PendingIntent broadcast = PendingIntent.getBroadcast(getBaseContext(), Integer.parseInt(reminderId), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(convertDateTime(dateTime));
+        //cal.add(Calendar.SECOND, 10);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+    }
+
+
+    public Date convertDateTime(String dateTime) {
+        //String dateTime = "02 Jul 2019 15:57";
+        Date date = new Date();
+        SimpleDateFormat formatter6 = new SimpleDateFormat("dd MMM yyyy HH:mm");
+        try {
+            date = formatter6.parse(dateTime);
+            System.out.println("dateTime: " + date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
+    }*/
 }

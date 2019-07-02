@@ -1,5 +1,6 @@
 package com.surefiz.screens.reminders;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,9 +14,9 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.notificationclasses.ReminderNotification;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.screens.reminders.adapter.ReminderAdapter;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.reminders.model.User;
@@ -31,8 +32,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ReminderActivity extends BaseActivity implements ReminderAdapter.OnReminderListener{
+public class ReminderActivity extends BaseActivity implements ReminderAdapter.OnReminderListener {
+    public static final int EDIT_REMINDER_REQUEST_CODE = 1000;
     public View view;
+    Intent addIntent = null;
     private RecyclerView recyclerView;
     private LoadingData loadingData;
     private ArrayList<User> arrayListReminder = new ArrayList<User>();
@@ -62,14 +65,13 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
         recyclerView.setAdapter(mReminderAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
 
     }
-
 
     private void setHeaderView() {
         tv_universal_header.setText("Reminder");
@@ -84,10 +86,9 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(ReminderActivity.this,
-                        AddEditReminderActivity.class);
+                Intent intent = new Intent(ReminderActivity.this, AddEditReminderActivity.class);
                 intent.putExtra("action_type", "add");
-                startActivity(intent);
+                startActivityForResult(intent, EDIT_REMINDER_REQUEST_CODE);
             }
         });
     }
@@ -102,7 +103,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
         String userId = LoginShared.getRegistrationDataModel(this).getData().getUser()
                 .get(0).getUserId();
 
-        Log.d("@@Sent-Reminder : ","token = " +"\nuserId ="+userId);
+        Log.d("@@Sent-Reminder : ", "token = " + "\nuserId =" + userId);
 
         final Call<ReminderListResponse> call_ReminderListApi = apiInterface
                 .call_ReminderListApi(token, userId);
@@ -120,7 +121,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
                 if (response.body().getStatus() == 1) {
                     //Add Items to the list
                     arrayListReminder.addAll(response.body().getData().getReminderList());
-                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     String deviceToken = LoginShared.getDeviceToken(ReminderActivity.this);
                     LoginShared.destroySessionTypePreference(ReminderActivity.this);
                     LoginShared.setDeviceToken(ReminderActivity.this, deviceToken);
@@ -128,13 +129,21 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
-                }else {
+                } else {
                     //Show dialog with proper message
                     MethodUtils.errorMsg(ReminderActivity.this, response.body()
                             .getData().getMessage());
                 }
                 //Refresh the list
                 mReminderAdapter.notifyDataSetChanged();
+
+                //Creates notification for Newly Added Reminder Only
+                if (addIntent != null && addIntent.getStringExtra("action_type").equalsIgnoreCase("add")) {
+                    int lastPosition=arrayListReminder.size()-1;
+                    String finalDateTime=arrayListReminder.get(lastPosition).getDate()+ " " +arrayListReminder.get(lastPosition).getTime();
+                    new ReminderNotification(ReminderActivity.this,arrayListReminder.get(lastPosition).getId(),
+                            arrayListReminder.get(lastPosition).getMessage(), finalDateTime);
+                }
             }
 
             @Override
@@ -160,6 +169,17 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
         Intent editIntent = new Intent(this, AddEditReminderActivity.class);
         editIntent.putExtra("action_type", "edit");
         editIntent.putExtra("reminder", arrayListReminder.get(position));
-        startActivity(editIntent);
+        startActivityForResult(editIntent, EDIT_REMINDER_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_REMINDER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            addIntent = data;
+            callReminderListApi();
+        } else {
+            addIntent = null;
+        }
     }
 }

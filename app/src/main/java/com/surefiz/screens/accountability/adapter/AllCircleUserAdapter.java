@@ -91,7 +91,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
             btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnCircleViewClickListener.onPerformanceClick(getAdapterPosition());
+                    mOnCircleViewClickListener.onRemoveClick(getAdapterPosition());
 
                 }
             });

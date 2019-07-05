@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -16,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,11 +29,9 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.OpenCameraOrGalleryDialog;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
-import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.familyinvite.FamilyInviteActivity;
 import com.surefiz.screens.groupinvite.GroupInviteActivity;
@@ -48,7 +44,6 @@ import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -64,7 +59,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.Part;
 
 public class RegistrationClickEvent implements View.OnClickListener {
     RegistrationActivity registrationActivity;
@@ -260,7 +254,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         registrationActivity.profile_image.setOnClickListener(this);
         registrationActivity.iv_plus_add_image.setOnClickListener(this);
         registrationActivity.btn_register.setOnClickListener(this);
-        registrationActivity.rl_back.setOnClickListener(this);
+        //registrationActivity.rl_back.setOnClickListener(this);
         registrationActivity.et_management.setOnClickListener(this);
         registrationActivity.et_userselection.setOnClickListener(this);
         registrationActivity.et_member.setOnClickListener(this);
@@ -278,9 +272,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     validationAndApiCall();
                 }
                 break;
-            case R.id.rl_back:
+            /*case R.id.rl_back:
                 registrationActivity.onBackPressed();
-                break;
+                break;*/
             case R.id.profile_image:
                 new OpenCameraOrGalleryDialog(registrationActivity, path -> filePath = path, "0").show();
                 break;
@@ -793,7 +787,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Email and Confirm Email is not same.");
         }/* else if (registrationActivity.et_password.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your password");
-        }*/ else if (registrationActivity.et_scale_id.getText().toString().equals("")) {
+        }*/ else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                registrationActivity.et_scale_id.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your Scale Id");
         } else if (!lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
             MethodUtils.errorMsg(registrationActivity, "Please enter valid Scale Id");
@@ -888,7 +883,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserId());
+        //RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserId());
+        RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.registrationModel.getData().getUser().get(0).getUserId());
 
         //String name = registrationActivity.et_first_name.getText().toString().trim() + "%20" + registrationActivity.et_last_name.getText().toString().trim();
         //String name = registrationActivity.et_first_name.getText().toString().trim();
@@ -926,21 +922,28 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else {
             units = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
+
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else {
+        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
+        } else {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "3");
         }
+
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.age.getText().toString().trim());
         RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim().split(Pattern.quote(" "))[0]);
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
 
 
-        Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoApi(LoginShared.getRegistrationDataModel(registrationActivity).getData().getToken(), current_User_Id, first_name, middle_name, last_name,
+        Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoApi(registrationActivity.registrationModel.getData().getToken(), current_User_Id, first_name, middle_name, last_name,
                 email, time, height, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken);
+
+        /*Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoApi(LoginShared.getRegistrationDataModel(registrationActivity).getData().getToken(), current_User_Id, first_name, middle_name, last_name,
+                email, time, height, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken);*/
 
 
         complete_user_info_api.enqueue(new Callback<ResponseBody>() {
@@ -958,6 +961,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     Log.d("@@CompleteUserInfo : ", jsonObject.toString());
 
                     if (jsonObject.optInt("status") == 1) {
+
+                        LoginShared.setRegistrationDataModel(registrationActivity, registrationActivity.registrationModel);
+                        LoginShared.setUserPhoto(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserPhoto());
+                        LoginShared.setUserName(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserName());
+                        LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
 
                         //MethodUtils.errorMsg(registrationActivity, jsonObject.getString("message"));
                         if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
@@ -1078,8 +1086,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
             gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else if (registrationActivity.et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
-        } else if (registrationActivity.et_gender.getText().toString().trim().equalsIgnoreCase("Prefer not to say")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "4");
+        } else {
+            //gender = RequestBody.create(MediaType.parse("text/plain"), "4");
+            gender = RequestBody.create(MediaType.parse("text/plain"), "3");
         }
 
 
@@ -1216,8 +1225,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
             gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else if (registrationActivity.et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
-        } else if (registrationActivity.et_gender.getText().toString().trim().equalsIgnoreCase("Prefer not to say")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "4");
+        } else {
+            //gender = RequestBody.create(MediaType.parse("text/plain"), "4");
+            gender = RequestBody.create(MediaType.parse("text/plain"), "3");
         }
 
         if (weight_managment_goal == 2) {
@@ -1361,7 +1371,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         MultipartBody.Part body = MultipartBody.Part.createFormData("userImage",
                 registrationActivity.mCompressedFile.getName(), reqFile);
 
-        RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserId());
+        RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.registrationModel.getData().getUser().get(0).getUserId());
         //String name = registrationActivity.et_first_name.getText().toString().trim() + registrationActivity.et_last_name.getText().toString().trim();
         //RequestBody full_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_first_name.getText().toString().trim());
 
@@ -1380,13 +1390,17 @@ public class RegistrationClickEvent implements View.OnClickListener {
             units = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
 
+
         if (registrationActivity.et_gender.getText().toString().trim().equals("Male")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else if (registrationActivity.et_gender.getText().toString().trim().equals("Female")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "0");
-        } else {
+        } else if (registrationActivity.et_gender.getText().toString().trim().equals("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
+        } else {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "3");
         }
+
 
         if (weight_managment_goal == 2) {
             type = RequestBody.create(MediaType.parse("text/plain"), "2");
@@ -1413,7 +1427,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
 
 
-        Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoImageApi(LoginShared.getRegistrationDataModel(registrationActivity).getData().getToken(), current_User_Id, first_name, middle_name, last_name,
+        Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoImageApi(registrationActivity.registrationModel.getData().getToken(), current_User_Id, first_name, middle_name, last_name,
                 email, time, height, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken, body);
 
         complete_user_info_api.enqueue(new Callback<ResponseBody>() {
@@ -1432,14 +1446,15 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
                     if (jsonObject.optInt("status") == 1) {
 
-                        //registrationModel = gson.fromJson(responseString, RegistrationModel.class);
-                        //LoginShared.setRegistrationDataModel(registrationActivity, registrationModel);
+
+                        LoginShared.setRegistrationDataModel(registrationActivity, registrationActivity.registrationModel);
+                        LoginShared.setUserPhoto(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserPhoto());
+                        LoginShared.setUserName(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserName());
+                        LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
+
+
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
-                        //LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
-                        //LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
-                        //LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
-                        //MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         if (!LoginShared.getstatusforwifivarification(registrationActivity))
                             MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));

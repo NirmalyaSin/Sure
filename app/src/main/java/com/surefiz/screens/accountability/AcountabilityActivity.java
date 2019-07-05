@@ -15,13 +15,13 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.adapter.AllCircleUserAdapter;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.accountability.models.User;
+import com.surefiz.screens.accountability.models.removeuser.RemoveUserAccount;
 import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
 import com.surefiz.screens.boardcast.BoardCastActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -58,6 +58,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     private void callCircleUserListApi() {
         loadingData.show_with_label("Loading");
+
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -117,7 +118,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         recyclerView.setAdapter(mAllCircleUserAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
@@ -175,6 +176,56 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     @Override
     public void onRemoveClick(int position) {
+        callRemoveAccountUserApi(position);
+    }
+
+
+    private void callRemoveAccountUserApi(int position) {
+        loadingData.show_with_label("Loading");
+
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<RemoveUserAccount> removeAccountUserApi = apiInterface.call_ApiforRemove_accuser(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),
+                arrayListUsers.get(position).getUser_id());
+
+        removeAccountUserApi.enqueue(new Callback<RemoveUserAccount>() {
+            @Override
+            public void onResponse(Call<RemoveUserAccount> call, Response<RemoveUserAccount> response) {
+                if (loadingData != null && loadingData.isShowing()) {
+                    loadingData.dismiss();
+                }
+
+                try {
+                    //Log.d("@@removeAccountUser : ", jsonObject.toString());
+                    if (response.body().getStatus() == 1) {
+                        //arrayListUsers.addAll(response.body().getData().getUserList());
+                        Log.d("@@UserItem : ", arrayListUsers.get(0).toString());
+                        arrayListUsers.remove(position);
+                        MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
+
+                    } else if (response.body().getStatus() == 2) {
+                        MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
+                    } else {
+                        MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
+                    }
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(AcountabilityActivity.this, getString(R.string.error_occurred));
+                }
+
+                mAllCircleUserAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<RemoveUserAccount> call, Throwable t) {
+                if (loadingData != null && loadingData.isShowing())
+                    loadingData.dismiss();
+                MethodUtils.errorMsg(AcountabilityActivity.this, getString(R.string.error_occurred));
+            }
+        });
+
 
     }
 }

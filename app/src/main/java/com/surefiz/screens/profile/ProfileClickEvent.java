@@ -204,7 +204,7 @@ public class ProfileClickEvent implements View.OnClickListener {
             activity.et_gender.setText("Female");
         } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("2")) {
             activity.et_gender.setText("Non-binary");
-        } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserGender().equals("4")) {
+        } else {
             activity.et_gender.setText("Prefer not to say");
         }
 
@@ -497,8 +497,8 @@ public class ProfileClickEvent implements View.OnClickListener {
             gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else if (activity.et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
-        } else if (activity.et_gender.getText().toString().trim().equalsIgnoreCase("Prefer not to say")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "4");
+        } else {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "3");
         }
         RequestBody user_email = RequestBody.create(MediaType.parse("text/plain"), activity.et_email.getText().toString().trim());
         String str = activity.et_height.getText().toString().trim();
@@ -602,8 +602,8 @@ public class ProfileClickEvent implements View.OnClickListener {
             gender = RequestBody.create(MediaType.parse("text/plain"), "0");
         } else if (activity.et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
-        } else if (activity.et_gender.getText().toString().trim().equalsIgnoreCase("Prefer not to say")) {
-            gender = RequestBody.create(MediaType.parse("text/plain"), "4");
+        } else {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "3");
         }
 
 

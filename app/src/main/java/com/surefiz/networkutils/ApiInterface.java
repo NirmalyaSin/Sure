@@ -1,8 +1,8 @@
 package com.surefiz.networkutils;
 
 
-import com.google.zxing.ResultPoint;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
+import com.surefiz.screens.accountability.models.removeuser.RemoveUserAccount;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.bmidetails.model.BMIResponse;
 import com.surefiz.screens.chat.model.ChatListResponse;
@@ -16,7 +16,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -39,10 +38,10 @@ import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
-import static com.surefiz.apilist.ApiList.BOARDCAST;
-import static com.surefiz.apilist.ApiList.CHANGEPASSWORD;
 import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
 import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
+import static com.surefiz.apilist.ApiList.BOARDCAST;
+import static com.surefiz.apilist.ApiList.CHANGEPASSWORD;
 import static com.surefiz.apilist.ApiList.COMPLETE_USER_INFO;
 import static com.surefiz.apilist.ApiList.CONTACTLIST;
 import static com.surefiz.apilist.ApiList.DASHBOARD;
@@ -56,6 +55,7 @@ import static com.surefiz.apilist.ApiList.LOGOUT;
 import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
 import static com.surefiz.apilist.ApiList.READ_NOTIFICATION;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
+import static com.surefiz.apilist.ApiList.REMOVE_ACCOUNT_USER;
 import static com.surefiz.apilist.ApiList.SENDOTP;
 import static com.surefiz.apilist.ApiList.SEND_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.USERLIST;
@@ -416,4 +416,10 @@ public interface ApiInterface {
                                                 @Field("Content-Type") String serverUserId,
                                                 @Field("userId") String userId,
                                                 @Field("acceptationStatus") String acceptationStatus);
+
+    @FormUrlEncoded
+    @POST(REMOVE_ACCOUNT_USER)
+    Call<RemoveUserAccount> call_ApiforRemove_accuser(@Header("x-authorization") String token,
+                                                      @Field("sender") String sender,
+                                                      @Field("receiver") String receiver);
 }

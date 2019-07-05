@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -1244,7 +1243,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         PieEntry muscelEntry = new PieEntry((float) muscelValue);
         entries.add(muscelEntry);
 
-        double boneValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().get(1);
+        double boneValue = 0;
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().size() > 2) {
+            boneValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().get(1);
+        }
         PieEntry boneEntry = new PieEntry((float) boneValue);
         entries.add(boneEntry);
 

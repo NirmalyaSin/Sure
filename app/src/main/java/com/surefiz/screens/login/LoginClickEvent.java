@@ -11,7 +11,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.AddLoginUserDetails;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -28,7 +27,6 @@ import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
-
 
 import org.json.JSONObject;
 
@@ -159,6 +157,133 @@ public class LoginClickEvent implements View.OnClickListener {
                         LoginShared.setUserPhoto(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId()));
+
+
+                        if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+                            if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
+                                    getUserMac().equals("")) {
+
+                                LoginShared.setRegistrationDataModel(mLoginActivity, null);
+
+
+                                Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
+                                regIntent.putExtra("completeStatus", "0");
+                                regIntent.putExtra("registrationModelData", responseString);
+                                mLoginActivity.startActivity(regIntent);
+                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                mLoginActivity.finish();
+                            } else {
+                                if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
+                                    Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                                    mLoginActivity.startActivity(intent);
+                                    mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    mLoginActivity.finish();
+                                } else {
+                                    Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
+                                    mLoginActivity.startActivity(intent);
+                                    mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    mLoginActivity.finish();
+                                }
+                            }
+                        } else {
+                            if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0) {
+
+                                LoginShared.setRegistrationDataModel(mLoginActivity, null);
+
+                                Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
+                                regIntent.putExtra("completeStatus", "0");
+                                regIntent.putExtra("registrationModelData", responseString);
+                                mLoginActivity.startActivity(regIntent);
+                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                mLoginActivity.finish();
+
+                            } else {
+
+                                if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
+                                        getUserMac().equals("")) {
+
+                                    String deviceToken = LoginShared.getDeviceToken(mLoginActivity);
+                                    LoginShared.setRegistrationDataModel(mLoginActivity, null);
+                                    LoginShared.destroySessionTypePreference(mLoginActivity);
+                                    LoginShared.setDeviceToken(mLoginActivity, deviceToken);
+
+                                    JSONObject jsObject = jsonObject.getJSONObject("data");
+                                    MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
+                                } else {
+
+                                    if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
+                                        Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                                        mLoginActivity.startActivity(intent);
+                                        mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                        mLoginActivity.finish();
+                                    } else {
+                                        Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
+                                        mLoginActivity.startActivity(intent);
+                                        mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                        mLoginActivity.finish();
+                                    }
+                                }
+                            }
+                        }
+                    } else if (jsonObject.optInt("status") == 4) {
+                        registrationModel = gson.fromJson(responseString, RegistrationModel.class);
+                        LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
+                        Intent intent = new Intent(mLoginActivity, OtpActivity.class);
+                        mLoginActivity.startActivity(intent);
+                        mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        mLoginActivity.finish();
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
+                    } else {
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
+                    }
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.error_occurred));
+            }
+        });
+    }
+
+
+
+
+    /*private void callapiforlogin() {
+//        {"status":1,"data":{"status":1,"message":"You have successfully logged in.","token":"29c41fc29c0ec161708b345901f2dbf6","user":[{"user_id":"101","user_name":"John101  John","user_email":"john101@surefiz.com","user_password":"123456","user_photo":"https:\/\/www.surefiz.com\/img\/profiles\/user-101\/1542293673.jpg","user_mac":"1000000010","user_permission":"ReadOnly","user_LastLogin":"2019-02-14 05:11:55","user_Profile_Complete_Status":1}]}}
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<ResponseBody> loginapicall = apiInterface.call_loginApi(mLoginActivity.editEmail.getText().toString().trim(),
+                mLoginActivity.editPassword.getText().toString(), "2", LoginShared.getDeviceToken(mLoginActivity));
+        loginapicall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                try {
+                    String responseString = response.body().string();
+                    Gson gson = new Gson();
+                    RegistrationModel registrationModel;
+
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    Log.d("@@LoginData : ", jsonObject.toString());
+                    if (jsonObject.optInt("status") == 1) {
+                        LoginShared.setstatusforOtpvarification(mLoginActivity, true);
+                        LoginShared.setWeightPageFrom(mLoginActivity, "0");
+                        registrationModel = gson.fromJson(responseString, RegistrationModel.class);
+                        LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
+                        LoginShared.setUserPhoto(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserPhoto());
+                        LoginShared.setUserName(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserName());
+                        LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId()));
                         if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
                                 getUserProfileCompleteStatus() == 0) {
 //                            new AddLoginUserDetails(mLoginActivity).show();
@@ -207,7 +332,7 @@ public class LoginClickEvent implements View.OnClickListener {
                 MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.error_occurred));
             }
         });
-    }
+    }*/
 
     private void hideSoftKeyBoard() {
         View view = mLoginActivity.getCurrentFocus();

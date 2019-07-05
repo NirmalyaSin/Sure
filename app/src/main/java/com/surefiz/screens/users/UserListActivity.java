@@ -113,7 +113,8 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
 
                         //printUserdata(response.body().getData().getUserList());
                         adapter.notifyDataSetChanged();
-                        if (response.body().getData().getSubUserAddStatus() == 0) {
+                        //if (response.body().getData().getSubUserAddStatus() == 0) {
+                        if (response.body().getData().getUserList().size() >= 4) {
                             btn_add_user.setEnabled(false);
                             btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_edit_rounded_corner_blue));
                             btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.black));
@@ -221,7 +222,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
         rv_items.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         rv_items.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         rv_items.setLayoutManager(mLayoutManager);

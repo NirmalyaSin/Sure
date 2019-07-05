@@ -32,10 +32,10 @@
 
                 <EditText
                     android:id="@+id/searchBar"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_ractangle_white"
+                    android:background="@color/hintColor"
                     android:hint="Search user here"
                     android:gravity="center_vertical"
                     android:drawableLeft="@drawable/ic_search"

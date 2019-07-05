@@ -6,15 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -38,7 +37,7 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.ViewProfileModel;
-import com.surefiz.screens.termcondition.TermAndConditionActivity;
+import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MediaUtils;
 import com.surefiz.utils.MethodUtils;
@@ -74,6 +73,7 @@ public class RegistrationActivity extends AppCompatActivity {
     public File mCompressedFile = null;
     public RegistrationClickEvent registrationClickEvent;
     public boolean isInCompleteProfile = false;
+    public RegistrationModel registrationModel;
     int regType = -1;
     @BindView(R.id.tv_upload)
     TextView tv_upload;
@@ -179,7 +179,6 @@ public class RegistrationActivity extends AppCompatActivity {
     LinearLayout ll_zip_code;
     @BindView(R.id.btn_skip_config)
     Button btn_skip_config;
-
     private File mFile = null;
     private Uri fileUri = null;
     private OnImageSet onImageSet;
@@ -210,6 +209,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void viewShowFromLogin() {
         if (getIntent().getStringExtra("completeStatus").equals("0")) {
+
+            Gson gson = new Gson();
+            registrationModel = gson.fromJson(getIntent().getStringExtra("registrationModelData"), RegistrationModel.class);
+
             tv_password.setVisibility(View.GONE);
             star_image_password.setVisibility(View.GONE);
             ll_password.setVisibility(View.GONE);
@@ -237,7 +240,7 @@ public class RegistrationActivity extends AppCompatActivity {
             ll_zip_code.setVisibility(View.GONE);
             ll_signup_member.setVisibility(View.GONE);
 
-            btn_register.setText("Update");
+            //btn_register.setText("Update");
             //btn_register.setText("Register");
             isInCompleteProfile = true;
             //btn_skip_config.setVisibility(View.GONE);
@@ -280,8 +283,12 @@ public class RegistrationActivity extends AppCompatActivity {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<ResponseBody> call_view_profile = apiInterface.call_viewprofileApi(LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getToken(),
-                LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserId());
+        final Call<ResponseBody> call_view_profile = apiInterface.call_viewprofileApi(registrationModel.getData().getToken(),
+                registrationModel.getData().getUser().get(0).getUserId());
+
+
+        /*final Call<ResponseBody> call_view_profile = apiInterface.call_viewprofileApi(LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserId());*/
 
         System.out.println("@@ProfileInfo :" + call_view_profile);
 
@@ -340,7 +347,18 @@ public class RegistrationActivity extends AppCompatActivity {
         et_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
         et_confirm_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
         et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
-        et_gender.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender());
+
+        if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender())) {
+            if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("1")) {
+                et_gender.setText("Male");
+            } else if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("0")) {
+                et_gender.setText("Female");
+            } else if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("2")) {
+                et_gender.setText("Non-binary");
+            } else {
+                et_gender.setText("Prefer not to say");
+            }
+        }
 
         if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob())) {
             age.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob());
@@ -379,18 +397,53 @@ public class RegistrationActivity extends AppCompatActivity {
         bundle.putString("weight", LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTargetWeight());
         bundle.putString("time", LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTime());
 
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
+            btn_register.setText("Complete Register");
+        } else {
+            btn_register.setText("Complete Signup");
+        }
+
+        //et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
+
         registrationClickEvent.setValuesForListItem(bundle);
 
         showImage();
+
+
+        disableViews();
+    }
+
+    private void disableViews() {
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
+            et_first_name.setEnabled(false);
+            et_middle_name.setEnabled(false);
+            et_last_name.setEnabled(false);
+            et_email.setEnabled(false);
+            et_confirm_email.setEnabled(false);
+            et_phone.setEnabled(false);
+            et_gender.setEnabled(false);
+            age.setEnabled(false);
+            et_units.setEnabled(false);
+            et_management.setEnabled(false);
+            et_weight.setEnabled(false);
+            et_height.setEnabled(false);
+            et_time_loss.setEnabled(false);
+            iv_plus_add_image.setEnabled(false);
+            et_userselection.setEnabled(false);
+            et_scale_id.setEnabled(true);
+        } else {
+
+            ll_scale_id.setVisibility(View.GONE);
+            rl_scale_id.setVisibility(View.GONE);
+            et_scale_id.setText("");
+
+        }
     }
 
 
     public boolean checkIsZeroValue(String value) {
-        if (value.equalsIgnoreCase("0") || value.equalsIgnoreCase("0.0") || value.equalsIgnoreCase("0.00")) {
-            return true;
-        }
+        return value.equalsIgnoreCase("0") || value.equalsIgnoreCase("0.0") || value.equalsIgnoreCase("0.00");
 
-        return false;
     }
 
     private void showImage() {

@@ -19,14 +19,12 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.acountabiltySearch.adapter.SearchCircleUserAdapter;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.accountability.models.User;
+import com.surefiz.screens.acountabiltySearch.adapter.SearchCircleUserAdapter;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.dashboard.BaseActivity;
-import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -71,7 +69,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-              //  Log.d("@@beforeTextChanged: ", "Searching... start: "+start+" , after: "+after+" , count: "+count+" , Char: "+s);
+                //  Log.d("@@beforeTextChanged: ", "Searching... start: "+start+" , after: "+after+" , count: "+count+" , Char: "+s);
             }
 
             @Override
@@ -81,13 +79,13 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                     public void run() {
                         if (System.currentTimeMillis() - lastChange >= 1000) {
                             //send request
-                            Log.d("@@onTextChanged: ", "Searching... count: "+count
-                                    +" , Char: "+key);
+                            Log.d("@@onTextChanged: ", "Searching... count: " + count
+                                    + " , Char: " + key);
                             String keyword = searchBar.getText().toString().trim();
-                            if(!keyword.equals("")) {
+                            if (!keyword.equals("")) {
                                 //Call Api to list users based on the keyword
                                 callSearchCircleUserApi(key.toString());
-                            }else {
+                            } else {
                                 arrayListUsers.clear();
                                 mSearchCircleUserAdapter.notifyDataSetChanged();
                             }
@@ -99,7 +97,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
 
             @Override
             public void afterTextChanged(Editable s) {
-            //    Log.d("@@afterTextChanged: ", "Searching... Editable: "+s);
+                //    Log.d("@@afterTextChanged: ", "Searching... Editable: "+s);
             }
         });
     }
@@ -125,8 +123,8 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                 try {
                     if (response.body().getStatus() == 1) {
                         arrayListUsers.addAll(response.body().getData().getUserList());
-                        Log.d("@@UserItem : " , arrayListUsers.get(0).toString());
-                    }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        Log.d("@@UserItem : ", arrayListUsers.get(0).toString());
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(SearchAcountabilityActivity.this);
                         LoginShared.destroySessionTypePreference(SearchAcountabilityActivity.this);
                         LoginShared.setDeviceToken(SearchAcountabilityActivity.this, deviceToken);
@@ -137,7 +135,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                     }
 
                 } catch (Exception e) {
-                  //  MethodUtils.errorMsg(SearchAcountabilityActivity.this, getString(R.string.error_occurred));
+                    //  MethodUtils.errorMsg(SearchAcountabilityActivity.this, getString(R.string.error_occurred));
                 }
 
                 mSearchCircleUserAdapter.notifyDataSetChanged();
@@ -147,7 +145,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
             public void onFailure(Call<CircleUserResponse> call, Throwable t) {
                 if (loadingData != null && loadingData.isShowing())
                     loadingData.dismiss();
-             //   MethodUtils.errorMsg(SearchAcountabilityActivity.this, getString(R.string.error_occurred));
+                //   MethodUtils.errorMsg(SearchAcountabilityActivity.this, getString(R.string.error_occurred));
             }
         });
 
@@ -167,7 +165,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         recyclerView.setAdapter(mSearchCircleUserAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -213,7 +211,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<AddToCircleResponse> call_AddToCircleUserApi = apiInterface.call_AddToCircleUserApi(
-                        LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getToken(),
                 LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),
                 arrayListUsers.get(listPosition).getUser_id(),
                 connectionType);
@@ -224,15 +222,15 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                 if (loadingData != null && loadingData.isShowing()) {
                     loadingData.dismiss();
                 }
-                if(response.body()!=null) {
+                if (response.body() != null) {
                     Log.d("@@RequestData : ", response.body().toString());
                 }
 
-                if(response.body().getStatus()==1){
+                if (response.body().getStatus() == 1) {
                     //Show success dialog
                     showResponseDialog(response.body().getStatus(),
                             response.body().getData().getMessage());
-                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     String deviceToken = LoginShared.getDeviceToken(SearchAcountabilityActivity.this);
                     LoginShared.destroySessionTypePreference(SearchAcountabilityActivity.this);
                     LoginShared.setDeviceToken(SearchAcountabilityActivity.this, deviceToken);
@@ -240,7 +238,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
-                }else {
+                } else {
                     //Show dialog to show response from server
                     MethodUtils.errorMsg(SearchAcountabilityActivity.this,
                             response.body().getData().getMessage());
@@ -254,8 +252,8 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
                     loadingData.dismiss();
                 }
                 //Show error dialog
-               MethodUtils.errorMsg(SearchAcountabilityActivity.this,
-                       getString(R.string.error_occurred));
+                MethodUtils.errorMsg(SearchAcountabilityActivity.this,
+                        getString(R.string.error_occurred));
             }
         });
 
@@ -267,7 +265,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         });
     }
 
-    public void showResponseDialog(int status, String message){
+    public void showResponseDialog(int status, String message) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setMessage(message);

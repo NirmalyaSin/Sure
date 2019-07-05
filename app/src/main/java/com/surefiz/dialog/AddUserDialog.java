@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -165,6 +166,8 @@ public class AddUserDialog extends Dialog {
                     MethodUtils.errorMsg(activity, "Please enter user email");
                 } else if (et_re_enter_email.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter confirm user email");
+                }else if (!et_re_enter_email.getText().toString().equals(et_email.getText().toString())) {
+                    MethodUtils.errorMsg(activity, "Email and Confirm email is not same");
                 }
                 if (isFullList) {
                     if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
@@ -188,9 +191,9 @@ public class AddUserDialog extends Dialog {
                     }
                     else if (et_height.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your height");
-                    } else if (et_weight.getText().toString().equals("")) {
+                    } else if (weight_managment_goal == 2&&et_weight.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your desired weight");
-                    } else if (et_time_loss.getText().toString().equals("")) {
+                    } else if (weight_managment_goal == 2&&et_time_loss.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please select your time to lose weight");
                     } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                         MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
@@ -205,11 +208,11 @@ public class AddUserDialog extends Dialog {
                         addUserApi();
                     }
                 } else {
-                    int age = Integer.parseInt(et_DOB.getText().toString());
+                    /*int age = Integer.parseInt(et_DOB.getText().toString());
                     if (!(age >= 7 && age <= 99)) {
                         MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
                         return;
-                    }
+                    }*/
 
                     if (!ckb.isChecked()) {
                         MethodUtils.errorMsg(activity, "Please accept terms and conditions");
@@ -766,8 +769,8 @@ public class AddUserDialog extends Dialog {
             gender = "0";
         } else if (et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = "2";
-        } else if (et_gender.getText().toString().trim().equalsIgnoreCase("Prefer not to say")) {
-            gender = "4";
+        } else  {
+            gender = "3";
         }
 
         if (et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
@@ -813,9 +816,18 @@ public class AddUserDialog extends Dialog {
                     LoginShared.getRegistrationDataModel(activity).getData().getToken(),
                     LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
                     et_name.getText().toString().trim(), et_middle.getText().toString().trim(), et_last.getText().toString().trim(), et_email.getText().toString().trim(), "",
+                    "", "", "12345678", "3", "",
+                    "", "2", "1",
+                    LoginShared.getDeviceToken(activity), "2", "0");
+
+
+            /*call_addUser = apiInterface.call_adduserApi(
+                    LoginShared.getRegistrationDataModel(activity).getData().getToken(),
+                    LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId(), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserMac(),
+                    et_name.getText().toString().trim(), et_middle.getText().toString().trim(), et_last.getText().toString().trim(), et_email.getText().toString().trim(), "",
                     "", "", "12345678", "", "",
                     "", "2", "",
-                    LoginShared.getDeviceToken(activity), "", "");
+                    LoginShared.getDeviceToken(activity), "", "");*/
         }
 
 
@@ -829,6 +841,8 @@ public class AddUserDialog extends Dialog {
                     String responseString = response.body().string();
 
                     JSONObject jsonObject = new JSONObject(responseString);
+                    Log.d("@@AddUserData : ", jsonObject.toString());
+
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jObject = jsonObject.getJSONObject("data");
                         int scaleUserId = jObject.optInt("scaleUserId");

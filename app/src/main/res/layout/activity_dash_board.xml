@@ -814,6 +814,7 @@
                                 android:layout_centerVertical="true"
                                 android:text="@string/battery_status_low"
                                 android:textColor="@color/whiteColor"
+                                android:visibility="gone"
                                 android:textSize="@dimen/_12sdp" />
 
                             <RelativeLayout

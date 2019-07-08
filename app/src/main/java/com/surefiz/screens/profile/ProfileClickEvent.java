@@ -142,7 +142,6 @@ public class ProfileClickEvent implements View.OnClickListener {
 
         System.out.println("@@@ProfileInfo :" + call_view_profile.request().body());
 
-
         call_view_profile.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -234,6 +233,13 @@ public class ProfileClickEvent implements View.OnClickListener {
         } else {
             activity.et_height.setText("");
         }
+
+        activity.et_country_name.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getCountry());
+        activity.et_add_line1.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getAddressline1());
+        activity.et_add_line2.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getAddressline2());
+        activity.et_city.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getCity());
+        activity.et_state.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getState());
+        activity.et_zipcode.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getZip());
 
 
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
@@ -706,14 +712,6 @@ public class ProfileClickEvent implements View.OnClickListener {
         LinearLayout ll = (LinearLayout) datePicker.getChildAt(0);
         LinearLayout ll2 = (LinearLayout) ll.getChildAt(0);
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-
-       /* if (currentapiVersion > 23) {
-            ll2.getChildAt(1).setVisibility(View.GONE);
-        } else if (currentapiVersion == 23) {
-            ll2.getChildAt(0).setVisibility(View.GONE);
-        } else {
-            ll2.getChildAt(1).setVisibility(View.GONE);
-        }*/
 
         date_time_set.setOnClickListener(new View.OnClickListener() {
             @Override

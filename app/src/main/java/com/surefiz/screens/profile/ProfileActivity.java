@@ -58,6 +58,13 @@ public class ProfileActivity extends BaseActivity {
     EditText et_units;
     EditText et_email;
     EditText et_height;
+    EditText et_country_name;
+    EditText et_add_line1;
+    EditText et_add_line2;
+    EditText et_city;
+    EditText et_state;
+    EditText et_zipcode;
+
     Button btn_register;
     Switch switch_visibility;
     RelativeLayout rl_visibility;
@@ -114,6 +121,13 @@ public class ProfileActivity extends BaseActivity {
         et_units = view.findViewById(R.id.et_units);
         et_email = view.findViewById(R.id.et_email);
         et_height = view.findViewById(R.id.et_height);
+        et_country_name = view.findViewById(R.id.et_country_name);
+        et_add_line1 = view.findViewById(R.id.et_add_line1);
+        et_add_line2 = view.findViewById(R.id.et_add_line2);
+        et_city = view.findViewById(R.id.et_city);
+        et_state = view.findViewById(R.id.et_state);
+        et_zipcode = view.findViewById(R.id.et_zipcode);
+
         btn_register = view.findViewById(R.id.btn_register);
         switch_visibility = view.findViewById(R.id.switch_visibility);
         rl_visibility = view.findViewById(R.id.rl_visibility);

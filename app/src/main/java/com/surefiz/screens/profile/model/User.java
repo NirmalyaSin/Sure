@@ -1,4 +1,3 @@
-
 package com.surefiz.screens.profile.model;
 
 import com.google.gson.annotations.Expose;
@@ -15,21 +14,36 @@ public class User {
     @SerializedName("user_name")
     @Expose
     private String userName;
-    @SerializedName("user_email")
-    @Expose
-    private String userEmail;
-    @SerializedName("user_permission")
-    @Expose
-    private String userPermission;
-    @SerializedName("user_LastLogin")
-    @Expose
-    private String userLastLogin;
     @SerializedName("middle_name")
     @Expose
     private String middleName;
     @SerializedName("last_name")
     @Expose
     private String lastName;
+    @SerializedName("user_email")
+    @Expose
+    private String userEmail;
+    @SerializedName("user_permission")
+    @Expose
+    private String userPermission;
+    @SerializedName("country")
+    @Expose
+    private String country;
+    @SerializedName("addressline1")
+    @Expose
+    private String addressline1;
+    @SerializedName("addressline2")
+    @Expose
+    private String addressline2;
+    @SerializedName("city")
+    @Expose
+    private String city;
+    @SerializedName("state")
+    @Expose
+    private String state;
+    @SerializedName("zip")
+    @Expose
+    private String zip;
     @SerializedName("user_phoneNumber")
     @Expose
     private String userPhoneNumber;
@@ -42,6 +56,9 @@ public class User {
     @SerializedName("user_image")
     @Expose
     private String userImage;
+    @SerializedName("user_LastLogin")
+    @Expose
+    private String userLastLogin;
     @SerializedName("preferredUnits")
     @Expose
     private String preferredUnits;
@@ -57,6 +74,9 @@ public class User {
     @SerializedName("type")
     @Expose
     private String type;
+    @SerializedName("IsServerWeight")
+    @Expose
+    private String isServerWeight;
     @SerializedName("scaleid")
     @Expose
     private String scaleid;
@@ -88,6 +108,22 @@ public class User {
         this.userName = userName;
     }
 
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -104,28 +140,52 @@ public class User {
         this.userPermission = userPermission;
     }
 
-    public String getUserLastLogin() {
-        return userLastLogin;
+    public String getCountry() {
+        return country;
     }
 
-    public void setUserLastLogin(String userLastLogin) {
-        this.userLastLogin = userLastLogin;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getAddressline1() {
+        return addressline1;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setAddressline1(String addressline1) {
+        this.addressline1 = addressline1;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getAddressline2() {
+        return addressline2;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setAddressline2(String addressline2) {
+        this.addressline2 = addressline2;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public String getUserPhoneNumber() {
@@ -158,6 +218,14 @@ public class User {
 
     public void setUserImage(String userImage) {
         this.userImage = userImage;
+    }
+
+    public String getUserLastLogin() {
+        return userLastLogin;
+    }
+
+    public void setUserLastLogin(String userLastLogin) {
+        this.userLastLogin = userLastLogin;
     }
 
     public String getPreferredUnits() {
@@ -198,6 +266,14 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getIsServerWeight() {
+        return isServerWeight;
+    }
+
+    public void setIsServerWeight(String isServerWeight) {
+        this.isServerWeight = isServerWeight;
     }
 
     public String getScaleid() {

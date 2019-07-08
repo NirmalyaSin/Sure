@@ -1,21 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/about"
     tools:context=".screens.welcome.WelcomeActivity">
 
-    <TextView
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <VideoView
+            android:id="@+id/video_view_welcome"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome To SureFiz™"
-        android:textSize="@dimen/_30sdp"
-        android:textStyle="bold"
-        android:textColor="@color/whiteColor"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:src="@mipmap/ic_launcher" />
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Welcome To SureFiz™"-->
+    <!--android:textSize="@dimen/_30sdp"-->
+    <!--android:textStyle="bold"-->
+    <!--android:textColor="@color/whiteColor"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_marginBottom="@dimen/_40sdp"-->
+    <!--android:visibility="visible"/>-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_40sdp"/>
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_28sdp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@drawable/login_submit_rounded_corner"
+            android:gravity="center"
+            android:text="Login"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_22sdp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/ll_howto_sign_learn_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/txt_signup"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/login_submit_rounded_corner"
+                android:gravity="center"
+                android:text="How to Signup"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:id="@+id/txt_learn_more"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/login_submit_rounded_corner"
+                android:gravity="center"
+                android:text="Learn More"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="normal" />
+        </LinearLayout>
+    </LinearLayout>
+
 
 </RelativeLayout>

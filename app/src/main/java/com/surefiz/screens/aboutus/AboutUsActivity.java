@@ -30,7 +30,8 @@ public class AboutUsActivity extends BaseActivity {
 
     private void setHeaderView() {
         tv_universal_header.setText(getIntent().getStringExtra("header"));
-        img_topbar_menu.setVisibility(View.VISIBLE);
+        img_topbar_menu.setVisibility(getIntent().getBooleanExtra("menu", false) ?
+                View.VISIBLE : View.INVISIBLE);
         btn_done.setVisibility(View.GONE);
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);

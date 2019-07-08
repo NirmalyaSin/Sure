@@ -264,8 +264,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_about:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent aboutIntent = new Intent(this, AboutUsActivity.class);
-                aboutIntent.putExtra("url","https://www.surefiz.com/AboutUs");
-                aboutIntent.putExtra("header","About Us");
+                aboutIntent.putExtra("url", "https://www.surefiz.com/AboutUs");
+                aboutIntent.putExtra("header", "About Us");
+                aboutIntent.putExtra("menu", true);
                 startActivity(aboutIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -273,8 +274,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_forum:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 aboutIntent = new Intent(this, AboutUsActivity.class);
-                aboutIntent.putExtra("url","https://www.surefiz.com/AboutUs");
-                aboutIntent.putExtra("header","About Us");
+                aboutIntent.putExtra("url", "https://www.surefiz.com/AboutUs");
+                aboutIntent.putExtra("header", "About Us");
                 startActivity(aboutIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

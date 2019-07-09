@@ -51,6 +51,7 @@ import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.GET_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.GROUPINVITE;
 import static com.surefiz.apilist.ApiList.LOGIN;
+import static com.surefiz.apilist.ApiList.SOCIAL_LOGIN;
 import static com.surefiz.apilist.ApiList.LOGOUT;
 import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
 import static com.surefiz.apilist.ApiList.READ_NOTIFICATION;
@@ -175,6 +176,21 @@ public interface ApiInterface {
     Call<ResponseBody> call_loginApi(@Field("user_email") String user_email,
                                      @Field("user_password") String user_password,
                                      @Field("deviceType") String deviceType,
+                                     @Field("device_Token") String device_Token);
+
+
+    @FormUrlEncoded
+    @POST(SOCIAL_LOGIN)
+    Call<ResponseBody> call_socialloginApi(@Field("socicalID") String socicalID,
+                                     @Field("emailId") String emailId,
+                                     @Field("fullName") String fullName,
+                                     @Field("usertype") String usertype,
+                                     @Field("medianame") String medianame,
+                                     @Field("userImage") String userImage,
+                                     @Field("dob") String dob,
+                                     @Field("phoneNumber") String phoneNumber,
+                                     @Field("deviceType") String deviceType,
+                                     @Field("socicalToken") String socicalToken,
                                      @Field("device_Token") String device_Token);
 
     @FormUrlEncoded

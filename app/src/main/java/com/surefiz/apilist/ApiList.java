@@ -11,6 +11,7 @@ public class ApiList {
     public static final String GROUPINVITE = "ApiServices/Group_invite";
     public static final String SENDOTP = "ApiServices/OtpValidation";
     public static final String LOGIN = "ApiServices/Login";
+    public static final String SOCIAL_LOGIN = "ApiServices/SocialLogin";
     public static final String VIEWPROFILE = "ApiServices/userProfile";
     public static final String EDITPROFILE = "ApiServices/EditUserProfile";
     public static final String USERLIST = "ApiServices/UserList";

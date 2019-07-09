@@ -1,25 +1,17 @@
 package com.surefiz.screens.welcome;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.surefiz.R;
-import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.login.LoginClickEvent;
-import com.surefiz.sharedhandler.LoginShared;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.surefiz.utils.GeneralToApp.WELCOME_WAIT_TIME;
 
 public class WelcomeActivity extends AppCompatActivity {
     @BindView(R.id.txt_login)

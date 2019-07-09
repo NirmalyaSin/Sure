@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -205,6 +204,19 @@
                     android:layout_weight="1"
                     android:gravity="left">
 
+                    <!--<com.google.android.gms.common.SignInButton
+                        android:id="@+id/googleSignInButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />-->
+
+                    <ImageView
+                        android:id="@+id/googleSignInButton"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_google_plus"
+                        android:visibility="visible" />
+
                     <!--<com.twitter.sdk.android.core.identity.TwitterLoginButton
                         android:id="@+id/iv_twiter"
                         android:layout_width="@dimen/_40sdp"
@@ -217,7 +229,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_twitter" />
+                        android:src="@drawable/ic_twitter"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -230,8 +243,8 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:text="New User? Sign Up"
                 android:textColor="@color/blue"
-                android:visibility="visible"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_14sdp"
+                android:visibility="visible" />
         </LinearLayout>
     </ScrollView>
 

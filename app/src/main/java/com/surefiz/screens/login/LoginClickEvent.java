@@ -149,6 +149,7 @@ public class LoginClickEvent implements View.OnClickListener {
 
                     JSONObject jsonObject = new JSONObject(responseString);
                     Log.d("@@LoginData : ", jsonObject.toString());
+
                     if (jsonObject.optInt("status") == 1) {
                         LoginShared.setstatusforOtpvarification(mLoginActivity, true);
                         LoginShared.setWeightPageFrom(mLoginActivity, "0");

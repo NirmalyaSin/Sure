@@ -12,6 +12,107 @@
         android:alpha="0.6"
         android:background="@drawable/splash_image" />
 
+
+    <LinearLayout
+        android:id="@+id/ll_management"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/_18sdp">
+
+        <TextView
+            android:id="@+id/tv_management"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_18sdp"
+            android:text="Weight Management Goal"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star16" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_management"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+        android:layout_below="@+id/ll_management"
+        android:background="@drawable/edit_text_background">
+
+        <EditText
+            android:id="@+id/et_weight_managment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@android:color/transparent"
+            android:focusableInTouchMode="false"
+            android:hint="Please Select Weight Management Goal"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/_6sdp"
+            android:textColor="@color/whiteColor"
+            android:textColorHint="@color/hintColor"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="@dimen/_10sdp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_desired_weight_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/_18sdp"
+        android:layout_below="@+id/rl_management"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_18sdp"
+            android:text="Desired Weight Selection"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star16" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_desired_weight_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+        android:layout_below="@+id/ll_desired_weight_selection"
+        android:background="@drawable/edit_text_background"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/et_desired_weight_selection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@android:color/transparent"
+            android:focusableInTouchMode="false"
+            android:hint="Select your input choice"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/_6sdp"
+            android:textColor="@color/whiteColor"
+            android:textColorHint="@color/hintColor"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="@dimen/_10sdp" />
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/tv_units"
         android:layout_width="wrap_content"
@@ -55,7 +156,7 @@
         android:id="@+id/tv_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_units"
+        android:layout_below="@+id/rl_desired_weight_selection"
         android:paddingLeft="@dimen/_18sdp"
         android:paddingTop="@dimen/_20sdp"
         android:text="Desired Weight"

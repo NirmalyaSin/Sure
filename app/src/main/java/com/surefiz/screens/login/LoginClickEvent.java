@@ -172,7 +172,7 @@ public class LoginClickEvent implements View.OnClickListener {
                                 regIntent.putExtra("registrationModelData", responseString);
                                 mLoginActivity.startActivity(regIntent);
                                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                mLoginActivity.finish();
+                                mLoginActivity.finishAffinity();
                             } else {
                                 if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
                                     Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
@@ -183,7 +183,7 @@ public class LoginClickEvent implements View.OnClickListener {
                                     Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
                                     mLoginActivity.startActivity(intent);
                                     mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    mLoginActivity.finish();
+                                    mLoginActivity.finishAffinity();
                                 }
                             }
                         } else {
@@ -196,7 +196,7 @@ public class LoginClickEvent implements View.OnClickListener {
                                 regIntent.putExtra("registrationModelData", responseString);
                                 mLoginActivity.startActivity(regIntent);
                                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                mLoginActivity.finish();
+                                mLoginActivity.finishAffinity();
 
                             } else {
 
@@ -221,7 +221,7 @@ public class LoginClickEvent implements View.OnClickListener {
                                         Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
                                         mLoginActivity.startActivity(intent);
                                         mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                        mLoginActivity.finish();
+                                        mLoginActivity.finishAffinity();
                                     }
                                 }
                             }

@@ -70,14 +70,22 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void doneUserDialog() {
+
+        if (getIntent().getBooleanExtra("showSkipButton",false)){
+            findViewById(R.id.btn_skip).setVisibility(View.GONE);
+            findViewById(R.id.rl_back).setVisibility(View.VISIBLE);
+        }
+
+        findViewById(R.id.rl_back).setOnClickListener(v -> {
+            onBackPressed();
+        });
+
         findViewById(R.id.btn_skip).setOnClickListener(v -> {
             Intent loginIntent = new Intent(UserListActivity.this, DashBoardActivity.class);
             startActivity(loginIntent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
         });
-        /*findViewById(R.id.rl_back).setOnClickListener(view1 ->
-                onBackPressed());*/
     }
 
     private void addUserDialog() {

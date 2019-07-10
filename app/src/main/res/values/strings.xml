@@ -47,9 +47,11 @@
     <string name="battery_status">Battery Status:</string>
     <string name="visibility">Visibility</string>
     <string name="performance">Performance</string>
-    <string name="remove">Remove</string>
+    <string name="unfriend">Unfriend</string>
 
     <string name="web_client_id">667975241749-r7hepg2v6q70s98il8lih76e6akrh9br.apps.googleusercontent.com</string>
+    <string name="fb_login_type">facebook</string>
+    <string name="google_login_type">Google</string>
 
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 

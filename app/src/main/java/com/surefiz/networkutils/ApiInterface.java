@@ -421,6 +421,16 @@ public interface ApiInterface {
                                                  @Field("preferredUnits") String preferredunits);
 
     @FormUrlEncoded
+    @POST(SEND_WEIGHT_MANAGEMENT)
+    Call<ResponseBody> call_sendWeightManagementForWeight(@Header("x-authorization") String token,
+                                                 @Field("serverUserId") String serverUserId,
+                                                 @Field("desiredWeight") String desiredWeight,
+                                                 @Field("timeToLoseWeight") String timeToLoseWeight,
+                                                 @Field("preferredUnits") String preferredunits,
+                                                 @Field("type") String type,
+                                                 @Field("maintain_Weight_By_Server") String maintain_Weight_By_Server);
+
+    @FormUrlEncoded
     @POST(PROGRESS_STATUS)
     Call<ResponseBody> call_ProgressDetailsApi(@Header("x-authorization") String token,
                                                @Field("userId") String serverUserId,

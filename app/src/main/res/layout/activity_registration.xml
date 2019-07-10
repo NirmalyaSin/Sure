@@ -880,6 +880,7 @@
                         android:hint="Enter your age"
                         android:inputType="numberSigned"
                         android:maxLines="1"
+                        android:maxLength="2"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"

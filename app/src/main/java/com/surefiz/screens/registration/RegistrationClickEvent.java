@@ -1,7 +1,9 @@
 package com.surefiz.screens.registration;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -968,11 +970,11 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
 
                         //MethodUtils.errorMsg(registrationActivity, jsonObject.getString("message"));
-                        if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
+                        /*if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
                             MethodUtils.errorMsg(registrationActivity, jsonObject.getJSONObject("data").getString("message"));
-                        }
+                        }*/
 
-                        new android.os.Handler().postDelayed(new Runnable() {
+                        /*new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
 
@@ -990,7 +992,10 @@ public class RegistrationClickEvent implements View.OnClickListener {
                                     registrationActivity.finish();
                                 }
                             }
-                        }, GeneralToApp.SPLASH_WAIT_TIME);
+                        }, GeneralToApp.SPLASH_WAIT_TIME);*/
+
+
+                        showAckowlegmentDialog(jsonObject.getJSONObject("data").getString("message"));
 
 
                         /*registrationModel = gson.fromJson(responseString, RegistrationModel.class);
@@ -1027,6 +1032,48 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.error_occurred));
             }
         });
+    }
+
+
+
+    public void showAckowlegmentDialog(String msg) {
+        final AlertDialog dialog = new AlertDialog.Builder(registrationActivity).create();
+        dialog.setTitle(R.string.app_name);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setMessage(msg);
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                dialog.dismiss();
+
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
+
+                            Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
+                            registrationActivity.startActivity(intent);
+                            registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            registrationActivity.finish();
+
+                        } else {
+                            Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
+                            registrationActivity.startActivity(intent);
+                            registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            registrationActivity.finish();
+                        }
+                    }
+                }, GeneralToApp.SPLASH_WAIT_TIME);
+                return;
+            }
+        });
+
+        try {
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -1453,19 +1500,18 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
 
 
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        //JSONObject jsObject = jsonObject.getJSONObject("data");
 
 
-                        if (!LoginShared.getstatusforwifivarification(registrationActivity))
-                            MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
+                        /*if (!LoginShared.getstatusforwifivarification(registrationActivity))
+                            MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));*/
 
-                        new android.os.Handler().postDelayed(new Runnable() {
+
+                        showAckowlegmentDialog(jsonObject.getJSONObject("data").getString("message"));
+
+                       /* new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                /*Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
-                                registrationActivity.startActivity(intent);
-                                registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                registrationActivity.finish();*/
 
                                 if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
                                     Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
@@ -1479,7 +1525,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                                     registrationActivity.finish();
                                 }
                             }
-                        }, GeneralToApp.SPLASH_WAIT_TIME);
+                        }, GeneralToApp.SPLASH_WAIT_TIME);*/
 
 
                         /*new android.os.Handler().postDelayed(() -> {

@@ -77,13 +77,13 @@
                     android:id="@+id/btnRemove"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_25sdp"
-                    android:background="@drawable/shape_rectangle_blue"
+                    android:background="@drawable/shape_rectangle_red"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
                     android:gravity="center"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:text="@string/remove"
+                    android:text="@string/unfriend"
                     android:textAllCaps="false"
                     android:textColor="@color/whiteColor" />
 

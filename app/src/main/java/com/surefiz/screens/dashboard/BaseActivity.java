@@ -243,9 +243,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_users:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent userIntent = new Intent(this, UserListActivity.class);
+                userIntent.putExtra("showSkipButton",true);
                 startActivity(userIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                //finish();
                 break;
             case R.id.tv_profile:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -275,7 +276,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 aboutIntent = new Intent(this, AboutUsActivity.class);
                 aboutIntent.putExtra("url", "https://www.surefiz.com/AboutUs");
-                aboutIntent.putExtra("header", "About Us");
+                aboutIntent.putExtra("header", "Forum");
+                aboutIntent.putExtra("menu", true);
                 startActivity(aboutIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

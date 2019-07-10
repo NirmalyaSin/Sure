@@ -71,13 +71,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView tv_forgetPassword;
     @BindView(R.id.iv_facebook)
     ImageView iv_facebook;
+    @BindView(R.id.googleSignInButton)
+    ImageView googleSignInButton;
     @BindView(R.id.iv_twiter)
     ImageView iv_twiter;
     @BindView(R.id.tv_register)
     TextView tv_register;
     private CallbackManager callbackManager;
     private LoginClickEvent loginClickEvent;
-    private ImageView googleSignInButton;
     private GoogleApiClient googleApiClient;
 
 
@@ -89,10 +90,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginClickEvent = new LoginClickEvent(this);
         iv_facebook.setOnClickListener(this);
+        googleSignInButton.setOnClickListener(this);
         //getHashKey();
 
         // REMOVE
-        editEmail.setText("anayak@mailinator.com");
+        editEmail.setText("arup.nayak@capitalnumbers.com");
         editPassword.setText("12345678");
         //editEmail.setText("john101@surefiz.com");
         //editPassword.setText("123456");
@@ -105,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void startFireBase() {
 
-        googleSignInButton = findViewById(R.id.googleSignInButton);
+        //googleSignInButton = findViewById(R.id.googleSignInButton);
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -119,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .build();
 
 
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
+        /*googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -128,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                 startActivityForResult(intent, RC_SIGN_IN_GOOGLE);
             }
-        });
+        });*/
     }
 
 
@@ -165,6 +167,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
 //                MethodUtils.errorMsg(LoginActivity.this, "Under Development");
                 break;
+
+            case R.id.googleSignInButton:
+                Auth.GoogleSignInApi.signOut(googleApiClient);
+
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent, RC_SIGN_IN_GOOGLE);
+                break;
         }
 
     }
@@ -195,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             System.out.println("googleData: " + id + "\n" + email + "\n" + name + "\n" + photoUrl + "\n" + idToken);
 
-            callapiforSocaillogin(id, email, name, "google", photoUrl == null ? "" : photoUrl.toString(), "", "", idToken);
+            callapiforSocaillogin(id, email, name, getString(R.string.google_login_type), photoUrl == null ? "" : photoUrl.toString(), "", "", idToken);
         } else {
             Toast.makeText(this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
         }
@@ -319,8 +328,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
-        Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
-//        loginwithSocial(socialName, socialId, getString(R.string.fb_login_type));
+        //Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
+        //loginwithSocial(socialName, socialId, getString(R.string.fb_login_type));
+        callapiforSocaillogin(socialId, socialEmail, socialName, getString(R.string.fb_login_type), socialProfileImage,
+                "", "", currentAccessToken.toString());
     }
 
     @Override

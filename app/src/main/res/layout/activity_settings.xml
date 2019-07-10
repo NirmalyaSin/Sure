@@ -141,7 +141,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="Accountability Circle Privacy"
+                android:text="Accountability Circle"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 

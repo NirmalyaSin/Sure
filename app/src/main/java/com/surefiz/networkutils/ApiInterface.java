@@ -59,6 +59,7 @@ import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.REMOVE_ACCOUNT_USER;
 import static com.surefiz.apilist.ApiList.SENDOTP;
 import static com.surefiz.apilist.ApiList.SEND_WEIGHT_MANAGEMENT;
+import static com.surefiz.apilist.ApiList.UPDATE_USER_DEVICE_INFO;
 import static com.surefiz.apilist.ApiList.USERLIST;
 import static com.surefiz.apilist.ApiList.VIEWPROFILE;
 
@@ -197,6 +198,16 @@ public interface ApiInterface {
     @POST(VIEWPROFILE)
     Call<ResponseBody> call_viewprofileApi(@Header("x-authorization") String token,
                                            @Field("user_id") String user_id);
+
+
+    @FormUrlEncoded
+    @POST(UPDATE_USER_DEVICE_INFO)
+    Call<ResponseBody> call_updateUserDeviceInfoApi(@Header("x-authorization") String token,
+                                           @Field("userId") String user_id,
+                                           @Field("deviceType") String deviceType,
+                                           @Field("deviceToken") String deviceToken,
+                                           @Field("deviceVersion") String deviceVersion,
+                                           @Field("appVersion") String appVersion);
 
     @Multipart
     @POST(EDITPROFILE)

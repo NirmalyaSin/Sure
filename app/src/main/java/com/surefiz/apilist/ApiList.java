@@ -43,4 +43,5 @@ public class ApiList {
     public static final String ACCEPTSERVERWEIGHT = "Acceptserverweight";
     public static final String READ_NOTIFICATION = "ApiServices/ReadNotification";
     public static final String REMOVE_ACCOUNT_USER = "ApiServices/Remove_accuser";
+    public static final String UPDATE_USER_DEVICE_INFO = "ApiServices/UpdateUserDeviceInfo";
 }

@@ -172,7 +172,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
                     tempUserList.add(userList.get(i));
                 }
 
-                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
+                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility()+ " " + userList.get(i).getIsUserHaveCompleteInfo());
             }
         } else {
 

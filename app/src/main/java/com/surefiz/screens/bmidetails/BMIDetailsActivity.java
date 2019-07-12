@@ -111,7 +111,69 @@ public class BMIDetailsActivity extends AppCompatActivity {
 
 
         //setBMIProgressChart("10.8");
+        //showBMIProgressReport();
     }
+
+    /*private void showBMIProgressReport() {
+        txt_bmi_subgoal1.setText("150");
+        txt_bmi_subgoal2.setText("155");
+
+        int imageDrawable = 0;
+
+        switch ("progress-empty") {
+            case "progress-bar2":
+                imageDrawable = R.drawable.progress_bar2;
+                break;
+            case "progress-bar4":
+                imageDrawable = R.drawable.progress_bar4;
+                break;
+            case "progress-bar6":
+                imageDrawable = R.drawable.progress_bar6;
+                break;
+            case "progress-bar8":
+                imageDrawable = R.drawable.progress_bar8;
+                break;
+            case "progress-bar10":
+                imageDrawable = R.drawable.progress_bar10;
+                break;
+            case "progress-bar12":
+                imageDrawable = R.drawable.progress_bar12;
+                break;
+            case "progress-bar14":
+                imageDrawable = R.drawable.progress_bar14;
+                break;
+            case "progress-bar16":
+                imageDrawable = R.drawable.progress_bar16;
+                break;
+            case "progress-bar18":
+                imageDrawable = R.drawable.progress_bar18;
+                break;
+            case "progress-bar20":
+                imageDrawable = R.drawable.progress_bar20;
+                break;
+            case "progress-bar22":
+                imageDrawable = R.drawable.progress_bar22;
+                break;
+            case "progress-bar24":
+                imageDrawable = R.drawable.progress_bar24;
+                break;
+            case "progress-bar26":
+                imageDrawable = R.drawable.progress_bar26;
+                break;
+            case "progress-bar28":
+                imageDrawable = R.drawable.progress_bar28;
+                break;
+            case "progress-full":
+                imageDrawable = R.drawable.progress_full;
+                break;
+            case "progress-empty":
+                imageDrawable = R.drawable.progress_empty;
+                break;
+        }
+
+        if (imageDrawable != 0)
+            img_bmi_progress.setImageResource(imageDrawable);
+    }*/
 
     private void setBMIProgressChart(String bmiPercentage) {
         bmiProgressChart.setUsePercentValues(true);

@@ -45,7 +45,7 @@ import retrofit2.Retrofit;
 
 public class WeightDetailsActivity extends AppCompatActivity implements OnUiEventClick, OnUserIdManagerListener {
 
-    //    private WeightDetailsOnclick mWeightDetailsOnclick;
+    //private WeightDetailsOnclick mWeightDetailsOnclick;
     private UDPHelper udpHelper;
     private UserIdManager userIdManager;
 
@@ -85,9 +85,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         viewBind();
         setRecyclerViewItem();
 
-        if (!getIntent().getBooleanExtra("shouldOpenWeightAssignView", false)) {
-            callUserListApi();
-        }
+
 
         handler = new Handler();
         handler1 = new Handler();
@@ -118,8 +116,17 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
             e.printStackTrace();
         }
 
+
+
+        /*if (!getIntent().getBooleanExtra("shouldOpenWeightAssignView", false)) {
+            callUserListApi();
+        }*/
+
+        callUserListApi();
+
         //Start time Count-down
         startTimerCountDown();
+
     }
 
     private void setHeader() {
@@ -169,7 +176,10 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         btn_weight_assign_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent weightAssignIntent=new Intent();
+                int scaleUserId=Integer.parseInt(LoginShared.getRegistrationDataModel(WeightDetailsActivity.this).getData().getUser().get(0).getScaleUserId());
+                weightAssignIntent.putExtra("id",scaleUserId);
+                onUiClick(weightAssignIntent,1001);
             }
         });
     }

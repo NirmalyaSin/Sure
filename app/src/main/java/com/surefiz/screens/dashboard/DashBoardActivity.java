@@ -1,6 +1,8 @@
 package com.surefiz.screens.dashboard;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -170,10 +172,69 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         } else {
             callDashBoardApi(id);
             callUserListApi();
+
+            if (!getIntent().getBooleanExtra("isFromMenu",false)) {
+                callUpdateUserDeviceInfoApi();
+            }
+
+            //getAppVersion();
         }
 
         setRecyclerViewItem();
         //callContactsApi();
+    }
+
+    private String getAppVersion() {
+        String osVersion = android.os.Build.VERSION.RELEASE;
+
+        String appVersion = "";
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            appVersion = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("versionName: " + osVersion + " " + appVersion);
+
+        return appVersion;
+    }
+
+
+    private String getOSVersion() {
+        return android.os.Build.VERSION.RELEASE;
+    }
+
+    private void callUpdateUserDeviceInfoApi() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        final Call<ResponseBody> userListModelCall = apiInterface.call_updateUserDeviceInfoApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),
+                "2", LoginShared.getDeviceToken(DashBoardActivity.this), getOSVersion(), getAppVersion());
+
+        userListModelCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+
+                    String responseString = response.body().string();
+
+                    JSONObject jsonObject = new JSONObject(responseString);
+
+                    Log.d("@@updateUserDevice : ", jsonObject.toString());
+
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+            }
+        });
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.registration.MembershipActivity;
@@ -86,6 +87,8 @@ public class SplashActivity extends AppCompatActivity {
                     getServerTime = jsonObject1.optString("lastServerUpdateTime");
                 } else if (jsonObject1.optInt("pushType") == 7) {
                     LoginShared.setWeightFromNotification(this, "7");
+                }else if (jsonObject1.optInt("pushType") == 3) {
+                    LoginShared.setWeightFromNotification(this, "3");
                 }
             } else {
                 LoginShared.setWeightFromNotification(this, "0");
@@ -216,6 +219,12 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             } else if (LoginShared.getWeightFromNotification(this).equals("7")) {
                 Intent intent = new Intent(this, UserConfirmationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }else if (LoginShared.getWeightFromNotification(this).equals("3")) {
+                Intent intent = new Intent(this, NotificationActivity.class);
+                intent.putExtra("fromDashboard", true);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

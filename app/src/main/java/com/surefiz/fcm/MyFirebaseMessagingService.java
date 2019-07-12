@@ -26,6 +26,7 @@ import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.screens.users.UserListActivity;
@@ -101,6 +102,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setOTP(this, jObject.optString("OTP"));
                 }else if (jObject.optInt("pushType") == 10) {
                     LoginShared.setWeightFromNotification(this, "10");
+                }else if (jObject.optInt("pushType") == 3) {
+                    LoginShared.setWeightFromNotification(this, "3");
                 } else {
                     LoginShared.setWeightFromNotification(this, "7");
                 }
@@ -279,14 +282,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
+        }else if (jObject.optInt("pushType") == 3) {
+            Intent intent = new Intent(this, NotificationActivity.class);
+            intent.putExtra("fromDashboard", true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
         }else if (jObject.optInt("pushType") == 10) {
-
 
             Intent intent = new Intent(this, NotificationHandleClassOnForeground.class);
             intent.putExtra("notificationFlag", "1");
             intent.putExtra("shouldOpenWeightAssignView", true);
             intent.putExtra("lastServerUpdateDate", jObject.optString("lastServerUpdateDate"));
             intent.putExtra("lastServerUpdateTime", jObject.optString("lastServerUpdateTime"));
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
 
             /*Intent intent = new Intent(this, UserListActivity.class);
             intent.putExtra("isFromPushNotification",true);

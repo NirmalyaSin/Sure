@@ -59,6 +59,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     @Override
     public void onBindViewHolder(@NonNull UserListViewHolder userListViewHolder, int i) {
         df2 = new DecimalFormat(".##");
+
         if (userLists.get(i).getUserName() == null || userLists.get(i).getUserName().equals("") ||
                 userLists.get(i).getUserName().equalsIgnoreCase("null") ||
                 userLists.get(i).getUserName().isEmpty()) {
@@ -78,7 +79,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         if (isFromNotification) {
             userListViewHolder.btn_delete.setVisibility(View.INVISIBLE);
             userListViewHolder.ll_status.setVisibility(View.GONE);
-
 
             // item click
             userListViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {

@@ -258,9 +258,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_dashboard:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent dashBoardIntent = new Intent(this, DashBoardActivity.class);
+                dashBoardIntent.putExtra("isFromMenu",true);
                 startActivity(dashBoardIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                finishAffinity();
                 break;
             case R.id.tv_about:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

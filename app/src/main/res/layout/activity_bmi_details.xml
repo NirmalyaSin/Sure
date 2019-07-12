@@ -97,8 +97,8 @@
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/bmiProgressChart"
-                        android:layout_width="@dimen/_200sdp"
-                        android:layout_height="@dimen/_200sdp"
+                        android:layout_width="@dimen/_170sdp"
+                        android:layout_height="@dimen/_170sdp"
                         android:layout_gravity="center"
                         android:background="@android:color/transparent" />
 
@@ -156,8 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:orientation="vertical">
+                    android:layout_marginRight="@dimen/_20sdp">
 
                     <ImageView
                         android:id="@+id/img_bmi_progress"
@@ -172,8 +171,8 @@
                         android:id="@+id/txt_bmi_subgoal2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/img_bmi_progress"
-                        android:layout_alignRight="@id/img_bmi_progress"
+                        android:layout_below="@+id/img_bmi_progress"
+                        android:layout_alignRight="@+id/img_bmi_progress"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_14sdp" />
@@ -181,7 +180,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/img_bmi_progress"
+                        android:layout_below="@+id/img_bmi_progress"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:text="SUB GOAL"
@@ -192,8 +191,8 @@
                         android:id="@+id/txt_bmi_subgoal1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/img_bmi_progress"
-                        android:layout_alignLeft="@id/img_bmi_progress"
+                        android:layout_below="@+id/img_bmi_progress"
+                        android:layout_alignLeft="@+id/img_bmi_progress"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_14sdp" />

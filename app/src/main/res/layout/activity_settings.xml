@@ -133,6 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/view22"
             android:layout_marginTop="@dimen/_15sdp"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
@@ -162,13 +163,14 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_10sdp"
+            android:visibility="gone"
             android:background="@color/whiteColor" />
 
         <RelativeLayout
             android:id="@+id/rl_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/view3"
+            android:layout_below="@+id/view22"
             android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal">
 

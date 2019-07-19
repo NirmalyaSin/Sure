@@ -30,7 +30,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="Register / Update Your Device"
+                android:text="Register or update your scale"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 
@@ -133,8 +133,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/view22"
             android:layout_marginTop="@dimen/_15sdp"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -163,8 +163,8 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:visibility="gone"
-            android:background="@color/whiteColor" />
+            android:background="@color/whiteColor"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/rl_password"
@@ -217,7 +217,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
-                android:text="Weight Management Options"
+                android:text="Weight Management"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 

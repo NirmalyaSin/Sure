@@ -173,7 +173,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             callDashBoardApi(id);
             callUserListApi();
 
-            if (!getIntent().getBooleanExtra("isFromMenu",false)) {
+            if (!getIntent().getBooleanExtra("isFromMenu", false)) {
                 callUpdateUserDeviceInfoApi();
             }
 
@@ -281,6 +281,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         //      Collections.reverse(response.body().getData().getUserList());
                         //contactLists.addAll(response.body().getData().getUserList());
                         contactLists.addAll(checkMainUserVisibility(response.body().getData().getUserList()));
+                        //contactLists.addAll(checkSubUserAccount(contactLists));
                         adapter.notifyDataSetChanged();
 
                         if (id != null && !id.equals("")) {
@@ -326,7 +327,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         List<UserListItem> tempUserList = new ArrayList<>();
 
-        if (userList.get(0).getScaleUserId() == 1) {
+        if (LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")) {
 
             tempUserList.add(userList.get(0));
 
@@ -339,6 +340,30 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             }
         } else {
 
+            tempUserList.addAll(userList);
+        }
+
+
+        // This is to check if it is a Sub Users Account. Then Main User will be removed from the user list.
+        if (!LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            if (tempUserList.get(0).getScaleUserId() == 1) {
+                tempUserList.remove(0);
+            }
+        }
+
+        return tempUserList;
+    }
+
+
+    // This method is to check wheather any sub-user wants to be displayed on Main users family
+    private List<UserListItem> checkSubUserAccount(List<UserListItem> userList) {
+
+        List<UserListItem> tempUserList = new ArrayList<>();
+
+        if (!LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            tempUserList.addAll(userList);
+            tempUserList.remove(0);
+        } else {
             tempUserList.addAll(userList);
         }
 

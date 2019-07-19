@@ -197,7 +197,7 @@
         android:layout_below="@+id/rl_weight"
         android:paddingLeft="@dimen/_18sdp"
         android:paddingTop="@dimen/_20sdp"
-        android:text="Time To Lose Weight (The weight will be estimated by SureFiz™)"
+        android:text="Time To Lose Weight"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 

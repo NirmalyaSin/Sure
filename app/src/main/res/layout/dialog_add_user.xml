@@ -430,6 +430,7 @@
                         android:hint="Enter Phone Number"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="10"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -545,7 +546,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:paddingTop="@dimen/_20sdp"
-                        android:text="User Selection"
+                        android:text="Desired Weight Selection"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp"
                         android:visibility="gone" />
@@ -569,7 +570,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
-                        android:hint="User Selection"
+                        android:hint="Desired Weight Selection"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -579,9 +580,11 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:paddingTop="@dimen/_20sdp">
 
                     <TextView
@@ -606,6 +609,7 @@
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_9sdp"
                     android:layout_marginRight="@dimen/_18sdp"
+                    android:visibility="gone"
                     android:background="@drawable/edit_text_background">
 
                     <EditText
@@ -626,9 +630,11 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_time_to_loss"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:paddingTop="@dimen/_20sdp">
 
                     <TextView
@@ -655,6 +661,7 @@
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_9sdp"
                     android:layout_marginRight="@dimen/_18sdp"
+                    android:visibility="gone"
                     android:background="@drawable/edit_text_background">
 
                     <EditText

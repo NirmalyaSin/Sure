@@ -2,16 +2,22 @@ package com.surefiz.screens.reminders;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.helpers.RecyclerItemTouchHelper;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.notificationclasses.ReminderNotification;
@@ -32,7 +38,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ReminderActivity extends BaseActivity implements ReminderAdapter.OnReminderListener {
+public class ReminderActivity extends BaseActivity implements ReminderAdapter.OnReminderListener,
+        RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     public static final int EDIT_REMINDER_REQUEST_CODE = 1000;
     public View view;
     Intent addIntent = null;
@@ -40,6 +47,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
     private LoadingData loadingData;
     private ArrayList<User> arrayListReminder = new ArrayList<User>();
     private ReminderAdapter mReminderAdapter;
+    private RelativeLayout rlRemiderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
         setHeaderView();
         loadingData = new LoadingData(this);
         recyclerView = view.findViewById(R.id.recyclerView);
+        rlRemiderView = view.findViewById(R.id.rlRemiderView);
         //Setup RecyclerView
         setRecyclerViewItem();
         //Api Call to fetch all reminder list
@@ -61,6 +70,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
     }
 
     private void setRecyclerViewItem() {
+
         mReminderAdapter = new ReminderAdapter(this, arrayListReminder, this);
         recyclerView.setAdapter(mReminderAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -70,6 +80,13 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
+
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+
+        //ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(ItemTouchHelper.LEFT, ItemTouchHelper.LEFT, this);
+        //new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
 
     }
 
@@ -139,9 +156,9 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
 
                 //Creates notification for Newly Added Reminder Only
                 if (addIntent != null && addIntent.getStringExtra("action_type").equalsIgnoreCase("add")) {
-                    int lastPosition=arrayListReminder.size()-1;
-                    String finalDateTime=arrayListReminder.get(lastPosition).getDate()+ " " +arrayListReminder.get(lastPosition).getTime();
-                    new ReminderNotification(ReminderActivity.this,arrayListReminder.get(lastPosition).getId(),
+                    int lastPosition = arrayListReminder.size() - 1;
+                    String finalDateTime = arrayListReminder.get(lastPosition).getDate() + " " + arrayListReminder.get(lastPosition).getTime();
+                    new ReminderNotification(ReminderActivity.this, arrayListReminder.get(lastPosition).getId(),
                             arrayListReminder.get(lastPosition).getMessage(), finalDateTime);
                 }
             }
@@ -181,5 +198,49 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
         } else {
             addIntent = null;
         }
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+
+            if (viewHolder instanceof ReminderAdapter.ReminderViewHolder) {
+                // get the removed item name to display it in snack bar
+                String name = arrayListReminder.get(viewHolder.getAdapterPosition()).getMessage();
+
+                // backup of removed item for undo purpose
+                final User deletedItem = arrayListReminder.get(viewHolder.getAdapterPosition());
+                final int deletedIndex = viewHolder.getAdapterPosition();
+
+                // remove the item from recycler view
+
+                //removeItem(viewHolder.getAdapterPosition());
+
+                // showing snack bar with Undo option
+                Snackbar snackbar = Snackbar.make(rlRemiderView, name + " removed from Reminder!", Snackbar.LENGTH_LONG);
+                snackbar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // undo is selected, restore the deleted item
+
+                        //restoreItem(deletedItem, deletedIndex);
+                    }
+                });
+                snackbar.setActionTextColor(Color.WHITE);
+                snackbar.show();
+            }
+    }
+
+    public void removeItem(int position) {
+        arrayListReminder.remove(position);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
+        mReminderAdapter.notifyItemRemoved(position);
+    }
+
+    public void restoreItem(User item, int position) {
+        arrayListReminder.add(position, item);
+        // notify item added by position
+        mReminderAdapter.notifyItemInserted(position);
     }
 }

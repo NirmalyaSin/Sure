@@ -22,6 +22,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.surefiz.R;
 import com.surefiz.application.MyApplicationClass;
 import com.surefiz.screens.NotificationHandleClassOnForeground;
+import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
@@ -29,7 +30,6 @@ import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
-import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.sharedhandler.LoginShared;
 
 import org.json.JSONException;
@@ -39,9 +39,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private MyApplicationClass myApplicationClass;
-
     private static final String TAG = "MyFirebaseMsgService";
+    private MyApplicationClass myApplicationClass;
     private JSONObject jObject;
 
     /**
@@ -100,10 +99,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "7");
                 } else if (jObject.optInt("pushType") == 9) {
                     LoginShared.setOTP(this, jObject.optString("OTP"));
-                }else if (jObject.optInt("pushType") == 10) {
+                } else if (jObject.optInt("pushType") == 10) {
                     LoginShared.setWeightFromNotification(this, "10");
-                }else if (jObject.optInt("pushType") == 3) {
+                } else if (jObject.optInt("pushType") == 3) {
                     LoginShared.setWeightFromNotification(this, "3");
+                } else if (jObject.optInt("pushType") == 4) {
+                    LoginShared.setWeightFromNotification(this, "4");
                 } else {
                     LoginShared.setWeightFromNotification(this, "7");
                 }
@@ -202,14 +203,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        } else if (jObject.optInt("pushType") == 4) {
+        }*/ else if (jObject.optInt("pushType") == 4) {
             Intent intent = new Intent(this, AcountabilityActivity.class);
-            intent.putExtra("notificationFlag", "1");
+            //intent.putExtra("notificationFlag", "1");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        }*/ else if (jObject.optInt("pushType") == 5) {
+        } else if (jObject.optInt("pushType") == 5) {
             Intent intent = new Intent(this, BMIDetailsActivity.class);
             intent.putExtra("notificationFlag", "1");
             intent.putExtra("serverUserId", jObject.optString("serverUserId"));
@@ -282,13 +283,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        }else if (jObject.optInt("pushType") == 3) {
+        } else if (jObject.optInt("pushType") == 3) {
             Intent intent = new Intent(this, NotificationActivity.class);
             intent.putExtra("fromDashboard", true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
-        }else if (jObject.optInt("pushType") == 10) {
+        } else if (jObject.optInt("pushType") == 10) {
 
             Intent intent = new Intent(this, NotificationHandleClassOnForeground.class);
             intent.putExtra("notificationFlag", "1");

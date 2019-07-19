@@ -59,6 +59,7 @@ public class AddUserDialog extends Dialog {
     RelativeLayout rl_userselection, rl_weight, rl_time_loss;
     TextView tv_userSelection, tv_management, tv_weight, tv_time_loss, tv_termsnCon;
     LoadingData loader;
+    LinearLayout ll_time_to_loss, ll_weight;
     MoveTutorial moveTutorial;
     private int user_selection_val = 0;
     private int weight_managment_goal = 0;
@@ -107,6 +108,8 @@ public class AddUserDialog extends Dialog {
         tv_time_loss = findViewById(R.id.tv_time_loss);
         rl_time_loss = findViewById(R.id.rl_time_loss);
         tv_termsnCon = findViewById(R.id.tv_termsnCon);
+        ll_time_to_loss = findViewById(R.id.ll_time_to_loss);
+        ll_weight = findViewById(R.id.ll_weight);
 
         hideSoftKeyBoard();
 
@@ -166,7 +169,7 @@ public class AddUserDialog extends Dialog {
                     MethodUtils.errorMsg(activity, "Please enter user email");
                 } else if (et_re_enter_email.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter confirm user email");
-                }else if (!et_re_enter_email.getText().toString().equals(et_email.getText().toString())) {
+                } else if (!et_re_enter_email.getText().toString().equals(et_email.getText().toString())) {
                     MethodUtils.errorMsg(activity, "Email and Confirm email is not same");
                 }
                 if (isFullList) {
@@ -188,12 +191,11 @@ public class AddUserDialog extends Dialog {
                         MethodUtils.errorMsg(activity, "Please enter non-zero value for Age");
                     } else if (!isNonZeroValue(et_DOB.getText().toString().trim())) {
                         MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
-                    }
-                    else if (et_height.getText().toString().equals("")) {
+                    } else if (et_height.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your height");
-                    } else if (weight_managment_goal == 2&&et_weight.getText().toString().equals("")) {
+                    } else if (weight_managment_goal == 2 && user_selection_val == 1 && et_weight.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please enter your desired weight");
-                    } else if (weight_managment_goal == 2&&et_time_loss.getText().toString().equals("")) {
+                    } else if (weight_managment_goal == 2 && user_selection_val == 1 && et_time_loss.getText().toString().equals("")) {
                         MethodUtils.errorMsg(activity, "Please select your time to lose weight");
                     } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                         MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
@@ -693,19 +695,25 @@ public class AddUserDialog extends Dialog {
                 if (value.equals("Lose and Mantain Weight")) {
                     tv_userSelection.setVisibility(View.VISIBLE);
                     rl_userselection.setVisibility(View.VISIBLE);
-                    tv_weight.setVisibility(View.VISIBLE);
-                    rl_weight.setVisibility(View.VISIBLE);
-                    tv_time_loss.setVisibility(View.VISIBLE);
-                    rl_time_loss.setVisibility(View.VISIBLE);
+
+                    tv_weight.setVisibility(View.GONE);
+                    rl_weight.setVisibility(View.GONE);
+                    tv_time_loss.setVisibility(View.GONE);
+                    rl_time_loss.setVisibility(View.GONE);
+                    ll_weight.setVisibility(View.GONE);
+                    ll_time_to_loss.setVisibility(View.GONE);
                     weight_managment_goal = 2;
                     user_selection_val = 0;
                 } else {
                     tv_userSelection.setVisibility(View.GONE);
                     rl_userselection.setVisibility(View.GONE);
+
                     tv_weight.setVisibility(View.GONE);
                     rl_weight.setVisibility(View.GONE);
                     tv_time_loss.setVisibility(View.GONE);
                     rl_time_loss.setVisibility(View.GONE);
+                    ll_weight.setVisibility(View.GONE);
+                    ll_time_to_loss.setVisibility(View.GONE);
                     et_userselection.setText("");
                     weight_managment_goal = 1;
                     user_selection_val = 0;
@@ -726,12 +734,16 @@ public class AddUserDialog extends Dialog {
                     rl_weight.setVisibility(View.VISIBLE);
                     tv_time_loss.setVisibility(View.VISIBLE);
                     rl_time_loss.setVisibility(View.VISIBLE);
+                    ll_weight.setVisibility(View.VISIBLE);
+                    ll_time_to_loss.setVisibility(View.VISIBLE);
                     user_selection_val = 1;
                 } else {
                     tv_weight.setVisibility(View.GONE);
                     rl_weight.setVisibility(View.GONE);
                     tv_time_loss.setVisibility(View.GONE);
                     rl_time_loss.setVisibility(View.GONE);
+                    ll_weight.setVisibility(View.GONE);
+                    ll_time_to_loss.setVisibility(View.GONE);
                     user_selection_val = 2;
                 }
             }
@@ -769,7 +781,7 @@ public class AddUserDialog extends Dialog {
             gender = "0";
         } else if (et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = "2";
-        } else  {
+        } else {
             gender = "3";
         }
 

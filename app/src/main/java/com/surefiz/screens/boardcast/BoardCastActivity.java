@@ -105,7 +105,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("Broadcast Message");
+        tv_universal_header.setText("Message Board");
         img_topbar_menu.setVisibility(View.VISIBLE);
         btn_done.setVisibility(View.GONE);
         iv_edit.setVisibility(View.GONE);

@@ -27,6 +27,13 @@ public class ReminderNotification {
         createReminderNotification();
     }
 
+    public ReminderNotification(Activity mActivity, String reminderId) {
+        this.mActivity = mActivity;
+        this.reminderId = reminderId;
+
+        cancelAlarm();
+    }
+
     private void createReminderNotification () {
 
         AlarmManager alarmManager = (AlarmManager) mActivity.getSystemService(Context.ALARM_SERVICE);
@@ -56,5 +63,16 @@ public class ReminderNotification {
         }
 
         return date;
+    }
+
+
+    public void cancelAlarm()
+    {
+        Intent notificationIntent = new Intent(mActivity, AlarmReceiver.class);
+        notificationIntent.putExtra("notificationText", reminderText);
+        notificationIntent.putExtra("notifyId", Integer.parseInt(reminderId));
+        PendingIntent sender = PendingIntent.getBroadcast(mActivity.getBaseContext(), Integer.parseInt(reminderId), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) mActivity.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(sender);
     }
 }

@@ -67,9 +67,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_40sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
                     android:gravity="center_horizontal"
-                    android:text="@string/instruction_page_text"
+                    android:text="@string/step_on_the_scale"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_20sdp" />
 
@@ -80,10 +80,11 @@
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:orientation="vertical">
 
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/step_on_scale"
+                        android:text="@string/instruction_step1"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_15sdp" />
 
@@ -91,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_7sdp"
-                        android:text="@string/scale_blinking"
+                        android:text="@string/instruction_step2"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_15sdp" />
 
@@ -99,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_7sdp"
-                        android:text="@string/step_down"
+                        android:text="@string/instruction_step3"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_15sdp" />
 

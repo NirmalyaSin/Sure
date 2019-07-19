@@ -15,13 +15,11 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.privacy.adapter.PrivacyAdapter;
 import com.surefiz.screens.privacy.model.PrivacyListResponse;
 import com.surefiz.screens.privacy.model.PrivacySetting;
-import com.surefiz.screens.reminders.AddEditReminderActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -64,17 +62,20 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
         buttonSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectedIDs ="";
+                String selectedIDs = "";
                 String unSelectedIds = "";
-                for (PrivacySetting setting:arrayListPrivacySetting){
-                    if(setting.getPrivacyEnabled().equals("1")){
-                        selectedIDs = selectedIDs+setting.getPrivacyId()+",";
-                    }else {
-                        unSelectedIds = unSelectedIds+setting.getPrivacyId()+",";
+                for (PrivacySetting setting : arrayListPrivacySetting) {
+                    if (setting.getPrivacyEnabled().equals("1")) {
+                        selectedIDs = selectedIDs + setting.getPrivacyId() + ",";
+                    } else {
+                        unSelectedIds = unSelectedIds + setting.getPrivacyId() + ",";
                     }
                 }
 
-                String finalSelectedIds = selectedIDs.substring(0, selectedIDs.lastIndexOf(","));
+                String finalSelectedIds = "";
+                if (!selectedIDs.equalsIgnoreCase("")) {
+                    finalSelectedIds = selectedIDs.substring(0, selectedIDs.lastIndexOf(","));
+                }
                 String finalUnSelectedIds = unSelectedIds.substring(0, unSelectedIds.lastIndexOf(","));
 
                 Log.d("@@Selected-IDs : ", finalSelectedIds);
@@ -91,7 +92,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
         recyclerView.setAdapter(mPrivacyAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
@@ -127,7 +128,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
         String senderId = LoginShared.getRegistrationDataModel(this).getData().getUser()
                 .get(0).getUserId();
 
-        Log.d("@@Sent-Privacy : ","token = " +"\nsenderId ="+senderId);
+        Log.d("@@Sent-Privacy : ", "token = " + "\nsenderId =" + senderId);
 
         final Call<PrivacyListResponse> call_PrivacyListApi = apiInterface
                 .call_PrivacyListApi(token, senderId);
@@ -145,7 +146,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                 if (response.body().getStatus() == 1) {
                     //Add Items to the list
                     arrayListPrivacySetting.addAll(response.body().getData().getPrivacySettings());
-                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     String deviceToken = LoginShared.getDeviceToken(PrivacyActivity.this);
                     LoginShared.destroySessionTypePreference(PrivacyActivity.this);
                     LoginShared.setDeviceToken(PrivacyActivity.this, deviceToken);
@@ -153,7 +154,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
-                }else {
+                } else {
                     MethodUtils.errorMsg(PrivacyActivity.this, response.body().getData().getMessage());
                 }
                 //Refresh the list
@@ -182,8 +183,8 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
         String senderId = LoginShared.getRegistrationDataModel(this).getData().getUser()
                 .get(0).getUserId();
 
-        Log.d("@@Sent-update : ","token = " +"\nsenderId ="+senderId
-                +"\nselectedIDs ="+selected+"\nunSelectedIds ="+unSelected);
+        Log.d("@@Sent-update : ", "token = " + "\nsenderId =" + senderId
+                + "\nselectedIDs =" + selected + "\nunSelectedIds =" + unSelected);
 
         final Call<PrivacyListResponse> call_UpdatePrivacyList = apiInterface
                 .call_UpdatePrivacyList(token, senderId, selected.trim(), unSelected.trim());
@@ -198,9 +199,9 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
 
                 if (response.body().getStatus() == 1) {
                     //Show Alert dialog
-                   showResponseDialog(response.body().getStatus(),
-                           response.body().getData().getMessage());
-                }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    showResponseDialog(response.body().getStatus(),
+                            response.body().getData().getMessage());
+                } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     String deviceToken = LoginShared.getDeviceToken(PrivacyActivity.this);
                     LoginShared.destroySessionTypePreference(PrivacyActivity.this);
                     LoginShared.setDeviceToken(PrivacyActivity.this, deviceToken);
@@ -208,7 +209,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
-                }else {
+                } else {
                     MethodUtils.errorMsg(PrivacyActivity.this,
                             response.body().getData().getMessage());
                 }
@@ -240,7 +241,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
         mPrivacyAdapter.notifyDataSetChanged();
     }
 
-    public void showResponseDialog(int status, String message){
+    public void showResponseDialog(int status, String message) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setMessage(message);

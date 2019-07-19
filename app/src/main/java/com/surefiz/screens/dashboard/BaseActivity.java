@@ -275,8 +275,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_forum:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+
+                String forumUrl="https://www.surefiz.com/beta/forum/?id="+LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
+
                 aboutIntent = new Intent(this, AboutUsActivity.class);
-                aboutIntent.putExtra("url", "https://www.surefiz.com/AboutUs");
+                aboutIntent.putExtra("url", forumUrl);
                 aboutIntent.putExtra("header", "Forum");
                 aboutIntent.putExtra("menu", true);
                 startActivity(aboutIntent);

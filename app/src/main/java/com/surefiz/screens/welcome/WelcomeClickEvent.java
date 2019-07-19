@@ -33,11 +33,16 @@ public class WelcomeClickEvent implements View.OnClickListener {
 
             case R.id.txt_signup:
 
+                String url = "https://www.surefiz.com/Signup";
+                Intent howToSignUpintent = new Intent(welcomeActivity, AboutUsActivity.class);
+                howToSignUpintent.putExtra("url", url);
+                howToSignUpintent.putExtra("menu", false);
+                howToSignUpintent.putExtra("header", "How to Sign up");
+                welcomeActivity.startActivity(howToSignUpintent);
 
                 break;
 
             case R.id.txt_learn_more:
-
                 String urlvalue = "https://www.surefiz.com/InShort";
                 Intent learnmoreintent = new Intent(welcomeActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);

@@ -22,9 +22,7 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.UDPHelper;
 import com.surefiz.screens.dashboard.DashBoardActivity;
-import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.users.adapter.UserListAdapter;
 import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.users.model.UserListModel;
@@ -45,19 +43,17 @@ import retrofit2.Retrofit;
 
 public class WeightDetailsActivity extends AppCompatActivity implements OnUiEventClick, OnUserIdManagerListener {
 
+    //Weight Measurement Units
+    public int captureWeight = 0;
+    Handler handler, handler1;
     //private WeightDetailsOnclick mWeightDetailsOnclick;
     private UDPHelper udpHelper;
     private UserIdManager userIdManager;
-
-
-    //Weight Measurement Units
-    public int captureWeight = 0;
     private String data_id = "";
     private String userName, scaleId;
     private int scaleUserId = -1;
     private String calledFrom;
     private boolean isWeightReceived;
-    Handler handler, handler1;
     private boolean isTimerOff = true;
     private String timerValue = "0";
     private String fromPush = "";
@@ -84,7 +80,6 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         setHeader();
         viewBind();
         setRecyclerViewItem();
-
 
 
         handler = new Handler();
@@ -176,10 +171,10 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         btn_weight_assign_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent weightAssignIntent=new Intent();
-                int scaleUserId=Integer.parseInt(LoginShared.getRegistrationDataModel(WeightDetailsActivity.this).getData().getUser().get(0).getScaleUserId());
-                weightAssignIntent.putExtra("id",scaleUserId);
-                onUiClick(weightAssignIntent,1001);
+                Intent weightAssignIntent = new Intent();
+                int scaleUserId = Integer.parseInt(LoginShared.getRegistrationDataModel(WeightDetailsActivity.this).getData().getUser().get(0).getScaleUserId());
+                weightAssignIntent.putExtra("id", scaleUserId);
+                onUiClick(weightAssignIntent, 1001);
             }
         });
     }
@@ -196,7 +191,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         adapter = new UserListAdapter(this, userLists, true, this);
         rv_items.setAdapter(adapter);
         rv_items.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         rv_items.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         rv_items.setLayoutManager(mLayoutManager);
@@ -264,7 +259,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
 
         List<UserListItem> tempUserList = new ArrayList<>();
 
-        if (userList.get(0).getScaleUserId() == 1) {
+        if (LoginShared.getRegistrationDataModel(WeightDetailsActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")) {
 
             tempUserList.add(userList.get(0));
 

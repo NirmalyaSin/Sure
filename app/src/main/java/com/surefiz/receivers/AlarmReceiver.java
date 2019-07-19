@@ -34,7 +34,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         String channelId = context.getString(R.string.app_name);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
 
-        Notification notification = builder.setContentTitle(context.getString(R.string.app_name))
+        Notification notification = builder.setContentTitle(context.getString(R.string.app_name)+" Reminder")
                 .setContentText(intent.getStringExtra("notificationText"))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)

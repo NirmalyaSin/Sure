@@ -163,7 +163,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
 
         List<UserListItem> tempUserList = new ArrayList<>();
 
-        if (userList.get(0).getScaleUserId() == 1) {
+        if (LoginShared.getRegistrationDataModel(UserListActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")) {
 
             tempUserList.add(userList.get(0));
 

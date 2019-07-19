@@ -682,6 +682,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
         }
     }
 
+    private String replaceScaleIDFormatter(String formattedScaleId) {
+        return formattedScaleId.replaceAll("-", "");
+    }
 
     private void validationAndApiCall() {
         if (registrationActivity.et_first_name.getText().toString().equals("")) {
@@ -871,7 +874,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
     private boolean lengthScale(final String scale) {
         //return scale.length() <= 10;
-        return scale.length() == 10;
+        return scale.length() == 12;
     }
 
     private void callCompleteUserInfoApi() {
@@ -896,7 +899,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody last_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_last_name.getText().toString().trim());
 
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_email.getText().toString().trim());
-        RequestBody scaleId = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale_id.getText().toString().trim());
+        RequestBody scaleId = RequestBody.create(MediaType.parse("text/plain"), replaceScaleIDFormatter(registrationActivity.et_scale_id.getText().toString().trim()));
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
 
 
@@ -1427,7 +1430,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody last_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_last_name.getText().toString().trim());
 
 
-        RequestBody scaleId = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_scale_id.getText().toString().trim());
+        RequestBody scaleId = RequestBody.create(MediaType.parse("text/plain"), replaceScaleIDFormatter(registrationActivity.et_scale_id.getText().toString().trim()));
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_email.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
 

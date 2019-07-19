@@ -1,13 +1,13 @@
 package com.surefiz.screens;
 
-import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.surefiz.R;
+import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -69,9 +69,9 @@ public class SplashActivity extends AppCompatActivity {
                     LoginShared.setWeightFromNotification(this, "2");
                 }/* else if (jsonObject1.optInt("pushType") == 3) {
                     LoginShared.setWeightFromNotification(this, "3");
-                } else if (jsonObject1.optInt("pushType") == 4) {
+                }*/ else if (jsonObject1.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
-                }*/ else if (jsonObject1.optInt("pushType") == 5) {
+                } else if (jsonObject1.optInt("pushType") == 5) {
                     LoginShared.setWeightFromNotification(this, "5");
                 } else if (jsonObject1.optInt("pushType") == 6) {
                     LoginShared.setWeightFromNotification(this, "6");
@@ -87,7 +87,7 @@ public class SplashActivity extends AppCompatActivity {
                     getServerTime = jsonObject1.optString("lastServerUpdateTime");
                 } else if (jsonObject1.optInt("pushType") == 7) {
                     LoginShared.setWeightFromNotification(this, "7");
-                }else if (jsonObject1.optInt("pushType") == 3) {
+                } else if (jsonObject1.optInt("pushType") == 3) {
                     LoginShared.setWeightFromNotification(this, "3");
                 }
             } else {
@@ -190,12 +190,12 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            } else if (LoginShared.getWeightFromNotification(this).equals("4")) {
+            } */ else if (LoginShared.getWeightFromNotification(this).equals("4")) {
                 Intent intent = new Intent(this, AcountabilityActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            }*/ else if (LoginShared.getWeightFromNotification(this).equals("5")) {
+            } else if (LoginShared.getWeightFromNotification(this).equals("5")) {
                 //   LoginShared.setWeightFromNotification(this, "0");
                 String serverUserId = "";
                 String scaleUserId = "";
@@ -222,7 +222,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            }else if (LoginShared.getWeightFromNotification(this).equals("3")) {
+            } else if (LoginShared.getWeightFromNotification(this).equals("3")) {
                 Intent intent = new Intent(this, NotificationActivity.class);
                 intent.putExtra("fromDashboard", true);
                 startActivity(intent);

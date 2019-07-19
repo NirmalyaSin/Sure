@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +20,6 @@ import android.widget.TextView;
 import com.surefiz.R;
 import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.screens.dashboard.DashBoardActivity;
-import com.surefiz.screens.progressstatus.ProgressStatusActivity;
-import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -32,9 +28,9 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
+    private static DecimalFormat df2;
     Activity activity;
     List<UserListItem> userLists;
-    private static DecimalFormat df2;
     private int row_index = -1;
     private OnUiEventClick onUiEventClick;
     private boolean isFromNotification;
@@ -73,7 +69,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 userLists.get(i).getUserName().isEmpty()) {
             userListViewHolder.tv_weight.setText("No Weight");
         } else {
-            userListViewHolder.tv_weight.setText("Weight:   " + userLists.get(i).getUserWeight());
+            if (userLists.get(i).getUserWeight().equals("0.0 KG") || userLists.get(i).getUserWeight().equals("0.0 LBS")) {
+                userListViewHolder.tv_weight.setText("Weight:");
+            } else {
+                userListViewHolder.tv_weight.setText("Weight:   " + userLists.get(i).getUserWeight());
+            }
         }
 
         if (isFromNotification) {
@@ -97,7 +97,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 userListViewHolder.txt_profile_status.setTextColor(ContextCompat.getColor(activity, R.color.red_delete));
             } else {
                 userListViewHolder.txt_profile_status.setText("Complete");
-                userListViewHolder.txt_profile_status.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                userListViewHolder.txt_profile_status.setTextColor(ContextCompat.getColor(activity, R.color.complete_color));
+                //userListViewHolder.txt_profile_status.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
             }
 
 
@@ -187,31 +188,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         return userLists.size();
     }
 
-    public class UserListViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tv_name, tv_weight, txt_profile_status;
-        ImageView iv_separature;
-        RelativeLayout rl_main;
-        Button btn_delete;
-        LinearLayout ll_status;
-
-        public UserListViewHolder(@NonNull View itemView, Activity activity) {
-            super(itemView);
-            tv_name = itemView.findViewById(R.id.tv_name);
-            tv_weight = itemView.findViewById(R.id.tv_weight);
-            iv_separature = itemView.findViewById(R.id.iv_separature);
-            rl_main = itemView.findViewById(R.id.rl_main);
-            txt_profile_status = itemView.findViewById(R.id.txt_profile_status);
-            btn_delete = itemView.findViewById(R.id.btn_delete);
-            ll_status = itemView.findViewById(R.id.ll_status);
-        }
-
-    }
-
     private void showAlert(final UserListItem userListItem) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
         alertDialog.setTitle("Save Weight Confirmation");
-        alertDialog.setMessage("Do you want to assign " + userListItem.getUserName() + " for this weight?");
+        alertDialog.setMessage("Do you want to assign this weight to " + userListItem.getUserName() /*+ " for this weight?"*/);
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -231,5 +211,26 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         });
         alertDialog.create();
         alertDialog.show();
+    }
+
+    public class UserListViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tv_name, tv_weight, txt_profile_status;
+        ImageView iv_separature;
+        RelativeLayout rl_main;
+        Button btn_delete;
+        LinearLayout ll_status;
+
+        public UserListViewHolder(@NonNull View itemView, Activity activity) {
+            super(itemView);
+            tv_name = itemView.findViewById(R.id.tv_name);
+            tv_weight = itemView.findViewById(R.id.tv_weight);
+            iv_separature = itemView.findViewById(R.id.iv_separature);
+            rl_main = itemView.findViewById(R.id.rl_main);
+            txt_profile_status = itemView.findViewById(R.id.txt_profile_status);
+            btn_delete = itemView.findViewById(R.id.btn_delete);
+            ll_status = itemView.findViewById(R.id.ll_status);
+        }
+
     }
 }

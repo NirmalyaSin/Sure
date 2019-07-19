@@ -3,7 +3,6 @@ package com.surefiz.screens.apconfig;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
@@ -14,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
@@ -25,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.surefiz.R;
@@ -68,6 +69,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initializeView() {
+        //TextView tvApConfig = view.findViewById(R.id.tvApConfig);
+        //tvApConfig.setText(Html.fromHtml(getString(R.string.ap_config)));
         editSSID = view.findViewById(R.id.editSSID);
         editBSSID = view.findViewById(R.id.editBSSID);
         editPassword = view.findViewById(R.id.editPassword);
@@ -148,7 +151,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 lock.acquire();
             }
         } catch (Exception e) {
-            Log.d("Wifi Exception", "" + e.getMessage().toString());
+            Log.d("Wifi Exception", "" + e.getMessage());
         }
 
         if (mWifiManager != null) {

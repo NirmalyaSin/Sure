@@ -57,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <Button
@@ -92,11 +93,22 @@
 
         <ImageView
             android:id="@+id/imgSendMessage"
-            android:layout_width="@dimen/_36sdp"
-            android:layout_height="@dimen/_36sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:src="@drawable/chat" />
 
+        <TextView
+            android:id="@+id/textViewOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:textSize="@dimen/_30sdp"
+            android:textColor="@color/whiteColor"
+            android:text="&#8942;"
+            android:textAppearance="?android:textAppearanceLarge" />
+        
     </LinearLayout>
 
     <View

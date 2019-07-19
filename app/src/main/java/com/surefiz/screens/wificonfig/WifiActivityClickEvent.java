@@ -228,16 +228,18 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     public void onApConfigResult(boolean success) {
         if (loader.isShowing()) {
             loader.dismiss();
+
         }
         if (success)
-            Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
+            Toast.makeText(mWifiConfigActivity, "Wificonfig done", Toast.LENGTH_LONG).show();
         else {
             AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
             alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
-            alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+            //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
+            alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.smart_config_failed));
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
                     (dialog, which) -> dialog.dismiss());
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "AP Config",
                     (dialog, which) -> {
                         dialog.dismiss();
                         LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
@@ -271,10 +273,11 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         } else {
             AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
             alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
-            alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+            //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
+            alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.smart_config_failed));
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
                     (dialog, which) -> dialog.dismiss());
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "AP Config",
                     (dialog, which) -> {
                         dialog.dismiss();
                         LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
@@ -291,7 +294,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
         alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
         alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.configrution));
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Update Weight",
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Next",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

@@ -10,12 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -71,6 +68,7 @@ public class BMIDetailsActivity extends AppCompatActivity {
     @BindView(R.id.bmiProgressChart)
     PieChart bmiProgressChart;
     private LoadingData loader;
+    private int numberOfSlices = 40;
     private BroadcastReceiver myBMIReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -82,7 +80,6 @@ public class BMIDetailsActivity extends AppCompatActivity {
             callBMIApi(serverUserId, scaleUserId);
         }
     };
-    private int numberOfSlices = 40;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,8 +106,7 @@ public class BMIDetailsActivity extends AppCompatActivity {
             finishAffinity();
         });
 
-
-        //setBMIProgressChart("10.8");
+        //setBMIProgressChart("10.0");
         //showBMIProgressReport();
     }
 
@@ -210,8 +206,10 @@ public class BMIDetailsActivity extends AppCompatActivity {
         // calculation of values to be displayed
         ArrayList<PieEntry> entries = setChartValues();
 
+        int bmiValue = Math.round(Float.parseFloat(bmiPercentage));
 
-        bmiProgressChart.setCenterText(bmiPercentage + "%");
+        //bmiProgressChart.setCenterText(bmiPercentage + "%");
+        bmiProgressChart.setCenterText(bmiValue + "%");
         bmiProgressChart.setCenterTextColor(Color.WHITE);
         bmiProgressChart.setCenterTextSize(15f);
 
@@ -226,9 +224,16 @@ public class BMIDetailsActivity extends AppCompatActivity {
 
 
         // Setting the color code for the slices
-        ArrayList<Integer> colors = setColorForChart(bmiPercentage);
+        //ArrayList<Integer> colors = setColorForChart(bmiPercentage);
 
-        dataSet.setColors(colors);
+
+        ArrayList<Integer> colors = setColorForChart(bmiValue);
+
+        if (bmiValue > 0) {
+            dataSet.setColors(colors);
+        }else {
+            dataSet.setColor(Color.TRANSPARENT);
+        }
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter(bmiProgressChart));
@@ -241,13 +246,20 @@ public class BMIDetailsActivity extends AppCompatActivity {
         bmiProgressChart.invalidate();
     }
 
-    private ArrayList<Integer> setColorForChart(String bmiPercentage) {
+    private ArrayList<Integer> setColorForChart(int bmiPercentage) {
 
-        float bmiValue = Float.parseFloat(bmiPercentage);
-        //float val = (numberOfSlices/100.0f)*bmiValue;
-        int achievedSlices = (int) ((numberOfSlices / 100.0f) * bmiValue);
-        int leftOverSlices = numberOfSlices - achievedSlices;
+
         ArrayList<Integer> colors = new ArrayList<>();
+
+        if (bmiPercentage < 1) {
+            return colors;
+        }
+
+        //float bmiValue = Float.parseFloat(bmiPercentage);
+        //float val = (numberOfSlices/100.0f)*bmiValue;
+        int achievedSlices = (int) ((numberOfSlices / 100.0f) * bmiPercentage);
+        int leftOverSlices = numberOfSlices - achievedSlices;
+
 
         // Achieved steps should be displayed in White color
         for (int i = 0; i < achievedSlices; i++) {
@@ -327,7 +339,7 @@ public class BMIDetailsActivity extends AppCompatActivity {
                     setBMIProgressChart(dmBmiDetails.getPercentage());
 
                     if (dmBmiDetails.getWeight().contains(" ")) {
-                        String split[] = dmBmiDetails.getWeight().split(Pattern.quote(" "));
+                        String[] split = dmBmiDetails.getWeight().split(Pattern.quote(" "));
                         if (split.length > 0) {
                             txt_bmi_weight.setText(split[0]);
                         }

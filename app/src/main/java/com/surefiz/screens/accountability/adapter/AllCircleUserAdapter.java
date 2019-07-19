@@ -2,9 +2,11 @@ package com.surefiz.screens.accountability.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,10 +44,10 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
 
     @Override
     public void onBindViewHolder(@NonNull CircleUserViewHolder holder, int position) {
-    //    Log.e("@@holder: ", arrayListCircleUser.get(position).toString());
+        //    Log.e("@@holder: ", arrayListCircleUser.get(position).toString());
         holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
         String image = arrayListCircleUser.get(position).getUser_search_image();
-        if(!image.equals("") && !image.equals("null")){
+        if (!image.equals("") && !image.equals("null")) {
             Picasso.with(mContext)
                     .load(image)
                     .fit()
@@ -54,7 +56,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
                     .into(holder.imageUserProfile);
         }
 
-        if(arrayListCircleUser.get(position).getOnlineStatus().equals("1")){
+        if (arrayListCircleUser.get(position).getOnlineStatus().equals("1")) {
             holder.imageOnlineOffline.setImageDrawable(mContext.getResources()
                     .getDrawable(R.drawable.ic_dot_online));
         }
@@ -65,10 +67,20 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
         return arrayListCircleUser.size();
     }
 
+    public interface OnCircleViewClickListener {
+        void onViewClick(int position);
+
+        void onSendMessageClick(int position);
+
+        void onPerformanceClick(int position);
+
+        void onRemoveClick(int position);
+    }
+
     public class CircleUserViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imageUserProfile;
-        TextView textUserName;
-        Button btnPerformance,btnRemove;
+        TextView textUserName, textViewOptions;
+        Button btnPerformance, btnRemove;
         ImageView imgSendMessage, imageOnlineOffline;
 
         public CircleUserViewHolder(@NonNull View itemView) {
@@ -76,6 +88,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
             imageUserProfile = itemView.findViewById(R.id.imageUserProfile);
             imageOnlineOffline = itemView.findViewById(R.id.imageOnlineOffline);
             textUserName = itemView.findViewById(R.id.textUserName);
+            textViewOptions = itemView.findViewById(R.id.textViewOptions);
             btnPerformance = itemView.findViewById(R.id.btnPerformance);
             btnRemove = itemView.findViewById(R.id.btnRemove);
             imgSendMessage = itemView.findViewById(R.id.imgSendMessage);
@@ -110,13 +123,32 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
                 }
             });
 
-        }
-    }
+            textViewOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(mContext, textViewOptions, Gravity.CENTER);
 
-    public interface OnCircleViewClickListener{
-        void onViewClick(int position);
-        void onSendMessageClick(int position);
-        void onPerformanceClick(int position);
-        void onRemoveClick(int position);
+                    popup.inflate(R.menu.custom_menu);
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.menuPerformance:
+                                    mOnCircleViewClickListener.onPerformanceClick(getAdapterPosition());
+                                    return true;
+                                case R.id.menuUnfriend:
+                                    mOnCircleViewClickListener.onRemoveClick(getAdapterPosition());
+                                    return true;
+                            }
+                            return false;
+                        }
+                    });
+
+                    popup.show();
+                }
+            });
+
+        }
     }
 }

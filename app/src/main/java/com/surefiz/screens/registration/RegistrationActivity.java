@@ -11,7 +11,9 @@ import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -196,6 +198,44 @@ public class RegistrationActivity extends AppCompatActivity {
         viewShowFromSignup();
         setTermsAndCondition();
         registrationClickEvent = new RegistrationClickEvent(this);
+
+        setTextFormatter();
+    }
+
+
+    private void setTextFormatter() {
+        et_scale_id.addTextChangedListener(new TextWatcher() {
+
+            private boolean isEdiging = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isEdiging) return;
+                isEdiging = true;
+                // removing old dashes
+                StringBuilder sb = new StringBuilder();
+                sb.append(s.toString().trim().replace("-", ""));
+
+                if (sb.length() > 3)
+                    sb.insert(3, "-");
+                if (sb.length() > 7)
+                    sb.insert(7, "-");
+                if (sb.length() > 12)
+                    sb.delete(12, sb.length());
+
+                s.replace(0, s.length(), sb.toString());
+                isEdiging = false;
+            }
+        });
     }
 
     private void initializeImageLoader() {

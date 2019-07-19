@@ -43,8 +43,13 @@ public class AboutUsActivity extends BaseActivity {
 
         WebSettings wbSettings = web.getSettings();
         wbSettings.setJavaScriptEnabled(true);
-        wbSettings.getLoadsImagesAutomatically();
-        wbSettings.setLoadsImagesAutomatically(true);
+        /*wbSettings.getLoadsImagesAutomatically();
+        wbSettings.setLoadsImagesAutomatically(true);*/
+        web.getSettings().setDomStorageEnabled(true);
+        web.getSettings().setAppCacheEnabled(true);
+        web.getSettings().setLoadsImagesAutomatically(true);
+        web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
         /*webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {

@@ -13,19 +13,21 @@
             android:id="@+id/video_view_welcome"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/llLowerButtons"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_40sdp"
+        android:alpha="0.7"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:src="@mipmap/ic_launcher" />
+
     <!--<TextView-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
@@ -40,6 +42,7 @@
 
 
     <LinearLayout
+        android:id="@+id/llLowerButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -48,34 +51,22 @@
         android:layout_marginBottom="@dimen/_28sdp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txt_login"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:gravity="center"
-            android:text="Login"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_22sdp"
-            android:textStyle="bold"
-            android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/ll_howto_sign_learn_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
             android:orientation="horizontal"
             android:weightSum="2">
 
             <TextView
                 android:id="@+id/txt_signup"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"
                 android:background="@drawable/login_submit_rounded_corner"
                 android:gravity="center"
-                android:text="How to Signup"
+                android:text="How to Sign up"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="normal" />
@@ -87,15 +78,29 @@
             <TextView
                 android:id="@+id/txt_learn_more"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"
                 android:background="@drawable/login_submit_rounded_corner"
                 android:gravity="center"
-                android:text="Learn More"
+                android:text="Learn a more"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="normal" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@drawable/login_submit_rounded_corner"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:gravity="center"
+            android:text="Login"
+            android:alpha="0.7"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_22sdp"
+            android:textStyle="bold"
+            android:visibility="visible" />
     </LinearLayout>
 
 

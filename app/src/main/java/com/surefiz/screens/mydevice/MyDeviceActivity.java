@@ -1,16 +1,13 @@
 package com.surefiz.screens.mydevice;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.SystemClock;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.support.v4.widget.DrawerLayout;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,7 +20,6 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -45,6 +41,18 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
     EditText et_id;
     TextView tv_scale_id;
     private LoadingData loader;
+    /*private String blockCharacterSet = "~*#^|$%&!/+(),;N.";
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +76,47 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         btn_update = findViewById(R.id.btn_update);
         et_id = findViewById(R.id.et_id);
         tv_scale_id = findViewById(R.id.tv_scale_id);
+
+        setTextFormatter();
+    }
+
+    private void setTextFormatter() {
+        et_id.addTextChangedListener(new TextWatcher() {
+
+            private boolean isEdiging = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isEdiging) return;
+                isEdiging = true;
+                // removing old dashes
+                StringBuilder sb = new StringBuilder();
+                sb.append(s.toString().trim().replace("-", ""));
+
+                if (sb.length() > 3)
+                    sb.insert(3, "-");
+                if (sb.length() > 7)
+                    sb.insert(7, "-");
+                if (sb.length() > 12)
+                    sb.delete(12, sb.length());
+
+                s.replace(0, s.length(), sb.toString());
+                isEdiging = false;
+            }
+        });
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("Device Binding");
+        tv_universal_header.setText("Scale ID");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.VISIBLE);
@@ -80,8 +125,20 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         img_topbar_menu.setVisibility(View.GONE);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         if (LoginShared.getRegistrationDataModel(this) != null) {
-            tv_scale_id.setText("Your Scale ID: " + LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac());
+            tv_scale_id.setText("Current Scale ID: " + LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac());
         }
+    }
+
+    private String formatScaleId(String scaleId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(scaleId.replace("-", ""));
+
+        if (sb.length() > 3)
+            sb.insert(3, "-");
+        if (sb.length() > 7)
+            sb.insert(7, "-");
+
+        return sb.toString();
     }
 
     @Override
@@ -102,7 +159,10 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                     MethodUtils.errorMsg(this, getString(R.string.no_internet));
                 } else if (et_id.getText().toString().trim().equals("")) {
                     MethodUtils.errorMsg(this, "Please enter Scale ID");
+                } else if (et_id.getText().toString().length() != 12) {
+                    MethodUtils.errorMsg(this, "Please enter 10 digit Scale ID");
                 } else {
+                    System.out.println("replaceScaleIDFormatter: " + replaceScaleIDFormatter(et_id.getText().toString().trim()));
                     changeScaleIdToServer();
                 }
                 break;
@@ -115,13 +175,17 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    private String replaceScaleIDFormatter(String formattedScaleId) {
+        return formattedScaleId.replaceAll("-", "");
+    }
+
     private void changeScaleIdToServer() {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<ResponseBody> call_addDeviceApi = apiInterface.call_addDeviceApi(LoginShared.getRegistrationDataModel(this).getData().getToken(),
-                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(), et_id.getText().toString().trim());
+                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(), replaceScaleIDFormatter(et_id.getText().toString().trim()));
         call_addDeviceApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

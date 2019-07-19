@@ -1,5 +1,6 @@
 package com.surefiz.screens.acountabiltySearch;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -182,9 +183,23 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                //finish();
+                onBackPressed();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        goBackToAccountabilityCircle();
+    }
+
+    private void goBackToAccountabilityCircle(){
+        Intent backIntent= new Intent();
+        backIntent.putExtra("message","done");
+        setResult(Activity.RESULT_OK,backIntent);
+        finish();
     }
 
     @Override

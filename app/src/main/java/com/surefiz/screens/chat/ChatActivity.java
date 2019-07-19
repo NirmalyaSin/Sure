@@ -21,7 +21,6 @@ import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -36,17 +35,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScrollListener {
+    private final int INITIAL_PAGINATION = 0;
     public View view;
+    public Handler handler;
     private RecyclerView recyclerView;
     private LoadingData loadingData;
     private ArrayList<Conversation> arrayListConversation = new ArrayList<Conversation>();
     private ChatAdapter mChatAdapter;
     private String receiver_id;
-    private final int INITIAL_PAGINATION = 0;
     private int oldPagination;
     private EditText editTextMessage;
     private ImageView imageSendMsg;
-    public Handler handler;
     private MyApplicationClass myApplicationClass;
 
     @Override
@@ -107,7 +106,7 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
         recyclerView.setAdapter(mChatAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
@@ -182,8 +181,10 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
-                    }else {
-                        MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
+                    } else {
+                        if (!response.body().getData().getMessage().equalsIgnoreCase("No Records Found")) {
+                            MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
+                        }
                     }
 
                 }
@@ -225,7 +226,7 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                     if (response.body().getStatus() == 1) {
                         oldPagination = INITIAL_PAGINATION;
                         callChatListApi(receiver_id, INITIAL_PAGINATION);
-                    }else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ChatActivity.this);
                         LoginShared.destroySessionTypePreference(ChatActivity.this);
                         LoginShared.setDeviceToken(ChatActivity.this, deviceToken);
@@ -233,7 +234,7 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
-                    }else {
+                    } else {
                         MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
                     }
                 }

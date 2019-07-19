@@ -1,7 +1,9 @@
 package com.surefiz.screens.accountability;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -111,6 +113,8 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     }
 
+    private static final int ADD_FRIEND_REQUEST=1001;
+
     private void setRecyclerViewItem() {
         recyclerView = view.findViewById(R.id.rv_items);
         mAllCircleUserAdapter = new AllCircleUserAdapter(this,
@@ -138,8 +142,8 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
         findViewById(R.id.ll_acc_friend).setOnClickListener(view1 -> {
-            startActivity(new Intent(AcountabilityActivity.this,
-                    SearchAcountabilityActivity.class));
+            startActivityForResult(new Intent(AcountabilityActivity.this,
+                    SearchAcountabilityActivity.class),ADD_FRIEND_REQUEST);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
         findViewById(R.id.ll_acc_message).setOnClickListener(view1 -> {
@@ -153,6 +157,14 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     @Override
     public void onViewClick(int position) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==ADD_FRIEND_REQUEST&&resultCode== Activity.RESULT_OK){
+            callCircleUserListApi();
+        }
     }
 
     @Override

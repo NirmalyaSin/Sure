@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
@@ -52,6 +54,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
     public class ReminderViewHolder extends RecyclerView.ViewHolder {
         TextView textReminderMessage, textDate, textTime;
         ImageView imageEditReminder;
+        public RelativeLayout viewBackground;
+        public LinearLayout viewForeground;
 
         public ReminderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +63,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
             textDate = itemView.findViewById(R.id.textDate);
             textTime = itemView.findViewById(R.id.textTime);
             imageEditReminder = itemView.findViewById(R.id.imageEditReminder);
+            viewForeground = itemView.findViewById(R.id.view_foreground);
+            viewBackground = itemView.findViewById(R.id.view_background);
 
             imageEditReminder.setOnClickListener(new View.OnClickListener() {
                 @Override

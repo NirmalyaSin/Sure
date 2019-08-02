@@ -1,16 +1,20 @@
 package com.surefiz.screens.reminders.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.surefiz.R;
 import com.surefiz.screens.reminders.model.User;
 
@@ -21,6 +25,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
     private Context mContext;
     private ArrayList<User> arrayListReminder = new ArrayList<User>();
     private OnReminderListener mOnReminderListener;
+    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
     public ReminderAdapter(Context context, ArrayList<User> reminders,
                            OnReminderListener clickListener) {
@@ -44,6 +49,10 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
         holder.textReminderMessage.setText(arrayListReminder.get(position).getMessage());
         holder.textDate.setText(arrayListReminder.get(position).getDate());
         holder.textTime.setText(arrayListReminder.get(position).getTime());
+
+
+        viewBinderHelper.bind(holder.swipeRevealLayout, arrayListReminder.get(position).getId());
+        viewBinderHelper.setOpenOnlyOne(true);
     }
 
     @Override
@@ -54,8 +63,9 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
     public class ReminderViewHolder extends RecyclerView.ViewHolder {
         TextView textReminderMessage, textDate, textTime;
         ImageView imageEditReminder;
-        public RelativeLayout viewBackground;
+        public FrameLayout frameDelete;
         public LinearLayout viewForeground;
+        public SwipeRevealLayout swipeRevealLayout;
 
         public ReminderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,7 +74,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
             textTime = itemView.findViewById(R.id.textTime);
             imageEditReminder = itemView.findViewById(R.id.imageEditReminder);
             viewForeground = itemView.findViewById(R.id.view_foreground);
-            viewBackground = itemView.findViewById(R.id.view_background);
+            frameDelete = itemView.findViewById(R.id.frameDelete);
+            swipeRevealLayout = itemView.findViewById(R.id.swipeRevealLayout);
 
             imageEditReminder.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,10 +84,17 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
                 }
             });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            viewForeground.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnReminderListener.onReminderSelected(getAdapterPosition());
+                }
+            });
+
+            frameDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnReminderListener.onRemiderDeleted(getAdapterPosition());
                 }
             });
         }
@@ -85,5 +103,14 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
     public interface OnReminderListener{
         void onReminderSelected(int position);
         void onEditEdit(int position);
+        void onRemiderDeleted(int position);
+    }
+
+    public void saveStates(Bundle outState) {
+        viewBinderHelper.saveStates(outState);
+    }
+
+    public void restoreStates(Bundle inState) {
+        viewBinderHelper.restoreStates(inState);
     }
 }

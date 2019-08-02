@@ -8,7 +8,7 @@ public class PrivacySetting {
     @SerializedName("privacyText")
     String privacyText;
     @SerializedName("privacyEnabled")
-    String privacyEnabled;
+    int privacyEnabled;
 
     public PrivacySetting() {
     }
@@ -29,11 +29,11 @@ public class PrivacySetting {
         this.privacyText = privacyText;
     }
 
-    public String getPrivacyEnabled() {
+    public int getPrivacyEnabled() {
         return privacyEnabled;
     }
 
-    public void setPrivacyEnabled(String privacyEnabled) {
+    public void setPrivacyEnabled(int privacyEnabled) {
         this.privacyEnabled = privacyEnabled;
     }
 

@@ -22,7 +22,6 @@ import com.surefiz.screens.privacy.model.PrivacyListResponse;
 import com.surefiz.screens.privacy.model.PrivacySetting;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
-import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                 String selectedIDs = "";
                 String unSelectedIds = "";
                 for (PrivacySetting setting : arrayListPrivacySetting) {
-                    if (setting.getPrivacyEnabled().equals("1")) {
+                    if (setting.getPrivacyEnabled() == 1) {
                         selectedIDs = selectedIDs + setting.getPrivacyId() + ",";
                     } else {
                         unSelectedIds = unSelectedIds + setting.getPrivacyId() + ",";
@@ -76,7 +75,10 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                 if (!selectedIDs.equalsIgnoreCase("")) {
                     finalSelectedIds = selectedIDs.substring(0, selectedIDs.lastIndexOf(","));
                 }
-                String finalUnSelectedIds = unSelectedIds.substring(0, unSelectedIds.lastIndexOf(","));
+                String finalUnSelectedIds = "";
+                if (!unSelectedIds.equalsIgnoreCase("")) {
+                    finalUnSelectedIds = unSelectedIds.substring(0, unSelectedIds.lastIndexOf(","));
+                }
 
                 Log.d("@@Selected-IDs : ", finalSelectedIds);
                 Log.d("@@Un-Selected-IDs : ", finalUnSelectedIds);
@@ -91,9 +93,8 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
         mPrivacyAdapter = new PrivacyAdapter(this, arrayListPrivacySetting, this);
         recyclerView.setAdapter(mPrivacyAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
-        recyclerView.addItemDecoration(decoration);
+        //SpacesItemDecoration decoration = new SpacesItemDecoration(10);
+        //recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -158,6 +159,9 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                     MethodUtils.errorMsg(PrivacyActivity.this, response.body().getData().getMessage());
                 }
                 //Refresh the list
+                if (isWholeDashboardSelected()) {
+                    mPrivacyAdapter.setClickRestriction(true);
+                }
                 mPrivacyAdapter.notifyDataSetChanged();
                 //Hide save button
                 buttonSaveChanges.setVisibility(View.GONE);
@@ -171,6 +175,15 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
                 MethodUtils.errorMsg(PrivacyActivity.this, getString(R.string.error_occurred));
             }
         });
+    }
+
+    private boolean isWholeDashboardSelected() {
+        for (PrivacySetting privacySetting : arrayListPrivacySetting) {
+            if (privacySetting.getPrivacyText().equalsIgnoreCase("Whole dashboard") && privacySetting.getPrivacyEnabled() == 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void callUpdatePrivacyApi(final String selected, final String unSelected) {
@@ -228,17 +241,33 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
     @Override
     public void onSelected(int position) {
         buttonSaveChanges.setVisibility(View.VISIBLE);
-        arrayListPrivacySetting.get(position).setPrivacyEnabled("1");
-        Log.d("@@Privacy : ", arrayListPrivacySetting.get(position).getPrivacyEnabled());
+        arrayListPrivacySetting.get(position).setPrivacyEnabled(1);
+        //Log.d("@@Privacy : ", arrayListPrivacySetting.get(position).getPrivacyEnabled());
         mPrivacyAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onUnSelectd(int position) {
         buttonSaveChanges.setVisibility(View.VISIBLE);
-        arrayListPrivacySetting.get(position).setPrivacyEnabled("0");
-        Log.d("@@Privacy : ", arrayListPrivacySetting.get(position).getPrivacyEnabled());
+        arrayListPrivacySetting.get(position).setPrivacyEnabled(0);
+        //Log.d("@@Privacy : ", arrayListPrivacySetting.get(position).getPrivacyEnabled());
         mPrivacyAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void allSelectDeselect(boolean b) {
+        buttonSaveChanges.setVisibility(View.VISIBLE);
+        if (b) {
+            for (int i = 0; i < arrayListPrivacySetting.size(); i++) {
+                arrayListPrivacySetting.get(i).setPrivacyEnabled(1);
+            }
+        } else {
+            for (int i = 0; i < arrayListPrivacySetting.size(); i++) {
+                arrayListPrivacySetting.get(i).setPrivacyEnabled(0);
+            }
+        }
+        mPrivacyAdapter.notifyDataSetChanged();
+
     }
 
     public void showResponseDialog(int status, String message) {

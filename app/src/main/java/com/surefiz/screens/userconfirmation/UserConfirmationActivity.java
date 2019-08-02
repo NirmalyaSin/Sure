@@ -3,10 +3,9 @@ package com.surefiz.screens.userconfirmation;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +20,6 @@ import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.settings.SettingsActivity;
-import com.surefiz.screens.weightManagement.WeightManagementActivity;
-import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
@@ -42,14 +39,17 @@ import retrofit2.Retrofit;
 public class UserConfirmationActivity extends BaseActivity implements View.OnClickListener {
 
     public View view;
-    private LoadingData loader;
     EditText et_weight, et_time_loss;
     Button btn_accept, btn_provide;
     String isnotification;
     String units = "";
+    private LoadingData loader;
     private List<String> weightList = new ArrayList<>();
     private List<String> timeList = new ArrayList<>();
     private UniversalPopup weightPopup, timePopup;
+    private int maintainWeightByServer = 0;
+    private int savedType = 1;
+    private int savedUnits = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,9 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         view = View.inflate(this, R.layout.activity_user_confirmation, null);
         addContentView(view);
         isnotification = LoginShared.getWeightFromNotification(this);
+
+        LoginShared.setWeightFromNotification(this, "0");
+
         loader = new LoadingData(this);
         initializeView(view);
         showViewMode();
@@ -108,6 +111,8 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 try {
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
+
+                    System.out.println("getWeightManagementApiConfirm: " + jsonObject.toString());
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
@@ -143,15 +148,50 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
     private void sendWeightManagementDetails() {
         String weight = "";
-        String units = "";
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+
         weight = et_weight.getText().toString().trim();
-        String[] splited = weight.split(" ");
-        Call<ResponseBody> call_sendWeightManagementApi = apiInterface.call_sendWeightManagement(LoginShared.getRegistrationDataModel(UserConfirmationActivity.this).getData().getToken(),
+        if (!weight.equalsIgnoreCase("")) {
+            String[] splittedWeights = weight.split(" ");
+            weight = splittedWeights[0].trim();
+        }else {
+            loader.dismiss();
+            MethodUtils.errorMsg(UserConfirmationActivity.this, "Enter desired weight.");
+            return;
+        }
+
+        String type = "2";
+        String maintainWeightByServer = "0";
+
+        String time = et_time_loss.getText().toString().trim();
+
+        if (!time.equalsIgnoreCase("") && !time.equalsIgnoreCase("TBD")) {
+            String[] splittedTime = time.split(" ");
+            time = splittedTime[0].trim();
+        }else {
+            loader.dismiss();
+            MethodUtils.errorMsg(UserConfirmationActivity.this, "Enter time to lose weight.");
+            return;
+        }
+
+
+        /*Call<ResponseBody> call_sendWeightManagementApi = apiInterface.call_sendWeightManagement(LoginShared.getRegistrationDataModel(UserConfirmationActivity.this).getData().getToken(),
                 LoginShared.getRegistrationDataModel(UserConfirmationActivity.this).getData().getUser().get(0).getUserId(),
-                weight, et_time_loss.getText().toString().trim(), units);
+                weight, et_time_loss.getText().toString().trim(), units);*/
+
+
+        Call<ResponseBody> call_sendWeightManagementApi = apiInterface.call_sendWeightManagementForWeight(LoginShared.getRegistrationDataModel(UserConfirmationActivity.this).getData().getToken(),
+                LoginShared.getRegistrationDataModel(UserConfirmationActivity.this).getData().getUser().get(0).getUserId(),
+                weight,
+                time,
+                String.valueOf(savedUnits),
+                type,
+                maintainWeightByServer);
+
+
         call_sendWeightManagementApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -160,6 +200,9 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 try {
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
+
+                    System.out.println("sendWeightManagementDetails: " + jsonObject.toString());
+
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
@@ -209,11 +252,28 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
     private void setData(JSONObject jsnObject) {
         et_weight.setText(jsnObject.optString("desiredWeight"));
-        et_time_loss.setText(jsnObject.optString("timeToLoseWeight"));
-        if (units.equalsIgnoreCase("LB")) {
+
+        if (jsnObject.optString("timeToLoseWeight").equalsIgnoreCase("0 Weeks")) {
+            et_time_loss.setText("TBD");
+        } else {
+            et_time_loss.setText(jsnObject.optString("timeToLoseWeight"));
+        }
+
+        maintainWeightByServer = jsnObject.optInt("maintain_Weight_By_Server");
+        savedType = jsnObject.optInt("type");
+        savedUnits = jsnObject.optInt("preferredUnits");
+
+        /*if (units.equalsIgnoreCase("LB")) {
             addWeightListAndCall("LB");
         } else {
             addWeightListAndCall("KG");
+        }*/
+
+
+        if (savedUnits == 1) {
+            addWeightListAndCall("KG");
+        } else {
+            addWeightListAndCall("LB");
         }
     }
 
@@ -260,7 +320,10 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
             loader.show_with_label("Loading");
             Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
             final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-            Call<ResponseBody> callApifor_server_weight = apiInterface.call_Apiforserver_weight(LoginShared.getRegistrationDataModel(this).getData().getToken(), "application/json",
+            /*Call<ResponseBody> callApifor_server_weight = apiInterface.call_Apiforserver_weight(LoginShared.getRegistrationDataModel(this).getData().getToken(), "application/json",
+                    LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(), "1");*/
+
+            Call<ResponseBody> callApifor_server_weight = apiInterface.call_Apiforserver_weight(LoginShared.getRegistrationDataModel(this).getData().getToken(),
                     LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(), "1");
             callApifor_server_weight.enqueue(new Callback<ResponseBody>() {
                 @Override

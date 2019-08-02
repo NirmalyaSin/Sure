@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
@@ -25,13 +24,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
 import com.surefiz.screens.dashboard.BaseActivity;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
+import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
 
@@ -285,9 +285,16 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                         (dialog, which) -> {
                             dialog.dismiss();
                             LoginShared.setstatusforwifivarification(this, true);
-                            Intent instruc = new Intent(this, InstructionActivity.class);
-                            startActivity(instruc);
-                            finish();
+
+                            if (!new InstructionSharedPreference(ApConfigActivity.this).isInstructionShown(ApConfigActivity.this, LoginShared.getRegistrationDataModel(ApConfigActivity.this).getData().getUser().get(0).getUserId())) {
+                                Intent instruc = new Intent(this, InstructionActivity.class);
+                                startActivity(instruc);
+                                finish();
+                            } else {
+                                Intent dashBoardIntent = new Intent(this, DashBoardActivity.class);
+                                startActivity(dashBoardIntent);
+                                finish();
+                            }
                         });
             } else {
                 alertDialog.setMessage("Your AP Configuration completed successfully.");

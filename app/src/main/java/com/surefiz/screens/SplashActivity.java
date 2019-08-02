@@ -11,6 +11,7 @@ import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
@@ -21,6 +22,7 @@ import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
+import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
@@ -50,6 +52,8 @@ public class SplashActivity extends AppCompatActivity {
         MethodUtils.fullScreen(this);
         //bundle.get("pushData")
         //pushData
+
+        System.out.println("instructionShown: "+ new InstructionSharedPreference(SplashActivity.this).getInstructionVisibility(SplashActivity.this));
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

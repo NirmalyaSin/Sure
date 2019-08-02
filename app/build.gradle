@@ -80,5 +80,8 @@ dependencies {
 
     // New chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // Swipe Reveal for Remider Delete
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 }
 apply plugin: 'com.google.gms.google-services'

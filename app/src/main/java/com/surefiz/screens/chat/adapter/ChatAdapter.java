@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.surefiz.R;
 import com.surefiz.screens.chat.ChatConstant;
 import com.surefiz.screens.chat.model.Conversation;
+import com.surefiz.utils.ChatDateConverter;
 
 import java.util.ArrayList;
 
@@ -42,27 +43,26 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapterViewHolder holder, int position) {
-        if (position == 0){
+        if (position == 0) {
             Log.d("@@getItemCount : ", "fist-loading = " + firstLoading);
             firstLoading = true;
         }
 
-        switch (arrayListConversation.get(position).getMessageFrom()){
+        switch (arrayListConversation.get(position).getMessageFrom()) {
             case ChatConstant.CHAT_FROM_SENDER:
                 holder.rlMessageRight.setVisibility(View.VISIBLE);
                 holder.rlMessageLeft.setVisibility(View.GONE);
                 holder.texMessageRight.setText(arrayListConversation.get(position).getMessage());
-                holder.textDateTimeRight.setText(arrayListConversation.get(position).getDateTime());
+                holder.textDateTimeRight.setText(ChatDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
                 break;
             case ChatConstant.CHAT_FROM_RECEIVER:
                 holder.rlMessageRight.setVisibility(View.GONE);
                 holder.rlMessageLeft.setVisibility(View.VISIBLE);
                 holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
-                holder.textDateTimeLeft.setText(arrayListConversation.get(position).getDateTime());
+                holder.textDateTimeLeft.setText(ChatDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
                 break;
         }
     }
-
 
 
     @Override
@@ -70,11 +70,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
         super.onViewAttachedToWindow(holder);
 
         int position = holder.getAdapterPosition();
-        if(firstLoading){
+        if (firstLoading) {
             firstLoading = false;
-        }else {
-            Log.d("@@Scrolling : ", "New-Pos = " +position);
-            if(position==0){
+        } else {
+            Log.d("@@Scrolling : ", "New-Pos = " + position);
+            if (position == 0) {
                 mOnChatScrollListener.onScrollToTop(position);
             }
         }
@@ -85,8 +85,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
         return arrayListConversation.size();
     }
 
+    public interface OnChatScrollListener {
+        void onScrollToTop(int scrollPosition);
+    }
+
     public class ChatAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView textMessageLeft, texMessageRight,textDateTimeLeft,textDateTimeRight;
+        TextView textMessageLeft, texMessageRight, textDateTimeLeft, textDateTimeRight;
         RelativeLayout rlMessageRight, rlMessageLeft;
 
         public ChatAdapterViewHolder(@NonNull View itemView) {
@@ -99,9 +103,5 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
             rlMessageLeft = itemView.findViewById(R.id.rlMessageLeft);
             rlMessageRight = itemView.findViewById(R.id.rlMessageRight);
         }
-    }
-
-    public interface OnChatScrollListener{
-        void onScrollToTop(int scrollPosition);
     }
 }

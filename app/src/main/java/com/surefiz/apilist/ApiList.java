@@ -40,8 +40,10 @@ public class ApiList {
     public static final String SEND_WEIGHT_MANAGEMENT = "ApiServices/sendWeightManagement";
     public static final String API_BMI_DATA = "ApiServices/BMIDetails";
     public static final String PROGRESS_STATUS = "ApiServices/ProgressStatus";
-    public static final String ACCEPTSERVERWEIGHT = "Acceptserverweight";
+    public static final String ACCEPTSERVERWEIGHT = "ApiServices/Acceptserverweight";
     public static final String READ_NOTIFICATION = "ApiServices/ReadNotification";
     public static final String REMOVE_ACCOUNT_USER = "ApiServices/Remove_accuser";
     public static final String UPDATE_USER_DEVICE_INFO = "ApiServices/UpdateUserDeviceInfo";
+    public static final String API_POST_REMOVE_REMINDER = "ApiServices/Remove_reminder";
+    public static final String API_BroadcastMessage = "ApiServices/ShowBroadcastMessage";
 }

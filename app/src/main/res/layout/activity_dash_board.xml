@@ -92,7 +92,6 @@
                             android:text="Weight Loss"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/_18sdp"
-                            android:textStyle="bold"
                             android:visibility="visible" />
 
                         <com.github.mikephil.charting.charts.PieChart
@@ -134,10 +133,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Body Composition"
+                            android:text="Composition"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/_18sdp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_18sdp" />
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pieChatBodyComposition"
@@ -257,6 +255,7 @@
 
                 <!--_535sdp-->
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cv_user_body_composition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -304,7 +303,7 @@
                             android:paddingTop="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
                             android:text="Name:"
-                            android:textColor="@color/whiteColor"
+                            android:textColor="@color/textGray"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
@@ -315,7 +314,7 @@
                             android:paddingLeft="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
                             android:text="Scale Id:"
-                            android:textColor="@color/whiteColor"
+                            android:textColor="@color/textGray"
                             android:textSize="@dimen/_12sdp" />
 
                         <View
@@ -361,7 +360,7 @@
                                         android:paddingLeft="@dimen/_10sdp"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Weight"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <TextView
@@ -372,7 +371,7 @@
                                         android:paddingLeft="@dimen/_10sdp"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="9.10 lbs"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
                                 </RelativeLayout>
 
@@ -412,7 +411,7 @@
                                         android:paddingLeft="@dimen/_12sdp"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Height"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <TextView
@@ -423,7 +422,7 @@
                                         android:paddingLeft="@dimen/_10sdp"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="172 Inch"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
                                 </RelativeLayout>
                             </RelativeLayout>
@@ -472,7 +471,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Body Fat"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
@@ -524,7 +523,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Bone Kg"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
@@ -585,7 +584,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Muscle"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
@@ -637,7 +636,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="BMI"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
@@ -699,7 +698,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Water"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
@@ -751,7 +750,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_10sdp"
                                         android:text="Protein"
-                                        android:textColor="@color/whiteColor"
+                                        android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
@@ -790,7 +789,7 @@
                             android:paddingTop="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
                             android:text="Recorded on 30/11/2019"
-                            android:textColor="@color/whiteColor"
+                            android:textColor="@color/textGray"
                             android:textSize="@dimen/_12sdp" />
 
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.screens.notifications.models.Notification;
+import com.surefiz.utils.MessagDateConverter;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapterViewHolder holder, int position) {
         holder.textMessage.setText(arrayListNotifications.get(position).getNotificationText());
-        switch (arrayListNotifications.get(position).getNotificationType()){
+        switch (arrayListNotifications.get(position).getNotificationType()) {
             case "4":
                 holder.linearAcceptRejectButton.setVisibility(View.VISIBLE);
                 break;
@@ -50,13 +51,24 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 break;
         }
 
-        holder.textDate.setText(arrayListNotifications.get(position).getNotificationDate());
-        holder.textTime.setText(arrayListNotifications.get(position).getNotificationTime());
+
+        System.out.println("friendTime: " + MessagDateConverter.DateConverterForNotification(arrayListNotifications.get(position).getNotificationDate(), arrayListNotifications.get(position).getNotificationTime(),arrayListNotifications.get(position).getNotificationType()));
+        String[] strings = MessagDateConverter.DateConverterForNotification(arrayListNotifications.get(position).getNotificationDate(), arrayListNotifications.get(position).getNotificationTime(),arrayListNotifications.get(position).getNotificationType()).split(",");
+        holder.textDate.setText(strings != null ? strings[0] : arrayListNotifications.get(position).getNotificationDate());
+        holder.textTime.setText(strings != null ? strings[1].trim() : arrayListNotifications.get(position).getNotificationTime());
     }
 
     @Override
     public int getItemCount() {
         return arrayListNotifications.size();
+    }
+
+    public interface OnNotificationClickListener {
+        void onViewClick(int position);
+
+        void onAccept(int position);
+
+        void onReject(int position);
     }
 
     public class NotificationAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -79,11 +91,5 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             btnReject.setOnClickListener(v -> mOnNotificationClickListener.onReject(getAdapterPosition()));
         }
-    }
-
-    public interface OnNotificationClickListener{
-        void onViewClick(int position);
-        void onAccept(int position);
-        void onReject(int position);
     }
 }

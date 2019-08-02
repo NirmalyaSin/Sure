@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class PrivacyAdapter extends RecyclerView.Adapter<PrivacyAdapter.PrivacyViewHolder> {
 
+    public boolean Whole_dashboard = false;
     private Context mContext;
     private ArrayList<PrivacySetting> arrayListPrivacy = new ArrayList<PrivacySetting>();
     private OnPrivacyListener mOnPrivacyListener;
@@ -36,23 +37,42 @@ public class PrivacyAdapter extends RecyclerView.Adapter<PrivacyAdapter.PrivacyV
         return new PrivacyViewHolder(rootView);
     }
 
+    public void setClickRestriction(boolean wholeDashBoard) {
+        Whole_dashboard = wholeDashBoard;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull PrivacyViewHolder holder, int position) {
-    //    Log.e("@@holder: ", arrayListPrivacy.get(position).toString());
+        //    Log.e("@@holder: ", arrayListPrivacy.get(position).toString());
         holder.textPrivacyOption.setText(arrayListPrivacy.get(position).getPrivacyText());
 
-        if(arrayListPrivacy.get(position).getPrivacyEnabled().equals("1")){
+        if (arrayListPrivacy.get(position).getPrivacyEnabled() == 1) {
             holder.imagePrivacySelect.setImageDrawable(mContext.getResources()
                     .getDrawable(R.drawable.ic_radio_circle_checked));
-        }else {
+        } else {
             holder.imagePrivacySelect.setImageDrawable(mContext.getResources()
                     .getDrawable(R.drawable.ic_radio_button));
         }
+
+
+        /*if (arrayListPrivacy.get(position).getPrivacyText().equalsIgnoreCase("Whole dashboard") && arrayListPrivacy.get(position).getPrivacyEnabled() == 1) {
+            mOnPrivacyListener.allSelectDeselect(true);
+            Whole_dashboard = true;
+        }*/
     }
 
     @Override
     public int getItemCount() {
         return arrayListPrivacy.size();
+    }
+
+    public interface OnPrivacyListener {
+        void onSelected(int position);
+
+        void onUnSelectd(int position);
+
+        void allSelectDeselect(boolean b);
+
     }
 
     public class PrivacyViewHolder extends RecyclerView.ViewHolder {
@@ -68,20 +88,33 @@ public class PrivacyAdapter extends RecyclerView.Adapter<PrivacyAdapter.PrivacyV
                 @Override
                 public void onClick(View v) {
 
-                    if(arrayListPrivacy.get(getAdapterPosition()).getPrivacyEnabled().equals("1")){
-                        //Un-Check the option
-                        mOnPrivacyListener.onUnSelectd(getAdapterPosition());
-                    }else {
-                        //Check the option
-                        mOnPrivacyListener.onSelected(getAdapterPosition());
+                    if (arrayListPrivacy.get(getAdapterPosition()).getPrivacyText().equalsIgnoreCase("Whole dashboard")) {
+
+                        if (arrayListPrivacy.get(getAdapterPosition()).getPrivacyEnabled() == 1) {
+                            //Un-Check the option
+                            mOnPrivacyListener.allSelectDeselect(false);
+                            Whole_dashboard = false;
+                        } else {
+                            //Check the option
+                            mOnPrivacyListener.allSelectDeselect(true);
+                            Whole_dashboard = true;
+                        }
+
+                    } else {
+
+                        if (!Whole_dashboard) {
+                            if (arrayListPrivacy.get(getAdapterPosition()).getPrivacyEnabled() == 1) {
+                                //Un-Check the option
+                                mOnPrivacyListener.onUnSelectd(getAdapterPosition());
+                            } else {
+                                //Check the option
+                                mOnPrivacyListener.onSelected(getAdapterPosition());
+                            }
+                        }
                     }
                 }
+
             });
         }
-    }
-
-    public interface OnPrivacyListener{
-        void onSelected(int position);
-        void onUnSelectd(int position);
     }
 }

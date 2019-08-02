@@ -106,7 +106,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else if (jObject.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
                 } else {
-                    LoginShared.setWeightFromNotification(this, "7");
+                    //LoginShared.setWeightFromNotification(this, "7");
+                    LoginShared.setWeightFromNotification(this, "0");
                 }
                 scheduleJob();
             } else {

@@ -34,6 +34,7 @@ public class SharedUtils {
     public static final String KEY_SHARED_WEIGHT_PAGE_FROM_NOTIFICATION = "KEY_SHARED_WEIGHT_PAGE_FROM_NOTIFICATION";
     public static final String KEY_SHARED_CAPTURED_WEIGHT = "KEY_SHARED_CAPTURED_WEIGHT";
     public static final String KEY_SHARED_IS_WELCOME = "KEY_SHARED_IS_WELCOME";
+    public static final String KEY_SHARED_IS_INSTRUCTION = "KEY_SHARED_IS_INSTRUCTION";
 
 
     public static final String KEY_SHARED_USER_TYPE = "KEY_SHARED_USER_TYPE"; //customer or normal or fb etc

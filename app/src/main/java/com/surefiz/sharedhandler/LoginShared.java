@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.dashboard.model.DashboardModel;
 import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
@@ -18,7 +17,7 @@ public class LoginShared {
     private static void activateShared(Context context) {
         LoginShared.context = context;
         LoginShared.prefs = context.getSharedPreferences(
-                SharedUtils.TYPE_DEAD_ON_LOGOUT_SHARED, context.MODE_PRIVATE);
+                SharedUtils.TYPE_DEAD_ON_LOGOUT_SHARED, Context.MODE_PRIVATE);
     }
 
     /**
@@ -266,7 +265,7 @@ public class LoginShared {
 
     public static void destroySessionTypePreference(Context context) {
         prefs = context.getSharedPreferences(
-                SharedUtils.TYPE_DEAD_ON_LOGOUT_SHARED, context.MODE_PRIVATE);
+                SharedUtils.TYPE_DEAD_ON_LOGOUT_SHARED, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         //Set Preference for welcome page
         boolean isWelcome = getWelcome(context);
@@ -379,4 +378,34 @@ public class LoginShared {
             activateShared(context);
         return prefs.getBoolean(SharedUtils.KEY_SHARED_IS_WELCOME, false);
     }
+
+
+    /*public static void setInstructionVisibility(Context context, String userId) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        String newStr = getInstructionVisibility(context);
+
+        if (!newStr.contains(userId + ",")) {
+            newStr = newStr.equalsIgnoreCase("") ? newStr + userId + "," : "";
+        }
+        editor.putString(SharedUtils.KEY_SHARED_IS_INSTRUCTION, newStr);
+        editor.commit();
+    }
+
+    public static String getInstructionVisibility(Context context) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        return prefs.getString(SharedUtils.KEY_SHARED_IS_INSTRUCTION, "");
+    }
+
+    public static boolean isInstructionShown(Context context, String userId) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        String newStr = getInstructionVisibility(context);
+        return newStr.contains(userId + ",");
+
+    }*/
 }

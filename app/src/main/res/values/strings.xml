@@ -59,6 +59,13 @@
     <string name="google_login_type">Google</string>
     <string name="smart_config_failed">Smart Config didn’t work on your network. We will try AP Config method now.</string>
     <string name="step_on_the_scale">Step on the Scale</string>
+    <string name="delete">DELETE</string>
+    <string name="Allow_accountability_circle">Allow accountability circle members to view my:</string>
+    <string name="register">Register</string>
+    <string name="update">Update</string>
+    <string name="complete_sign_up">Complete Sign Up</string>
+    <string name="surefiz_signup">SureFiz™ Signup</string>
+    <string name="surefiz_register">SureFiz™ Register</string>
 
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 

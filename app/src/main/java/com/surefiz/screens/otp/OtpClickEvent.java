@@ -188,11 +188,29 @@ public class OtpClickEvent implements View.OnClickListener {
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
 
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        /*JSONObject jsObject = jsonObject.getJSONObject("data");
                         Intent regIntent = new Intent(otpActivity, LoginActivity.class);
                         otpActivity.startActivity(regIntent);
                         otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        otpActivity.finishAffinity();
+                        otpActivity.finishAffinity();*/
+
+
+                        if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0) {
+
+                            Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
+                            regIntent.putExtra("completeStatus", "0");
+                            otpActivity.startActivity(regIntent);
+                            otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            otpActivity.finishAffinity();
+                        }else {
+                            Intent intent = new Intent(otpActivity, DashBoardActivity.class);
+                            otpActivity.startActivity(intent);
+                            otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            otpActivity.finishAffinity();
+                        }
+
+
+
 //                        MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
                         /*LoginShared.setstatusforOtpvarification(otpActivity, true);
                         if (LoginShared.getRegistrationDataModel(otpActivity) != null &&

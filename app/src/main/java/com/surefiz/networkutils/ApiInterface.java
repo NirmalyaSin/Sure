@@ -5,6 +5,7 @@ import com.surefiz.screens.accountability.models.CircleUserResponse;
 import com.surefiz.screens.accountability.models.removeuser.RemoveUserAccount;
 import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.bmidetails.model.BMIResponse;
+import com.surefiz.screens.boardcast.model.Message;
 import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
@@ -30,6 +31,7 @@ import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.API_ADD_EDIT_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_BMI_DATA;
+import static com.surefiz.apilist.ApiList.API_BroadcastMessage;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_ACCEPT_REJECT_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEND_CANCEL_REQUEST;
@@ -38,6 +40,7 @@ import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
+import static com.surefiz.apilist.ApiList.API_POST_REMOVE_REMINDER;
 import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
 import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.BOARDCAST;
@@ -51,7 +54,6 @@ import static com.surefiz.apilist.ApiList.FORGOTPASSWORD;
 import static com.surefiz.apilist.ApiList.GET_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.GROUPINVITE;
 import static com.surefiz.apilist.ApiList.LOGIN;
-import static com.surefiz.apilist.ApiList.SOCIAL_LOGIN;
 import static com.surefiz.apilist.ApiList.LOGOUT;
 import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
 import static com.surefiz.apilist.ApiList.READ_NOTIFICATION;
@@ -59,6 +61,7 @@ import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.REMOVE_ACCOUNT_USER;
 import static com.surefiz.apilist.ApiList.SENDOTP;
 import static com.surefiz.apilist.ApiList.SEND_WEIGHT_MANAGEMENT;
+import static com.surefiz.apilist.ApiList.SOCIAL_LOGIN;
 import static com.surefiz.apilist.ApiList.UPDATE_USER_DEVICE_INFO;
 import static com.surefiz.apilist.ApiList.USERLIST;
 import static com.surefiz.apilist.ApiList.VIEWPROFILE;
@@ -183,16 +186,16 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(SOCIAL_LOGIN)
     Call<ResponseBody> call_socialloginApi(@Field("socicalID") String socicalID,
-                                     @Field("emailId") String emailId,
-                                     @Field("fullName") String fullName,
-                                     @Field("usertype") String usertype,
-                                     @Field("medianame") String medianame,
-                                     @Field("userImage") String userImage,
-                                     @Field("dob") String dob,
-                                     @Field("phoneNumber") String phoneNumber,
-                                     @Field("deviceType") String deviceType,
-                                     @Field("socicalToken") String socicalToken,
-                                     @Field("device_Token") String device_Token);
+                                           @Field("emailId") String emailId,
+                                           @Field("fullName") String fullName,
+                                           @Field("usertype") String usertype,
+                                           @Field("medianame") String medianame,
+                                           @Field("userImage") String userImage,
+                                           @Field("dob") String dob,
+                                           @Field("phoneNumber") String phoneNumber,
+                                           @Field("deviceType") String deviceType,
+                                           @Field("socicalToken") String socicalToken,
+                                           @Field("device_Token") String device_Token);
 
     @FormUrlEncoded
     @POST(VIEWPROFILE)
@@ -203,11 +206,11 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(UPDATE_USER_DEVICE_INFO)
     Call<ResponseBody> call_updateUserDeviceInfoApi(@Header("x-authorization") String token,
-                                           @Field("userId") String user_id,
-                                           @Field("deviceType") String deviceType,
-                                           @Field("deviceToken") String deviceToken,
-                                           @Field("deviceVersion") String deviceVersion,
-                                           @Field("appVersion") String appVersion);
+                                                    @Field("userId") String user_id,
+                                                    @Field("deviceType") String deviceType,
+                                                    @Field("deviceToken") String deviceToken,
+                                                    @Field("deviceVersion") String deviceVersion,
+                                                    @Field("appVersion") String appVersion);
 
     @Multipart
     @POST(EDITPROFILE)
@@ -320,6 +323,11 @@ public interface ApiInterface {
                                                     @Field("userId") String userId);
 
     @FormUrlEncoded
+    @POST(API_POST_REMOVE_REMINDER)
+    Call<ResponseBody> call_RemoveReminderApi(@Header("x-authorization") String token,
+                                                      @Field("rid") String reminderId);
+
+    @FormUrlEncoded
     @POST(API_ADD_EDIT_REMINDER_LIST)
     Call<ReminderListResponse> call_AddUpdateReminderApi(@Header("x-authorization") String token,
                                                          @Field("userId") String userId,
@@ -327,6 +335,7 @@ public interface ApiInterface {
                                                          @Field("dateTime") String dateTime,
                                                          @Field("type") String type,
                                                          @Field("Id") String Id);
+
 
     @FormUrlEncoded
     @POST(API_UPDATE_PRIVACY_LIST)
@@ -411,6 +420,11 @@ public interface ApiInterface {
                                          @Field("message") String message);
 
     @FormUrlEncoded
+    @POST(API_BroadcastMessage)
+    Call<Message> call_BroadcastMessageApi(@Header("x-authorization") String token,
+                                           @Field("senderId") String senderId);
+
+    @FormUrlEncoded
     @POST(CHANGEPASSWORD)
     Call<ResponseBody> call_changePasswordApi(@Header("x-authorization") String token,
                                               @Field("userId") String userId,
@@ -423,23 +437,23 @@ public interface ApiInterface {
                                                 @Field("serverUserId") String serverUserId,
                                                 @Field("scaleUserId") String scaleUserId);
 
-    @FormUrlEncoded
+    /*@FormUrlEncoded
     @POST(SEND_WEIGHT_MANAGEMENT)
     Call<ResponseBody> call_sendWeightManagement(@Header("x-authorization") String token,
                                                  @Field("serverUserId") String serverUserId,
                                                  @Field("desiredWeight") String desiredWeight,
                                                  @Field("timeToLoseWeight") String timeToLoseWeight,
-                                                 @Field("preferredUnits") String preferredunits);
+                                                 @Field("preferredUnits") String preferredunits);*/
 
     @FormUrlEncoded
     @POST(SEND_WEIGHT_MANAGEMENT)
     Call<ResponseBody> call_sendWeightManagementForWeight(@Header("x-authorization") String token,
-                                                 @Field("serverUserId") String serverUserId,
-                                                 @Field("desiredWeight") String desiredWeight,
-                                                 @Field("timeToLoseWeight") String timeToLoseWeight,
-                                                 @Field("preferredUnits") String preferredunits,
-                                                 @Field("type") String type,
-                                                 @Field("maintain_Weight_By_Server") String maintain_Weight_By_Server);
+                                                          @Field("serverUserId") String serverUserId,
+                                                          @Field("desiredWeight") String desiredWeight,
+                                                          @Field("timeToLoseWeight") String timeToLoseWeight,
+                                                          @Field("preferredUnits") String preferredunits,
+                                                          @Field("type") String type,
+                                                          @Field("maintain_Weight_By_Server") String maintain_Weight_By_Server);
 
     @FormUrlEncoded
     @POST(PROGRESS_STATUS)
@@ -450,7 +464,6 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(ACCEPTSERVERWEIGHT)
     Call<ResponseBody> call_Apiforserver_weight(@Header("x-authorization") String token,
-                                                @Field("Content-Type") String serverUserId,
                                                 @Field("userId") String userId,
                                                 @Field("acceptationStatus") String acceptationStatus);
 

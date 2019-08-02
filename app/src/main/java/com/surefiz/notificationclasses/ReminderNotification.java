@@ -18,6 +18,7 @@ public class ReminderNotification {
     Activity mActivity;
     String reminderId, reminderText, dateTime;
 
+    //This Constructor is to create a Notification
     public ReminderNotification(Activity mActivity, String reminderId, String reminderText, String dateTime) {
         this.mActivity = mActivity;
         this.reminderId = reminderId;
@@ -27,6 +28,7 @@ public class ReminderNotification {
         createReminderNotification();
     }
 
+    //This Constructor is to Cancle/Remove a Notification
     public ReminderNotification(Activity mActivity, String reminderId) {
         this.mActivity = mActivity;
         this.reminderId = reminderId;

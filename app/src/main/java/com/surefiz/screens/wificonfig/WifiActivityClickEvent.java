@@ -11,11 +11,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -34,6 +32,7 @@ import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.settings.SettingsActivity;
+import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
 
@@ -44,6 +43,9 @@ import cn.onecoder.scalewifi.api.ScaleWiFiConfig;
 import cn.onecoder.scalewifi.api.impl.OnScaleWiFiConfigResultListener;
 
 public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.OnMenuItemClickListener, OnScaleWiFiConfigResultListener {
+    WifiReceiver wifiReceiver = new WifiReceiver();
+    LoadingData loader;
+    boolean isWifiReceived = false;
     private WifiConfigActivity mWifiConfigActivity;
     private PermissionHelper permissionHelper;
     private WifiManager mWifiManager;
@@ -51,9 +53,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     private List<ScanResult> scanResultsWifi = new ArrayList<>();
     private ProgressDialog progressDialog;
     private ScaleWiFiConfig scaleWiFiConfig;
-    WifiReceiver wifiReceiver = new WifiReceiver();
-    LoadingData loader;
-    boolean isWifiReceived = false;
 
 
     public WifiActivityClickEvent(WifiConfigActivity activity) {
@@ -83,7 +82,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 lock.acquire();
             }*/
         } catch (Exception e) {
-            Log.d("Wifi Exception", "" + e.getMessage().toString());
+            Log.d("Wifi Exception", "" + e.getMessage());
         }
 
 
@@ -146,12 +145,23 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                         (HideReturnsTransformationMethod.getInstance());
                 break;
             case R.id.btn_skip_config:
-                Intent details = new Intent(mWifiConfigActivity, InstructionActivity.class);
-                mWifiConfigActivity.startActivity(details);
-                mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                mWifiConfigActivity.finish();
-                LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
-                break;
+
+                //System.out.println("instructionShown: " + new InstructionSharedPreference(mWifiConfigActivity).getInstructionVisibility(mWifiConfigActivity));
+
+                if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
+                    Intent details = new Intent(mWifiConfigActivity, InstructionActivity.class);
+                    mWifiConfigActivity.startActivity(details);
+                    mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    mWifiConfigActivity.finish();
+                    LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
+                    break;
+                } else {
+                    Intent details = new Intent(mWifiConfigActivity, DashBoardActivity.class);
+                    mWifiConfigActivity.startActivity(details);
+                    mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    mWifiConfigActivity.finish();
+                    LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
+                }
 
         }
     }
@@ -299,28 +309,19 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
-                        Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
-                        mWifiConfigActivity.startActivity(instruc);
-                        mWifiConfigActivity.finish();
+
+                        if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
+                            Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
+                            mWifiConfigActivity.startActivity(instruc);
+                            mWifiConfigActivity.finish();
+                        }else {
+                            Intent dashboardIntent = new Intent(mWifiConfigActivity, DashBoardActivity.class);
+                            mWifiConfigActivity.startActivity(dashboardIntent);
+                            mWifiConfigActivity.finish();
+                        }
                     }
                 });
         alertDialog.show();
-    }
-
-
-    class WifiReceiver extends BroadcastReceiver {
-
-        public void onReceive(Context c, Intent intent) {
-            scanResultsWifi.clear();
-//            Toast.makeText(mWifiConfigActivity, "Wifi List Received", Toast.LENGTH_LONG).show();
-            scanResultsWifi = mWifiManager.getScanResults();
-            if (loader.isShowing()) {
-                loader.dismiss();
-            }
-            //Show popup menu
-            ShowSSIDList();
-        }
-
     }
 
     public void ShowSSIDList() {
@@ -353,6 +354,21 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         }
 
         return true;
+    }
+
+    class WifiReceiver extends BroadcastReceiver {
+
+        public void onReceive(Context c, Intent intent) {
+            scanResultsWifi.clear();
+//            Toast.makeText(mWifiConfigActivity, "Wifi List Received", Toast.LENGTH_LONG).show();
+            scanResultsWifi = mWifiManager.getScanResults();
+            if (loader.isShowing()) {
+                loader.dismiss();
+            }
+            //Show popup menu
+            ShowSSIDList();
+        }
+
     }
 
 

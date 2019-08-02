@@ -55,22 +55,22 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/_5sdp"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/btnPerformance"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:background="@drawable/shape_rectangle_blue"
+                    android:gravity="center"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:layout_marginEnd="@dimen/_5sdp"
                     android:text="@string/performance"
-                    android:layout_alignParentStart="true"
                     android:textAllCaps="false"
                     android:textColor="@color/whiteColor" />
 
@@ -78,12 +78,12 @@
                     android:id="@+id/btnRemove"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_25sdp"
-                    android:background="@drawable/shape_rectangle_red"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_5sdp"
-                    android:gravity="center"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_5sdp"
+                    android:background="@drawable/shape_rectangle_red"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:text="@string/unfriend"
                     android:textAllCaps="false"
                     android:textColor="@color/whiteColor" />
@@ -99,16 +99,14 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:src="@drawable/chat" />
 
-        <TextView
-            android:id="@+id/textViewOptions"
+        <ImageView
+            android:id="@+id/ivViewOptions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_menu_24px"
             android:padding="@dimen/_5sdp"
-            android:textSize="@dimen/_30sdp"
-            android:textColor="@color/whiteColor"
-            android:text="&#8942;"
-            android:textAppearance="?android:textAppearanceLarge" />
-        
+            android:tint="@color/whiteColor" />
+
     </LinearLayout>
 
     <View

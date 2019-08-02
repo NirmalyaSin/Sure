@@ -59,6 +59,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     private WeigtUniversalPopup managementPopup, selectionPopup;
     private int selectedWeightManagmentGoal = 0;
     private int selectedDesiredWeightSelection = 0;
+    //private boolean isFirstTimeUpdate = true;
+    //private int maintain_Weight_By_Server = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +92,13 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             btn_accept.setVisibility(View.VISIBLE);
             btn_decline.setVisibility(View.VISIBLE);
             rl_back.setVisibility(View.GONE);
+
+            LoginShared.setWeightFromNotification(WeightManagementActivity.this, "0");
         }
         btn_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callApiforweightUpdate();
-
             }
         });
         btn_decline.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +154,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
                     findViewById(R.id.ll_desired_weight_selection).setVisibility(View.VISIBLE);
                     findViewById(R.id.rl_desired_weight_selection).setVisibility(View.VISIBLE);
+                    et_desired_weight_selection.setText("");
 
                     findViewById(R.id.tv_weight).setVisibility(View.GONE);
                     findViewById(R.id.rl_weight).setVisibility(View.GONE);
@@ -158,18 +162,21 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
 
                     selectedWeightManagmentGoal = 0;
+                    selectedDesiredWeightSelection=-1;
                 } else {
                     et_weight_managment.setText(managementList.get(1));
 
 
                     findViewById(R.id.ll_desired_weight_selection).setVisibility(View.GONE);
                     findViewById(R.id.rl_desired_weight_selection).setVisibility(View.GONE);
-                    findViewById(R.id.tv_weight).setVisibility(View.GONE);
-                    findViewById(R.id.rl_weight).setVisibility(View.GONE);
                     findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
                     findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
 
+                    findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
+                    findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
+
                     selectedWeightManagmentGoal = 1;
+                    selectedDesiredWeightSelection=-1;
                 }
             }
         });
@@ -213,7 +220,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         });
     }
 
-
     private void showAndDismissSelectionPopup() {
 
         managementPopup.dismiss();
@@ -255,13 +261,19 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     private void callApiforweightUpdate() {
         if (btn_accept.getText().equals("Update")) {
+
             sendWeightManagementDetails();
 
         } else {
             loader.show_with_label("Loading");
             Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
             final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-            Call<ResponseBody> callApifor_server_weight = apiInterface.call_Apiforserver_weight(LoginShared.getRegistrationDataModel(this).getData().getToken(), "application/json",
+
+            /*Call<ResponseBody> callApifor_server_weight = apiInterface.call_Apiforserver_weight(LoginShared.getRegistrationDataModel(this).getData().getToken(), "application/json",
+                    LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(), "1");*/
+
+
+            Call<ResponseBody> callApifor_server_weight = apiInterface.call_Apiforserver_weight(LoginShared.getRegistrationDataModel(this).getData().getToken(),
                     LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(), "1");
             callApifor_server_weight.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -271,6 +283,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     try {
                         String responseString = response.body().string();
                         JSONObject jsonObject = new JSONObject(responseString);
+
+                        System.out.println("weightdata: " + jsonObject.toString());
                         if (jsonObject.optInt("status") == 1) {
                             JSONObject jsObject = jsonObject.getJSONObject("data");
                         }
@@ -295,13 +309,10 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     if (loader != null && loader.isShowing())
                         loader.dismiss();
                     MethodUtils.errorMsg(WeightManagementActivity.this, getString(R.string.error_occurred));
-
-
                 }
             });
         }
     }
-
 
     private void getWeightManagementApi() {
         loader.show_with_label("Loading");
@@ -378,7 +389,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             addWeightListAndCall("KG");
         }
 
-        if (jsnObject.optString("preferredUnits").equals("0")) {
+        if (units.equals("0")) {
             et_units.setText("LB/INCH");
         } else {
             et_units.setText("KG/CM");
@@ -392,6 +403,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
         weight_value = jsnObject.optString("desiredWeight");
         time_value = jsnObject.optString("timeToLoseWeight");
+        //maintain_Weight_By_Server = jsnObject.optInt("maintain_Weight_By_Server");
 
 
         if (jsnObject.optInt("type") == 1) {
@@ -405,6 +417,41 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             selectionPopup.onWeightCallback.onSuccess(desiredWeightSelectionList.get(1));
         } else if (jsnObject.optInt("maintain_Weight_By_Server") == 0) {
             selectionPopup.onWeightCallback.onSuccess(desiredWeightSelectionList.get(0));
+        }
+
+
+        if (jsnObject.optInt("maintain_Weight_By_Server") == 1) {
+            findViewById(R.id.tv_time_loss).setVisibility(View.VISIBLE);
+            findViewById(R.id.rl_time_loss).setVisibility(View.VISIBLE);
+            et_time_loss.setText("TBD");
+        } else if (jsnObject.optInt("maintain_Weight_By_Server") == 0) {
+            findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
+            findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
+
+            if (!weight_value.equalsIgnoreCase("0.0 LBS") &&
+                    !weight_value.equalsIgnoreCase("0 LBS") &&
+                    !weight_value.equalsIgnoreCase("0.00 LBS") &&
+                    !weight_value.equalsIgnoreCase("0.0 KG") &&
+                    !weight_value.equalsIgnoreCase("0 KG") &&
+                    !weight_value.equalsIgnoreCase("0.00 KG") &&
+                    !weight_value.equalsIgnoreCase("0")) {
+                et_weight.setText(weight_value);
+            } else {
+                et_weight.setText("TBD");
+            }
+        }
+
+        if (!weight_value.equalsIgnoreCase("0.0 LBS") &&
+                !weight_value.equalsIgnoreCase("0 LBS") &&
+                !weight_value.equalsIgnoreCase("0.00 LBS") &&
+                !weight_value.equalsIgnoreCase("0.0 KG") &&
+                !weight_value.equalsIgnoreCase("0 KG") &&
+                !weight_value.equalsIgnoreCase("0.00 KG") &&
+                !weight_value.equalsIgnoreCase("0")) {
+
+            findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
+            findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
+            et_weight.setText(weight_value);
         }
 
         //et_weight_managment.setText(jsnObject.optString("type"));
@@ -613,41 +660,57 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void sendWeightManagementDetails() {
-        String weight = "";
-        String units = "";
+
         loader.show_with_label("Loading");
+
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        String[] splited = weight.split(" ");
-
-        if (et_units.getText().toString().trim().equals("KG/CM")) {
-            units = "1";
-        } else {
-            units = "0";
-        }
 
 
         String type = "";
         String userselectionbody = "";
-        String time = "";
+
+        String weight = et_weight.getText().toString().trim();
+        String time = et_time_loss.getText().toString().trim();
+
+        if (!weight.equalsIgnoreCase("")) {
+            String[] weights = weight.split(" ");
+            weight = weights[0];
+        }
+
+        if (time.equalsIgnoreCase("") || time.equalsIgnoreCase("TBD")) {
+            time = "0";
+        } else {
+            String[] splittedTime = time.split(" ");
+            time = splittedTime[0].trim();
+        }
 
 
         if (selectedWeightManagmentGoal == 0) {
             type = "2";
-
             if (selectedDesiredWeightSelection == 0) {
                 userselectionbody = "0";
-                weight = et_weight.getText().toString().trim();
-                time = et_time_loss.getText().toString().trim();
-            } else {
+
+                if (time.equalsIgnoreCase("0")) {
+                    loader.dismiss();
+                    MethodUtils.errorMsg(WeightManagementActivity.this, "Enter time to lose weight.");
+                    return;
+                }
+                //weight = et_weight.getText().toString().trim();
+                //time = et_time_loss.getText().toString().trim();
+            } else if (selectedDesiredWeightSelection == 1){
                 userselectionbody = "1";
                 weight = "";
                 time = "";
+            }else {
+                loader.dismiss();
+                MethodUtils.errorMsg(WeightManagementActivity.this, "Enter desired weight selection");
+                return;
             }
         } else {
             type = "1";
             userselectionbody = "0";
-            weight = "";
+            //weight = "";
             time = "";
         }
 
@@ -655,6 +718,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         Call<ResponseBody> call_sendWeightManagementApi = apiInterface.call_sendWeightManagementForWeight(LoginShared.getRegistrationDataModel(WeightManagementActivity.this).getData().getToken(),
                 LoginShared.getRegistrationDataModel(WeightManagementActivity.this).getData().getUser().get(0).getUserId(),
                 weight, time, units, type, userselectionbody);
+
         call_sendWeightManagementApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -663,11 +727,14 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 try {
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
+
+                    System.out.println("sendWeightDetails: " + jsonObject.toString());
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
                         MethodUtils.errorMsg(WeightManagementActivity.this, jsObject.getString("message"));
-                        new android.os.Handler().postDelayed(new Runnable() {
+
+                        new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 Intent loginIntent;
@@ -732,9 +799,12 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     @Override
     public void onBackPressed() {
         if (isnotification.equals("7")) {
-
+            Intent loginIntent = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
+            startActivity(loginIntent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
             Intent loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
             startActivity(loginIntent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

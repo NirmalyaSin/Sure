@@ -11,32 +11,74 @@
         android:alpha="0.6"
         android:background="@drawable/splash_image" />
 
-    <EditText
-        android:id="@+id/et_message"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp"
-        android:layout_marginLeft="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:layout_marginRight="@dimen/_15sdp"
-        android:background="@drawable/edittext_background"
-        android:gravity="top"
-        android:imeOptions="actionDone"
-        android:inputType="text|textCapSentences|textMultiLine"
-        android:padding="@dimen/_10sdp"
-        android:textColor="@color/whiteColor"
-        android:textColorHint="@color/whiteColor"
-        android:textCursorDrawable="@drawable/cursor_color"
-        android:textSize="@dimen/_12sdp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_boardcast"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/et_message"
-        android:layout_margin="@dimen/_44sdp"
-        android:background="@drawable/login_submit_rounded_corner"
-        android:text="Send Message"
-        android:textAllCaps="false"
-        android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_14sdp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/v1"
+                android:layout_marginTop="@dimen/_5sdp"
+                tools:itemCount="10"
+                tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/message_item_view"
+                tools:orientation="vertical" />
+
+            <View
+                android:id="@+id/v1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/whiteColor"
+                android:layout_alignParentBottom="true"
+                />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="Type a messge here..."
+                android:inputType="textMultiLine"
+                android:padding="@dimen/_5sdp"
+                android:textColorHint="@color/whiteColor"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_11sdp"
+                />
+
+            <TextView
+                android:id="@+id/btn_boardcast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
+                android:text="Send"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_12sdp"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

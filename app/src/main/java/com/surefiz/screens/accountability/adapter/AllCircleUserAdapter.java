@@ -2,6 +2,7 @@ package com.surefiz.screens.accountability.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -60,6 +61,8 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
             holder.imageOnlineOffline.setImageDrawable(mContext.getResources()
                     .getDrawable(R.drawable.ic_dot_online));
         }
+
+        DrawableCompat.setTint(holder.ivViewOptions.getDrawable(), mContext.getResources().getColor(R.color.whiteColor));
     }
 
     @Override
@@ -79,16 +82,16 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
 
     public class CircleUserViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imageUserProfile;
-        TextView textUserName, textViewOptions;
+        TextView textUserName;
         Button btnPerformance, btnRemove;
-        ImageView imgSendMessage, imageOnlineOffline;
+        ImageView imgSendMessage, imageOnlineOffline,ivViewOptions;
 
         public CircleUserViewHolder(@NonNull View itemView) {
             super(itemView);
             imageUserProfile = itemView.findViewById(R.id.imageUserProfile);
             imageOnlineOffline = itemView.findViewById(R.id.imageOnlineOffline);
             textUserName = itemView.findViewById(R.id.textUserName);
-            textViewOptions = itemView.findViewById(R.id.textViewOptions);
+            ivViewOptions = itemView.findViewById(R.id.ivViewOptions);
             btnPerformance = itemView.findViewById(R.id.btnPerformance);
             btnRemove = itemView.findViewById(R.id.btnRemove);
             imgSendMessage = itemView.findViewById(R.id.imgSendMessage);
@@ -123,10 +126,10 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
                 }
             });
 
-            textViewOptions.setOnClickListener(new View.OnClickListener() {
+            ivViewOptions.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(mContext, textViewOptions, Gravity.CENTER);
+                    PopupMenu popup = new PopupMenu(mContext, ivViewOptions, Gravity.CENTER);
 
                     popup.inflate(R.menu.custom_menu);
 

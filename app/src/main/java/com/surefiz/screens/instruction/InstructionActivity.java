@@ -10,13 +10,11 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.users.UserListActivity;
 import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.users.model.UserListModel;
+import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
-import com.surefiz.utils.MethodUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +27,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class InstructionActivity extends AppCompatActivity {
+    public List<UserListItem> userLists = new ArrayList<>();
     @BindView(R.id.btndone)
     Button btn_button;
     @BindView(R.id.btn_skip)
     Button btn_skip;
-
-    public List<UserListItem> userLists = new ArrayList<>();
-
     InstructionActivityonclick mInstructionActivityonclick;
 
     @Override
@@ -44,6 +40,15 @@ public class InstructionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_instruction);
         ButterKnife.bind(this);
         mInstructionActivityonclick = new InstructionActivityonclick(this);
+
+
+        System.out.println("instructionUserId: " + LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+        System.out.println("instructionShown: " + new InstructionSharedPreference(InstructionActivity.this).getInstructionVisibility(InstructionActivity.this));
+
+        new InstructionSharedPreference(InstructionActivity.this).setInstructionVisibility(InstructionActivity.this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+        //LoginShared.setInstructionVisibility(InstructionActivity.this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+
+        System.out.println("instructionShown: " + new InstructionSharedPreference(InstructionActivity.this).getInstructionVisibility(InstructionActivity.this));
     }
 
     @Override
@@ -85,7 +90,7 @@ public class InstructionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserListModel> call, Throwable t) {
-             //   MethodUtils.errorMsg(InstructionActivity.this, getString(R.string.error_occurred));
+                //   MethodUtils.errorMsg(InstructionActivity.this, getString(R.string.error_occurred));
             }
         });
     }

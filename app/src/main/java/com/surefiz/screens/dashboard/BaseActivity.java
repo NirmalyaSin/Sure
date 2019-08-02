@@ -2,11 +2,11 @@ package com.surefiz.screens.dashboard;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -25,24 +25,23 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.accountability.AcountabilityActivity;
-import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.boardcast.BoardCastActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
-import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.reminders.ReminderActivity;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.screens.users.UserListActivity;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
-import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,10 +104,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public RelativeLayout rl_back;
+    LoadingData loader;
     private ActionBarDrawerToggle mDrawerToggle;
     private ImageLoader imageLoader;
-    LoadingData loader;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,7 +241,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_users:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent userIntent = new Intent(this, UserListActivity.class);
-                userIntent.putExtra("showSkipButton",true);
+                userIntent.putExtra("showSkipButton", true);
                 startActivity(userIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 //finish();
@@ -258,7 +256,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_dashboard:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent dashBoardIntent = new Intent(this, DashBoardActivity.class);
-                dashBoardIntent.putExtra("isFromMenu",true);
+                dashBoardIntent.putExtra("isFromMenu", true);
                 startActivity(dashBoardIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finishAffinity();
@@ -276,8 +274,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_forum:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
 
-                String forumUrl="https://www.surefiz.com/beta/forum/?id="+LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
+                /*String forumUrl = "https://www.surefiz.com/beta/forum/?id=" + LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId() +
+                        "&key=" + md5Converter(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPassword());*/
 
+
+                String forumUrl = "https://www.surefiz.com/Home/forum/?id=" + LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId() +
+                        "&key=" + md5Converter(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPassword());
+
+                System.out.println("forumUrl: " + forumUrl);
                 aboutIntent = new Intent(this, AboutUsActivity.class);
                 aboutIntent.putExtra("url", forumUrl);
                 aboutIntent.putExtra("header", "Forum");
@@ -348,6 +352,25 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 callLogoutApi();
                 break;
         }
+    }
+
+    public String md5Converter(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte[] messageDigest = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private void callLogoutApi() {

@@ -138,6 +138,7 @@
                 android:paddingRight="@dimen/_35sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:text="Add User"
+                android:visibility="gone"
                 android:textAllCaps="true"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />

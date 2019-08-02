@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.surefiz.R;
 import com.surefiz.screens.dashboard.BaseActivity;
@@ -39,7 +40,7 @@ public class AboutUsActivity extends BaseActivity {
 
     private void loadUrl() {
 
-        web.loadUrl(url);
+
 
         WebSettings wbSettings = web.getSettings();
         wbSettings.setJavaScriptEnabled(true);
@@ -49,6 +50,9 @@ public class AboutUsActivity extends BaseActivity {
         web.getSettings().setAppCacheEnabled(true);
         web.getSettings().setLoadsImagesAutomatically(true);
         web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        web.setWebViewClient(new WebViewClient());
+
+        web.loadUrl(url);
 
         /*webView.setWebViewClient(new WebViewClient() {
             @Override

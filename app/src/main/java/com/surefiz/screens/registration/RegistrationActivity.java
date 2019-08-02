@@ -79,6 +79,8 @@ public class RegistrationActivity extends AppCompatActivity {
     int regType = -1;
     @BindView(R.id.tv_upload)
     TextView tv_upload;
+    @BindView(R.id.tv_registration)
+    TextView tv_registration;
     @BindView(R.id.tv_password)
     TextView tv_password;
     @BindView(R.id.rl_password)
@@ -199,6 +201,14 @@ public class RegistrationActivity extends AppCompatActivity {
         setTermsAndCondition();
         registrationClickEvent = new RegistrationClickEvent(this);
 
+        /*if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
+            btn_register.setText(getResources().getString(R.string.register));
+            tv_registration.setText(getResources().getString(R.string.surefiz_register));
+        } else {
+            btn_register.setText(getResources().getString(R.string.complete_sign_up));
+            tv_registration.setText(getResources().getString(R.string.surefiz_signup));
+        }*/
+
         setTextFormatter();
     }
 
@@ -251,7 +261,12 @@ public class RegistrationActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("completeStatus").equals("0")) {
 
             Gson gson = new Gson();
-            registrationModel = gson.fromJson(getIntent().getStringExtra("registrationModelData"), RegistrationModel.class);
+
+            if (getIntent().hasExtra("registrationModelData")) {
+                registrationModel = gson.fromJson(getIntent().getStringExtra("registrationModelData"), RegistrationModel.class);
+            } else {
+                registrationModel = LoginShared.getRegistrationDataModel(this);
+            }
 
             tv_password.setVisibility(View.GONE);
             star_image_password.setVisibility(View.GONE);
@@ -437,10 +452,14 @@ public class RegistrationActivity extends AppCompatActivity {
         bundle.putString("weight", LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTargetWeight());
         bundle.putString("time", LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTime());
 
+
+
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
-            btn_register.setText("Complete Register");
+            btn_register.setText(getResources().getString(R.string.register));
+            tv_registration.setText(getResources().getString(R.string.surefiz_register));
         } else {
-            btn_register.setText("Complete Signup");
+            btn_register.setText(getResources().getString(R.string.complete_sign_up));
+            tv_registration.setText(getResources().getString(R.string.surefiz_signup));
         }
 
         //et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());

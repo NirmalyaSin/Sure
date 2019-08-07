@@ -13,10 +13,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.surefiz.R;
@@ -71,6 +75,8 @@ public class ProfileActivity extends BaseActivity {
     private File mFile = null;
     private Uri fileUri = null;
     private OnImageSet onImageSet;
+    TextView btnGoogleAdd;
+    TextView btnFacebookAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +137,8 @@ public class ProfileActivity extends BaseActivity {
         btn_register = view.findViewById(R.id.btn_register);
         switch_visibility = view.findViewById(R.id.switch_visibility);
         rl_visibility = view.findViewById(R.id.rl_visibility);
+        btnGoogleAdd = view.findViewById(R.id.btnGoogleAdd);
+        btnFacebookAdd = view.findViewById(R.id.btnFacebookAdd);
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {
@@ -222,6 +230,8 @@ public class ProfileActivity extends BaseActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
         // if the result is capturing Image
 
         switch (requestCode) {
@@ -267,6 +277,11 @@ public class ProfileActivity extends BaseActivity {
 
                 break;
 
+            case ProfileClickEvent.RC_SIGN_IN_GOOGLE :
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                profileClickEvent.handleSignInResult(result);
+
+                break;
             default:
                 break;
 

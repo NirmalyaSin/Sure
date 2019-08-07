@@ -94,6 +94,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //getHashKey();
 
         // REMOVE
+        //editEmail.setText("kannanrasimo12@gmail.com");
+        //editPassword.setText("12345678");
         editEmail.setText("arup.nayak@capitalnumbers.com");
         editPassword.setText("123456789");
         //editEmail.setText("john103@surefiz.com");

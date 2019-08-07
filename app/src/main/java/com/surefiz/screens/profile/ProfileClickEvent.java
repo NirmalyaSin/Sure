@@ -4,7 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,7 +19,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -40,6 +59,7 @@ import com.surefiz.utils.progressloader.LoadingData;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -52,7 +72,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ProfileClickEvent implements View.OnClickListener {
+public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+    static final int RC_SIGN_IN_GOOGLE = 100;
     ProfileActivity activity;
     String units = "", height = "";
     String[] splited;
@@ -67,7 +88,8 @@ public class ProfileClickEvent implements View.OnClickListener {
     private UniversalPopup heightPopup;
     private String weight_value = "", time_value = "", units_value = "";
     private WeigtUniversalPopup weigtUniversalPopupPreferred;
-
+    private GoogleApiClient googleApiClient;
+    private CallbackManager callbackManager;
 
     public ProfileClickEvent(ProfileActivity activity) {
         this.activity = activity;
@@ -76,6 +98,8 @@ public class ProfileClickEvent implements View.OnClickListener {
         setClickEvent();
         addPreferredListAndCall();
         //addHeightListAndCall("INCH");
+
+        startFireBase();
 
         if (!ConnectionDetector.isConnectingToInternet(activity)) {
             MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
@@ -106,6 +130,19 @@ public class ProfileClickEvent implements View.OnClickListener {
                 }
             }
         });
+    }
+
+    private void startFireBase() {
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(activity.getString(R.string.web_client_id))//you can also use R.string.default_web_client_id
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(activity)
+                .enableAutoManage(activity, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
     }
 
     private void addHeightListAndCall(String change) {
@@ -255,7 +292,29 @@ public class ProfileClickEvent implements View.OnClickListener {
         }
 
         activity.profile_image.setEnabled(false);
+
+        setSocialAddButtonStatus();
+
         showImage();
+    }
+
+    private void setSocialAddButtonStatus() {
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked() == 0) {
+            activity.btnGoogleAdd.setBackgroundColor(activity.getResources().getColor(R.color.social_add_button));
+            activity.btnGoogleAdd.setText("Add");
+        } else {
+            activity.btnGoogleAdd.setBackgroundColor(Color.RED);
+            activity.btnGoogleAdd.setText("Remove");
+        }
+
+
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getFacebookAccountLinked() == 0) {
+            activity.btnFacebookAdd.setBackgroundColor(activity.getResources().getColor(R.color.social_add_button));
+            activity.btnFacebookAdd.setText("Add");
+        } else {
+            activity.btnFacebookAdd.setBackgroundColor(Color.RED);
+            activity.btnFacebookAdd.setText("Remove");
+        }
     }
 
     private boolean checkIsZeroValue(String value) {
@@ -281,7 +340,6 @@ public class ProfileClickEvent implements View.OnClickListener {
         }
     }
 
-
     private void setClickEvent() {
         activity.et_gender.setOnClickListener(this);
         //activity.et_DOB.setOnClickListener(this);
@@ -292,6 +350,8 @@ public class ProfileClickEvent implements View.OnClickListener {
         activity.et_height.setOnClickListener(this);
         activity.btn_register.setOnClickListener(this);
         activity.switch_visibility.setOnClickListener(this);
+        activity.btnGoogleAdd.setOnClickListener(this);
+        activity.btnFacebookAdd.setOnClickListener(this);
         activity.findViewById(R.id.iv_weight_managment).setOnClickListener(this);
     }
 
@@ -332,7 +392,6 @@ public class ProfileClickEvent implements View.OnClickListener {
             }
         });
     }
-
 
     public void onClick(View v) {
         switch (v.getId()) {
@@ -456,7 +515,214 @@ public class ProfileClickEvent implements View.OnClickListener {
                 activity.startActivity(weightIntent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+
+            case R.id.btnGoogleAdd:
+
+                if (!ConnectionDetector.isConnectingToInternet(activity)) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked() == 0) {
+                    Auth.GoogleSignInApi.signOut(googleApiClient);
+                    Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                    activity.startActivityForResult(intent, RC_SIGN_IN_GOOGLE);
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked() == 1) {
+                    callapiforRemoveSocial("google");
+                }
+
+                break;
+
+            case R.id.btnFacebookAdd:
+                if (!ConnectionDetector.isConnectingToInternet(activity)) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getFacebookAccountLinked() == 0) {
+                    callFacebooklogin();
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getFacebookAccountLinked() == 1) {
+                    callapiforRemoveSocial("fb");
+                }
+                break;
         }
+    }
+
+    public void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            GoogleSignInAccount account = result.getSignInAccount();
+            String id = account.getId();
+            String idToken = account.getIdToken();
+            String name = account.getDisplayName();
+            String email = account.getEmail();
+            Uri photoUrl = account.getPhotoUrl();
+
+            System.out.println("googleData: " + id + "\n" + email + "\n" + name + "\n" + photoUrl + "\n" + idToken);
+            System.out.println("googleData: " + id + "," + idToken);
+
+            callapiforAddSocail(id, "google");
+            //callapiforSocaillogin(id, email, name, getString(R.string.google_login_type), photoUrl == null ? "" : photoUrl.toString(), "", "", idToken);
+        } else {
+            Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void callFacebooklogin() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            requestData();
+            return;
+        }
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email,public_profile"));
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        requestData();
+                        loginResult.getAccessToken();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        System.out.println();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        System.out.println();
+                        exception.printStackTrace();
+                    }
+                });
+    }
+
+
+    private void requestData() {
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                JSONObject json = response.getJSONObject();
+
+                parseFacebookJsonAndAPiCall(json, AccessToken.getCurrentAccessToken());
+
+            }
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link,email,picture.width(750).height(750)");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    private void parseFacebookJsonAndAPiCall(final JSONObject jsonObjectFbResult, final AccessToken currentAccessToken) {
+        if (jsonObjectFbResult == null)
+            return;
+
+        final String socialEmail = jsonObjectFbResult.optString("email");
+        String socialId = jsonObjectFbResult.optString("id");
+        String socialName = jsonObjectFbResult.optString("name");
+
+
+        System.out.println("facebookData: " + socialId + "," + socialName);
+
+        callapiforAddSocail(socialId, "fb");
+    }
+
+    private void callapiforAddSocail(String socicalID, String medianame) {
+
+        LoadingData loader = new LoadingData(activity);
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+
+        String userID = LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId();
+
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<ResponseBody> socialoginapicall = apiInterface.call_socialAddApi(socicalID,
+                medianame, userID);
+
+        socialoginapicall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                try {
+                    String responseString = response.body().string();
+
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    Log.d("@@AddSocial : ", jsonObject.toString());
+
+                    if (jsonObject.optInt("status") == 1) {
+
+                        if (medianame.equalsIgnoreCase("google")) {
+                            LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).setGoogleAccountLinked(1);
+                        } else if (medianame.equalsIgnoreCase("fb")) {
+                            LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).setFacebookAccountLinked(1);
+                        }
+
+                        setSocialAddButtonStatus();
+
+                    } else {
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(activity, jsObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+            }
+        });
+    }
+
+
+    private void callapiforRemoveSocial(String medianame) {
+
+        LoadingData loader = new LoadingData(activity);
+        loader.show_with_label("Loading");
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+
+        String userID = LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId();
+
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<ResponseBody> socialoginapicall = apiInterface.call_socialRemoveApi(medianame, userID);
+
+        socialoginapicall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                try {
+                    String responseString = response.body().string();
+
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    Log.d("@@AddSocial : ", jsonObject.toString());
+
+                    if (jsonObject.optInt("status") == 1) {
+
+                        if (medianame.equalsIgnoreCase("google")) {
+                            LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).setGoogleAccountLinked(0);
+                        } else if (medianame.equalsIgnoreCase("fb")) {
+                            LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).setFacebookAccountLinked(0);
+                        }
+
+                        setSocialAddButtonStatus();
+
+                    } else {
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(activity, jsObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
+            }
+        });
     }
 
     private boolean isNonZeroValue(String value) {
@@ -567,7 +833,6 @@ public class ProfileClickEvent implements View.OnClickListener {
                         activity.finish();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
-
                         MethodUtils.errorMsg(activity, jsObject.getString("message"));
                     }
                 } catch (Exception e) {
@@ -739,5 +1004,10 @@ public class ProfileClickEvent implements View.OnClickListener {
                 genderPopup.showAsDropDown(activity.et_gender);
             }
         }, 100);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

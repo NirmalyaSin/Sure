@@ -754,6 +754,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                         String deviceToken = LoginShared.getDeviceToken(WeightManagementActivity.this);
                         LoginShared.destroySessionTypePreference(WeightManagementActivity.this);
                         LoginShared.setDeviceToken(WeightManagementActivity.this, deviceToken);
+
                         Intent loginIntent = new Intent(WeightManagementActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

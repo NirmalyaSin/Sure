@@ -133,7 +133,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Composition"
+                            android:text="@string/compositions"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/_18sdp" />
 
@@ -440,7 +440,7 @@
                         <LinearLayout
                             android:id="@+id/ll_fat"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_75sdp"
+                            android:layout_height="@dimen/_90sdp"
                             android:layout_below="@+id/view5"
                             android:orientation="horizontal"
                             android:weightSum="3">
@@ -469,22 +469,33 @@
                                         android:id="@+id/tv_fat"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_8sdp"
                                         android:text="Body Fat"
+                                        android:textColor="@color/textGray"
+                                        android:textSize="@dimen/_13sdp" />
+
+                                    <TextView
+                                        android:id="@+id/tv_fat_dynamic"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/tv_fat"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
                                         android:id="@+id/btn_fat"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/_30sdp"
-                                        android:layout_below="@id/tv_fat"
-                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_22sdp"
+                                        android:layout_below="@id/tv_fat_dynamic"
+                                        android:layout_marginTop="@dimen/_8sdp"
+                                        android:paddingStart="@dimen/_3sdp"
+                                        android:paddingEnd="@dimen/_3sdp"
                                         android:background="#40CCDD"
                                         android:text="Thin"
                                         android:textAllCaps="false"
                                         android:textColor="@color/whiteColor"
-                                        android:textSize="@dimen/_10sdp" />
+                                        android:textSize="@dimen/_8sdp" />
 
                                 </RelativeLayout>
                             </RelativeLayout>
@@ -521,22 +532,33 @@
                                         android:id="@+id/tv_bone"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_8sdp"
                                         android:text="Bone Kg"
+                                        android:textColor="@color/textGray"
+                                        android:textSize="@dimen/_13sdp" />
+
+                                    <TextView
+                                        android:id="@+id/tv_bone_dynamic"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/tv_bone"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
                                         android:id="@+id/btn_bone"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/_30sdp"
-                                        android:layout_below="@id/tv_bone"
-                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_22sdp"
+                                        android:layout_below="@id/tv_bone_dynamic"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:background="#FE3E42"
                                         android:text="Not Enough"
+                                        android:paddingStart="@dimen/_3sdp"
+                                        android:paddingEnd="@dimen/_3sdp"
                                         android:textAllCaps="false"
                                         android:textColor="@color/whiteColor"
-                                        android:textSize="@dimen/_10sdp" />
+                                        android:textSize="@dimen/_8sdp" />
                                 </RelativeLayout>
                             </RelativeLayout>
                         </LinearLayout>
@@ -553,7 +575,7 @@
                         <LinearLayout
                             android:id="@+id/ll_muscle"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_75sdp"
+                            android:layout_height="@dimen/_90sdp"
                             android:layout_below="@+id/view6"
                             android:orientation="horizontal"
                             android:weightSum="3">
@@ -582,22 +604,33 @@
                                         android:id="@+id/tv_muscle"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_8sdp"
                                         android:text="Muscle"
+                                        android:textColor="@color/textGray"
+                                        android:textSize="@dimen/_13sdp" />
+
+                                    <TextView
+                                        android:id="@+id/tv_muscle_dynamic"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/tv_muscle"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
                                         android:id="@+id/btn_muscle"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/_30sdp"
-                                        android:layout_below="@id/tv_muscle"
-                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_22sdp"
+                                        android:layout_below="@id/tv_muscle_dynamic"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:background="#FE3E42"
+                                        android:paddingStart="@dimen/_3sdp"
+                                        android:paddingEnd="@dimen/_3sdp"
                                         android:text="Not Enough"
                                         android:textAllCaps="false"
                                         android:textColor="@color/whiteColor"
-                                        android:textSize="@dimen/_10sdp" />
+                                        android:textSize="@dimen/_8sdp" />
 
                                 </RelativeLayout>
                             </RelativeLayout>
@@ -634,22 +667,33 @@
                                         android:id="@+id/tv_bmi"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_8sdp"
                                         android:text="BMI"
+                                        android:textColor="@color/textGray"
+                                        android:textSize="@dimen/_13sdp" />
+
+                                    <TextView
+                                        android:id="@+id/tv_bmi_dynamic"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/tv_bmi"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
                                         android:id="@+id/btn_bmi"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/_30sdp"
-                                        android:layout_below="@id/tv_bmi"
-                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_22sdp"
+                                        android:layout_below="@id/tv_bmi_dynamic"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:background="#FE3E42"
+                                        android:paddingStart="@dimen/_3sdp"
+                                        android:paddingEnd="@dimen/_3sdp"
                                         android:text="Not Enough"
                                         android:textAllCaps="false"
                                         android:textColor="@color/whiteColor"
-                                        android:textSize="@dimen/_10sdp" />
+                                        android:textSize="@dimen/_8sdp" />
 
                                 </RelativeLayout>
                             </RelativeLayout>
@@ -667,7 +711,7 @@
                         <LinearLayout
                             android:id="@+id/ll_water"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_75sdp"
+                            android:layout_height="@dimen/_90sdp"
                             android:layout_below="@+id/view7"
                             android:orientation="horizontal"
                             android:weightSum="3">
@@ -696,22 +740,33 @@
                                         android:id="@+id/tv_water"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_8sdp"
                                         android:text="Water"
+                                        android:textColor="@color/textGray"
+                                        android:textSize="@dimen/_13sdp" />
+
+                                    <TextView
+                                        android:id="@+id/tv_water_dynamic"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/tv_water"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
                                         android:id="@+id/btn_water"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/_30sdp"
-                                        android:layout_below="@id/tv_water"
-                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_22sdp"
+                                        android:layout_below="@id/tv_water_dynamic"
+                                        android:layout_marginTop="@dimen/_8sdp"
+                                        android:paddingStart="@dimen/_3sdp"
+                                        android:paddingEnd="@dimen/_3sdp"
                                         android:background="#FE3E42"
                                         android:text="Not Enough"
                                         android:textAllCaps="false"
                                         android:textColor="@color/whiteColor"
-                                        android:textSize="@dimen/_10sdp" />
+                                        android:textSize="@dimen/_8sdp" />
 
                                 </RelativeLayout>
                             </RelativeLayout>
@@ -748,22 +803,33 @@
                                         android:id="@+id/tv_protein"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:paddingTop="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_8sdp"
                                         android:text="Protein"
+                                        android:textColor="@color/textGray"
+                                        android:textSize="@dimen/_13sdp" />
+
+                                    <TextView
+                                        android:id="@+id/tv_protein_dynamic"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/tv_protein"
+                                        android:layout_marginTop="@dimen/_8sdp"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
                                     <Button
                                         android:id="@+id/btn_protein"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/_30sdp"
-                                        android:layout_below="@id/tv_protein"
-                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_height="@dimen/_22sdp"
+                                        android:layout_below="@id/tv_protein_dynamic"
+                                        android:layout_marginTop="@dimen/_8sdp"
+                                        android:paddingStart="@dimen/_3sdp"
+                                        android:paddingEnd="@dimen/_3sdp"
                                         android:background="#40CCDD"
                                         android:text="Thin"
                                         android:textAllCaps="false"
                                         android:textColor="@color/whiteColor"
-                                        android:textSize="@dimen/_10sdp" />
+                                        android:textSize="@dimen/_8sdp" />
 
                                 </RelativeLayout>
                             </RelativeLayout>
@@ -813,8 +879,8 @@
                                 android:layout_centerVertical="true"
                                 android:text="@string/battery_status_low"
                                 android:textColor="@color/whiteColor"
-                                android:visibility="gone"
-                                android:textSize="@dimen/_12sdp" />
+                                android:textSize="@dimen/_12sdp"
+                                android:visibility="gone" />
 
                             <RelativeLayout
                                 android:id="@+id/rl_battery_image"
@@ -834,8 +900,8 @@
 
                                 <ImageView
                                     android:id="@+id/img_battery_status"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_8sdp"
                                     android:layout_centerVertical="true"
                                     android:layout_toEndOf="@+id/tv_battery_status"
                                     android:paddingLeft="@dimen/_10sdp"

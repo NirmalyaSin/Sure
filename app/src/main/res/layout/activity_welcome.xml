@@ -20,12 +20,12 @@
     </RelativeLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_above="@+id/llLowerButtons"
         android:layout_centerHorizontal="true"
         android:alpha="0.7"
-        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:src="@mipmap/ic_launcher" />
 
     <!--<TextView-->

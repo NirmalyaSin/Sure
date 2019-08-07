@@ -10,6 +10,9 @@ public class BodyFat{
 	@SerializedName("status")
 	private String status;
 
+	@SerializedName("value")
+	private float value;
+
 	public void setColourCode(String colourCode){
 		this.colourCode = colourCode;
 	}
@@ -26,4 +29,11 @@ public class BodyFat{
 		return status;
 	}
 
+	public float getValue() {
+		return value;
+	}
+
+	public void setValue(float value) {
+		this.value = value;
+	}
 }

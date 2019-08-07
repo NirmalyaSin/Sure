@@ -30,6 +30,7 @@ import static com.surefiz.apilist.ApiList.ACCEPTSERVERWEIGHT;
 import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
 import static com.surefiz.apilist.ApiList.API_ADD_EDIT_REMINDER_LIST;
+import static com.surefiz.apilist.ApiList.API_ADD_SOCIAL;
 import static com.surefiz.apilist.ApiList.API_BMI_DATA;
 import static com.surefiz.apilist.ApiList.API_BroadcastMessage;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_ACCEPT_REJECT_REQUEST;
@@ -198,6 +199,17 @@ public interface ApiInterface {
                                            @Field("device_Token") String device_Token);
 
     @FormUrlEncoded
+    @POST(API_ADD_SOCIAL)
+    Call<ResponseBody> call_socialAddApi(@Field("socicalID") String socicalID,
+                                         @Field("type") String medianame,
+                                         @Field("userId") String userID);
+
+    @FormUrlEncoded
+    @POST(API_ADD_SOCIAL)
+    Call<ResponseBody> call_socialRemoveApi(@Field("type") String medianame,
+                                            @Field("userId") String userID);
+
+    @FormUrlEncoded
     @POST(VIEWPROFILE)
     Call<ResponseBody> call_viewprofileApi(@Header("x-authorization") String token,
                                            @Field("user_id") String user_id);
@@ -325,7 +337,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_POST_REMOVE_REMINDER)
     Call<ResponseBody> call_RemoveReminderApi(@Header("x-authorization") String token,
-                                                      @Field("rid") String reminderId);
+                                              @Field("rid") String reminderId);
 
     @FormUrlEncoded
     @POST(API_ADD_EDIT_REMINDER_LIST)

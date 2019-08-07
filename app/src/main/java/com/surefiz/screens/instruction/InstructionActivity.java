@@ -42,13 +42,13 @@ public class InstructionActivity extends AppCompatActivity {
         mInstructionActivityonclick = new InstructionActivityonclick(this);
 
 
-        System.out.println("instructionUserId: " + LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
-        System.out.println("instructionShown: " + new InstructionSharedPreference(InstructionActivity.this).getInstructionVisibility(InstructionActivity.this));
+        //System.out.println("instructionUserId: " + LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+        //System.out.println("instructionShown: " + new InstructionSharedPreference(InstructionActivity.this).getInstructionVisibility(InstructionActivity.this));
 
         new InstructionSharedPreference(InstructionActivity.this).setInstructionVisibility(InstructionActivity.this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
         //LoginShared.setInstructionVisibility(InstructionActivity.this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
 
-        System.out.println("instructionShown: " + new InstructionSharedPreference(InstructionActivity.this).getInstructionVisibility(InstructionActivity.this));
+        //System.out.println("instructionShown: " + new InstructionSharedPreference(InstructionActivity.this).getInstructionVisibility(InstructionActivity.this));
     }
 
     @Override

@@ -83,6 +83,12 @@ public class User {
     @SerializedName("mainuservisibility")
     @Expose
     private String mainuservisibility;
+    @SerializedName("googleAccountLinked")
+    @Expose
+    private int googleAccountLinked;
+    @SerializedName("facebookAccountLinked")
+    @Expose
+    private int facebookAccountLinked;
 
     public String getUserId() {
         return userId;
@@ -290,5 +296,21 @@ public class User {
 
     public void setMainuservisibility(String mainuservisibility) {
         this.mainuservisibility = mainuservisibility;
+    }
+
+    public int getGoogleAccountLinked() {
+        return googleAccountLinked;
+    }
+
+    public void setGoogleAccountLinked(int googleAccountLinked) {
+        this.googleAccountLinked = googleAccountLinked;
+    }
+
+    public int getFacebookAccountLinked() {
+        return facebookAccountLinked;
+    }
+
+    public void setFacebookAccountLinked(int facebookAccountLinked) {
+        this.facebookAccountLinked = facebookAccountLinked;
     }
 }

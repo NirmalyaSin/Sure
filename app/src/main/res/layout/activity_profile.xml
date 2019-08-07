@@ -82,10 +82,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:maxLength="15"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter First Name"
                         android:inputType="text|textCapSentences"
+                        android:maxLength="15"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -118,10 +118,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:maxLength="15"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter Middle Name"
                         android:inputType="text|textCapSentences"
+                        android:maxLength="15"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -154,10 +154,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:maxLength="15"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter Last Name"
                         android:inputType="text|textCapSentences"
+                        android:maxLength="15"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -337,8 +337,8 @@
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter Age"
                         android:inputType="numberSigned"
-                        android:maxLines="1"
                         android:maxLength="2"
+                        android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -387,12 +387,12 @@
                     android:id="@+id/tv_country_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:text="Country Name"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="-20dp"/>
+                    android:textSize="@dimen/_14sdp" />
 
                 <RelativeLayout
                     android:id="@+id/rl_countryName"
@@ -425,12 +425,12 @@
                     android:id="@+id/tv_address_line"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:text="Address Line 1"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="-20dp"/>
+                    android:textSize="@dimen/_14sdp" />
 
                 <RelativeLayout
                     android:id="@+id/rl_addressLine1"
@@ -463,12 +463,12 @@
                     android:id="@+id/tv_address_line2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:text="Address Line 2"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="-20dp"/>
+                    android:textSize="@dimen/_14sdp" />
 
                 <RelativeLayout
                     android:id="@+id/rl_addressLine2"
@@ -501,12 +501,12 @@
                     android:id="@+id/tv_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:text="City"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="-20dp"/>
+                    android:textSize="@dimen/_14sdp" />
 
                 <RelativeLayout
                     android:id="@+id/rl_city"
@@ -539,12 +539,12 @@
                     android:id="@+id/tv_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:text="State"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="-20dp"/>
+                    android:textSize="@dimen/_14sdp" />
 
                 <RelativeLayout
                     android:id="@+id/rl_state"
@@ -577,12 +577,12 @@
                     android:id="@+id/tv_zip_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:text="Zip Code"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="-20dp"/>
+                    android:textSize="@dimen/_14sdp" />
 
                 <RelativeLayout
                     android:id="@+id/rl_zip_code"
@@ -626,9 +626,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:backgroundTint="@color/sky_blue"
-                        android:layout_toStartOf="@+id/switch_visibility"
                         android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_toStartOf="@+id/switch_visibility"
+                        android:backgroundTint="@color/sky_blue"
                         android:text="@string/visibility"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
@@ -640,11 +640,121 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:enabled="false"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:checked="false"
+                        android:enabled="false"
                         android:theme="@style/SCBSwitch" />
                 </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_google"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/edit_text_background"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/googleSignInButton"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center_vertical"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_google_plus"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:text="Google"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="@dimen/_14sdp" />
+                    </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/btnGoogleAdd"
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="#05B085"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:text="Add"
+                            android:gravity="center"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="@dimen/_14sdp" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_facebook"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:text="Facebook"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="@dimen/_14sdp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/btnFacebookAdd"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:background="#05B085"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="Add"
+                        android:gravity="center"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+                </RelativeLayout>
+
 
                 <Button
                     android:id="@+id/btn_register"

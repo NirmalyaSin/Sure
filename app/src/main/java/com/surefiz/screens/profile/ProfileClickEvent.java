@@ -299,6 +299,12 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     }
 
     private void setSocialAddButtonStatus() {
+
+        /*ViewProfileModel viewProfileModel = LoginShared.getViewProfileDataModel(activity);
+        viewProfileModel.getData().getUser().get(0).setGoogleAccountLinked(1);
+        LoginShared.setViewProfileDataModel(activity, viewProfileModel);
+        System.out.println("googleStatus: " + LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked());*/
+
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked() == 0) {
             activity.btnGoogleAdd.setBackgroundColor(activity.getResources().getColor(R.color.social_add_button));
             activity.btnGoogleAdd.setText("Add");
@@ -645,20 +651,27 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     JSONObject jsonObject = new JSONObject(responseString);
                     Log.d("@@AddSocial : ", jsonObject.toString());
 
+                    JSONObject jsObject = jsonObject.getJSONObject("data");
+                    MethodUtils.errorMsg(activity, jsObject.getString("message"));
+
                     if (jsonObject.optInt("status") == 1) {
 
+                        ViewProfileModel viewProfileModel = LoginShared.getViewProfileDataModel(activity);
+
                         if (medianame.equalsIgnoreCase("google")) {
-                            LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).setGoogleAccountLinked(1);
+                            viewProfileModel.getData().getUser().get(0).setGoogleAccountLinked(1);
+                            LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         } else if (medianame.equalsIgnoreCase("fb")) {
-                            LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).setFacebookAccountLinked(1);
+                            viewProfileModel.getData().getUser().get(0).setFacebookAccountLinked(1);
+                            LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         }
 
                         setSocialAddButtonStatus();
 
-                    } else {
+                    } /*else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(activity, jsObject.getString("message"));
-                    }
+                    }*/
                 } catch (Exception e) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
                 }
@@ -697,20 +710,29 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     JSONObject jsonObject = new JSONObject(responseString);
                     Log.d("@@AddSocial : ", jsonObject.toString());
 
+
+                    JSONObject jsObject = jsonObject.getJSONObject("data");
+                    MethodUtils.errorMsg(activity, jsObject.getString("message"));
+
+
                     if (jsonObject.optInt("status") == 1) {
 
+                        ViewProfileModel viewProfileModel = LoginShared.getViewProfileDataModel(activity);
+
                         if (medianame.equalsIgnoreCase("google")) {
-                            LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).setGoogleAccountLinked(0);
+                            viewProfileModel.getData().getUser().get(0).setGoogleAccountLinked(0);
+                            LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         } else if (medianame.equalsIgnoreCase("fb")) {
-                            LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).setFacebookAccountLinked(0);
+                            viewProfileModel.getData().getUser().get(0).setFacebookAccountLinked(0);
+                            LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         }
 
                         setSocialAddButtonStatus();
 
-                    } else {
+                    } /*else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(activity, jsObject.getString("message"));
-                    }
+                    }*/
                 } catch (Exception e) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
                 }

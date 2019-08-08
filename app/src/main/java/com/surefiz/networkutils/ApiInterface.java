@@ -42,6 +42,7 @@ import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
 import static com.surefiz.apilist.ApiList.API_POST_REMOVE_REMINDER;
+import static com.surefiz.apilist.ApiList.API_REMOVE_SOCIAL;
 import static com.surefiz.apilist.ApiList.API_SEND_CHAT;
 import static com.surefiz.apilist.ApiList.API_UPDATE_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.BOARDCAST;
@@ -205,7 +206,7 @@ public interface ApiInterface {
                                          @Field("userId") String userID);
 
     @FormUrlEncoded
-    @POST(API_ADD_SOCIAL)
+    @POST(API_REMOVE_SOCIAL)
     Call<ResponseBody> call_socialRemoveApi(@Field("type") String medianame,
                                             @Field("userId") String userID);
 

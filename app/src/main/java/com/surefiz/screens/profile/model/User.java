@@ -89,6 +89,9 @@ public class User {
     @SerializedName("facebookAccountLinked")
     @Expose
     private int facebookAccountLinked;
+    @SerializedName("isPasswordAvailable")
+    @Expose
+    private int isPasswordAvailable;
 
     public String getUserId() {
         return userId;
@@ -312,5 +315,13 @@ public class User {
 
     public void setFacebookAccountLinked(int facebookAccountLinked) {
         this.facebookAccountLinked = facebookAccountLinked;
+    }
+
+    public int getIsPasswordAvailable() {
+        return isPasswordAvailable;
+    }
+
+    public void setIsPasswordAvailable(int isPasswordAvailable) {
+        this.isPasswordAvailable = isPasswordAvailable;
     }
 }

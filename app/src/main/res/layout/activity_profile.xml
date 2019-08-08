@@ -647,12 +647,21 @@
                 </RelativeLayout>
 
 
+                <TextView
+                    android:id="@+id/tvSocialHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:text="@string/manage_social_logins"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_16sdp" />
+
                 <RelativeLayout
                     android:id="@+id/rl_google"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_18sdp"
-                    android:layout_marginTop="@dimen/_9sdp"
                     android:layout_marginRight="@dimen/_18sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:background="@drawable/edit_text_background"
@@ -664,6 +673,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -686,20 +696,21 @@
                     </LinearLayout>
 
 
-                        <TextView
-                            android:id="@+id/btnGoogleAdd"
-                            android:layout_width="@dimen/_90sdp"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:background="#05B085"
-                            android:paddingStart="@dimen/_5sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:text="Add"
-                            android:gravity="center"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_14sdp" />
+                    <TextView
+                        android:id="@+id/btnGoogleAdd"
+                        android:layout_width="@dimen/_90sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="#05B085"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="Add"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
                 </RelativeLayout>
 
 
@@ -710,8 +721,8 @@
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_9sdp"
                     android:layout_marginRight="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_9sdp"
                     android:background="@drawable/edit_text_background"
-                    android:paddingBottom="@dimen/_5sdp"
                     android:visibility="visible">
 
                     <LinearLayout
@@ -719,6 +730,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -744,13 +756,14 @@
                         android:layout_width="@dimen/_90sdp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:background="#05B085"
+                        android:gravity="center"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Add"
-                        android:gravity="center"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
                 </RelativeLayout>
@@ -760,7 +773,10 @@
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_margin="@dimen/_44sdp"
+                    android:layout_marginStart="@dimen/_44sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_44sdp"
+                    android:layout_marginBottom="@dimen/_34sdp"
                     android:background="@drawable/login_submit_rounded_corner"
                     android:text="Save"
                     android:textAllCaps="false"

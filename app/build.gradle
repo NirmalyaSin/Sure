@@ -83,5 +83,9 @@ dependencies {
 
     // Swipe Reveal for Remider Delete
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+    implementation 'com.github.douglasjunior:android-simple-tooltip:0.2.3'
+    implementation('com.github.douglasjunior:android-simple-tooltip:master-SNAPSHOT') {
+        changing = false // Gradle will then check for updates every 24 hours
+    }
 }
 apply plugin: 'com.google.gms.google-services'

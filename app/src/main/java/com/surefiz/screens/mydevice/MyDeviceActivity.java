@@ -38,7 +38,7 @@ import retrofit2.Retrofit;
 public class MyDeviceActivity extends BaseActivity implements View.OnClickListener {
     public View view;
     Button btn_update;
-    EditText et_id;
+    EditText et_id,et_confirm_scale_id;
     TextView tv_scale_id;
     private LoadingData loader;
     /*private String blockCharacterSet = "~*#^|$%&!/+(),;N.";
@@ -75,6 +75,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
     private void setViewBind() {
         btn_update = findViewById(R.id.btn_update);
         et_id = findViewById(R.id.et_id);
+        et_confirm_scale_id = findViewById(R.id.et_confirm_scale_id);
         tv_scale_id = findViewById(R.id.tv_scale_id);
 
         setTextFormatter();
@@ -82,6 +83,39 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
 
     private void setTextFormatter() {
         et_id.addTextChangedListener(new TextWatcher() {
+
+            private boolean isEdiging = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isEdiging) return;
+                isEdiging = true;
+                // removing old dashes
+                StringBuilder sb = new StringBuilder();
+                sb.append(s.toString().trim().replace("-", ""));
+
+                if (sb.length() > 3)
+                    sb.insert(3, "-");
+                if (sb.length() > 7)
+                    sb.insert(7, "-");
+                if (sb.length() > 12)
+                    sb.delete(12, sb.length());
+
+                s.replace(0, s.length(), sb.toString());
+                isEdiging = false;
+            }
+        });
+
+        et_confirm_scale_id.addTextChangedListener(new TextWatcher() {
 
             private boolean isEdiging = false;
 
@@ -158,9 +192,13 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 if (!ConnectionDetector.isConnectingToInternet(this)) {
                     MethodUtils.errorMsg(this, getString(R.string.no_internet));
                 } else if (et_id.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(this, "Please enter Scale ID");
+                    MethodUtils.errorMsg(this, "Please enter new Scale ID");
                 } else if (et_id.getText().toString().length() != 12) {
                     MethodUtils.errorMsg(this, "Please enter 10 digit Scale ID");
+                }else if (et_confirm_scale_id.getText().toString().trim().equals("")) {
+                    MethodUtils.errorMsg(this, "Please enter confirm Scale ID");
+                } else if (!et_id.getText().toString().trim().equals(et_confirm_scale_id.getText().toString().trim())) {
+                    MethodUtils.errorMsg(this, "New Scale ID and confirm Scale ID is not same");
                 } else {
                     System.out.println("replaceScaleIDFormatter: " + replaceScaleIDFormatter(et_id.getText().toString().trim()));
                     changeScaleIdToServer();

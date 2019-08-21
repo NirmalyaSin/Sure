@@ -144,7 +144,7 @@
                         android:background="@drawable/login_submit_rounded_corner"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:text="Lock WiFi Details"
+                        android:text="Confirm"
                         android:textAllCaps="false"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp"

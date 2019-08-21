@@ -45,12 +45,16 @@ public class MesgAdapter extends RecyclerView.Adapter<MesgAdapter
             firstLoading = true;
         }
 
-        switch (arrayListConversation.get(position).getMessageFrom()){
+
+        holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
+        holder.textDateTimeLeft.setText(MessagDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
+
+        /*switch (arrayListConversation.get(position).getMessageFrom()){
             case ChatConstant.CHAT_FROM_SENDER:
                 holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
                 holder.textDateTimeLeft.setText(MessagDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
                 break;
-        }
+        }*/
     }
 
 

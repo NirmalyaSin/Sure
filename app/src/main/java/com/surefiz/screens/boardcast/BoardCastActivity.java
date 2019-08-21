@@ -63,6 +63,9 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
         receiver_id = getIntent().getStringExtra("reciver_id");
 
+        LoginShared.setWeightFromNotification(this, "0");
+
+
         setHeaderView();
         viewBind();
         clickEventFunc();
@@ -87,11 +90,9 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         //SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         //recyclerView.addItemDecoration(decoration);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        mLayoutManager.setStackFromEnd(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        mLayoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(mLayoutManager);
-
     }
 
     private void clickEventFunc() {
@@ -125,11 +126,15 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
 
                         if(response.body().getData().getBroadcast()!=null) {
-                            arrayListConversation.addAll(0, response.body().getData().getBroadcast());
+
+                            arrayListConversation.clear();
+                            arrayListConversation.addAll(response.body().getData().getBroadcast());
+                            Collections.reverse(arrayListConversation);
+                            //arrayListConversation.addAll(0, response.body().getData().getBroadcast());
 
                             Log.d("@@ListSize : ", "" + arrayListConversation.size());
                             mesgAdapter.notifyDataSetChanged();
-                            recyclerView.smoothScrollToPosition(arrayListConversation.size());
+                            //recyclerView.smoothScrollToPosition(arrayListConversation.size());
                         }
 
                         //myApplicationClass.chatListNotification.clear();

@@ -647,6 +647,97 @@
                 </RelativeLayout>
 
 
+                <LinearLayout
+                    android:id="@+id/ll_add_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-20dp"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:paddingTop="@dimen/_20sdp"
+                        android:text="Add New Password"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_16sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_new_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-15dp"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:paddingTop="@dimen/_20sdp"
+                        android:text="New Password"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_new_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_9sdp"
+                        android:layout_marginRight="@dimen/_18sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/edit_text_background">
+
+                        <EditText
+                            android:id="@+id/et_new_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:backgroundTint="@android:color/transparent"
+                            android:hint="Enter new password"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/_6sdp"
+                            android:textColor="@color/whiteColor"
+                            android:textColorHint="@color/hintColor"
+                            android:textCursorDrawable="@drawable/cursor_color"
+                            android:textSize="@dimen/_10sdp" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_confirm_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-20dp"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:paddingTop="@dimen/_20sdp"
+                        android:text="Confirm Password"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_confirm_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_9sdp"
+                        android:layout_marginRight="@dimen/_18sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/edit_text_background">
+
+                        <EditText
+                            android:id="@+id/et_confirm_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:backgroundTint="@android:color/transparent"
+                            android:hint="Enter confirm passord"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/_6sdp"
+                            android:textColor="@color/whiteColor"
+                            android:textColorHint="@color/hintColor"
+                            android:textCursorDrawable="@drawable/cursor_color"
+                            android:textSize="@dimen/_10sdp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tvSocialHeader"
                     android:layout_width="wrap_content"

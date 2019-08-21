@@ -53,6 +53,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -512,6 +513,19 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     }, 100);
                 }
                 break;
+
+            /*case R.id.toolTipScaleId:
+                new SimpleTooltip.Builder(registrationActivity)
+                        .anchorView(v)
+                        .backgroundColor(registrationActivity.getResources().getColor(R.color.whiteColor))
+                        .arrowColor(registrationActivity.getResources().getColor(R.color.whiteColor))
+                        .text("Texto do Tooltip")
+                        .gravity(Gravity.START)
+                        .animated(false)
+                        .transparentOverlay(true)
+                        .build()
+                        .show();
+                break;*/
         }
     }
 
@@ -687,7 +701,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void validationAndApiCall() {
-        if (registrationActivity.et_first_name.getText().toString().equals("")) {
+        if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
+            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
+        }else if (registrationActivity.et_first_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
         } /*else if (registrationActivity.et_middle_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your middle name");
@@ -776,7 +792,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
     //--This method is responsible for validating all the fields for IncompleteProfile Update
 
     private void validationAndApiCallForIncompleteProfile() {
-        if (registrationActivity.et_first_name.getText().toString().equals("")) {
+        if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
+            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
+        }else if (registrationActivity.et_first_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
         } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your last name");
@@ -794,9 +812,15 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please enter your password");
         }*/ else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                 registrationActivity.et_scale_id.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your Scale Id");
-        } else if (!lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter valid Scale Id");
+            MethodUtils.errorMsg(registrationActivity, "Please enter your Scale ID");
+        } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                !lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
+            MethodUtils.errorMsg(registrationActivity, "Please enter valid Scale ID");
+        }else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                registrationActivity.et_confirm_scale_id.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, "Please enter confirm Scale ID");
+        } else if (!registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
+            MethodUtils.errorMsg(registrationActivity, "Scale ID and Confirm Scale ID is not same");
         } else if (registrationActivity.et_phone.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
         } else if (registrationActivity.et_management.getText().toString().equals("")) {
@@ -1036,7 +1060,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
             }
         });
     }
-
 
 
     public void showAckowlegmentDialog(String msg) {

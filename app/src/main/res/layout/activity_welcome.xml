@@ -82,7 +82,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_submit_rounded_corner"
                 android:gravity="center"
-                android:text="Learn a more"
+                android:text="Learn more"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="normal" />
@@ -102,6 +102,4 @@
             android:textStyle="bold"
             android:visibility="visible" />
     </LinearLayout>
-
-
 </RelativeLayout>

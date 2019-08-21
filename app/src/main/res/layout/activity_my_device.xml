@@ -68,7 +68,47 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:backgroundTint="@android:color/transparent"
-                android:hint="Enter new scale ID"
+                android:hint="Enter new Scale ID"
+                android:maxLines="1"
+                android:maxLength="12"
+                android:inputType="numberSigned"
+                android:digits="0123456789-"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/whiteColor"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:textSize="@dimen/_10sdp" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_confirm_scale_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_email"
+            android:paddingLeft="@dimen/_18sdp"
+            android:paddingTop="@dimen/_20sdp"
+            android:text="Confirm scale ID"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_confirm_scale_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_confirm_scale_id"
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_marginRight="@dimen/_18sdp"
+            android:background="@drawable/edit_text_background">
+
+            <EditText
+                android:id="@+id/et_confirm_scale_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="Enter confirm Scale ID"
                 android:maxLines="1"
                 android:maxLength="12"
                 android:inputType="numberSigned"
@@ -84,7 +124,7 @@
             android:id="@+id/btn_update"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_below="@+id/rl_email"
+            android:layout_below="@+id/rl_confirm_scale_id"
             android:layout_margin="@dimen/_44sdp"
             android:background="@drawable/login_submit_rounded_corner"
             android:text="Update"

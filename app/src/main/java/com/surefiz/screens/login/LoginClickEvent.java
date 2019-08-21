@@ -210,7 +210,8 @@ public class LoginClickEvent implements View.OnClickListener {
                                     LoginShared.setDeviceToken(mLoginActivity, deviceToken);
 
                                     JSONObject jsObject = jsonObject.getJSONObject("data");
-                                    MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
+                                    //MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
+                                    MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.mac_id_not_found));
                                 } else {
 
                                     if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {

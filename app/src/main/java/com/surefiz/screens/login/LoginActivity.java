@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.TooltipCompat;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +54,7 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -77,6 +80,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ImageView iv_twiter;
     @BindView(R.id.tv_register)
     TextView tv_register;
+    @BindView(R.id.tvOR)
+    TextView tvOR;
     private CallbackManager callbackManager;
     private LoginClickEvent loginClickEvent;
     private GoogleApiClient googleApiClient;
@@ -97,11 +102,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //editEmail.setText("kannanrasimo12@gmail.com");
         //editPassword.setText("12345678");
         editEmail.setText("arup.nayak@capitalnumbers.com");
+        //editEmail.setText("kannanrasimo12@gmail.com");
         editPassword.setText("123456789");
+
+
         //editEmail.setText("john103@surefiz.com");
         //editPassword.setText("123456");
-        /*editEmail.setText("khokhar@rasimo.com");
-        editPassword.setText("12345678");*/
+        //editEmail.setText("khokhar@rasimo.com");
+        //editPassword.setText("12345678");
 
         startFireBase();
 

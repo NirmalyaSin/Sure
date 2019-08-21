@@ -129,7 +129,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
             ivViewOptions.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(mContext, ivViewOptions, Gravity.CENTER);
+                    PopupMenu popup = new PopupMenu(mContext, ivViewOptions, Gravity.END|Gravity.TOP);
 
                     popup.inflate(R.menu.custom_menu);
 

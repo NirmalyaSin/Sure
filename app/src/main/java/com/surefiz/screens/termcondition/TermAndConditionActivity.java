@@ -24,7 +24,8 @@ public class TermAndConditionActivity extends BaseActivity {
         addContentView(view);
         viewBind();
         setHeaderView();
-        url = "https://www.surefiz.com/AboutUs";
+        //url = "https://www.surefiz.com/AboutUs";
+        url = "https://www.surefiz.com/Home/termsandconditions";
         loadUrl();
     }
 
@@ -34,7 +35,8 @@ public class TermAndConditionActivity extends BaseActivity {
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("Terms & Condition");
+        tv_universal_header.setText(getResources().getString(R.string.surefiz_register));
+        //tv_universal_header.setText("Terms & Condition");
         img_topbar_menu.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         iv_edit.setVisibility(View.GONE);
@@ -51,11 +53,15 @@ public class TermAndConditionActivity extends BaseActivity {
 
     private void loadUrl() {
         loader.show();
-        web.loadUrl(url);
+
         WebSettings wbSettings = web.getSettings();
         wbSettings.setJavaScriptEnabled(true);
-        wbSettings.getLoadsImagesAutomatically();
-        wbSettings.setLoadsImagesAutomatically(true);
+        web.getSettings().setDomStorageEnabled(true);
+        web.getSettings().setAppCacheEnabled(true);
+        web.getSettings().setLoadsImagesAutomatically(true);
+        web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        web.setWebViewClient(new WebViewClient());
+
         web.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -66,6 +72,7 @@ public class TermAndConditionActivity extends BaseActivity {
             }
         });
 
+        web.loadUrl(url);
     }
 
     @Override

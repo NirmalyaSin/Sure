@@ -9,7 +9,7 @@ public class Goals {
 
     @SerializedName("minigoalsjson")
     @Expose
-    private List<Double> minigoalsjson = null;
+    private List<String> minigoalsjson = null;
     @SerializedName("miniweeksjson")
     @Expose
     private List<String> miniweeksjson = null;
@@ -32,11 +32,11 @@ public class Goals {
     @Expose
     private Integer me2;
 
-    public List<Double> getMinigoalsjson() {
+    public List<String> getMinigoalsjson() {
         return minigoalsjson;
     }
 
-    public void setMinigoalsjson(List<Double> minigoalsjson) {
+    public void setMinigoalsjson(List<String> minigoalsjson) {
         this.minigoalsjson = minigoalsjson;
     }
 

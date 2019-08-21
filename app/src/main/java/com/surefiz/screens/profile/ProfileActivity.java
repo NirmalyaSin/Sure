@@ -77,6 +77,9 @@ public class ProfileActivity extends BaseActivity {
     private OnImageSet onImageSet;
     TextView btnGoogleAdd;
     TextView btnFacebookAdd;
+    LinearLayout ll_add_new_password;
+    EditText et_new_password;
+    EditText et_confirm_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +116,8 @@ public class ProfileActivity extends BaseActivity {
         et_height.setEnabled(false);
         profile_image.setEnabled(false);
         switch_visibility.setEnabled(false);
+        et_new_password.setEnabled(false);
+        et_confirm_password.setEnabled(false);
     }
 
     private void initView() {
@@ -139,6 +144,10 @@ public class ProfileActivity extends BaseActivity {
         rl_visibility = view.findViewById(R.id.rl_visibility);
         btnGoogleAdd = view.findViewById(R.id.btnGoogleAdd);
         btnFacebookAdd = view.findViewById(R.id.btnFacebookAdd);
+        ll_add_new_password = view.findViewById(R.id.ll_add_new_password);
+        ll_add_new_password.setVisibility(View.GONE);
+        et_new_password = view.findViewById(R.id.et_new_password);
+        et_confirm_password = view.findViewById(R.id.et_confirm_password);
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {

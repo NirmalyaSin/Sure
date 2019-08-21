@@ -1,6 +1,7 @@
 package com.surefiz.screens.accountability;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,12 +40,12 @@ import retrofit2.Retrofit;
 
 public class AcountabilityActivity extends BaseActivity implements AllCircleUserAdapter.OnCircleViewClickListener {
 
+    private static final int ADD_FRIEND_REQUEST = 1001;
     public View view;
     private RecyclerView recyclerView;
     private LoadingData loadingData;
     private ArrayList<User> arrayListUsers = new ArrayList<User>();
     private AllCircleUserAdapter mAllCircleUserAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +114,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     }
 
-    private static final int ADD_FRIEND_REQUEST=1001;
-
     private void setRecyclerViewItem() {
         recyclerView = view.findViewById(R.id.rv_items);
         mAllCircleUserAdapter = new AllCircleUserAdapter(this,
@@ -143,7 +142,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         });
         findViewById(R.id.ll_acc_friend).setOnClickListener(view1 -> {
             startActivityForResult(new Intent(AcountabilityActivity.this,
-                    SearchAcountabilityActivity.class),ADD_FRIEND_REQUEST);
+                    SearchAcountabilityActivity.class), ADD_FRIEND_REQUEST);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
         findViewById(R.id.ll_acc_message).setOnClickListener(view1 -> {
@@ -162,7 +161,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==ADD_FRIEND_REQUEST&&resultCode== Activity.RESULT_OK){
+        if (requestCode == ADD_FRIEND_REQUEST && resultCode == Activity.RESULT_OK) {
             callCircleUserListApi();
         }
     }
@@ -188,7 +187,24 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     @Override
     public void onRemoveClick(int position) {
-        callRemoveAccountUserApi(position);
+        //callRemoveAccountUserApi(position);
+        showUserConfirmation(position);
+    }
+
+
+    private void showUserConfirmation(int position) {
+        AlertDialog alertDialog = new AlertDialog.Builder(AcountabilityActivity.this).create();
+        alertDialog.setTitle(this.getResources().getString(R.string.delete_user_confirmation));
+        //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
+        alertDialog.setMessage("Do you want to delete " + arrayListUsers.get(position).getUser_name() + "?");
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No!",
+                (dialog, which) -> dialog.dismiss());
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    callRemoveAccountUserApi(position);
+                });
+        alertDialog.show();
     }
 
 

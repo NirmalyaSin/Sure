@@ -281,7 +281,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         } else {
             if (getIntent().getBooleanExtra("wifi", false)) {
                 alertDialog.setMessage(getResources().getString(R.string.configrution));
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Update Weight",
+                //alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Update Weight",
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Step on Scale",
                         (dialog, which) -> {
                             dialog.dismiss();
                             LoginShared.setstatusforwifivarification(this, true);

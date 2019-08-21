@@ -32,7 +32,7 @@ public class CurrentCompositions {
     private BodyFat water;
 
     @SerializedName("scaleMacAddress")
-    private long scaleMacAddress;
+    private String scaleMacAddress;
 
     @SerializedName("height")
     private String height;
@@ -112,11 +112,11 @@ public class CurrentCompositions {
         this.water = water;
     }
 
-    public long getScaleMacAddress() {
+    public String getScaleMacAddress() {
         return scaleMacAddress;
     }
 
-    public void setScaleMacAddress(long scaleMacAddress) {
+    public void setScaleMacAddress(String scaleMacAddress) {
         this.scaleMacAddress = scaleMacAddress;
     }
 

@@ -240,6 +240,7 @@ public interface ApiInterface {
                                                 @Part("Height") RequestBody Height,
                                                 @Part("prefferedUnits") RequestBody prefferedUnits,
                                                 @Part("mainuservisibility") RequestBody mainuservisibility,
+                                                @Part("password") RequestBody password,
                                                 @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -256,7 +257,8 @@ public interface ApiInterface {
                                            @Part("user_email") RequestBody user_email,
                                            @Part("Height") RequestBody Height,
                                            @Part("prefferedUnits") RequestBody prefferedUnits,
-                                           @Part("mainuservisibility") RequestBody mainuservisibility);
+                                           @Part("mainuservisibility") RequestBody mainuservisibility,
+                                           @Part("password") RequestBody password);
 
     @FormUrlEncoded
     @POST(USERLIST)

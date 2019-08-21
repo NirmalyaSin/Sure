@@ -16,10 +16,12 @@ import android.text.Html;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -57,6 +59,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.zelory.compressor.Compressor;
 import id.zelory.compressor.FileUtil;
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -159,10 +162,12 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_member;
     @BindView(R.id.ll_scale_id)
     LinearLayout ll_scale_id;
-    @BindView(R.id.rl_scale_id)
-    RelativeLayout rl_scale_id;
+    @BindView(R.id.ll_confirm_scale_id)
+    LinearLayout ll_confirm_scale_id;
     @BindView(R.id.et_scale_id)
     EditText et_scale_id;
+    @BindView(R.id.et_confirm_scale_id)
+    EditText et_confirm_scale_id;
     @BindView(R.id.ll_password)
     LinearLayout ll_password;
     @BindView(R.id.rl_street_address)
@@ -183,6 +188,11 @@ public class RegistrationActivity extends AppCompatActivity {
     LinearLayout ll_zip_code;
     @BindView(R.id.btn_skip_config)
     Button btn_skip_config;
+    @BindView(R.id.toolTipScaleId)
+    ImageView toolTipScaleId;
+    @BindView(R.id.toolTipConfirmScaleId)
+    ImageView toolTipConfirmScaleId;
+    String toolTipText = "";
     private File mFile = null;
     private Uri fileUri = null;
     private OnImageSet onImageSet;
@@ -212,9 +222,41 @@ public class RegistrationActivity extends AppCompatActivity {
         setTextFormatter();
     }
 
-
     private void setTextFormatter() {
         et_scale_id.addTextChangedListener(new TextWatcher() {
+
+            private boolean isEdiging = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isEdiging) return;
+                isEdiging = true;
+                // removing old dashes
+                StringBuilder sb = new StringBuilder();
+                sb.append(s.toString().trim().replace("-", ""));
+
+                if (sb.length() > 3)
+                    sb.insert(3, "-");
+                if (sb.length() > 7)
+                    sb.insert(7, "-");
+                if (sb.length() > 12)
+                    sb.delete(12, sb.length());
+
+                s.replace(0, s.length(), sb.toString());
+                isEdiging = false;
+            }
+        });
+
+        et_confirm_scale_id.addTextChangedListener(new TextWatcher() {
 
             private boolean isEdiging = false;
 
@@ -275,15 +317,15 @@ public class RegistrationActivity extends AppCompatActivity {
             profile_image.setVisibility(View.VISIBLE);
             iv_plus_add_image.setVisibility(View.VISIBLE);
             tv_upload.setVisibility(View.VISIBLE);
-            linearLayout1.setVisibility(View.GONE);
+            linearLayout1.setVisibility(View.VISIBLE);
 
             //tv_scale.setVisibility(View.GONE);
             //rl_scale.setVisibility(View.GONE);
 
             //----------Addited By Arup---------//
 
+            ll_confirm_scale_id.setVisibility(View.VISIBLE);
             ll_scale_id.setVisibility(View.VISIBLE);
-            rl_scale_id.setVisibility(View.VISIBLE);
 
             rl_street_address.setVisibility(View.GONE);
             ll_street_address.setVisibility(View.GONE);
@@ -317,6 +359,41 @@ public class RegistrationActivity extends AppCompatActivity {
             //tv_scale.setVisibility(View.VISIBLE);
             //rl_scale.setVisibility(View.VISIBLE);
         }
+
+
+        toolTipScaleId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new SimpleTooltip.Builder(RegistrationActivity.this)
+                        .anchorView(v)
+                        .backgroundColor(getResources().getColor(R.color.whiteColor))
+                        .arrowColor(getResources().getColor(R.color.whiteColor))
+                        .text(toolTipText)
+                        .gravity(Gravity.START)
+                        .animated(false)
+                        .transparentOverlay(true)
+                        .build()
+                        .show();
+            }
+        });
+
+        toolTipConfirmScaleId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new SimpleTooltip.Builder(RegistrationActivity.this)
+                        .anchorView(v)
+                        .backgroundColor(getResources().getColor(R.color.whiteColor))
+                        .arrowColor(getResources().getColor(R.color.whiteColor))
+                        .text(toolTipText)
+                        .gravity(Gravity.START)
+                        .animated(false)
+                        .transparentOverlay(true)
+                        .build()
+                        .show();
+            }
+        });
     }
 
     private void viewShowFromSignup() {
@@ -403,6 +480,9 @@ public class RegistrationActivity extends AppCompatActivity {
         et_confirm_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
         et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
 
+        et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
+        et_confirm_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
+
         if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender())) {
             if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("1")) {
                 et_gender.setText("Male");
@@ -453,7 +533,6 @@ public class RegistrationActivity extends AppCompatActivity {
         bundle.putString("time", LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getTime());
 
 
-
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
             btn_register.setText(getResources().getString(R.string.register));
             tv_registration.setText(getResources().getString(R.string.surefiz_register));
@@ -467,9 +546,14 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationClickEvent.setValuesForListItem(bundle);
 
         showImage();
-
-
         disableViews();
+
+
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
+            toolTipText = "Scale ID is labeled on\nthe back of your scale";
+        } else {
+            toolTipText = "Scale ID is\nset by primary user";
+        }
     }
 
     private void disableViews() {
@@ -490,11 +574,13 @@ public class RegistrationActivity extends AppCompatActivity {
             iv_plus_add_image.setEnabled(false);
             et_userselection.setEnabled(false);
             et_scale_id.setEnabled(true);
+            et_confirm_scale_id.setEnabled(true);
         } else {
 
-            ll_scale_id.setVisibility(View.GONE);
-            rl_scale_id.setVisibility(View.GONE);
-            et_scale_id.setText("");
+            ll_scale_id.setVisibility(View.VISIBLE);
+            et_scale_id.setEnabled(false);
+            ll_confirm_scale_id.setVisibility(View.VISIBLE);
+            et_confirm_scale_id.setEnabled(false);
 
         }
     }

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.surefiz.R;
 import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
+import com.surefiz.screens.boardcast.BoardCastActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
@@ -93,6 +94,8 @@ public class SplashActivity extends AppCompatActivity {
                     LoginShared.setWeightFromNotification(this, "7");
                 } else if (jsonObject1.optInt("pushType") == 3) {
                     LoginShared.setWeightFromNotification(this, "3");
+                }else if (jsonObject1.optInt("pushType") == 12) {
+                    LoginShared.setWeightFromNotification(this, "12");
                 }
             } else {
                 LoginShared.setWeightFromNotification(this, "0");
@@ -223,6 +226,11 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             } else if (LoginShared.getWeightFromNotification(this).equals("7")) {
                 Intent intent = new Intent(this, UserConfirmationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }else if (LoginShared.getWeightFromNotification(this).equals("12")) {
+                Intent intent = new Intent(this, BoardCastActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

@@ -24,6 +24,7 @@ import com.surefiz.application.MyApplicationClass;
 import com.surefiz.screens.NotificationHandleClassOnForeground;
 import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
+import com.surefiz.screens.boardcast.BoardCastActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -105,6 +106,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jObject.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
+                }else if (jObject.optInt("pushType") == 12) {
+                    LoginShared.setWeightFromNotification(this, "12");
                 } else {
                     //LoginShared.setWeightFromNotification(this, "7");
                     LoginShared.setWeightFromNotification(this, "0");
@@ -307,6 +310,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);*/
+        }else if (jObject.optInt("pushType") == 12) {
+            Intent intent = new Intent(this, BoardCastActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
         } else {
             Intent intent = new Intent(this, DashBoardActivity.class);
             intent.putExtra("notificationFlag", "1");

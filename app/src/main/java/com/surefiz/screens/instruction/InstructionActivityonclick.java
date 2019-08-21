@@ -54,7 +54,7 @@ public class InstructionActivityonclick implements View.OnClickListener {
                 Intent dashBoardIntent = new Intent(instructionActivity, DashBoardActivity.class);
                 instructionActivity.startActivity(dashBoardIntent);
                 instructionActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                instructionActivity.finish();
+                instructionActivity.finishAffinity();
                 break;
             case R.id.btn_skip:
                 Intent details = new Intent(instructionActivity, DashBoardActivity.class);

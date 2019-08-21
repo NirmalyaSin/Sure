@@ -291,6 +291,18 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             activity.rl_visibility.setVisibility(View.VISIBLE);
         }
 
+
+        /*ViewProfileModel viewProfileModel = LoginShared.getViewProfileDataModel(activity);
+        viewProfileModel.getData().getUser().get(0).setIsPasswordAvailable(0);
+        LoginShared.setViewProfileDataModel(activity, viewProfileModel);*/
+
+
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 1) {
+            activity.ll_add_new_password.setVisibility(View.GONE);
+        } else {
+            activity.ll_add_new_password.setVisibility(View.VISIBLE);
+        }
+
         activity.profile_image.setEnabled(false);
 
         setSocialAddButtonStatus();
@@ -455,6 +467,10 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.et_height.setEnabled(true);
                 activity.profile_image.setEnabled(true);
                 activity.switch_visibility.setEnabled(true);
+
+                activity.et_new_password.setEnabled(true);
+                activity.et_confirm_password.setEnabled(true);
+
                 activity.et_full.setSelection(activity.et_full.getText().length());
                 InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(activity.et_full, InputMethodManager.SHOW_IMPLICIT);
@@ -505,6 +521,21 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     MethodUtils.errorMsg(activity, "Please enter your Age");
                 } else if (!isNonZeroValue(activity.et_DOB.getText().toString().trim())) {
                     MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
+                        activity.et_new_password.getText().toString().equals("")) {
+
+                    MethodUtils.errorMsg(activity, "Enter new password");
+
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
+                        activity.et_confirm_password.getText().toString().equals("")) {
+
+                    MethodUtils.errorMsg(activity, "Enter confirm password");
+
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
+                        !activity.et_confirm_password.getText().toString().equals(activity.et_new_password.getText().toString())) {
+
+                    MethodUtils.errorMsg(activity, "New password and confirm password must be same");
+
                 } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else {
@@ -774,12 +805,16 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody gender = null;
         RequestBody preffered = null;
         RequestBody mainuservisibility = null;
+        RequestBody password = null;
+
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), activity.et_full.getText().toString().trim());
         RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), activity.et_phone.getText().toString().trim());
+
         if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
             preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
         } else {
@@ -808,6 +843,13 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             mainuservisibility = RequestBody.create(MediaType.parse("text/plain"), "0");
         }
 
+
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0) {
+            password = RequestBody.create(MediaType.parse("text/plain"), activity.et_new_password.getText().toString().trim());
+        } else {
+            password = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), activity.mCompressedFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("userImage",
                 activity.mCompressedFile.getName(), reqFile);
@@ -820,7 +862,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, body);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -877,8 +919,11 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody gender = null;
         RequestBody preffered = null;
         RequestBody mainuservisibility = null;
+        RequestBody password = null;
+
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), activity.et_full.getText().toString().trim());
         RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
@@ -907,6 +952,13 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         }
 
 
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0) {
+            password = RequestBody.create(MediaType.parse("text/plain"), activity.et_new_password.getText().toString().trim());
+        } else {
+            password = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+
+
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "Android");
         RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId());
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), activity.et_DOB.getText().toString().trim());
@@ -914,8 +966,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         String str = activity.et_height.getText().toString().trim();
         String[] splited = str.split(" ");
         RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0]);
+
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override

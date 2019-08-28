@@ -69,8 +69,9 @@
     <string name="compositions">Composition</string>
     <string name="manage_social_logins">Manage Social Logins</string>
     <string name="delete_user_confirmation">Delete User Confirmation</string>
-    <string name="mac_id_not_found">No scale ID found associated with your account, please
+    <string name="mac_id_not_found">No cale ID found associated with your account, please
 have the primary user registered before you login</string>
+    <string name="login"><u>Login</u></string>
 
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 

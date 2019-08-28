@@ -602,7 +602,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         tv_name.setText(Html.fromHtml(nameText));
         tv_mac.setText(Html.fromHtml(scaleText));
         //tv_name.setText("Name: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUserName());
-        //tv_mac.setText("Scale Id: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getScaleMacAddress());
+        //tv_mac.setText("Scale ID: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getScaleMacAddress());
         tv_weight_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWeight());
         tv_height_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getHeight());
 
@@ -708,9 +708,14 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         switch (batteryStatus) {
             case 0:
+                imageDrawable = R.drawable.battery0;
+                MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
+                break;
             case 1:
-                tv_battery_low_status.setVisibility(View.VISIBLE);
-                rl_battery_image.setVisibility(View.GONE);
+                //tv_battery_low_status.setVisibility(View.VISIBLE);
+                //rl_battery_image.setVisibility(View.GONE);
+                imageDrawable = R.drawable.battery1;
+                MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
                 break;
             case 2:
                 imageDrawable = R.drawable.battery2;
@@ -1405,7 +1410,12 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         double boneValue = 0;
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().size() > 2) {
-            boneValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().get(1);
+            try {
+                boneValue = Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().get(1));
+            } catch (Exception e) {
+                e.printStackTrace();
+                boneValue = 0;
+            }
         }
         PieEntry boneEntry = new PieEntry((float) boneValue);
         entries.add(boneEntry);

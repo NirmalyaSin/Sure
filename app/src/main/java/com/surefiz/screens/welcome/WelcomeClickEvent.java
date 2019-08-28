@@ -1,6 +1,8 @@
 package com.surefiz.screens.welcome;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.text.Html;
 import android.view.View;
 
 import com.surefiz.R;
@@ -33,12 +35,14 @@ public class WelcomeClickEvent implements View.OnClickListener {
 
             case R.id.txt_signup:
 
-                String url = "https://www.surefiz.com/Signup";
+                /*String url = "https://www.surefiz.com/Signup";
                 Intent howToSignUpintent = new Intent(welcomeActivity, AboutUsActivity.class);
                 howToSignUpintent.putExtra("url", url);
                 howToSignUpintent.putExtra("menu", false);
                 howToSignUpintent.putExtra("header", "How to Sign up");
-                welcomeActivity.startActivity(howToSignUpintent);
+                welcomeActivity.startActivity(howToSignUpintent);*/
+
+                showHowToSignupDialog();
 
                 break;
 
@@ -52,5 +56,24 @@ public class WelcomeClickEvent implements View.OnClickListener {
 
                 break;
         }
+    }
+
+
+    private void showHowToSignupDialog() {
+
+        //For your weight management make the best decision and please visit  https://www.surefiz.com and click at  SIGNUP
+
+        String showToSignText = "<font color=#000000>For your weight management make the best decision and please visit </font>" + "<font color=#4A68EA><b><u>https://www.surefiz.com</u></b></font>"
+                +"<font color=#000000> and click at  SIGNUP</font>";
+
+        AlertDialog alertDialog = new AlertDialog.Builder(welcomeActivity).create();
+        alertDialog.setTitle(welcomeActivity.getResources().getString(R.string.app_name));
+        alertDialog.setMessage(Html.fromHtml(showToSignText));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                (dialog, which) -> {
+                    dialog.dismiss();
+                });
+
+        alertDialog.show();
     }
 }

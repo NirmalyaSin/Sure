@@ -6,25 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.AddUserDialogForOTP;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.SplashActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
-import com.surefiz.screens.users.UserListActivity;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -195,14 +188,14 @@ public class OtpClickEvent implements View.OnClickListener {
                         otpActivity.finishAffinity();*/
 
 
-                        if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0) {
-
+                        if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0||
+                                LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserMac().equals("")) {
                             Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
                             regIntent.putExtra("completeStatus", "0");
                             otpActivity.startActivity(regIntent);
                             otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             otpActivity.finishAffinity();
-                        }else {
+                        } else {
                             Intent intent = new Intent(otpActivity, DashBoardActivity.class);
                             otpActivity.startActivity(intent);
                             otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -211,24 +204,6 @@ public class OtpClickEvent implements View.OnClickListener {
 
 
 
-//                        MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
-                        /*LoginShared.setstatusforOtpvarification(otpActivity, true);
-                        if (LoginShared.getRegistrationDataModel(otpActivity) != null &&
-                                LoginShared.getRegistrationDataModel(otpActivity).getData() != null &&
-                                LoginShared.getRegistrationDataModel(otpActivity).getData().getToken().equals("") &&
-                                LoginShared.getRegistrationDataModel(otpActivity).getData().getToken() == null &&
-                                LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).
-                                        getUserProfileCompleteStatus() == 0) {
-                            Intent regIntent = new Intent(otpActivity, LoginActivity.class);
-                            regIntent.putExtra("completeStatus", "0");
-                            otpActivity.startActivity(regIntent);
-                            otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        } else {
-                            showUserAddDialog("Do you want to Add More Users?", "Yes", "Not now");
-                        }*/
-                        /*Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
-                        otpActivity.startActivity(dashBoardIntent);
-                        otpActivity.finish();*/
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(otpActivity);
                         LoginShared.destroySessionTypePreference(otpActivity);

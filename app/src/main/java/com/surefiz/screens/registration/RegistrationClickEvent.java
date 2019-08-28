@@ -812,15 +812,15 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please enter your password");
         }*/ else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                 registrationActivity.et_scale_id.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your Scale ID");
+            MethodUtils.errorMsg(registrationActivity, "Please enter your scale ID");
         } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                 !lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter valid Scale ID");
+            MethodUtils.errorMsg(registrationActivity, "Please enter valid scale ID");
         }else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                 registrationActivity.et_confirm_scale_id.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter confirm Scale ID");
+            MethodUtils.errorMsg(registrationActivity, "Please enter confirm scale ID");
         } else if (!registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Scale ID and Confirm Scale ID is not same");
+            MethodUtils.errorMsg(registrationActivity, "Scale ID and Confirm scale ID is not same");
         } else if (registrationActivity.et_phone.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
         } else if (registrationActivity.et_management.getText().toString().equals("")) {

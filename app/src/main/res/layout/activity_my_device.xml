@@ -37,7 +37,7 @@
             android:layout_below="@+id/tv_header"
             android:paddingLeft="@dimen/_18sdp"
             android:paddingRight="@dimen/_8sdp"
-            android:text="Scale Id"
+            android:text="Scale ID"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:backgroundTint="@android:color/transparent"
-                android:hint="Enter new Scale ID"
+                android:hint="Enter new scale ID"
                 android:maxLines="1"
                 android:maxLength="12"
                 android:inputType="numberSigned"
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:backgroundTint="@android:color/transparent"
-                android:hint="Enter confirm Scale ID"
+                android:hint="Enter confirm scale ID"
                 android:maxLines="1"
                 android:maxLength="12"
                 android:inputType="numberSigned"

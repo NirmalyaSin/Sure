@@ -253,6 +253,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
         } else if (eventCode == 101) {
             if (intent != null) {
                 boolean isDialog = intent.getBooleanExtra("userDialog", false);
+
                 new AddUserDialog(UserListActivity.this, new MoveTutorial() {
                     @Override
                     public void onSuccess(String success) {

@@ -579,7 +579,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             ll_scale_id.setVisibility(View.VISIBLE);
             et_scale_id.setEnabled(false);
-            ll_confirm_scale_id.setVisibility(View.VISIBLE);
+            ll_confirm_scale_id.setVisibility(View.GONE);
             et_confirm_scale_id.setEnabled(false);
 
         }

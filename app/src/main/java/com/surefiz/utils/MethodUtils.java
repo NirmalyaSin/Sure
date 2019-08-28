@@ -1,8 +1,10 @@
 package com.surefiz.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -78,5 +80,18 @@ public class MethodUtils {
         int randomNum = rand.nextInt((max - min) + 1) + min;
 //        int randomNum = (1000000 + rand.nextInt(9000000));
         return randomNum;
+    }
+
+    public static void showInfoDialog(Activity activity,String message) {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+        alertDialog.setTitle(activity.getResources().getString(R.string.app_name));
+        alertDialog.setMessage(Html.fromHtml(message));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                (dialog, which) -> {
+                    dialog.dismiss();
+                });
+
+        alertDialog.show();
     }
 }

@@ -311,7 +311,7 @@
                             android:layout_below="@+id/tv_name"
                             android:paddingLeft="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
-                            android:text="Scale Id:"
+                            android:text="Scale ID:"
                             android:textColor="@color/textGray"
                             android:textSize="@dimen/_12sdp" />
 

@@ -50,8 +50,8 @@
             <TextView
                 android:id="@+id/btn_boardcast"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="@dimen/_1sdp"
                 android:background="@color/whiteColor"
                 android:padding="@dimen/_5sdp"
                 android:gravity="center"

@@ -9,7 +9,7 @@ public class Composition {
 
     @SerializedName("overallData")
     @Expose
-    private List<Double> overallData = null;
+    private List<String> overallData = null;
     @SerializedName("muscle")
     @Expose
     private Double muscle;
@@ -17,11 +17,11 @@ public class Composition {
     @Expose
     private Double fat;
 
-    public List<Double> getOverallData() {
+    public List<String> getOverallData() {
         return overallData;
     }
 
-    public void setOverallData(List<Double> overallData) {
+    public void setOverallData(List<String> overallData) {
         this.overallData = overallData;
     }
 

@@ -159,7 +159,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         img_topbar_menu.setVisibility(View.GONE);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         if (LoginShared.getRegistrationDataModel(this) != null) {
-            tv_scale_id.setText("Current Scale ID: " + LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac());
+            tv_scale_id.setText("Current scale ID: " + LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac());
         }
     }
 
@@ -192,13 +192,13 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 if (!ConnectionDetector.isConnectingToInternet(this)) {
                     MethodUtils.errorMsg(this, getString(R.string.no_internet));
                 } else if (et_id.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(this, "Please enter new Scale ID");
+                    MethodUtils.errorMsg(this, "Please enter new scale ID");
                 } else if (et_id.getText().toString().length() != 12) {
-                    MethodUtils.errorMsg(this, "Please enter 10 digit Scale ID");
+                    MethodUtils.errorMsg(this, "Please enter 10 digit scale ID");
                 }else if (et_confirm_scale_id.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(this, "Please enter confirm Scale ID");
+                    MethodUtils.errorMsg(this, "Please enter confirm scale ID");
                 } else if (!et_id.getText().toString().trim().equals(et_confirm_scale_id.getText().toString().trim())) {
-                    MethodUtils.errorMsg(this, "New Scale ID and confirm Scale ID is not same");
+                    MethodUtils.errorMsg(this, "New scale ID and confirm scale ID is not same");
                 } else {
                     System.out.println("replaceScaleIDFormatter: " + replaceScaleIDFormatter(et_id.getText().toString().trim()));
                     changeScaleIdToServer();

@@ -103,8 +103,8 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 StringBuilder sb = new StringBuilder();
                 sb.append(s.toString().trim().replace("-", ""));
 
-                if (sb.length() > 3)
-                    sb.insert(3, "-");
+                if (sb.length() > 2)
+                    sb.insert(2, "-");
                 if (sb.length() > 7)
                     sb.insert(7, "-");
                 if (sb.length() > 12)
@@ -136,8 +136,8 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 StringBuilder sb = new StringBuilder();
                 sb.append(s.toString().trim().replace("-", ""));
 
-                if (sb.length() > 3)
-                    sb.insert(3, "-");
+                if (sb.length() > 2)
+                    sb.insert(2, "-");
                 if (sb.length() > 7)
                     sb.insert(7, "-");
                 if (sb.length() > 12)
@@ -198,7 +198,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 }else if (et_confirm_scale_id.getText().toString().trim().equals("")) {
                     MethodUtils.errorMsg(this, "Please enter confirm scale ID");
                 } else if (!et_id.getText().toString().trim().equals(et_confirm_scale_id.getText().toString().trim())) {
-                    MethodUtils.errorMsg(this, "New scale ID and confirm scale ID is not same");
+                    MethodUtils.errorMsg(this, "New scale ID and confirm scale ID are not identical");
                 } else {
                     System.out.println("replaceScaleIDFormatter: " + replaceScaleIDFormatter(et_id.getText().toString().trim()));
                     changeScaleIdToServer();

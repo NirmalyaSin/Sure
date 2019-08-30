@@ -26,6 +26,8 @@ import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -33,6 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.HTTP;
 
 public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScrollListener {
     private final int INITIAL_PAGINATION = 0;
@@ -80,8 +83,14 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
                     editTextMessage.setError("Enter message");
                 } else {
                     //Send Chat message
-                    callSendChatApi(message);
-                    editTextMessage.setText("");
+
+                    try {
+                        String toServerUnicodeEncoded = URLEncoder.encode(message,"utf-8");
+                        callSendChatApi(toServerUnicodeEncoded);
+                        editTextMessage.setText("");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

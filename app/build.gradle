@@ -87,5 +87,7 @@ dependencies {
     implementation('com.github.douglasjunior:android-simple-tooltip:master-SNAPSHOT') {
         changing = false // Gradle will then check for updates every 24 hours
     }
+
+    implementation "com.android.support:support-emoji:28.0.0"
 }
 apply plugin: 'com.google.gms.google-services'

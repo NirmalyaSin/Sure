@@ -35,26 +35,43 @@
 
                     <RelativeLayout
                         android:id="@+id/fl_profile_image"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerInParent="true">
 
-                        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/profile_image"
+                        <RelativeLayout
+                            android:id="@+id/rlUserImage"
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="@dimen/_80sdp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/prof_img_placeholder"
-                            app:civ_border_color="#FF000000"
-                            app:civ_border_width="0dp" />
+                            android:layout_centerHorizontal="true">
 
-                        <ImageView
-                            android:id="@+id/iv_plus_add_image"
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="@dimen/_30sdp"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentBottom="true"
-                            android:src="@drawable/camera_icon_updated" />
+                            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/profile_image"
+                                android:layout_width="@dimen/_80sdp"
+                                android:layout_height="@dimen/_80sdp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/prof_img_placeholder"
+                                app:civ_border_color="#FF000000"
+                                app:civ_border_width="0dp" />
+
+                            <ImageView
+                                android:id="@+id/iv_plus_add_image"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:src="@drawable/camera_icon_updated" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tvUserImageHint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/rlUserImage"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/press_to_upload"
+                            android:textColor="@color/whiteColor" />
                     </RelativeLayout>
                 </RelativeLayout>
 

@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:orientation="vertical">
 
@@ -114,8 +114,8 @@
                         android:layout_marginRight="@dimen/_30sdp"
                         android:layout_marginBottom="@dimen/_40sdp"
                         android:background="@drawable/login_submit_rounded_corner"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
                         android:text="@string/yes_it_down"
                         android:textAllCaps="false"
                         android:textColor="@color/whiteColor"

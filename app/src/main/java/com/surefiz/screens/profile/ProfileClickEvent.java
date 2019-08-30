@@ -453,6 +453,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 break;
             case R.id.iv_edit:
                 activity.iv_plus_add_image.setVisibility(View.VISIBLE);
+                activity.tvUserImageHint.setVisibility(View.VISIBLE);
                 activity.btn_register.setVisibility(View.VISIBLE);
                 activity.iv_edit.setVisibility(View.GONE);
                 activity.et_full.requestFocus();

@@ -1408,16 +1408,21 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         PieEntry muscelEntry = new PieEntry((float) muscelValue);
         entries.add(muscelEntry);
 
-        double boneValue = 0;
+        Double boneValue = 0.0;
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().size() > 2) {
             try {
                 boneValue = Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().get(1));
+
+                if (Double.isNaN(boneValue)) {
+                    boneValue = 0.0;
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
-                boneValue = 0;
+                boneValue = 0.0;
             }
         }
-        PieEntry boneEntry = new PieEntry((float) boneValue);
+        PieEntry boneEntry = new PieEntry(boneValue.floatValue());
         entries.add(boneEntry);
 
         double fatValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getFat();

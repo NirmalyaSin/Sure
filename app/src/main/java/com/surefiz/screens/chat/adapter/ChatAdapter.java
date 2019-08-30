@@ -15,6 +15,8 @@ import com.surefiz.screens.chat.ChatConstant;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.utils.ChatDateConverter;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
@@ -48,17 +50,27 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
             firstLoading = true;
         }
 
+        String processed = "";
+        try {
+            processed = URLDecoder.decode(arrayListConversation.get(position).getMessage(), "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            processed = "";
+        }
+
         switch (arrayListConversation.get(position).getMessageFrom()) {
             case ChatConstant.CHAT_FROM_SENDER:
                 holder.rlMessageRight.setVisibility(View.VISIBLE);
                 holder.rlMessageLeft.setVisibility(View.GONE);
-                holder.texMessageRight.setText(arrayListConversation.get(position).getMessage());
+                //holder.texMessageRight.setText(arrayListConversation.get(position).getMessage());
+                holder.texMessageRight.setText(processed);
                 holder.textDateTimeRight.setText(ChatDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
                 break;
             case ChatConstant.CHAT_FROM_RECEIVER:
                 holder.rlMessageRight.setVisibility(View.GONE);
                 holder.rlMessageLeft.setVisibility(View.VISIBLE);
-                holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
+                //holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
+                holder.textMessageLeft.setText(processed);
                 holder.textDateTimeLeft.setText(ChatDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
                 break;
         }

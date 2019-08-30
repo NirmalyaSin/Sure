@@ -53,7 +53,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -703,7 +702,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void validationAndApiCall() {
         if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
             MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
-        }else if (registrationActivity.et_first_name.getText().toString().equals("")) {
+        } else if (registrationActivity.et_first_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
         } /*else if (registrationActivity.et_middle_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your middle name");
@@ -794,7 +793,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void validationAndApiCallForIncompleteProfile() {
         if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
             MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
-        }else if (registrationActivity.et_first_name.getText().toString().equals("")) {
+        } else if (registrationActivity.et_first_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
         } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your last name");
@@ -816,11 +815,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                 !lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
             MethodUtils.errorMsg(registrationActivity, "Please enter valid scale ID");
-        }else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+        } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                 registrationActivity.et_confirm_scale_id.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter confirm scale ID");
-        } else if (!registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Scale ID and Confirm scale ID is not same");
+        } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                !registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
+            MethodUtils.errorMsg(registrationActivity, "Scale ID and confirm scale ID are not identical");
         } else if (registrationActivity.et_phone.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
         } else if (registrationActivity.et_management.getText().toString().equals("")) {
@@ -889,6 +889,16 @@ public class RegistrationClickEvent implements View.OnClickListener {
             } else {
                 selectionPopup.onWeightCallback.onSuccess(selectionList.get(1));
             }
+        } else if (data.getString("type").equalsIgnoreCase("0")) {
+            registrationActivity.tv_userSelection.setVisibility(View.GONE);
+            registrationActivity.rl_userselection.setVisibility(View.GONE);
+            registrationActivity.et_userselection.setText("");
+            registrationActivity.tv_weight.setVisibility(View.GONE);
+            registrationActivity.rl_weight.setVisibility(View.GONE);
+            registrationActivity.et_weight.setText("");
+            registrationActivity.tv_time_loss.setVisibility(View.GONE);
+            registrationActivity.rl_time_loss.setVisibility(View.GONE);
+            registrationActivity.et_time_loss.setText("");
         }
     }
 
@@ -1066,7 +1076,14 @@ public class RegistrationClickEvent implements View.OnClickListener {
         final AlertDialog dialog = new AlertDialog.Builder(registrationActivity).create();
         dialog.setTitle(R.string.app_name);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setMessage(msg);
+
+        if (!LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleid().equalsIgnoreCase("")) {
+            dialog.setMessage(registrationActivity.getResources().getString(R.string.sub_user_sign_up_success));
+        } else {
+            dialog.setMessage(msg);
+        }
+
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -1076,22 +1093,27 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     @Override
                     public void run() {
 
-                        if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
-
-                            Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
+                        if (!LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                                LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleid().equalsIgnoreCase("")) {
+                            Intent intent = new Intent(registrationActivity, LoginActivity.class);
                             registrationActivity.startActivity(intent);
                             registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            registrationActivity.finish();
-
+                            registrationActivity.finishAffinity();
                         } else {
-                            Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
-                            registrationActivity.startActivity(intent);
-                            registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            registrationActivity.finish();
+                            if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
+                                Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
+                                registrationActivity.startActivity(intent);
+                                registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                registrationActivity.finish();
+                            } else {
+                                Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
+                                registrationActivity.startActivity(intent);
+                                registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                registrationActivity.finish();
+                            }
                         }
                     }
                 }, GeneralToApp.SPLASH_WAIT_TIME);
-                return;
             }
         });
 

@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -244,8 +243,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 sb.append(s.toString().trim().replace("-", ""));
 
-                if (sb.length() > 3)
-                    sb.insert(3, "-");
+                if (sb.length() > 2)
+                    sb.insert(2, "-");
                 if (sb.length() > 7)
                     sb.insert(7, "-");
                 if (sb.length() > 12)
@@ -277,8 +276,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 sb.append(s.toString().trim().replace("-", ""));
 
-                if (sb.length() > 3)
-                    sb.insert(3, "-");
+                if (sb.length() > 2)
+                    sb.insert(2, "-");
                 if (sb.length() > 7)
                     sb.insert(7, "-");
                 if (sb.length() > 12)
@@ -483,17 +482,17 @@ public class RegistrationActivity extends AppCompatActivity {
         et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
         et_confirm_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
 
-        if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender())) {
-            if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("1")) {
-                et_gender.setText("Male");
-            } else if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("0")) {
-                et_gender.setText("Female");
-            } else if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("2")) {
-                et_gender.setText("Non-binary");
-            } else {
-                et_gender.setText("Prefer not to say");
-            }
+        //if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender())) {
+        if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("1")) {
+            et_gender.setText("Male");
+        } else if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("0")) {
+            et_gender.setText("Female");
+        } else if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("2")) {
+            et_gender.setText("Non-binary");
+        } else {
+            et_gender.setText("Prefer not to say");
         }
+        //}
 
         if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob())) {
             age.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserDob());

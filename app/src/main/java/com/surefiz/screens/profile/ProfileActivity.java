@@ -80,6 +80,7 @@ public class ProfileActivity extends BaseActivity {
     LinearLayout ll_add_new_password;
     EditText et_new_password;
     EditText et_confirm_password;
+    TextView tvUserImageHint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,7 @@ public class ProfileActivity extends BaseActivity {
 
     public void showViewMode() {
         iv_plus_add_image.setVisibility(View.GONE);
+        tvUserImageHint.setVisibility(View.GONE);
         btn_register.setVisibility(View.GONE);
         et_phone.setEnabled(false);
         et_full.setEnabled(false);
@@ -123,6 +125,7 @@ public class ProfileActivity extends BaseActivity {
     private void initView() {
         profile_image = view.findViewById(R.id.profile_image);
         iv_plus_add_image = view.findViewById(R.id.iv_plus_add_image);
+        tvUserImageHint=view.findViewById(R.id.tvUserImageHint);
         et_DOB = view.findViewById(R.id.et_DOB);
         et_phone = view.findViewById(R.id.et_phone);
         et_full = view.findViewById(R.id.et_full);

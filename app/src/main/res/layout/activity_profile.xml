@@ -189,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Email Id"
+                    android:text="Email ID"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -208,7 +208,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:hint="Enter Email Id"
+                        android:hint="Enter email ID"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"

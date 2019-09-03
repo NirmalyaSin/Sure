@@ -159,13 +159,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addSelectionListAndCall() {
-        selectionList.add("I will Provide the Info");
+        selectionList.add("I Will Provide the Info");
         selectionList.add("I want SureFiz™ to suggest");
 
         selectionPopup = new WeigtUniversalPopup(registrationActivity, selectionList, registrationActivity.et_userselection, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-                if (value.equals("I will Provide the Info")) {
+                if (value.equals("I Will Provide the Info")) {
                     registrationActivity.tv_weight.setVisibility(View.VISIBLE);
                     registrationActivity.rl_weight.setVisibility(View.VISIBLE);
                     registrationActivity.tv_time_loss.setVisibility(View.VISIBLE);

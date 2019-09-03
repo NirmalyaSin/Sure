@@ -496,13 +496,13 @@ public class AddUserDialogForOTP extends Dialog {
     }
 
     private void addSelectionListAndCall() {
-        selectionList.add("I will Provide the Info");
+        selectionList.add("I Will Provide the Info");
         selectionList.add("I want SureFiz™ to suggest");
 
         selectionPopup = new WeigtUniversalPopup(activity, selectionList, et_userselection, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-                if (value.equals("I will Provide the Info")) {
+                if (value.equals("I Will Provide the Info")) {
                     tv_weight.setVisibility(View.VISIBLE);
                     rl_weight.setVisibility(View.VISIBLE);
                     tv_time_loss.setVisibility(View.VISIBLE);

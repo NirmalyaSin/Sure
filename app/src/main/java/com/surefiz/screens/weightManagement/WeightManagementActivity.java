@@ -183,13 +183,13 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void addSelectionListAndCall() {
-        desiredWeightSelectionList.add("I will Provide the Info");
+        desiredWeightSelectionList.add("I Will Provide the Info");
         desiredWeightSelectionList.add("I want SureFiz™ to suggest");
 
         selectionPopup = new WeigtUniversalPopup(WeightManagementActivity.this, desiredWeightSelectionList, et_desired_weight_selection, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-                if (value.equals("I will Provide the Info")) {
+                if (value.equals("I Will Provide the Info")) {
                     et_desired_weight_selection.setText(desiredWeightSelectionList.get(0));
 
                     if (selectedWeightManagmentGoal == 1) {

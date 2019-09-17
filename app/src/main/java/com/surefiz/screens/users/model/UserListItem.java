@@ -27,6 +27,17 @@ public class UserListItem implements Serializable {
     @SerializedName("mainuservisibility")
     private int mainuservisibility;
 
+    @SerializedName("user_image")
+    private String user_image;
+
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
+    }
+
     public String getUserWeight() {
         return userWeight;
     }

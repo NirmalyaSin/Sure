@@ -91,6 +91,7 @@ public class AddEditReminderActivity extends BaseActivity implements
                                     finalDateTime);
 
                             break;
+
                     }
                 }
             }
@@ -230,12 +231,12 @@ public class AddEditReminderActivity extends BaseActivity implements
 
                     //Creates notification for Edited Reminder Only
                     if (!reminderId.equalsIgnoreCase("")) {
-                        new ReminderNotification(AddEditReminderActivity.this,reminderId, reminderText, dateTime);
+                        new ReminderNotification(AddEditReminderActivity.this, reminderId, reminderText, dateTime);
                     }
-
 
                     //Open dialog to show success message and close the page
                     showResponseDialog(response.body().getStatus(), response.body().getData().getMessage());
+
                 } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     String deviceToken = LoginShared.getDeviceToken(AddEditReminderActivity.this);
                     LoginShared.destroySessionTypePreference(AddEditReminderActivity.this);
@@ -321,7 +322,7 @@ public class AddEditReminderActivity extends BaseActivity implements
                 //Cancel the dialog.
                 dialog.dismiss();
                 Intent intent = new Intent();
-                intent.putExtra("action_type",getIntent().getStringExtra("action_type"));
+                intent.putExtra("action_type", getIntent().getStringExtra("action_type"));
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }

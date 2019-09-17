@@ -632,7 +632,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             tv_bone_dynamic.setVisibility(View.GONE);
         }
         btn_bone.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getStatus());
-        btn_bone.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getColourCode()));
+
+        try {
+            btn_bone.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getColourCode()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            btn_bone.setBackgroundColor(Color.parseColor("#05B085"));
+        }
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getValue() > 0.0) {
@@ -715,7 +721,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 //tv_battery_low_status.setVisibility(View.VISIBLE);
                 //rl_battery_image.setVisibility(View.GONE);
                 imageDrawable = R.drawable.battery1;
-                MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
+                MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low1));
                 break;
             case 2:
                 imageDrawable = R.drawable.battery2;
@@ -1522,9 +1528,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                             getWeightProgress().getLabel());
         }
+
         options.setXAxis(new ArrayList<HIXAxis>() {{
             add(xAxis);
         }});
+
         Number minY = null;
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                 getWeightProgress().getData().size() > 0) {
@@ -1552,7 +1560,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }});
 
         HITooltip tooltip = new HITooltip();
-        tooltip.setPointFormat("{series.name} produced <b>{point.y:,100.0f}</b><br/>warheads in {point.x}");
+        //tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b><br/>warheads in {point.x}");
+        tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b><br/>Week {point.x}");
+        //tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b>");
         options.setTooltip(tooltip);
 
         HIExporting exporting = new HIExporting();
@@ -2098,7 +2108,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             gauge.setName("Latest Weight");
             gauge.setTooltip(new HITooltip());
             gauge.getTooltip().setValueSuffix(" lbs");
-            gauge.setData(new ArrayList<>(Collections.singletonList(Integer.valueOf(gaugeChart.getGtw()))));
+            //gauge.setData(new ArrayList<>(Collections.singletonList(Integer.valueOf(gaugeChart.getGtw()))));
+            gauge.setData(new ArrayList<>(Collections.singletonList(Double.parseDouble(gaugeChart.getGtw()))));
 
             options.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
 

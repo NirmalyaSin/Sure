@@ -16,8 +16,8 @@ import butterknife.ButterKnife;
 public class WelcomeActivity extends AppCompatActivity {
     @BindView(R.id.txt_login)
     TextView tv_login;
-    @BindView(R.id.txt_signup)
-    TextView tv_signup;
+    /*@BindView(R.id.txt_signup)
+    TextView tv_signup;*/
     @BindView(R.id.txt_learn_more)
     TextView tv_learn_more;
 

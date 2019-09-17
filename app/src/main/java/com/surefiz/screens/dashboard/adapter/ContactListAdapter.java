@@ -55,10 +55,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ContactListViewHolder contactListViewHolder, int i) {
-
         if (row_user != 1) {
             if (LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId().
-                    equals(""+userLists.get(i).getServerUserId())) {
+                    equals("" + userLists.get(i).getServerUserId())) {
                 row_index = i;
                 row_user = 1;
             } else {
@@ -67,8 +66,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         }
 
         if (row_other != 1) {
-
-            if (activity.id.equals(""+userLists.get(i).getServerUserId())) {
+            if (activity.id.equals("" + userLists.get(i).getServerUserId())) {
                 row_index = i;
                 row_user = 1;
                 row_other = 1;
@@ -97,7 +95,23 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         } else {
             contactListViewHolder.iv_online.setVisibility(View.GONE);
         }*/
-        if (LoginShared.getUserPhoto(activity).equals("") || LoginShared.getUserPhoto(activity) == null ||
+
+
+        try {
+            if (!userLists.get(i).getUser_image().equals("")) {
+                imageLoader.displayImage(userLists.get(i).getUser_image(), contactListViewHolder.profile_image);
+            } else {
+                contactListViewHolder.profile_image.setImageResource
+                        (R.drawable.prof_img_placeholder);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            contactListViewHolder.profile_image.setImageResource
+                    (R.drawable.prof_img_placeholder);
+        }
+
+
+        /*if (LoginShared.getUserPhoto(activity).equals("") || LoginShared.getUserPhoto(activity) == null ||
                 LoginShared.getUserPhoto(activity).equalsIgnoreCase("null") ||
                 LoginShared.getUserPhoto(activity).isEmpty()) {
             contactListViewHolder.profile_image.setImageResource
@@ -105,12 +119,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         } else {
 
             if (LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId().equals(""+userLists.get(i).getServerUserId())) {
-                imageLoader.displayImage(LoginShared.getUserPhoto(activity), contactListViewHolder.profile_image);
+                //imageLoader.displayImage(LoginShared.getUserPhoto(activity), contactListViewHolder.profile_image);
+                imageLoader.displayImage(userLists.get(i).getUser_image(), contactListViewHolder.profile_image);
             } else {
                 contactListViewHolder.profile_image.setImageResource
                         (R.drawable.prof_img_placeholder);
             }
-        }
+        }*/
 
         if (userLists.get(i).getUserName() == null || userLists.get(i).getUserName().equals("") || userLists.get(i).getUserName().equalsIgnoreCase("null") || userLists.get(i).getUserName().isEmpty()) {
             contactListViewHolder.tv_name.setText("No Name");
@@ -118,9 +133,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             contactListViewHolder.tv_name.setText(userLists.get(i).getUserName());
         }
 
-        contactListViewHolder.rl_main.setOnClickListener(new View.OnClickListener()
-
-        {
+        contactListViewHolder.rl_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 row_index = i;
@@ -129,21 +142,20 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             }
         });
 
-        if (row_index == i)
-
-        {
+        if (row_index == i) {
             contactListViewHolder.view1.setBackgroundResource(R.drawable.login_edit_rounded_corner);
-        } else
-
-        {
+        } else {
             contactListViewHolder.view1.setBackgroundColor(Color.TRANSPARENT);
         }
-
     }
 
     @Override
     public int getItemCount() {
         return userLists.size();
+    }
+
+    public interface OnCircleViewClickListener {
+        void onViewClick(int position);
     }
 
     public class ContactListViewHolder extends RecyclerView.ViewHolder {
@@ -161,9 +173,5 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             rl_main = itemView.findViewById(R.id.rl_main);
             view1 = itemView.findViewById(R.id.view1);
         }
-    }
-
-    public interface OnCircleViewClickListener {
-        void onViewClick(int position);
     }
 }

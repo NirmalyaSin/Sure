@@ -49,6 +49,7 @@
 
 
     <string name="battery_status_low"><b>Battery Low!</b> Please change the battery in scale immediately.</string>
+    <string name="battery_status_low1"><b>Battery Low!</b> Please change the battery in scale soon.</string>
     <string name="battery_status">Battery Status:</string>
     <string name="visibility">Show My Performance to the Primary User</string>
     <string name="performance">Performance</string>
@@ -74,7 +75,7 @@ have the primary user registered before you login</string>
 
     <string name="sub_user_sign_up_success">You have signed up successfully. For you to start using the service, please have the primary user to
 complete his/her registration process.</string>
-    <string name="login"><u>Login</u></string>
+    <string name="login">Login</string>
     <string name="press_to_upload">Press the save button to update the profile image</string>
 
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->

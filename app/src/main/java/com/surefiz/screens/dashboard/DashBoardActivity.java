@@ -247,6 +247,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
+        }else {
+            super.onBackPressed();
         }
     }
 

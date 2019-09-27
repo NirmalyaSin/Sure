@@ -301,6 +301,7 @@
                     android:paddingTop="@dimen/_20sdp"
                     android:text="Re-Enter Email"
                     android:textColor="@color/whiteColor"
+                    android:visibility="gone"
                     android:textSize="@dimen/_14sdp" />
 
                 <RelativeLayout
@@ -310,6 +311,7 @@
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_9sdp"
                     android:layout_marginRight="@dimen/_18sdp"
+                    android:visibility="gone"
                     android:background="@drawable/edit_text_background">
 
                     <EditText
@@ -496,11 +498,9 @@
                     android:id="@+id/ll_confirm_scale_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:layout_marginRight="@dimen/_18sdp"
                     android:layout_marginLeft="@dimen/_18sdp"
-                    android:padding="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -545,6 +545,7 @@
                             android:paddingBottom="@dimen/_6sdp"
                             android:textColor="@color/whiteColor"
                             android:textColorHint="@color/whiteColor"
+                            android:imeOptions="actionNext"
                             android:textCursorDrawable="@drawable/cursor_color"
                             android:textSize="@dimen/_10sdp" />
 
@@ -554,6 +555,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_marginBottom="@dimen/_3sdp"
+                            android:visibility="gone"
                             android:src="@drawable/information"/>
                     </RelativeLayout>
                 </LinearLayout>

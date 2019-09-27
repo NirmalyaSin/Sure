@@ -111,7 +111,7 @@
             android:background="@drawable/shape_rectangle_blue"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp"
-            android:text="Save Reminder"
+            android:text="Set Reminder"
             android:textAllCaps="false"
             android:layout_marginLeft="@dimen/_30sdp"
             android:layout_marginRight="@dimen/_30sdp"

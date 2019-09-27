@@ -102,7 +102,7 @@ public class AddEditReminderActivity extends BaseActivity implements
         type = getIntent().getStringExtra("action_type");
         if (type.equals("add")) {
             buttonSaveReminder.setVisibility(View.VISIBLE);
-            tv_universal_header.setText("Create Reminder");
+            tv_universal_header.setText("Add Reminder");
             //set field with Current date
             editReminderDate.setText(getCurrentDate());
             //set field with Current time
@@ -113,7 +113,7 @@ public class AddEditReminderActivity extends BaseActivity implements
             mReminder = getIntent().getParcelableExtra("reminder");
             if (type.equals("view")) {
                 buttonSaveReminder.setVisibility(View.GONE);
-                tv_universal_header.setText("Reminder Details");
+                tv_universal_header.setText("View Reminder");
 
                 if (mReminder != null) {
                     editReminderText.setText(mReminder.getMessage());
@@ -128,7 +128,7 @@ public class AddEditReminderActivity extends BaseActivity implements
                 }
             } else if (type.equals("edit")) {
                 buttonSaveReminder.setVisibility(View.VISIBLE);
-                tv_universal_header.setText("Update Reminder");
+                tv_universal_header.setText("Edit Reminder");
 
                 if (mReminder != null) {
                     editReminderText.setText(mReminder.getMessage());

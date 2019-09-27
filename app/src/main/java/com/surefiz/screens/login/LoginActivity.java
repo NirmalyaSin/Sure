@@ -101,9 +101,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // REMOVE
         //editEmail.setText("kannanrasimo12@gmail.com");
         //editPassword.setText("12345678");
-        //editEmail.setText("pranay2@capitalnumbers.com");
+        editEmail.setText("pranay2@capitalnumbers.com");
         //editEmail.setText("kannanrasimo12@gmail.com");
-        //editPassword.setText("12345678");
+        editPassword.setText("12345678");
 
 
         //editEmail.setText("john103@surefiz.com");

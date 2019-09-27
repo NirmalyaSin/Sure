@@ -173,7 +173,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("Search Circle Users");
+        tv_universal_header.setText("Search Users");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);

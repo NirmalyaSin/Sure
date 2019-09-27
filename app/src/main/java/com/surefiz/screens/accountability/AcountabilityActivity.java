@@ -149,7 +149,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
             Intent messageIntent = new Intent(this, BoardCastActivity.class);
             startActivity(messageIntent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
+            //finish();
         });
     }
 

@@ -801,13 +801,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please enter your email");
         } else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
             MethodUtils.errorMsg(registrationActivity, "Please enter a valid email address");
-        } else if (registrationActivity.et_confirm_email.getText().toString().equals("")) {
+        } /*else if (registrationActivity.et_confirm_email.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter confirm email");
         } else if (!MethodUtils.isValidEmail(registrationActivity.et_confirm_email.getText().toString())) {
             MethodUtils.errorMsg(registrationActivity, "Please enter a valid confirm email address");
         } else if (!registrationActivity.et_confirm_email.getText().toString().equals(registrationActivity.et_email.getText().toString())) {
             MethodUtils.errorMsg(registrationActivity, "Email and Confirm Email is not same.");
-        }/* else if (registrationActivity.et_password.getText().toString().equals("")) {
+        } else if (registrationActivity.et_password.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your password");
         }*/ else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                 registrationActivity.et_scale_id.getText().toString().equals("")) {
@@ -1089,7 +1089,28 @@ public class RegistrationClickEvent implements View.OnClickListener {
             public void onClick(DialogInterface arg0, int arg1) {
                 dialog.dismiss();
 
-                new android.os.Handler().postDelayed(new Runnable() {
+
+                if (!LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                        LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleid().equalsIgnoreCase("")) {
+                    Intent intent = new Intent(registrationActivity, LoginActivity.class);
+                    registrationActivity.startActivity(intent);
+                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    registrationActivity.finishAffinity();
+                } else {
+                    if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
+                        Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
+                        registrationActivity.startActivity(intent);
+                        registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        registrationActivity.finish();
+                    } else {
+                        Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
+                        registrationActivity.startActivity(intent);
+                        registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        registrationActivity.finish();
+                    }
+                }
+
+                /*new android.os.Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
@@ -1113,7 +1134,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                             }
                         }
                     }
-                }, GeneralToApp.SPLASH_WAIT_TIME);
+                }, GeneralToApp.SPLASH_WAIT_TIME);*/
             }
         });
 

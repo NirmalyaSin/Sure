@@ -176,7 +176,15 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
             }
         } else {
 
-            tempUserList.addAll(userList);
+            //tempUserList.addAll(userList);
+
+            for (int i = 0; i < userList.size(); i++) {
+                if (String.valueOf(userList.get(i).getScaleUserId()).equalsIgnoreCase(LoginShared.getRegistrationDataModel(UserListActivity.this).getData().getUser().get(0).getScaleUserId())) {
+                    tempUserList.add(userList.get(i));
+                }
+
+                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
+            }
         }
 
         return tempUserList;

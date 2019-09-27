@@ -887,7 +887,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.iv_edit.setVisibility(View.VISIBLE);
                         activity.showViewMode();
-                        setData();
+                        //setData();
+                        getProfileDataAndSet();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(activity);
                         LoginShared.destroySessionTypePreference(activity);
@@ -992,7 +993,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                                 LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLastName());
                         MethodUtils.errorMsg(activity, jObject.getString("message"));
                         activity.showViewMode();
-                        setData();
+                        //setData();
+                        getProfileDataAndSet();
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(activity);
                         LoginShared.destroySessionTypePreference(activity);
@@ -1007,6 +1009,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                         MethodUtils.errorMsg(activity, jsObject.getString("message"));
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
                 }
             }

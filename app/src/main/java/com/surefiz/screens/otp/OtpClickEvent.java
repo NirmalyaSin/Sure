@@ -188,6 +188,9 @@ public class OtpClickEvent implements View.OnClickListener {
                         otpActivity.finishAffinity();*/
 
 
+                        LoginShared.setstatusforOtpvarification(otpActivity, true);
+
+
                         if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0||
                                 LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserMac().equals("")) {
                             Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);

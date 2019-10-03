@@ -76,7 +76,7 @@
                     android:background="@null"
                     android:backgroundTint="@android:color/transparent"
                     android:hint="Enter Your Email"
-                    android:inputType="text|textNoSuggestions"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/_6sdp"
                     android:textColor="@color/whiteColor"

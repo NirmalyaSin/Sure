@@ -1,5 +1,9 @@
 package com.surefiz.screens.otp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -25,6 +29,14 @@ public class OtpActivity extends AppCompatActivity {
     @BindView(R.id.btn_submit)
     Button btn_submit;
 
+    private BroadcastReceiver mOTPReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //updateUi();
+            setOTP();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,5 +55,18 @@ public class OtpActivity extends AppCompatActivity {
             et_third.setText("" + otpFromNotification.charAt(2));
             et_fourth.setText("" + otpFromNotification.charAt(3));
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(mOTPReceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver(mOTPReceiver, new IntentFilter("ON_OTP_RECEIVED"));
+
     }
 }

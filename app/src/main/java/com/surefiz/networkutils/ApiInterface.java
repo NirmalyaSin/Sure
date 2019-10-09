@@ -201,13 +201,15 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST(API_ADD_SOCIAL)
-    Call<ResponseBody> call_socialAddApi(@Field("socicalID") String socicalID,
+    Call<ResponseBody> call_socialAddApi(@Header("x-authorization") String token,
+                                         @Field("socialid") String socicalID,
                                          @Field("type") String medianame,
                                          @Field("userId") String userID);
 
     @FormUrlEncoded
     @POST(API_REMOVE_SOCIAL)
-    Call<ResponseBody> call_socialRemoveApi(@Field("type") String medianame,
+    Call<ResponseBody> call_socialRemoveApi(@Header("x-authorization") String token,
+                                            @Field("type") String medianame,
                                             @Field("userId") String userID);
 
     @FormUrlEncoded

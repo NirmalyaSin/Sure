@@ -134,6 +134,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         btn_add.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
+        rlFriendRequest.setVisibility(View.GONE);
         findViewById(R.id.iv_setting).setVisibility(View.VISIBLE);
         findViewById(R.id.iv_setting).setOnClickListener(view1 -> {
             Intent privacyIntent = new Intent(this, PrivacyActivity.class);
@@ -179,6 +180,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         Intent intent = new Intent(AcountabilityActivity.this, DashBoardActivity.class);
         intent.putExtra("id", arrayListUsers.get(position).getUser_id());
         intent.putExtra("page", "1");
+        intent.putExtra("Performance", "1");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();

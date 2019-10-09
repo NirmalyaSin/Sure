@@ -238,7 +238,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_boardcast:
                 if (et_message.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(BoardCastActivity.this, "Please enter some text to BoardCast");
+                    MethodUtils.errorMsg(BoardCastActivity.this, "Please enter some text to BroadCast.");
                 } else if (!ConnectionDetector.isConnectingToInternet(BoardCastActivity.this)) {
                     MethodUtils.errorMsg(BoardCastActivity.this, BoardCastActivity.this.getString(R.string.no_internet));
                 } else {

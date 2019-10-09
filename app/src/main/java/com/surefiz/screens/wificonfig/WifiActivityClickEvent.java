@@ -92,7 +92,14 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             mWifiManager.getWifiState();
             WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
             if (wifiInfo != null) {
-                String ssid = wifiInfo.getSSID();
+                //String ssid="";
+                //System.out.println("SSID: "+wifiInfo.getSSID());
+                String ssid;
+                if (!wifiInfo.getSSID().contains("unknown ssid")) {
+                    ssid = wifiInfo.getSSID();
+                } else {
+                    ssid="";
+                }
                 if (!TextUtils.isEmpty(ssid) && ssid.length() > 2
                         && ssid.startsWith("\"") && ssid.endsWith("\"")) {
                     ssid = ssid.substring(1, ssid.length() - 1);

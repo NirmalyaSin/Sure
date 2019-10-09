@@ -1,6 +1,7 @@
 package com.surefiz.screens.otp;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -189,6 +190,9 @@ public class OtpClickEvent implements View.OnClickListener {
 
 
                         LoginShared.setstatusforOtpvarification(otpActivity, true);
+
+                        NotificationManager notificationManager = (NotificationManager)otpActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+                        notificationManager.cancel(100);
 
 
                         if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0||

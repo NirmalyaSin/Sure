@@ -1001,10 +1001,15 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
                     if (jsonObject.optInt("status") == 1) {
 
+                        //System.out.println("scaleUserId: "+registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId());
+
+                        registrationActivity.registrationModel.getData().getUser().get(0).setUserMac(jsonObject.getJSONObject("data").getString("user_mac"));
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationActivity.registrationModel);
                         LoginShared.setUserPhoto(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
+
+                        //System.out.println("scaleUserId: "+registrationActivity.registrationModel.getData().getUser().get(0).getUserMac());
 
                         //MethodUtils.errorMsg(registrationActivity, jsonObject.getString("message"));
                         /*if (!LoginShared.getstatusforwifivarification(registrationActivity)) {

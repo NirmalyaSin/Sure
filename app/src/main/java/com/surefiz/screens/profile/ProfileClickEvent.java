@@ -572,7 +572,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getFacebookAccountLinked() == 0) {
-                    callFacebooklogin();
+                    activity.callFacebooklogin();
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getFacebookAccountLinked() == 1) {
                     callapiforRemoveSocial("fb");
                 }
@@ -599,13 +599,14 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         }
     }
 
-    private void callFacebooklogin() {
+    /*private void callFacebooklogin() {
         if (AccessToken.getCurrentAccessToken() != null) {
             requestData();
             return;
         }
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email,public_profile"));
+        //LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email"));
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -657,9 +658,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         System.out.println("facebookData: " + socialId + "," + socialName);
 
         callapiforAddSocail(socialId, "fb");
-    }
+    }*/
 
-    private void callapiforAddSocail(String socicalID, String medianame) {
+    public void callapiforAddSocail(String socicalID, String medianame) {
 
         LoadingData loader = new LoadingData(activity);
         loader.show_with_label("Loading");
@@ -668,7 +669,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         String userID = LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId();
 
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<ResponseBody> socialoginapicall = apiInterface.call_socialAddApi(socicalID,
+        Call<ResponseBody> socialoginapicall = apiInterface.call_socialAddApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(), socicalID,
                 medianame, userID);
 
         socialoginapicall.enqueue(new Callback<ResponseBody>() {
@@ -728,7 +729,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         String userID = LoginShared.getRegistrationDataModel(activity).getData().getUser().get(0).getUserId();
 
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<ResponseBody> socialoginapicall = apiInterface.call_socialRemoveApi(medianame, userID);
+        Call<ResponseBody> socialoginapicall = apiInterface.call_socialRemoveApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(), medianame, userID);
 
         socialoginapicall.enqueue(new Callback<ResponseBody>() {
             @Override

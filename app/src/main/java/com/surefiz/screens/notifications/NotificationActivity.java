@@ -107,7 +107,7 @@ public class NotificationActivity extends BaseActivity implements
         iv_edit.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
-        iv_friend_request.setVisibility(View.GONE);
+        rlFriendRequest.setVisibility(View.GONE);
     }
 
     private void setRecyclerViewItem() {

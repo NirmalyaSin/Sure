@@ -141,6 +141,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             id = getIntent().getStringExtra("id");
             if (getIntent().getStringExtra("page").equals("1")) {
                 rl_back.setVisibility(View.VISIBLE);
+                //rlFriendRequest.setVisibility(View.GONE);
                 tv_universal_header.setText("Performance");
                 img_topbar_menu.setVisibility(View.GONE);
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -156,6 +157,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 rv_items.setVisibility(View.GONE);
             } else {
                 rl_back.setVisibility(View.GONE);
+                //rlFriendRequest.setVisibility(View.VISIBLE);
                 img_topbar_menu.setVisibility(View.VISIBLE);
                 tv_universal_header.setText("Dashboard");
                 rv_items.setVisibility(View.VISIBLE);
@@ -438,6 +440,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                         setSubGoalsChart();
                                         showGoalsChart();
                                         setOtherOptions();
+                                        //showGoalsAndAcheivementsChart();
+
 
                                         checkForShowView();
                                     } else {
@@ -464,6 +468,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 public void run() {
                                     cv_gauge.setVisibility(View.VISIBLE);
                                     //cv_sub_goals.setVisibility(View.GONE);
+
                                     cv_achi_goals.setVisibility(View.GONE);
                                     cv_body_composition.setVisibility(View.GONE);
                                     implementHighChart(dashboardModel.getData().getChartList().getGuagechart());
@@ -511,7 +516,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         });
     }
 
-    private void showCharts(String chartName) {
+   /* private void showCharts(String chartName) {
         switch (chartName) {
             case "weightProgress":
                 setWeightChart();
@@ -535,7 +540,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 break;
 
         }
-    }
+    }*/
 
 
     private void checkForShowView() {
@@ -597,6 +602,12 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     private void setOtherOptions() {
 
+        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count()>0) {
+            tvFriendRequestCount.setVisibility(View.VISIBLE);
+            tvFriendRequestCount.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count());
+        }else {
+            tvFriendRequestCount.setVisibility(View.GONE);
+        }
 
         String nameText = "<font color=#788394> Name: " + "</font>" + "<font color=#B5B7BF>" + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUserName() + "</font>";
         String scaleText = "<font color=#788394> Scale ID: " + "</font>" + "<font color=#B5B7BF>" + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getScaleMacAddress() + "</font>";
@@ -609,6 +620,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         tv_height_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getHeight());
 
         try {
+
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getValue() > 0.0) {
                 tv_fat_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getValue()));
                 tv_fat_dynamic.setVisibility(View.VISIBLE);
@@ -619,8 +631,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
             tv_fat_dynamic.setVisibility(View.GONE);
         }
-        btn_fat.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getStatus());
-        btn_fat.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getColourCode()));
+
+        try {
+            btn_fat.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getStatus());
+            btn_fat.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getColourCode()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getValue() > 0.0) {
@@ -633,9 +650,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
             tv_bone_dynamic.setVisibility(View.GONE);
         }
-        btn_bone.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getStatus());
+
 
         try {
+            btn_bone.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getStatus());
             btn_bone.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getColourCode()));
         } catch (Exception e) {
             e.printStackTrace();
@@ -653,9 +671,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
             tv_muscle_dynamic.setVisibility(View.GONE);
         }
-        btn_muscle.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getStatus());
+
 
         try {
+            btn_muscle.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getStatus());
             btn_muscle.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getColourCode()));
         } catch (Exception e) {
             e.printStackTrace();
@@ -673,8 +692,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
             tv_bmi_dynamic.setVisibility(View.GONE);
         }
-        btn_bmi.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getStatus());
-        btn_bmi.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getColourCode()));
+
+        try {
+            btn_bmi.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getStatus());
+            btn_bmi.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getColourCode()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getValue() > 0.0) {
@@ -687,8 +711,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
             tv_water_dynamic.setVisibility(View.GONE);
         }
-        btn_water.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getStatus());
-        btn_water.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getColourCode()));
+
+        try {
+            btn_water.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getStatus());
+            btn_water.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getColourCode()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getValue() > 0.0) {
@@ -701,12 +730,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
             tv_protein_dynamic.setVisibility(View.GONE);
         }
-        btn_protein.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getStatus());
-        btn_protein.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getColourCode()));
+
+        try {
+            btn_protein.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getStatus());
+            btn_protein.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getColourCode()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         tv_recorded.setText("Recorded on " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getRecordedOn());
 
-        System.out.println("BatteryStatus: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
+        //System.out.println("BatteryStatus: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
         showBatteryStatus(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
     }
 
@@ -754,6 +788,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void viewBind() {
         chartView = findViewById(R.id.hc_weight);
         chartView.setOptions(options);
+        chartView.setWillNotDraw(true);
         chartViewLoss = findViewById(R.id.hc_weight_loss);
         pieChatBodyComposition = findViewById(R.id.pieChatBodyComposition);
 //        chartViewLoss.setOptions(optionsLoss);
@@ -1493,6 +1528,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     private void setWeightChart() {
 
+        chartView.setWillNotDraw(false);
+
         HIChart chart = new HIChart();
         chart.setType("area");
         //Required for gradient Background
@@ -2002,8 +2039,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         btn_add.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.VISIBLE);
-        iv_friend_request.setVisibility(View.VISIBLE);
-        iv_friend_request.setOnClickListener(new View.OnClickListener() {
+        rlFriendRequest.setVisibility(View.VISIBLE);
+        rlFriendRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DashBoardActivity.this, NotificationActivity.class);

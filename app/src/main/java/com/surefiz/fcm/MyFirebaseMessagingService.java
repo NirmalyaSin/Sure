@@ -29,6 +29,7 @@ import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
+import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -100,13 +101,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     LoginShared.setWeightFromNotification(this, "7");
                 } else if (jObject.optInt("pushType") == 9) {
                     LoginShared.setOTP(this, jObject.optString("OTP"));
+                    callOTPReceived();
                 } else if (jObject.optInt("pushType") == 10) {
                     LoginShared.setWeightFromNotification(this, "10");
                 } else if (jObject.optInt("pushType") == 3) {
                     LoginShared.setWeightFromNotification(this, "3");
                 } else if (jObject.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
-                }else if (jObject.optInt("pushType") == 12) {
+                } else if (jObject.optInt("pushType") == 12) {
                     LoginShared.setWeightFromNotification(this, "12");
                 } else {
                     //LoginShared.setWeightFromNotification(this, "7");
@@ -151,6 +153,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.putExtra("ScaleUserId", jObject.optString("ScaleUserId"));
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
         }
+    }
+
+    private void callOTPReceived() {
+        Intent intent = new Intent("ON_OTP_RECEIVED");
+        sendBroadcast(intent);
     }
     // [END receive_message]
 
@@ -221,6 +228,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.putExtra("ScaleUserId", jObject.optString("ScaleUserId"));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+            pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        } else if (jObject.optInt("pushType") == 9) {
+            Intent intent = new Intent(this, OtpActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
         } else if (jObject.optInt("pushType") == 6) {
@@ -310,7 +322,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);*/
-        }else if (jObject.optInt("pushType") == 12) {
+        } else if (jObject.optInt("pushType") == 12) {
             Intent intent = new Intent(this, BoardCastActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,

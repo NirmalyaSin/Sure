@@ -122,15 +122,36 @@
             android:src="@drawable/iv_setting"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/iv_friend_request"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rlFriendRequest"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:padding="@dimen/_10sdp"
-            android:src="@drawable/ic_friend_request"
-            android:visibility="gone" />
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_friend_request"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/ic_friend_request" />
+
+            <TextView
+                android:id="@+id/tvFriendRequestCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_6sdp"
+                android:background="@drawable/red_cirlce"
+                android:textStyle="bold"
+                android:padding="@dimen/_3sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/whiteColor"/>
+        </RelativeLayout>
 
     </RelativeLayout>
 

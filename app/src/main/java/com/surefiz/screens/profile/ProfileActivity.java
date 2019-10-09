@@ -19,6 +19,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.gun0912.tedpermission.PermissionListener;
@@ -29,10 +37,13 @@ import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.utils.MediaUtils;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import butterknife.ButterKnife;
@@ -345,5 +356,69 @@ public class ProfileActivity extends BaseActivity {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private CallbackManager callbackManager;
+
+    public void callFacebooklogin() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            requestData();
+            return;
+        }
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logInWithReadPermissions(ProfileActivity.this, Arrays.asList("email,public_profile"));
+        //LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email"));
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        requestData();
+                        loginResult.getAccessToken();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        System.out.println();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        System.out.println();
+                        exception.printStackTrace();
+                    }
+                });
+    }
+
+
+    private void requestData() {
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                JSONObject json = response.getJSONObject();
+
+                parseFacebookJsonAndAPiCall(json, AccessToken.getCurrentAccessToken());
+
+            }
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link,email,picture.width(750).height(750)");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    private void parseFacebookJsonAndAPiCall(final JSONObject jsonObjectFbResult, final AccessToken currentAccessToken) {
+        if (jsonObjectFbResult == null)
+            return;
+
+        final String socialEmail = jsonObjectFbResult.optString("email");
+        String socialId = jsonObjectFbResult.optString("id");
+        String socialName = jsonObjectFbResult.optString("name");
+
+
+        System.out.println("facebookData: " + socialId + "," + socialName);
+
+        profileClickEvent.callapiforAddSocail(socialId, "fb");
     }
 }

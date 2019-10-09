@@ -28,6 +28,9 @@ public class CurrentCompositions {
     @SerializedName("battery")
     private int battery;
 
+    @SerializedName("friendrequest_count")
+    private int friendrequest_count;
+
     @SerializedName("water")
     private BodyFat water;
 
@@ -134,5 +137,13 @@ public class CurrentCompositions {
 
     public void setbMI(BodyFat bMI) {
         this.bMI = bMI;
+    }
+
+    public int getFriendrequest_count() {
+        return friendrequest_count;
+    }
+
+    public void setFriendrequest_count(int friendrequest_count) {
+        this.friendrequest_count = friendrequest_count;
     }
 }

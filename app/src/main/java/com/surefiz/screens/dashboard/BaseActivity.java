@@ -40,6 +40,8 @@ import com.surefiz.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
 
+import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -86,8 +88,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public TextView tv_signout;
     @BindView(R.id.img_topbar_menu)
     public ImageButton img_topbar_menu;
-    @BindView(R.id.iv_friend_request)
-    public ImageView iv_friend_request;
+    @BindView(R.id.rlFriendRequest)
+    public RelativeLayout rlFriendRequest;
+    @BindView(R.id.tvFriendRequestCount)
+    public TextView tvFriendRequestCount;
     @BindView(R.id.tv_universal_header)
     public TextView tv_universal_header;
     @BindView(R.id.iv_edit)
@@ -278,7 +282,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                         "&key=" + md5Converter(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPassword());*/
 
 
-                String forumUrl = "https://www.surefiz.com/Home/forum/?id=" + LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId() +
+                String forumUrl = "https://www.surefiz.com/Home/Forum?id=" + LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId() +
                         "&key=" + md5Converter(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPassword());
 
                 System.out.println("forumUrl: " + forumUrl);
@@ -354,7 +358,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public String md5Converter(String s) {
+    /*public String md5Converter(String s) {
         try {
             // Create MD5 Hash
             MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
@@ -368,6 +372,26 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }*/
+
+
+    public static String md5Converter(String s)
+    {
+        MessageDigest digest;
+        try
+        {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(Charset.forName("US-ASCII")),0,s.length());
+            byte[] magnitude = digest.digest();
+            BigInteger bi = new BigInteger(1, magnitude);
+            String hash = String.format("%0" + (magnitude.length << 1) + "x", bi);
+            return hash;
+        }
+        catch (NoSuchAlgorithmException e)
+        {
             e.printStackTrace();
         }
         return "";

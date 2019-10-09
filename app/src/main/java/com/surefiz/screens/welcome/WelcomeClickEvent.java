@@ -20,7 +20,7 @@ public class WelcomeClickEvent implements View.OnClickListener {
     private void setOnClick() {
 
         welcomeActivity.tv_login.setOnClickListener(this);
-        //welcomeActivity.tv_signup.setOnClickListener(this);
+        welcomeActivity.tv_signup.setOnClickListener(this);
         welcomeActivity.tv_learn_more.setOnClickListener(this);
     }
 
@@ -33,18 +33,18 @@ public class WelcomeClickEvent implements View.OnClickListener {
                 welcomeActivity.startActivity(loginintent);
                 break;
 
-            /*case R.id.txt_signup:
+            case R.id.tv_signup:
 
-                *//*String url = "https://www.surefiz.com/Signup";
+                /*String url = "https://www.surefiz.com/Signup";
                 Intent howToSignUpintent = new Intent(welcomeActivity, AboutUsActivity.class);
                 howToSignUpintent.putExtra("url", url);
                 howToSignUpintent.putExtra("menu", false);
                 howToSignUpintent.putExtra("header", "How to Sign up");
-                welcomeActivity.startActivity(howToSignUpintent);*//*
+                welcomeActivity.startActivity(howToSignUpintent);*/
 
                 showHowToSignupDialog();
 
-                break;*/
+                break;
 
             case R.id.txt_learn_more:
                 String urlvalue = "https://www.surefiz.com/InShort";

@@ -49,6 +49,7 @@ import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
@@ -559,6 +560,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked() == 0) {
+
+                    activity.fbcallbackManager=null;
+
                     Auth.GoogleSignInApi.signOut(googleApiClient);
                     Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                     activity.startActivityForResult(intent, RC_SIGN_IN_GOOGLE);
@@ -685,9 +689,11 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     Log.d("@@AddSocial : ", jsonObject.toString());
 
                     JSONObject jsObject = jsonObject.getJSONObject("data");
-                    MethodUtils.errorMsg(activity, jsObject.getString("message"));
+                    //MethodUtils.errorMsg(activity, jsObject.getString("message"));
 
                     if (jsonObject.optInt("status") == 1) {
+
+                        MethodUtils.errorMsg(activity, jsObject.getString("message"));
 
                         ViewProfileModel viewProfileModel = LoginShared.getViewProfileDataModel(activity);
 
@@ -701,10 +707,17 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
                         setSocialAddButtonStatus();
 
-                    } /*else {
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(activity);
+                        LoginShared.destroySessionTypePreference(activity);
+                        LoginShared.setDeviceToken(activity, deviceToken);
+                        Intent loginIntent = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(loginIntent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        activity.finish();
+                    } else {
                         MethodUtils.errorMsg(activity, jsObject.getString("message"));
-                    }*/
+                    }
                 } catch (Exception e) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
                 }

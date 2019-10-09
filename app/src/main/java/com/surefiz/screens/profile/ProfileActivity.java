@@ -34,7 +34,6 @@ import com.gun0912.tedpermission.TedPermission;
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.screens.dashboard.BaseActivity;
-import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.utils.MediaUtils;
 
 import org.json.JSONObject;
@@ -83,15 +82,16 @@ public class ProfileActivity extends BaseActivity {
     Button btn_register;
     Switch switch_visibility;
     RelativeLayout rl_visibility;
-    private File mFile = null;
-    private Uri fileUri = null;
-    private OnImageSet onImageSet;
     TextView btnGoogleAdd;
     TextView btnFacebookAdd;
     LinearLayout ll_add_new_password;
     EditText et_new_password;
     EditText et_confirm_password;
     TextView tvUserImageHint;
+    private File mFile = null;
+    private Uri fileUri = null;
+    private OnImageSet onImageSet;
+    public CallbackManager fbcallbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +136,7 @@ public class ProfileActivity extends BaseActivity {
     private void initView() {
         profile_image = view.findViewById(R.id.profile_image);
         iv_plus_add_image = view.findViewById(R.id.iv_plus_add_image);
-        tvUserImageHint=view.findViewById(R.id.tvUserImageHint);
+        tvUserImageHint = view.findViewById(R.id.tvUserImageHint);
         et_DOB = view.findViewById(R.id.et_DOB);
         et_phone = view.findViewById(R.id.et_phone);
         et_full = view.findViewById(R.id.et_full);
@@ -205,6 +205,9 @@ public class ProfileActivity extends BaseActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
 // Always show the chooser (if there are multiple options available)
+
+
+        fbcallbackManager =null;
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY);
     }
 
@@ -229,6 +232,8 @@ public class ProfileActivity extends BaseActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 
         // start the image capture Intent
+
+        fbcallbackManager =null;
         startActivityForResult(intent, CAMERA);
     }
 
@@ -300,12 +305,15 @@ public class ProfileActivity extends BaseActivity {
 
                 break;
 
-            case ProfileClickEvent.RC_SIGN_IN_GOOGLE :
+            case ProfileClickEvent.RC_SIGN_IN_GOOGLE:
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 profileClickEvent.handleSignInResult(result);
 
                 break;
             default:
+                if (fbcallbackManager != null) {
+                    fbcallbackManager.onActivityResult(requestCode, resultCode, data);
+                }
                 break;
 
         }
@@ -358,18 +366,88 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-
-    private CallbackManager callbackManager;
-
-    public void callFacebooklogin() {
+    /*public void callFacebooklogin() {
         if (AccessToken.getCurrentAccessToken() != null) {
             requestData();
             return;
         }
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logInWithReadPermissions(ProfileActivity.this, Arrays.asList("email,public_profile"));
-        //LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email"));
         LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        requestData();
+                        loginResult.getAccessToken();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        System.out.println();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        System.out.println();
+                        exception.printStackTrace();
+                    }
+                });
+    }
+
+    public void requestData() {
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                JSONObject json = response.getJSONObject();
+
+                parseFacebookJsonAndAPiCall(json, AccessToken.getCurrentAccessToken());
+
+            }
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link,email,picture.width(750).height(750)");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    private void parseFacebookJsonAndAPiCall(final JSONObject jsonObjectFbResult, final AccessToken currentAccessToken) {
+        if (jsonObjectFbResult == null)
+            return;
+
+        final String socialEmail = jsonObjectFbResult.optString("email");
+        String socialId = jsonObjectFbResult.optString("id");
+        String socialName = jsonObjectFbResult.optString("name");
+//        String socialBirthDay = jsonObjectFbResult.optString("birthday");
+        String password = socialId + "astro!@#";
+        String socialProfileImage = "";
+        if (jsonObjectFbResult.optJSONObject("picture") != null) {
+            JSONObject obj = jsonObjectFbResult.optJSONObject("picture");
+            if (obj.has("data")) {
+                JSONObject data = obj.optJSONObject("data");
+                if (data.has("url")) {
+                    socialProfileImage = data.optString("url");
+                }
+            }
+        }
+        //Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
+        //loginwithSocial(socialName, socialId, getString(R.string.fb_login_type));
+        *//*callapiforSocaillogin(socialId, socialEmail, socialName, getString(R.string.fb_login_type), socialProfileImage,
+                "", "", currentAccessToken.toString());*//*
+
+
+        profileClickEvent.callapiforAddSocail(socialId, "fb");
+    }*/
+
+    public void callFacebooklogin() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            requestData();
+            return;
+        }
+        fbcallbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logInWithReadPermissions(ProfileActivity.this, Arrays.asList("email,public_profile"));
+        //LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email"));
+        LoginManager.getInstance().registerCallback(fbcallbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {

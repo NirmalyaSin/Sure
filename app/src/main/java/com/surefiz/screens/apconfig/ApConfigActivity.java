@@ -230,11 +230,13 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         final String scaleName = "WS915_V2.6_V1.5-";
         //int scaleId = LoginShared.getScaleUserId(this);
         int scaleId = LoginShared.getUserMacId(this);
-        String networkSSID = scaleName + scaleId;
+        //String networkSSID = scaleName + scaleId;
+        String networkSSID = "";
         ScanResult scanResult = null;
         for (ScanResult result : scanResultsWifi) {
             if (result.SSID.endsWith("" + scaleId)) {
                 scanResult = result;
+                networkSSID = scanResult.SSID;
                 break;
             }
 
@@ -246,6 +248,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         if (scanResult != null) {
             WifiConfiguration conf = new WifiConfiguration();
             conf.SSID = "\"" + networkSSID + "\"";
+            //conf.SSID = "\"" + scanResult.SSID + "\"";
             conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             wifiManager.addNetwork(conf);

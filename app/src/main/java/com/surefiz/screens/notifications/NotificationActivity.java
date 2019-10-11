@@ -176,7 +176,7 @@ public class NotificationActivity extends BaseActivity implements
                         Intent loginIntent = new Intent(NotificationActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         MethodUtils.errorMsg(NotificationActivity.this, response.body().getData().getMessage());
                     }

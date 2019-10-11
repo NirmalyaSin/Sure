@@ -3,8 +3,10 @@ package com.surefiz.screens.dashboard;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -36,7 +38,6 @@ import com.highsoft.highcharts.common.hichartsclasses.HICSSObject;
 import com.highsoft.highcharts.common.hichartsclasses.HIChart;
 import com.highsoft.highcharts.common.hichartsclasses.HIColumn;
 import com.highsoft.highcharts.common.hichartsclasses.HICondition;
-import com.highsoft.highcharts.common.hichartsclasses.HICredits;
 import com.highsoft.highcharts.common.hichartsclasses.HIDataLabels;
 import com.highsoft.highcharts.common.hichartsclasses.HIExporting;
 import com.highsoft.highcharts.common.hichartsclasses.HIGauge;
@@ -61,6 +62,7 @@ import com.highsoft.highcharts.common.hichartsclasses.HITooltip;
 import com.highsoft.highcharts.common.hichartsclasses.HIXAxis;
 import com.highsoft.highcharts.common.hichartsclasses.HIYAxis;
 import com.highsoft.highcharts.core.HIChartView;
+import com.highsoft.highcharts.core.HIFunction;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -198,7 +200,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
         }
 
-        System.out.println("versionName: " + osVersion + " " + appVersion);
+        //System.out.println("versionName: " + osVersion + " " + appVersion);
 
         return appVersion;
     }
@@ -341,7 +343,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     tempUserList.add(userList.get(i));
                 }
 
-                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
+                //System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
             }
         } else {
 
@@ -351,7 +353,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     tempUserList.add(userList.get(i));
                 }
 
-                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
+                //System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
             }
             //tempUserList.addAll(userList);
         }
@@ -794,20 +796,32 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void viewBind() {
         chartView = findViewById(R.id.hc_weight);
         chartView.setOptions(options);
-        chartView.setWillNotDraw(true);
+        //chartView.setWillNotDraw(true);
+
+
         chartViewLoss = findViewById(R.id.hc_weight_loss);
         pieChatBodyComposition = findViewById(R.id.pieChatBodyComposition);
 //        chartViewLoss.setOptions(optionsLoss);
         chartViewBmi = findViewById(R.id.hc_bmi);
         chartViewBmi.setOptions(optionsBMI);
+        //chartViewBmi.setWillNotDraw(true);
+
         chartViewGoals = findViewById(R.id.hc_goals);
         chartViewGoals.setOptions(optionsGoals);
+        //chartViewGoals.setWillNotDraw(true);
+
         chartViewSubGoals = findViewById(R.id.hc_sub_goals);
         chartViewSubGoals.setOptions(optionsSubGoals);
+        //chartViewSubGoals.setWillNotDraw(true);
+
         chartViewAchiGoals = findViewById(R.id.hc_achi_goals);
         chartViewAchiGoals.setOptions(optionsAchiGoals);
+        //chartViewAchiGoals.setWillNotDraw(true);
+
         chartGauge = findViewById(R.id.hc_gauge);
         chartGauge.setOptions(optionsAchiGoals);
+        //chartGauge.setWillNotDraw(true);
+
         tv_name = findViewById(R.id.tv_name);
         tv_mac = findViewById(R.id.tv_mac);
         tv_weight_dynamic = findViewById(R.id.tv_weight_dynamic);
@@ -855,39 +869,40 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         rl_battery_image = findViewById(R.id.rl_battery_image);
         img_battery_status = findViewById(R.id.img_battery_status);
 
-
-
-       /* cv_weight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashBoardActivity.this,
-                        SingleChartActivity.class);
-                startActivity(intent);
-            }
-        });*/
+        setEmptyWeightChart();
+        setEmptyBMIChart();
+        setEmptySubGoalsChart();
+        showEmptyGoalsChart();
+        showEmptyGoalsAndAcheivementsChart();
+        implementEmptyHighChart();
     }
 
     private void setSubGoalsChart() {
 
-        HIChart chart = new HIChart();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-        HIGradient gradient = new HIGradient(0, 0, 0, 1);
+                try {
+                    //chartViewSubGoals.setWillNotDraw(false);
+                    HIChart chart = new HIChart();
 
-        LinkedList<HIStop> stops = new LinkedList<>();
-        stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
-        stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
+                    HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
-        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+                    LinkedList<HIStop> stops = new LinkedList<>();
+                    stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
+                    stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
 
-        chart.setType("column");
-        HILegend hiLegend = new HILegend();
-        HICSSObject hicssObject = new HICSSObject();
-        hicssObject.setColor("#ffffff");  //Removed
-        hiLegend.setItemStyle(hicssObject);
-        optionsSubGoals.setLegend(hiLegend);
+                    chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
+                    chart.setType("column");
+                    HILegend hiLegend = new HILegend();
+                    HICSSObject hicssObject = new HICSSObject();
+                    hicssObject.setColor("#ffffff");  //Removed
+                    hiLegend.setItemStyle(hicssObject);
+                    optionsSubGoals.setLegend(hiLegend);
 
 
-        chart.setRenderTo("container");
+                    chart.setRenderTo("container");
         /*chart.setOptions3d(new HIOptions3d());
         chart.getOptions3d().setEnabled(true);
         chart.getOptions3d().setAlpha(15);
@@ -903,277 +918,504 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         hiOptions3d.setDepth(100);
         chart.setOptions3d(hiOptions3d);*/
 
-        optionsSubGoals.setChart(chart);
+                    optionsSubGoals.setChart(chart);
 
-        HITitle title = new HITitle();
-        title.setUseHTML(true);
-        title.setText("<p style='color: #ffffff; text-align: center;'>Your Sub Goals Progress</p>");
-        optionsSubGoals.setTitle(title);
+                    HITitle title = new HITitle();
+                    title.setUseHTML(true);
+                    title.setText("<p style='color: #ffffff; text-align: center;'>Your Sub Goals Progress</p>");
+                    optionsSubGoals.setTitle(title);
 
-        HIXAxis xAxis = new HIXAxis();
-        HITitle hiXTitle = new HITitle();
-        hiXTitle.setText("<p style='color: #ffffff; '>Weeks</p>");
-        xAxis.setTitle(hiXTitle);
-        String[] categoriesList = new String[]{"Apples", "Oranges", "Pears", "Grapes", "Bananas"};
-        xAxis.setCategories((ArrayList<String>)
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getWeeks());
-        HILabels hiLabels = new HILabels();
-        hiLabels.setStyle(hicssObject);
-        xAxis.setLabels(hiLabels);
-        hiLabels.setSkew3d(true);
-        HIStyle hiStyle = new HIStyle();
-        hiStyle.setFontSize("16px");
+                    HIXAxis xAxis = new HIXAxis();
+                    HITitle hiXTitle = new HITitle();
+                    hiXTitle.setText("<p style='color: #ffffff; '>Weeks</p>");
+                    xAxis.setTitle(hiXTitle);
+                    String[] categoriesList = new String[]{"Apples", "Oranges", "Pears", "Grapes", "Bananas"};
+                    xAxis.setCategories((ArrayList<String>)
+                            LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getWeeks());
+                    HILabels hiLabels = new HILabels();
+                    hiLabels.setStyle(hicssObject);
+                    xAxis.setLabels(hiLabels);
+                    hiLabels.setSkew3d(true);
+                    HIStyle hiStyle = new HIStyle();
+                    hiStyle.setFontSize("16px");
 
-        optionsSubGoals.setXAxis(new ArrayList<HIXAxis>() {{
-            add(xAxis);
-        }});
+                    optionsSubGoals.setXAxis(new ArrayList<HIXAxis>() {{
+                        add(xAxis);
+                    }});
 
-        HIExporting exporting = new HIExporting();
-        exporting.setEnabled(false);
-        optionsSubGoals.setExporting(exporting);
+                    HIExporting exporting = new HIExporting();
+                    exporting.setEnabled(false);
+                    optionsSubGoals.setExporting(exporting);
 
-        HIYAxis yAxis = new HIYAxis();
-        yAxis.setAllowDecimals(false);
-        yAxis.setMin(0);
-        HITitle hiTitle = new HITitle();
-        hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
-        hiTitle.setSkew3d(true);
-        hiLabels.setStyle(hicssObject);
-        yAxis.setTitle(hiTitle);
-        yAxis.setLabels(hiLabels);
-        optionsSubGoals.setYAxis(new ArrayList<HIYAxis>() {{
-            add(yAxis);
-        }});
+                    HIYAxis yAxis = new HIYAxis();
+                    yAxis.setAllowDecimals(false);
+                    yAxis.setMin(0);
+                    HITitle hiTitle = new HITitle();
+                    hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
+                    hiTitle.setSkew3d(true);
+                    hiLabels.setStyle(hicssObject);
+                    yAxis.setTitle(hiTitle);
+                    yAxis.setLabels(hiLabels);
+                    optionsSubGoals.setYAxis(new ArrayList<HIYAxis>() {{
+                        add(yAxis);
+                    }});
 
-        HITooltip tooltip = new HITooltip();
-        tooltip.setHeaderFormat("<b>{point.key}</b><br>");
-        tooltip.setPointFormat("<span style=\"color:{series.color}\"></span> {series.name}: {point.y} / {point.stackTotal}");
-        optionsSubGoals.setTooltip(tooltip);
+                    HITooltip tooltip = new HITooltip();
+                    tooltip.setHeaderFormat("<b>{point.key}</b><br>");
+                    tooltip.setPointFormat("<span style=\"color:{series.color}\"></span> {series.name}: {point.y} / {point.stackTotal}");
+                    optionsSubGoals.setTooltip(tooltip);
 
-        HIPlotOptions plotOptions = new HIPlotOptions();
-        HIColumn hiColumn = new HIColumn();
-        hiColumn.setDepth(25);
-        plotOptions.setColumn(hiColumn);
-        plotOptions.getColumn().setBorderWidth(0);
-        //hiColumn.setStacking("normal");
-        //hiColumn.setDepth(40);
-        optionsSubGoals.setPlotOptions(plotOptions);
+                    HIPlotOptions plotOptions = new HIPlotOptions();
+                    HIColumn hiColumn = new HIColumn();
+                    hiColumn.setDepth(25);
+                    plotOptions.setColumn(hiColumn);
+                    plotOptions.getColumn().setBorderWidth(0);
+                    //hiColumn.setStacking("normal");
+                    //hiColumn.setDepth(40);
+                    optionsSubGoals.setPlotOptions(plotOptions);
 
-        HIColumn series1 = new HIColumn();
-        series1.setColorByPoint(true);
-        series1.setName("Expected Weight To Go");
+                    HIColumn series1 = new HIColumn();
+                    series1.setColorByPoint(true);
+                    series1.setName("Expected Weight To Go");
 //        series1.setColor(HIColor.initWithRGB(73,183,130));
 //        series1.setColor(HIColor.initWithHexValue("#49b782"));
-        Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo().toArray(new Number[0]);
+                    Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo().toArray(new Number[0]);
 
 
-        Number[] numbers = new Number[series1_data.length];
-        ArrayList<String> colors1 = new ArrayList<>();
-        ArrayList<String> colors2 = new ArrayList<>();
+                    Number[] numbers = new Number[series1_data.length];
+                    ArrayList<String> colors1 = new ArrayList<>();
+                    ArrayList<String> colors2 = new ArrayList<>();
 
-        for (int i = 0; i < series1_data.length; i++) {
-            numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
-            colors1.add("#49b782");
-        }
-        series1.setShowInLegend(true);
-        series1.setColor(HIColor.initWithRGB(73, 183, 130));
-        series1.setColors(colors1);
-        series1.setData(new ArrayList<>(Arrays.asList(numbers)));
+                    for (int i = 0; i < series1_data.length; i++) {
+                        numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                        colors1.add("#49b782");
+                    }
+                    series1.setShowInLegend(true);
+                    series1.setColor(HIColor.initWithRGB(73, 183, 130));
+                    series1.setColors(colors1);
+                    series1.setData(new ArrayList<>(Arrays.asList(numbers)));
 //        series1.setStack("male");
-        HIColumn series2 = new HIColumn();
-        series2.setColorByPoint(true);
-        series2.setName("Acheived Weight");
+                    HIColumn series2 = new HIColumn();
+                    series2.setColorByPoint(true);
+                    series2.setName("Acheived Weight");
 //        series2.setColor(HIColor.initWithRGB(255,175,68));
 //        series2.setColor(HIColor.initWithHexValue("#FFAF44"));
-        Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight().toArray(new Number[0]);
-        Number[] numbers1 = new Number[series2_data.length];
-        for (int i = 0; i < series2_data.length; i++) {
-            numbers1[i] = Double.parseDouble(String.valueOf(series2_data[i]));
-            colors2.add("#FFAF44");
-        }
+                    Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight().toArray(new Number[0]);
+                    Number[] numbers1 = new Number[series2_data.length];
+                    for (int i = 0; i < series2_data.length; i++) {
+                        numbers1[i] = Double.parseDouble(String.valueOf(series2_data[i]));
+                        colors2.add("#FFAF44");
+                    }
 //        series2.setColor(HIColor.initWithRGB(255,175,68));
-        series2.setShowInLegend(true);
-        series2.setColor(HIColor.initWithRGB(255, 175, 68));
-        series2.setColors(colors2);
-        series2.setData(new ArrayList<>(Arrays.asList(numbers1)));
+                    series2.setShowInLegend(true);
+                    series2.setColor(HIColor.initWithRGB(255, 175, 68));
+                    series2.setColors(colors2);
+                    series2.setData(new ArrayList<>(Arrays.asList(numbers1)));
 
-        optionsSubGoals.setSeries(new ArrayList<>(Arrays.asList(series1, series2/*, series3, series4*/)));
+                    optionsSubGoals.setSeries(new ArrayList<>(Arrays.asList(series1, series2/*, series3, series4*/)));
 
-        chartViewSubGoals.setOptions(optionsSubGoals);
-        chartViewSubGoals.reload();
+                    chartViewSubGoals.setOptions(optionsSubGoals);
+                    chartViewSubGoals.reload();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 300);
+    }
+
+
+    private void setEmptySubGoalsChart() {
+
+        try {
+            //chartViewSubGoals.setWillNotDraw(false);
+            HIChart chart = new HIChart();
+            HIGradient gradient = new HIGradient(0, 0, 0, 1);
+
+            LinkedList<HIStop> stops = new LinkedList<>();
+            stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
+            stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
+
+            chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
+            chart.setType("column");
+            HILegend hiLegend = new HILegend();
+            HICSSObject hicssObject = new HICSSObject();
+            hicssObject.setColor("#ffffff");  //Removed
+            hiLegend.setItemStyle(hicssObject);
+            optionsSubGoals.setLegend(hiLegend);
+
+
+            chart.setRenderTo("container");
+
+            optionsSubGoals.setChart(chart);
+
+            HITitle title = new HITitle();
+            title.setUseHTML(true);
+            title.setText("<p style='color: #ffffff; text-align: center;'>Your Sub Goals Progress</p>");
+            optionsSubGoals.setTitle(title);
+
+            HIXAxis xAxis = new HIXAxis();
+            HITitle hiXTitle = new HITitle();
+            hiXTitle.setText("<p style='color: #ffffff; '>Weeks</p>");
+            xAxis.setTitle(hiXTitle);
+            xAxis.setCategories(new ArrayList<String>());
+            HILabels hiLabels = new HILabels();
+            hiLabels.setStyle(hicssObject);
+            xAxis.setLabels(hiLabels);
+            hiLabels.setSkew3d(true);
+            HIStyle hiStyle = new HIStyle();
+            hiStyle.setFontSize("16px");
+
+            optionsSubGoals.setXAxis(new ArrayList<HIXAxis>() {{
+                add(xAxis);
+            }});
+
+            HIExporting exporting = new HIExporting();
+            exporting.setEnabled(false);
+            optionsSubGoals.setExporting(exporting);
+
+            HIYAxis yAxis = new HIYAxis();
+            yAxis.setAllowDecimals(false);
+            yAxis.setMin(0);
+            HITitle hiTitle = new HITitle();
+            hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
+            hiTitle.setSkew3d(true);
+            hiLabels.setStyle(hicssObject);
+            yAxis.setTitle(hiTitle);
+            yAxis.setLabels(hiLabels);
+            optionsSubGoals.setYAxis(new ArrayList<HIYAxis>() {{
+                add(yAxis);
+            }});
+
+            HITooltip tooltip = new HITooltip();
+            tooltip.setHeaderFormat("<b>{point.key}</b><br>");
+            tooltip.setPointFormat("<span style=\"color:{series.color}\"></span> {series.name}: {point.y} / {point.stackTotal}");
+            optionsSubGoals.setTooltip(tooltip);
+
+            HIPlotOptions plotOptions = new HIPlotOptions();
+            HIColumn hiColumn = new HIColumn();
+            hiColumn.setDepth(25);
+            plotOptions.setColumn(hiColumn);
+            plotOptions.getColumn().setBorderWidth(0);
+            //hiColumn.setStacking("normal");
+            //hiColumn.setDepth(40);
+            optionsSubGoals.setPlotOptions(plotOptions);
+
+            HIColumn series1 = new HIColumn();
+            series1.setColorByPoint(true);
+            series1.setName("Expected Weight To Go");
+
+
+            ArrayList<String> colors1 = new ArrayList<>();
+            ArrayList<String> colors2 = new ArrayList<>();
+
+            colors1.add("#49b782");
+            colors2.add("#FFAF44");
+
+            series1.setShowInLegend(true);
+            series1.setColor(HIColor.initWithRGB(73, 183, 130));
+            series1.setColors(colors1);
+            series1.setData(new ArrayList<>());
+
+            HIColumn series2 = new HIColumn();
+            series2.setColorByPoint(true);
+            series2.setName("Acheived Weight");
+
+            series2.setShowInLegend(true);
+            series2.setColor(HIColor.initWithRGB(255, 175, 68));
+            series2.setColors(colors2);
+            series2.setData(new ArrayList<>());
+
+            optionsSubGoals.setSeries(new ArrayList<>(Arrays.asList(series1, series2)));
+            chartViewSubGoals.setOptions(optionsSubGoals);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showGoalsChart() {
-        chartViewGoals.plugins = new ArrayList<>(Arrays.asList("drilldown"));
 
-        HIChart chart = new HIChart();
-        //Required for gradient Background
-        HIGradient gradient = new HIGradient(0, 0, 0, 1);
-        LinkedList<HIStop> stops = new LinkedList<>();
-        stops.add(new HIStop(0, HIColor.initWithRGB(255, 204, 102)));
-        stops.add(new HIStop(1, HIColor.initWithRGB(51, 204, 51)));
-        //Set Color
-        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-        HILegend hiLegend = new HILegend();
-        optionsGoals.setLegend(hiLegend);
-        chart.setType("column");
-        optionsGoals.setChart(chart);
+                try {
+                    //chartViewGoals.setWillNotDraw(false);
+                    chartViewGoals.plugins = new ArrayList<>(Arrays.asList("drilldown"));
 
-        HITitle title = new HITitle();
-        title.setUseHTML(true);
-        title.setText("<p style='color: #ffffff; text-align: center;'>Next Sub Goals</p>");
-        optionsGoals.setTitle(title);
+                    HIChart chart = new HIChart();
+                    //Required for gradient Background
+                    HIGradient gradient = new HIGradient(0, 0, 0, 1);
+                    LinkedList<HIStop> stops = new LinkedList<>();
+                    stops.add(new HIStop(0, HIColor.initWithRGB(255, 204, 102)));
+                    stops.add(new HIStop(1, HIColor.initWithRGB(51, 204, 51)));
+                    //Set Color
+                    chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
 
-        HIXAxis xAxis = new HIXAxis();
-        HITitle hiXTitle = new HITitle();
-        hiXTitle.setText("<p style='color: #ffffff; '>Weeks</p>");
-        xAxis.setTitle(hiXTitle);
-        xAxis.setAllowDecimals(false);
+                    HILegend hiLegend = new HILegend();
+                    optionsGoals.setLegend(hiLegend);
+                    chart.setType("column");
+                    optionsGoals.setChart(chart);
 
-        xAxis.setCategories((ArrayList<String>)
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getNextSubGoal().getLabel());
+                    HITitle title = new HITitle();
+                    title.setUseHTML(true);
+                    title.setText("<p style='color: #ffffff; text-align: center;'>Next Sub Goals</p>");
+                    optionsGoals.setTitle(title);
 
+                    HIXAxis xAxis = new HIXAxis();
+                    HITitle hiXTitle = new HITitle();
+                    hiXTitle.setText("<p style='color: #ffffff; '>Weeks</p>");
+                    xAxis.setTitle(hiXTitle);
+                    xAxis.setAllowDecimals(false);
 
-        HICSSObject hicssObject = new HICSSObject();
-        hicssObject.setColor("#ffffff");
-
-        HILabels hiXLabels = new HILabels();
-        hiXLabels.setStyle(hicssObject);
-        xAxis.setLabels(hiXLabels);
-
-        optionsGoals.setXAxis(new ArrayList<HIXAxis>() {{
-            add(xAxis);
-        }});
-        xAxis.setVisible(true);
-
-        HIYAxis yAxis = new HIYAxis();
-        HITitle hiTitle = new HITitle();
-        HILabels hiLabels = new HILabels();
-        hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
-        hiLabels.setStyle(hicssObject);
-        yAxis.setTitle(hiTitle);
-        yAxis.setLabels(hiLabels);
-        yAxis.setGridLineColor(HIColor.initWithRGBA(0, 0, 0, 0.3));
-        optionsGoals.setYAxis(new ArrayList<HIYAxis>() {{
-            add(yAxis);
-        }});
-
-        HIPlotOptions hiPlotOptions = new HIPlotOptions();
-        HIColumn hiColumn = new HIColumn();
-        HIDataLabels hiDataLabels = new HIDataLabels();
-        hiDataLabels.setEnabled(true);
-        hiDataLabels.setColor(HIColor.initWithRGB(30, 72, 179));
-        hiColumn.setDataLabels(hiDataLabels);
-        hiPlotOptions.setColumn(hiColumn);
-        optionsGoals.setPlotOptions(hiPlotOptions);
-
-        HILegend legend = new HILegend();
-        legend.setEnabled(false);
-        optionsGoals.setLegend(legend);
+                    xAxis.setCategories((ArrayList<String>)
+                            LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getNextSubGoal().getLabel());
 
 
-        HIExporting exporting = new HIExporting();
-        exporting.setEnabled(false);
-        optionsGoals.setExporting(exporting);
+                    HICSSObject hicssObject = new HICSSObject();
+                    hicssObject.setColor("#ffffff");
 
-        HIColumn series1 = new HIColumn();
-        series1.setName("Brands");
+                    HILabels hiXLabels = new HILabels();
+                    hiXLabels.setStyle(hicssObject);
+                    xAxis.setLabels(hiXLabels);
 
-        Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getNextSubGoal().
-                getData().toArray(new Number[0]);
+                    optionsGoals.setXAxis(new ArrayList<HIXAxis>() {{
+                        add(xAxis);
+                    }});
+                    xAxis.setVisible(true);
 
-        Number[] numbers = new Number[series1_data.length];
-        ArrayList<HIColor> hiColors = new ArrayList<>();
-        ArrayList<String> colors = new ArrayList<>();
-        for (int i = 0; i < series1_data.length; i++) {
-            numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                    HIYAxis yAxis = new HIYAxis();
+                    HITitle hiTitle = new HITitle();
+                    HILabels hiLabels = new HILabels();
+                    hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
+                    hiLabels.setStyle(hicssObject);
+                    yAxis.setTitle(hiTitle);
+                    yAxis.setLabels(hiLabels);
+                    yAxis.setGridLineColor(HIColor.initWithRGBA(0, 0, 0, 0.3));
+                    optionsGoals.setYAxis(new ArrayList<HIYAxis>() {{
+                        add(yAxis);
+                    }});
+
+                    HIPlotOptions hiPlotOptions = new HIPlotOptions();
+                    HIColumn hiColumn = new HIColumn();
+                    HIDataLabels hiDataLabels = new HIDataLabels();
+                    hiDataLabels.setEnabled(true);
+                    hiDataLabels.setColor(HIColor.initWithRGB(30, 72, 179));
+                    hiColumn.setDataLabels(hiDataLabels);
+                    hiPlotOptions.setColumn(hiColumn);
+                    optionsGoals.setPlotOptions(hiPlotOptions);
+
+                    HILegend legend = new HILegend();
+                    legend.setEnabled(false);
+                    optionsGoals.setLegend(legend);
+
+
+                    HIExporting exporting = new HIExporting();
+                    exporting.setEnabled(false);
+                    optionsGoals.setExporting(exporting);
+
+                    HIColumn series1 = new HIColumn();
+                    series1.setName("Brands");
+
+                    Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getNextSubGoal().
+                            getData().toArray(new Number[0]);
+
+                    Number[] numbers = new Number[series1_data.length];
+                    ArrayList<HIColor> hiColors = new ArrayList<>();
+                    ArrayList<String> colors = new ArrayList<>();
+                    for (int i = 0; i < series1_data.length; i++) {
+                        numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                        colors.add("#77D48B");
+                    }
+
+                    series1.setData(new ArrayList<>(Arrays.asList(numbers)));
+                    optionsGoals.setColors(colors);
+                    optionsGoals.setSeries(new ArrayList<>(Arrays.asList(series1)));
+
+                    chartViewGoals.setOptions(optionsGoals);
+                    //chartViewGoals.reload();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, 400);
+    }
+
+
+    private void showEmptyGoalsChart() {
+
+        try {
+            //chartViewGoals.setWillNotDraw(false);
+            chartViewGoals.plugins = new ArrayList<>(Arrays.asList("drilldown"));
+
+            HIChart chart = new HIChart();
+            //Required for gradient Background
+            HIGradient gradient = new HIGradient(0, 0, 0, 1);
+            LinkedList<HIStop> stops = new LinkedList<>();
+            stops.add(new HIStop(0, HIColor.initWithRGB(255, 204, 102)));
+            stops.add(new HIStop(1, HIColor.initWithRGB(51, 204, 51)));
+            //Set Color
+            chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
+            HILegend hiLegend = new HILegend();
+            optionsGoals.setLegend(hiLegend);
+            chart.setType("column");
+            optionsGoals.setChart(chart);
+
+            HITitle title = new HITitle();
+            title.setUseHTML(true);
+            title.setText("<p style='color: #ffffff; text-align: center;'>Next Sub Goals</p>");
+            optionsGoals.setTitle(title);
+
+            HIXAxis xAxis = new HIXAxis();
+            HITitle hiXTitle = new HITitle();
+            hiXTitle.setText("<p style='color: #ffffff; '>Weeks</p>");
+            xAxis.setTitle(hiXTitle);
+            xAxis.setAllowDecimals(false);
+
+            xAxis.setCategories(new ArrayList<String>());
+
+
+            HICSSObject hicssObject = new HICSSObject();
+            hicssObject.setColor("#ffffff");
+
+            HILabels hiXLabels = new HILabels();
+            hiXLabels.setStyle(hicssObject);
+            xAxis.setLabels(hiXLabels);
+
+            optionsGoals.setXAxis(new ArrayList<HIXAxis>() {{
+                add(xAxis);
+            }});
+            xAxis.setVisible(true);
+
+            HIYAxis yAxis = new HIYAxis();
+            HITitle hiTitle = new HITitle();
+            HILabels hiLabels = new HILabels();
+            hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
+            hiLabels.setStyle(hicssObject);
+            yAxis.setTitle(hiTitle);
+            yAxis.setLabels(hiLabels);
+            yAxis.setGridLineColor(HIColor.initWithRGBA(0, 0, 0, 0.3));
+            optionsGoals.setYAxis(new ArrayList<HIYAxis>() {{
+                add(yAxis);
+            }});
+
+            HIPlotOptions hiPlotOptions = new HIPlotOptions();
+            HIColumn hiColumn = new HIColumn();
+            HIDataLabels hiDataLabels = new HIDataLabels();
+            hiDataLabels.setEnabled(true);
+            hiDataLabels.setColor(HIColor.initWithRGB(30, 72, 179));
+            hiColumn.setDataLabels(hiDataLabels);
+            hiPlotOptions.setColumn(hiColumn);
+            optionsGoals.setPlotOptions(hiPlotOptions);
+
+            HILegend legend = new HILegend();
+            legend.setEnabled(false);
+            optionsGoals.setLegend(legend);
+
+
+            HIExporting exporting = new HIExporting();
+            exporting.setEnabled(false);
+            optionsGoals.setExporting(exporting);
+
+            HIColumn series1 = new HIColumn();
+            series1.setName("Brands");
+
+            ArrayList<String> colors = new ArrayList<>();
             colors.add("#77D48B");
+
+
+            series1.setData(new ArrayList<>());
+            optionsGoals.setColors(colors);
+            optionsGoals.setSeries(new ArrayList<>(Arrays.asList(series1)));
+
+            chartViewGoals.setOptions(optionsGoals);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        series1.setData(new ArrayList<>(Arrays.asList(numbers)));
-        optionsGoals.setColors(colors);
-        optionsGoals.setSeries(new ArrayList<>(Arrays.asList(series1)));
-
-        chartViewGoals.setOptions(optionsGoals);
-        chartViewGoals.reload();
     }
 
     private void setBMIChart() {
-        chartView.plugins = new ArrayList<>(Arrays.asList("series-label"));
 
-        HIChart chart = new HIChart();
-        //Required for gradient Background
-        HIGradient gradient = new HIGradient(0, 0, 0, 1);
-        LinkedList<HIStop> stops = new LinkedList<>();
-        stops.add(new HIStop(0, HIColor.initWithRGB(56, 239, 125)));
-        stops.add(new HIStop(1, HIColor.initWithRGB(17, 153, 142)));
-        //Set Color
-        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-        chart.setType("spline");
-        HILegend hiLegend = new HILegend();
-        HICSSObject hicssObject = new HICSSObject();
-        hicssObject.setColor("#ffffff");
-        hiLegend.setItemStyle(hicssObject);
-        optionsBMI.setLegend(hiLegend);
-        optionsBMI.setChart(chart);
+                try {
+                    //chartViewBmi.setWillNotDraw(false);
+                    chartViewBmi.plugins = new ArrayList<>(Arrays.asList("series-label"));
 
-        HITitle title = new HITitle();
-        title.setUseHTML(true);
-        title.setText("<p style='color: #ffffff; text-align: center;'>BMI Progress</p>");
-        optionsBMI.setTitle(title);
+                    HIChart chart = new HIChart();
+                    //Required for gradient Background
+                    HIGradient gradient = new HIGradient(0, 0, 0, 1);
+                    LinkedList<HIStop> stops = new LinkedList<>();
+                    stops.add(new HIStop(0, HIColor.initWithRGB(56, 239, 125)));
+                    stops.add(new HIStop(1, HIColor.initWithRGB(17, 153, 142)));
+                    //Set Color
+                    chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
+                    chart.setType("spline");
+                    HILegend hiLegend = new HILegend();
+                    HICSSObject hicssObject = new HICSSObject();
+                    hicssObject.setColor("#ffffff");
+                    hiLegend.setItemStyle(hicssObject);
+                    optionsBMI.setLegend(hiLegend);
+                    optionsBMI.setChart(chart);
+
+                    HITitle title = new HITitle();
+                    title.setUseHTML(true);
+                    title.setText("<p style='color: #ffffff; text-align: center;'>BMI Progress</p>");
+                    optionsBMI.setTitle(title);
 
         /*HISubtitle subtitle = new HISubtitle();
         subtitle.setText("<p style='color: #ffffff; text-align: center;'>Source: WorldClimate.com</p>");
         options.setSubtitle(subtitle);*/
 
-        HIXAxis xAxis = new HIXAxis();
-        HILabels labels = new HILabels();
-        HITitle hiTitleX = new HITitle();
-        hiTitleX.setText("<p style='color: #ffffff; '></p>");
-        xAxis.setLineWidth(1);
-        xAxis.setAllowDecimals(false);
+                    HIXAxis xAxis = new HIXAxis();
+                    HILabels labels = new HILabels();
+                    HITitle hiTitleX = new HITitle();
+                    hiTitleX.setText("<p style='color: #ffffff; '></p>");
+                    xAxis.setLineWidth(1);
+                    xAxis.setAllowDecimals(false);
 
-        HILabels hiXLabels = new HILabels();
-        hiXLabels.setStyle(hicssObject);
-        xAxis.setLabels(hiXLabels);
+                    HILabels hiXLabels = new HILabels();
+                    hiXLabels.setStyle(hicssObject);
+                    xAxis.setLabels(hiXLabels);
 
 
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().
-                getLabel() != null ||
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                        getBMI().getLabel().size() > 0) {
-            xAxis.setCategories((ArrayList<String>)
-                    LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                            getBMI().getLabel());
-        }
+                    if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().
+                            getLabel() != null ||
+                            LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                    getBMI().getLabel().size() > 0) {
+                        xAxis.setCategories((ArrayList<String>)
+                                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                        getBMI().getLabel());
+                    }
 
-        optionsBMI.setXAxis(new ArrayList<HIXAxis>() {{
-            add(xAxis);
-        }});
-        xAxis.setTitle(hiTitleX);
-        xAxis.setVisible(true);
+                    optionsBMI.setXAxis(new ArrayList<HIXAxis>() {{
+                        add(xAxis);
+                    }});
+                    xAxis.setTitle(hiTitleX);
+                    xAxis.setVisible(true);
 
-        HIYAxis yAxis = new HIYAxis();
-        HITitle hiTitle = new HITitle();
-        HILabels hiLabels = new HILabels();
-        hiTitle.setText("<p style='color: #ffffff; '>BMI</p>");
-        //hiTitle.setText("<p style='color: #ffffff; '>Values</p>");
-        hiLabels.setStyle(hicssObject);
-        yAxis.setLineWidth(1);
-        yAxis.setTitle(hiTitle);
-        yAxis.setLabels(hiLabels);
+                    HIYAxis yAxis = new HIYAxis();
+                    HITitle hiTitle = new HITitle();
+                    HILabels hiLabels = new HILabels();
+                    hiTitle.setText("<p style='color: #ffffff; '>BMI</p>");
+                    //hiTitle.setText("<p style='color: #ffffff; '>Values</p>");
+                    hiLabels.setStyle(hicssObject);
+                    yAxis.setLineWidth(1);
+                    yAxis.setTitle(hiTitle);
+                    yAxis.setLabels(hiLabels);
 
-        optionsBMI.setYAxis(new ArrayList<HIYAxis>() {{
-            add(yAxis);
-        }});
+                    optionsBMI.setYAxis(new ArrayList<HIYAxis>() {{
+                        add(yAxis);
+                    }});
 
-        yAxis.setVisible(true);
+                    yAxis.setVisible(true);
 
-        HITooltip tooltip = new HITooltip();
-        tooltip.setShared(true);
-        optionsBMI.setTooltip(tooltip);
+                    HITooltip tooltip = new HITooltip();
+                    tooltip.setShared(true);
+                    optionsBMI.setTooltip(tooltip);
 
         /*HIPlotOptions plotOptions = new HIPlotOptions();
         HIArea hiArea = new HIArea();
@@ -1193,321 +1435,338 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         plotOptions.setArea(hiArea);
         options.setPlotOptions(plotOptions);*/
 
-        HIPlotOptions plotOptions = new HIPlotOptions();
-        HISpline hiSpline = new HISpline();
-        HIMarker hiMarker = new HIMarker();
-        HIArea hiArea = new HIArea();
-        hiMarker.setEnabled(true);
-        hiMarker.setSymbol("circle");
-        hiMarker.setFillColor(HIColor.initWithHexValue("#ffffff"));
-        hiMarker.setRadius(4);
-        hiMarker.setLineColor(HIColor.initWithRGB(102, 102, 102));
-        hiMarker.setLineWidth(1);
-        hiArea.setMarker(hiMarker);
-        plotOptions.setArea(hiArea);
+                    HIPlotOptions plotOptions = new HIPlotOptions();
+                    HISpline hiSpline = new HISpline();
+                    HIMarker hiMarker = new HIMarker();
+                    HIArea hiArea = new HIArea();
+                    hiMarker.setEnabled(true);
+                    hiMarker.setSymbol("circle");
+                    hiMarker.setFillColor(HIColor.initWithHexValue("#ffffff"));
+                    hiMarker.setRadius(4);
+                    hiMarker.setLineColor(HIColor.initWithRGB(102, 102, 102));
+                    hiMarker.setLineWidth(1);
+                    hiArea.setMarker(hiMarker);
+                    plotOptions.setArea(hiArea);
 
-        HIExporting exporting = new HIExporting();
-        exporting.setEnabled(false);
-        optionsBMI.setExporting(exporting);
+                    HIExporting exporting = new HIExporting();
+                    exporting.setEnabled(false);
+                    optionsBMI.setExporting(exporting);
 
-        optionsBMI.setPlotOptions(plotOptions);
+                    optionsBMI.setPlotOptions(plotOptions);
 
-        HISpline series1 = new HISpline();
-        series1.setName("BMI");
-        series1.setColor(HIColor.initWithRGB(255, 255, 255));
+                    HISpline series1 = new HISpline();
+                    series1.setName("BMI");
+                    series1.setColor(HIColor.initWithRGB(255, 255, 255));
 
-        Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData().toArray(new Number[0]);
-        Number[] numbers = new Number[series1_data.length];
-        for (int i = 0; i < series1_data.length; i++) {
-            numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                    Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData().toArray(new Number[0]);
+                    Number[] numbers = new Number[series1_data.length];
+                    for (int i = 0; i < series1_data.length; i++) {
+                        numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                    }
+                    series1.setData(new ArrayList<>(Arrays.asList(numbers)));
+
+                    optionsBMI.setSeries(new ArrayList<>(Arrays.asList(series1/*, series2*/)));
+
+
+                    chartViewBmi.setOptions(optionsBMI);
+                    chartViewBmi.reload();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 200);
+    }
+
+
+    private void setEmptyBMIChart() {
+        try {
+            chartViewBmi.plugins = new ArrayList<>(Arrays.asList("series-label"));
+
+            HIChart chart = new HIChart();
+            //Required for gradient Background
+            HIGradient gradient = new HIGradient(0, 0, 0, 1);
+            LinkedList<HIStop> stops = new LinkedList<>();
+            stops.add(new HIStop(0, HIColor.initWithRGB(56, 239, 125)));
+            stops.add(new HIStop(1, HIColor.initWithRGB(17, 153, 142)));
+            //Set Color
+            chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
+            chart.setType("spline");
+            HILegend hiLegend = new HILegend();
+            HICSSObject hicssObject = new HICSSObject();
+            hicssObject.setColor("#ffffff");
+            hiLegend.setItemStyle(hicssObject);
+            optionsBMI.setLegend(hiLegend);
+            optionsBMI.setChart(chart);
+
+            HITitle title = new HITitle();
+            title.setUseHTML(true);
+            title.setText("<p style='color: #ffffff; text-align: center;'>BMI Progress</p>");
+            optionsBMI.setTitle(title);
+
+
+            HIXAxis xAxis = new HIXAxis();
+            HILabels labels = new HILabels();
+            HITitle hiTitleX = new HITitle();
+            hiTitleX.setText("<p style='color: #ffffff; '></p>");
+            xAxis.setLineWidth(1);
+            xAxis.setAllowDecimals(false);
+
+            HILabels hiXLabels = new HILabels();
+            hiXLabels.setStyle(hicssObject);
+            xAxis.setLabels(hiXLabels);
+
+
+            xAxis.setCategories(new ArrayList<String>());
+
+            optionsBMI.setXAxis(new ArrayList<HIXAxis>() {{
+                add(xAxis);
+            }});
+            xAxis.setTitle(hiTitleX);
+            xAxis.setVisible(true);
+
+            HIYAxis yAxis = new HIYAxis();
+            HITitle hiTitle = new HITitle();
+            HILabels hiLabels = new HILabels();
+            hiLabels.setStyle(hicssObject);
+            yAxis.setLineWidth(1);
+            yAxis.setTitle(hiTitle);
+            yAxis.setLabels(hiLabels);
+
+            optionsBMI.setYAxis(new ArrayList<HIYAxis>() {{
+                add(yAxis);
+            }});
+
+            yAxis.setVisible(true);
+
+            HITooltip tooltip = new HITooltip();
+            tooltip.setShared(true);
+            optionsBMI.setTooltip(tooltip);
+
+
+            HIPlotOptions plotOptions = new HIPlotOptions();
+            HISpline hiSpline = new HISpline();
+            HIMarker hiMarker = new HIMarker();
+            HIArea hiArea = new HIArea();
+            hiMarker.setEnabled(true);
+            hiMarker.setSymbol("circle");
+            hiMarker.setFillColor(HIColor.initWithHexValue("#ffffff"));
+            hiMarker.setRadius(4);
+            hiMarker.setLineColor(HIColor.initWithRGB(102, 102, 102));
+            hiMarker.setLineWidth(1);
+            hiArea.setMarker(hiMarker);
+            plotOptions.setArea(hiArea);
+
+            HIExporting exporting = new HIExporting();
+            exporting.setEnabled(false);
+            optionsBMI.setExporting(exporting);
+
+            optionsBMI.setPlotOptions(plotOptions);
+
+            HISpline series1 = new HISpline();
+            series1.setName("BMI");
+            series1.setColor(HIColor.initWithRGB(255, 255, 255));
+
+            series1.setData(new ArrayList<>());
+
+            optionsBMI.setSeries(new ArrayList<>(Arrays.asList(series1)));
+            chartViewBmi.setOptions(optionsBMI);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        series1.setData(new ArrayList<>(Arrays.asList(numbers)));
-
-        optionsBMI.setSeries(new ArrayList<>(Arrays.asList(series1/*, series2*/)));
-
-
-        chartViewBmi.setOptions(optionsBMI);
-        chartViewBmi.reload();
     }
 
 
     private void setWeightLossChart() {
 
-        chartViewLoss.setUsePercentValues(true);
-        chartViewLoss.getDescription().setEnabled(false);
-        chartViewLoss.setExtraOffsets(5, 10, 5, 5);
+        try {
+            chartViewLoss.setUsePercentValues(true);
+            chartViewLoss.getDescription().setEnabled(false);
+            chartViewLoss.setExtraOffsets(5, 10, 5, 5);
 
-        chartViewLoss.setDragDecelerationFrictionCoef(0.95f);
+            chartViewLoss.setDragDecelerationFrictionCoef(0.95f);
 
 //        chartViewLoss.setCenterText(generateCenterSpannableText());
 
-        chartViewLoss.setDrawHoleEnabled(true);
-        chartViewLoss.setHoleColor(Color.TRANSPARENT);
+            chartViewLoss.setDrawHoleEnabled(true);
+            chartViewLoss.setHoleColor(Color.TRANSPARENT);
 
-        chartViewLoss.setTransparentCircleColor(Color.WHITE);
-        chartViewLoss.setTransparentCircleAlpha(110);
+            chartViewLoss.setTransparentCircleColor(Color.WHITE);
+            chartViewLoss.setTransparentCircleAlpha(110);
 
-        chartViewLoss.setHoleRadius(58f);
-        chartViewLoss.setTransparentCircleRadius(61f);
+            chartViewLoss.setHoleRadius(58f);
+            chartViewLoss.setTransparentCircleRadius(61f);
 
-        chartViewLoss.setDrawCenterText(true);
+            chartViewLoss.setDrawCenterText(true);
 
-        chartViewLoss.setRotationAngle(250);
-        // enable rotation of the chartViewLoss by touch
-        chartViewLoss.setRotationEnabled(false);
-        chartViewLoss.setHighlightPerTapEnabled(false);
-
-
-        chartViewLoss.animateY(1400, Easing.EaseInOutQuad);
-
-        Legend l = chartViewLoss.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setXEntrySpace(-20f);
-        l.setYEntrySpace(-10f);
-        l.setYOffset(0f);
-        l.setCustom(new ArrayList<>());
-
-        // entry label styling
-        chartViewLoss.setEntryLabelColor(Color.TRANSPARENT);
-        chartViewLoss.setEntryLabelTextSize(12f);
-
-        // calculations
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        double achieved = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getAchieved();
-        double toGo = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getToGo();
-        double percentage = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getPercentage();
-
-        double total = achieved + toGo;
-        float toGoChart = (float) ((total / 100) * toGo);
-        float achievedChart = (float) ((total / 100) * achieved);
-        PieEntry pieEntry = new PieEntry(toGoChart, "To Go: " + toGo);
-        entries.add(pieEntry);
-        pieEntry = new PieEntry(achievedChart, "Achieved: " + achieved);
-        entries.add(pieEntry);
-
-        //chartViewLoss.setCenterText(percentage + "%");
-        chartViewLoss.setCenterText(Math.round(percentage) + "%");
-        chartViewLoss.setCenterTextColor(getResources().getColor(R.color.textBlue));
-        chartViewLoss.setCenterTextSize(35f);
-
-        PieDataSet dataSet = new PieDataSet(entries, "Weight Loss Achievement");
-
-        dataSet.setDrawIcons(false);
-
-        dataSet.setSliceSpace(3f);
-        dataSet.setIconsOffset(new MPPointF(0, 40));
-        dataSet.setSelectionShift(5f);
-
-        // add a lot of colors
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.rgb(250, 66, 82));
-        colors.add(Color.rgb(40, 181, 233));
-
-        dataSet.setColors(colors);
-        //dataSet.setSelectionShift(0f);
-
-        PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter(chartViewLoss));
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.TRANSPARENT);
-        chartViewLoss.setData(data);
-
-        // undo all highlights
-        chartViewLoss.highlightValues(null);
-
-        chartViewLoss.invalidate();
+            chartViewLoss.setRotationAngle(250);
+            // enable rotation of the chartViewLoss by touch
+            chartViewLoss.setRotationEnabled(false);
+            chartViewLoss.setHighlightPerTapEnabled(false);
 
 
+            chartViewLoss.animateY(1400, Easing.EaseInOutQuad);
 
-/*
+            Legend l = chartViewLoss.getLegend();
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+            l.setOrientation(Legend.LegendOrientation.VERTICAL);
+            l.setDrawInside(false);
+            l.setXEntrySpace(-20f);
+            l.setYEntrySpace(-10f);
+            l.setYOffset(0f);
+            l.setCustom(new ArrayList<>());
 
-        HIChart chart = new HIChart();
+            // entry label styling
+            chartViewLoss.setEntryLabelColor(Color.TRANSPARENT);
+            chartViewLoss.setEntryLabelTextSize(12f);
 
-        //Required for gradient Background
-        HIGradient gradient = new HIGradient(0, 0, 0, 1);
-        LinkedList<HIStop> stops = new LinkedList<>();
-        stops.add(new HIStop(0, HIColor.initWithRGB(220, 227, 91)));
-        stops.add(new HIStop(1, HIColor.initWithRGB(69, 182, 73)));
-        //Set Color
-        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+            // calculations
+            ArrayList<PieEntry> entries = new ArrayList<>();
+            double achieved = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getAchieved();
+            double toGo = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getToGo();
+            double percentage = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getPercentage();
 
-        chart.setPlotShadow(false);
-        chart.setType("pie");
-        optionsLoss.setChart(chart);
+            double total = achieved + toGo;
+            float toGoChart = (float) ((total / 100) * toGo);
+            float achievedChart = (float) ((total / 100) * achieved);
+            PieEntry pieEntry = new PieEntry(toGoChart, "To Go: " + toGo);
+            entries.add(pieEntry);
+            pieEntry = new PieEntry(achievedChart, "Achieved: " + achieved);
+            entries.add(pieEntry);
 
-        ArrayList<String> colors = new ArrayList<>();
-        HIGradient hiGradient = new HIGradient((float) 0.5, (float) 0.3, (float) 0.7);
+            //chartViewLoss.setCenterText(percentage + "%");
+            chartViewLoss.setCenterText(Math.round(percentage) + "%");
+            chartViewLoss.setCenterTextColor(getResources().getColor(R.color.textBlue));
+            chartViewLoss.setCenterTextSize(35f);
 
-        HashMap<String, Number> radialGradient = new HashMap<>();
-        radialGradient.put("cx", 0.5);
-        radialGradient.put("cy", 0.3);
-        radialGradient.put("r", 0.7);
+            PieDataSet dataSet = new PieDataSet(entries, "Weight Loss Achievement");
 
-        colors.add("#40CDDE");
-        colors.add("#FF3E42");
-        //colors.add("#90ed7d");
-        //colors.add("#8085e9");
+            dataSet.setDrawIcons(false);
 
-        optionsLoss.setColors(colors);
+            dataSet.setSliceSpace(3f);
+            dataSet.setIconsOffset(new MPPointF(0, 40));
+            dataSet.setSelectionShift(5f);
 
-        HIExporting exporting = new HIExporting();
-        exporting.setEnabled(false);
-        optionsLoss.setExporting(exporting);
+            // add a lot of colors
 
-        HITitle title = new HITitle();
-        title.setText("Weight Loss");
-        optionsLoss.setTitle(title);
+            ArrayList<Integer> colors = new ArrayList<>();
+            colors.add(Color.rgb(250, 66, 82));
+            colors.add(Color.rgb(40, 181, 233));
 
-        HITooltip tooltip = new HITooltip();
-        //tooltip.setPointFormat("{series.name}: <b>{point.percentage:.1f}%</b>");
-        optionsLoss.setTooltip(tooltip);
+            dataSet.setColors(colors);
+            //dataSet.setSelectionShift(0f);
 
-        HIPlotOptions plotoptions = new HIPlotOptions();
-        HIPie hiPie = new HIPie();
-        hiPie.setAllowPointSelect(true);
-        hiPie.setCursor("pointer");
-        HIDataLabels hiDataLabels = new HIDataLabels();
-        hiDataLabels.setEnabled(true);
-        hiDataLabels.setFormat("<b>{point.name}</b>: {point.percentage:.1f} %");
-        HIStyle hiStyle = new HIStyle();
-        hiStyle.setColor("black");
-        hiDataLabels.setConnectorColor(HIColor.initWithHexValue("#808080"));
-        optionsLoss.setPlotOptions(plotoptions);
+            PieData data = new PieData(dataSet);
+            data.setValueFormatter(new PercentFormatter(chartViewLoss));
+            data.setValueTextSize(11f);
+            data.setValueTextColor(Color.TRANSPARENT);
+            chartViewLoss.setData(data);
 
-        HIPie pie = new HIPie();
-        pie.setName("Brands");
-        HashMap<String, Object> map1 = new HashMap<>();
-        map1.put("name", "Acheived");
-        map1.put("y", LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getAchieved());
+            // undo all highlights
+            chartViewLoss.highlightValues(null);
 
-        HashMap<String, Object> map2 = new HashMap<>();
-        map2.put("name", "ToGo");
-        map2.put("y", LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getWeightLoss().getToGo());
-        *//*map2.put("sliced", true);
-        map2.put("selected", true);*//*
+            chartViewLoss.invalidate();
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
 
-
-         *//*HashMap<String, Object> map3 = new HashMap<>();
-        map3.put("name", "Firefox");
-        map3.put("y", 10.38);
-
-        HashMap<String, Object> map4 = new HashMap<>();
-        map4.put("name", "Safari");
-        map4.put("y", 4.77);
-
-        HashMap<String, Object> map5 = new HashMap<>();
-        map5.put("name", "Opera");
-        map5.put("y", 0.91);
-
-        HashMap<String, Object> map6 = new HashMap<>();
-        map6.put("name", "Proprietary or Undetectable");
-        map6.put("y", 0.2);*//*
-
-        pie.setData(new ArrayList<>(Arrays.asList(map1, map2*//*, map3, map4, map5, map6*//*)));
-
-        optionsLoss.setSeries(new ArrayList<>(Collections.singletonList(pie)));
-
-        chartViewLoss.setOptions(optionsLoss);
-        chartViewLoss.reload();*/
     }
 
 
     private void setPieChatBodyComposition() {
-        pieChatBodyComposition.setUsePercentValues(true);
-        pieChatBodyComposition.getDescription().setEnabled(false);
-        pieChatBodyComposition.setExtraOffsets(5, 10, 5, 5);
-        pieChatBodyComposition.setDragDecelerationFrictionCoef(0.95f);
-        pieChatBodyComposition.setDrawHoleEnabled(true);
-        pieChatBodyComposition.setHoleColor(Color.TRANSPARENT);
-        pieChatBodyComposition.setTransparentCircleColor(Color.WHITE);
-        pieChatBodyComposition.setTransparentCircleAlpha(110);
-        pieChatBodyComposition.setHoleRadius(58f);
-        pieChatBodyComposition.setTransparentCircleRadius(61f);
-        pieChatBodyComposition.setDrawCenterText(true);
-        pieChatBodyComposition.setRotationAngle(270);
-        pieChatBodyComposition.setRotationEnabled(false);
-        pieChatBodyComposition.setHighlightPerTapEnabled(false);
+        try {
+            pieChatBodyComposition.setUsePercentValues(true);
+            pieChatBodyComposition.getDescription().setEnabled(false);
+            pieChatBodyComposition.setExtraOffsets(5, 10, 5, 5);
+            pieChatBodyComposition.setDragDecelerationFrictionCoef(0.95f);
+            pieChatBodyComposition.setDrawHoleEnabled(true);
+            pieChatBodyComposition.setHoleColor(Color.TRANSPARENT);
+            pieChatBodyComposition.setTransparentCircleColor(Color.WHITE);
+            pieChatBodyComposition.setTransparentCircleAlpha(110);
+            pieChatBodyComposition.setHoleRadius(58f);
+            pieChatBodyComposition.setTransparentCircleRadius(61f);
+            pieChatBodyComposition.setDrawCenterText(true);
+            pieChatBodyComposition.setRotationAngle(270);
+            pieChatBodyComposition.setRotationEnabled(false);
+            pieChatBodyComposition.setHighlightPerTapEnabled(false);
 
 
-        pieChatBodyComposition.animateY(1400, Easing.EaseInOutQuad);
+            pieChatBodyComposition.animateY(1400, Easing.EaseInOutQuad);
 
-        Legend l = pieChatBodyComposition.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setXEntrySpace(-20f);
-        l.setYEntrySpace(-10f);
-        l.setYOffset(0f);
-        l.setCustom(new ArrayList<>());
-        //l.setCustom(new ArrayList<>());
+            Legend l = pieChatBodyComposition.getLegend();
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+            l.setOrientation(Legend.LegendOrientation.VERTICAL);
+            l.setDrawInside(false);
+            l.setXEntrySpace(-20f);
+            l.setYEntrySpace(-10f);
+            l.setYOffset(0f);
+            l.setCustom(new ArrayList<>());
+            //l.setCustom(new ArrayList<>());
 
 
-        pieChatBodyComposition.setEntryLabelColor(Color.WHITE);
-        pieChatBodyComposition.setEntryLabelTextSize(12f);
+            pieChatBodyComposition.setEntryLabelColor(Color.WHITE);
+            pieChatBodyComposition.setEntryLabelTextSize(12f);
 
-        // calculation of values to be displayed
-        ArrayList<PieEntry> entries = new ArrayList<>();
+            // calculation of values to be displayed
+            ArrayList<PieEntry> entries = new ArrayList<>();
 
-        double muscelValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getMuscle();
-        PieEntry muscelEntry = new PieEntry((float) muscelValue);
-        entries.add(muscelEntry);
+            double muscelValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getMuscle();
+            PieEntry muscelEntry = new PieEntry((float) muscelValue);
+            entries.add(muscelEntry);
 
-        Double boneValue = 0.0;
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().size() > 2) {
-            try {
-                boneValue = Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().get(1));
+            Double boneValue = 0.0;
+            if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().size() > 2) {
+                try {
+                    boneValue = Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getOverallData().get(1));
 
-                if (Double.isNaN(boneValue)) {
+                    if (Double.isNaN(boneValue)) {
+                        boneValue = 0.0;
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                     boneValue = 0.0;
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                boneValue = 0.0;
             }
-        }
-        PieEntry boneEntry = new PieEntry(boneValue.floatValue());
-        entries.add(boneEntry);
+            PieEntry boneEntry = new PieEntry(boneValue.floatValue());
+            entries.add(boneEntry);
 
-        double fatValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getFat();
-        PieEntry fatEntry = new PieEntry((float) fatValue);
-        entries.add(fatEntry);
-
-
-        String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>"
-                + "<br>" + "<font color=#24F91D><b> Bone " + boneValue + "%<b></font>";
-        //String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>";
-        pieChatBodyComposition.setCenterText(Html.fromHtml(centerText));
-        //pieChatBodyComposition.setCenterText("Muscle " + muscelValue + "%" + "\nFat " + fatValue + "%");
-        pieChatBodyComposition.setCenterTextColor(Color.WHITE);
-        pieChatBodyComposition.setCenterTextSize(12f);
+            double fatValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getFat();
+            PieEntry fatEntry = new PieEntry((float) fatValue);
+            entries.add(fatEntry);
 
 
-        PieDataSet dataSet = new PieDataSet(entries, "");
+            String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>"
+                    + "<br>" + "<font color=#24F91D><b> Bone " + boneValue + "%<b></font>";
+            //String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>";
+            pieChatBodyComposition.setCenterText(Html.fromHtml(centerText));
+            //pieChatBodyComposition.setCenterText("Muscle " + muscelValue + "%" + "\nFat " + fatValue + "%");
+            pieChatBodyComposition.setCenterTextColor(Color.WHITE);
+            pieChatBodyComposition.setCenterTextSize(12f);
 
 
-        dataSet.setDrawIcons(false);
-
-        dataSet.setSliceSpace(1f);
-        dataSet.setIconsOffset(new MPPointF(0, 40));
-        dataSet.setSelectionShift(5f);
+            PieDataSet dataSet = new PieDataSet(entries, "");
 
 
-        // Setting the color code for the slices
-        //ArrayList<Integer> colors = setColorForChart(bmiPercentage);
-        ArrayList<Integer> colors = new ArrayList<>();
-        //colors.add(Color.rgb(151, 125, 6));
-        colors.add(Color.rgb(253, 125, 4));
-        colors.add(Color.rgb(41, 178, 7));
-        colors.add(Color.rgb(250, 66, 82));
+            dataSet.setDrawIcons(false);
+
+            dataSet.setSliceSpace(1f);
+            dataSet.setIconsOffset(new MPPointF(0, 40));
+            dataSet.setSelectionShift(5f);
 
 
-        dataSet.setColors(colors);
+            // Setting the color code for the slices
+            //ArrayList<Integer> colors = setColorForChart(bmiPercentage);
+            ArrayList<Integer> colors = new ArrayList<>();
+            //colors.add(Color.rgb(151, 125, 6));
+            colors.add(Color.rgb(253, 125, 4));
+            colors.add(Color.rgb(41, 178, 7));
+            colors.add(Color.rgb(250, 66, 82));
+
+
+            dataSet.setColors(colors);
 
 
         /*ArrayList<LegendEntry> legendEntries = new ArrayList<>();
@@ -1521,523 +1780,521 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         l.setCustom(legendEntries);*/
 
-        PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter(pieChatBodyComposition));
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.TRANSPARENT);
-        pieChatBodyComposition.setData(data);
+            PieData data = new PieData(dataSet);
+            data.setValueFormatter(new PercentFormatter(pieChatBodyComposition));
+            data.setValueTextSize(11f);
+            data.setValueTextColor(Color.TRANSPARENT);
+            pieChatBodyComposition.setData(data);
 
-        // undo all highlights
-        pieChatBodyComposition.highlightValues(null);
-        pieChatBodyComposition.invalidate();
+            // undo all highlights
+            pieChatBodyComposition.highlightValues(null);
+            pieChatBodyComposition.invalidate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    private void setEmptyWeightChart() {
+
+        try {
+            //chartView.setWillNotDraw(false);
+
+            HIChart chart = new HIChart();
+            chart.setType("area");
+            //Required for gradient Background
+            HIGradient gradient = new HIGradient(0, 0, 0, 1);
+            LinkedList<HIStop> stops = new LinkedList<>();
+
+            stops.add(new HIStop(0, HIColor.initWithRGB(250, 69, 107)));
+            stops.add(new HIStop(1, HIColor.initWithRGB(64, 93, 249)));
+            //Set Color
+            chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
+            options.setChart(chart);
+            HILegend hiLegend = new HILegend();
+            HICSSObject hicssObject = new HICSSObject();
+            hicssObject.setColor("#ffffff");
+            hiLegend.setItemStyle(hicssObject);
+            options.setLegend(hiLegend);
+
+            HITitle title = new HITitle();
+            title.setUseHTML(true);
+            title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress</p>");
+            options.setTitle(title);
+
+            HIXAxis xAxis = new HIXAxis();
+            xAxis.setVisible(false);
+            xAxis.setMin(0);
+            xAxis.setAllowDecimals(true);
+            xAxis.setCategories(new ArrayList<String>());
+
+            options.setXAxis(new ArrayList<HIXAxis>() {{
+                add(xAxis);
+            }});
+
+            Number minY = 0;
+
+            HIYAxis yAxis = new HIYAxis();
+            yAxis.setMin(minY);
+
+            yAxis.setVisible(false);
+            options.setYAxis(new ArrayList<HIYAxis>() {{
+                add(yAxis);
+            }});
+
+            HITooltip tooltip = new HITooltip();
+            tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b><br/>Week {point.x}");
+
+            options.setTooltip(tooltip);
+
+            HIExporting exporting = new HIExporting();
+            exporting.setEnabled(false);
+            options.setExporting(exporting);
+
+            HIPlotOptions plotOptions = new HIPlotOptions();
+            HIArea hiArea = new HIArea();
+            // hiArea.setPointStart(1940);
+            hiArea.setPointStart(0);
+            HIMarker marker = new HIMarker();
+            marker.setEnabled(true);
+            marker.setSymbol("circle");
+            marker.setFillColor(HIColor.initWithRGB(255, 255, 255));
+            marker.setRadius(3);
+            HIStates hiStates = new HIStates();
+            HIHover hiHover = new HIHover();
+            hiStates.setHover(hiHover);
+            hiArea.setMarker(marker);
+            hiHover.setEnabled(true);
+            hiStates.setHover(hiHover);
+            plotOptions.setArea(hiArea);
+            options.setPlotOptions(plotOptions);
+
+            HIArea series1 = new HIArea();
+            series1.setName("Weight");
+            series1.setColor(HIColor.initWithRGB(255, 255, 255));
+            series1.setLineColor(HIColor.initWithRGB(255, 255, 255));
+            series1.setFillColor(HIColor.initWithRGBA(255, 255, 255, 0.4));
+
+            series1.setData(new ArrayList<>());
+
+            options.setSeries(new ArrayList<>(Arrays.asList(series1)));
+            chartView.setOptions(options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void setWeightChart() {
 
-        chartView.setWillNotDraw(false);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-        HIChart chart = new HIChart();
-        chart.setType("area");
-        //Required for gradient Background
-        HIGradient gradient = new HIGradient(0, 0, 0, 1);
-        LinkedList<HIStop> stops = new LinkedList<>();
+                try {
+                    //chartView.setWillNotDraw(false);
+
+
+                    HIChart chart = new HIChart();
+                    chart.setType("area");
+                    //Required for gradient Background
+                    HIGradient gradient = new HIGradient(0, 0, 0, 1);
+                    LinkedList<HIStop> stops = new LinkedList<>();
         /*stops.add(new HIStop(0, HIColor.initWithRGB(255, 51, 0)));
         stops.add(new HIStop(1, HIColor.initWithRGB(51, 153, 255)));*/
 
-        stops.add(new HIStop(0, HIColor.initWithRGB(250, 69, 107)));
-        stops.add(new HIStop(1, HIColor.initWithRGB(64, 93, 249)));
-        //Set Color
-        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+                    stops.add(new HIStop(0, HIColor.initWithRGB(250, 69, 107)));
+                    stops.add(new HIStop(1, HIColor.initWithRGB(64, 93, 249)));
+                    //Set Color
+                    chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
 
-        options.setChart(chart);
-        HILegend hiLegend = new HILegend();
-        HICSSObject hicssObject = new HICSSObject();
-        hicssObject.setColor("#ffffff");
-        hiLegend.setItemStyle(hicssObject);
-        options.setLegend(hiLegend);
 
-        HITitle title = new HITitle();
-        title.setUseHTML(true);
-        title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress</p>");
-        options.setTitle(title);
+                    options.setChart(chart);
+                    HILegend hiLegend = new HILegend();
+                    HICSSObject hicssObject = new HICSSObject();
+                    hicssObject.setColor("#ffffff");
+                    hiLegend.setItemStyle(hicssObject);
+                    options.setLegend(hiLegend);
 
-        HIXAxis xAxis = new HIXAxis();
-        xAxis.setVisible(false);
-        xAxis.setMin(0);
-        xAxis.setAllowDecimals(true);
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                getWeightProgress().getLabel() != null ||
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                        getWeightProgress().getLabel().size() > 0) {
-            xAxis.setCategories((ArrayList<String>)
-                    LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                            getWeightProgress().getLabel());
-        }
+                    HITitle title = new HITitle();
+                    title.setUseHTML(true);
+                    title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress</p>");
+                    options.setTitle(title);
 
-        options.setXAxis(new ArrayList<HIXAxis>() {{
-            add(xAxis);
-        }});
+                    HIXAxis xAxis = new HIXAxis();
+                    xAxis.setVisible(false);
+                    xAxis.setMin(0);
+                    xAxis.setAllowDecimals(true);
+                    if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                            getWeightProgress().getLabel() != null ||
+                            LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                    getWeightProgress().getLabel().size() > 0) {
+                        xAxis.setCategories((ArrayList<String>)
+                                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                        getWeightProgress().getLabel());
+                    }
 
-        Number minY = null;
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                getWeightProgress().getData().size() > 0) {
+                    options.setXAxis(new ArrayList<HIXAxis>() {{
+                        add(xAxis);
+                    }});
 
-            int minIndex = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                    getWeightProgress().getData().indexOf(Collections.min(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                    getWeightProgress().getData()));
+                    Number minY = null;
+                    if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                            getWeightProgress().getData().size() > 0) {
 
-            minY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                    getWeightProgress().getData().get(minIndex));
-        } else {
-            minY = 0;
-        }
+                        int minIndex = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                getWeightProgress().getData().indexOf(Collections.min(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                getWeightProgress().getData()));
+
+                        minY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                getWeightProgress().getData().get(minIndex));
+                    } else {
+                        minY = 0;
+                    }
 
         /*Number maxY = Math.round(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                 getWeightProgress().getData().get(0));*/
 
-        HIYAxis yAxis = new HIYAxis();
-        //   yAxis.setMax(maxY);
-        yAxis.setMin(minY);
+                    HIYAxis yAxis = new HIYAxis();
+                    //   yAxis.setMax(maxY);
+                    yAxis.setMin(minY);
 
-        yAxis.setVisible(false);
-        options.setYAxis(new ArrayList<HIYAxis>() {{
-            add(yAxis);
-        }});
+                    yAxis.setVisible(false);
+                    options.setYAxis(new ArrayList<HIYAxis>() {{
+                        add(yAxis);
+                    }});
 
-        HITooltip tooltip = new HITooltip();
-        //tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b><br/>warheads in {point.x}");
-        tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b><br/>Week {point.x}");
-        //tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b>");
-        options.setTooltip(tooltip);
+                    HITooltip tooltip = new HITooltip();
+                    //tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b><br/>warheads in {point.x}");
+                    tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b><br/>Week {point.x}");
+                    //tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b>");
+                    options.setTooltip(tooltip);
 
-        HIExporting exporting = new HIExporting();
-        exporting.setEnabled(false);
-        options.setExporting(exporting);
+                    HIExporting exporting = new HIExporting();
+                    exporting.setEnabled(false);
+                    options.setExporting(exporting);
 
-        HIPlotOptions plotOptions = new HIPlotOptions();
-        HIArea hiArea = new HIArea();
-        // hiArea.setPointStart(1940);
-        hiArea.setPointStart(0);
-        HIMarker marker = new HIMarker();
-        marker.setEnabled(true);
-        marker.setSymbol("circle");
-        marker.setFillColor(HIColor.initWithRGB(255, 255, 255));
-        marker.setRadius(3);
-        HIStates hiStates = new HIStates();
-        HIHover hiHover = new HIHover();
-        hiStates.setHover(hiHover);
-        hiArea.setMarker(marker);
-        hiHover.setEnabled(true);
-        hiStates.setHover(hiHover);
-        plotOptions.setArea(hiArea);
-        options.setPlotOptions(plotOptions);
+                    HIPlotOptions plotOptions = new HIPlotOptions();
+                    HIArea hiArea = new HIArea();
+                    // hiArea.setPointStart(1940);
+                    hiArea.setPointStart(0);
+                    HIMarker marker = new HIMarker();
+                    marker.setEnabled(true);
+                    marker.setSymbol("circle");
+                    marker.setFillColor(HIColor.initWithRGB(255, 255, 255));
+                    marker.setRadius(3);
+                    HIStates hiStates = new HIStates();
+                    HIHover hiHover = new HIHover();
+                    hiStates.setHover(hiHover);
+                    hiArea.setMarker(marker);
+                    hiHover.setEnabled(true);
+                    hiStates.setHover(hiHover);
+                    plotOptions.setArea(hiArea);
 
-        HIArea series1 = new HIArea();
-        series1.setName("Weight");
-        series1.setColor(HIColor.initWithRGB(255, 255, 255));
-        series1.setLineColor(HIColor.initWithRGB(255, 255, 255));
-        series1.setFillColor(HIColor.initWithRGBA(255, 255, 255, 0.4));
-        //   series1.setNegativeFillColor(HIColor.initWithHexValue("#07FFFCFC"));
-        //    series1.setNegativeFillColor(HIColor.initWithHexValue("#ffffff"));
-        //    series1.setFillColor(HIColor.initWithHexValue("#ffffff"));
+                    //plotOptions.getSeries().setClip(false);
+                    options.setPlotOptions(plotOptions);
+
+                    HIArea series1 = new HIArea();
+                    series1.setName("Weight");
+                    series1.setColor(HIColor.initWithRGB(255, 255, 255));
+                    series1.setLineColor(HIColor.initWithRGB(255, 255, 255));
+                    series1.setFillColor(HIColor.initWithRGBA(255, 255, 255, 0.4));
+                    //   series1.setNegativeFillColor(HIColor.initWithHexValue("#07FFFCFC"));
+                    //    series1.setNegativeFillColor(HIColor.initWithHexValue("#ffffff"));
+                    //    series1.setFillColor(HIColor.initWithHexValue("#ffffff"));
 
 //        series1.setFillOpacity(0.2);
-        // series1.setPointStart(0);
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData()
-                .getChartList().getWeightProgress().getData() != null ||
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData()
-                        .getChartList().getWeightProgress().getData().size() > 0) {
+                    // series1.setPointStart(0);
+                    if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData()
+                            .getChartList().getWeightProgress().getData() != null ||
+                            LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData()
+                                    .getChartList().getWeightProgress().getData().size() > 0) {
 
-            Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
-                    .getData().getChartList().getWeightProgress().getData().toArray(new Number[0]);
-            Number[] numbers = new Number[series1_data.length];
-            for (int i = 0; i < series1_data.length; i++) {
-                numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                        Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
+                                .getData().getChartList().getWeightProgress().getData().toArray(new Number[0]);
+                        Number[] numbers = new Number[series1_data.length];
+                        for (int i = 0; i < series1_data.length; i++) {
+                            numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                        }
+
+                        series1.setData(new ArrayList<>(Arrays.asList(numbers)));
+
+                        options.setSeries(new ArrayList<>(Arrays.asList(series1/*, series2*/)));
+                    }
+
+
+                    chartView.setOptions(options);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-
-            series1.setData(new ArrayList<>(Arrays.asList(numbers)));
-
-            options.setSeries(new ArrayList<>(Arrays.asList(series1/*, series2*/)));
-        }
-
-        chartView.setOptions(options);
-        chartView.reload();
+        }, 50);
 
     }
 
     private void showGoalsAndAcheivementsChart() {
 
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-        HIChart chart = new HIChart();
-        chart.setType("line");
+                try {
+                    //chartViewAchiGoals.setWillNotDraw(false);
+                    HIChart chart = new HIChart();
+                    chart.setType("line");
 
-        chart.setBackgroundColor(HIColor.initWithHexValue("#554755"));
+                    chart.setBackgroundColor(HIColor.initWithHexValue("#554755"));
 
-        HIGradient gradient = new HIGradient(0, 0, 0, 1);
+                    HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
-        LinkedList<HIStop> stops = new LinkedList<>();
+                    LinkedList<HIStop> stops = new LinkedList<>();
 
-        stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
-        stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
+                    stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
+                    stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
 
-        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+                    chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
 
-        optionsAchiGoals.setChart(chart);
-        HICSSObject hicssObject = new HICSSObject();
-        hicssObject.setColor("#ffffff");
+                    optionsAchiGoals.setChart(chart);
+                    HICSSObject hicssObject = new HICSSObject();
+                    hicssObject.setColor("#ffffff");
 
-        HITitle title = new HITitle();
-        title.setUseHTML(true);
-        title.setText("<p style='color: #ffffff; text-align: center;'>Your Goals</p>");
-        optionsAchiGoals.setTitle(title);
-
-
-        HIXAxis xAxis = new HIXAxis();
-        xAxis.setAllowDecimals(true);
-        HITitle xtitle1 = new HITitle();
-        HILabels xlabels = new HILabels();
-        xlabels.setStyle(hicssObject);
-        xtitle1.setText("<p style='color: #ffffff; '>Weeks</p>");
-        xAxis.setLabels(xlabels);
-        xAxis.setTitle(xtitle1);
-
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson() != null
-            /*LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().size() > 0*/) {
+                    HITitle title = new HITitle();
+                    title.setUseHTML(true);
+                    title.setText("<p style='color: #ffffff; text-align: center;'>Your Goals</p>");
+                    optionsAchiGoals.setTitle(title);
 
 
-            ArrayList<String> xAxisWeeks = new ArrayList<>();
-            for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs1();
-                 i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs2(); i++) {
+                    HIXAxis xAxis = new HIXAxis();
+                    xAxis.setAllowDecimals(true);
+                    HITitle xtitle1 = new HITitle();
+                    HILabels xlabels = new HILabels();
+                    xlabels.setStyle(hicssObject);
+                    xtitle1.setText("<p style='color: #ffffff; '>Weeks</p>");
+                    xAxis.setLabels(xlabels);
+                    xAxis.setTitle(xtitle1);
 
-                if (i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().size()) {
-                    xAxisWeeks.add(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().get(i));
-                }
-            }
+                    if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson() != null
+                        /*LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().size() > 0*/) {
 
-            System.out.println("xAxisWeeks: " + xAxisWeeks.toString());
-            xAxis.setCategories(xAxisWeeks);
 
-            //xAxis.setCategories((ArrayList<String>) LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson());
-        }
-        optionsAchiGoals.setXAxis(new ArrayList<HIXAxis>() {{
-            add(xAxis);
-        }});
+                        ArrayList<String> xAxisWeeks = new ArrayList<>();
+                        for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs1();
+                             i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs2(); i++) {
 
-        //xAxis.setVisible(true);
+                            if (i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().size()) {
+                                xAxisWeeks.add(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().get(i));
+                            }
+                        }
 
-        HIYAxis yaxis = new HIYAxis();
-        HITitle title1 = new HITitle();
-        HILabels labels = new HILabels();
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext() != null ||
-                !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().
-                        equalsIgnoreCase("null") ||
-                !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().isEmpty()) {
+                        //System.out.println("xAxisWeeks: " + xAxisWeeks.toString());
+                        xAxis.setCategories(xAxisWeeks);
 
-            String s = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext();
-//            title1.setText("<p style='color: #ffffff; '>" + s + "p>");
-            title1.setText("<p style='color: #ffffff; '>Weight</p>");
-        } else {
-            title1.setText("<p style='color: #ffffff; '>Sub Goals Progress</p>");
-        }
-        labels.setStyle(hicssObject);
-        yaxis.setLabels(labels);
-        yaxis.setTitle(title1);
-        optionsAchiGoals.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
+                        //xAxis.setCategories((ArrayList<String>) LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson());
+                    }
+                    optionsAchiGoals.setXAxis(new ArrayList<HIXAxis>() {{
+                        add(xAxis);
+                    }});
 
-        HILegend legend = new HILegend();
-        legend.setLayout("vertical");
-        legend.setAlign("right");
-        legend.setVerticalAlign("middle");
-        legend.setItemStyle(hicssObject);
-        optionsAchiGoals.setLegend(legend);
+                    //xAxis.setVisible(true);
 
-        HIPlotOptions plotoptions = new HIPlotOptions();
-        HISeries hiSeries = new HISeries();
-        hiSeries.setPointStart(2010);
-        HILabel hiLabel = new HILabel();
-        hiSeries.setLabel(hiLabel);
-        hiLabel.setConnectorAllowed(false);
-        plotoptions.setSeries(hiSeries);
+                    HIYAxis yaxis = new HIYAxis();
+                    HITitle title1 = new HITitle();
+                    HILabels labels = new HILabels();
+                    if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext() != null ||
+                            !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().
+                                    equalsIgnoreCase("null") ||
+                            !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().isEmpty()) {
 
-        HIExporting exporting = new HIExporting();
-        exporting.setEnabled(false);
-        optionsAchiGoals.setExporting(exporting);
+                        String s = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext();
+                        //            title1.setText("<p style='color: #ffffff; '>" + s + "p>");
+                        title1.setText("<p style='color: #ffffff; '>Weight</p>");
+                    } else {
+                        title1.setText("<p style='color: #ffffff; '>Sub Goals Progress</p>");
+                    }
+                    labels.setStyle(hicssObject);
+                    yaxis.setLabels(labels);
+                    yaxis.setTitle(title1);
+                    optionsAchiGoals.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
 
-        HIResponsive responsive = new HIResponsive();
+                    HILegend legend = new HILegend();
+                    legend.setLayout("vertical");
+                    legend.setAlign("right");
+                    legend.setVerticalAlign("middle");
+                    legend.setItemStyle(hicssObject);
+                    optionsAchiGoals.setLegend(legend);
 
-        HIRules rules1 = new HIRules();
-        HICondition hiCondition = new HICondition();
-        hiCondition.setMaxWidth(700);
-        rules1.setCondition(hiCondition);
-        HashMap<String, HashMap> chartLegend = new HashMap<>();
-        HashMap<String, String> legendOptions = new HashMap<>();
+                    HIPlotOptions plotoptions = new HIPlotOptions();
+                    HISeries hiSeries = new HISeries();
+                    hiSeries.setPointStart(2010);
+                    HILabel hiLabel = new HILabel();
+                    hiSeries.setLabel(hiLabel);
+                    hiLabel.setConnectorAllowed(false);
+                    plotoptions.setSeries(hiSeries);
 
-        legendOptions.put("layout", "horizontal");
-        legendOptions.put("align", "center");
-        legendOptions.put("verticalAlign", "bottom");
+                    HIExporting exporting = new HIExporting();
+                    exporting.setEnabled(false);
+                    optionsAchiGoals.setExporting(exporting);
 
-        chartLegend.put("legend", legendOptions);
-        rules1.setChartOptions(chartLegend);
-        responsive.setRules(new ArrayList<>(Collections.singletonList(rules1)));
-        optionsAchiGoals.setResponsive(responsive);
+                    HIResponsive responsive = new HIResponsive();
+
+                    HIRules rules1 = new HIRules();
+                    HICondition hiCondition = new HICondition();
+                    hiCondition.setMaxWidth(700);
+                    rules1.setCondition(hiCondition);
+                    HashMap<String, HashMap> chartLegend = new HashMap<>();
+                    HashMap<String, String> legendOptions = new HashMap<>();
+
+                    legendOptions.put("layout", "horizontal");
+                    legendOptions.put("align", "center");
+                    legendOptions.put("verticalAlign", "bottom");
+
+                    chartLegend.put("legend", legendOptions);
+                    rules1.setChartOptions(chartLegend);
+                    responsive.setRules(new ArrayList<>(Collections.singletonList(rules1)));
+                    optionsAchiGoals.setResponsive(responsive);
 
 //ms1 to ms2 Line1
-        HILine line1 = new HILine();
-        line1.setName("Current Sub Goals");
+                    HILine line1 = new HILine();
+                    line1.setName("Current Sub Goals");
 
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson() != null &&
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().size() > 0) {
+                    if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson() != null &&
+                            LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().size() > 0) {
 
-            /*Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                    getMinigoalsjson().toArray(new Number[0]);*/
+                /*Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
+                        getMinigoalsjson().toArray(new Number[0]);*/
 
-            List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                    getMinigoalsjson();
+                        List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
+                                getMinigoalsjson();
 
-            //Number[] numbers = new Number[series1_data.length];
-            Number[] numbers = new Number[LoginShared.getDashBoardDataModel(DashBoardActivity.this)
-                    .getData().getChartList().getGoals().getMs2()];
+                        //Number[] numbers = new Number[series1_data.length];
+                        Number[] numbers = new Number[LoginShared.getDashBoardDataModel(DashBoardActivity.this)
+                                .getData().getChartList().getGoals().getMs2()];
 
-            System.out.println("numbers: " + numbers.length);
+                        //System.out.println("numbers: " + numbers.length);
 
-            for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
-                    .getData().getChartList().getGoals().getMs1();
-                 i < LoginShared.getDashBoardDataModel(DashBoardActivity.this)
-                         .getData().getChartList().getGoals().getMs2(); i++) {
-                //numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
-                if (!series1_data.get(i).equals("")) {
-                    numbers[i] = Double.parseDouble(series1_data.get(i));
+                        for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
+                                .getData().getChartList().getGoals().getMs1();
+                             i < LoginShared.getDashBoardDataModel(DashBoardActivity.this)
+                                     .getData().getChartList().getGoals().getMs2(); i++) {
+                            //numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                            if (!series1_data.get(i).equals("")) {
+                                numbers[i] = Double.parseDouble(series1_data.get(i));
+                            }
+                        }
+
+
+                        line1.setColor(HIColor.initWithRGB(143, 236, 126));
+                        line1.setData(new ArrayList<>(Arrays.asList(numbers)));
+
+                /*Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
+                        getMinigoalsjson().toArray(new Number[0]);*/
+
+
+                        List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
+                                getMinigoalsjson();
+
+                        //Number[] numbers2 = new Number[series2_data.length];
+                /*Number[] numbers2 = new Number[(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2() -
+                        LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1()) + 1];*/
+
+                        //System.out.println("numbers2: " + numbers2.length);
+
+                        ArrayList<Double> numberList2 = new ArrayList<>();
+
+                        for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1();
+                             i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2(); i++) {
+
+                            if (series2_data.get(i) != null && !series2_data.get(i).equals("")) {
+                                numberList2.add(Double.parseDouble(series2_data.get(i)));
+                            }
+                        }
+
+                        //System.out.println("numbers2: " + numberList2.toString());
+
+                        HILine line2 = new HILine();
+                        line2.setName("Achived Sub Goals");
+                        line2.setColor(HIColor.initWithRGB(233, 150, 43));
+                        //line2.setData(new ArrayList<>(Arrays.asList(numbers2)));
+                        line2.setData(numberList2);
+                        optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1, line2)));
+                    }
+
+                    chartViewAchiGoals.setOptions(optionsAchiGoals);
+                    chartViewAchiGoals.reload();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+        }, 500);
 
-
-            line1.setColor(HIColor.initWithRGB(143, 236, 126));
-            line1.setData(new ArrayList<>(Arrays.asList(numbers)));
-
-            /*Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                    getMinigoalsjson().toArray(new Number[0]);*/
-
-
-            List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                    getMinigoalsjson();
-
-            //Number[] numbers2 = new Number[series2_data.length];
-            /*Number[] numbers2 = new Number[(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2() -
-                    LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1()) + 1];*/
-
-            //System.out.println("numbers2: " + numbers2.length);
-
-            ArrayList<Double> numberList2 = new ArrayList<>();
-
-            for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1();
-                 i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2(); i++) {
-
-                if (series2_data.get(i) != null && !series2_data.get(i).equals("")) {
-                    numberList2.add(Double.parseDouble(series2_data.get(i)));
-                }
-            }
-
-            System.out.println("numbers2: " + numberList2.toString());
-
-            HILine line2 = new HILine();
-            line2.setName("Achived Sub Goals");
-            line2.setColor(HIColor.initWithRGB(233, 150, 43));
-            //line2.setData(new ArrayList<>(Arrays.asList(numbers2)));
-            line2.setData(numberList2);
-            optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1, line2)));
-        }
-
-        chartViewAchiGoals.setOptions(optionsAchiGoals);
-        chartViewAchiGoals.reload();
     }
 
 
-    /*private void showGoalsAndAcheivementsChart() {
+    private void showEmptyGoalsAndAcheivementsChart() {
+
+        try {
+            //chartViewAchiGoals.setWillNotDraw(false);
+            HIChart chart = new HIChart();
+            chart.setType("line");
+
+            chart.setBackgroundColor(HIColor.initWithHexValue("#554755"));
+
+            HIGradient gradient = new HIGradient(0, 0, 0, 1);
+
+            LinkedList<HIStop> stops = new LinkedList<>();
+
+            stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
+            stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
+
+            chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
+            optionsAchiGoals.setChart(chart);
+            HICSSObject hicssObject = new HICSSObject();
+            hicssObject.setColor("#ffffff");
+
+            HITitle title = new HITitle();
+            title.setUseHTML(true);
+            title.setText("<p style='color: #ffffff; text-align: center;'>Your Goals</p>");
+            optionsAchiGoals.setTitle(title);
 
 
-        HIChart chart = new HIChart();
-        chart.setType("line");
+            HIXAxis xAxis = new HIXAxis();
+            xAxis.setAllowDecimals(true);
+            HITitle xtitle1 = new HITitle();
+            HILabels xlabels = new HILabels();
+            xlabels.setStyle(hicssObject);
+            xtitle1.setText("<p style='color: #ffffff; '>Weeks</p>");
+            xAxis.setLabels(xlabels);
+            xAxis.setTitle(xtitle1);
 
-        chart.setBackgroundColor(HIColor.initWithHexValue("#554755"));
+            xAxis.setCategories(new ArrayList<>());
+            optionsAchiGoals.setXAxis(new ArrayList<HIXAxis>() {{
+                add(xAxis);
+            }});
 
-        HIGradient gradient = new HIGradient(0, 0, 0, 1);
-
-        LinkedList<HIStop> stops = new LinkedList<>();
-
-        stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
-        stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
-
-        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
-
-        optionsAchiGoals.setChart(chart);
-        HICSSObject hicssObject = new HICSSObject();
-        hicssObject.setColor("#ffffff");
-
-        HITitle title = new HITitle();
-        title.setUseHTML(true);
-        title.setText("<p style='color: #ffffff; text-align: center;'>Your Goals</p>");
-        optionsAchiGoals.setTitle(title);
-
-
-        HIXAxis xAxis = new HIXAxis();
-        xAxis.setAllowDecimals(true);
-        HITitle xtitle1 = new HITitle();
-        HILabels xlabels = new HILabels();
-        xlabels.setStyle(hicssObject);
-        xtitle1.setText("<p style='color: #ffffff; '>Weeks</p>");
-        xAxis.setLabels(xlabels);
-        xAxis.setTitle(xtitle1);
-
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson() != null
-            *//*LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().size() > 0*//*) {
-
-
-            ArrayList<String> xAxisWeeks = new ArrayList<>();
-            for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs1();
-                 i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs2(); i++) {
-                xAxisWeeks.add(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().get(i));
-            }
-
-            System.out.println("xAxisWeeks: " + xAxisWeeks.toString());
-            xAxis.setCategories(xAxisWeeks);
-
-            //xAxis.setCategories((ArrayList<String>) LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson());
-        }
-        optionsAchiGoals.setXAxis(new ArrayList<HIXAxis>() {{
-            add(xAxis);
-        }});
-
-        //xAxis.setVisible(true);
-
-        HIYAxis yaxis = new HIYAxis();
-        HITitle title1 = new HITitle();
-        HILabels labels = new HILabels();
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext() != null ||
-                !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().
-                        equalsIgnoreCase("null") ||
-                !LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext().isEmpty()) {
-
-            String s = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext();
-//            title1.setText("<p style='color: #ffffff; '>" + s + "p>");
-            title1.setText("<p style='color: #ffffff; '>Weight</p>");
-        } else {
+            HIYAxis yaxis = new HIYAxis();
+            HITitle title1 = new HITitle();
+            HILabels labels = new HILabels();
             title1.setText("<p style='color: #ffffff; '>Sub Goals Progress</p>");
+
+            labels.setStyle(hicssObject);
+            yaxis.setLabels(labels);
+            yaxis.setTitle(title1);
+            optionsAchiGoals.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
+
+
+            HIExporting exporting = new HIExporting();
+            exporting.setEnabled(false);
+            optionsAchiGoals.setExporting(exporting);
+
+
+            optionsAchiGoals.setSeries(new ArrayList<HISeries>());
+
+            chartViewAchiGoals.setOptions(optionsAchiGoals);
+            chartViewAchiGoals.reload();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        labels.setStyle(hicssObject);
-        yaxis.setLabels(labels);
-        yaxis.setTitle(title1);
-        optionsAchiGoals.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
-
-        HILegend legend = new HILegend();
-        legend.setLayout("vertical");
-        legend.setAlign("right");
-        legend.setVerticalAlign("middle");
-        legend.setItemStyle(hicssObject);
-        optionsAchiGoals.setLegend(legend);
-
-        HIPlotOptions plotoptions = new HIPlotOptions();
-        HISeries hiSeries = new HISeries();
-        hiSeries.setPointStart(2010);
-        HILabel hiLabel = new HILabel();
-        hiSeries.setLabel(hiLabel);
-        hiLabel.setConnectorAllowed(false);
-        plotoptions.setSeries(hiSeries);
-
-        HIExporting exporting = new HIExporting();
-        exporting.setEnabled(false);
-        optionsAchiGoals.setExporting(exporting);
-
-        HIResponsive responsive = new HIResponsive();
-
-        HIRules rules1 = new HIRules();
-        HICondition hiCondition = new HICondition();
-        hiCondition.setMaxWidth(700);
-        rules1.setCondition(hiCondition);
-        HashMap<String, HashMap> chartLegend = new HashMap<>();
-        HashMap<String, String> legendOptions = new HashMap<>();
-
-        legendOptions.put("layout", "horizontal");
-        legendOptions.put("align", "center");
-        legendOptions.put("verticalAlign", "bottom");
-
-        chartLegend.put("legend", legendOptions);
-        rules1.setChartOptions(chartLegend);
-        responsive.setRules(new ArrayList<>(Collections.singletonList(rules1)));
-        optionsAchiGoals.setResponsive(responsive);
-
-//ms1 to ms2 Line1
-        HILine line1 = new HILine();
-        line1.setName("Current Sub Goals");
-
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson() != null &&
-                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().size() > 0) {
-
-            Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                    getMinigoalsjson().toArray(new Number[0]);
-
-            *//*List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                    getMinigoalsjson();*//*
-
-            //Number[] numbers = new Number[series1_data.length];
-            Number[] numbers = new Number[LoginShared.getDashBoardDataModel(DashBoardActivity.this)
-                    .getData().getChartList().getGoals().getMs2()];
-
-            System.out.println("numbers: " + numbers.length);
-
-            for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
-                    .getData().getChartList().getGoals().getMs1();
-                 i < LoginShared.getDashBoardDataModel(DashBoardActivity.this)
-                         .getData().getChartList().getGoals().getMs2(); i++) {
-                numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
-                *//*if (!series1_data.get(i).equals("")) {
-                    numbers[i] = Double.parseDouble(series1_data.get(i));
-                }*//*
-            }
-
-
-            line1.setColor(HIColor.initWithRGB(143, 236, 126));
-            line1.setData(new ArrayList<>(Arrays.asList(numbers)));
-
-            Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                    getMinigoalsjson().toArray(new Number[0]);
-
-            //Number[] numbers2 = new Number[series2_data.length];
-            Number[] numbers2 = new Number[(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2() -
-                    LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1()) + 1];
-
-            System.out.println("numbers2: " + numbers2.length);
-
-            for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1();
-                 i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2(); i++) {
-                //numbers2[i] = series2_data[i] == null ? 0 : Double.parseDouble(String.valueOf(series2_data[i]));
-
-                int localIndex = i - LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1();
-
-                if (series2_data[i] == null) {
-                    if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2() == 1) {
-                        numbers2[localIndex] = 0;
-                    } else {
-                        if (i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2() - 1) {
-                            numbers2[localIndex] = (Double.parseDouble(String.valueOf(series2_data[i - 1])) + Double.parseDouble(String.valueOf(series2_data[i + 1]))) / 2;
-                        } else {
-                            numbers2[localIndex] = Double.parseDouble(String.valueOf(series2_data[i - 1]));
-                        }
-                    }
-                } else {
-                    numbers2[localIndex] = Double.parseDouble(String.valueOf(series2_data[i]));
-                }
-            }
-
-            HILine line2 = new HILine();
-            line2.setName("Achived Sub Goals");
-            line2.setColor(HIColor.initWithRGB(233, 150, 43));
-            line2.setData(new ArrayList<>(Arrays.asList(numbers2)));
-            optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1, line2)));
-        }
-
-        chartViewAchiGoals.setOptions(optionsAchiGoals);
-        chartViewAchiGoals.reload();
-    }*/
+    }
 
 
     private void setHeaderView() {
@@ -2066,8 +2323,141 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
     private void implementHighChart(Guagechart gaugeChart) {
-        if (gaugeChart != null) {
 
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                try {
+                    if (gaugeChart != null) {
+
+                        //chartGauge.setWillNotDraw(false);
+                        HIOptions options = new HIOptions();
+
+                        HIChart chart = new HIChart();
+                        chart.setType("gauge");
+                        chart.setPlotBorderWidth(0);
+                        chart.setPlotShadow(false);
+                        options.setChart(chart);
+
+
+                        HITitle title = new HITitle();
+                        title.setUseHTML(true);
+                        title.setText("<p style='color: #ffffff; text-align: center;'>Maintenance Mode</p>");
+                        options.setTitle(title);
+
+
+                        HIGradient gradientMain = new HIGradient(0, 0, 0, 1);
+
+                        LinkedList<HIStop> stopsMain = new LinkedList<>();
+
+                        stopsMain.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
+                        stopsMain.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
+
+                        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradientMain, stopsMain));
+
+                        HIPane pane = new HIPane();
+                        pane.setStartAngle(-150);
+                        pane.setEndAngle(150);
+                        HIBackground background1 = new HIBackground();
+
+                        HIGradient gradient = new HIGradient();
+                        LinkedList<HIStop> stops = new LinkedList<>();
+                        stops.add(new HIStop(0, HIColor.initWithHexValue("FFF")));
+                        stops.add(new HIStop(1, HIColor.initWithHexValue("333")));
+                        background1.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
+                        background1.setBorderWidth(0);
+                        background1.setOuterRadius("109%");
+                        HIBackground background2 = new HIBackground();
+                        background2.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+                        background2.setBorderWidth(1);
+                        background2.setOuterRadius("107%");
+                        HIBackground background3 = new HIBackground();
+                        HIBackground background4 = new HIBackground();
+                        background4.setBackgroundColor(HIColor.initWithHexValue("DDD"));
+                        background4.setBorderWidth(0);
+                        background4.setOuterRadius("105%");
+                        background4.setInnerRadius("103%");
+                        pane.setBackground(new ArrayList<>(Arrays.asList(background1, background2, background3, background4)));
+                        options.setPane(pane);
+
+                        HIYAxis yaxis = new HIYAxis();
+                        yaxis.setMin(Double.parseDouble(gaugeChart.getGtw()));
+                        yaxis.setMax(Double.parseDouble(gaugeChart.getMaxweight()));
+                        yaxis.setMinorTickWidth(1);
+                        yaxis.setMinorTickLength(10);
+                        yaxis.setMinorTickPosition("inside");
+                        yaxis.setMinorTickColor(HIColor.initWithHexValue("666"));
+                        yaxis.setTickPixelInterval(30);
+                        yaxis.setTickWidth(2);
+                        yaxis.setTickPosition("inside");
+                        yaxis.setTickLength(10);
+                        yaxis.setTickColor(HIColor.initWithHexValue("666"));
+                        yaxis.setLabels(new HILabels());
+                        yaxis.getLabels().setStep(2);
+                        yaxis.setTitle(new HITitle());
+                        //yaxis.getTitle().setText("Latest Weight");
+                        yaxis.getTitle().setText("<p style='color: #104c52; '>Latest Weight</p>");
+
+
+                        // calculations
+                        double greenStart = Double.parseDouble(gaugeChart.getGtw());
+                        double greenEnd = (Double.parseDouble(gaugeChart.getGtw()) + Double.parseDouble(gaugeChart.getDiff()));
+
+                        double yellowEnd = (Double.parseDouble(gaugeChart.getGtw()) + (2 * Double.parseDouble(gaugeChart.getDiff())));
+
+                        double redEnd = Double.parseDouble(gaugeChart.getMaxweight());
+
+                        HIPlotBands plotband1 = new HIPlotBands();
+                        plotband1.setFrom(greenStart);
+                        plotband1.setTo(greenEnd);
+                        plotband1.setColor(HIColor.initWithHexValue("55BF3B"));
+
+                        HIPlotBands plotband2 = new HIPlotBands();
+                        plotband2.setFrom(greenEnd);
+                        plotband2.setTo(yellowEnd);
+                        plotband2.setColor(HIColor.initWithHexValue("DDDF0D"));
+
+                        HIPlotBands plotband3 = new HIPlotBands();
+                        plotband3.setFrom(yellowEnd);
+                        plotband3.setTo(redEnd);
+                        plotband3.setColor(HIColor.initWithHexValue("DF5353"));
+
+                        yaxis.setPlotBands(new ArrayList<>(Arrays.asList(plotband1, plotband2, plotband3)));
+                        options.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
+
+                        HIGauge gauge = new HIGauge();
+                        gauge.setName("Latest Weight");
+                        gauge.setTooltip(new HITooltip());
+                        gauge.getTooltip().setValueSuffix(" lbs");
+                        //gauge.setData(new ArrayList<>(Collections.singletonList(Integer.valueOf(gaugeChart.getGtw()))));
+                        gauge.setData(new ArrayList<>(Collections.singletonList(Double.parseDouble(gaugeChart.getGtw()))));
+
+                        options.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
+
+
+                        HIExporting exporting = new HIExporting();
+                        exporting.setEnabled(false);
+                        options.setExporting(exporting);
+
+                /*HICredits hiCredits=new HICredits();
+                hiCredits.setEnabled(false);
+                options.setCredits(hiCredits);*/
+
+                        chartGauge.setOptions(options);
+                        chartGauge.reload();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 500);
+    }
+
+
+    private void implementEmptyHighChart() {
+        try {
+
+            //chartGauge.setWillNotDraw(false);
             HIOptions options = new HIOptions();
 
             HIChart chart = new HIChart();
@@ -2075,7 +2465,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             chart.setPlotBorderWidth(0);
             chart.setPlotShadow(false);
             options.setChart(chart);
-
 
 
             HITitle title = new HITitle();
@@ -2120,8 +2509,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             options.setPane(pane);
 
             HIYAxis yaxis = new HIYAxis();
-            yaxis.setMin(Double.parseDouble(gaugeChart.getGtw()));
-            yaxis.setMax(Double.parseDouble(gaugeChart.getMaxweight()));
+            yaxis.setMin(Double.parseDouble("40"));
+            yaxis.setMax(Double.parseDouble("120"));
             yaxis.setMinorTickWidth(1);
             yaxis.setMinorTickLength(10);
             yaxis.setMinorTickPosition("inside");
@@ -2134,56 +2523,21 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             yaxis.setLabels(new HILabels());
             yaxis.getLabels().setStep(2);
             yaxis.setTitle(new HITitle());
-            //yaxis.getTitle().setText("Latest Weight");
             yaxis.getTitle().setText("<p style='color: #104c52; '>Latest Weight</p>");
 
 
-            // calculations
-            double greenStart = Double.parseDouble(gaugeChart.getGtw());
-            double greenEnd = (Double.parseDouble(gaugeChart.getGtw()) + Double.parseDouble(gaugeChart.getDiff()));
-
-            double yellowEnd = (Double.parseDouble(gaugeChart.getGtw()) + (2 * Double.parseDouble(gaugeChart.getDiff())));
-
-            double redEnd = Double.parseDouble(gaugeChart.getMaxweight());
-
-            HIPlotBands plotband1 = new HIPlotBands();
-            plotband1.setFrom(greenStart);
-            plotband1.setTo(greenEnd);
-            plotband1.setColor(HIColor.initWithHexValue("55BF3B"));
-
-            HIPlotBands plotband2 = new HIPlotBands();
-            plotband2.setFrom(greenEnd);
-            plotband2.setTo(yellowEnd);
-            plotband2.setColor(HIColor.initWithHexValue("DDDF0D"));
-
-            HIPlotBands plotband3 = new HIPlotBands();
-            plotband3.setFrom(yellowEnd);
-            plotband3.setTo(redEnd);
-            plotband3.setColor(HIColor.initWithHexValue("DF5353"));
-
-            yaxis.setPlotBands(new ArrayList<>(Arrays.asList(plotband1, plotband2, plotband3)));
-            options.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
-
-            HIGauge gauge = new HIGauge();
-            gauge.setName("Latest Weight");
-            gauge.setTooltip(new HITooltip());
-            gauge.getTooltip().setValueSuffix(" lbs");
-            //gauge.setData(new ArrayList<>(Collections.singletonList(Integer.valueOf(gaugeChart.getGtw()))));
-            gauge.setData(new ArrayList<>(Collections.singletonList(Double.parseDouble(gaugeChart.getGtw()))));
-
-            options.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
+            options.setSeries(new ArrayList<HISeries>());
 
 
             HIExporting exporting = new HIExporting();
             exporting.setEnabled(false);
             options.setExporting(exporting);
 
-            /*HICredits hiCredits=new HICredits();
-            hiCredits.setEnabled(false);
-            options.setCredits(hiCredits);*/
 
             chartGauge.setOptions(options);
-            chartGauge.reload();
+            //chartGauge.reload();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -228,14 +228,20 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private void autoConnect() {
         unregisterReceiver(wifiReceiver);
         final String scaleName = "WS915_V2.6_V1.5-";
-        int scaleId = LoginShared.getScaleUserId(this);
+        //int scaleId = LoginShared.getScaleUserId(this);
+        int scaleId = LoginShared.getUserMacId(this);
         String networkSSID = scaleName + scaleId;
         ScanResult scanResult = null;
         for (ScanResult result : scanResultsWifi) {
-            if (result.SSID.equals(networkSSID)) {
+            if (result.SSID.endsWith("" + scaleId)) {
                 scanResult = result;
                 break;
             }
+
+            /*if (result.SSID.equals(networkSSID)) {
+                scanResult = result;
+                break;
+            }*/
         }
         if (scanResult != null) {
             WifiConfiguration conf = new WifiConfiguration();

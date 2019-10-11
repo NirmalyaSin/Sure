@@ -233,9 +233,17 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
+
+                        //System.out.println("userMacID: " + LoginShared.getUserMacId(MyDeviceActivity.this));
+
                         RegistrationModel registrationModel = LoginShared.getRegistrationDataModel(MyDeviceActivity.this);
-                        registrationModel.getData().getUser().get(0).setUserMac(et_id.getText().toString().trim());
+                        registrationModel.getData().getUser().get(0).setUserMac(replaceScaleIDFormatter(et_id.getText().toString().trim()));
                         LoginShared.setRegistrationDataModel(MyDeviceActivity.this, registrationModel);
+
+                        LoginShared.setUserMacId(Integer.parseInt(replaceScaleIDFormatter(et_id.getText().toString().trim())));
+                        //LoginShared.setUserMacId(Integer.parseInt(et_id.getText().toString().trim()));
+
+                        //System.out.println("userMacID: " + LoginShared.getUserMacId(MyDeviceActivity.this));
 
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 

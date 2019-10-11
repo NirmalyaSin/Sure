@@ -1008,7 +1008,10 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setUserPhoto(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
+                        LoginShared.setUserMacId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
 
+
+                        //System.out.println("userMacID: " + LoginShared.getUserMacId(registrationActivity));
                         //System.out.println("scaleUserId: "+registrationActivity.registrationModel.getData().getUser().get(0).getUserMac());
 
                         //MethodUtils.errorMsg(registrationActivity, jsonObject.getString("message"));
@@ -1251,6 +1254,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
+                        LoginShared.setUserMacId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac()));
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {
@@ -1411,6 +1415,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
+                        LoginShared.setUserMacId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac()));
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(() -> {
@@ -1568,11 +1573,16 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     if (jsonObject.optInt("status") == 1) {
 
 
+                        registrationActivity.registrationModel.getData().getUser().get(0).setUserMac(jsonObject.getJSONObject("data").getString("user_mac"));
+
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationActivity.registrationModel);
                         LoginShared.setUserPhoto(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
+                        LoginShared.setUserMacId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
 
+
+                        System.out.println("userMacID: " + LoginShared.getUserMacId(registrationActivity));
 
                         //JSONObject jsObject = jsonObject.getJSONObject("data");
 

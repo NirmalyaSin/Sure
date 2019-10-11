@@ -36,6 +36,7 @@ import com.highsoft.highcharts.common.hichartsclasses.HICSSObject;
 import com.highsoft.highcharts.common.hichartsclasses.HIChart;
 import com.highsoft.highcharts.common.hichartsclasses.HIColumn;
 import com.highsoft.highcharts.common.hichartsclasses.HICondition;
+import com.highsoft.highcharts.common.hichartsclasses.HICredits;
 import com.highsoft.highcharts.common.hichartsclasses.HIDataLabels;
 import com.highsoft.highcharts.common.hichartsclasses.HIExporting;
 import com.highsoft.highcharts.common.hichartsclasses.HIGauge;
@@ -249,7 +250,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -602,11 +603,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     private void setOtherOptions() {
 
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count()>0) {
-            tvFriendRequestCount.setVisibility(View.VISIBLE);
-            tvFriendRequestCount.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count());
-        }else {
-            tvFriendRequestCount.setVisibility(View.GONE);
+        try {
+            if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count() > 0) {
+                tvFriendRequestCount.setVisibility(View.VISIBLE);
+                tvFriendRequestCount.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count()));
+                //tvFriendRequestCount.setText(String.valueOf(100));
+            } else {
+                tvFriendRequestCount.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         String nameText = "<font color=#788394> Name: " + "</font>" + "<font color=#B5B7BF>" + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUserName() + "</font>";
@@ -2070,19 +2076,34 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             chart.setPlotShadow(false);
             options.setChart(chart);
 
+
+
             HITitle title = new HITitle();
-            title.setText("Maintenance Mode");
+            title.setUseHTML(true);
+            title.setText("<p style='color: #ffffff; text-align: center;'>Maintenance Mode</p>");
             options.setTitle(title);
+
+
+            HIGradient gradientMain = new HIGradient(0, 0, 0, 1);
+
+            LinkedList<HIStop> stopsMain = new LinkedList<>();
+
+            stopsMain.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
+            stopsMain.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
+
+            chart.setBackgroundColor(HIColor.initWithLinearGradient(gradientMain, stopsMain));
 
             HIPane pane = new HIPane();
             pane.setStartAngle(-150);
             pane.setEndAngle(150);
             HIBackground background1 = new HIBackground();
+
             HIGradient gradient = new HIGradient();
             LinkedList<HIStop> stops = new LinkedList<>();
             stops.add(new HIStop(0, HIColor.initWithHexValue("FFF")));
             stops.add(new HIStop(1, HIColor.initWithHexValue("333")));
             background1.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
             background1.setBorderWidth(0);
             background1.setOuterRadius("109%");
             HIBackground background2 = new HIBackground();
@@ -2151,6 +2172,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             gauge.setData(new ArrayList<>(Collections.singletonList(Double.parseDouble(gaugeChart.getGtw()))));
 
             options.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
+
+
+            HIExporting exporting = new HIExporting();
+            exporting.setEnabled(false);
+            options.setExporting(exporting);
+
+            /*HICredits hiCredits=new HICredits();
+            hiCredits.setEnabled(false);
+            options.setCredits(hiCredits);*/
 
             chartGauge.setOptions(options);
             chartGauge.reload();

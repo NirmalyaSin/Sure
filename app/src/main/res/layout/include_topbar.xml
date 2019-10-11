@@ -140,13 +140,11 @@
 
             <TextView
                 android:id="@+id/tvFriendRequestCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_6sdp"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:textSize="@dimen/_7sdp"
                 android:background="@drawable/red_cirlce"
                 android:textStyle="bold"
-                android:padding="@dimen/_3sdp"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
                 android:visibility="gone"

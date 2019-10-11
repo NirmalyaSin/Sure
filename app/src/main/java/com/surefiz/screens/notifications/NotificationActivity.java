@@ -11,17 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.acountabiltySearch.RequestState;
-import com.surefiz.screens.acountabiltySearch.SearchAcountabilityActivity;
-import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
@@ -35,8 +31,6 @@ import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -108,13 +102,40 @@ public class NotificationActivity extends BaseActivity implements
         iv_AddPlus.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         rlFriendRequest.setVisibility(View.GONE);
+
+        if (isFromDashboard) {
+            img_topbar_menu.setVisibility(View.GONE);
+            rl_back.setVisibility(View.VISIBLE);
+            rl_back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callBackPressed();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isFromDashboard) {
+            callBackPressed();
+        }else {
+            super.onBackPressed();
+        }
+
+    }
+
+    private void callBackPressed() {
+        startActivity(new Intent(NotificationActivity.this, DashBoardActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finishAffinity();
     }
 
     private void setRecyclerViewItem() {
         mNotificationAdapter = new NotificationAdapter(this,
                 arrayListNotifications, this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpacesItemDecoration decoration = new SpacesItemDecoration((int) 10);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);

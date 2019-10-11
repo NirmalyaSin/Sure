@@ -172,6 +172,23 @@ public class LoginShared {
         return id;
     }
 
+    public static void setUserMacId(int id) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(SharedUtils.KEY_SHARED_USER_MAC_ID, id);
+        editor.commit();
+    }
+
+    public static int getUserMacId(Context context) {
+        int id = 1;
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        id = prefs.getInt(SharedUtils.KEY_SHARED_USER_MAC_ID, id);
+        return id;
+    }
+
     /**
      * DEVICE TOKEN
      */

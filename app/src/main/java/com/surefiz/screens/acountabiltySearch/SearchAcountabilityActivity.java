@@ -180,6 +180,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.GONE);
         rl_back.setVisibility(View.VISIBLE);
+        rlUserSearch.setVisibility(View.VISIBLE);
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

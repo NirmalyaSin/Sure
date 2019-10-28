@@ -2,20 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EDEDED">
+    android:background="@color/whiteColor">
 
     <RelativeLayout
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_130sdp"
-        android:background="@color/menu_header">
+        android:background="#F3F3F3">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_topbar_menu_profile"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_22sdp"
             android:src="@drawable/prof_img_placeholder" />
 
         <TextView
@@ -23,11 +23,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img_topbar_menu_profile"
-            android:paddingLeft="@dimen/_10sdp"
-            android:text="Santanu"
+            android:layout_toEndOf="@+id/img_topbar_menu_profile"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_medium"
             android:textSize="@dimen/_14sdp"
-            android:textColor="@color/whiteColor" />
+            android:textColor="@color/colorBlack" />
     </RelativeLayout>
 
     <ScrollView
@@ -47,8 +47,9 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:text="Dashboard"
+                android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_weight"
@@ -57,9 +58,10 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:text="Measure Weight"
+                android:fontFamily="@font/roboto_medium"
                 android:visibility="gone"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_users"
@@ -68,8 +70,9 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
                 android:text="Users"
+                android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_profile"
@@ -77,9 +80,10 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Profile"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_circle"
@@ -88,8 +92,9 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:textSize="@dimen/_14sdp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Accountability Circle"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_message"
@@ -98,9 +103,10 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:text="Broadcast Message"
+                android:fontFamily="@font/roboto_medium"
                 android:visibility="gone"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_reminder"
@@ -109,8 +115,9 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:text="Reminders"
+                android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_notification"
@@ -119,8 +126,9 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:text="Notifications"
+                android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_settings"
@@ -129,8 +137,9 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:text="Settings"
+                android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_about"
@@ -139,8 +148,9 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:text="About Us"
+                android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_forum"
@@ -149,8 +159,9 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:text="Forum"
+                android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_signout"
@@ -159,11 +170,10 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_14sdp"
                 android:paddingBottom="@dimen/_14sdp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Sign out"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="#25415D" />
-
+                android:textColor="@color/colorBlack" />
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>

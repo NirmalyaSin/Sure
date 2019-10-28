@@ -153,13 +153,14 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         tv_universal_header.setText("Scale ID");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.VISIBLE);
         btn_done.setVisibility(View.GONE);
         rl_back.setVisibility(View.VISIBLE);
         img_topbar_menu.setVisibility(View.GONE);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         if (LoginShared.getRegistrationDataModel(this) != null) {
-            tv_scale_id.setText("Current scale ID: " + LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac());
+            tv_scale_id.setText("Current scale ID: " + formatScaleId(LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac()));
         }
     }
 
@@ -167,8 +168,8 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         StringBuilder sb = new StringBuilder();
         sb.append(scaleId.replace("-", ""));
 
-        if (sb.length() > 3)
-            sb.insert(3, "-");
+        if (sb.length() > 2)
+            sb.insert(2, "-");
         if (sb.length() > 7)
             sb.insert(7, "-");
 

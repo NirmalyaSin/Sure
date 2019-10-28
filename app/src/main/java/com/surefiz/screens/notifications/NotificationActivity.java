@@ -90,8 +90,9 @@ public class NotificationActivity extends BaseActivity implements
 
     private void setHeaderView() {
         tv_universal_header.setText(isFromDashboard ? "Friend Requests" : "Notification");
-        btn_add.setVisibility(View.VISIBLE);
-        btn_add.setText("Clear All");
+        btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
+        btn_add.setText("CLEAR ALL");
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -294,35 +295,35 @@ public class NotificationActivity extends BaseActivity implements
         switch (v.getId()) {
             case R.id.txt_notification_stepped:
                 selectedTab = 1;
-                txt_battery.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
-                txt_performance.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
-                txt_stepped.setBackgroundColor(ContextCompat.getColor(this, R.color.registration_color_white));
+                txt_battery.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+                txt_performance.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+                txt_stepped.setBackgroundColor(ContextCompat.getColor(this, R.color.light_blue));
 
-                txt_battery.setTextColor(ContextCompat.getColor(this, R.color.registration_color_white));
-                txt_performance.setTextColor(ContextCompat.getColor(this, R.color.registration_color_white));
-                txt_stepped.setTextColor(ContextCompat.getColor(this, R.color.registration_color_black));
+                txt_battery.setTextColor(ContextCompat.getColor(this, R.color.colorBlack));
+                txt_performance.setTextColor(ContextCompat.getColor(this, R.color.colorBlack));
+                txt_stepped.setTextColor(ContextCompat.getColor(this, R.color.whiteColor));
                 callNotificationListApi("1");
                 break;
             case R.id.txt_notification_performance:
                 selectedTab = 2;
-                txt_battery.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
-                txt_performance.setBackgroundColor(ContextCompat.getColor(this, R.color.registration_color_white));
-                txt_stepped.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
+                txt_battery.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+                txt_performance.setBackgroundColor(ContextCompat.getColor(this, R.color.light_blue));
+                txt_stepped.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
 
-                txt_battery.setTextColor(ContextCompat.getColor(this, R.color.registration_color_white));
-                txt_performance.setTextColor(ContextCompat.getColor(this, R.color.registration_color_black));
-                txt_stepped.setTextColor(ContextCompat.getColor(this, R.color.registration_color_white));
+                txt_battery.setTextColor(ContextCompat.getColor(this, R.color.colorBlack));
+                txt_performance.setTextColor(ContextCompat.getColor(this, R.color.whiteColor));
+                txt_stepped.setTextColor(ContextCompat.getColor(this, R.color.colorBlack));
                 callNotificationListApi("2");
                 break;
             case R.id.txt_notification_battery:
                 selectedTab = 3;
-                txt_battery.setBackgroundColor(ContextCompat.getColor(this, R.color.registration_color_white));
-                txt_performance.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
-                txt_stepped.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
+                txt_battery.setBackgroundColor(ContextCompat.getColor(this, R.color.light_blue));
+                txt_performance.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+                txt_stepped.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
 
-                txt_battery.setTextColor(ContextCompat.getColor(this, R.color.registration_color_black));
-                txt_performance.setTextColor(ContextCompat.getColor(this, R.color.registration_color_white));
-                txt_stepped.setTextColor(ContextCompat.getColor(this, R.color.registration_color_white));
+                txt_battery.setTextColor(ContextCompat.getColor(this, R.color.whiteColor));
+                txt_performance.setTextColor(ContextCompat.getColor(this, R.color.colorBlack));
+                txt_stepped.setTextColor(ContextCompat.getColor(this, R.color.colorBlack));
                 callNotificationListApi("3");
                 break;
             default:

@@ -18,10 +18,10 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_14sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:background="@drawable/back"
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/back_arrow_new"
                 android:scaleType="centerInside" />
         </RelativeLayout>
 
@@ -33,24 +33,25 @@
 
             <ImageButton
                 android:id="@+id/img_topbar_menu"
-                android:layout_width="?android:attr/actionBarSize"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:background="@android:color/transparent"
                 android:scaleType="center"
-                android:src="@drawable/menu" />
+                android:src="@drawable/menu_new" />
         </RelativeLayout>
 
         <Button
             android:id="@+id/btn_done"
             android:layout_width="@dimen/_90sdp"
             android:layout_height="@dimen/_25sdp"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_toRightOf="@+id/rl_menu"
-            android:background="@drawable/login_submit_rounded_corner"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_toEndOf="@+id/rl_menu"
+            android:fontFamily="@font/roboto_regular"
+            android:background="@android:color/transparent"
             android:text="Dashboard"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
@@ -63,21 +64,23 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Dashboard"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_12sdp" />
 
         <Button
             android:id="@+id/btn_add"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/_40sdp"
-            android:layout_toRightOf="@+id/tv_universal_header"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:text="Add"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_toEndOf="@+id/tv_universal_header"
+            android:fontFamily="@font/roboto_regular"
+            android:background="@android:color/transparent"
+            android:text="ADD"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_11sdp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -105,8 +108,8 @@
 
         <ImageView
             android:id="@+id/iv_AddPlus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/_8sdp"
@@ -134,9 +137,9 @@
 
             <ImageView
                 android:id="@+id/iv_friend_request"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/ic_friend_request" />
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/add_user_new" />
 
             <TextView
                 android:id="@+id/tvFriendRequestCount"
@@ -148,7 +151,24 @@
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
                 android:visibility="gone"
-                android:textColor="@color/whiteColor"/>
+                android:textColor="@color/whiteColor" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlUserSearch"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/ivUserSearch"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/search_new" />
         </RelativeLayout>
 
     </RelativeLayout>

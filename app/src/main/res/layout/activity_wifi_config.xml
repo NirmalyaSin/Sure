@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/login_image_new">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -20,10 +21,10 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_14sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:background="@drawable/back"
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/back_arrow_new"
                 android:scaleType="centerInside" />
         </RelativeLayout>
 
@@ -34,8 +35,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:text="Skip"
+            android:background="@android:color/transparent"
+            android:text="SKIP"
+            android:fontFamily="@font/roboto_regular"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp" />
@@ -45,49 +47,48 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Scale WiFi Setup"
+            android:fontFamily="@font/roboto_regular"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_header">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.6"
-            android:background="@drawable/splash_image" />
 
 
         <ScrollView
             android:id="@+id/sv_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="true"
-            android:fillViewport="true">
+            android:layout_below="@+id/rl_header"
+            android:clipToPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="@dimen/_40sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
                     android:gravity="start"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/wifi_config"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_14sdp" />
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="SELECT WIFI"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -102,15 +103,14 @@
 
                         <EditText
                             android:id="@+id/editSSID"
-                            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
-                            android:backgroundTint="@android:color/transparent"
-                            android:drawableLeft="@drawable/ic_wifi"
-                            android:drawablePadding="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp"
                             android:focusableInTouchMode="false"
                             android:hint="Enter your WiFi-Name"
+                            android:fontFamily="@font/roboto_regular"
                             android:inputType="text|textNoSuggestions"
                             android:maxLines="1"
                             android:textColor="@color/whiteColor"
@@ -139,24 +139,33 @@
                             android:textSize="@dimen/_10sdp" />
                     </RelativeLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="WIFI PASSWORD"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:background="@drawable/edit_text_background"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/editPassword"
-                            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:background="@null"
-                            android:backgroundTint="@android:color/transparent"
-                            android:drawableLeft="@drawable/ic_lock_open"
-                            android:drawablePadding="@dimen/_10sdp"
+                            android:fontFamily="@font/roboto_regular"
                             android:hint="Enter Password"
                             android:inputType="textPassword"
                             android:maxLines="1"
@@ -164,7 +173,7 @@
                             android:textColorHint="@color/hintColor"
                             android:textSize="@dimen/_12sdp" />
 
-                        <ImageView
+                        <!--<ImageView
                             android:id="@+id/iv_showPassword"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
@@ -176,21 +185,20 @@
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:src="@drawable/ic_visible"
-                            android:visibility="gone" />
+                            android:visibility="gone" />-->
                     </LinearLayout>
 
                     <Button
                         android:id="@+id/btnConfigure"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_30sdp"
-                        android:layout_marginRight="@dimen/_30sdp"
                         android:layout_marginBottom="@dimen/_40sdp"
-                        android:background="@drawable/login_submit_rounded_corner"
+                        android:background="@drawable/login_button_gradient"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:text="Configure"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="CONFIGURE"
                         android:textAllCaps="false"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
@@ -199,6 +207,4 @@
 
             </LinearLayout>
         </ScrollView>
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -110,13 +110,14 @@ public class ProfileActivity extends BaseActivity {
         iv_edit.setVisibility(View.VISIBLE);
         findViewById(R.id.iv_weight_managment).setVisibility(View.VISIBLE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.VISIBLE);
     }
 
     public void showViewMode() {
         iv_plus_add_image.setVisibility(View.GONE);
-        tvUserImageHint.setVisibility(View.GONE);
+        tvUserImageHint.setVisibility(View.VISIBLE);
         btn_register.setVisibility(View.GONE);
         et_phone.setEnabled(false);
         et_full.setEnabled(false);

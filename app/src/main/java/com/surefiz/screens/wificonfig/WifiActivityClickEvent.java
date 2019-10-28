@@ -114,8 +114,8 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     private void setClickEvent() {
         mWifiConfigActivity.btnConfigure.setOnClickListener(this);
-        mWifiConfigActivity.iv_showPassword.setOnClickListener(this);
-        mWifiConfigActivity.iv_hidePassword.setOnClickListener(this);
+        /*mWifiConfigActivity.iv_showPassword.setOnClickListener(this);
+        mWifiConfigActivity.iv_hidePassword.setOnClickListener(this);*/
         mWifiConfigActivity.editSSID.setOnClickListener(this);
         mWifiConfigActivity.btn_skip_config.setOnClickListener(this);
     }
@@ -139,7 +139,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 wificonfigblankvalidation();
                 break;
 
-            case R.id.iv_showPassword:
+           /* case R.id.iv_showPassword:
                 mWifiConfigActivity.iv_showPassword.setVisibility(View.GONE);
                 mWifiConfigActivity.iv_hidePassword.setVisibility(View.VISIBLE);
                 mWifiConfigActivity.editPassword.setTransformationMethod
@@ -150,7 +150,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 mWifiConfigActivity.iv_hidePassword.setVisibility(View.GONE);
                 mWifiConfigActivity.editPassword.setTransformationMethod
                         (HideReturnsTransformationMethod.getInstance());
-                break;
+                break;*/
             case R.id.btn_skip_config:
 
                 //System.out.println("instructionShown: " + new InstructionSharedPreference(mWifiConfigActivity).getInstructionVisibility(mWifiConfigActivity));
@@ -277,14 +277,17 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         if (sucess) {
             if (mWifiConfigActivity.getIntent().getStringExtra("comeFrom") != null) {
                 if (mWifiConfigActivity.getIntent().getStringExtra("comeFrom").equals("1")) {
-                    Toast.makeText(mWifiConfigActivity, "wifi configruation done", Toast.LENGTH_LONG).show();
+
+                    /*Toast.makeText(mWifiConfigActivity, "wifi configruation done", Toast.LENGTH_LONG).show();
                     Intent deviceIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
                     mWifiConfigActivity.startActivity(deviceIntent);
                     mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    mWifiConfigActivity.finish();
+                    mWifiConfigActivity.finish();*/
+
+                    showalertdialog(true);
                 }
             } else {
-                showalertdialog();
+                showalertdialog(false);
             }
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         } else {
@@ -307,27 +310,43 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         }
     }
 
-    private void showalertdialog() {
+    private void showalertdialog(boolean isFromSettingPage) {
         AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
         alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
         alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.configrution));
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Next",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
 
-                        if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
-                            Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
-                            mWifiConfigActivity.startActivity(instruc);
-                            mWifiConfigActivity.finish();
-                        }else {
-                            Intent dashboardIntent = new Intent(mWifiConfigActivity, DashBoardActivity.class);
-                            mWifiConfigActivity.startActivity(dashboardIntent);
+        if (isFromSettingPage) {
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            Intent deviceIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
+                            mWifiConfigActivity.startActivity(deviceIntent);
+                            mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             mWifiConfigActivity.finish();
                         }
-                    }
-                });
+                    });
+        } else {
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Next",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
+
+                            if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
+                                Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
+                                mWifiConfigActivity.startActivity(instruc);
+                                mWifiConfigActivity.finish();
+                            }else {
+                                Intent dashboardIntent = new Intent(mWifiConfigActivity, DashBoardActivity.class);
+                                mWifiConfigActivity.startActivity(dashboardIntent);
+                                mWifiConfigActivity.finish();
+                            }
+                        }
+                    });
+        }
+
+
         alertDialog.show();
     }
 

@@ -135,7 +135,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 if (et_units.getText().toString().equals("KG/CM")) {
                     addWeightListAndCall("KG");
                 } else {
-                    addWeightListAndCall("LB");
+                    addWeightListAndCall("LBS");
                 }
             }
         });
@@ -162,7 +162,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
 
                     selectedWeightManagmentGoal = 0;
-                    selectedDesiredWeightSelection=-1;
+                    selectedDesiredWeightSelection = -1;
                 } else {
                     et_weight_managment.setText(managementList.get(1));
 
@@ -176,7 +176,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
 
                     selectedWeightManagmentGoal = 1;
-                    selectedDesiredWeightSelection=-1;
+                    selectedDesiredWeightSelection = -1;
                 }
             }
         });
@@ -384,7 +384,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         }*/
 
         if (units.equalsIgnoreCase("0")) {
-            addWeightListAndCall("LB");
+            addWeightListAndCall("LBS");
         } else {
             addWeightListAndCall("KG");
         }
@@ -495,7 +495,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     private void addWeightListAndCall(String change) {
         weightList.clear();
-        if (change.equals("LB")) {
+        if (change.equals("LBS")) {
             for (int i = 5; i < 301; i++) {
                 weightList.add(i + " " + change);
             }
@@ -554,6 +554,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         tv_universal_header.setText("Weight Management");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         rl_back.setVisibility(View.VISIBLE);
@@ -698,11 +699,11 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
                 //weight = et_weight.getText().toString().trim();
                 //time = et_time_loss.getText().toString().trim();
-            } else if (selectedDesiredWeightSelection == 1){
+            } else if (selectedDesiredWeightSelection == 1) {
                 userselectionbody = "1";
                 weight = "";
                 time = "";
-            }else {
+            } else {
                 loader.dismiss();
                 MethodUtils.errorMsg(WeightManagementActivity.this, "Enter desired weight selection");
                 return;
@@ -803,6 +804,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             Intent loginIntent = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
             startActivity(loginIntent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        } else if (getIntent().getBooleanExtra("isInitiatedFromProfile", false)) {
             finish();
         } else {
             //super.onBackPressed();

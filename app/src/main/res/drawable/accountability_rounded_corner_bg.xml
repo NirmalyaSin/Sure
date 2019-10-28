@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <stroke android:width=".25dp"
+        android:color="@color/gray"/>
+
+    <solid android:color="@color/accountAbilityTransparent"/>
+
+    <padding
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp"
+        android:bottom="1dp"/>
+
+    <corners android:radius="@dimen/_5sdp" />
+</shape>

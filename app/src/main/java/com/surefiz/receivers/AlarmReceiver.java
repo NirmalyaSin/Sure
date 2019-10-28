@@ -8,6 +8,8 @@ import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
@@ -34,10 +36,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         String channelId = context.getString(R.string.app_name);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
 
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
         Notification notification = builder.setContentTitle(context.getString(R.string.app_name)+" Reminder")
                 .setContentText(intent.getStringExtra("notificationText"))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
+                .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent).build();
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

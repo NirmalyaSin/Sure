@@ -63,6 +63,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         tv_universal_header.setText("Change Password");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         rl_back.setVisibility(View.VISIBLE);

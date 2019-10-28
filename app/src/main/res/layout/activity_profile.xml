@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
+        <!--<View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.6"
-            android:background="@drawable/splash_image" />
+            android:background="@drawable/splash_image" />-->
 
         <ScrollView
             android:id="@+id/sv_main"
@@ -25,7 +25,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_40sdp"
                 android:orientation="vertical">
 
@@ -70,6 +70,7 @@
                             android:layout_below="@+id/rlUserImage"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/roboto_regular"
                             android:text="@string/press_to_upload"
                             android:textColor="@color/whiteColor" />
                     </RelativeLayout>
@@ -81,7 +82,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_40sdp"
-                    android:text="First Name "
+                    android:text="FIRST NAME"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -104,6 +106,7 @@
                         android:inputType="text|textCapSentences"
                         android:maxLength="15"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -117,7 +120,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Middle Name "
+                    android:text="MIDDLE NAME"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -140,6 +144,7 @@
                         android:inputType="text|textCapSentences"
                         android:maxLength="15"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -153,7 +158,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Last Name "
+                    android:text="LAST NAME"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -176,6 +182,7 @@
                         android:inputType="text|textCapSentences"
                         android:maxLength="15"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -189,7 +196,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Email ID"
+                    android:text="EMAIL ID"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -211,6 +219,7 @@
                         android:hint="Enter email ID"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -224,7 +233,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Phone Number"
+                    android:text="PHONE NUMBER"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -246,6 +256,7 @@
                         android:hint="Enter Phone Number"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -259,7 +270,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Preferred Units"
+                    android:text="PREFERRED UNITS"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp"
                     android:visibility="visible" />
@@ -284,6 +296,7 @@
                         android:hint="Select Preferred unit"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -297,7 +310,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Gender"
+                    android:text="GENDER"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -320,6 +334,7 @@
                         android:hint="Select Gender"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -333,7 +348,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Age"
+                    android:text="AGE"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -356,6 +372,7 @@
                         android:inputType="numberSigned"
                         android:maxLength="2"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -369,7 +386,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Height"
+                    android:text="HEIGHT"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -393,6 +411,7 @@
                         android:hint="Select Height"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -407,7 +426,8 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Country Name"
+                    android:text="COUNTRY NAME"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -431,6 +451,7 @@
                         android:hint="Select Country Name"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -445,7 +466,8 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Address Line 1"
+                    android:text="ADDRESS LINE 1"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -469,6 +491,7 @@
                         android:hint="Enter your address line 1"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -483,7 +506,8 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Address Line 2"
+                    android:text="ADDRESS LINE 2"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -507,6 +531,7 @@
                         android:hint="Enter your address line 2"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -521,7 +546,8 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="City"
+                    android:text="CITY"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -545,6 +571,7 @@
                         android:hint="Enter your city name"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -559,7 +586,8 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="State"
+                    android:text="STATE"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -583,6 +611,7 @@
                         android:hint="Select your state"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -597,7 +626,8 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="Zip Code"
+                    android:text="ZIP CODE"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -621,6 +651,7 @@
                         android:hint="Enter your zip code"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -646,6 +677,7 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:layout_toStartOf="@+id/switch_visibility"
                         android:backgroundTint="@color/sky_blue"
+                        android:fontFamily="@font/roboto_regular"
                         android:text="@string/visibility"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
@@ -658,6 +690,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
+                        android:fontFamily="@font/roboto_regular"
                         android:checked="false"
                         android:enabled="false"
                         android:theme="@style/SCBSwitch" />
@@ -676,7 +709,8 @@
                         android:layout_marginTop="-20dp"
                         android:paddingLeft="@dimen/_18sdp"
                         android:paddingTop="@dimen/_20sdp"
-                        android:text="Add New Password"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="ADD NEW PASSWORD"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_16sdp" />
 
@@ -687,7 +721,8 @@
                         android:layout_marginTop="-15dp"
                         android:paddingLeft="@dimen/_18sdp"
                         android:paddingTop="@dimen/_20sdp"
-                        android:text="New Password"
+                        android:text="NEW PASSWORD"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -710,6 +745,7 @@
                             android:hint="Enter new password"
                             android:inputType="textPassword"
                             android:maxLines="1"
+                            android:fontFamily="@font/roboto_regular"
                             android:paddingBottom="@dimen/_6sdp"
                             android:textColor="@color/whiteColor"
                             android:textColorHint="@color/hintColor"
@@ -724,7 +760,8 @@
                         android:layout_marginTop="-20dp"
                         android:paddingLeft="@dimen/_18sdp"
                         android:paddingTop="@dimen/_20sdp"
-                        android:text="Confirm Password"
+                        android:text="CONFIRM PASSWORD"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -747,6 +784,7 @@
                             android:hint="Enter confirm passord"
                             android:inputType="textPassword"
                             android:maxLines="1"
+                            android:fontFamily="@font/roboto_regular"
                             android:paddingBottom="@dimen/_6sdp"
                             android:textColor="@color/whiteColor"
                             android:textColorHint="@color/hintColor"
@@ -762,6 +800,7 @@
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginBottom="@dimen/_12sdp"
                     android:text="@string/manage_social_logins"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_16sdp" />
 
@@ -798,7 +837,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:paddingStart="@dimen/_5sdp"
-                            android:text="Google"
+                            android:text="GOOGLE"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
@@ -810,8 +850,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="#05B085"
+                        android:background="@color/message_board_colo"
                         android:gravity="center"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_10sdp"
@@ -854,7 +895,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:paddingStart="@dimen/_5sdp"
-                            android:text="Facebook"
+                            android:text="FACEBOOK"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
@@ -865,12 +907,13 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="#05B085"
+                        android:background="@color/message_board_colo"
                         android:gravity="center"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_5sdp"
+                        android:fontFamily="@font/roboto_regular"
                         android:text="Add"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
@@ -881,12 +924,13 @@
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginStart="@dimen/_44sdp"
+                    android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_24sdp"
-                    android:layout_marginEnd="@dimen/_44sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_34sdp"
-                    android:background="@drawable/login_submit_rounded_corner"
-                    android:text="Save"
+                    android:background="@drawable/login_button_gradient"
+                    android:text="SAVE"
+                    android:fontFamily="@font/roboto_bold"
                     android:textAllCaps="false"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />

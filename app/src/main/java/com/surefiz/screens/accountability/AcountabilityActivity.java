@@ -132,6 +132,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         tv_universal_header.setText("Accountability Circle");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
         rlFriendRequest.setVisibility(View.GONE);
@@ -172,6 +173,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         //Go to Chat Page
         Intent chatIntent = new Intent(this, ChatActivity.class);
         chatIntent.putExtra("reciver_id", arrayListUsers.get(position).getUser_id());
+        chatIntent.putExtra("reciverName", arrayListUsers.get(position).getUser_name());
         startActivity(chatIntent);
     }
 

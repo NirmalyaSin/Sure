@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
+        <!--<View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.6"
-            android:background="@drawable/splash_image" />
+            android:background="@drawable/splash_image" />-->
 
         <TextView
             android:id="@+id/tv_header"
@@ -127,9 +127,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_below="@+id/rl_confirm_scale_id"
-            android:layout_margin="@dimen/_44sdp"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:text="Update"
+            android:layout_margin="@dimen/_30sdp"
+            android:background="@drawable/login_button_gradient"
+            android:text="UPDATE"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp"

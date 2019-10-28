@@ -80,8 +80,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ImageView iv_twiter;
     @BindView(R.id.tv_register)
     TextView tv_register;
-    @BindView(R.id.tvOR)
-    TextView tvOR;
+    /*@BindView(R.id.tvOR)
+    TextView tvOR;*/
     private CallbackManager callbackManager;
     private LoginClickEvent loginClickEvent;
     private GoogleApiClient googleApiClient;
@@ -239,7 +239,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     loader.dismiss();
 
                 try {
+
                     String responseString = response.body().string();
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    Log.d("@@LoginDataSocial : ", jsonObject.toString());
+
+                    loginClickEvent.navigateAfterLogin(responseString,true);
+
+                    /*String responseString = response.body().string();
                     Gson gson = new Gson();
                     RegistrationModel registrationModel;
 
@@ -255,7 +262,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(LoginActivity.this, jsObject.getString("message"));
-                    }
+                    }*/
+
+
+
 
 
                 } catch (Exception e) {

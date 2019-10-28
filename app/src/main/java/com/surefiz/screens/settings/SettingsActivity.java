@@ -55,6 +55,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         tv_universal_header.setText("Settings");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.VISIBLE);

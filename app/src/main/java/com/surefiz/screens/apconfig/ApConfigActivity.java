@@ -65,7 +65,6 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         scaleWiFiConfig = new ScaleWiFiConfig();
         initializeView();
         showConnectedWifiSSID();
-
     }
 
     private void initializeView() {
@@ -89,6 +88,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         tv_universal_header.setText("AP Configuration");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.GONE);
@@ -230,13 +230,13 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         final String scaleName = "WS915_V2.6_V1.5-";
         //int scaleId = LoginShared.getScaleUserId(this);
         int scaleId = LoginShared.getUserMacId(this);
-        //String networkSSID = scaleName + scaleId;
-        String networkSSID = "";
+        String networkSSID = scaleName + scaleId;
+        //String networkSSID = "";
         ScanResult scanResult = null;
         for (ScanResult result : scanResultsWifi) {
             if (result.SSID.endsWith("" + scaleId)) {
                 scanResult = result;
-                networkSSID = scanResult.SSID;
+                //networkSSID = scanResult.SSID;
                 break;
             }
 
@@ -248,7 +248,6 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         if (scanResult != null) {
             WifiConfiguration conf = new WifiConfiguration();
             conf.SSID = "\"" + networkSSID + "\"";
-            //conf.SSID = "\"" + scanResult.SSID + "\"";
             conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             wifiManager.addNetwork(conf);

@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".screens.weightManagement.WeightManagementActivity">
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.6"
-        android:background="@drawable/splash_image" />
+        android:background="@drawable/splash_image" />-->
 
 
     <LinearLayout
@@ -25,7 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/_18sdp"
-            android:text="Weight Management Goal"
+            android:fontFamily="@font/roboto_regular"
+            android:text="WEIGHT MANAGEMENT GOAL"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -52,6 +53,7 @@
             android:background="@null"
             android:backgroundTint="@android:color/transparent"
             android:focusableInTouchMode="false"
+            android:fontFamily="@font/roboto_regular"
             android:hint="Please Select Weight Management Goal"
             android:inputType="number"
             android:maxLines="1"
@@ -76,7 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/_18sdp"
-            android:text="Desired Weight Selection"
+            android:fontFamily="@font/roboto_regular"
+            android:text="DESIRED WEIGHT SELECTION"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -104,6 +107,7 @@
             android:background="@null"
             android:backgroundTint="@android:color/transparent"
             android:focusableInTouchMode="false"
+            android:fontFamily="@font/roboto_regular"
             android:hint="Select your input choice"
             android:maxLines="1"
             android:paddingBottom="@dimen/_6sdp"
@@ -119,7 +123,8 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/_18sdp"
         android:paddingTop="@dimen/_20sdp"
-        android:text="Preferred Units"
+        android:fontFamily="@font/roboto_regular"
+        android:text="PREFERRED UNITS"
         android:visibility="gone"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
@@ -159,7 +164,8 @@
         android:layout_below="@+id/rl_desired_weight_selection"
         android:paddingLeft="@dimen/_18sdp"
         android:paddingTop="@dimen/_20sdp"
-        android:text="Desired Weight"
+        android:fontFamily="@font/roboto_regular"
+        android:text="DESIRED WEIGHT"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 
@@ -180,6 +186,7 @@
             android:background="@null"
             android:backgroundTint="@android:color/transparent"
             android:focusableInTouchMode="false"
+            android:fontFamily="@font/roboto_regular"
             android:hint="Desired Weight"
             android:inputType="text|textNoSuggestions"
             android:maxLines="1"
@@ -197,7 +204,8 @@
         android:layout_below="@+id/rl_weight"
         android:paddingLeft="@dimen/_18sdp"
         android:paddingTop="@dimen/_20sdp"
-        android:text="Time To Lose Weight"
+        android:fontFamily="@font/roboto_regular"
+        android:text="TIME TO LOSE WEIGHT"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 
@@ -218,6 +226,7 @@
             android:background="@null"
             android:backgroundTint="@android:color/transparent"
             android:focusableInTouchMode="false"
+            android:fontFamily="@font/roboto_regular"
             android:hint="SureFiz™ will suggest you the time to lose weight"
             android:inputType="text|textNoSuggestions"
             android:maxLines="1"
@@ -234,8 +243,9 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_below="@+id/rl_time_loss"
         android:layout_margin="@dimen/_44sdp"
-        android:background="@drawable/login_submit_rounded_corner"
-        android:text="Update"
+        android:background="@drawable/login_button_gradient"
+        android:fontFamily="@font/roboto_bold"
+        android:text="UPDATE"
         android:textAllCaps="false"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
@@ -246,8 +256,9 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_below="@+id/rl_time_loss"
         android:layout_margin="@dimen/_44sdp"
-        android:background="@drawable/login_submit_rounded_corner"
-        android:text="Accept"
+        android:background="@drawable/login_button_gradient"
+        android:fontFamily="@font/roboto_bold"
+        android:text="ACCEPT"
         android:visibility="gone"
         android:textAllCaps="false"
         android:textColor="@color/whiteColor"
@@ -257,8 +268,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:layout_below="@+id/btn_accept"
-        android:background="@drawable/login_submit_rounded_corner"
-        android:text="Decline"
+        android:background="@drawable/login_button_gradient"
+        android:fontFamily="@font/roboto_bold"
+        android:text="DECLINE"
         android:textAllCaps="false"
         android:visibility="gone"
         android:layout_marginRight="@dimen/_44sdp"

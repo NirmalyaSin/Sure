@@ -3,6 +3,7 @@ package com.surefiz.screens.chat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -26,6 +29,8 @@ import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
+import org.w3c.dom.Text;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -37,9 +42,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.HTTP;
 
-public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScrollListener {
+public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnChatScrollListener {
     private final int INITIAL_PAGINATION = 0;
-    public View view;
+    //public View view;
     public Handler handler;
     private RecyclerView recyclerView;
     private LoadingData loadingData;
@@ -50,12 +55,14 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
     private EditText editTextMessage;
     private ImageView imageSendMsg;
     private MyApplicationClass myApplicationClass;
+    private TextView tvUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = View.inflate(this, R.layout.activity_chat, null);
-        addContentView(view);
+        setContentView(R.layout.activity_chat);
+        //view = View.inflate(this, R.layout.activity_chat, null);
+        //addContentView(view);
         handler = new Handler();
         myApplicationClass = (MyApplicationClass) getApplication();
         LoginShared.setWeightFromNotification(this, "0");
@@ -68,9 +75,11 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
     private void initializeView() {
         setHeaderView();
         loadingData = new LoadingData(this);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        editTextMessage = view.findViewById(R.id.editTextMessage);
-        imageSendMsg = view.findViewById(R.id.imageSendMsg);
+        recyclerView = findViewById(R.id.recyclerView);
+        editTextMessage = findViewById(R.id.editTextMessage);
+        imageSendMsg = findViewById(R.id.imageSendMsg);
+
+
         setRecyclerViewItem();
         //Call Api to list all chat
         callChatListApi(receiver_id, INITIAL_PAGINATION);
@@ -120,24 +129,32 @@ public class ChatActivity extends BaseActivity implements ChatAdapter.OnChatScro
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
-
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText("Chat");
+        /*tv_universal_header.setText("Chat");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.GONE);
-        rl_back.setVisibility(View.VISIBLE);
+        rl_back.setVisibility(View.VISIBLE);*/
 
+        RelativeLayout rl_back = findViewById(R.id.rl_back);
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        tvUserName = findViewById(R.id.tvUserName);
+
+        /*if (getIntent().hasExtra("reciverName")){
+            tvUserName.setText(getIntent().getStringExtra("reciverName"));
+        }else {
+            tvUserName.setText("Chat");
+        }*/
     }
 
     private void callChatListApi(final String receiverId, final int newPagination) {

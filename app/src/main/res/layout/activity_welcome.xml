@@ -64,8 +64,9 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"
-                android:background="@drawable/login_submit_rounded_corner"
+                android:background="@drawable/login_button_gradient"
                 android:gravity="center"
+                android:fontFamily="@font/roboto_medium"
                 android:text="How to Sign up"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_15sdp"
@@ -93,9 +94,10 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"
-                android:background="@drawable/login_submit_rounded_corner"
+                android:background="@drawable/login_button_gradient"
                 android:gravity="center"
                 android:text="Learn more"
+                android:fontFamily="@font/roboto_medium"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="normal" />
@@ -111,9 +113,9 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:alpha="0.7"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_18sdp"
-            android:textStyle="bold"
             android:visibility="visible" />
     </LinearLayout>
 </RelativeLayout>

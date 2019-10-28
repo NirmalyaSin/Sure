@@ -1,124 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.reminders.AddEditReminderActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.6"
-        android:background="@drawable/splash_image" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_title"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
 
         <EditText
             android:id="@+id/editReminderText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_rectangle_round_transparent"
             android:textColor="@color/whiteColor"
             android:cursorVisible="true"
             android:textCursorDrawable="@color/whiteColor"
+            android:fontFamily="@font/roboto_regular"
             android:hint="Add reminder here"
-            android:textSize="@dimen/_12sdp"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/_14sdp"
             android:inputType="textMultiLine"
-            android:textColorHint="@color/gray"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:padding="@dimen/_8sdp"/>
+            android:textColorHint="@color/whiteColor"
+            android:layout_marginTop="@dimen/_5sdp" />
 
-        <LinearLayout
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/whiteColor" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_10sdp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            android:layout_marginTop="@dimen/_20sdp">
+
+
+            <LinearLayout
+                android:id="@+id/llDate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_12sdp"
-                android:text="Select Date"/>
+                android:orientation="vertical"
+                android:layout_toStartOf="@+id/ivEditDate">
 
-            <EditText
-                android:id="@+id/editReminderDate"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_rectangle_round_transparent"
-                android:drawableRight="@drawable/ic_edit"
-                android:drawablePadding="@dimen/_5sdp"
-                android:textSize="@dimen/_12sdp"
-                android:focusableInTouchMode="false"
-                android:editable="false"
-                android:hint="Select"
-                android:gravity="center"
-                android:padding="@dimen/_5sdp"
-                android:textColorHint="@color/gray"
-                android:textColor="@color/whiteColor"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:cursorVisible="false" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/whiteColor"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/select_date" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/editReminderDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:textSize="@dimen/_14sdp"
+                    android:background="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:editable="false"
+                    android:hint="Select"
+                    android:gravity="start"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textColorHint="@color/whiteColor"
+                    android:textColor="@color/whiteColor"
+                    android:cursorVisible="false" />
+            </LinearLayout>
 
-        <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_below="@+id/llDate"
+                android:background="@color/whiteColor" />
+
+            <ImageView
+                android:id="@+id/ivEditDate"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/calendar_new"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_10sdp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_12sdp"
-                android:text="Select Time"/>
+            android:layout_marginTop="@dimen/_20sdp">
 
-            <EditText
-                android:id="@+id/editReminderTime"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:id="@+id/llTime"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_rectangle_round_transparent"
-                android:drawableRight="@drawable/ic_edit"
-                android:drawablePadding="@dimen/_5sdp"
-                android:textSize="@dimen/_12sdp"
-                android:focusableInTouchMode="false"
-                android:editable="false"
-                android:hint="Select"
-                android:gravity="center"
-                android:padding="@dimen/_5sdp"
-                android:textColorHint="@color/gray"
-                android:textColor="@color/whiteColor"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:cursorVisible="false" />
+                android:layout_toStartOf="@+id/ivEditTime"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/whiteColor"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/select_time" />
+
+                <EditText
+                    android:id="@+id/editReminderTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:background="@android:color/transparent"
+                    android:textSize="@dimen/_14sdp"
+                    android:focusableInTouchMode="false"
+                    android:editable="false"
+                    android:hint="Select"
+                    android:gravity="start"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textColorHint="@color/whiteColor"
+                    android:textColor="@color/whiteColor"
+                    android:cursorVisible="false" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivEditTime"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/clock_new"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/llTime"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/whiteColor" />
+        </RelativeLayout>
 
         <Button
             android:id="@+id/buttonSaveReminder"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            android:background="@drawable/shape_rectangle_blue"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_button_gradient"
             android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp"
-            android:text="Set Reminder"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/set_reminder"
             android:textAllCaps="false"
-            android:layout_marginLeft="@dimen/_30sdp"
-            android:layout_marginRight="@dimen/_30sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_60sdp"
             android:gravity="center" />
-
     </LinearLayout>
-
 </RelativeLayout>

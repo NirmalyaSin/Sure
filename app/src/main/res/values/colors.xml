@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#8436B8</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="statusBarColor">#8436B8</color>
+    <!--<color name="statusBarColor">#8436B8</color>-->
+    <color name="statusBarColor">#40000000</color>
     <color name="whiteColor">#FFFFFF</color>
     <color name="hintColor">#A9A9A9</color>
     <color name="otphintColor">#FFFFFF</color>
@@ -17,6 +18,7 @@
     <color name="kprogresshud_default_color">#b1000000</color>
     <color name="kprogresshud_grey_color">#449E9E9E</color>
     <color name="blue">#3981F5</color>
+    <color name="light_blue">#1A9AE1</color>
     <color name="menu_header">#0F2233</color>
     <color name="gray">#d4d7d5d5</color>
     <color name="popupbg">#3D5625</color>
@@ -27,11 +29,13 @@
 
     <color name="sky_blue">#347BEE</color>
     <color name="sky_blue1">#4A68EA</color>
-    <color name="complete_color">#24F91D</color>
+    <color name="complete_color">#229869</color>
     <color name="message_board_colo">#28a745</color>
     <color name="textBlue">#0381cd</color>
     <color name="textGray">#B5B7BF</color>
     <color name="mesg_gray">#e1e1e1</color>
 
     <color name="social_add_button">#05B085</color>
+    <color name="colorBlack">#000000</color>
+    <color name="accountAbilityTransparent">#50000000</color>
 </resources>

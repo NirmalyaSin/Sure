@@ -90,6 +90,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public ImageButton img_topbar_menu;
     @BindView(R.id.rlFriendRequest)
     public RelativeLayout rlFriendRequest;
+    @BindView(R.id.rlUserSearch)
+    public RelativeLayout rlUserSearch;
     @BindView(R.id.tvFriendRequestCount)
     public TextView tvFriendRequestCount;
     @BindView(R.id.tv_universal_header)

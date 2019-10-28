@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 
 import com.surefiz.R;
@@ -45,6 +46,8 @@ public class AddEditReminderActivity extends BaseActivity implements
     private User mReminder;
     private String type;
     private Calendar calendar;
+    private ImageView ivEditDate;
+    private ImageView ivEditTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class AddEditReminderActivity extends BaseActivity implements
         loadingData = new LoadingData(this);
         editReminderText = view.findViewById(R.id.editReminderText);
         editReminderDate = view.findViewById(R.id.editReminderDate);
+        ivEditDate = view.findViewById(R.id.ivEditDate);
+        ivEditTime = view.findViewById(R.id.ivEditTime);
         editReminderTime = view.findViewById(R.id.editReminderTime);
         buttonSaveReminder = view.findViewById(R.id.buttonSaveReminder);
         //Get values from previous page
@@ -168,10 +173,18 @@ public class AddEditReminderActivity extends BaseActivity implements
     }
 
     public void enableDateTimeSelection() {
+
         editReminderDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDatePickerDialog();
+            }
+        });
+
+        ivEditDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editReminderDate.performClick();
             }
         });
 
@@ -181,12 +194,21 @@ public class AddEditReminderActivity extends BaseActivity implements
                 openTimePickerDialog();
             }
         });
+
+        ivEditTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editReminderTime.performClick();
+            }
+        });
     }
 
     private void setHeaderView() {
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         rl_back.setVisibility(View.VISIBLE);
         img_topbar_menu.setVisibility(View.GONE);

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.instruction.InstructionActivity">
+    android:background="@drawable/login_image_new">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -16,11 +16,11 @@
             android:id="@+id/btn_skip"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_25sdp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:background="@drawable/login_submit_rounded_corner"
-            android:text="Skip"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@android:color/transparent"
+            android:text="SKIP"
             android:visibility="gone"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
@@ -32,6 +32,7 @@
             android:layout_centerInParent="true"
             android:paddingBottom="@dimen/_10sdp"
             android:text="Instructions"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -42,24 +43,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_header">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.6"
-            android:background="@drawable/splash_image" />
 
         <ScrollView
             android:id="@+id/sv_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:orientation="vertical">
 
@@ -67,12 +61,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:gravity="center_horizontal"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/step_on_the_scale"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_20sdp" />
+                    android:textSize="@dimen/_18sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,12 +81,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/instruction_step1"
                         android:textColor="@color/whiteColor"
+                        android:fontFamily="@font/roboto_regular"
                         android:textSize="@dimen/_15sdp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_7sdp"
+                        android:fontFamily="@font/roboto_regular"
                         android:text="@string/instruction_step2"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_15sdp" />
@@ -101,6 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_7sdp"
+                        android:fontFamily="@font/roboto_regular"
                         android:text="@string/instruction_step3"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_15sdp" />
@@ -109,13 +106,12 @@
                         android:id="@+id/btndone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_30sdp"
-                        android:layout_marginRight="@dimen/_30sdp"
                         android:layout_marginBottom="@dimen/_40sdp"
-                        android:background="@drawable/login_submit_rounded_corner"
+                        android:background="@drawable/login_button_gradient"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="@string/yes_it_down"
                         android:textAllCaps="false"
                         android:textColor="@color/whiteColor"

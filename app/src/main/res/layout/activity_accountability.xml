@@ -6,86 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".screens.users.UserListActivity">
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.6"
-        android:background="@drawable/splash_image" />
+        android:background="@drawable/splash_image" />-->
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical">-->
 
         <LinearLayout
+            android:id="@+id/llNavigator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:orientation="horizontal"
-            android:weightSum="5">
+            android:background="@drawable/accountability_navigator_bg"
+            android:weightSum="2">
 
             <LinearLayout
                 android:id="@+id/ll_acc_message"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:background="@color/message_board_colo"
+                android:layout_weight="1"
+                android:background="@drawable/login_button_gradient"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/messageboard"
-                        android:tint="@color/whiteColor"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:text="Message Board"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/_14sdp" />
-                </LinearLayout>
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/message_board"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="@dimen/_5sdp"
-                android:layout_height="@dimen/_5sdp" />
 
             <LinearLayout
                 android:id="@+id/ll_acc_friend"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:background="@color/message_board_colo"
+                android:layout_weight="1"
+                android:background="@drawable/login_button_gradient"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_add_plus" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:text="Add Friend"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/_14sdp" />
-                </LinearLayout>
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/add_friend"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -93,10 +75,7 @@
             android:id="@+id/rv_items"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/llNavigator"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
@@ -105,5 +84,4 @@
             tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:listitem="@layout/item_user_accountability"
             tools:orientation="vertical" />
-    </LinearLayout>
 </RelativeLayout>

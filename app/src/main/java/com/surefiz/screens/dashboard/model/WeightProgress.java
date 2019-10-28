@@ -12,7 +12,7 @@ public class WeightProgress {
     private List<String> label = null;
     @SerializedName("data")
     @Expose
-    private List<Double> data = null;
+    private List<String> data = null;
     @SerializedName("noOfWeek")
     @Expose
     private String noOfWeek;
@@ -25,11 +25,11 @@ public class WeightProgress {
         this.label = label;
     }
 
-    public List<Double> getData() {
+    public List<String> getData() {
         return data;
     }
 
-    public void setData(List<Double> data) {
+    public void setData(List<String> data) {
         this.data = data;
     }
 

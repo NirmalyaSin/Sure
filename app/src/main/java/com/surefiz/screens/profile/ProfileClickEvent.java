@@ -320,25 +320,24 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked() == 0) {
             activity.btnGoogleAdd.setBackgroundColor(activity.getResources().getColor(R.color.social_add_button));
-            activity.btnGoogleAdd.setText("Add");
+            activity.btnGoogleAdd.setText("ADD");
         } else {
             activity.btnGoogleAdd.setBackgroundColor(Color.RED);
-            activity.btnGoogleAdd.setText("Remove");
+            activity.btnGoogleAdd.setText("REMOVE");
         }
 
 
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getFacebookAccountLinked() == 0) {
             activity.btnFacebookAdd.setBackgroundColor(activity.getResources().getColor(R.color.social_add_button));
-            activity.btnFacebookAdd.setText("Add");
+            activity.btnFacebookAdd.setText("ADD");
         } else {
             activity.btnFacebookAdd.setBackgroundColor(Color.RED);
-            activity.btnFacebookAdd.setText("Remove");
+            activity.btnFacebookAdd.setText("REMOVE");
         }
     }
 
     private boolean checkIsZeroValue(String value) {
         return value.equalsIgnoreCase("0") || value.equalsIgnoreCase("0.0") || value.equalsIgnoreCase("0.00");
-
     }
 
     private void showImage() {

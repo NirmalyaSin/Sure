@@ -221,6 +221,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
         btn_done.setVisibility(View.GONE);
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
 
         rl_back.setVisibility(View.VISIBLE);
 

@@ -106,6 +106,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
         tv_universal_header.setText("Privacy");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.GONE);

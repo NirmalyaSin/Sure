@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.otp.OtpActivity">
+    tools:context=".screens.otp.OtpActivity"
+    android:background="@drawable/login_image_new">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -17,18 +17,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/roboto_bold"
             android:text="One Time Password"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
     </RelativeLayout>
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_header"
         android:alpha="0.6"
-        android:background="@drawable/splash_image" />
+        android:background="@drawable/splash_image" />-->
 
     <TextView
         android:id="@+id/tv_enter"
@@ -39,6 +40,7 @@
         android:paddingTop="@dimen/_20sdp"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
+        android:fontFamily="@font/roboto_regular"
         android:text="One Time Password will be auto-filled in the boxes below. If the boxes do not show the activation code please check your email and enter the One Time Password manually."
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
@@ -77,6 +79,7 @@
                 android:gravity="center|bottom"
                 android:hint="@string/edittext_hint"
                 android:inputType="number"
+                android:fontFamily="@font/roboto_regular"
                 android:maxLines="1"
                 android:maxLength="1"
                 android:textStyle="bold"
@@ -106,6 +109,7 @@
                 android:gravity="center|bottom"
                 android:hint="@string/edittext_hint"
                 android:inputType="number"
+                android:fontFamily="@font/roboto_regular"
                 android:maxLines="1"
                 android:maxLength="1"
                 android:textStyle="bold"
@@ -136,6 +140,7 @@
                 android:hint="@string/edittext_hint"
                 android:inputType="number"
                 android:maxLines="1"
+                android:fontFamily="@font/roboto_regular"
                 android:maxLength="1"
                 android:textStyle="bold"
                 android:paddingBottom="@dimen/_6sdp"
@@ -165,6 +170,7 @@
                 android:hint="@string/edittext_hint"
                 android:inputType="number"
                 android:maxLines="1"
+                android:fontFamily="@font/roboto_regular"
                 android:maxLength="1"
                 android:textStyle="bold"
                 android:paddingBottom="@dimen/_6sdp"
@@ -180,8 +186,9 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_below="@+id/ll_otp"
         android:layout_margin="@dimen/_44sdp"
-        android:background="@drawable/login_submit_rounded_corner"
-        android:text="Submit"
+        android:fontFamily="@font/roboto_bold"
+        android:background="@drawable/login_button_gradient"
+        android:text="SUBMIT"
         android:textAllCaps="false"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />

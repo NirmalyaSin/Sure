@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
+        <!--<View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.6"
-            android:background="@drawable/splash_image" />
+            android:background="@drawable/splash_image" />-->
 
         <TextView
             android:id="@+id/tv_app"
@@ -31,7 +31,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_items"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -274,7 +274,8 @@
                             android:layout_centerHorizontal="true"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_6sdp"
-                            android:text="Body's Current Compositions"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="BODY'S CURRENT COMPOSITIONS"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_15sdp" />
 
@@ -295,6 +296,7 @@
                             android:paddingLeft="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
+                            android:fontFamily="@font/roboto_medium"
                             android:text="Name:"
                             android:textColor="@color/textGray"
                             android:textSize="@dimen/_12sdp" />
@@ -306,6 +308,7 @@
                             android:layout_below="@+id/tv_name"
                             android:paddingLeft="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
+                            android:fontFamily="@font/roboto_medium"
                             android:text="Scale ID:"
                             android:textColor="@color/textGray"
                             android:textSize="@dimen/_12sdp" />
@@ -352,6 +355,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="@dimen/_10sdp"
                                         android:paddingTop="@dimen/_10sdp"
+                                        android:fontFamily="@font/roboto_medium"
                                         android:text="Weight"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
@@ -363,6 +367,7 @@
                                         android:layout_below="@+id/tv_weight"
                                         android:paddingLeft="@dimen/_10sdp"
                                         android:paddingTop="@dimen/_10sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:text="9.10 lbs"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
@@ -402,6 +407,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="@dimen/_12sdp"
                                         android:paddingTop="@dimen/_10sdp"
+                                        android:fontFamily="@font/roboto_medium"
                                         android:text="Height"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
@@ -413,6 +419,7 @@
                                         android:layout_below="@+id/tv_height"
                                         android:paddingLeft="@dimen/_10sdp"
                                         android:paddingTop="@dimen/_10sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:text="172 Inch"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
@@ -463,6 +470,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_8sdp"
                                         android:text="Body Fat"
+                                        android:fontFamily="@font/roboto_medium"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -471,6 +479,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_below="@id/tv_fat"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:layout_marginTop="@dimen/_8sdp"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
@@ -483,6 +492,7 @@
                                         android:layout_marginTop="@dimen/_8sdp"
                                         android:paddingStart="@dimen/_3sdp"
                                         android:paddingEnd="@dimen/_3sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:background="#40CCDD"
                                         android:text="Thin"
                                         android:textAllCaps="false"
@@ -526,6 +536,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_8sdp"
                                         android:text="Bone Kg"
+                                        android:fontFamily="@font/roboto_medium"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -535,6 +546,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_below="@id/tv_bone"
                                         android:layout_marginTop="@dimen/_8sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -546,6 +558,7 @@
                                         android:layout_marginTop="@dimen/_8sdp"
                                         android:background="#FE3E42"
                                         android:text="Not Enough"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:paddingStart="@dimen/_3sdp"
                                         android:paddingEnd="@dimen/_3sdp"
                                         android:textAllCaps="false"
@@ -598,6 +611,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_8sdp"
                                         android:text="Muscle"
+                                        android:fontFamily="@font/roboto_medium"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -607,6 +621,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_below="@id/tv_muscle"
                                         android:layout_marginTop="@dimen/_8sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -617,6 +632,7 @@
                                         android:layout_below="@id/tv_muscle_dynamic"
                                         android:layout_marginTop="@dimen/_8sdp"
                                         android:background="#FE3E42"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:paddingStart="@dimen/_3sdp"
                                         android:paddingEnd="@dimen/_3sdp"
                                         android:text="Not Enough"
@@ -661,6 +677,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_8sdp"
                                         android:text="BMI"
+                                        android:fontFamily="@font/roboto_medium"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -670,6 +687,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_below="@id/tv_bmi"
                                         android:layout_marginTop="@dimen/_8sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -681,6 +699,7 @@
                                         android:layout_marginTop="@dimen/_8sdp"
                                         android:background="#FE3E42"
                                         android:paddingStart="@dimen/_3sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:paddingEnd="@dimen/_3sdp"
                                         android:text="Not Enough"
                                         android:textAllCaps="false"
@@ -718,6 +737,7 @@
                                     android:layout_width="@dimen/_20sdp"
                                     android:layout_height="@dimen/_15sdp"
                                     android:layout_alignParentLeft="true"
+                                    android:fontFamily="@font/roboto_medium"
                                     android:layout_marginLeft="@dimen/_15sdp"
                                     android:layout_marginTop="@dimen/_15sdp"
                                     android:src="@drawable/drop" />
@@ -734,6 +754,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_8sdp"
                                         android:text="Water"
+                                        android:fontFamily="@font/roboto_medium"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -743,6 +764,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_below="@id/tv_water"
                                         android:layout_marginTop="@dimen/_8sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -754,6 +776,7 @@
                                         android:layout_marginTop="@dimen/_8sdp"
                                         android:paddingStart="@dimen/_3sdp"
                                         android:paddingEnd="@dimen/_3sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:background="#FE3E42"
                                         android:text="Not Enough"
                                         android:textAllCaps="false"
@@ -797,6 +820,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_8sdp"
                                         android:text="Protein"
+                                        android:fontFamily="@font/roboto_medium"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -806,6 +830,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_below="@id/tv_protein"
                                         android:layout_marginTop="@dimen/_8sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />
 
@@ -817,6 +842,7 @@
                                         android:layout_marginTop="@dimen/_8sdp"
                                         android:paddingStart="@dimen/_3sdp"
                                         android:paddingEnd="@dimen/_3sdp"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:background="#40CCDD"
                                         android:text="Thin"
                                         android:textAllCaps="false"
@@ -846,6 +872,7 @@
                             android:paddingLeft="@dimen/_6sdp"
                             android:paddingTop="@dimen/_6sdp"
                             android:paddingBottom="@dimen/_6sdp"
+                            android:fontFamily="@font/roboto_medium"
                             android:text="Recorded on 30/11/2019"
                             android:textColor="@color/textGray"
                             android:textSize="@dimen/_12sdp" />
@@ -869,6 +896,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
+                                android:fontFamily="@font/roboto_regular"
                                 android:text="@string/battery_status_low"
                                 android:textColor="@color/whiteColor"
                                 android:textSize="@dimen/_12sdp"
@@ -887,6 +915,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:text="@string/battery_status"
+                                    android:fontFamily="@font/roboto_medium"
                                     android:textColor="@color/whiteColor"
                                     android:textSize="@dimen/_12sdp" />
 
@@ -919,6 +948,7 @@
                                 android:layout_centerInParent="true"
                                 android:background="#40CBDC"
                                 android:textAllCaps="false"
+                                android:fontFamily="@font/roboto_medium"
                                 android:text="Performance Status"
                                 android:textColor="#ffffff"
                                 android:textSize="@dimen/_14sdp" />

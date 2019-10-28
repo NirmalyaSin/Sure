@@ -36,6 +36,7 @@ public class AboutUsActivity extends BaseActivity {
         btn_done.setVisibility(View.GONE);
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
     }
 
     private void loadUrl() {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -92,7 +93,8 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
     public class SearchCircleUserViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imageUserProfile;
         TextView textUserName;
-        Button btnAddToCircle, btnRequestSent, btnCancelRequest, btnAccepted;
+        Button  btnRequestSent, btnCancelRequest, btnAccepted;
+        ImageView btnAddToCircle;
 
         public SearchCircleUserViewHolder(@NonNull View itemView) {
             super(itemView);

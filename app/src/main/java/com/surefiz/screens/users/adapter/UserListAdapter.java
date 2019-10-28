@@ -72,12 +72,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             if (userLists.get(i).getUserWeight().equals("0.0 KG") || userLists.get(i).getUserWeight().equals("0.0 LBS")) {
                 userListViewHolder.tv_weight.setText("Weight:");
             } else {
-                userListViewHolder.tv_weight.setText("Weight:   " + userLists.get(i).getUserWeight());
+                userListViewHolder.tv_weight.setText("Weight: " + userLists.get(i).getUserWeight());
             }
         }
 
         if (isFromNotification) {
-            userListViewHolder.btn_delete.setVisibility(View.INVISIBLE);
+            userListViewHolder.btn_delete.setVisibility(View.GONE);
             userListViewHolder.ll_status.setVisibility(View.GONE);
 
             // item click
@@ -216,7 +216,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public class UserListViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_name, tv_weight, txt_profile_status;
-        ImageView iv_separature;
+        //ImageView iv_separature;
         RelativeLayout rl_main;
         Button btn_delete;
         LinearLayout ll_status;
@@ -225,7 +225,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             super(itemView);
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_weight = itemView.findViewById(R.id.tv_weight);
-            iv_separature = itemView.findViewById(R.id.iv_separature);
+            //iv_separature = itemView.findViewById(R.id.iv_separature);
             rl_main = itemView.findViewById(R.id.rl_main);
             txt_profile_status = itemView.findViewById(R.id.txt_profile_status);
             btn_delete = itemView.findViewById(R.id.btn_delete);

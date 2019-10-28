@@ -92,6 +92,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
         tv_universal_header.setText("Reminder");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
+        rlUserSearch.setVisibility(View.GONE);
         iv_AddPlus.setVisibility(View.VISIBLE);
         btn_done.setVisibility(View.GONE);
         rl_back.setVisibility(View.GONE);
@@ -265,9 +266,9 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
                         arrayListReminder.remove(position);
                         mReminderAdapter.notifyItemRemoved(position);
 
-                        //MethodUtils.errorMsg(ReminderActivity.this, jsonObject.getString("message"));
+                        MethodUtils.errorMsg(ReminderActivity.this, jsonObject.getJSONObject("data").getString("message"));
 
-                        Snackbar snackbar = Snackbar.make(rlRemiderView, jsonObject.getJSONObject("data").getString("message"), Snackbar.LENGTH_LONG);
+                        /*Snackbar snackbar = Snackbar.make(rlRemiderView, jsonObject.getJSONObject("data").getString("message"), Snackbar.LENGTH_LONG);
                         snackbar.setAction("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -275,7 +276,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
                             }
                         });
                         snackbar.setActionTextColor(Color.WHITE);
-                        snackbar.show();
+                        snackbar.show();*/
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ReminderActivity.this);
@@ -284,7 +285,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
                         Intent loginIntent = new Intent(ReminderActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         //Show dialog with proper message
                         MethodUtils.errorMsg(ReminderActivity.this, jsonObject.getString("message"));

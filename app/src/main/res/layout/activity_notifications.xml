@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.users.UserListActivity">
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.6"
-        android:background="@drawable/splash_image" />
+        android:background="@drawable/splash_image" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,57 +19,58 @@
         <LinearLayout
             android:id="@+id/ll_notification_tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/shape_rectangle_round_transparent"
+            android:layout_height="@dimen/_50sdp"
             android:orientation="horizontal"
             android:weightSum="3">
 
             <TextView
                 android:id="@+id/txt_notification_stepped"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="Someone Stepped"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Someone\nStepped"
                 android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_12sdp" />
 
             <View
                 android:layout_width="@dimen/_1sdp"
                 android:layout_height="match_parent"
-                android:background="@color/whiteColor" />
+                android:background="@android:color/transparent" />
 
             <TextView
                 android:id="@+id/txt_notification_performance"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_medium"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:text="Performance"
                 android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_12sdp" />
 
             <View
                 android:layout_width="@dimen/_1sdp"
                 android:layout_height="match_parent"
-                android:background="@color/whiteColor" />
+                android:background="@android:color/transparent" />
 
             <TextView
                 android:id="@+id/txt_notification_battery"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:fontFamily="@font/roboto_medium"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="Battery Status"
+                android:text="Battery\nStatus"
                 android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_12sdp" />
 
         </LinearLayout>
 

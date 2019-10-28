@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".screens.boardcast.BoardCastActivity">
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.6"
-        android:background="@drawable/splash_image" />
+        android:background="@drawable/splash_image" />-->
 
 
     <RelativeLayout
@@ -42,6 +42,7 @@
                 android:cursorVisible="true"
                 android:hint="Type a messge here..."
                 android:inputType="textMultiLine"
+                android:fontFamily="@font/roboto_regular"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/registration_color_black"
                 android:textColorHint="@color/registration_color_black"
@@ -55,6 +56,7 @@
                 android:background="@color/whiteColor"
                 android:padding="@dimen/_5sdp"
                 android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
                 android:text="Send"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"

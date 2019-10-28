@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -103,7 +104,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
 
     public class ChatAdapterViewHolder extends RecyclerView.ViewHolder {
         TextView textMessageLeft, texMessageRight, textDateTimeLeft, textDateTimeRight;
-        RelativeLayout rlMessageRight, rlMessageLeft;
+        LinearLayout rlMessageRight, rlMessageLeft;
 
         public ChatAdapterViewHolder(@NonNull View itemView) {
             super(itemView);

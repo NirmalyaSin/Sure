@@ -46,12 +46,20 @@ public class PrivacyAdapter extends RecyclerView.Adapter<PrivacyAdapter.PrivacyV
         //    Log.e("@@holder: ", arrayListPrivacy.get(position).toString());
         holder.textPrivacyOption.setText(arrayListPrivacy.get(position).getPrivacyText());
 
-        if (arrayListPrivacy.get(position).getPrivacyEnabled() == 1) {
+        /*if (arrayListPrivacy.get(position).getPrivacyEnabled() == 1) {
             holder.imagePrivacySelect.setImageDrawable(mContext.getResources()
                     .getDrawable(R.drawable.ic_radio_circle_checked));
         } else {
             holder.imagePrivacySelect.setImageDrawable(mContext.getResources()
                     .getDrawable(R.drawable.ic_radio_button));
+        }*/
+
+        if (arrayListPrivacy.get(position).getPrivacyEnabled() == 1) {
+            holder.imagePrivacySelect.setImageDrawable(mContext.getResources()
+                    .getDrawable(R.drawable.selected_tick_new));
+        } else {
+            holder.imagePrivacySelect.setImageDrawable(mContext.getResources()
+                    .getDrawable(R.drawable.unselected_tick_new));
         }
 
 

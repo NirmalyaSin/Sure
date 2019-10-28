@@ -52,8 +52,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
 
 
-        System.out.println("friendTime: " + MessagDateConverter.DateConverterForNotification(arrayListNotifications.get(position).getNotificationDate(), arrayListNotifications.get(position).getNotificationTime(),arrayListNotifications.get(position).getNotificationType()));
-        String[] strings = MessagDateConverter.DateConverterForNotification(arrayListNotifications.get(position).getNotificationDate(), arrayListNotifications.get(position).getNotificationTime(),arrayListNotifications.get(position).getNotificationType()).split(",");
+        //System.out.println("friendTime: " + MessagDateConverter.DateConverterForNotification(arrayListNotifications.get(position).getNotificationDate(), arrayListNotifications.get(position).getNotificationTime(),arrayListNotifications.get(position).getNotificationType()));
+        String[] strings = MessagDateConverter.DateConverterForNotification(arrayListNotifications.get(position).getNotificationDate(), arrayListNotifications.get(position).getNotificationTime(), arrayListNotifications.get(position).getNotificationType()).split(",");
         holder.textDate.setText(strings != null ? strings[0] : arrayListNotifications.get(position).getNotificationDate());
         holder.textTime.setText(strings != null ? strings[1].trim() : arrayListNotifications.get(position).getNotificationTime());
     }

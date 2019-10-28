@@ -8,6 +8,7 @@ import android.view.View;
 import com.surefiz.R;
 import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.login.LoginNewActivity;
 
 public class WelcomeClickEvent implements View.OnClickListener {
     WelcomeActivity welcomeActivity;

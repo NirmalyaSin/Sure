@@ -27,10 +27,10 @@ public class WifiConfigActivity extends AppCompatActivity {
     Button btnConfigure;
     @BindView(R.id.btn_skip_config)
     Button btn_skip_config;
-    @BindView(R.id.iv_showPassword)
+    /*@BindView(R.id.iv_showPassword)
     ImageView iv_showPassword;
     @BindView(R.id.iv_hidePassword)
-    ImageView iv_hidePassword;
+    ImageView iv_hidePassword;*/
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
 
@@ -42,9 +42,10 @@ public class WifiConfigActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wifi_config);
         ButterKnife.bind(this);
         setViewAndFunctionality();
-        editPassword.setTransformationMethod
-                (HideReturnsTransformationMethod.getInstance());
+        //editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         wifiActivityClickEvent = new WifiActivityClickEvent(this);
+
+        btn_skip_config.setBackgroundDrawable(null);
     }
 
     private void setViewAndFunctionality() {
@@ -61,6 +62,4 @@ public class WifiConfigActivity extends AppCompatActivity {
                 });
             }
     }
-
-
 }

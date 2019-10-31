@@ -25,6 +25,7 @@ import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -56,6 +57,13 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         setRecyclerViewItem();
         LoginShared.setWeightFromNotification(this, "0");
         loadingData = new LoadingData(this);
+        callCircleUserListApi();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        LoginShared.setWeightFromNotification(this, "0");
         callCircleUserListApi();
     }
 
@@ -91,7 +99,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
                         Intent loginIntent = new Intent(AcountabilityActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
                     }
@@ -201,7 +209,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         alertDialog.setTitle(this.getResources().getString(R.string.delete_user_confirmation));
         //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
         alertDialog.setMessage("Do you want to delete " + arrayListUsers.get(position).getUser_name() + "?");
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No!",
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
                 (dialog, which) -> dialog.dismiss());
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
                 (dialog, which) -> {
@@ -237,8 +245,14 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
                         arrayListUsers.remove(position);
                         MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
 
-                    } else if (response.body().getStatus() == 2) {
-                        MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
+                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        String deviceToken = LoginShared.getDeviceToken(AcountabilityActivity.this);
+                        LoginShared.destroySessionTypePreference(AcountabilityActivity.this);
+                        LoginShared.setDeviceToken(AcountabilityActivity.this, deviceToken);
+                        Intent loginIntent = new Intent(AcountabilityActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finishAffinity();
                     } else {
                         MethodUtils.errorMsg(AcountabilityActivity.this, response.body().getData().getMessage());
                     }

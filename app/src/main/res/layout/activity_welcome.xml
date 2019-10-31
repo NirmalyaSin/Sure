@@ -28,18 +28,6 @@
         android:layout_marginBottom="@dimen/_15sdp"
         android:src="@mipmap/ic_launcher" />
 
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Welcome To SureFiz™"-->
-    <!--android:textSize="@dimen/_30sdp"-->
-    <!--android:textStyle="bold"-->
-    <!--android:textColor="@color/whiteColor"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_marginBottom="@dimen/_40sdp"-->
-    <!--android:visibility="visible"/>-->
-
 
     <LinearLayout
         android:id="@+id/llLowerButtons"
@@ -67,7 +55,7 @@
                 android:background="@drawable/login_button_gradient"
                 android:gravity="center"
                 android:fontFamily="@font/roboto_medium"
-                android:text="How to Sign up"
+                android:text="New Sign up"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="normal" />

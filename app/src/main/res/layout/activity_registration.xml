@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.registration.RegistrationActivity">
+    tools:context=".screens.registration.RegistrationActivity"
+    android:background="@drawable/login_image_new">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -60,11 +61,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_header">
 
-        <View
+        <!--<View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.6"
-            android:background="@drawable/splash_image" />
+            android:background="@drawable/splash_image" />-->
 
         <ScrollView
             android:id="@+id/sv_main"
@@ -114,6 +115,7 @@
                     android:layout_gravity="center_horizontal"
                     android:paddingTop="@dimen/_9sdp"
                     android:paddingBottom="@dimen/_40sdp"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="Upload Image"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
@@ -129,6 +131,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="First Name "
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -157,6 +160,7 @@
                         android:inputType="text|textCapSentences"
                         android:maxLength="15"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -170,7 +174,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_18sdp"
-                    android:text="Middle Name "
+                    android:text="Middle Name"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -193,6 +198,7 @@
                         android:inputType="text|textCapSentences"
                         android:maxLength="15"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -211,7 +217,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
-                        android:text="Last Name "
+                        android:text="Last Name"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -240,6 +247,7 @@
                         android:inputType="text|textCapSentences"
                         android:maxLength="15"
                         android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"
@@ -258,7 +266,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
-                        android:text="Email Id"
+                        android:text="Email ID"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -283,7 +292,8 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:hint="Enter Email Id"
+                        android:hint="Enter Email ID"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -301,6 +311,7 @@
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:text="Re-Enter Email"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:visibility="gone"
                     android:textSize="@dimen/_14sdp" />
@@ -321,7 +332,8 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:hint="Re-Enter Email Id"
+                        android:hint="Re-Enter Email ID"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -345,6 +357,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Password"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -371,6 +384,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter Password"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="textPassword"
                         android:maxLength="16"
                         android:maxLines="1"
@@ -393,6 +407,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Phone Number"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -418,6 +433,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter Phone Number"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="number"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -450,6 +466,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Scale ID"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp" />
 
@@ -475,6 +492,7 @@
                             android:backgroundTint="@android:color/transparent"
                             android:digits="0123456789-"
                             android:hint="Enter scale ID"
+                            android:fontFamily="@font/roboto_regular"
                             android:inputType="number"
                             android:maxLength="12"
                             android:maxLines="1"
@@ -516,6 +534,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Confirm scale ID"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp" />
 
@@ -541,6 +560,7 @@
                             android:backgroundTint="@android:color/transparent"
                             android:digits="0123456789-"
                             android:hint="Enter Confirm scale ID"
+                            android:fontFamily="@font/roboto_regular"
                             android:inputType="number"
                             android:maxLength="12"
                             android:maxLines="1"
@@ -612,6 +632,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Preferred Units"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -638,6 +659,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
                         android:hint="Select Preferred unit"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="number"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -659,6 +681,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Weight Management Goal"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -685,6 +708,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
                         android:hint="Please Select Weight Management Goal"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="number"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -707,6 +731,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Desired Weight Selection"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -734,6 +759,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
                         android:hint="Select your input choice"
+                        android:fontFamily="@font/roboto_regular"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -754,6 +780,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Desired Weight"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -780,6 +807,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
                         android:hint="Desired Weight"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -800,7 +828,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
-                        android:text="Time To Lose Weight "
+                        android:text="Time To Lose Weight"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -827,6 +856,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
                         android:hint="SureFiz™ will suggest you the time to lose weight"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -848,6 +878,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Height"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -874,6 +905,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
                         android:hint="Select Height"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -895,6 +927,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Gender"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -921,6 +954,7 @@
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
                         android:hint="Select Gender"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -941,6 +975,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Age"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -965,6 +1000,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter your age"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="numberSigned"
                         android:maxLength="2"
                         android:maxLines="1"
@@ -987,6 +1023,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Street Address"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -1012,6 +1049,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter your address"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textCapSentences"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -1033,6 +1071,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="City"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -1058,6 +1097,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter your city name"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textCapSentences"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -1079,6 +1119,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="State"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -1104,6 +1145,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Select your State"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textCapSentences"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -1125,6 +1167,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_18sdp"
                         android:text="Zip Code"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />
 
@@ -1149,7 +1192,8 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:hint="Enter your zipcode"
+                        android:hint="Enter your zip code"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textCapSentences"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
@@ -1176,6 +1220,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_18sdp"
                             android:text="Member Options"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/whiteColor"
                             android:textSize="@dimen/_14sdp" />
 
@@ -1201,6 +1246,7 @@
                             android:backgroundTint="@android:color/transparent"
                             android:focusableInTouchMode="false"
                             android:hint="How many member you want to add?"
+                            android:fontFamily="@font/roboto_regular"
                             android:inputType="text|textCapSentences"
                             android:maxLines="1"
                             android:paddingBottom="@dimen/_6sdp"
@@ -1233,6 +1279,7 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:text="TextView"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/whiteColor"
                         android:textColorLink="@color/blue" />
 
@@ -1242,13 +1289,14 @@
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginStart="@dimen/_44sdp"
-                    android:layout_marginEnd="@dimen/_44sdp"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
-                    android:background="@drawable/login_submit_rounded_corner"
+                    android:background="@drawable/login_button_gradient"
                     android:text="Register"
-                    android:textAllCaps="false"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textAllCaps="true"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 

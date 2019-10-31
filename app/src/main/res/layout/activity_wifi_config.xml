@@ -166,7 +166,7 @@
                             android:layout_weight="1"
                             android:background="@null"
                             android:fontFamily="@font/roboto_regular"
-                            android:hint="Enter Password"
+                            android:hint="Enter WiFi Password"
                             android:inputType="textPassword"
                             android:maxLines="1"
                             android:textColor="@color/whiteColor"

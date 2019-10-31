@@ -31,6 +31,9 @@ public class CurrentCompositions {
     @SerializedName("friendrequest_count")
     private int friendrequest_count;
 
+    @SerializedName("unit")
+    private String unit;
+
     @SerializedName("water")
     private BodyFat water;
 
@@ -145,5 +148,13 @@ public class CurrentCompositions {
 
     public void setFriendrequest_count(int friendrequest_count) {
         this.friendrequest_count = friendrequest_count;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

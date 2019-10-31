@@ -88,6 +88,24 @@ public class NotificationActivity extends BaseActivity implements
         setHeaderView();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        isFromDashboard = intent.getBooleanExtra("fromDashboard", false);
+        if (isFromDashboard) {
+            ll_notification_tab.setVisibility(View.GONE);
+            callNotificationListApi("4");
+            selectedTab = 4;
+        }else {
+            ll_notification_tab.setVisibility(View.VISIBLE);
+            txt_stepped.performClick();
+            selectedTab = 1;
+        }
+
+        tv_universal_header.setText(isFromDashboard ? "Friend Requests" : "Notification");
+    }
+
     private void setHeaderView() {
         tv_universal_header.setText(isFromDashboard ? "Friend Requests" : "Notification");
         btn_add.setVisibility(View.GONE);
@@ -120,7 +138,7 @@ public class NotificationActivity extends BaseActivity implements
     public void onBackPressed() {
         if (isFromDashboard) {
             callBackPressed();
-        }else {
+        } else {
             super.onBackPressed();
         }
 
@@ -168,8 +186,13 @@ public class NotificationActivity extends BaseActivity implements
                         arrayListNotifications.clear();
                         if (response.body().getData().getNotifications() != null)
                             arrayListNotifications.addAll(response.body().getData().getNotifications());
-                        else
-                            MethodUtils.errorMsg(NotificationActivity.this, "No Notifications");
+                        else {
+                            if (type.equals("4")) {
+                                MethodUtils.errorMsg(NotificationActivity.this, "No friend request pending.");
+                            } else {
+                                MethodUtils.errorMsg(NotificationActivity.this, "No notification found.");
+                            }
+                        }
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(NotificationActivity.this);
                         LoginShared.destroySessionTypePreference(NotificationActivity.this);
@@ -234,7 +257,7 @@ public class NotificationActivity extends BaseActivity implements
                     Intent loginIntent = new Intent(NotificationActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
+                    finishAffinity();
                 } else {
                     //Show error dialog
                     MethodUtils.errorMsg(NotificationActivity.this, response.body().getData().getMessage());
@@ -393,7 +416,7 @@ public class NotificationActivity extends BaseActivity implements
                         Intent loginIntent = new Intent(NotificationActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         MethodUtils.errorMsg(NotificationActivity.this, response.body().getData().getMessage());
                     }

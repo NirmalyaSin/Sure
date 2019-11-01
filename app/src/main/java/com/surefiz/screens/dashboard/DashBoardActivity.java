@@ -80,6 +80,7 @@ import com.surefiz.screens.users.model.UserListItem;
 import com.surefiz.screens.users.model.UserListModel;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.ChatDateConverter;
+import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -721,11 +722,24 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         switch (batteryStatus) {
             case 0:
                 imageDrawable = R.drawable.battery0;
-                MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
+                    }
+                }, GeneralToApp.SPLASH_WAIT_TIME);
+
                 break;
             case 1:
                 imageDrawable = R.drawable.battery1;
-                MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low1));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low1));
+                    }
+                }, GeneralToApp.SPLASH_WAIT_TIME);
+
                 break;
             case 2:
                 imageDrawable = R.drawable.battery2;
@@ -1736,7 +1750,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                             try {
                                 minY = Math.round(Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                        getWeightProgress().getData().get(minIndex)));
+                                        getWeightProgress().getData().get(minIndex)))-1;
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 minY = 0;
@@ -2088,17 +2103,23 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         HIColumn series1 = new HIColumn();
                         series1.setColorByPoint(true);
                         series1.setName("Expected Weight To Go");
-//        series1.setColor(HIColor.initWithRGB(73,183,130));
-//        series1.setColor(HIColor.initWithHexValue("#49b782"));
-                        Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo().toArray(new Number[0]);
 
 
-                        Number[] numbers = new Number[series1_data.length];
+                        //Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo().toArray(new Number[0]);
+                        List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo();
+
+
+                        Number[] numbers = new Number[series1_data.size()];
                         ArrayList<String> colors1 = new ArrayList<>();
                         ArrayList<String> colors2 = new ArrayList<>();
 
-                        for (int i = 0; i < series1_data.length; i++) {
-                            numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
+                        for (int i = 0; i < series1_data.size(); i++) {
+                            try {
+                                numbers[i] = Double.parseDouble(series1_data.get(i));
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                                numbers[i] = 0.0;
+                            }
                             colors1.add("#49b782");
                         }
                         series1.setShowInLegend(true);
@@ -2111,10 +2132,20 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         series2.setName("Acheived Weight");
 //        series2.setColor(HIColor.initWithRGB(255,175,68));
 //        series2.setColor(HIColor.initWithHexValue("#FFAF44"));
-                        Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight().toArray(new Number[0]);
-                        Number[] numbers1 = new Number[series2_data.length];
-                        for (int i = 0; i < series2_data.length; i++) {
-                            numbers1[i] = Double.parseDouble(String.valueOf(series2_data[i]));
+
+                        List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight();
+                        //Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight().toArray(new Number[0]);
+                        Number[] numbers1 = new Number[series2_data.size()];
+                        for (int i = 0; i < series2_data.size(); i++) {
+
+                            try {
+                                numbers1[i] = Double.parseDouble(series2_data.get(i));
+                            } catch (NumberFormatException e) {
+                                numbers1[i] = 0.0;
+                                e.printStackTrace();
+                            }
+
+
                             colors2.add("#FFAF44");
                         }
 //        series2.setColor(HIColor.initWithRGB(255,175,68));

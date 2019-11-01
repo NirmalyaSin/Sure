@@ -133,9 +133,9 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     btnConfigure.setEnabled(true);
                     btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
                     btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));
-                } else if (!permissionHelperBlock.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) ){
+                } else if (!permissionHelperBlock.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
                     permissionHelperBlock.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
-                } else if (!checkLocationStatus()){
+                } else if (!checkLocationStatus()) {
                     buildAlertMessageNoGps();
                 }
 
@@ -162,9 +162,9 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     isAutoConnecting = false;
                     hideSoftKeyBoard();
                     getAvailableSSID();
-                } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) ){
+                } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
                     permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
-                } else if (!checkLocationStatus()){
+                } else if (!checkLocationStatus()) {
                     buildAlertMessageNoGps();
                 }
                 break;
@@ -307,7 +307,10 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     wifiManager.reconnect();
                     btnConfigure.setEnabled(false);
                     btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
-                    changeAPConfig();
+                    //changeAPConfig();
+
+                    showApConfigCofirmationDialog(networkSSID);
+
                     break;
                 }
             }
@@ -324,6 +327,32 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
             showDialog("Configuring...", true);
         }, 3000);
     }
+
+    private void showApConfigCofirmationDialog(String SSID) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getResources().getString(R.string.app_name));
+
+        String messageStr = getResources().getString(R.string.app_name) + " Wants to Join Wi-Fi Network \"" + SSID + "\"";
+
+        alertDialog.setMessage(messageStr);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Join",
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    changeAPConfig();
+                });
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                (dialog, which) -> {
+                    dialog.dismiss();
+
+                    /*btnlockwifi.setEnabled(false);
+                    btnConfigure.setEnabled(true);
+                    btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
+                    btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));*/
+                });
+        alertDialog.show();
+    }
+
 
     private void showalertdialog(boolean success) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();

@@ -535,7 +535,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingTop="@dimen/_8sdp"
-                                        android:text="Bone Kg"
+                                        android:text="Bone"
                                         android:fontFamily="@font/roboto_medium"
                                         android:textColor="@color/textGray"
                                         android:textSize="@dimen/_13sdp" />

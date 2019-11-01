@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".screens.userconfirmation.UserConfirmationActivity">
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_header"
         android:alpha="0.6"
-        android:background="@drawable/splash_image" />
+        android:background="@drawable/splash_image" />-->
     <TextView
         android:id="@+id/tv_enter"
         android:layout_width="wrap_content"
@@ -21,6 +21,7 @@
         android:paddingTop="@dimen/_20sdp"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
+        android:fontFamily="@font/roboto_regular"
         android:text="SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
@@ -33,6 +34,7 @@
         android:paddingLeft="@dimen/_18sdp"
         android:paddingTop="@dimen/_20sdp"
         android:text="Desired Weight"
+        android:fontFamily="@font/roboto_regular"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 
@@ -56,6 +58,7 @@
             android:hint="Desired Weight"
             android:inputType="text|textNoSuggestions"
             android:maxLines="1"
+            android:fontFamily="@font/roboto_regular"
             android:paddingBottom="@dimen/_6sdp"
             android:textColor="@color/whiteColor"
             android:textColorHint="@color/hintColor"
@@ -71,6 +74,7 @@
         android:paddingStart="@dimen/_18sdp"
         android:paddingEnd="@dimen/_18sdp"
         android:paddingTop="@dimen/_20sdp"
+        android:fontFamily="@font/roboto_regular"
         android:text="Time To Lose Weight Calculated After The First Weight"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
@@ -95,6 +99,7 @@
             android:hint="SureFiz™ will suggest you the time to lose weight"
             android:inputType="text|textNoSuggestions"
             android:maxLines="1"
+            android:fontFamily="@font/roboto_regular"
             android:paddingBottom="@dimen/_6sdp"
             android:textColor="@color/whiteColor"
             android:textColorHint="@color/hintColor"
@@ -108,12 +113,13 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_below="@+id/rl_time_loss"
         android:layout_marginTop="@dimen/_44sdp"
-        android:layout_marginLeft="@dimen/_44sdp"
-        android:layout_marginRight="@dimen/_44sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/login_submit_rounded_corner"
+        android:background="@drawable/login_button_gradient"
         android:text="Accept SureFiz™ Weight"
         android:textAllCaps="false"
+        android:fontFamily="@font/roboto_bold"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 
@@ -123,10 +129,11 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_below="@+id/btn_accept"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginLeft="@dimen/_44sdp"
-        android:layout_marginRight="@dimen/_44sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/login_submit_rounded_corner"
+        android:fontFamily="@font/roboto_bold"
+        android:background="@drawable/login_button_gradient"
         android:text="I Will Provide The Details "
         android:textAllCaps="false"
         android:textColor="@color/whiteColor"

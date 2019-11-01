@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -171,6 +172,26 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 }
 
         }
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mWifiConfigActivity);
+        builder.setMessage("Your GPS seems to be disabled, you need to enable it to use this service?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                        mWifiConfigActivity.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public boolean checkLocationStatus() {
+        final LocationManager manager = (LocationManager) mWifiConfigActivity.getSystemService(Context.LOCATION_SERVICE);
+
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     @TargetApi(Build.VERSION_CODES.M)

@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.application.MyApplicationClass;
@@ -36,6 +39,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +60,8 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     private ImageView imageSendMsg;
     private MyApplicationClass myApplicationClass;
     private TextView tvUserName;
+    private ImageLoader imageLoader;
+    private CircleImageView ivUserImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +70,22 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         //view = View.inflate(this, R.layout.activity_chat, null);
         //addContentView(view);
         handler = new Handler();
+        initializeImageLoader();
         myApplicationClass = (MyApplicationClass) getApplication();
         LoginShared.setWeightFromNotification(this, "0");
         //Receive receiverId from previous page.
         receiver_id = getIntent().getStringExtra("reciver_id");
         //Initialize Views
         initializeView();
+    }
+
+    private void initializeImageLoader() {
+        DisplayImageOptions opts = new DisplayImageOptions.Builder().cacheInMemory(true).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .defaultDisplayImageOptions(DisplayImageOptions.createSimple()).defaultDisplayImageOptions(opts)
+                .build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
     }
 
     private void initializeView() {
@@ -149,6 +165,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         });
 
         tvUserName = findViewById(R.id.tvUserName);
+        ivUserImage = findViewById(R.id.ivUserImage);
 
         /*if (getIntent().hasExtra("reciverName")){
             tvUserName.setText(getIntent().getStringExtra("reciverName"));
@@ -186,6 +203,11 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     Log.d("@@ChatList : ", response.body().toString());
 
                     if (response.body().getStatus() == 1) {
+
+                        tvUserName.setText(response.body().getData().getReceivername());
+                        imageLoader.displayImage(response.body().getData().getReceiverphoto(), ivUserImage);
+
+
                         if (oldPagination == 0) {
                             arrayListConversation.clear();
                         }

@@ -40,6 +40,10 @@ public class ChatListResponse {
     public class Data{
         @SerializedName("message")
         String message;
+        @SerializedName("receivername")
+        String receivername;
+        @SerializedName("receiverphoto")
+        String receiverphoto;
         @SerializedName("conversations")
         ArrayList<Conversation> conversations;
 
@@ -48,6 +52,22 @@ public class ChatListResponse {
 
         public String getMessage() {
             return message;
+        }
+
+        public String getReceivername() {
+            return receivername;
+        }
+
+        public void setReceivername(String receivername) {
+            this.receivername = receivername;
+        }
+
+        public String getReceiverphoto() {
+            return receiverphoto;
+        }
+
+        public void setReceiverphoto(String receiverphoto) {
+            this.receiverphoto = receiverphoto;
         }
 
         public void setMessage(String message) {

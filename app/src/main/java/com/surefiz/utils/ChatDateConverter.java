@@ -18,7 +18,7 @@ public class ChatDateConverter {
             e.printStackTrace();
         }
 
-        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy hh:mm aa");
         df.setTimeZone(TimeZone.getDefault());
         String formattedDate = df.format(date);
 

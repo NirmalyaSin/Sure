@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.surefiz.R;
 import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.reminders.ReminderActivity;
 
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -26,7 +27,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         //createNotification(context, notifyId, intent.getStringExtra("notificationText"));
 
-        Intent notificationIntent = new Intent(context, DashBoardActivity.class);
+        Intent notificationIntent = new Intent(context, ReminderActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(DashBoardActivity.class);
         stackBuilder.addNextIntent(notificationIntent);

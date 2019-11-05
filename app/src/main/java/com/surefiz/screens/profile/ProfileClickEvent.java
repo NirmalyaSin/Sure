@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -21,14 +20,7 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -49,7 +41,6 @@ import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
@@ -60,7 +51,6 @@ import com.surefiz.utils.progressloader.LoadingData;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -367,6 +357,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_units.setOnClickListener(this);
         activity.et_height.setOnClickListener(this);
         activity.btn_register.setOnClickListener(this);
+        activity.btn_cancel.setOnClickListener(this);
         activity.switch_visibility.setOnClickListener(this);
         activity.btnGoogleAdd.setOnClickListener(this);
         activity.btnFacebookAdd.setOnClickListener(this);
@@ -455,8 +446,10 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.iv_plus_add_image.setVisibility(View.VISIBLE);
                 activity.tvUserImageHint.setVisibility(View.VISIBLE);
                 activity.btn_register.setVisibility(View.VISIBLE);
+                activity.btn_cancel.setVisibility(View.VISIBLE);
                 activity.iv_edit.setVisibility(View.GONE);
-                activity.et_full.requestFocus();
+                //activity.et_full.requestFocus();
+                activity.et_full.setEnabled(true);
                 activity.et_phone.setEnabled(true);
                 activity.et_full.setEnabled(true);
                 activity.et_middle.setEnabled(true);
@@ -547,6 +540,13 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     }
                 }
                 break;
+            case R.id.btn_cancel:
+                //setData();
+
+                disableProfileEditMode();
+
+                break;
+
             case R.id.iv_weight_managment:
                 Intent weightIntent = new Intent(activity, WeightManagementActivity.class);
                 weightIntent.putExtra("isInitiatedFromProfile", true);
@@ -560,7 +560,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked() == 0) {
 
-                    activity.fbcallbackManager=null;
+                    activity.fbcallbackManager = null;
 
                     Auth.GoogleSignInApi.signOut(googleApiClient);
                     Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
@@ -581,6 +581,31 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 }
                 break;
         }
+    }
+
+    private void disableProfileEditMode() {
+        activity.iv_plus_add_image.setVisibility(View.GONE);
+        activity.btn_register.setVisibility(View.GONE);
+        activity.btn_cancel.setVisibility(View.GONE);
+        activity.iv_edit.setVisibility(View.VISIBLE);
+        //activity.et_full.requestFocus();
+        activity.et_full.setEnabled(false);
+        activity.et_phone.setEnabled(false);
+        activity.et_full.setEnabled(false);
+        activity.et_middle.setEnabled(false);
+        activity.et_last.setEnabled(false);
+        activity.et_gender.setEnabled(false);
+        activity.et_DOB.setEnabled(false);
+        activity.et_units.setEnabled(false);
+        activity.et_email.setEnabled(false);
+        activity.et_height.setEnabled(false);
+        activity.profile_image.setEnabled(false);
+        activity.switch_visibility.setEnabled(false);
+
+        activity.et_new_password.setEnabled(false);
+        activity.et_confirm_password.setEnabled(false);
+
+        getProfileDataAndSet();
     }
 
     public void handleSignInResult(GoogleSignInResult result) {

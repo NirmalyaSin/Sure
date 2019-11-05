@@ -80,6 +80,7 @@ public class ProfileActivity extends BaseActivity {
     EditText et_zipcode;
 
     Button btn_register;
+    Button btn_cancel;
     Switch switch_visibility;
     RelativeLayout rl_visibility;
     TextView btnGoogleAdd;
@@ -119,6 +120,7 @@ public class ProfileActivity extends BaseActivity {
         iv_plus_add_image.setVisibility(View.GONE);
         tvUserImageHint.setVisibility(View.VISIBLE);
         btn_register.setVisibility(View.GONE);
+        btn_cancel.setVisibility(View.GONE);
         et_phone.setEnabled(false);
         et_full.setEnabled(false);
         et_middle.setEnabled(false);
@@ -155,6 +157,7 @@ public class ProfileActivity extends BaseActivity {
         et_zipcode = view.findViewById(R.id.et_zipcode);
 
         btn_register = view.findViewById(R.id.btn_register);
+        btn_cancel = view.findViewById(R.id.btn_cancel);
         switch_visibility = view.findViewById(R.id.switch_visibility);
         rl_visibility = view.findViewById(R.id.rl_visibility);
         btnGoogleAdd = view.findViewById(R.id.btnGoogleAdd);

@@ -110,6 +110,14 @@ public class BMIDetailsActivity extends AppCompatActivity {
         //showBMIProgressReport();
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        startActivity(new Intent(this, DashBoardActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finishAffinity();
+    }
+
     /*private void showBMIProgressReport() {
         txt_bmi_subgoal1.setText("150");
         txt_bmi_subgoal2.setText("155");
@@ -321,6 +329,9 @@ public class BMIDetailsActivity extends AppCompatActivity {
         final Call<BMIResponse> call_BMIDetailsApi = apiInterface
                 .call_BMIDetailsApi(token, serverUserId, scaleUserId);
 
+        /*final Call<BMIResponse> call_BMIDetailsApi = apiInterface
+                .call_BMIDetailsApi(token, "9222","1000000099");*/
+
         call_BMIDetailsApi.enqueue(new Callback<BMIResponse>() {
             @Override
             public void onResponse(Call<BMIResponse> call, Response<BMIResponse> response) {
@@ -355,52 +366,52 @@ public class BMIDetailsActivity extends AppCompatActivity {
                     int imageDrawable = 0;
 
                     switch (dmBmiDetails.getSubgoalImageName()) {
-                        case "progress-bar2":
+                        case "progress-bar2.jpg":
                             imageDrawable = R.drawable.progress_bar2;
                             break;
-                        case "progress-bar4":
+                        case "progress-bar4.jpg":
                             imageDrawable = R.drawable.progress_bar4;
                             break;
-                        case "progress-bar6":
+                        case "progress-bar6.jpg":
                             imageDrawable = R.drawable.progress_bar6;
                             break;
-                        case "progress-bar8":
+                        case "progress-bar8.jpg":
                             imageDrawable = R.drawable.progress_bar8;
                             break;
-                        case "progress-bar10":
+                        case "progress-bar10.jpg":
                             imageDrawable = R.drawable.progress_bar10;
                             break;
-                        case "progress-bar12":
+                        case "progress-bar12.jpg":
                             imageDrawable = R.drawable.progress_bar12;
                             break;
-                        case "progress-bar14":
+                        case "progress-bar14.jpg":
                             imageDrawable = R.drawable.progress_bar14;
                             break;
-                        case "progress-bar16":
+                        case "progress-bar16.jpg":
                             imageDrawable = R.drawable.progress_bar16;
                             break;
-                        case "progress-bar18":
+                        case "progress-bar18.jpg":
                             imageDrawable = R.drawable.progress_bar18;
                             break;
-                        case "progress-bar20":
+                        case "progress-bar20.jpg":
                             imageDrawable = R.drawable.progress_bar20;
                             break;
-                        case "progress-bar22":
+                        case "progress-bar22.jpg":
                             imageDrawable = R.drawable.progress_bar22;
                             break;
-                        case "progress-bar24":
+                        case "progress-bar24.jpg":
                             imageDrawable = R.drawable.progress_bar24;
                             break;
-                        case "progress-bar26":
+                        case "progress-bar26.jpg":
                             imageDrawable = R.drawable.progress_bar26;
                             break;
-                        case "progress-bar28":
+                        case "progress-bar28.jpg":
                             imageDrawable = R.drawable.progress_bar28;
                             break;
-                        case "progress-full":
+                        case "progress-full.jpg":
                             imageDrawable = R.drawable.progress_full;
                             break;
-                        case "progress-empty":
+                        case "progress-empty.jpg":
                             imageDrawable = R.drawable.progress_empty;
                             break;
                     }

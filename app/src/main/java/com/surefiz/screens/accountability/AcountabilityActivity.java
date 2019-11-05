@@ -208,10 +208,10 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         AlertDialog alertDialog = new AlertDialog.Builder(AcountabilityActivity.this).create();
         alertDialog.setTitle(this.getResources().getString(R.string.delete_user_confirmation));
         //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
-        alertDialog.setMessage("Do you want to delete " + arrayListUsers.get(position).getUser_name() + "?");
+        alertDialog.setMessage("Do you want to unfriend " + arrayListUsers.get(position).getUser_name() + "?");
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
                 (dialog, which) -> dialog.dismiss());
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
                 (dialog, which) -> {
                     dialog.dismiss();
                     callRemoveAccountUserApi(position);

@@ -25,17 +25,14 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.chat.adapter.ChatAdapter;
 import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.chat.model.Conversation;
-import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
-import org.w3c.dom.Text;
-
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -44,7 +41,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.HTTP;
 
 public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnChatScrollListener {
     private final int INITIAL_PAGINATION = 0;
@@ -110,7 +106,8 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     //Send Chat message
 
                     try {
-                        String toServerUnicodeEncoded = URLEncoder.encode(message,"utf-8");
+                        //String toServerUnicodeEncoded = URLEncoder.encode(message, "utf-8");
+                        String toServerUnicodeEncoded = encodeToNonLossyAscii(message);
                         callSendChatApi(toServerUnicodeEncoded);
                         editTextMessage.setText("");
                     } catch (Exception e) {
@@ -133,6 +130,29 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                 handler.postDelayed(this, 500);
             }
         }, 500);
+    }
+
+    public static String encodeToNonLossyAscii(String original) {
+        Charset asciiCharset = Charset.forName("US-ASCII");
+        if (asciiCharset.newEncoder().canEncode(original)) {
+            return original;
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < original.length(); i++) {
+            char c = original.charAt(i);
+            if (c < 128) {
+                stringBuffer.append(c);
+            } else if (c < 256) {
+                String octal = Integer.toOctalString(c);
+                stringBuffer.append("\\");
+                stringBuffer.append(octal);
+            } else {
+                String hex = Integer.toHexString(c);
+                stringBuffer.append("\\u");
+                stringBuffer.append(hex);
+            }
+        }
+        return stringBuffer.toString();
     }
 
     private void setRecyclerViewItem() {
@@ -202,10 +222,21 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     }
                     Log.d("@@ChatList : ", response.body().toString());
 
-                    if (response.body().getStatus() == 1) {
+                    if (response.body().getStatus() == 0) {
+                        try {
+                            tvUserName.setText(response.body().getData().getReceivername());
+                            imageLoader.displayImage(response.body().getData().getReceiverphoto(), ivUserImage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else if (response.body().getStatus() == 1) {
 
-                        tvUserName.setText(response.body().getData().getReceivername());
-                        imageLoader.displayImage(response.body().getData().getReceiverphoto(), ivUserImage);
+                        try {
+                            tvUserName.setText(response.body().getData().getReceivername());
+                            imageLoader.displayImage(response.body().getData().getReceiverphoto(), ivUserImage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
 
                         if (oldPagination == 0) {

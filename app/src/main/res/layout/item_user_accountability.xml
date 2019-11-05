@@ -11,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
-        android:padding="@dimen/_5sdp"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_7sdp"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingEnd="@dimen/_5sdp"
         android:background="@drawable/accountability_rounded_corner_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -31,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:src="@drawable/ic_dot_offline" />
         </FrameLayout>
 

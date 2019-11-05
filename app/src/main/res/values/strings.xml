@@ -69,7 +69,7 @@
     <string name="surefiz_register">SureFiz™ Registration</string>
     <string name="compositions">Composition</string>
     <string name="manage_social_logins">MANAGE SOCIAL LOGINS</string>
-    <string name="delete_user_confirmation">Delete User Confirmation</string>
+    <string name="delete_user_confirmation">Unfriend User Confirmation</string>
     <string name="mac_id_not_found">No scale ID found associated with your account, please
 have the primary user registered before you login.</string>
 

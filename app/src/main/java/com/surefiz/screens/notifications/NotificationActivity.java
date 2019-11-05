@@ -458,7 +458,8 @@ public class NotificationActivity extends BaseActivity implements
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             finish();
                         } else {
-                            MethodUtils.errorMsg(this, "Sorry! Cannot connect to scale. Please try later.");
+                            //MethodUtils.errorMsg(this, "Sorry! Cannot connect to scale. Please try later.");
+                            MethodUtils.errorMsg(this, "This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

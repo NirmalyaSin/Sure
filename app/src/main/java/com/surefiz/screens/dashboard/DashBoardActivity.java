@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -42,6 +43,7 @@ import com.highsoft.highcharts.common.hichartsclasses.HIColumn;
 import com.highsoft.highcharts.common.hichartsclasses.HICondition;
 import com.highsoft.highcharts.common.hichartsclasses.HICredits;
 import com.highsoft.highcharts.common.hichartsclasses.HIDataLabels;
+import com.highsoft.highcharts.common.hichartsclasses.HIEvents;
 import com.highsoft.highcharts.common.hichartsclasses.HIExporting;
 import com.highsoft.highcharts.common.hichartsclasses.HIGauge;
 import com.highsoft.highcharts.common.hichartsclasses.HIHover;
@@ -65,6 +67,7 @@ import com.highsoft.highcharts.common.hichartsclasses.HITooltip;
 import com.highsoft.highcharts.common.hichartsclasses.HIXAxis;
 import com.highsoft.highcharts.common.hichartsclasses.HIYAxis;
 import com.highsoft.highcharts.core.HIChartView;
+import com.highsoft.highcharts.core.HIFunction;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -430,20 +433,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                         setPieChatBodyComposition();
                                         setOtherOptions();
 
-                                        checkForShowView();
+                                        //checkForShowView();
                                     } else {
-                                        MethodUtils.errorMsg(DashBoardActivity.this, "Sorry, Charts are private. We can change the message later");
+                                        String restrictionMessage = "Sorry, " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUserName() + " has made these charts private, please ask the user to allow you to view the chart(s)";
+                                        //MethodUtils.errorMsg(DashBoardActivity.this, "Sorry, Charts are private. We can change the message later");
+                                        MethodUtils.errorMsg(DashBoardActivity.this, restrictionMessage);
                                     }
                                 } else {
 
                                     cv_sub_goals.setVisibility(View.VISIBLE);
 
                                     setWeightChartAsync();
-
                                     setWeightLossChart();
                                     setPieChatBodyComposition();
-
-
                                     setOtherOptions();
                                 }
 
@@ -455,11 +457,21 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             runOnUiThread(new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    cv_gauge.setVisibility(View.VISIBLE);
+
+                                    if (getIntent().hasExtra("Performance")) {
+                                        if (getIntent().getStringExtra("Performance").equalsIgnoreCase("1") && LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().size() == 0) {
+                                            cv_gauge.setVisibility(View.GONE);
+                                        } else {
+                                            cv_gauge.setVisibility(View.VISIBLE);
+                                        }
+                                    } else {
+                                        cv_gauge.setVisibility(View.VISIBLE);
+                                    }
+
                                     //cv_sub_goals.setVisibility(View.GONE);
 
                                     cv_achi_goals.setVisibility(View.GONE);
-                                    cv_body_composition.setVisibility(View.GONE);
+                                    cv_body_composition.setVisibility(View.VISIBLE);
 
                                     setHighChartAsync();
                                     //implementHighChart(dashboardModel.getData().getChartList().getGuagechart());
@@ -481,6 +493,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 }
                             }));
                         }
+
+
+                        //---------------Check for Charts visibility on Performance Mode----------//
+                        if (getIntent().hasExtra("Performance")) {
+                            if (getIntent().getStringExtra("Performance").equalsIgnoreCase("1")) {
+                                checkForShowView(dashboardModel);
+                            }
+                        }
+
+
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(DashBoardActivity.this);
                         LoginShared.destroySessionTypePreference(DashBoardActivity.this);
@@ -509,7 +531,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
 
-    private void checkForShowView() {
+    private void checkForShowView(DashboardModel dashboardModel) {
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("weightProgress")) {
             cv_weight.setVisibility(View.VISIBLE);
         } else {
@@ -548,16 +570,20 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
 
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("goals")) {
-            cv_achi_goals.setVisibility(View.VISIBLE);
+            if (dashboardModel.getData().getProgress() == 0) {
+                cv_achi_goals.setVisibility(View.GONE);
+            } else {
+                cv_achi_goals.setVisibility(View.VISIBLE);
+            }
         } else {
             cv_achi_goals.setVisibility(View.GONE);
         }
 
-        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("guagechart")) {
+        /*if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("guagechart")) {
             cv_gauge.setVisibility(View.VISIBLE);
         } else {
             cv_gauge.setVisibility(View.GONE);
-        }
+        }*/
 
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("bodycomposition")) {
             cv_user_body_composition.setVisibility(View.VISIBLE);
@@ -955,6 +981,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             series2.setData(new ArrayList<>());
 
             optionsSubGoals.setSeries(new ArrayList<>(Arrays.asList(series1, series2)));
+
+            HICredits hiCredits = new HICredits();
+            hiCredits.setEnabled(false);
+            optionsSubGoals.setCredits(hiCredits);
+
             chartViewSubGoals.setOptions(optionsSubGoals);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1048,6 +1079,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             series1.setData(new ArrayList<>());
             optionsGoals.setColors(colors);
             optionsGoals.setSeries(new ArrayList<>(Arrays.asList(series1)));
+
+            HICredits hiCredits = new HICredits();
+            hiCredits.setEnabled(false);
+            optionsGoals.setCredits(hiCredits);
 
             chartViewGoals.setOptions(optionsGoals);
         } catch (Exception e) {
@@ -1148,6 +1183,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             series1.setData(new ArrayList<>());
 
             optionsBMI.setSeries(new ArrayList<>(Arrays.asList(series1)));
+
+            HICredits hiCredits = new HICredits();
+            hiCredits.setEnabled(false);
+            optionsBMI.setCredits(hiCredits);
+
             chartViewBmi.setOptions(optionsBMI);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1177,7 +1217,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
             chartViewLoss.setDrawCenterText(true);
 
-            chartViewLoss.setRotationAngle(40);
+            chartViewLoss.setRotationAngle(300);
             // enable rotation of the chartViewLoss by touch
             chartViewLoss.setRotationEnabled(false);
             chartViewLoss.setHighlightPerTapEnabled(false);
@@ -1456,6 +1496,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             series1.setData(new ArrayList<>());
 
             options.setSeries(new ArrayList<>(Arrays.asList(series1)));
+
+            HICredits hiCredits = new HICredits();
+            hiCredits.setEnabled(false);
+            options.setCredits(hiCredits);
+
             chartView.setOptions(options);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1553,6 +1598,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
             optionsAchiGoals.setSeries(new ArrayList<HISeries>());
+
+            HICredits hiCredits = new HICredits();
+            hiCredits.setEnabled(false);
+            optionsAchiGoals.setCredits(hiCredits);
 
             chartViewAchiGoals.setOptions(optionsAchiGoals);
             chartViewAchiGoals.reload();
@@ -1667,6 +1716,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             exporting.setEnabled(false);
             options.setExporting(exporting);
 
+            HICredits hiCredits = new HICredits();
+            hiCredits.setEnabled(false);
+            options.setCredits(hiCredits);
+
 
             chartGauge.setOptions(options);
             //chartGauge.reload();
@@ -1750,7 +1803,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                             try {
                                 minY = Math.round(Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                        getWeightProgress().getData().get(minIndex)))-1;
+                                        getWeightProgress().getData().get(minIndex))) - 1;
 
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -2010,6 +2063,14 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
 
+    private class RunnableImpl implements Runnable {
+
+        public void run()
+        {
+            Toast.makeText(DashBoardActivity.this,"SubGoal Chart Loaded",Toast.LENGTH_LONG).show();
+        }
+    }
+
     private class AsyncSubGoalsChart extends AsyncTask<String, String, String> {
 
 
@@ -2024,6 +2085,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     try {
                         //chartViewSubGoals.setWillNotDraw(false);
                         HIChart chart = new HIChart();
+
+                        /*HIFunction hiFunction=new HIFunction(new RunnableImpl());
+                        HIEvents hiEvents=new HIEvents();
+                        hiEvents.setLoad(hiFunction);
+                        chart.setEvents(hiEvents);*/
 
                         HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
@@ -2163,6 +2229,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         chartViewSubGoals.setOptions(optionsSubGoals);
                         chartViewSubGoals.reload();
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -2442,7 +2509,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             gauge.setTooltip(new HITooltip());
                             gauge.getTooltip().setValueSuffix(" lbs");
                             //gauge.setData(new ArrayList<>(Collections.singletonList(Integer.valueOf(gaugeChart.getGtw()))));
-                            gauge.setData(new ArrayList<>(Collections.singletonList(Double.parseDouble(gaugeChart.getGtw()))));
+                            gauge.setData(new ArrayList<>(Collections.singletonList(Double.parseDouble(gaugeChart.getLastweight()))));
 
                             options.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
 

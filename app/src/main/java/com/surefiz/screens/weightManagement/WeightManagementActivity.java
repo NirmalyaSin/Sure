@@ -172,8 +172,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
                     findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
 
-                    findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
-                    findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
+                    findViewById(R.id.tv_weight).setVisibility(View.GONE);
+                    findViewById(R.id.rl_weight).setVisibility(View.GONE);
 
                     selectedWeightManagmentGoal = 1;
                     selectedDesiredWeightSelection = -1;
@@ -202,6 +202,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                         findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
                         findViewById(R.id.tv_time_loss).setVisibility(View.VISIBLE);
                         findViewById(R.id.rl_time_loss).setVisibility(View.VISIBLE);
+                        et_time_loss.setHint("Please Select");
+                        et_time_loss.setText("");
                     }
 
 

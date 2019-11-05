@@ -144,7 +144,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
                     Intent loginIntent = new Intent(ReminderActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
+                    finishAffinity();
                 } else {
                     //Show dialog with proper message
                     MethodUtils.errorMsg(ReminderActivity.this, response.body()

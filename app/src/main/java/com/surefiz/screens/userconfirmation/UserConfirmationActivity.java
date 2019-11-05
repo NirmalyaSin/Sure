@@ -157,7 +157,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         if (!weight.equalsIgnoreCase("")) {
             String[] splittedWeights = weight.split(" ");
             weight = splittedWeights[0].trim();
-        }else {
+        } else {
             loader.dismiss();
             MethodUtils.errorMsg(UserConfirmationActivity.this, "Enter desired weight.");
             return;
@@ -171,7 +171,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         if (!time.equalsIgnoreCase("") && !time.equalsIgnoreCase("TBD")) {
             String[] splittedTime = time.split(" ");
             time = splittedTime[0].trim();
-        }else {
+        } else {
             loader.dismiss();
             MethodUtils.errorMsg(UserConfirmationActivity.this, "Enter time to lose weight.");
             return;
@@ -229,7 +229,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                         Intent loginIntent = new Intent(UserConfirmationActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(UserConfirmationActivity.this, jsObject.getString("message"));
@@ -335,9 +335,21 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                         JSONObject jsonObject = new JSONObject(responseString);
                         if (jsonObject.optInt("status") == 1) {
                             JSONObject jsObject = jsonObject.getJSONObject("data");
+                            showSuccessMessage(jsObject.getString("message"));
+                        } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                            String deviceToken = LoginShared.getDeviceToken(UserConfirmationActivity.this);
+                            LoginShared.destroySessionTypePreference(UserConfirmationActivity.this);
+                            LoginShared.setDeviceToken(UserConfirmationActivity.this, deviceToken);
+                            Intent loginIntent = new Intent(UserConfirmationActivity.this, LoginActivity.class);
+                            startActivity(loginIntent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finishAffinity();
+                        } else {
+                            JSONObject jsObject = jsonObject.getJSONObject("data");
+                            MethodUtils.errorMsg(UserConfirmationActivity.this, jsObject.getString("message"));
                         }
 
-                        Intent dashboard;
+                        /*Intent dashboard;
                         //  if (isnotification.equals("7")){
                         dashboard = new Intent(UserConfirmationActivity.this, DashBoardActivity.class);
                         // }else
@@ -345,7 +357,8 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
                         startActivity(dashboard);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finish();*/
+
 
                     } catch (Exception e) {
                         MethodUtils.errorMsg(UserConfirmationActivity.this, getString(R.string.error_occurred));
@@ -400,6 +413,29 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 dialog.dismiss();
             }
         });
+
+        alertDialog.create();
+
+        alertDialog.show();
+    }
+
+
+    public void showSuccessMessage(String message) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserConfirmationActivity.this);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent dashboard = new Intent(UserConfirmationActivity.this, DashBoardActivity.class);
+                startActivity(dashboard);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finishAffinity();
+            }
+        });
+
 
         alertDialog.create();
 

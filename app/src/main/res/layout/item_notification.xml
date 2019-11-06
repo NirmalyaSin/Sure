@@ -52,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:fontFamily="@font/roboto_regular"
-                android:text="10-Feb, 2018"
                 android:textSize="@dimen/_13sdp"
                 android:layout_marginStart="@dimen/_3sdp"
                 android:textColor="@color/whiteColor" />
@@ -66,30 +65,31 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:gravity="end">
 
+
+            <Button
+                android:id="@+id/btnAccept"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/shape_rectangle_blue"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Accept"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor" />
+
             <Button
                 android:id="@+id/btnReject"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
                 android:background="@drawable/shape_rectangle_red"
                 android:text="Reject"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/roboto_bold"
                 android:textAllCaps="false"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:textColor="@color/whiteColor"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp" />
-
-            <Button
-                android:id="@+id/btnAccept"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:background="@drawable/shape_rectangle_green"
-                android:paddingLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Accept"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:textAllCaps="false"
-                android:textColor="@color/whiteColor" />
         </LinearLayout>
     </LinearLayout>
 

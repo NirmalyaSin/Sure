@@ -87,6 +87,7 @@ complete his/her registration process.</string>
     <string name="select_date">SELECT DATE</string>
     <string name="set_reminder">SET REMINDER</string>
     <string name="enter_title">ENTER TITLE</string>
+    <string name="click_to_view_history"><u>Click to view history.</u></string>
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 
 

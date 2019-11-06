@@ -50,7 +50,6 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:alpha="0.7"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
@@ -71,7 +70,6 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:alpha="0.7"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
@@ -108,7 +106,6 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:alpha="0.7"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
@@ -145,8 +142,6 @@
                 </android.support.v7.widget.CardView>
 
 
-
-
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_bmi"
                     android:layout_width="match_parent"
@@ -154,7 +149,6 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:alpha="0.7"
                     android:background="#A9A9A9"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
@@ -175,7 +169,6 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:alpha="0.7"
                     android:background="#A9A9A9"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
@@ -196,7 +189,6 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:alpha="0.7"
                     android:background="#A9A9A9"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
@@ -217,7 +209,6 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
-                    android:alpha="0.7"
                     android:background="#A9A9A9"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
@@ -228,6 +219,19 @@
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/_5sdp"
                         android:background="#554755" />
+
+                    <TextView
+                        android:id="@+id/tvViewHistory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/whiteColor"
+                        android:layout_gravity="end"
+                        android:padding="@dimen/_4sdp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:text="@string/click_to_view_history"
+                        android:textSize="@dimen/_12sdp"/>
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
@@ -237,7 +241,6 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:alpha="0.7"
                     android:background="#A9A9A9"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
@@ -260,7 +263,6 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:background="#A9A9A9"
-                    android:alpha="0.5"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_5sdp">
 
@@ -961,5 +963,50 @@
                 </android.support.v7.widget.CardView>
             </LinearLayout>
         </ScrollView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlHistoryChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/accountAbilityTransparent"
+        android:visibility="gone">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_320sdp"
+            android:layout_centerInParent="true">
+
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_300sdp"
+                android:visibility="visible"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <com.highsoft.highcharts.core.HIChartView
+                    android:id="@+id/hcHistoryGoals"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:background="#554755" />
+            </android.support.v7.widget.CardView>
+
+            <ImageView
+                android:id="@+id/ivCloseButton"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:scaleType="fitXY"
+                android:elevation="8dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/cross_icon" />
+
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

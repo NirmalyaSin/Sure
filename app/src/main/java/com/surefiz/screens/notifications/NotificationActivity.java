@@ -108,7 +108,7 @@ public class NotificationActivity extends BaseActivity implements
 
     private void setHeaderView() {
         tv_universal_header.setText(isFromDashboard ? "Friend Requests" : "Notification");
-        btn_add.setVisibility(View.GONE);
+        btn_add.setVisibility(View.VISIBLE);
         rlUserSearch.setVisibility(View.GONE);
         btn_add.setText("CLEAR ALL");
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -248,8 +248,7 @@ public class NotificationActivity extends BaseActivity implements
 
                 if (response.body().getStatus() == 1) {
                     //Show dialog to show response from server
-                    showResponseDialog(response.body().getStatus(),
-                            response.body().getData().getMessage());
+                    showResponseDialog(response.body().getStatus(), response.body().getData().getMessage());
                 } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                     String deviceToken = LoginShared.getDeviceToken(NotificationActivity.this);
                     LoginShared.destroySessionTypePreference(NotificationActivity.this);

@@ -28,6 +28,10 @@ public class ChartList {
     @Expose
     private Goals goals;
 
+    @SerializedName("historygoals")
+    @Expose
+    private HistoryGoals historygoals;
+
     @SerializedName("guagechart")
     private Guagechart guagechart = new Guagechart();
 
@@ -89,6 +93,14 @@ public class ChartList {
 
     public void setGoals(Goals goals) {
         this.goals = goals;
+    }
+
+    public HistoryGoals getHistorygoals() {
+        return historygoals;
+    }
+
+    public void setHistorygoals(HistoryGoals historygoals) {
+        this.historygoals = historygoals;
     }
 
     public CurrentCompositions getCurrentCompositions() {

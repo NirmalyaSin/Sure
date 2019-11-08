@@ -514,8 +514,8 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
 
     public void showcancelationDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Sorry! Cannot connect to scale. Please try later.");
-        //alertDialog.setMessage("This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.");
+        //alertDialog.setMessage("Sorry! Cannot connect to scale. Please try later.");
+        alertDialog.setMessage("This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.");
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

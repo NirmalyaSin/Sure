@@ -438,7 +438,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                         Intent loginIntent = new Intent(BaseActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(BaseActivity.this, jsObject.getString("message"));

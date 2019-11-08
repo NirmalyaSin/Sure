@@ -16,6 +16,9 @@ public class WeightProgress {
     @SerializedName("noOfWeek")
     @Expose
     private String noOfWeek;
+    @SerializedName("chart1min")
+    @Expose
+    private String chart1min;
 
     public List<String> getLabel() {
         return label;
@@ -41,4 +44,11 @@ public class WeightProgress {
         this.noOfWeek = noOfWeek;
     }
 
+    public String getChart1min() {
+        return chart1min;
+    }
+
+    public void setChart1min(String chart1min) {
+        this.chart1min = chart1min;
+    }
 }

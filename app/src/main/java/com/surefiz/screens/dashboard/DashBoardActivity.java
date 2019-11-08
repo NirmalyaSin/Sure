@@ -87,7 +87,6 @@ import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,7 +114,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     CardView cv_weight, cv_weight_loss, cv_bmi, cv_user_body_composition, cv_goals, cv_sub_goals, cv_achi_goals, cv_gauge;
     RelativeLayout rlHistoryChart;
     RecyclerView rv_items;
-    HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals, historyChartOptions;
+    HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals,guageChartOptions, historyChartOptions;
     List<UserListItem> contactLists = new ArrayList<>();
     ContactListAdapter adapter;
     private LoadingData loader;
@@ -139,6 +138,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         optionsGoals = new HIOptions();
         optionsSubGoals = new HIOptions();
         optionsAchiGoals = new HIOptions();
+        guageChartOptions = new HIOptions();
         historyChartOptions = new HIOptions();
         viewBind();
         setHeaderView();
@@ -824,7 +824,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         //chartViewAchiGoals.setWillNotDraw(true);
 
         chartGauge = findViewById(R.id.hc_gauge);
-        chartGauge.setOptions(optionsAchiGoals);
+        chartGauge.setOptions(guageChartOptions);
 
         hcHistoryGoals = findViewById(R.id.hcHistoryGoals);
         hcHistoryGoals.setOptions(historyChartOptions);
@@ -899,7 +899,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         ivCloseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rlHistoryChart.getVisibility()==View.VISIBLE){
+                if (rlHistoryChart.getVisibility() == View.VISIBLE) {
                     rlHistoryChart.setVisibility(View.GONE);
                 }
             }
@@ -1675,19 +1675,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         try {
 
             //chartGauge.setWillNotDraw(false);
-            HIOptions options = new HIOptions();
+            //HIOptions options = new HIOptions();
 
             HIChart chart = new HIChart();
             chart.setType("gauge");
             chart.setPlotBorderWidth(0);
             chart.setPlotShadow(false);
-            options.setChart(chart);
+            guageChartOptions.setChart(chart);
 
 
             HITitle title = new HITitle();
             title.setUseHTML(true);
             title.setText("<p style='color: #ffffff; text-align: center;'>Maintenance Mode</p>");
-            options.setTitle(title);
+            guageChartOptions.setTitle(title);
 
 
             HIGradient gradientMain = new HIGradient(0, 0, 0, 1);
@@ -1723,7 +1723,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             background4.setOuterRadius("105%");
             background4.setInnerRadius("103%");
             pane.setBackground(new ArrayList<>(Arrays.asList(background1, background2, background3, background4)));
-            options.setPane(pane);
+            guageChartOptions.setPane(pane);
 
             HIYAxis yaxis = new HIYAxis();
             yaxis.setMin(Double.parseDouble("40"));
@@ -1743,19 +1743,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             yaxis.getTitle().setText("<p style='color: #104c52; '>Latest Weight</p>");
 
 
-            options.setSeries(new ArrayList<HISeries>());
+            guageChartOptions.setSeries(new ArrayList<HISeries>());
 
 
             HIExporting exporting = new HIExporting();
             exporting.setEnabled(false);
-            options.setExporting(exporting);
+            guageChartOptions.setExporting(exporting);
 
             HICredits hiCredits = new HICredits();
             hiCredits.setEnabled(false);
-            options.setCredits(hiCredits);
+            guageChartOptions.setCredits(hiCredits);
 
 
-            chartGauge.setOptions(options);
+            chartGauge.setOptions(guageChartOptions);
             //chartGauge.reload();
         } catch (Exception e) {
             e.printStackTrace();
@@ -1810,6 +1810,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 public void run() {
 
                     try {
+
+                        chartView.invalidate();
+
                         HIChart chart = new HIChart();
                         chart.setType("area");
                         //Required for gradient Background
@@ -1863,7 +1866,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             add(xAxis);
                         }});
 
-                        int minIndex = 0;
+                        /*int minIndex = 0;
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                                 getWeightProgress().getData().size() > 0) {
                             minIndex = getWeightProgressMinIndex();
@@ -1873,9 +1876,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                                 getWeightProgress().getData().size() > 0) {
 
-                            /*int minIndex = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                            *//*int minIndex = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                                     getWeightProgress().getData().indexOf(Collections.min(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                    getWeightProgress().getData()));*/
+                                    getWeightProgress().getData()));*//*
 
                             try {
                                 minY = Math.round(Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
@@ -1889,10 +1892,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             }
                         } else {
                             minY = 0;
-                        }
+                        }*/
 
                         HIYAxis yAxis = new HIYAxis();
-                        yAxis.setMin(minY);
+                        //yAxis.setMin(minY);
+                        try {
+                            Double val= Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                    getWeightProgress().getChart1min());
+                            yAxis.setMin((Number) val);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            yAxis.setMin(0);
+                            //yAxis.setMin(minY);
+                        }
 
                         yAxis.setVisible(false);
                         options.setYAxis(new ArrayList<HIYAxis>() {{
@@ -1981,7 +1993,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         protected void onPostExecute(String result) {
             chartView.setOptions(options);
             setBMIChartAsync();
-
         }
 
 
@@ -2141,12 +2152,12 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     }
 
-    private class RunnableImpl implements Runnable {
+    /*private class RunnableImpl implements Runnable {
 
         public void run() {
             Toast.makeText(DashBoardActivity.this, "SubGoal Chart Loaded", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
     private class AsyncSubGoalsChart extends AsyncTask<String, String, String> {
 
@@ -2484,19 +2495,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         if (gaugeChart != null) {
 
                             //chartGauge.setWillNotDraw(false);
-                            HIOptions options = new HIOptions();
+                            //HIOptions options = new HIOptions();
 
                             HIChart chart = new HIChart();
                             chart.setType("gauge");
                             chart.setPlotBorderWidth(0);
                             chart.setPlotShadow(false);
-                            options.setChart(chart);
+                            guageChartOptions.setChart(chart);
 
 
                             HITitle title = new HITitle();
                             title.setUseHTML(true);
                             title.setText("<p style='color: #ffffff; text-align: center;'>Maintenance Mode</p>");
-                            options.setTitle(title);
+                            guageChartOptions.setTitle(title);
 
 
                             HIGradient gradientMain = new HIGradient(0, 0, 0, 1);
@@ -2532,7 +2543,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             background4.setOuterRadius("105%");
                             background4.setInnerRadius("103%");
                             pane.setBackground(new ArrayList<>(Arrays.asList(background1, background2, background3, background4)));
-                            options.setPane(pane);
+                            guageChartOptions.setPane(pane);
 
                             HIYAxis yaxis = new HIYAxis();
                             yaxis.setMin(Double.parseDouble(gaugeChart.getGtw()));
@@ -2577,7 +2588,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             plotband3.setColor(HIColor.initWithHexValue("DF5353"));
 
                             yaxis.setPlotBands(new ArrayList<>(Arrays.asList(plotband1, plotband2, plotband3)));
-                            options.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
+                            guageChartOptions.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
 
                             HIGauge gauge = new HIGauge();
                             gauge.setName("Latest Weight");
@@ -2586,18 +2597,18 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             //gauge.setData(new ArrayList<>(Collections.singletonList(Integer.valueOf(gaugeChart.getGtw()))));
                             gauge.setData(new ArrayList<>(Collections.singletonList(Double.parseDouble(gaugeChart.getLastweight()))));
 
-                            options.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
+                            guageChartOptions.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
 
 
                             HIExporting exporting = new HIExporting();
                             exporting.setEnabled(false);
-                            options.setExporting(exporting);
+                            guageChartOptions.setExporting(exporting);
 
                             HICredits hiCredits = new HICredits();
                             hiCredits.setEnabled(false);
-                            options.setCredits(hiCredits);
+                            guageChartOptions.setCredits(hiCredits);
 
-                            chartGauge.setOptions(options);
+                            chartGauge.setOptions(guageChartOptions);
                             chartGauge.reload();
                         }
                     } catch (Exception e) {
@@ -2613,8 +2624,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         @Override
         protected void onPostExecute(String result) {
-
-
+            chartGauge.setOptions(guageChartOptions);
         }
 
 
@@ -2753,7 +2763,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHgoalsjson().size() > 0) {
 
 
-
                             List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().
                                     getHgoalsjson();
 
@@ -2783,16 +2792,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                             try {
                                 for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHe1();
-                                     i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHe2()-1; i++) {
+                                     i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHe2(); i++) {
 
-                                    System.out.println("numberList2: "+series2_data.get(i));
+                                    System.out.println("numberList2: " + series2_data.get(i));
                                     /*if (!series2_data.get(i).equals("")) {
                                         numberList2.add(Double.parseDouble(series2_data.get(i)));
                                     }*/
 
                                     if (!series2_data.get(i).equals("0")) {
                                         numberList2.add(Double.parseDouble(series2_data.get(i)));
-                                    }else {
+                                    } else {
                                         numberList2.add(null);
                                     }
                                 }
@@ -2800,8 +2809,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 e.printStackTrace();
                             }
 
-                            System.out.println("numberList2: "+numberList2.size());
-                            System.out.println("numberList2: "+numberList2.toString());
+                            //System.out.println("numberList2: "+numberList2.size());
+                            //System.out.println("numberList2: "+numberList2.toString());
 
                             HILine line2 = new HILine();
                             line2.setName("Achived Sub Goals");
@@ -2828,7 +2837,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         @Override
         protected void onPostExecute(String result) {
-
             hcHistoryGoals.setOptions(historyChartOptions);
         }
 

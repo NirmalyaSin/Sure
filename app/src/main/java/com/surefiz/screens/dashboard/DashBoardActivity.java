@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,11 +18,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -114,7 +116,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     CardView cv_weight, cv_weight_loss, cv_bmi, cv_user_body_composition, cv_goals, cv_sub_goals, cv_achi_goals, cv_gauge;
     RelativeLayout rlHistoryChart;
     RecyclerView rv_items;
-    HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals,guageChartOptions, historyChartOptions;
+    HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals, guageChartOptions, historyChartOptions;
     List<UserListItem> contactLists = new ArrayList<>();
     ContactListAdapter adapter;
     private LoadingData loader;
@@ -125,6 +127,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private CardView cv_body_composition;
     private ImageView ivCloseButton;
     private TextView tvViewHistory;
+    private SwipeRefreshLayout swiperefresh;
+    private ScrollView scrollDataView;
+    private ViewTreeObserver.OnScrollChangedListener mOnScrollChangedListener;
+    private int selectedUserPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +161,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             if (getIntent().getStringExtra("page").equals("1")) {
                 rl_back.setVisibility(View.VISIBLE);
                 //rlFriendRequest.setVisibility(View.GONE);
+                selectedUserPosition = -1;
                 tv_universal_header.setText("Performance");
                 img_topbar_menu.setVisibility(View.GONE);
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -169,6 +176,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 });
                 rv_items.setVisibility(View.GONE);
             } else {
+                selectedUserPosition = -1;
                 rl_back.setVisibility(View.GONE);
                 //rlFriendRequest.setVisibility(View.VISIBLE);
                 img_topbar_menu.setVisibility(View.VISIBLE);
@@ -180,6 +188,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         } else {
             id = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId();
             rv_items.setVisibility(View.VISIBLE);
+            selectedUserPosition = -1;
         }
 
         if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
@@ -214,7 +223,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         return appVersion;
     }
-
 
     private String getOSVersion() {
         return android.os.Build.VERSION.RELEASE;
@@ -338,7 +346,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         });
     }
 
-
     // This method is to check wheather any sub-user wants to be displayed on Main users family
     private List<UserListItem> checkMainUserVisibility(List<UserListItem> userList) {
 
@@ -379,7 +386,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         return tempUserList;
     }
 
-
     // This method is to check wheather any sub-user wants to be displayed on Main users family
     private List<UserListItem> checkSubUserAccount(List<UserListItem> userList) {
 
@@ -395,7 +401,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         return tempUserList;
     }
 
-
     private void callDashBoardApi(String id) {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
@@ -408,6 +413,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
+                swiperefresh.setRefreshing(false);
 
                 try {
                     String responseString = response.body().string();
@@ -533,7 +539,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             }
         });
     }
-
 
     private void checkForShowView(DashboardModel dashboardModel) {
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("weightProgress")) {
@@ -798,7 +803,33 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        swiperefresh.getViewTreeObserver().addOnScrollChangedListener(mOnScrollChangedListener =
+                new ViewTreeObserver.OnScrollChangedListener() {
+                    @Override
+                    public void onScrollChanged() {
+                        if (scrollDataView.getScrollY() == 0)
+                            swiperefresh.setEnabled(true);
+                        else
+                            swiperefresh.setEnabled(false);
+
+                    }
+                });
+    }
+
+    @Override
+    public void onStop() {
+        swiperefresh.getViewTreeObserver().removeOnScrollChangedListener(mOnScrollChangedListener);
+        super.onStop();
+    }
+
     private void viewBind() {
+        swiperefresh = findViewById(R.id.swiperefresh);
+        swiperefresh.setColorSchemeColors(R.color.blue, R.color.purple, R.color.blue);
+        scrollDataView = findViewById(R.id.scrollDataView);
+        //swiperefresh.setNestedScrollingEnabled(false);
         chartView = findViewById(R.id.hc_weight);
         chartView.setOptions(options);
         //chartView.setWillNotDraw(true);
@@ -904,8 +935,27 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 }
             }
         });
-    }
 
+
+        swiperefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.i("onRefresh", "onRefresh called from SwipeRefreshLayout");
+
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        swiperefresh.setRefreshing(true);
+                        if (selectedUserPosition > -1) {
+                            callDashBoardApi("" + contactLists.get(selectedUserPosition).getServerUserId());
+                        } else {
+                            callDashBoardApi(id);
+                            selectedUserPosition = -1;
+                        }
+                    }
+                }
+        );
+    }
 
     private void setEmptySubGoalsChart() {
 
@@ -1021,7 +1071,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
     }
 
-
     private void showEmptyGoalsChart() {
 
         try {
@@ -1118,7 +1167,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
         }
     }
-
 
     private void setEmptyBMIChart() {
         try {
@@ -1223,7 +1271,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
     }
 
-
     private void setWeightLossChart() {
 
         try {
@@ -1319,7 +1366,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
 
     }
-
 
     private void setPieChatBodyComposition() {
         try {
@@ -1536,7 +1582,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
     }
 
-
     private void setWeightChartAsync() {
         AsyncWeightChart runner = new AsyncWeightChart();
         runner.execute();
@@ -1571,7 +1616,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         AsyncHistoryChart historyRunner = new AsyncHistoryChart();
         historyRunner.execute();
     }
-
 
     private void showEmptyGoalsAndAcheivementsChart() {
 
@@ -1666,6 +1710,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
             MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
         } else {
+            selectedUserPosition = position;
             callDashBoardApi("" + contactLists.get(position).getServerUserId());
         }
     }
@@ -1897,9 +1942,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         HIYAxis yAxis = new HIYAxis();
                         //yAxis.setMin(minY);
                         try {
-                            Double val= Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                            Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                                     getWeightProgress().getChart1min());
-                            yAxis.setMin((Number) val);
+                            yAxis.setMin(val);
                         } catch (Exception e) {
                             e.printStackTrace();
                             yAxis.setMin(0);
@@ -2374,7 +2419,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HITitle title = new HITitle();
                         title.setUseHTML(true);
-                        title.setText("<p style='color: #ffffff; text-align: center;'>Next Sub Goals</p>");
+                        title.setText("<p style='color: #ffffff; text-align: center;'>Next Sub Goals in " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
                         optionsGoals.setTitle(title);
 
                         HIXAxis xAxis = new HIXAxis();

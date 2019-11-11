@@ -16,6 +16,9 @@ public class SubGoalsProgress {
     @SerializedName("acheivedWeight")
     @Expose
     private List<String> acheivedWeight = null;
+    @SerializedName("minval")
+    @Expose
+    private String minval;
 
     public List<String> getWeeks() {
         return weeks;
@@ -41,4 +44,11 @@ public class SubGoalsProgress {
         this.acheivedWeight = acheivedWeight;
     }
 
+    public String getMinval() {
+        return minval;
+    }
+
+    public void setMinval(String minval) {
+        this.minval = minval;
+    }
 }

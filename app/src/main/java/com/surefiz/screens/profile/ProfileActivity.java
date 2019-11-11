@@ -130,6 +130,8 @@ public class ProfileActivity extends BaseActivity {
         et_units.setEnabled(false);
         et_email.setEnabled(false);
         et_height.setEnabled(false);
+        et_country_name.setEnabled(false);
+        et_state.setEnabled(false);
         profile_image.setEnabled(false);
         switch_visibility.setEnabled(false);
         et_new_password.setEnabled(false);

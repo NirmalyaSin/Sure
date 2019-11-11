@@ -629,7 +629,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         try {
 
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getValue() > 0.0) {
-                tv_fat_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getValue()));
+                tv_fat_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit());
                 tv_fat_dynamic.setVisibility(View.VISIBLE);
             } else {
                 tv_fat_dynamic.setVisibility(View.GONE);
@@ -648,7 +648,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getValue() > 0.0) {
-                tv_bone_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getValue()));
+                tv_bone_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit());
                 tv_bone_dynamic.setVisibility(View.VISIBLE);
             } else {
                 tv_bone_dynamic.setVisibility(View.GONE);
@@ -669,7 +669,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getValue() > 0.0) {
-                tv_muscle_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getValue()));
+                tv_muscle_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit());
                 tv_muscle_dynamic.setVisibility(View.VISIBLE);
             } else {
                 tv_muscle_dynamic.setVisibility(View.GONE);
@@ -1277,29 +1277,21 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             chartViewLoss.setUsePercentValues(true);
             chartViewLoss.getDescription().setEnabled(false);
             chartViewLoss.setExtraOffsets(5, 10, 5, 5);
-
             chartViewLoss.setDragDecelerationFrictionCoef(0.95f);
-
-//        chartViewLoss.setCenterText(generateCenterSpannableText());
-
             chartViewLoss.setDrawHoleEnabled(true);
             chartViewLoss.setHoleColor(Color.TRANSPARENT);
-
             chartViewLoss.setTransparentCircleColor(Color.WHITE);
             chartViewLoss.setTransparentCircleAlpha(110);
-
             chartViewLoss.setHoleRadius(58f);
             chartViewLoss.setTransparentCircleRadius(61f);
-
             chartViewLoss.setDrawCenterText(true);
-
-            chartViewLoss.setRotationAngle(320);
-            // enable rotation of the chartViewLoss by touch
+            chartViewLoss.setRotationAngle(0);
             chartViewLoss.setRotationEnabled(false);
             chartViewLoss.setHighlightPerTapEnabled(false);
-
-
             chartViewLoss.animateY(1400, Easing.EaseInOutQuad);
+
+
+            // enable rotation of the chartViewLoss by touch
 
             Legend l = chartViewLoss.getLegend();
             l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -1383,8 +1375,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             pieChatBodyComposition.setRotationAngle(270);
             pieChatBodyComposition.setRotationEnabled(false);
             pieChatBodyComposition.setHighlightPerTapEnabled(false);
-
-
             pieChatBodyComposition.animateY(1400, Easing.EaseInOutQuad);
 
             Legend l = pieChatBodyComposition.getLegend();
@@ -1642,6 +1632,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             HITitle title = new HITitle();
             title.setUseHTML(true);
             title.setText("<p style='color: #ffffff; text-align: center;'>Your Goals</p>");
+            title.setAlign("left");
             optionsAchiGoals.setTitle(title);
 
 
@@ -1943,7 +1934,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         //yAxis.setMin(minY);
                         try {
                             Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                    getWeightProgress().getChart1min());
+                                    getWeightProgress().getMinval());
                             yAxis.setMin(val);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -2274,7 +2265,18 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HIYAxis yAxis = new HIYAxis();
                         yAxis.setAllowDecimals(false);
-                        yAxis.setMin(0);
+                        //yAxis.setMin(0);
+
+                        try {
+                            Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                    getSubGoalsProgress().getMinval());
+                            yAxis.setMin(val);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            yAxis.setMin(0);
+                        }
+
+
                         HITitle hiTitle = new HITitle();
                         hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
                         hiTitle.setSkew3d(true);
@@ -2745,6 +2747,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
                         HIYAxis yaxis = new HIYAxis();
+
+                        try {
+                            Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                    getHistorygoals().getMinval());
+                            yaxis.setMin(val);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            yaxis.setMin(0);
+                            //yAxis.setMin(minY);
+                        }
+
                         HITitle title1 = new HITitle();
                         HILabels labels = new HILabels();
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHweighttext() != null ||
@@ -2844,11 +2857,18 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                         numberList2.add(Double.parseDouble(series2_data.get(i)));
                                     }*/
 
-                                    if (!series2_data.get(i).equals("0")) {
+                                    try {
+                                        numberList2.add(Double.parseDouble(series2_data.get(i)));
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        numberList2.add(0.0);
+                                    }
+
+                                    /*if (!series2_data.get(i).equals("0")) {
                                         numberList2.add(Double.parseDouble(series2_data.get(i)));
                                     } else {
                                         numberList2.add(null);
-                                    }
+                                    }*/
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -2966,6 +2986,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         //xAxis.setVisible(true);
 
                         HIYAxis yaxis = new HIYAxis();
+
+                        try {
+                            Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
+                                    getGoals().getMinval());
+                            yaxis.setMin(val);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            yaxis.setMin(0);
+                            //yAxis.setMin(minY);
+                        }
+
                         HITitle title1 = new HITitle();
                         HILabels labels = new HILabels();
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweighttext() != null ||

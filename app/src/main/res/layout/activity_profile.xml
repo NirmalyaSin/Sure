@@ -609,7 +609,6 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:focusableInTouchMode="false"
                         android:hint="Select your state"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"

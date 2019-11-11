@@ -38,6 +38,7 @@ import static com.surefiz.apilist.ApiList.API_CIRCLE_SEARCH_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_SEND_CANCEL_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
+import static com.surefiz.apilist.ApiList.API_GET_COUNTRY_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
@@ -261,6 +262,10 @@ public interface ApiInterface {
                                            @Part("prefferedUnits") RequestBody prefferedUnits,
                                            @Part("mainuservisibility") RequestBody mainuservisibility,
                                            @Part("password") RequestBody password);
+
+
+    @GET(API_GET_COUNTRY_LIST)
+    Call<ResponseBody> call_countryListApi();
 
     @FormUrlEncoded
     @POST(USERLIST)

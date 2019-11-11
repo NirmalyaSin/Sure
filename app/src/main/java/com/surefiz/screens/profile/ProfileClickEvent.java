@@ -74,6 +74,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private LoadingData loader;
     private ImageLoader imageLoader;
     private List<String> prefferedList = new ArrayList<>();
+    private List<String> countryList = new ArrayList<>();
     private String filePath = "";
     private List<String> heightList = new ArrayList<>();
     private UniversalPopup heightPopup;
@@ -81,6 +82,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private WeigtUniversalPopup weigtUniversalPopupPreferred;
     private GoogleApiClient googleApiClient;
     private CallbackManager callbackManager;
+    private WeigtUniversalPopup countryListPopup;
 
     public ProfileClickEvent(ProfileActivity activity) {
         this.activity = activity;
@@ -121,6 +123,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 }
             }
         });
+
+        callCountryListApi();
     }
 
     private void startFireBase() {
@@ -361,6 +365,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.switch_visibility.setOnClickListener(this);
         activity.btnGoogleAdd.setOnClickListener(this);
         activity.btnFacebookAdd.setOnClickListener(this);
+        activity.et_country_name.setOnClickListener(this);
         activity.findViewById(R.id.iv_weight_managment).setOnClickListener(this);
     }
 
@@ -459,6 +464,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.et_units.setEnabled(true);
                 activity.et_email.setEnabled(true);
                 activity.et_height.setEnabled(true);
+                activity.et_country_name.setEnabled(true);
+                activity.et_state.setEnabled(true);
                 activity.profile_image.setEnabled(true);
                 activity.switch_visibility.setEnabled(true);
 
@@ -580,6 +587,22 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     callapiforRemoveSocial("fb");
                 }
                 break;
+            case R.id.et_country_name:
+                showAndDismissCountryPopup();
+                break;
+        }
+    }
+
+    private void showAndDismissCountryPopup() {
+        if (countryListPopup != null && countryListPopup.isShowing()) {
+            countryListPopup.dismiss();
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    countryListPopup.showAsDropDown(activity.et_country_name);
+                }
+            }, 100);
         }
     }
 
@@ -600,6 +623,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_email.setEnabled(false);
         activity.et_height.setEnabled(false);
         activity.profile_image.setEnabled(false);
+        activity.et_country_name.setEnabled(false);
+        activity.et_state.setEnabled(false);
         activity.switch_visibility.setEnabled(false);
 
         activity.et_new_password.setEnabled(false);
@@ -951,8 +976,50 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
             }
         });
-
     }
+
+    private void callCountryListApi() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        Call<ResponseBody> coutryList = apiInterface.call_countryListApi();
+        coutryList.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String responseString = response.body().string();
+                    JSONObject jsonObject = new JSONObject(responseString);
+
+                    System.out.println("jsonObject: " + jsonObject.toString());
+                    addPrefferedCountryList();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void addPrefferedCountryList() {
+
+        countryList.add("USA");
+        countryList.add("USA");
+        countryList.add("USA");
+        countryList.add("USA");
+
+        countryListPopup = new WeigtUniversalPopup(activity, countryList, activity.et_country_name, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+
+            }
+        });
+    }
+
 
     private void sendProfileUpdateApi() {
         loader.show_with_label("Loading");
@@ -1082,7 +1149,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
         Calendar mCalendar;
         mCalendar = Calendar.getInstance();
-        System.out.println("Inside Dialog Box");
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_date_picker);

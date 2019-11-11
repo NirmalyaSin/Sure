@@ -31,6 +31,9 @@ public class HistoryGoals {
     @SerializedName("he2")
     @Expose
     private Integer he2;
+    @SerializedName("minval")
+    @Expose
+    private String minval;
 
 
     public List<String> getHgoalsjson() {
@@ -95,5 +98,13 @@ public class HistoryGoals {
 
     public void setHe2(Integer he2) {
         this.he2 = he2;
+    }
+
+    public String getMinval() {
+        return minval;
+    }
+
+    public void setMinval(String minval) {
+        this.minval = minval;
     }
 }

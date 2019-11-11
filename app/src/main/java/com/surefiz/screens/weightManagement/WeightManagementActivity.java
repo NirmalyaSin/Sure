@@ -507,6 +507,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 weightList.add(i + " " + change);
             }
         }
+
         weightPopup = new UniversalPopup(WeightManagementActivity.this, weightList, et_weight);/*, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {

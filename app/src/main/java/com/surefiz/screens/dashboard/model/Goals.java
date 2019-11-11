@@ -31,6 +31,9 @@ public class Goals {
     @SerializedName("me2")
     @Expose
     private Integer me2;
+    @SerializedName("minval")
+    @Expose
+    private String minval;
 
     public List<String> getMinigoalsjson() {
         return minigoalsjson;
@@ -96,4 +99,11 @@ public class Goals {
         this.me2 = me2;
     }
 
+    public String getMinval() {
+        return minval;
+    }
+
+    public void setMinval(String minval) {
+        this.minval = minval;
+    }
 }

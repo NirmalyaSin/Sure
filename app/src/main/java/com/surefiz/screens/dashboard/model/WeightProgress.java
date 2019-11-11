@@ -19,6 +19,9 @@ public class WeightProgress {
     @SerializedName("chart1min")
     @Expose
     private String chart1min;
+    @SerializedName("minval")
+    @Expose
+    private String minval;
 
     public List<String> getLabel() {
         return label;
@@ -50,5 +53,13 @@ public class WeightProgress {
 
     public void setChart1min(String chart1min) {
         this.chart1min = chart1min;
+    }
+
+    public String getMinval() {
+        return minval;
+    }
+
+    public void setMinval(String minval) {
+        this.minval = minval;
     }
 }

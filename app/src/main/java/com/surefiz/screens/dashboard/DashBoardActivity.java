@@ -1820,11 +1820,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void showHistoryGoalsChart() {
         try {
 
-
-
-            /*AsyncHistoryChart historyRunner = new AsyncHistoryChart();
-            historyRunner.execute();*/
-
             rlHistoryChart.setVisibility(View.VISIBLE);
             ivCloseButton.bringToFront();
 
@@ -1847,10 +1842,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                     try {
 
-                        chartView.invalidate();
+                        //chartView.invalidate();
 
                         HIChart chart = new HIChart();
-                        chart.setType("area");
+
                         //Required for gradient Background
                         HIGradient gradient = new HIGradient(0, 0, 0, 1);
                         LinkedList<HIStop> stops = new LinkedList<>();
@@ -1861,7 +1856,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
 
 
+                        chart.setType("area");
                         options.setChart(chart);
+
                         HILegend hiLegend = new HILegend();
                         HICSSObject hicssObject = new HICSSObject();
                         hicssObject.setColor("#ffffff");
@@ -1893,9 +1890,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                             xAxis.setCategories(dateList);
 
-                            /*xAxis.setCategories((ArrayList<String>)
-                                    LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                            getWeightProgress().getLabel());*/
                         }
 
                         options.setXAxis(new ArrayList<HIXAxis>() {{
@@ -1931,7 +1925,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         }*/
 
                         HIYAxis yAxis = new HIYAxis();
-                        //yAxis.setMin(minY);
                         try {
                             Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                                     getWeightProgress().getMinval());
@@ -1939,7 +1932,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         } catch (Exception e) {
                             e.printStackTrace();
                             yAxis.setMin(0);
-                            //yAxis.setMin(minY);
                         }
 
                         yAxis.setVisible(false);
@@ -2016,18 +2008,20 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                     } catch (Exception e) {
                         e.printStackTrace();
+                        chartView.setOptions(options);
                     }
 
                 }
             });
 
-            return "";
+            return null;
         }
 
 
         @Override
         protected void onPostExecute(String result) {
             chartView.setOptions(options);
+            chartView.reload();
             setBMIChartAsync();
         }
 
@@ -2177,6 +2171,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         @Override
         protected void onPostExecute(String result) {
             chartViewBmi.setOptions(optionsBMI);
+            chartViewBmi.reload();
             setSubGoalsChartAsync();
         }
 
@@ -2379,6 +2374,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         @Override
         protected void onPostExecute(String result) {
             chartViewSubGoals.setOptions(optionsSubGoals);
+            chartViewSubGoals.reload();
             setGoalsChartAsync();
         }
 
@@ -2514,6 +2510,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         @Override
         protected void onPostExecute(String result) {
             chartViewGoals.setOptions(optionsGoals);
+            chartViewGoals.reload();
         }
 
 
@@ -2672,6 +2669,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         @Override
         protected void onPostExecute(String result) {
             chartGauge.setOptions(guageChartOptions);
+            chartGauge.reload();
         }
 
 
@@ -2903,6 +2901,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         @Override
         protected void onPostExecute(String result) {
             hcHistoryGoals.setOptions(historyChartOptions);
+            hcHistoryGoals.reload();
         }
 
 
@@ -3138,6 +3137,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         @Override
         protected void onPostExecute(String result) {
             chartViewAchiGoals.setOptions(optionsAchiGoals);
+            chartViewAchiGoals.reload();
             setHistoryChart();
         }
 

@@ -543,6 +543,7 @@ public class RegistrationActivity extends AppCompatActivity {
         //et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
 
         registrationClickEvent.setValuesForListItem(bundle);
+        registrationClickEvent.setValuesForWeightSelection(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getIsServerWeight());
 
         showImage();
         disableViews();

@@ -3,21 +3,17 @@ package com.surefiz.screens.progressstatus;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
 import android.text.util.Linkify;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -28,7 +24,6 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -45,8 +40,6 @@ import retrofit2.Retrofit;
 
 public class ProgressStatusActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private LoadingData loader;
-    private String userId = "", contentId = "";
     //9180,9211,9015
     @BindView(R.id.tv_desc)
     TextView tv_desc;
@@ -70,6 +63,8 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
     ImageView profile_image;
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
+    private LoadingData loader;
+    private String userId = "", contentId = "";
     private ImageLoader imageLoader;
 
 
@@ -226,7 +221,7 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
                 Intent intent = new Intent(this, DashBoardActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                finishAffinity();
                 break;
             case R.id.rl_back:
                 onBackPressed();

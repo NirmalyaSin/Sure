@@ -10,6 +10,7 @@ import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
 import com.surefiz.screens.privacy.model.PrivacyListResponse;
+import com.surefiz.screens.profile.model.CountryList;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.users.model.UserListModel;
 
@@ -265,7 +266,7 @@ public interface ApiInterface {
 
 
     @GET(API_GET_COUNTRY_LIST)
-    Call<ResponseBody> call_countryListApi();
+    Call<CountryList> call_countryListApi();
 
     @FormUrlEncoded
     @POST(USERLIST)

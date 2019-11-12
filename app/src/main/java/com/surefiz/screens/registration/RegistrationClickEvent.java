@@ -835,11 +835,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
-        } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
+        } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
-        } else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
+        } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
-        } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
+        } /*else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
+        }*/ else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
             MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
         }/*else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
             MethodUtils.errorMsg(registrationActivity, "Password must be more than 8 characters");
@@ -899,6 +901,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
             registrationActivity.tv_time_loss.setVisibility(View.GONE);
             registrationActivity.rl_time_loss.setVisibility(View.GONE);
             registrationActivity.et_time_loss.setText("");
+        }
+    }
+
+
+    public void setValuesForWeightSelection(String isWeightSelection) {
+        if (isWeightSelection.equalsIgnoreCase("1")) {
+            selectionPopup.onWeightCallback.onSuccess(selectionList.get(1));
         }
     }
 

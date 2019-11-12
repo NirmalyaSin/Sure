@@ -42,6 +42,8 @@ import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.profile.model.CountryList;
+import com.surefiz.screens.profile.model.Datum;
 import com.surefiz.screens.profile.model.ViewProfileModel;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -982,35 +984,38 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        Call<ResponseBody> coutryList = apiInterface.call_countryListApi();
-        coutryList.enqueue(new Callback<ResponseBody>() {
+        Call<CountryList> coutryList = apiInterface.call_countryListApi();
+        coutryList.enqueue(new Callback<CountryList>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<CountryList> call, Response<CountryList> response) {
                 try {
-                    String responseString = response.body().string();
-                    JSONObject jsonObject = new JSONObject(responseString);
+                    //String responseString = response.body().string();
+                   // JSONObject jsonObject = new JSONObject(responseString);
 
-                    System.out.println("jsonObject: " + jsonObject.toString());
-                    addPrefferedCountryList();
+                    //System.out.println("jsonObject: " + jsonObject.toString());
+                    if (response.body().getStatus()==1) {
+                        addPrefferedCountryList(response.body().getData());
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<CountryList> call, Throwable t) {
 
             }
         });
     }
 
 
-    private void addPrefferedCountryList() {
+    private void addPrefferedCountryList(List<Datum> data) {
 
-        countryList.add("USA");
-        countryList.add("USA");
-        countryList.add("USA");
-        countryList.add("USA");
+        countryList.clear();
+        for (int i=0;i<data.size();i++){
+            countryList.add(data.get(i).getCountryName());
+        }
+
 
         countryListPopup = new WeigtUniversalPopup(activity, countryList, activity.et_country_name, new OnWeightCallback() {
             @Override

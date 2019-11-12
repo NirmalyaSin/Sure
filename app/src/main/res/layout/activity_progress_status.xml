@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.progressstatus.ProgressStatusActivity">
+    tools:context=".screens.progressstatus.ProgressStatusActivity"
+    android:background="@drawable/login_image_new">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -35,18 +36,19 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="SureFiz"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
     </RelativeLayout>
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?android:attr/actionBarSize"
         android:alpha="0.6"
         android:background="@drawable/splash_image"
-        android:visibility="visible" />
+        android:visibility="visible" />-->
 
     <ScrollView
         android:id="@+id/sv_main"
@@ -67,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="Your Progress Details"
+                android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
@@ -86,6 +89,7 @@
                 android:layout_below="@id/profile_image"
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/roboto_regular"
                 android:background="@android:color/transparent"
                 android:backgroundTint="@android:color/transparent"
                 android:textColor="@color/whiteColor"
@@ -106,6 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="Weight:"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
@@ -116,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:text="Muscle:"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -125,6 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:text="Fats:"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -134,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:text="Water:"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -143,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:text="BMI:"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 
@@ -150,6 +159,7 @@
                     android:id="@+id/tv_link2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
@@ -166,8 +176,9 @@
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@drawable/login_submit_rounded_corner"
+        android:background="@drawable/login_button_gradient"
         android:text="DASHBOARD"
+        android:fontFamily="@font/roboto_bold"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
 

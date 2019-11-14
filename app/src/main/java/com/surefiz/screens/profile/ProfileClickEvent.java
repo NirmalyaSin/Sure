@@ -77,6 +77,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private ImageLoader imageLoader;
     private List<String> prefferedList = new ArrayList<>();
     private List<String> countryList = new ArrayList<>();
+    private List<Integer> countryIDList = new ArrayList<>();
     private String filePath = "";
     private List<String> heightList = new ArrayList<>();
     private UniversalPopup heightPopup;
@@ -302,6 +303,34 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
         activity.profile_image.setEnabled(false);
 
+        if (!LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            activity.tv_zip_code.setVisibility(View.GONE);
+            activity.rl_zip_code.setVisibility(View.GONE);
+            activity.tv_state.setVisibility(View.GONE);
+            activity.rl_state.setVisibility(View.GONE);
+            activity.tv_city.setVisibility(View.GONE);
+            activity.rl_city.setVisibility(View.GONE);
+            activity.tv_address_line2.setVisibility(View.GONE);
+            activity.rl_addressLine2.setVisibility(View.GONE);
+            activity.tv_address_line.setVisibility(View.GONE);
+            activity.rl_addressLine1.setVisibility(View.GONE);
+            activity.tv_country_name.setVisibility(View.GONE);
+            activity.rl_countryName.setVisibility(View.GONE);
+        } else {
+            activity.tv_zip_code.setVisibility(View.VISIBLE);
+            activity.rl_zip_code.setVisibility(View.VISIBLE);
+            activity.tv_state.setVisibility(View.VISIBLE);
+            activity.rl_state.setVisibility(View.VISIBLE);
+            activity.tv_city.setVisibility(View.VISIBLE);
+            activity.rl_city.setVisibility(View.VISIBLE);
+            activity.tv_address_line2.setVisibility(View.VISIBLE);
+            activity.rl_addressLine2.setVisibility(View.VISIBLE);
+            activity.tv_address_line.setVisibility(View.VISIBLE);
+            activity.rl_addressLine1.setVisibility(View.VISIBLE);
+            activity.tv_country_name.setVisibility(View.VISIBLE);
+            activity.rl_countryName.setVisibility(View.VISIBLE);
+        }
+
         setSocialAddButtonStatus();
 
         showImage();
@@ -468,6 +497,10 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.et_height.setEnabled(true);
                 activity.et_country_name.setEnabled(true);
                 activity.et_state.setEnabled(true);
+                activity.et_add_line1.setEnabled(true);
+                activity.et_add_line2.setEnabled(true);
+                activity.et_city.setEnabled(true);
+                activity.et_zipcode.setEnabled(true);
                 activity.profile_image.setEnabled(true);
                 activity.switch_visibility.setEnabled(true);
 
@@ -539,6 +572,18 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
                     MethodUtils.errorMsg(activity, "New password and confirm password must be same");
 
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_country_name.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Enter country");
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line1.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Enter address line 1");
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line2.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Enter address line 2");
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_city.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Enter city");
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_state.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Enter state");
+                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_zipcode.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, "Enter zip code");
                 } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else {
@@ -627,6 +672,10 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.profile_image.setEnabled(false);
         activity.et_country_name.setEnabled(false);
         activity.et_state.setEnabled(false);
+        activity.et_add_line1.setEnabled(false);
+        activity.et_add_line2.setEnabled(false);
+        activity.et_city.setEnabled(false);
+        activity.et_zipcode.setEnabled(false);
         activity.switch_visibility.setEnabled(false);
 
         activity.et_new_password.setEnabled(false);
@@ -872,6 +921,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody preffered = null;
         RequestBody mainuservisibility = null;
         RequestBody password = null;
+        RequestBody country = null;
 
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -921,6 +971,50 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.mCompressedFile.getName(), reqFile);
 
 
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            try {
+                int index = countryList.indexOf(activity.et_country_name.getText().toString().trim());
+                country = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryIDList.get(index)));
+            } catch (Exception e) {
+                e.printStackTrace();
+                country = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryIDList.get(0)));
+            }
+        } else {
+            country = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+
+        RequestBody addressLine1;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            addressLine1 = RequestBody.create(MediaType.parse("text/plain"), activity.et_add_line1.getText().toString().trim());
+        } else {
+            addressLine1 = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+        RequestBody addressLine2;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            addressLine2 = RequestBody.create(MediaType.parse("text/plain"), activity.et_add_line2.getText().toString().trim());
+        } else {
+            addressLine2 = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+        RequestBody city;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            city = RequestBody.create(MediaType.parse("text/plain"), activity.et_city.getText().toString().trim());
+        } else {
+            city = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+        RequestBody state;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            state = RequestBody.create(MediaType.parse("text/plain"), activity.et_state.getText().toString().trim());
+        } else {
+            state = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+        RequestBody zipcode;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            zipcode = RequestBody.create(MediaType.parse("text/plain"), activity.et_zipcode.getText().toString().trim());
+        } else {
+            zipcode = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+
+
         /*MultipartBody.Part body1 = MultipartBody.Part.createFormData("middleName",
                 activity.mCompressedFile.getName(), reqFile);
         MultipartBody.Part body2 = MultipartBody.Part.createFormData("middleName",
@@ -928,7 +1022,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, body);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -990,10 +1084,10 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             public void onResponse(Call<CountryList> call, Response<CountryList> response) {
                 try {
                     //String responseString = response.body().string();
-                   // JSONObject jsonObject = new JSONObject(responseString);
+                    // JSONObject jsonObject = new JSONObject(responseString);
 
                     //System.out.println("jsonObject: " + jsonObject.toString());
-                    if (response.body().getStatus()==1) {
+                    if (response.body().getStatus() == 1) {
                         addPrefferedCountryList(response.body().getData());
                     }
                 } catch (Exception e) {
@@ -1012,15 +1106,17 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private void addPrefferedCountryList(List<Datum> data) {
 
         countryList.clear();
-        for (int i=0;i<data.size();i++){
+        countryIDList.clear();
+        for (int i = 0; i < data.size(); i++) {
             countryList.add(data.get(i).getCountryName());
+            countryIDList.add(data.get(i).getCountryID());
         }
 
 
         countryListPopup = new WeigtUniversalPopup(activity, countryList, activity.et_country_name, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-
+                activity.et_country_name.setText(value);
             }
         });
     }
@@ -1032,6 +1128,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody preffered = null;
         RequestBody mainuservisibility = null;
         RequestBody password = null;
+
+        RequestBody country = null;
 
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -1054,6 +1152,49 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         } else {
             gender = RequestBody.create(MediaType.parse("text/plain"), "3");
+        }
+
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            try {
+                int index = countryList.indexOf(activity.et_country_name.getText().toString().trim());
+                country = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryIDList.get(index)));
+            } catch (Exception e) {
+                e.printStackTrace();
+                country = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryIDList.get(0)));
+            }
+        } else {
+            country = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+
+        RequestBody addressLine1;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            addressLine1 = RequestBody.create(MediaType.parse("text/plain"), activity.et_add_line1.getText().toString().trim());
+        } else {
+            addressLine1 = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+        RequestBody addressLine2;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            addressLine2 = RequestBody.create(MediaType.parse("text/plain"), activity.et_add_line2.getText().toString().trim());
+        } else {
+            addressLine2 = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+        RequestBody city;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            city = RequestBody.create(MediaType.parse("text/plain"), activity.et_city.getText().toString().trim());
+        } else {
+            city = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+        RequestBody state;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            state = RequestBody.create(MediaType.parse("text/plain"), activity.et_state.getText().toString().trim());
+        } else {
+            state = RequestBody.create(MediaType.parse("text/plain"), "");
+        }
+        RequestBody zipcode;
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
+            zipcode = RequestBody.create(MediaType.parse("text/plain"), activity.et_zipcode.getText().toString().trim());
+        } else {
+            zipcode = RequestBody.create(MediaType.parse("text/plain"), "");
         }
 
 
@@ -1080,7 +1221,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0]);
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override

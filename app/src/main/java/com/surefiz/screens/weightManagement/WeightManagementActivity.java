@@ -367,13 +367,13 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void setData(JSONObject jsnObject) {
-        et_weight.setText(jsnObject.optString("desiredWeight"));
+        /*et_weight.setText(jsnObject.optString("desiredWeight"));
 
         if (jsnObject.optString("timeToLoseWeight").equals("0 Weeks")) {
             et_time_loss.setText("");
         } else {
             et_time_loss.setText(jsnObject.optString("timeToLoseWeight"));
-        }
+        }*/
 
         units = jsnObject.optString("preferredUnits");
         weight = et_weight.getText().toString().trim();
@@ -426,7 +426,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             findViewById(R.id.tv_time_loss).setVisibility(View.VISIBLE);
             findViewById(R.id.rl_time_loss).setVisibility(View.VISIBLE);
             et_time_loss.setText("TBD");
-        } else if (jsnObject.optInt("maintain_Weight_By_Server") == 0) {
+        } else if (jsnObject.optInt("type") == 2 && jsnObject.optInt("maintain_Weight_By_Server") == 0) {
             findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
             findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
 
@@ -454,6 +454,14 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
             findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
             et_weight.setText(weight_value);
+        }
+
+        et_weight.setText(jsnObject.optString("desiredWeight"));
+
+        if (jsnObject.optString("timeToLoseWeight").equals("0 Weeks")) {
+            et_time_loss.setText("");
+        } else {
+            et_time_loss.setText(jsnObject.optString("timeToLoseWeight"));
         }
 
         //et_weight_managment.setText(jsnObject.optString("type"));

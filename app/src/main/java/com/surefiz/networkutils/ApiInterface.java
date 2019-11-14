@@ -245,6 +245,12 @@ public interface ApiInterface {
                                                 @Part("prefferedUnits") RequestBody prefferedUnits,
                                                 @Part("mainuservisibility") RequestBody mainuservisibility,
                                                 @Part("password") RequestBody password,
+                                                @Part("country") RequestBody country,
+                                                @Part("addressLineOne") RequestBody addressLine1,
+                                                @Part("addressLineTwo") RequestBody addressLine2,
+                                                @Part("city") RequestBody city,
+                                                @Part("state") RequestBody state,
+                                                @Part("zipcode") RequestBody zipcode,
                                                 @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -262,7 +268,13 @@ public interface ApiInterface {
                                            @Part("Height") RequestBody Height,
                                            @Part("prefferedUnits") RequestBody prefferedUnits,
                                            @Part("mainuservisibility") RequestBody mainuservisibility,
-                                           @Part("password") RequestBody password);
+                                           @Part("password") RequestBody password,
+                                           @Part("country") RequestBody country,
+                                           @Part("addressLineOne") RequestBody addressLine1,
+                                           @Part("addressLineTwo") RequestBody addressLine2,
+                                           @Part("city") RequestBody city,
+                                           @Part("state") RequestBody state,
+                                           @Part("zipcode") RequestBody zipcode);
 
 
     @GET(API_GET_COUNTRY_LIST)

@@ -239,9 +239,9 @@
                             android:padding="@dimen/_4sdp"
                             android:fontFamily="@font/roboto_medium"
                             android:layout_marginEnd="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginTop="@dimen/_35sdp"
                             android:text="@string/click_to_view_history"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_10sdp" />
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView

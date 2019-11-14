@@ -60,6 +60,7 @@ public class ProfileActivity extends BaseActivity {
     public static final int CAMERA = 1, GALLERY = 2;
     public File mCompressedFile = null;
     public View view;
+    public CallbackManager fbcallbackManager;
     ProfileClickEvent profileClickEvent;
     de.hdodenhof.circleimageview.CircleImageView profile_image;
     ImageView iv_plus_add_image;
@@ -78,7 +79,6 @@ public class ProfileActivity extends BaseActivity {
     EditText et_city;
     EditText et_state;
     EditText et_zipcode;
-
     Button btn_register;
     Button btn_cancel;
     Switch switch_visibility;
@@ -92,7 +92,19 @@ public class ProfileActivity extends BaseActivity {
     private File mFile = null;
     private Uri fileUri = null;
     private OnImageSet onImageSet;
-    public CallbackManager fbcallbackManager;
+
+     TextView tv_zip_code;
+     RelativeLayout rl_zip_code;
+     TextView tv_state;
+     RelativeLayout rl_state;
+     TextView tv_city;
+     RelativeLayout rl_city;
+     TextView tv_address_line2;
+     RelativeLayout rl_addressLine2;
+     TextView tv_address_line;
+     RelativeLayout rl_addressLine1;
+     TextView tv_country_name;
+     RelativeLayout rl_countryName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +142,14 @@ public class ProfileActivity extends BaseActivity {
         et_units.setEnabled(false);
         et_email.setEnabled(false);
         et_height.setEnabled(false);
+
         et_country_name.setEnabled(false);
         et_state.setEnabled(false);
+        et_add_line1.setEnabled(false);
+        et_add_line2.setEnabled(false);
+        et_city.setEnabled(false);
+        et_zipcode.setEnabled(false);
+
         profile_image.setEnabled(false);
         switch_visibility.setEnabled(false);
         et_new_password.setEnabled(false);
@@ -168,6 +186,24 @@ public class ProfileActivity extends BaseActivity {
         ll_add_new_password.setVisibility(View.GONE);
         et_new_password = view.findViewById(R.id.et_new_password);
         et_confirm_password = view.findViewById(R.id.et_confirm_password);
+
+        tv_zip_code = view.findViewById(R.id.tv_zip_code);
+        rl_zip_code = view.findViewById(R.id.rl_zip_code);
+
+        tv_state = view.findViewById(R.id.tv_state);
+        rl_state = view.findViewById(R.id.rl_state);
+
+        tv_city = view.findViewById(R.id.tv_city);
+        rl_city = view.findViewById(R.id.rl_city);
+
+        tv_address_line2 = view.findViewById(R.id.tv_address_line2);
+        rl_addressLine2 = view.findViewById(R.id.rl_addressLine2);
+
+        tv_address_line = view.findViewById(R.id.tv_address_line);
+        rl_addressLine1 = view.findViewById(R.id.rl_addressLine1);
+
+        tv_country_name = view.findViewById(R.id.tv_country_name);
+        rl_countryName = view.findViewById(R.id.rl_countryName);
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {
@@ -213,7 +249,7 @@ public class ProfileActivity extends BaseActivity {
 // Always show the chooser (if there are multiple options available)
 
 
-        fbcallbackManager =null;
+        fbcallbackManager = null;
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY);
     }
 
@@ -239,7 +275,7 @@ public class ProfileActivity extends BaseActivity {
 
         // start the image capture Intent
 
-        fbcallbackManager =null;
+        fbcallbackManager = null;
         startActivityForResult(intent, CAMERA);
     }
 

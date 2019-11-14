@@ -1,9 +1,12 @@
 package com.surefiz.screens.mydevice;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -218,6 +221,25 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         return formattedScaleId.replaceAll("-", "");
     }
 
+    private void showUpdateInfoDialog(String message) {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getResources().getString(R.string.app_name));
+        alertDialog.setMessage(Html.fromHtml(message));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                (dialog, which) -> {
+                    dialog.dismiss();
+
+                    if (LoginShared.getRegistrationDataModel(this) != null) {
+                        tv_scale_id.setText("Current scale ID: " + formatScaleId(LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac()));
+                        et_id.setText("");
+                        et_confirm_scale_id.setText("");
+                    }
+                });
+
+        alertDialog.show();
+    }
+
     private void changeScaleIdToServer() {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
@@ -235,21 +257,17 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
 
-                        //System.out.println("userMacID: " + LoginShared.getUserMacId(MyDeviceActivity.this));
-
                         RegistrationModel registrationModel = LoginShared.getRegistrationDataModel(MyDeviceActivity.this);
                         registrationModel.getData().getUser().get(0).setUserMac(replaceScaleIDFormatter(et_id.getText().toString().trim()));
                         LoginShared.setRegistrationDataModel(MyDeviceActivity.this, registrationModel);
 
                         LoginShared.setUserMacId(Integer.parseInt(replaceScaleIDFormatter(et_id.getText().toString().trim())));
-                        //LoginShared.setUserMacId(Integer.parseInt(et_id.getText().toString().trim()));
-
-                        //System.out.println("userMacID: " + LoginShared.getUserMacId(MyDeviceActivity.this));
 
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
-                        MethodUtils.errorMsg(MyDeviceActivity.this, jsObject.getString("message"));
+                        showUpdateInfoDialog(jsObject.getString("message"));
 
+                        /*MethodUtils.errorMsg(MyDeviceActivity.this, jsObject.getString("message"));
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -258,7 +276,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 finish();
                             }
-                        }, GeneralToApp.SPLASH_WAIT_TIME);
+                        }, GeneralToApp.SPLASH_WAIT_TIME);*/
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(MyDeviceActivity.this);
@@ -267,7 +285,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                         Intent loginIntent = new Intent(MyDeviceActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(MyDeviceActivity.this, jsObject.getString("message"));

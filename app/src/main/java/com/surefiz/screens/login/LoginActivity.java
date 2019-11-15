@@ -112,6 +112,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //editPassword.setText("12345678");
 
         startFireBase();
+
+        //getHashKey();
     }
 
     private void startFireBase() {

@@ -1507,7 +1507,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
             HITitle title = new HITitle();
             title.setUseHTML(true);
-            title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress IN " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
+            title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress In " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
             options.setTitle(title);
 
             HIXAxis xAxis = new HIXAxis();
@@ -1872,7 +1872,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HITitle title = new HITitle();
                         title.setUseHTML(true);
-                        title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress IN " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
+                        title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress In " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
                         options.setTitle(title);
 
                         HIXAxis xAxis = new HIXAxis();
@@ -2363,7 +2363,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         optionsSubGoals.setCredits(hiCredits);
 
                         chartViewSubGoals.setOptions(optionsSubGoals);
-                        chartViewSubGoals.reload();
+                        //chartViewSubGoals.reload();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -2422,7 +2422,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HITitle title = new HITitle();
                         title.setUseHTML(true);
-                        title.setText("<p style='color: #ffffff; text-align: center;'>Next Sub Goals IN " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
+                        title.setText("<p style='color: #ffffff; text-align: center;'>Next Sub Goals In " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
                         optionsGoals.setTitle(title);
 
                         HIXAxis xAxis = new HIXAxis();

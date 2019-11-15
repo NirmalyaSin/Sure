@@ -33,7 +33,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_header">
+        android:layout_below="@+id/rl_header"
+        android:layout_above="@+id/tvAppVersion">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -176,4 +177,17 @@
                 android:textColor="@color/colorBlack" />
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/tvAppVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_12sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/colorBlack"/>
 </RelativeLayout>

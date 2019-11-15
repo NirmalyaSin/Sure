@@ -1,6 +1,8 @@
 package com.surefiz.screens.dashboard;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -107,12 +109,28 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_done)
     public Button btn_done;
     @BindView(R.id.rl_back)
-
-
     public RelativeLayout rl_back;
+    @BindView(R.id.tvAppVersion)
+    public TextView tvAppVersion;
+
     LoadingData loader;
     private ActionBarDrawerToggle mDrawerToggle;
     private ImageLoader imageLoader;
+
+    public static String md5Converter(String s) {
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(Charset.forName("US-ASCII")), 0, s.length());
+            byte[] magnitude = digest.digest();
+            BigInteger bi = new BigInteger(1, magnitude);
+            String hash = String.format("%0" + (magnitude.length << 1) + "x", bi);
+            return hash;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +143,23 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         initializeImageLoader();
         showData();
         initializeDrawer();
+        showAppVersion();
+    }
+
+    private void showAppVersion() {
+        String osVersion = android.os.Build.VERSION.RELEASE;
+
+        String appVersion = "";
+        //int appVersionCode = 0;
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            appVersion = pInfo.versionName;
+            //appVersionCode = pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        tvAppVersion.setText("Version: " + appVersion);
     }
 
     private void initializeImageLoader() {
@@ -232,6 +267,25 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             mDrawerToggle.onConfigurationChanged(newConfig);
 
     }
+
+    /*public String md5Converter(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte[] messageDigest = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -358,45 +412,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 callLogoutApi();
                 break;
         }
-    }
-
-    /*public String md5Converter(String s) {
-        try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes());
-            byte[] messageDigest = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }*/
-
-
-    public static String md5Converter(String s)
-    {
-        MessageDigest digest;
-        try
-        {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes(Charset.forName("US-ASCII")),0,s.length());
-            byte[] magnitude = digest.digest();
-            BigInteger bi = new BigInteger(1, magnitude);
-            String hash = String.format("%0" + (magnitude.length << 1) + "x", bi);
-            return hash;
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
-        }
-        return "";
     }
 
     private void callLogoutApi() {

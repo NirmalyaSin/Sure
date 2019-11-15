@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -56,6 +58,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private List<ScanResult> scanResultsWifi = new ArrayList<>();
     private ScaleWiFiConfig scaleWiFiConfig;
     private boolean isAutoConnecting = false;
+    private ImageView iv_showPassword;
+    private ImageView iv_hidePassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +81,15 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         editPassword = view.findViewById(R.id.editPassword);
         btnlockwifi = view.findViewById(R.id.btnlockwifi);
         btnConfigure = view.findViewById(R.id.btnConfigure);
-        editPassword.setTransformationMethod
-                (HideReturnsTransformationMethod.getInstance());
+        iv_showPassword = view.findViewById(R.id.iv_showPassword);
+        iv_hidePassword = view.findViewById(R.id.iv_hidePassword);
+        editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         btnlockwifi.setOnClickListener(this);
         btnConfigure.setOnClickListener(this);
         editSSID.setOnClickListener(this);
         rl_back.setOnClickListener(this);
+        iv_showPassword.setOnClickListener(this);
+        iv_hidePassword.setOnClickListener(this);
         setHeaderView();
     }
 
@@ -167,6 +174,18 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 } else if (!checkLocationStatus()) {
                     buildAlertMessageNoGps();
                 }
+                break;
+            case R.id.iv_showPassword:
+               iv_showPassword.setVisibility(View.GONE);
+                iv_hidePassword.setVisibility(View.VISIBLE);
+                editPassword.setTransformationMethod
+                        (PasswordTransformationMethod.getInstance());
+                break;
+            case R.id.iv_hidePassword:
+                iv_showPassword.setVisibility(View.VISIBLE);
+                iv_hidePassword.setVisibility(View.GONE);
+                editPassword.setTransformationMethod
+                        (HideReturnsTransformationMethod.getInstance());
                 break;
         }
     }

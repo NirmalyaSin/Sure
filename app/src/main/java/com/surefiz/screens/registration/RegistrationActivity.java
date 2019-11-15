@@ -552,7 +552,9 @@ public class RegistrationActivity extends AppCompatActivity {
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
             toolTipText = "Scale ID is labeled on\nthe back of your scale";
         } else {
-            toolTipText = "Scale ID is\nset by primary user";
+            toolTipText = "Scale ID is\nassigned by primary user";
+            et_scale_id.setHint("Scale ID is assigned by primary user");
+            et_confirm_scale_id.setHint("Scale ID is assigned by primary user");
         }
     }
 

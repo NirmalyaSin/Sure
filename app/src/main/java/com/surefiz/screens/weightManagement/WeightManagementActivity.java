@@ -143,13 +143,13 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     private void addManagementListAndCall() {
 
-        managementList.add("Lose and Mantain Weight");
+        managementList.add("Lose And Mantain Weight");
         managementList.add("Maintain Current Weight");
 
         managementPopup = new WeigtUniversalPopup(WeightManagementActivity.this, managementList, et_weight_managment, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-                if (value.equals("Lose and Mantain Weight")) {
+                if (value.equals("Lose And Mantain Weight")) {
                     et_weight_managment.setText(managementList.get(0));
 
                     findViewById(R.id.ll_desired_weight_selection).setVisibility(View.VISIBLE);
@@ -183,13 +183,13 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void addSelectionListAndCall() {
-        desiredWeightSelectionList.add("I Will Provide the Info");
+        desiredWeightSelectionList.add("I Will Provide The Info");
         desiredWeightSelectionList.add("I want SureFiz™ to suggest");
 
         selectionPopup = new WeigtUniversalPopup(WeightManagementActivity.this, desiredWeightSelectionList, et_desired_weight_selection, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-                if (value.equals("I Will Provide the Info")) {
+                if (value.equals("I Will Provide The Info")) {
                     et_desired_weight_selection.setText(desiredWeightSelectionList.get(0));
 
                     if (selectedWeightManagmentGoal == 1) {
@@ -208,6 +208,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
 
                     selectedDesiredWeightSelection = 0;
+                    et_time_loss.setEnabled(true);
+                    et_weight.setEnabled(true);
                 } else {
                     et_desired_weight_selection.setText(desiredWeightSelectionList.get(1));
 
@@ -462,6 +464,15 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             et_time_loss.setText("");
         } else {
             et_time_loss.setText(jsnObject.optString("timeToLoseWeight"));
+        }
+
+
+        if (jsnObject.optInt("type") == 2 && jsnObject.optInt("maintain_Weight_By_Server") == 1){
+            if (jsnObject.optString("timeToLoseWeight").equals("0 Weeks")) {
+                et_time_loss.setText("TBD");
+            }
+            et_time_loss.setEnabled(false);
+            et_weight.setEnabled(false);
         }
 
         //et_weight_managment.setText(jsnObject.optString("type"));

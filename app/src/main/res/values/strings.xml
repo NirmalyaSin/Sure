@@ -17,7 +17,7 @@
     <!--<string name="wifi_config">Choose the wireless network on which you want your scale to  be connected.\nPlease make sure it is not a 5G Wifi.\nIf your router has 5G WiFi, It has two networks, on 5G and the other non-5G.\nPlease pick the non-5G</string>-->
     <string name="wifi_config">Please choose 2.4 GHz WiFi for your scale. If your router has only one WiFi choose that one. If your router has two WiFi networks, make sure you choose 2.4 GHz network, NOT the 5 GHz network. You can skip this step, if you have already setup WiFi for  your scale.</string>
     <!--<string name="ap_config">To AP configuration follow the below step.\n 1) Enter the WiFI SSID and password.\n2)Lock WiFi Info\n 3) Go to the WiFi setting and pick the scale WiFi.\n4)Tap on the “AP Configure” Button.</string>-->
-    <string name="ap_config"><!--To AP configuration follow the below step.\n\n-->1) Please enter your WiFi network name and password. \n\n2) Tap “Confirm” to conform that the network name and password is accurate. \n\n3) Follow the instructions on the screen.</string>
+    <string name="ap_config"><!--To AP configuration follow the below step.\n\n-->1) Please enter your WiFi network name and password. \n\n2) Tap “Confirm” to confirm that the network name and password is accurate. \n\n3) Follow the instructions on the screen.</string>
     <string name="instruction_page_text">To Know Your Weight follow the steps below :</string>
     <string name="instruction_step1"> 1. With scale placed on sturdy, leveled and hard surface, step on the scale bare footed.</string>
     <string name="instruction_step2"> 2. The digits displaying weight will blink three times, and a dotted line will show up three times, after that step down the scale.</string>
@@ -87,7 +87,7 @@ complete his/her registration process.</string>
     <string name="select_date">SELECT DATE</string>
     <string name="set_reminder">SET REMINDER</string>
     <string name="enter_title">ENTER TITLE</string>
-    <string name="click_to_view_history"><u>Click to view history.</u></string>
+    <string name="click_to_view_history"><u>View History.</u></string>
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 
 

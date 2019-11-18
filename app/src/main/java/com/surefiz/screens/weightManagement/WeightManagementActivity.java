@@ -841,7 +841,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     public void showWeightUpdateDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(WeightManagementActivity.this);
         alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage("Changing these parameters will reassign the subgoal progress. Current progress will get replaced. Are you sure want to change?");
+        alertDialog.setMessage("Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure, you want to proceed?");
+        //alertDialog.setMessage("Changing these parameters will reassign the subgoal progress. Current progress will get replaced. Are you sure want to change?");
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override

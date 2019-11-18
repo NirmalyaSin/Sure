@@ -576,9 +576,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     MethodUtils.errorMsg(activity, "Enter country");
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line1.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Enter address line 1");
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line2.getText().toString().equals("")) {
+                } /*else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line2.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Enter address line 2");
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_city.getText().toString().equals("")) {
+                }*/ else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_city.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Enter city");
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_state.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Enter state");

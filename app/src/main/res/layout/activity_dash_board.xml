@@ -467,8 +467,8 @@
 
                                     <ImageView
                                         android:id="@+id/iv_fat"
-                                        android:layout_width="@dimen/_15sdp"
-                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_50sdp"
                                         android:layout_alignParentLeft="true"
                                         android:layout_marginLeft="@dimen/_15sdp"
                                         android:layout_marginTop="@dimen/_15sdp"

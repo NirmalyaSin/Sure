@@ -187,7 +187,7 @@
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/fb_new" />
+                        android:src="@drawable/ic_facebook" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -202,7 +202,7 @@
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/google_new"
+                        android:src="@drawable/ic_google_plus"
                         android:visibility="visible" />
 
                     <!--<com.twitter.sdk.android.core.identity.TwitterLoginButton

@@ -11,7 +11,7 @@
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/statusBarColor"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center_vertical">
 
         <RelativeLayout
@@ -42,13 +42,12 @@
 
     </RelativeLayout>
 
-    <!--<View
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:alpha="0.6"
-        android:background="@drawable/splash_image"
-        android:visibility="visible" />-->
+        android:layout_below="@id/rl_header"
+        android:background="@drawable/new_bg_image"
+        android:visibility="visible" />
 
     <ScrollView
         android:id="@+id/sv_main"

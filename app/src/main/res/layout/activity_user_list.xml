@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.users.UserListActivity"
-    android:background="@drawable/login_image_new">
+    tools:context=".screens.users.UserListActivity">
 
     <RelativeLayout
         android:id="@+id/rl_header_user_list"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/statusBarColor"
+        android:background="@color/colorPrimaryDark"
         android:visibility="visible">
 
         <RelativeLayout
@@ -55,12 +54,11 @@
 
     </RelativeLayout>
 
-    <!--<View
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_header_user_list"
-        android:alpha="0.6"
-        android:background="@drawable/splash_image" />-->
+        android:background="@drawable/new_bg_image" />
 
     <RelativeLayout
         android:id="@+id/rl_weight_assign"

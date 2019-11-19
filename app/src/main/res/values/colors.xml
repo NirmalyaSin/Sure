@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#8436B8</color>
+    <color name="colorPrimaryDark">#8F2FBF</color>
     <color name="colorAccent">#D81B60</color>
 
     <!--<color name="statusBarColor">#8436B8</color>-->
@@ -38,4 +38,5 @@
     <color name="social_add_button">#05B085</color>
     <color name="colorBlack">#000000</color>
     <color name="accountAbilityTransparent">#50000000</color>
+    <color name="opacity_color">#451E282E</color>
 </resources>

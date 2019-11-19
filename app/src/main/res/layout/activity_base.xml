@@ -2,8 +2,7 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/login_image_new">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,7 +19,8 @@
             android:id="@+id/base_rl_contentview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/base_topbar" />
+            android:layout_below="@id/base_topbar"
+            android:background="@drawable/new_bg_image"/>
     </RelativeLayout>
 
     <include

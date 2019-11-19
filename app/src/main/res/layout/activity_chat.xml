@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.chat.ChatActivity"
-    android:background="@drawable/login_image_new">
+    tools:context=".screens.chat.ChatActivity">
 
     <RelativeLayout
         android:id="@+id/rl_header_chat"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/statusBarColor"
+        android:background="@color/colorPrimaryDark"
         android:visibility="visible">
 
         <RelativeLayout
@@ -65,6 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_header_chat"
+        android:background="@drawable/new_bg_image"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView

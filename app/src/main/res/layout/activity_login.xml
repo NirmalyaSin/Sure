@@ -31,7 +31,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/login_image_new"
+        android:src="@drawable/splash_image_old"
         android:scaleType="fitXY" />
 
     <ScrollView
@@ -48,7 +48,7 @@
             android:paddingEnd="@dimen/_20sdp"
             android:orientation="vertical">
 
-            <TextView
+           <!-- <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -56,21 +56,21 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/app_name"
                 android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_28sdp" />
+                android:textSize="@dimen/_28sdp" />-->
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Login to continue to"
+                android:text="LOGIN TO YOUR ACCOUNT"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_18sdp" />
 
 
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -78,7 +78,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/app_name"
                 android:textColor="@color/blue"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/_18sdp" />-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -219,7 +219,6 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_twitter"
                         android:visibility="gone" />
-
                 </RelativeLayout>
             </LinearLayout>
 

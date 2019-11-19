@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.otp.OtpActivity"
-    android:background="@drawable/login_image_new">
+    tools:context=".screens.otp.OtpActivity">
 
     <RelativeLayout
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/statusBarColor">
+        android:background="@color/colorPrimaryDark">
 
         <TextView
             android:id="@+id/tv_registration"
@@ -24,12 +23,11 @@
 
     </RelativeLayout>
 
-    <!--<View
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_header"
-        android:alpha="0.6"
-        android:background="@drawable/splash_image" />-->
+        android:background="@drawable/splash_image_old" />
 
     <TextView
         android:id="@+id/tv_enter"

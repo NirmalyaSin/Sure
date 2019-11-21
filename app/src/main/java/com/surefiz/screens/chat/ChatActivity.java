@@ -31,6 +31,9 @@ import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -221,6 +224,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         loadingData.dismiss();
                     }
                     Log.d("@@ChatList : ", response.body().toString());
+
 
                     if (response.body().getStatus() == 0) {
                         try {

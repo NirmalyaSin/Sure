@@ -57,7 +57,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/roboto_bold"
             android:background="@drawable/login_button_gradient"
-            android:text="SAVE"
+            android:text="Save"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp"

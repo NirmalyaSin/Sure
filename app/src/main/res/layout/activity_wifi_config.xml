@@ -20,10 +20,10 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="@dimen/_13sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_14sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:background="@drawable/back_arrow_new"
+                android:background="@drawable/back"
                 android:scaleType="centerInside" />
         </RelativeLayout>
 
@@ -34,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
-            android:background="@android:color/transparent"
+            android:background="@drawable/login_button_gradient"
             android:text="SKIP"
             android:fontFamily="@font/roboto_regular"
             android:textAllCaps="false"
@@ -46,18 +46,36 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Scale WiFi Setup"
-            android:fontFamily="@font/roboto_regular"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
     </RelativeLayout>
 
 
-    <View
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_header">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash_image_old" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/opacity_color" />
+    </RelativeLayout>
+
+
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_header"
-        android:background="@drawable/splash_image_old"/>
+        android:background="@drawable/splash_image_old"/>-->
 
         <ScrollView
             android:id="@+id/sv_main"
@@ -111,7 +129,9 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:paddingBottom="@dimen/_5sdp"
+                            android:drawableStart="@drawable/ic_wifi"
                             android:paddingTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
                             android:focusableInTouchMode="false"
                             android:hint="Enter your WiFi-Name"
                             android:fontFamily="@font/roboto_regular"
@@ -169,6 +189,8 @@
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_weight="1"
                             android:background="@null"
+                            android:drawableStart="@drawable/ic_lock_open"
+                            android:drawablePadding="@dimen/_10sdp"
                             android:fontFamily="@font/roboto_regular"
                             android:hint="Enter WiFi Password"
                             android:inputType="textPassword"
@@ -202,7 +224,7 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="CONFIGURE"
+                        android:text="Configure"
                         android:textAllCaps="false"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp" />

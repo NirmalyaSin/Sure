@@ -23,10 +23,10 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="@dimen/_13sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_14sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:background="@drawable/back_arrow_new"
+                android:background="@drawable/back"
                 android:scaleType="centerInside" />
         </RelativeLayout>
 
@@ -176,7 +176,8 @@
         android:layout_marginRight="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/login_button_gradient"
-        android:text="DASHBOARD"
+        android:text="Dashboard"
+        android:textAllCaps="false"
         android:fontFamily="@font/roboto_bold"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />

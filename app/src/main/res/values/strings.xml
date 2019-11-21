@@ -25,7 +25,7 @@
     <string name="step_on_scale"> 1. Step on the scale and measure your weight</string>
     <string name="scale_blinking"> 2. Scale start blinking and with your weight &amp; stop</string>
     <string name="step_down"> 3. Step down from scale.</string>
-    <string name="yes_it_down">YES! IT"'S" DONE</string>
+    <string name="yes_it_down">Yes! it"'s" done</string>
     <string name="configrution">Your Configuration completed successfully.</string>
     <string name="youe_weight">Your Weight</string>
     <string name="go_next_action">Go DashBoard</string>
@@ -85,7 +85,7 @@ complete his/her registration process.</string>
     <string name="vertical_ellipsis">&#8942;</string>
     <string name="select_time">SELECT TIME</string>
     <string name="select_date">SELECT DATE</string>
-    <string name="set_reminder">SET REMINDER</string>
+    <string name="set_reminder">Set Reminder</string>
     <string name="enter_title">ENTER TITLE</string>
     <string name="click_to_view_history"><u>View History.</u></string>
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->

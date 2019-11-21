@@ -21,10 +21,10 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="@dimen/_13sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_14sdp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/back_arrow_new"
+                android:background="@drawable/back"
                 android:scaleType="centerInside" />
         </RelativeLayout>
 
@@ -60,10 +60,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_header">
 
-        <View
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/splash_image_old" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/splash_image_old" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/opacity_color" />
+        </RelativeLayout>
 
         <ScrollView
             android:id="@+id/sv_main"

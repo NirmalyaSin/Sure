@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<RelativeLayout
+    <RelativeLayout
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/statusBarColor">
+        android:background="@color/colorPrimaryDark">
 
         <TextView
             android:id="@+id/tv_registration"
@@ -15,12 +15,13 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Login"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
     </RelativeLayout>
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_header"
@@ -28,14 +29,40 @@
         android:background="@drawable/splash_image"
         android:visibility="gone" />-->
 
-    <ImageView
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_header">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash_image_old" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/opacity_color" />
+    </RelativeLayout>
+
+
+    <!--<ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/splash_image_old"
         android:scaleType="fitXY" />
 
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/opacity_color"/>-->
+
     <ScrollView
         android:id="@+id/sv_main"
+        android:layout_below="@id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -48,15 +75,15 @@
             android:paddingEnd="@dimen/_20sdp"
             android:orientation="vertical">
 
-           <!-- <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="@string/app_name"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_28sdp" />-->
+            <!-- <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center_horizontal"
+                 android:layout_marginBottom="@dimen/_15sdp"
+                 android:fontFamily="@font/roboto_regular"
+                 android:text="@string/app_name"
+                 android:textColor="@color/whiteColor"
+                 android:textSize="@dimen/_28sdp" />-->
 
 
             <TextView
@@ -165,7 +192,8 @@
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:fontFamily="@font/roboto_bold"
                 android:background="@drawable/login_button_gradient"
-                android:text="LOGIN"
+                android:text="Login"
+                android:textAllCaps="false"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 

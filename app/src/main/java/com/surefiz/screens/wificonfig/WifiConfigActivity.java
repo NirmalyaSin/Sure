@@ -45,7 +45,7 @@ public class WifiConfigActivity extends AppCompatActivity {
         //editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         wifiActivityClickEvent = new WifiActivityClickEvent(this);
 
-        btn_skip_config.setBackgroundDrawable(null);
+        //btn_skip_config.setBackgroundDrawable(null);
     }
 
     private void setViewAndFunctionality() {

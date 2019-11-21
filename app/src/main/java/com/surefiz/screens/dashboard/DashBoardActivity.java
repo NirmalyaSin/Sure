@@ -372,16 +372,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                 //System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
             }
-            //tempUserList.addAll(userList);
+
         }
 
 
-        // This is to check if it is a Sub Users Account. Then Main User will be removed from the user list.
-        /*if (!LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")) {
-            if (tempUserList.get(0).getScaleUserId() == 1) {
-                tempUserList.remove(0);
-            }
-        }*/
 
         return tempUserList;
     }
@@ -588,12 +582,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             cv_achi_goals.setVisibility(View.GONE);
             cv_gauge.setVisibility(View.GONE);
         }
-
-        /*if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("guagechart")) {
-            cv_gauge.setVisibility(View.VISIBLE);
-        } else {
-            cv_gauge.setVisibility(View.GONE);
-        }*/
 
         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().contains("bodycomposition")) {
             cv_user_body_composition.setVisibility(View.VISIBLE);
@@ -1459,17 +1447,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             dataSet.setColors(colors);
 
 
-        /*ArrayList<LegendEntry> legendEntries = new ArrayList<>();
-        LegendEntry legendEntry = new LegendEntry();
-        legendEntry.label = "Muscle: " + muscelValue + "%";
-        legendEntries.add(legendEntry);
-
-        LegendEntry legendEntryFat = new LegendEntry();
-        legendEntryFat.label = "Fat: " + fatValue + "%";
-        legendEntries.add(legendEntryFat);
-
-        l.setCustom(legendEntries);*/
-
             PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter(pieChatBodyComposition));
             data.setValueTextSize(11f);
@@ -1716,9 +1693,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     private void implementEmptyHighChart() {
         try {
-
-            //chartGauge.setWillNotDraw(false);
-            //HIOptions options = new HIOptions();
 
             HIChart chart = new HIChart();
             chart.setType("gauge");
@@ -2190,13 +2164,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     }
 
-    /*private class RunnableImpl implements Runnable {
-
-        public void run() {
-            Toast.makeText(DashBoardActivity.this, "SubGoal Chart Loaded", Toast.LENGTH_LONG).show();
-        }
-    }*/
-
     private class AsyncSubGoalsChart extends AsyncTask<String, String, String> {
 
 
@@ -2212,10 +2179,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         //chartViewSubGoals.setWillNotDraw(false);
                         HIChart chart = new HIChart();
 
-                        /*HIFunction hiFunction=new HIFunction(new RunnableImpl());
-                        HIEvents hiEvents=new HIEvents();
-                        hiEvents.setLoad(hiFunction);
-                        chart.setEvents(hiEvents);*/
 
                         HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
@@ -2329,12 +2292,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         series1.setColor(HIColor.initWithRGB(73, 183, 130));
                         series1.setColors(colors1);
                         series1.setData(new ArrayList<>(Arrays.asList(numbers)));
-//        series1.setStack("male");
+
                         HIColumn series2 = new HIColumn();
                         series2.setColorByPoint(true);
                         series2.setName("Acheived Weight");
-//        series2.setColor(HIColor.initWithRGB(255,175,68));
-//        series2.setColor(HIColor.initWithHexValue("#FFAF44"));
+
 
                         List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight();
                         //Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight().toArray(new Number[0]);
@@ -2351,7 +2313,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                             colors2.add("#FFAF44");
                         }
-//        series2.setColor(HIColor.initWithRGB(255,175,68));
+
                         series2.setShowInLegend(true);
                         series2.setColor(HIColor.initWithRGB(255, 175, 68));
                         series2.setColors(colors2);
@@ -2591,9 +2553,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         Guagechart gaugeChart = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGuagechart();
 
                         if (gaugeChart != null) {
-
-                            //chartGauge.setWillNotDraw(false);
-                            //HIOptions options = new HIOptions();
 
                             HIChart chart = new HIChart();
                             chart.setType("gauge");
@@ -2926,8 +2885,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 e.printStackTrace();
                             }
 
-                            //System.out.println("numberList2: "+numberList2.size());
-                            //System.out.println("numberList2: "+numberList2.toString());
+
 
                             HILine line2 = new HILine();
                             line2.setName("Achived Sub Goals");

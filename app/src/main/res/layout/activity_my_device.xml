@@ -129,7 +129,7 @@
             android:layout_below="@+id/rl_confirm_scale_id"
             android:layout_margin="@dimen/_30sdp"
             android:background="@drawable/login_button_gradient"
-            android:text="UPDATE"
+            android:text="Update"
             android:textAllCaps="false"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp"

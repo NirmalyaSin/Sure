@@ -23,11 +23,22 @@
 
     </RelativeLayout>
 
-    <View
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_header"
-        android:background="@drawable/splash_image_old" />
+        android:layout_below="@+id/rl_header">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash_image_old" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/opacity_color" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_enter"
@@ -186,7 +197,7 @@
         android:layout_margin="@dimen/_44sdp"
         android:fontFamily="@font/roboto_bold"
         android:background="@drawable/login_button_gradient"
-        android:text="SUBMIT"
+        android:text="Submit"
         android:textAllCaps="false"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />

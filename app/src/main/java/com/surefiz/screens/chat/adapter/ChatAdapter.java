@@ -48,10 +48,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapterViewHolder holder, int position) {
-        if (position == 0) {
+        /*if (position == 0) {
             Log.d("@@getItemCount : ", "fist-loading = " + firstLoading);
             firstLoading = true;
-        }
+        }*/
 
         String processedMessage = "";
         try {
@@ -85,10 +85,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
     public void onViewAttachedToWindow(@NonNull ChatAdapterViewHolder holder) {
         super.onViewAttachedToWindow(holder);
 
-        int position = holder.getAdapterPosition();
+        //int position = holder.getAdapterPosition();
         if (firstLoading) {
             firstLoading = false;
         } else {
+            int position = holder.getAdapterPosition();
             Log.d("@@Scrolling : ", "New-Pos = " + position);
             if (position == 0) {
                 mOnChatScrollListener.onScrollToTop(position);

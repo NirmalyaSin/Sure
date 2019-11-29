@@ -78,6 +78,8 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
         void onPerformanceClick(int position);
 
         void onRemoveClick(int position);
+
+        void onImageClick(int position);
     }
 
     public class CircleUserViewHolder extends RecyclerView.ViewHolder {
@@ -100,6 +102,14 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
                 @Override
                 public void onClick(View v) {
                     mOnCircleViewClickListener.onPerformanceClick(getAdapterPosition());
+
+                }
+            });
+
+            imageUserProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnCircleViewClickListener.onImageClick(getAdapterPosition());
 
                 }
             });

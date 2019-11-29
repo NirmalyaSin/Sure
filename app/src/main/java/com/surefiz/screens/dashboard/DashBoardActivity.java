@@ -376,7 +376,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
 
 
-
         return tempUserList;
     }
 
@@ -595,7 +594,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count() > 0) {
                 if (selectedUserPosition == -1 || selectedUserPosition == 0) {
-                tvFriendRequestCount.setVisibility(View.VISIBLE);
+                    tvFriendRequestCount.setVisibility(View.VISIBLE);
                     tvFriendRequestCount.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count()));
                 }
                 //tvFriendRequestCount.setText(String.valueOf(100));
@@ -699,7 +698,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getValue() > 0.0) {
-                tv_water_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getValue()));
+                tv_water_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getValue() + " %");
                 tv_water_dynamic.setVisibility(View.VISIBLE);
             } else {
                 tv_water_dynamic.setVisibility(View.GONE);
@@ -718,7 +717,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getValue() > 0.0) {
-                tv_protein_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getValue()));
+                tv_protein_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getValue() + " %");
                 tv_protein_dynamic.setVisibility(View.VISIBLE);
             } else {
                 tv_protein_dynamic.setVisibility(View.GONE);
@@ -1503,7 +1502,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
             HIYAxis yAxis = new HIYAxis();
             yAxis.setMin(minY);
-            yAxis.setTickInterval(2);
+            yAxis.setTickInterval(5);
 
             yAxis.setVisible(false);
             options.setYAxis(new ArrayList<HIYAxis>() {{
@@ -2886,7 +2885,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             }
 
 
-
                             HILine line2 = new HILine();
                             line2.setName("Achived Sub Goals");
                             line2.setColor(HIColor.initWithRGB(233, 150, 43));
@@ -3065,7 +3063,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         responsive.setRules(new ArrayList<>(Collections.singletonList(rules1)));
                         optionsAchiGoals.setResponsive(responsive);
 
-//ms1 to ms2 Line1
+                        //ms1 to ms2 Line1
                         HILine line1 = new HILine();
                         line1.setName("Current Sub Goals");
 

@@ -194,8 +194,10 @@ public class OtpClickEvent implements View.OnClickListener {
                         NotificationManager notificationManager = (NotificationManager)otpActivity.getSystemService(Context.NOTIFICATION_SERVICE);
                         notificationManager.cancel(100);
 
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        showOTPSuccessDialog(jsObject.getString("message"));
 
-                        if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0||
+                        /*if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0||
                                 LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserMac().equals("")) {
                             Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
                             regIntent.putExtra("completeStatus", "0");
@@ -207,7 +209,7 @@ public class OtpClickEvent implements View.OnClickListener {
                             otpActivity.startActivity(intent);
                             otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             otpActivity.finishAffinity();
-                        }
+                        }*/
 
 
 
@@ -238,6 +240,36 @@ public class OtpClickEvent implements View.OnClickListener {
         });
 
     }
+
+    public void showOTPSuccessDialog(String title) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(otpActivity);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage(title);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0||
+                        LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserMac().equals("")) {
+                    Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
+                    regIntent.putExtra("completeStatus", "0");
+                    otpActivity.startActivity(regIntent);
+                    otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    otpActivity.finishAffinity();
+                } else {
+                    Intent intent = new Intent(otpActivity, DashBoardActivity.class);
+                    otpActivity.startActivity(intent);
+                    otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    otpActivity.finishAffinity();
+                }
+            }
+        });
+
+        alertDialog.create();
+        alertDialog.show();
+    }
+
 
     public void showUserAddDialog(String title, String positive, String negative) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(otpActivity);

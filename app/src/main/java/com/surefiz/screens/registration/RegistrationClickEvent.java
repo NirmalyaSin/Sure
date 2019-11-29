@@ -901,6 +901,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
             registrationActivity.tv_time_loss.setVisibility(View.GONE);
             registrationActivity.rl_time_loss.setVisibility(View.GONE);
             registrationActivity.et_time_loss.setText("");
+
+            //registrationActivity.et_management.setEnabled(true);
         }
     }
 

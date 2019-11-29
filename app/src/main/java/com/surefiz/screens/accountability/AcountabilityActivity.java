@@ -2,7 +2,9 @@ package com.surefiz.screens.accountability;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,7 +12,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
@@ -53,11 +59,21 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_accountability, null);
         addContentView(view);
+        initializeImageLoader();
         setHeaderView();
         setRecyclerViewItem();
         LoginShared.setWeightFromNotification(this, "0");
         loadingData = new LoadingData(this);
         callCircleUserListApi();
+    }
+
+    private void initializeImageLoader() {
+        DisplayImageOptions opts = new DisplayImageOptions.Builder().cacheInMemory(true).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .defaultDisplayImageOptions(DisplayImageOptions.createSimple()).defaultDisplayImageOptions(opts)
+                .build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
     }
 
     @Override
@@ -197,10 +213,35 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     }
 
+    private ImageLoader imageLoader;
+
     @Override
     public void onRemoveClick(int position) {
         //callRemoveAccountUserApi(position);
         showUserConfirmation(position);
+    }
+
+    @Override
+    public void onImageClick(int position) {
+        showUserImage(position);
+    }
+
+    private void showUserImage(int position) {
+        Dialog dialog =new Dialog(this);
+        dialog.setContentView(R.layout.expanded_image_layout);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        ImageView ivUserImage=dialog.findViewById(R.id.ivUserImage);
+        ImageView ivCloseButton=dialog.findViewById(R.id.ivCloseButton);
+        imageLoader.displayImage(arrayListUsers.get(position).getUser_search_image(), ivUserImage);
+
+        ivCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 

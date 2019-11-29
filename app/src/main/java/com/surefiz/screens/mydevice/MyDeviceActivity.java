@@ -179,14 +179,14 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         return sb.toString();
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
         Intent loginIntent = new Intent(MyDeviceActivity.this, SettingsActivity.class);
         startActivity(loginIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -230,11 +230,13 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 (dialog, which) -> {
                     dialog.dismiss();
 
-                    if (LoginShared.getRegistrationDataModel(this) != null) {
+                    finish();
+
+                    /*if (LoginShared.getRegistrationDataModel(this) != null) {
                         tv_scale_id.setText("Current scale ID: " + formatScaleId(LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac()));
                         et_id.setText("");
                         et_confirm_scale_id.setText("");
-                    }
+                    }*/
                 });
 
         alertDialog.show();

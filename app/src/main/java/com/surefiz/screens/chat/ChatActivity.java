@@ -1,5 +1,7 @@
 package com.surefiz.screens.chat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,10 +33,6 @@ import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,6 +59,29 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     private TextView tvUserName;
     private ImageLoader imageLoader;
     private CircleImageView ivUserImage;
+
+    public static String encodeToNonLossyAscii(String original) {
+        Charset asciiCharset = Charset.forName("US-ASCII");
+        if (asciiCharset.newEncoder().canEncode(original)) {
+            return original;
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < original.length(); i++) {
+            char c = original.charAt(i);
+            if (c < 128) {
+                stringBuffer.append(c);
+            } else if (c < 256) {
+                String octal = Integer.toOctalString(c);
+                stringBuffer.append("\\");
+                stringBuffer.append(octal);
+            } else {
+                String hex = Integer.toHexString(c);
+                stringBuffer.append("\\u");
+                stringBuffer.append(hex);
+            }
+        }
+        return stringBuffer.toString();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,49 +156,20 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         }, 500);
     }
 
-    public static String encodeToNonLossyAscii(String original) {
-        Charset asciiCharset = Charset.forName("US-ASCII");
-        if (asciiCharset.newEncoder().canEncode(original)) {
-            return original;
-        }
-        StringBuffer stringBuffer = new StringBuffer();
-        for (int i = 0; i < original.length(); i++) {
-            char c = original.charAt(i);
-            if (c < 128) {
-                stringBuffer.append(c);
-            } else if (c < 256) {
-                String octal = Integer.toOctalString(c);
-                stringBuffer.append("\\");
-                stringBuffer.append(octal);
-            } else {
-                String hex = Integer.toHexString(c);
-                stringBuffer.append("\\u");
-                stringBuffer.append(hex);
-            }
-        }
-        return stringBuffer.toString();
-    }
-
     private void setRecyclerViewItem() {
         mChatAdapter = new ChatAdapter(this, arrayListConversation, this);
         recyclerView.setAdapter(mChatAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
+        mLayoutManager.setStackFromEnd(true);
+        //mLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
     private void setHeaderView() {
-        /*tv_universal_header.setText("Chat");
-        iv_edit.setVisibility(View.GONE);
-        btn_add.setVisibility(View.GONE);
-        iv_AddPlus.setVisibility(View.GONE);
-        btn_done.setVisibility(View.GONE);
-        img_topbar_menu.setVisibility(View.GONE);
-        rl_back.setVisibility(View.VISIBLE);*/
 
         RelativeLayout rl_back = findViewById(R.id.rl_back);
         rl_back.setOnClickListener(new View.OnClickListener() {
@@ -189,12 +181,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
 
         tvUserName = findViewById(R.id.tvUserName);
         ivUserImage = findViewById(R.id.ivUserImage);
-
-        /*if (getIntent().hasExtra("reciverName")){
-            tvUserName.setText(getIntent().getStringExtra("reciverName"));
-        }else {
-            tvUserName.setText("Chat");
-        }*/
     }
 
     private void callChatListApi(final String receiverId, final int newPagination) {
@@ -202,7 +188,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
             //Replace Old value with newer one.
             oldPagination = newPagination;
             //Show loader
-            loadingData.show_with_label("Loading...");
+            //loadingData.show_with_label("Loading...");
             //Call API Using Retrofit
             Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
             final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -246,7 +232,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         if (oldPagination == 0) {
                             arrayListConversation.clear();
                         }
-                        //        Collections.sort(response.body().getData().getConversations());
+                        //Collections.sort(response.body().getData().getConversations());
                         Collections.reverse(response.body().getData().getConversations());
 
                         arrayListConversation.addAll(0, response.body().getData().getConversations());
@@ -256,6 +242,11 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                             recyclerView.smoothScrollToPosition(arrayListConversation.size());
                         }
                         myApplicationClass.chatListNotification.clear();
+
+                        if (arrayListConversation.size() == 0) {
+                            showNoRecordsDialog();
+                        }
+
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ChatActivity.this);
                         LoginShared.destroySessionTypePreference(ChatActivity.this);
@@ -280,6 +271,22 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                 }
             });
         }
+    }
+
+    public void showNoRecordsDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage(R.string.chat_not_found);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.create();
+        alertDialog.show();
     }
 
     private void callSendChatApi(final String message) {

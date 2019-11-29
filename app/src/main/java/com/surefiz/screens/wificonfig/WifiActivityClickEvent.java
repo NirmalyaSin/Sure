@@ -76,7 +76,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 lock.acquire();
             }
           /*
-            if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+           if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                 if (lock == null)
                     lock = mWifiManager.createMulticastLock("WiFi_Lock");
                 lock.setReferenceCounted(true);
@@ -208,7 +208,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 String bssid = mWifiConfigActivity.editBSSID.getText().toString();
 
                 if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
-                    Toast.makeText(mWifiConfigActivity, "Plz input ssid and pwd.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mWifiConfigActivity, "Please enter ssid and pwd.", Toast.LENGTH_SHORT).show();
                 } else {
                     //  mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     if (!loader.isShowing()) {

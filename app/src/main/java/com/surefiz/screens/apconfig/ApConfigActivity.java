@@ -83,7 +83,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         btnConfigure = view.findViewById(R.id.btnConfigure);
         iv_showPassword = view.findViewById(R.id.iv_showPassword);
         iv_hidePassword = view.findViewById(R.id.iv_hidePassword);
-        editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        //editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         btnlockwifi.setOnClickListener(this);
         btnConfigure.setOnClickListener(this);
         editSSID.setOnClickListener(this);
@@ -179,13 +179,14 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                iv_showPassword.setVisibility(View.GONE);
                 iv_hidePassword.setVisibility(View.VISIBLE);
                 editPassword.setTransformationMethod
-                        (PasswordTransformationMethod.getInstance());
+                        (HideReturnsTransformationMethod.getInstance());
+
                 break;
             case R.id.iv_hidePassword:
                 iv_showPassword.setVisibility(View.VISIBLE);
                 iv_hidePassword.setVisibility(View.GONE);
-                editPassword.setTransformationMethod
-                        (HideReturnsTransformationMethod.getInstance());
+                editPassword.setTransformationMethod(
+                        PasswordTransformationMethod.getInstance());
                 break;
         }
     }

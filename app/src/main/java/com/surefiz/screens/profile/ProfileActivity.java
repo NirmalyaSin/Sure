@@ -130,7 +130,7 @@ public class ProfileActivity extends BaseActivity {
 
     public void showViewMode() {
         iv_plus_add_image.setVisibility(View.GONE);
-        tvUserImageHint.setVisibility(View.VISIBLE);
+        tvUserImageHint.setVisibility(View.GONE);
         btn_register.setVisibility(View.GONE);
         btn_cancel.setVisibility(View.GONE);
         et_phone.setEnabled(false);

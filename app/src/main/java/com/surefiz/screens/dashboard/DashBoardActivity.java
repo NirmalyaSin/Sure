@@ -114,7 +114,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded, tv_fat_dynamic, tv_bone_dynamic, tv_muscle_dynamic, tv_bmi_dynamic, tv_water_dynamic, tv_protein_dynamic;
     Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein;
     CardView cv_weight, cv_weight_loss, cv_bmi, cv_user_body_composition, cv_goals, cv_sub_goals, cv_achi_goals, cv_gauge;
-    RelativeLayout rlHistoryChart;
+    RelativeLayout rlHistoryChart,rl_battery_status;
     RecyclerView rv_items;
     HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals, guageChartOptions, historyChartOptions;
     List<UserListItem> contactLists = new ArrayList<>();
@@ -736,10 +736,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         tv_recorded.setText("Recorded on " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getRecordedOn());
 
+        if (getIntent().hasExtra("Performance")){
+            tv_recorded.setVisibility(View.GONE);
+            rl_battery_status.setVisibility(View.GONE);
+        }else {
+            tv_recorded.setVisibility(View.VISIBLE);
+            rl_battery_status.setVisibility(View.VISIBLE);
+        }
         //System.out.println("BatteryStatus: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
         if (!getIntent().hasExtra("Performance")) {
             showBatteryStatus(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
         }
+
+
     }
 
     private void showBatteryStatus(int batteryStatus) {
@@ -876,6 +885,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         rlHistoryChart.setVisibility(View.GONE);
         cv_weight = findViewById(R.id.cv_weight);
         //cv_weight.setVisibility(View.GONE);
+
+        rl_battery_status=findViewById(R.id.rl_battery_status);
 
 
         cv_body_composition = findViewById(R.id.cv_body_composition);

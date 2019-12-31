@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="SureFiz™"
+        android:text="@string/app_name"
         android:fontFamily="@font/roboto_regular"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_40sdp"

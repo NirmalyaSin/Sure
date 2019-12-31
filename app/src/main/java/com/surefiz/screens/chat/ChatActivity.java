@@ -232,19 +232,30 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         if (oldPagination == 0) {
                             arrayListConversation.clear();
                         }
-                        //Collections.sort(response.body().getData().getConversations());
-                        Collections.reverse(response.body().getData().getConversations());
 
+                        /*if (arrayListConversation.size() == 0) {
+                            Collections.reverse(response.body().getData().getConversations());
+                            arrayListConversation.addAll(0, response.body().getData().getConversations());
+                        } else {
+                            Collections.reverse(arrayListConversation);
+                            arrayListConversation.addAll(response.body().getData().getConversations());
+                            Collections.reverse(arrayListConversation);
+                        }*/
+
+                        Collections.reverse(response.body().getData().getConversations());
                         arrayListConversation.addAll(0, response.body().getData().getConversations());
 
                         mChatAdapter.notifyDataSetChanged();
-                        if (oldPagination == 0) {
-                            recyclerView.smoothScrollToPosition(arrayListConversation.size());
-                        }
+
+                        System.out.println("conversationSize: " + arrayListConversation.size());
+                        moveToEnd();
+                        /*if (oldPagination == 0) {
+                            recyclerView.smoothScrollToPosition(arrayListConversation.size()-1);
+                        }*/
                         myApplicationClass.chatListNotification.clear();
 
                         if (arrayListConversation.size() == 0) {
-                            showNoRecordsDialog();
+                            showNoRecordsDialog(response.body().getData().getMessage());
                         }
 
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
@@ -273,10 +284,28 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         }
     }
 
-    public void showNoRecordsDialog() {
+    private void moveToEnd() {
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (oldPagination == 0) {
+                    recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                } else {
+                    if (arrayListConversation.size() % 25 > 0) {
+                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - arrayListConversation.size() % 25 - 1);
+                    } else {
+                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 25 - 1);
+                    }
+                }
+            }
+        }, 50);
+    }
+
+    public void showNoRecordsDialog(String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
         alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage(R.string.chat_not_found);
+        //alertDialog.setMessage(R.string.chat_not_found);
+        alertDialog.setMessage(message);
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
             @Override

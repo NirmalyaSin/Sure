@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">SureFiz™</string>
-    <string name="app_name_otp">SureFiz™</string>
+    <!--<string name="app_name">SureFiz™</string>-->
+    <string name="app_name">SureFiz<sup><small>®</small></sup></string>
+    <!--<string name="app_name_otp">SureFiz™</string>-->
+    <!--<string name="app_name_otp">SureFiz®</string>-->
+    <string name="app_name_otp">SureFiz<sup><small>®</small></sup></string>
+    <!--<string name="app_name_otp">SureFiz<sup><small>&#174;</small></sup></string>-->
     <string name="facebook_app_id">2086076151705154</string>
     <string name="fb_login_protocol_scheme">fb2086076151705154</string>
 
@@ -49,7 +53,7 @@
 
 
     <string name="battery_status_low"><b>Battery Low!</b> Please change the battery in scale immediately.</string>
-    <string name="battery_status_low1"><b>Battery Low!</b> Please change the battery in scale soon.</string>
+    <string name="battery_status_low1"><b>Battery Low!</b> Please change the battery in scale very soon.</string>
     <string name="battery_status">Battery Status:</string>
     <string name="visibility">Show My Performance to the Primary User</string>
     <string name="performance">Performance</string>
@@ -89,6 +93,10 @@ complete his/her registration process.</string>
     <string name="enter_title">ENTER TITLE</string>
     <string name="click_to_view_history"><u>View History.</u></string>
     <string name="chat_not_found">Frequent messaging with your accountability circle members is a good idea</string>
+    <!--<string name="user_confirmation_header">Please enter your desired weight and select the time to lose weight.</string>-->
+    <string name="user_confirmation_header">Please make your choice below: Either Accept SureFiz® Weight or I Will Provide Weight &amp; Time.</string>
+    <string name="i_will_provide_weight_time">I Will Provide Weight &amp; Time</string>
+    <!--<string name="user_confirmation_header">SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight</string>-->
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 
 

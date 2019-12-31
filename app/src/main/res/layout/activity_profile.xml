@@ -585,7 +585,7 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="STATE"
+                    android:text="STATE / PROVINCE / REGION"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
@@ -624,7 +624,7 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="ZIP CODE"
+                    android:text="ZIP / POSTAL CODE"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />

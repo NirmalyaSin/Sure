@@ -152,7 +152,7 @@ public class SplashActivity extends AppCompatActivity {
                     int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
                     //if (dateFormat1.format(currentDate).equals(getServerDate)) {
                     int diffSecond = (int) (diff / 1000);
-                    if (diffSecond < 120) {
+                    if (diffSecond < 180) {
                         Intent intent = new Intent(this, WeightDetailsActivity.class);
                         intent.putExtra("timerValue", diffSecond);
                         intent.putExtra("fromPush", "1");
@@ -243,7 +243,7 @@ public class SplashActivity extends AppCompatActivity {
             } /*else if (LoginShared.getWeightFromNotification(this).equals("10")) {
                 Intent intent = new Intent(this, UserListActivity.class);
                 intent.putExtra("isFromPushNotification", true);
-                startActivity(intent);
+                startActivitexpiredy(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }*/

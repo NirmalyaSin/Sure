@@ -365,7 +365,7 @@ public class LoginClickEvent implements View.OnClickListener {
                             MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.mac_id_not_found));
                         } else {
 
-                            if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
+                            /*if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
                                 Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
                                 mLoginActivity.startActivity(intent);
                                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -375,7 +375,14 @@ public class LoginClickEvent implements View.OnClickListener {
                                 mLoginActivity.startActivity(intent);
                                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 mLoginActivity.finishAffinity();
-                            }
+                            }*/
+
+                            LoginShared.setstatusforwifivarification(mLoginActivity, true);
+
+                            Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
+                            mLoginActivity.startActivity(intent);
+                            mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            mLoginActivity.finishAffinity();
                         }
                     }
                 }

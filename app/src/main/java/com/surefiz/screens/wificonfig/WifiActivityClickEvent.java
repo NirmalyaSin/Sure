@@ -115,10 +115,12 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     private void setClickEvent() {
         mWifiConfigActivity.btnConfigure.setOnClickListener(this);
-        /*mWifiConfigActivity.iv_showPassword.setOnClickListener(this);
-        mWifiConfigActivity.iv_hidePassword.setOnClickListener(this);*/
+        mWifiConfigActivity.iv_showPassword.setOnClickListener(this);
+        mWifiConfigActivity.iv_hidePassword.setOnClickListener(this);
         mWifiConfigActivity.editSSID.setOnClickListener(this);
         mWifiConfigActivity.btn_skip_config.setOnClickListener(this);
+
+        //mWifiConfigActivity.editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
     }
 
     @Override
@@ -139,19 +141,19 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             case R.id.btnConfigure:
                 wificonfigblankvalidation();
                 break;
-
-           /* case R.id.iv_showPassword:
+            case R.id.iv_showPassword:
                 mWifiConfigActivity.iv_showPassword.setVisibility(View.GONE);
                 mWifiConfigActivity.iv_hidePassword.setVisibility(View.VISIBLE);
                 mWifiConfigActivity.editPassword.setTransformationMethod
-                        (PasswordTransformationMethod.getInstance());
+                        (HideReturnsTransformationMethod.getInstance());
+
                 break;
             case R.id.iv_hidePassword:
                 mWifiConfigActivity.iv_showPassword.setVisibility(View.VISIBLE);
                 mWifiConfigActivity.iv_hidePassword.setVisibility(View.GONE);
                 mWifiConfigActivity.editPassword.setTransformationMethod
-                        (HideReturnsTransformationMethod.getInstance());
-                break;*/
+                        (PasswordTransformationMethod.getInstance());
+                break;
             case R.id.btn_skip_config:
 
                 //System.out.println("instructionShown: " + new InstructionSharedPreference(mWifiConfigActivity).getInstructionVisibility(mWifiConfigActivity));

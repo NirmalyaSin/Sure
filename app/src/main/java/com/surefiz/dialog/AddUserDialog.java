@@ -724,7 +724,8 @@ public class AddUserDialog extends Dialog {
 
     private void addSelectionListAndCall() {
         selectionList.add("I Will Provide the Info");
-        selectionList.add("I want SureFiz™ to suggest");
+        //selectionList.add("I want SureFiz™ to suggest");
+        selectionList.add("I want " + activity.getResources().getString(R.string.app_name) + "to suggest");
 
         selectionPopup = new WeigtUniversalPopup(activity, selectionList, et_userselection, new OnWeightCallback() {
             @Override

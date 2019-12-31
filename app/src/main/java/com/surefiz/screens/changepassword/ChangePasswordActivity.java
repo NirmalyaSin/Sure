@@ -15,6 +15,8 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.mydevice.MyDeviceActivity;
+import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -135,9 +137,13 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                String deviceToken = LoginShared.getDeviceToken(ChangePasswordActivity.this);
+
+                                RegistrationModel registrationModel = LoginShared.getRegistrationDataModel(ChangePasswordActivity.this);
+                                registrationModel.getData().getUser().get(0).setUserPassword(et_new.getText().toString().trim());
+                                LoginShared.setRegistrationDataModel(ChangePasswordActivity.this, registrationModel);
+                                /*String deviceToken = LoginShared.getDeviceToken(ChangePasswordActivity.this);
                                 LoginShared.destroySessionTypePreference(ChangePasswordActivity.this);
-                                LoginShared.setDeviceToken(ChangePasswordActivity.this, deviceToken);
+                                LoginShared.setDeviceToken(ChangePasswordActivity.this, deviceToken);*/
                                 Intent loginIntent = new Intent(ChangePasswordActivity.this, SettingsActivity.class);
                                 startActivity(loginIntent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

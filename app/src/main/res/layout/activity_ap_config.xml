@@ -126,14 +126,14 @@
                             android:id="@+id/iv_showPassword"
                             android:layout_width="@dimen/_18sdp"
                             android:layout_height="@dimen/_18sdp"
-                            android:src="@drawable/ic_invisible"
+                            android:src="@drawable/ic_visible"
                             android:visibility="visible" />
 
                         <ImageView
                             android:id="@+id/iv_hidePassword"
                             android:layout_width="@dimen/_18sdp"
                             android:layout_height="@dimen/_18sdp"
-                            android:src="@drawable/ic_visible"
+                            android:src="@drawable/ic_invisible"
                             android:visibility="gone" />
                     </LinearLayout>
 

@@ -206,7 +206,9 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
-                        MethodUtils.errorMsg(UserConfirmationActivity.this, jsObject.getString("message"));
+                        showSuccessMessage(jsObject.getString("message"));
+
+                        /*MethodUtils.errorMsg(UserConfirmationActivity.this, jsObject.getString("message"));
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -220,7 +222,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 finish();
                             }
-                        }, GeneralToApp.SPLASH_WAIT_TIME);
+                        }, GeneralToApp.SPLASH_WAIT_TIME);*/
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(UserConfirmationActivity.this);
@@ -249,6 +251,8 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         });
 
     }
+
+
 
     private void setData(JSONObject jsnObject) {
         et_weight.setText(jsnObject.optString("desiredWeight"));
@@ -404,6 +408,11 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 btn_provide.setEnabled(false);
                 btn_provide.setBackgroundResource(R.drawable.rounded_corner_provide);
                 btn_accept.setText("Update");
+
+                if (et_time_loss.getText().toString().equalsIgnoreCase("TBD")) {
+                    et_time_loss.setText("");
+                    et_time_loss.setHint("Please select");
+                }
             }
         });
 

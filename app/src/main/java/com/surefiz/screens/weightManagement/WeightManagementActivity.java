@@ -184,7 +184,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     private void addSelectionListAndCall() {
         desiredWeightSelectionList.add("I Will Provide The Info");
-        desiredWeightSelectionList.add("I want SureFiz™ to suggest");
+        //desiredWeightSelectionList.add("I want SureFiz™ to suggest");
+        desiredWeightSelectionList.add("I want "+getResources().getString(R.string.app_name) +" to suggest");
 
         selectionPopup = new WeigtUniversalPopup(WeightManagementActivity.this, desiredWeightSelectionList, et_desired_weight_selection, new OnWeightCallback() {
             @Override
@@ -841,7 +842,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     public void showWeightUpdateDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(WeightManagementActivity.this);
         alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage("Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure, you want to proceed?");
+        //alertDialog.setMessage("Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure, you want to proceed?");
+        alertDialog.setMessage("Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure, Do you want to proceed?");
         //alertDialog.setMessage("Changing these parameters will reassign the subgoal progress. Current progress will get replaced. Are you sure want to change?");
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

@@ -160,7 +160,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
     private void addSelectionListAndCall() {
         selectionList.add("I Will Provide the Info");
-        selectionList.add("I want SureFiz™ to suggest");
+        //selectionList.add("I want SureFiz™ to suggest");
+        selectionList.add("I want "+registrationActivity.getResources().getString(R.string.app_name) +"to suggest");
 
         selectionPopup = new WeigtUniversalPopup(registrationActivity, selectionList, registrationActivity.et_userselection, new OnWeightCallback() {
             @Override

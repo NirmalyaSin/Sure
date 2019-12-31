@@ -27,10 +27,10 @@ public class WifiConfigActivity extends AppCompatActivity {
     Button btnConfigure;
     @BindView(R.id.btn_skip_config)
     Button btn_skip_config;
-    /*@BindView(R.id.iv_showPassword)
+    @BindView(R.id.iv_showPassword)
     ImageView iv_showPassword;
     @BindView(R.id.iv_hidePassword)
-    ImageView iv_hidePassword;*/
+    ImageView iv_hidePassword;
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
 

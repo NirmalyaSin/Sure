@@ -35,7 +35,7 @@ public class NotificationHandleClassOnForeground extends Activity {
             //if (dateFormat1.format(currentDate).equals(getIntent().getStringExtra("lastServerUpdateDate"))) {
 
             int diffSecond = (int) (diff / 1000);
-            if (diffSecond < 120) {
+            if (diffSecond < 180) {
                    /* Intent intent = new Intent(this, WeightDetailsActivity.class);
                     intent.putExtra("notificationFlag", "1");
                     intent.putExtra("timerValue", diffSecond);

@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/roboto_bold"
-            android:text="SureFiz™ Signup"
+            android:text="SureFiz® Signup"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -914,6 +914,56 @@
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
                         android:hint="Select Height"
+                        android:fontFamily="@font/roboto_regular"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_18sdp">
+
+                    <TextView
+                        android:id="@+id/tv_lifestyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Lifestyle"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_lifestyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_lifestyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="Please select your Lifestyle"
                         android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"

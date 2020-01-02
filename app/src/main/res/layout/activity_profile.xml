@@ -422,6 +422,45 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/tv_lifestyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:text="LIFESTYLE"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_lifestyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_lifestyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="Please select your lifestyle"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <TextView
                     android:id="@+id/tv_country_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

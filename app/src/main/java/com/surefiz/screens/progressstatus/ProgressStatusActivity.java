@@ -57,6 +57,14 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
     TextView tv_water;
     @BindView(R.id.tv_bmi)
     TextView tv_bmi;
+    @BindView(R.id.tv_bmr)
+    TextView tv_bmr;
+    @BindView(R.id.tv_visceral_fat)
+    TextView tv_visceral_fat;
+    @BindView(R.id.tv_body_type)
+    TextView tv_body_type;
+    @BindView(R.id.tv_body_score)
+    TextView tv_body_score;
     @BindView(R.id.tv_link2)
     TextView tv_link2;
     @BindView(R.id.profile_image)
@@ -195,6 +203,22 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
         }
         if (jsonObject.optString("BMI") != null) {
             tv_bmi.setText("BMI: " + jsonObject.optString("BMI"));
+        }
+
+        if (jsonObject.optString("BMI") != null) {
+            tv_bmr.setText("BMR: " + jsonObject.optString("BMR"));
+        }
+
+        if (jsonObject.optString("VFAL") != null) {
+            tv_visceral_fat.setText("Visceral Fat: " + jsonObject.optInt("VFAL"));
+        }
+
+        if (jsonObject.optString("Score") != null) {
+            tv_body_score.setText("Body Score: " + jsonObject.optInt("Score"));
+        }
+
+        if (jsonObject.optString("bodytype") != null) {
+            tv_body_type.setText("Body Type: " + jsonObject.optString("bodytype"));
         }
 
         if (jsonObject.optString("progressDetailsLink2") != null) {

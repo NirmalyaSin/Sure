@@ -133,6 +133,7 @@ public interface ApiInterface {
                                                 @Part("emailId") RequestBody emailId,
                                                 @Part("requredTime") RequestBody timeToloseWeight,
                                                 @Part("currentHeight") RequestBody height,
+                                                @Part("lifestyle") RequestBody lifestyle,
                                                 @Part("targetWeight") RequestBody desiredWeight,
                                                 @Part("gender") RequestBody gender,
                                                 @Part("phoneNumber") RequestBody phoneNumber,
@@ -154,6 +155,7 @@ public interface ApiInterface {
                                                      @Part("emailId") RequestBody emailId,
                                                      @Part("requredTime") RequestBody timeToloseWeight,
                                                      @Part("currentHeight") RequestBody height,
+                                                     @Part("lifestyle") RequestBody lifestyle,
                                                      @Part("targetWeight") RequestBody desiredWeight,
                                                      @Part("gender") RequestBody gender,
                                                      @Part("phoneNumber") RequestBody phoneNumber,
@@ -251,6 +253,7 @@ public interface ApiInterface {
                                                 @Part("city") RequestBody city,
                                                 @Part("state") RequestBody state,
                                                 @Part("zipcode") RequestBody zipcode,
+                                                @Part("lifestyle") RequestBody lifestyle,
                                                 @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -274,7 +277,8 @@ public interface ApiInterface {
                                            @Part("addressLineTwo") RequestBody addressLine2,
                                            @Part("city") RequestBody city,
                                            @Part("state") RequestBody state,
-                                           @Part("zipcode") RequestBody zipcode);
+                                           @Part("zipcode") RequestBody zipcode,
+                                           @Part("lifestyle") RequestBody lifestyle);
 
 
     @GET(API_GET_COUNTRY_LIST)

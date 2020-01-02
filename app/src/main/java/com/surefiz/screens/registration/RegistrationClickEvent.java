@@ -79,7 +79,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private String filePath = "", userselectiontext = "", weightmanagment = "";
     private LoadingData loader;
     private UniversalPopup genderPopup, prefferedPopup, heightPopup, weightPopup, timePopup, memberPopup;
-    private WeigtUniversalPopup managementPopup, selectionPopup;
+    private WeigtUniversalPopup managementPopup, selectionPopup, lifeStylePopup;
+    private int selectedLifeStyle = 0;
+    private List<String> lifeStyleList = new ArrayList<>();
 
     public RegistrationClickEvent(RegistrationActivity registrationActivity) {
         this.registrationActivity = registrationActivity;
@@ -92,6 +94,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         addWeightListAndCall("LB");
         addMemberListAndCall();
         addTimeListAndCall();
+        addLifeStyleListAndCall();
         setClickEvent();
         registrationActivity.et_units.addTextChangedListener(new TextWatcher() {
             @Override
@@ -121,6 +124,24 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }
             }
         });
+    }
+
+    private void addLifeStyleListAndCall() {
+        lifeStyleList.add("Sedentary");
+        lifeStyleList.add("Lightly active");
+        lifeStyleList.add("Moderately active");
+        lifeStyleList.add("Very active");
+        lifeStyleList.add("Extra active");
+
+        lifeStylePopup = new WeigtUniversalPopup(registrationActivity, lifeStyleList, registrationActivity.et_lifestyle, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+                registrationActivity.et_lifestyle.setText(value);
+                selectedLifeStyle = lifeStyleList.indexOf(value) + 1;
+            }
+        });
+
+        //lifeStylePopup = new UniversalPopup(activity, lifeStyleList, activity.et_lifestyle);
     }
 
     private void addManagementListAndCall() {
@@ -161,7 +182,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void addSelectionListAndCall() {
         selectionList.add("I Will Provide the Info");
         //selectionList.add("I want SureFiz™ to suggest");
-        selectionList.add("I want "+registrationActivity.getResources().getString(R.string.app_name) +"to suggest");
+        selectionList.add("I want " + registrationActivity.getResources().getString(R.string.app_name) + "to suggest");
 
         selectionPopup = new WeigtUniversalPopup(registrationActivity, selectionList, registrationActivity.et_userselection, new OnWeightCallback() {
             @Override
@@ -261,6 +282,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         registrationActivity.et_management.setOnClickListener(this);
         registrationActivity.et_userselection.setOnClickListener(this);
         registrationActivity.et_member.setOnClickListener(this);
+        registrationActivity.et_lifestyle.setOnClickListener(this);
     }
 
     @Override
@@ -513,6 +535,10 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     }, 100);
                 }
                 break;
+            case R.id.et_lifestyle:
+                hideSoftKeyBoard();
+                showAndDismissLifeStylePopup();
+                break;
 
             /*case R.id.toolTipScaleId:
                 new SimpleTooltip.Builder(registrationActivity)
@@ -526,6 +552,19 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         .build()
                         .show();
                 break;*/
+        }
+    }
+
+    private void showAndDismissLifeStylePopup() {
+        if (lifeStylePopup.isShowing()) {
+            lifeStylePopup.dismiss();
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    lifeStylePopup.showAsDropDown(registrationActivity.et_lifestyle);
+                }
+            }, 100);
         }
     }
 
@@ -546,6 +585,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
             selectionPopup.dismiss();
         } else if (memberPopup != null && memberPopup.isShowing()) {
             memberPopup.dismiss();
+        } else if (lifeStylePopup != null && lifeStylePopup.isShowing()) {
+            lifeStylePopup.dismiss();
         }
     }
 
@@ -733,6 +774,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
+        } else if (selectedLifeStyle == 0) {
+            MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");
         } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
         } else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
@@ -836,6 +879,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your height");
+        } else if (selectedLifeStyle == 0) {
+            MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");
         } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
         } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
@@ -907,6 +952,15 @@ public class RegistrationClickEvent implements View.OnClickListener {
         }
     }
 
+    public void setLifeStyle(String value) {
+        if (value.equals("0")) {
+            registrationActivity.et_lifestyle.setText("");
+        } else {
+            String lifeStyleValue = lifeStyleList.get(Integer.valueOf(value) - 1);
+            lifeStylePopup.onWeightCallback.onSuccess(lifeStyleValue);
+        }
+    }
+
 
     public void setValuesForWeightSelection(String isWeightSelection) {
         if (isWeightSelection.equalsIgnoreCase("1")) {
@@ -947,7 +1001,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_email.getText().toString().trim());
         RequestBody scaleId = RequestBody.create(MediaType.parse("text/plain"), replaceScaleIDFormatter(registrationActivity.et_scale_id.getText().toString().trim()));
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
-
+        RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
 
         if (weight_managment_goal == 2) {
             type = RequestBody.create(MediaType.parse("text/plain"), "2");
@@ -991,7 +1045,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
         Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoApi(registrationActivity.registrationModel.getData().getToken(), current_User_Id, first_name, middle_name, last_name,
-                email, time, height, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken);
+                email, time, height, lifestyle, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken);
 
         /*Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoApi(LoginShared.getRegistrationDataModel(registrationActivity).getData().getToken(), current_User_Id, first_name, middle_name, last_name,
                 email, time, height, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken);*/
@@ -1020,7 +1074,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setUserPhoto(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
-                        LoginShared.setUserMacId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
+
+                        try {
+                            LoginShared.setUserMacId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            LoginShared.setUserMacId(0);
+                        }
 
 
                         //System.out.println("userMacID: " + LoginShared.getUserMacId(registrationActivity));
@@ -1097,12 +1157,19 @@ public class RegistrationClickEvent implements View.OnClickListener {
         dialog.setTitle(R.string.app_name);
         dialog.setCanceledOnTouchOutside(false);
 
-        if (!LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
-                LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleid().equalsIgnoreCase("")) {
+        if (!LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac().equalsIgnoreCase("")) {
             dialog.setMessage(registrationActivity.getResources().getString(R.string.sub_user_sign_up_success));
         } else {
             dialog.setMessage(msg);
         }
+
+        /*if (!LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleid().equalsIgnoreCase("")) {
+            dialog.setMessage(registrationActivity.getResources().getString(R.string.sub_user_sign_up_success));
+        } else {
+            dialog.setMessage(msg);
+        }*/
 
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
@@ -1110,8 +1177,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 dialog.dismiss();
 
 
-                if (!LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
-                        LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleid().equalsIgnoreCase("")) {
+                if (!LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                        LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac().equalsIgnoreCase("")) {
                     Intent intent = new Intent(registrationActivity, LoginActivity.class);
                     registrationActivity.startActivity(intent);
                     registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -1521,6 +1588,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody scaleId = RequestBody.create(MediaType.parse("text/plain"), replaceScaleIDFormatter(registrationActivity.et_scale_id.getText().toString().trim()));
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_email.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
+        RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
 
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");
@@ -1566,7 +1634,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
         Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoImageApi(registrationActivity.registrationModel.getData().getToken(), current_User_Id, first_name, middle_name, last_name,
-                email, time, height, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken, body);
+                email, time, height, lifestyle, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken, body);
 
         complete_user_info_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -1591,7 +1659,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setUserPhoto(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
-                        LoginShared.setUserMacId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
+                        try {
+                            LoginShared.setUserMacId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            LoginShared.setUserMacId(0);
+                        }
 
 
                         System.out.println("userMacID: " + LoginShared.getUserMacId(registrationActivity));

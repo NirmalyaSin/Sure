@@ -73,6 +73,7 @@ public class ProfileActivity extends BaseActivity {
     EditText et_units;
     EditText et_email;
     EditText et_height;
+    EditText et_lifestyle;
     EditText et_country_name;
     EditText et_add_line1;
     EditText et_add_line2;
@@ -142,6 +143,7 @@ public class ProfileActivity extends BaseActivity {
         et_units.setEnabled(false);
         et_email.setEnabled(false);
         et_height.setEnabled(false);
+        et_lifestyle.setEnabled(false);
 
         et_country_name.setEnabled(false);
         et_state.setEnabled(false);
@@ -169,6 +171,7 @@ public class ProfileActivity extends BaseActivity {
         et_units = view.findViewById(R.id.et_units);
         et_email = view.findViewById(R.id.et_email);
         et_height = view.findViewById(R.id.et_height);
+        et_lifestyle = view.findViewById(R.id.et_lifestyle);
         et_country_name = view.findViewById(R.id.et_country_name);
         et_add_line1 = view.findViewById(R.id.et_add_line1);
         et_add_line2 = view.findViewById(R.id.et_add_line2);

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -72,7 +71,7 @@
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
-            <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_120sdp"
@@ -86,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_image"
-                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/roboto_regular"
                 android:background="@android:color/transparent"
@@ -94,15 +93,37 @@
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@id/tv_desc"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@color/whiteColor" />
+
+            <TextView
+                android:id="@+id/tvHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                android:layout_below="@id/view1"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:text="Your Today’s Body Composition:" />
+
             <LinearLayout
                 android:id="@+id/rl_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_desc"
-                android:layout_margin="@dimen/_15sdp"
+                android:layout_below="@id/tvHeader"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@android:color/transparent"
                 android:orientation="vertical">
-
 
                 <TextView
                     android:id="@+id/tv_weight"
@@ -155,6 +176,46 @@
                     android:textSize="@dimen/_14sdp" />
 
                 <TextView
+                    android:id="@+id/tv_bmr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="BMR:"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/tv_visceral_fat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="Visceral Fat:"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/tv_body_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="Body Type:"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/tv_body_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="Body Score:"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
                     android:id="@+id/tv_link2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -162,8 +223,15 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
-
             </LinearLayout>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@id/rl_progress"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@color/whiteColor" />
         </RelativeLayout>
     </ScrollView>
 
@@ -181,6 +249,4 @@
         android:fontFamily="@font/roboto_bold"
         android:textColor="@color/whiteColor"
         android:textSize="@dimen/_14sdp" />
-
-
 </RelativeLayout>

@@ -19,6 +19,12 @@ public class CurrentCompositions {
     @SerializedName("boneKg")
     private BodyFat boneKg;
 
+    @SerializedName("bmr")
+    private BodyFat bmr;
+
+    @SerializedName("bodyscore")
+    private BodyFat bodyscore;
+
     @SerializedName("recordedOn")
     private String recordedOn;
 
@@ -140,6 +146,22 @@ public class CurrentCompositions {
 
     public void setbMI(BodyFat bMI) {
         this.bMI = bMI;
+    }
+
+    public BodyFat getBmr() {
+        return bmr;
+    }
+
+    public void setBmr(BodyFat bmr) {
+        this.bmr = bmr;
+    }
+
+    public BodyFat getBodyscore() {
+        return bodyscore;
+    }
+
+    public void setBodyscore(BodyFat bodyscore) {
+        this.bodyscore = bodyscore;
     }
 
     public int getFriendrequest_count() {

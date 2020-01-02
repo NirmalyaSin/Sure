@@ -111,8 +111,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     PieChart chartViewLoss, pieChatBodyComposition;
     HIChartView chartView, chartViewBmi, chartViewGoals, chartViewSubGoals,
             chartViewAchiGoals, chartGauge, hcHistoryGoals;
-    TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded, tv_fat_dynamic, tv_bone_dynamic, tv_muscle_dynamic, tv_bmi_dynamic, tv_water_dynamic, tv_protein_dynamic;
-    Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein;
+    TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded, tv_fat_dynamic, tv_bone_dynamic, tv_muscle_dynamic, tv_bmi_dynamic, tv_water_dynamic, tv_protein_dynamic,tv_bmr_dynamic,tv_body_score_dynamic;
+    Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein,btn_body_score,btn_bmr;
     CardView cv_weight, cv_weight_loss, cv_bmi, cv_user_body_composition, cv_goals, cv_sub_goals, cv_achi_goals, cv_gauge;
     RelativeLayout rlHistoryChart,rl_battery_status;
     RecyclerView rv_items;
@@ -734,6 +734,46 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             e.printStackTrace();
         }
 
+        try {
+            tv_bmr_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getValue()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            tv_bmr_dynamic.setText("0");
+        }
+
+        try {
+            if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getStatus().equals("")) {
+                btn_bmr.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getValue()));
+                btn_bmr.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getColourCode()));
+                btn_bmr.setVisibility(View.VISIBLE);
+            } else {
+                btn_bmr.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            btn_bmr.setVisibility(View.GONE);
+        }
+
+        try {
+            tv_body_score_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getValue()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            tv_body_score_dynamic.setText("0");
+        }
+
+        try {
+            if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getStatus().equals("")) {
+                btn_body_score.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getValue()));
+                btn_body_score.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getColourCode()));
+                btn_body_score.setVisibility(View.VISIBLE);
+            } else {
+                btn_body_score.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            btn_body_score.setVisibility(View.GONE);
+        }
+
         tv_recorded.setText("Recorded on " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getRecordedOn());
 
         if (getIntent().hasExtra("Performance")){
@@ -871,6 +911,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         btn_bmi = findViewById(R.id.btn_bmi);
         btn_water = findViewById(R.id.btn_water);
         btn_protein = findViewById(R.id.btn_protein);
+        btn_bmr = findViewById(R.id.btn_bmr);
+        btn_body_score = findViewById(R.id.btn_body_score);
         tv_recorded = findViewById(R.id.tv_recorded);
 
         tv_fat_dynamic = findViewById(R.id.tv_fat_dynamic);
@@ -879,6 +921,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         tv_bmi_dynamic = findViewById(R.id.tv_bmi_dynamic);
         tv_water_dynamic = findViewById(R.id.tv_water_dynamic);
         tv_protein_dynamic = findViewById(R.id.tv_protein_dynamic);
+        tv_bmr_dynamic = findViewById(R.id.tv_bmr_dynamic);
+        tv_body_score_dynamic = findViewById(R.id.tv_body_score_dynamic);
 
         tvViewHistory = findViewById(R.id.tvViewHistory);
         rlHistoryChart = findViewById(R.id.rlHistoryChart);

@@ -93,6 +93,8 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText et_units;
     @BindView(R.id.et_height)
     EditText et_height;
+    @BindView(R.id.et_lifestyle)
+    EditText et_lifestyle;
     @BindView(R.id.et_weight)
     EditText et_weight;
     @BindView(R.id.et_time_loss)
@@ -544,6 +546,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         registrationClickEvent.setValuesForListItem(bundle);
         registrationClickEvent.setValuesForWeightSelection(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getIsServerWeight());
+        registrationClickEvent.setLifeStyle(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getLifestyle());
 
         showImage();
         disableViews();

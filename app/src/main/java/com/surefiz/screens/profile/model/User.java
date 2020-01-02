@@ -92,6 +92,9 @@ public class User {
     @SerializedName("isPasswordAvailable")
     @Expose
     private int isPasswordAvailable;
+    @SerializedName("lifestyle")
+    @Expose
+    private String lifestyle;
 
     public String getUserId() {
         return userId;
@@ -323,5 +326,13 @@ public class User {
 
     public void setIsPasswordAvailable(int isPasswordAvailable) {
         this.isPasswordAvailable = isPasswordAvailable;
+    }
+
+    public String getLifestyle() {
+        return lifestyle;
+    }
+
+    public void setLifestyle(String lifestyle) {
+        this.lifestyle = lifestyle;
     }
 }

@@ -71,7 +71,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     String units = "", height = "";
     String[] splited;
     private List<String> genderList = new ArrayList<>();
-    private UniversalPopup genderPopup, prefferedPopup;
+    private List<String> lifeStyleList = new ArrayList<>();
+    private UniversalPopup genderPopup;
     private int month, year, day;
     private LoadingData loader;
     private ImageLoader imageLoader;
@@ -85,7 +86,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private WeigtUniversalPopup weigtUniversalPopupPreferred;
     private GoogleApiClient googleApiClient;
     private CallbackManager callbackManager;
-    private WeigtUniversalPopup countryListPopup;
+    private WeigtUniversalPopup countryListPopup, lifeStylePopup;
+    private int selectedLifeStyle = 0;
 
     public ProfileClickEvent(ProfileActivity activity) {
         this.activity = activity;
@@ -104,6 +106,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         }
 
         addGenderListAndCall();
+        addLifeStyleListAndCall();
 
         activity.et_units.addTextChangedListener(new TextWatcher() {
             @Override
@@ -229,6 +232,13 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             activity.et_DOB.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserDob());
         } else {
             activity.et_DOB.setText("");
+        }
+
+        if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLifestyle().equals("0")) {
+            activity.et_lifestyle.setText("");
+        } else {
+            String lifeStyleValue = lifeStyleList.get(Integer.valueOf(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLifestyle()) - 1);
+            lifeStylePopup.onWeightCallback.onSuccess(lifeStyleValue);
         }
 
 
@@ -397,6 +407,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.btnGoogleAdd.setOnClickListener(this);
         activity.btnFacebookAdd.setOnClickListener(this);
         activity.et_country_name.setOnClickListener(this);
+        activity.et_lifestyle.setOnClickListener(this);
         activity.findViewById(R.id.iv_weight_managment).setOnClickListener(this);
     }
 
@@ -407,6 +418,24 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         genderList.add("Prefer not to say");
 
         genderPopup = new UniversalPopup(activity, genderList, activity.et_gender);
+    }
+
+    private void addLifeStyleListAndCall() {
+        lifeStyleList.add("Sedentary");
+        lifeStyleList.add("Lightly active");
+        lifeStyleList.add("Moderately active");
+        lifeStyleList.add("Very active");
+        lifeStyleList.add("Extra active");
+
+        lifeStylePopup = new WeigtUniversalPopup(activity, lifeStyleList, activity.et_lifestyle, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+                activity.et_lifestyle.setText(value);
+                selectedLifeStyle = lifeStyleList.indexOf(value) + 1;
+            }
+        });
+
+        //lifeStylePopup = new UniversalPopup(activity, lifeStyleList, activity.et_lifestyle);
     }
 
     private void addPreferredListAndCall() {
@@ -496,6 +525,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.et_email.setEnabled(true);
                 activity.et_height.setEnabled(true);
                 activity.et_country_name.setEnabled(true);
+                activity.et_lifestyle.setEnabled(true);
                 activity.et_state.setEnabled(true);
                 activity.et_add_line1.setEnabled(true);
                 activity.et_add_line2.setEnabled(true);
@@ -557,6 +587,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     MethodUtils.errorMsg(activity, "Please enter your Age");
                 } else if (!isNonZeroValue(activity.et_DOB.getText().toString().trim())) {
                     MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
+                } else if (selectedLifeStyle == 0) {
+                    MethodUtils.errorMsg(activity, "Please select your lifestyle");
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
                         activity.et_new_password.getText().toString().equals("")) {
 
@@ -637,6 +669,10 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             case R.id.et_country_name:
                 showAndDismissCountryPopup();
                 break;
+
+            case R.id.et_lifestyle:
+                showAndDismissLifeStylePopup();
+                break;
         }
     }
 
@@ -671,6 +707,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_height.setEnabled(false);
         activity.profile_image.setEnabled(false);
         activity.et_country_name.setEnabled(false);
+        activity.et_lifestyle.setEnabled(false);
         activity.et_state.setEnabled(false);
         activity.et_add_line1.setEnabled(false);
         activity.et_add_line2.setEnabled(false);
@@ -681,7 +718,17 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_new_password.setEnabled(false);
         activity.et_confirm_password.setEnabled(false);
 
+        disableAllPopups();
+
         getProfileDataAndSet();
+    }
+
+    private void disableAllPopups() {
+        lifeStylePopup.dismiss();
+        countryListPopup.dismiss();
+        genderPopup.dismiss();
+        heightPopup.dismiss();
+        weigtUniversalPopupPreferred.dismiss();
     }
 
     public void handleSignInResult(GoogleSignInResult result) {
@@ -930,6 +977,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), activity.et_phone.getText().toString().trim());
+        RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
 
         if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
             preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
@@ -1022,7 +1070,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode, body);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode, lifestyle, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -1137,6 +1185,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody fullName = RequestBody.create(MediaType.parse("text/plain"), activity.et_full.getText().toString().trim());
         RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
+        RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"),
                 activity.et_phone.getText().toString().trim());
         if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
@@ -1221,7 +1270,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0]);
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode, lifestyle);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -1333,6 +1382,19 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 genderPopup.showAsDropDown(activity.et_gender);
             }
         }, 100);
+    }
+
+    private void showAndDismissLifeStylePopup() {
+        if (lifeStylePopup.isShowing()) {
+            lifeStylePopup.dismiss();
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    lifeStylePopup.showAsDropDown(activity.et_lifestyle);
+                }
+            }, 100);
+        }
     }
 
     @Override

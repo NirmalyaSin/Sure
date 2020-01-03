@@ -117,7 +117,7 @@
         android:layout_marginRight="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/login_button_gradient"
-        android:text="Accept SureFiz™ Weight"
+        android:text="@string/accept_surefiz_weight"
         android:textAllCaps="false"
         android:fontFamily="@font/roboto_bold"
         android:textColor="@color/whiteColor"

@@ -692,6 +692,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private void disableProfileEditMode() {
         activity.iv_plus_add_image.setVisibility(View.GONE);
         activity.btn_register.setVisibility(View.GONE);
+        activity.tvUserImageHint.setVisibility(View.GONE);
         activity.btn_cancel.setVisibility(View.GONE);
         activity.iv_edit.setVisibility(View.VISIBLE);
         //activity.et_full.requestFocus();

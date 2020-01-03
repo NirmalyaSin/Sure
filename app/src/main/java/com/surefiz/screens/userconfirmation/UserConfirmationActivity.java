@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
@@ -50,6 +51,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     private int maintainWeightByServer = 0;
     private int savedType = 1;
     private int savedUnits = 1;
+    private TextView tv_enter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
     private void initializeView(View view) {
         setHeaderView();
+        tv_enter = view.findViewById(R.id.tv_enter);
         et_weight = view.findViewById(R.id.et_weight);
         et_time_loss = view.findViewById(R.id.et_time_loss);
         btn_accept = view.findViewById(R.id.btn_accept);
@@ -408,6 +411,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 btn_provide.setEnabled(false);
                 btn_provide.setBackgroundResource(R.drawable.rounded_corner_provide);
                 btn_accept.setText("Update");
+                tv_enter.setText(R.string.user_confirmation_header_declined);
 
                 if (et_time_loss.getText().toString().equalsIgnoreCase("TBD")) {
                     et_time_loss.setText("");

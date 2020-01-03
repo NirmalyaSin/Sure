@@ -69,8 +69,8 @@
     <string name="register">Register</string>
     <string name="update">Update</string>
     <string name="complete_sign_up">Complete Sign Up</string>
-    <string name="surefiz_signup">SureFiz™ Signup</string>
-    <string name="surefiz_register">SureFiz™ Registration</string>
+    <string name="surefiz_signup">SureFiz<sup><small>®</small></sup> Signup</string>
+    <string name="surefiz_register">SureFiz<sup><small>®</small></sup> Registration</string>
     <string name="compositions">Composition</string>
     <string name="manage_social_logins">MANAGE SOCIAL LOGINS</string>
     <string name="delete_user_confirmation">Unfriend User Confirmation</string>
@@ -93,9 +93,10 @@ complete his/her registration process.</string>
     <string name="enter_title">ENTER TITLE</string>
     <string name="click_to_view_history"><u>View History.</u></string>
     <string name="chat_not_found">Frequent messaging with your accountability circle members is a good idea</string>
-    <!--<string name="user_confirmation_header">Please enter your desired weight and select the time to lose weight.</string>-->
+    <string name="user_confirmation_header_declined">Please enter your desired weight and select the time to lose weight.</string>
     <string name="user_confirmation_header">Please make your choice below: Either Accept SureFiz® Weight or I Will Provide Weight &amp; Time.</string>
     <string name="i_will_provide_weight_time">I Will Provide Weight &amp; Time</string>
+    <string name="accept_surefiz_weight">Accept SureFiz<sup><small>®</small></sup> Weigh</string>
     <!--<string name="user_confirmation_header">SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight</string>-->
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 

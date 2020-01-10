@@ -129,17 +129,17 @@
 
             <Button
                 android:id="@+id/btn_add_user"
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/login_edit_rounded_corner_blue"
+                android:background="@drawable/login_button_gradient"
                 android:gravity="center"
                 android:paddingLeft="@dimen/_35sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingRight="@dimen/_35sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:text="Add User"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textAllCaps="true"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />

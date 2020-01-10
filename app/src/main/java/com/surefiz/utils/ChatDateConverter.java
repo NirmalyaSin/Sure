@@ -3,6 +3,7 @@ package com.surefiz.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class ChatDateConverter {
@@ -18,7 +19,7 @@ public class ChatDateConverter {
             e.printStackTrace();
         }
 
-        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy hh:mm aa");
+        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:mm aa", Locale.US);
         df.setTimeZone(TimeZone.getDefault());
         String formattedDate = df.format(date);
 

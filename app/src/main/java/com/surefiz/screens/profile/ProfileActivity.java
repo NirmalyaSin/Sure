@@ -378,6 +378,7 @@ public class ProfileActivity extends BaseActivity {
                     public void call(File file) {
                         mCompressedFile = file;
                         previewCapturedImage();
+                        tvUserImageHint.setVisibility(View.VISIBLE);
                     }
                 }, new Action1<Throwable>() {
                     @Override

@@ -91,7 +91,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             btn_submit.setVisibility(View.GONE);
             btn_accept.setVisibility(View.VISIBLE);
             btn_decline.setVisibility(View.VISIBLE);
-            rl_back.setVisibility(View.GONE);
+            rl_back.setVisibility(View.VISIBLE);
 
             LoginShared.setWeightFromNotification(WeightManagementActivity.this, "0");
         }

@@ -51,7 +51,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     private int maintainWeightByServer = 0;
     private int savedType = 1;
     private int savedUnits = 1;
-    private TextView tv_enter;
+    private TextView tv_enter,tv_time_loss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         tv_enter = view.findViewById(R.id.tv_enter);
         et_weight = view.findViewById(R.id.et_weight);
         et_time_loss = view.findViewById(R.id.et_time_loss);
+        tv_time_loss = view.findViewById(R.id.tv_time_loss);
         btn_accept = view.findViewById(R.id.btn_accept);
         btn_provide = view.findViewById(R.id.btn_provide);
 
@@ -412,6 +413,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 btn_provide.setBackgroundResource(R.drawable.rounded_corner_provide);
                 btn_accept.setText("Update");
                 tv_enter.setText(R.string.user_confirmation_header_declined);
+                tv_time_loss.setText(R.string.time_to_lose_weight);
 
                 if (et_time_loss.getText().toString().equalsIgnoreCase("TBD")) {
                     et_time_loss.setText("");

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,270 +11,285 @@
         android:alpha="0.6"
         android:background="@drawable/splash_image" />-->
 
-
-    <LinearLayout
-        android:id="@+id/ll_management"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/_18sdp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_management"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/_18sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:text="WEIGHT MANAGEMENT GOAL"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_14sdp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/star16" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_management"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_9sdp"
-        android:layout_marginRight="@dimen/_18sdp"
-        android:layout_below="@+id/ll_management"
-        android:background="@drawable/edit_text_background">
-
-        <EditText
-            android:id="@+id/et_weight_managment"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:backgroundTint="@android:color/transparent"
-            android:focusableInTouchMode="false"
-            android:fontFamily="@font/roboto_regular"
-            android:hint="Please Select Weight Management Goal"
-            android:inputType="number"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/_6sdp"
-            android:textColor="@color/whiteColor"
-            android:textColorHint="@color/hintColor"
-            android:textCursorDrawable="@drawable/cursor_color"
-            android:textSize="@dimen/_10sdp" />
-    </RelativeLayout>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_management"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_18sdp">
+
+                <TextView
+                    android:id="@+id/tv_management"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="WEIGHT MANAGEMENT GOAL"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_management"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:layout_below="@+id/ll_management"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_weight_managment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="Please Select Weight Management Goal"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
 
 
-    <LinearLayout
-        android:id="@+id/ll_desired_weight_selection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/_18sdp"
-        android:layout_below="@+id/rl_management"
-        android:visibility="visible">
+            <LinearLayout
+                android:id="@+id/ll_desired_weight_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_18sdp"
+                android:layout_below="@+id/rl_management"
+                android:visibility="visible">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/_18sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:text="DESIRED WEIGHT SELECTION"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_14sdp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="DESIRED WEIGHT SELECTION"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/star16" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star16" />
+            </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_desired_weight_selection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_9sdp"
-        android:layout_marginRight="@dimen/_18sdp"
-        android:layout_below="@+id/ll_desired_weight_selection"
-        android:background="@drawable/edit_text_background"
-        android:visibility="visible">
+            <RelativeLayout
+                android:id="@+id/rl_desired_weight_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:layout_below="@+id/ll_desired_weight_selection"
+                android:background="@drawable/edit_text_background"
+                android:visibility="visible">
 
-        <EditText
-            android:id="@+id/et_desired_weight_selection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:backgroundTint="@android:color/transparent"
-            android:focusableInTouchMode="false"
-            android:fontFamily="@font/roboto_regular"
-            android:hint="Select your input choice"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/_6sdp"
-            android:textColor="@color/whiteColor"
-            android:textColorHint="@color/hintColor"
-            android:textCursorDrawable="@drawable/cursor_color"
-            android:textSize="@dimen/_10sdp" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/et_desired_weight_selection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="Select your input choice"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_units"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/_18sdp"
-        android:paddingTop="@dimen/_20sdp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="PREFERRED UNITS"
-        android:visibility="gone"
-        android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_14sdp" />
+            <TextView
+                android:id="@+id/tv_units"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="PREFERRED UNITS"
+                android:visibility="gone"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
 
-    <RelativeLayout
-        android:id="@+id/rl_units"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_units"
-        android:layout_marginLeft="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_9sdp"
-        android:layout_marginRight="@dimen/_18sdp"
-        android:visibility="gone"
-        android:background="@drawable/edit_text_background">
+            <RelativeLayout
+                android:id="@+id/rl_units"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_units"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:visibility="gone"
+                android:background="@drawable/edit_text_background">
 
-        <EditText
-            android:id="@+id/et_units"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:backgroundTint="@android:color/transparent"
-            android:focusableInTouchMode="false"
-            android:hint="Select Preferred unit"
-            android:inputType="number"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/_6sdp"
-            android:textColor="@color/whiteColor"
-            android:textColorHint="@color/hintColor"
-            android:textCursorDrawable="@drawable/cursor_color"
-            android:textSize="@dimen/_10sdp" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/et_units"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:hint="Select Preferred unit"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_desired_weight_selection"
-        android:paddingLeft="@dimen/_18sdp"
-        android:paddingTop="@dimen/_20sdp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="DESIRED WEIGHT"
-        android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_14sdp" />
+            <TextView
+                android:id="@+id/tv_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_desired_weight_selection"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="DESIRED WEIGHT"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
 
-    <RelativeLayout
-        android:id="@+id/rl_weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_weight"
-        android:layout_marginLeft="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_9sdp"
-        android:layout_marginRight="@dimen/_18sdp"
-        android:background="@drawable/edit_text_background">
+            <RelativeLayout
+                android:id="@+id/rl_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_weight"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:background="@drawable/edit_text_background">
 
-        <EditText
-            android:id="@+id/et_weight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:backgroundTint="@android:color/transparent"
-            android:focusableInTouchMode="false"
-            android:fontFamily="@font/roboto_regular"
-            android:hint="Desired Weight"
-            android:inputType="text|textNoSuggestions"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/_6sdp"
-            android:textColor="@color/whiteColor"
-            android:textColorHint="@color/hintColor"
-            android:textCursorDrawable="@drawable/cursor_color"
-            android:textSize="@dimen/_10sdp" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/et_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="Desired Weight"
+                    android:inputType="text|textNoSuggestions"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_time_loss"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_weight"
-        android:paddingLeft="@dimen/_18sdp"
-        android:paddingTop="@dimen/_20sdp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="TIME TO LOSE WEIGHT"
-        android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_14sdp" />
+            <TextView
+                android:id="@+id/tv_time_loss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_weight"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="TIME TO LOSE WEIGHT"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
 
-    <RelativeLayout
-        android:id="@+id/rl_time_loss"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_time_loss"
-        android:layout_marginLeft="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_9sdp"
-        android:layout_marginRight="@dimen/_18sdp"
-        android:background="@drawable/edit_text_background">
+            <RelativeLayout
+                android:id="@+id/rl_time_loss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_time_loss"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:background="@drawable/edit_text_background">
 
-        <EditText
-            android:id="@+id/et_time_loss"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:backgroundTint="@android:color/transparent"
-            android:focusableInTouchMode="false"
-            android:fontFamily="@font/roboto_regular"
-            android:hint="Please select"
-            android:inputType="text|textNoSuggestions"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/_6sdp"
-            android:textColor="@color/whiteColor"
-            android:textColorHint="@color/hintColor"
-            android:textCursorDrawable="@drawable/cursor_color"
-            android:textSize="@dimen/_10sdp" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/et_time_loss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="Please select"
+                    android:inputType="text|textNoSuggestions"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/rl_time_loss"
-        android:layout_margin="@dimen/_44sdp"
-        android:background="@drawable/login_button_gradient"
-        android:fontFamily="@font/roboto_bold"
-        android:text="Update"
-        android:textAllCaps="false"
-        android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_14sdp" />
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/rl_time_loss"
+                android:layout_margin="@dimen/_44sdp"
+                android:background="@drawable/login_button_gradient"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Update"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
 
-    <Button
-        android:id="@+id/btn_accept"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/rl_time_loss"
-        android:layout_margin="@dimen/_44sdp"
-        android:background="@drawable/login_button_gradient"
-        android:fontFamily="@font/roboto_bold"
-        android:text="Accept"
-        android:visibility="gone"
-        android:textAllCaps="false"
-        android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_14sdp" />
-    <Button
-        android:id="@+id/btn_decline"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/btn_accept"
-        android:background="@drawable/login_button_gradient"
-        android:fontFamily="@font/roboto_bold"
-        android:text="Decline"
-        android:textAllCaps="false"
-        android:visibility="gone"
-        android:layout_marginRight="@dimen/_44sdp"
-        android:layout_marginLeft="@dimen/_44sdp"
-        android:textColor="@color/whiteColor"
-        android:textSize="@dimen/_14sdp" />
+            <Button
+                android:id="@+id/btn_accept"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/rl_time_loss"
+                android:layout_marginStart="@dimen/_44sdp"
+                android:layout_marginEnd="@dimen/_44sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/login_button_gradient"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Accept"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <Button
+                android:id="@+id/btn_decline"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/btn_accept"
+                android:background="@drawable/login_button_gradient"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Decline"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_44sdp"
+                android:layout_marginLeft="@dimen/_44sdp"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

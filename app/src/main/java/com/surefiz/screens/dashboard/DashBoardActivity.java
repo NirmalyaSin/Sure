@@ -206,6 +206,14 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         setRecyclerViewItem();
         //callContactsApi();
+
+        checkDate();
+    }
+
+    private void checkDate() {
+        //String dateStr="2019-12-30 19:54:51";
+        String dateStr="Dec 30, 2019 19:54";
+        System.out.println("currentDate: "+ChatDateConverter.DateConverter(dateStr));
     }
 
     private String getAppVersion() {
@@ -742,8 +750,12 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
 
         try {
-            if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getStatus().equals("")) {
-                btn_bmr.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getValue()));
+
+            //btn_bmr.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getStatus()));
+            //btn_bmr.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getColourCode()));
+
+            if (!LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getStatus().equals("")) {
+                btn_bmr.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getStatus()));
                 btn_bmr.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getColourCode()));
                 btn_bmr.setVisibility(View.VISIBLE);
             } else {
@@ -762,8 +774,12 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
 
         try {
-            if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getStatus().equals("")) {
-                btn_body_score.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getValue()));
+
+            //btn_body_score.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getStatus()));
+            //btn_body_score.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getColourCode()));
+
+            if (!LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getStatus().equals("")) {
+                btn_body_score.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getStatus()));
                 btn_body_score.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getColourCode()));
                 btn_body_score.setVisibility(View.VISIBLE);
             } else {

@@ -1,7 +1,9 @@
 package com.surefiz.screens.users;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -89,14 +91,27 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void addUserDialog() {
-        /*btn_add_user.setOnClickListener(new View.OnClickListener() {
+        btn_add_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ChooseOptionDialog(UserListActivity.this, UserListActivity.this).show()
+                openWebLink();
             }
-        });*/
+        });
 
-        btn_add_user.setOnClickListener(v -> new ChooseOptionDialog(UserListActivity.this, UserListActivity.this).show());
+        //btn_add_user.setOnClickListener(v -> new ChooseOptionDialog(UserListActivity.this, UserListActivity.this).show());
+    }
+
+    private void openWebLink() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.surefiz.com/AboutUs"));
+        startActivityForResult(browserIntent,200);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==200){
+            callUserListApi();
+        }
     }
 
     private void callUserListApi() {
@@ -128,7 +143,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
                             btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.black));
                         } else {
                             btn_add_user.setEnabled(true);
-                            btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_submit_rounded_corner));
+                            btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_button_gradient));
                             btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.white));
                         }
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
@@ -138,7 +153,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
                         Intent loginIntent = new Intent(UserListActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         MethodUtils.errorMsg(UserListActivity.this, response.body().getData().getMessage());
                     }

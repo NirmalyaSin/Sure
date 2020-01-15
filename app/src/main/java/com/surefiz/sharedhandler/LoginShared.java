@@ -172,20 +172,20 @@ public class LoginShared {
         return id;
     }
 
-    public static void setUserMacId(int id) {
+    public static void setUserMacId(long id) {
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(SharedUtils.KEY_SHARED_USER_MAC_ID, id);
+        editor.putLong(SharedUtils.KEY_SHARED_USER_MAC_ID, id);
         editor.commit();
     }
 
-    public static int getUserMacId(Context context) {
-        int id = 1;
+    public static long getUserMacId(Context context) {
+        long id = 1;
         if (LoginShared.context == null || LoginShared.prefs == null)
             activateShared(context);
-        id = prefs.getInt(SharedUtils.KEY_SHARED_USER_MAC_ID, id);
+        id = prefs.getLong(SharedUtils.KEY_SHARED_USER_MAC_ID, id);
         return id;
     }
 

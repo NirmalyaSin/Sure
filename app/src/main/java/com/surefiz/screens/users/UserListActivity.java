@@ -20,6 +20,7 @@ import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
@@ -102,8 +103,15 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void openWebLink() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.surefiz.com/AboutUs"));
-        startActivityForResult(browserIntent,200);
+        /*Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.surefiz.com/Login"));
+        startActivityForResult(browserIntent,200);*/
+
+        Intent aboutIntent = new Intent(this, AboutUsActivity.class);
+        aboutIntent.putExtra("url", "https://www.surefiz.com/Login");
+        aboutIntent.putExtra("header", getResources().getString(R.string.app_name));
+        aboutIntent.putExtra("menu", false);
+        startActivityForResult(aboutIntent,200);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override

@@ -1076,7 +1076,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
 
                         try {
-                            LoginShared.setUserMacId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
+                            LoginShared.setUserMacId(Long.parseLong(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                             LoginShared.setUserMacId(0);
@@ -1333,7 +1333,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
-                        LoginShared.setUserMacId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac()));
+                        LoginShared.setUserMacId(Long.parseLong(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac()));
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(new Runnable() {
@@ -1494,7 +1494,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
                         LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
-                        LoginShared.setUserMacId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac()));
+                        LoginShared.setUserMacId(Long.parseLong(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac()));
                         MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));
 
                         new android.os.Handler().postDelayed(() -> {
@@ -1660,7 +1660,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         LoginShared.setUserName(registrationActivity, registrationActivity.registrationModel.getData().getUser().get(0).getUserName());
                         LoginShared.setScaleUserId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId()));
                         try {
-                            LoginShared.setUserMacId(Integer.parseInt(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
+                            LoginShared.setUserMacId(Long.parseLong(registrationActivity.registrationModel.getData().getUser().get(0).getUserMac()));
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                             LoginShared.setUserMacId(0);

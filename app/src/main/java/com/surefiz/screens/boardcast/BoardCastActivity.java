@@ -1,6 +1,5 @@
 package com.surefiz.screens.boardcast;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,10 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
@@ -21,12 +18,8 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.boardcast.adapter.MesgAdapter;
 import com.surefiz.screens.boardcast.model.BroadcastItem;
 import com.surefiz.screens.boardcast.model.Message;
-import com.surefiz.screens.chat.adapter.ChatAdapter;
-import com.surefiz.screens.chat.model.ChatListResponse;
-import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.mydevice.MyDeviceActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
@@ -43,16 +36,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class BoardCastActivity extends BaseActivity implements View.OnClickListener {
+public class BoardCastActivity extends BaseActivity implements View.OnClickListener, MesgAdapter.OnChatScrollListener {
 
+    private final int INITIAL_PAGINATION = 0;
     public View view;
     EditText et_message;
-    TextView btn_boardcast;
+    ImageView btn_boardcast;
     private LoadingData loader;
     private RecyclerView recyclerView;
     private ArrayList<BroadcastItem> arrayListConversation = new ArrayList<BroadcastItem>();
     private MesgAdapter mesgAdapter;
     private String receiver_id;
+    private int oldPagination;
+    private int saveMessageCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,19 +75,20 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
         recyclerView = view.findViewById(R.id.recyclerView);
 
         setRecyclerViewItem();
-        callChatListApi(receiver_id);
+        callChatListApi(receiver_id, INITIAL_PAGINATION);
 
 
     }
 
     private void setRecyclerViewItem() {
-        mesgAdapter = new MesgAdapter(this, arrayListConversation);
+        mesgAdapter = new MesgAdapter(this, arrayListConversation,this);
         recyclerView.setAdapter(mesgAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //SpacesItemDecoration decoration = new SpacesItemDecoration(10);
-        //recyclerView.addItemDecoration(decoration);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
-        mLayoutManager.setStackFromEnd(false);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
+        recyclerView.addItemDecoration(decoration);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false);
+        mLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
@@ -99,9 +96,13 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
         btn_boardcast.setOnClickListener(this);
     }
 
-    private void callChatListApi(final String receiverId) {
+    private void callChatListApi(final String receiverId, final int newPagination) {
 
-        loader.show_with_label("Loading...");
+        if (oldPagination < newPagination || oldPagination == 0) {
+            //Replace Old value with newer one.
+            oldPagination = newPagination;
+
+            loader.show_with_label("Loading...");
             //Call API Using Retrofit
             Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
             final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -112,29 +113,33 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
             Log.d("@@Sent-List-Chat : ", "token = " + "\nsenderId =" + senderId);
 
             final Call<Message> call_BroadcastMessageApi = apiInterface
-                    .call_BroadcastMessageApi(token, senderId);
+                    .call_BroadcastMessageApi(token, senderId,String.valueOf(oldPagination));
 
-        call_BroadcastMessageApi.enqueue(new Callback<Message>() {
+            call_BroadcastMessageApi.enqueue(new Callback<Message>() {
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
                     if (loader != null && loader.isShowing()) {
                         loader.dismiss();
                     }
-                    Log.d("@@ChatList : ", response.body().toString());
 
                     if (response.body().getStatus() == 1) {
 
-
-                        if(response.body().getData().getBroadcast()!=null) {
+                        if (response.body().getData().getBroadcast() != null) {
 
                             arrayListConversation.clear();
                             arrayListConversation.addAll(response.body().getData().getBroadcast());
                             Collections.reverse(arrayListConversation);
-                            //arrayListConversation.addAll(0, response.body().getData().getBroadcast());
+
+                            if (saveMessageCount < arrayListConversation.size()) {
+                                mesgAdapter.setLoadMore(true);
+                            } else {
+                                mesgAdapter.setLoadMore(false);
+                            }
+                            saveMessageCount = arrayListConversation.size();
 
                             Log.d("@@ListSize : ", "" + arrayListConversation.size());
                             mesgAdapter.notifyDataSetChanged();
-                            //recyclerView.smoothScrollToPosition(arrayListConversation.size());
+                            moveToEnd();
                         }
 
                         //myApplicationClass.chatListNotification.clear();
@@ -154,15 +159,36 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
                 }
 
-            @Override
-            public void onFailure(Call<Message> call, Throwable t) {
-                if (loader != null && loader.isShowing())
-                    loader.dismiss();
-                MethodUtils.errorMsg(BoardCastActivity.this, getString(R.string.error_occurred));
-            }});
+                @Override
+                public void onFailure(Call<Message> call, Throwable t) {
+                    if (loader != null && loader.isShowing())
+                        loader.dismiss();
+                    MethodUtils.errorMsg(BoardCastActivity.this, getString(R.string.error_occurred));
+                }
+            });
+        }
 
     }
 
+    private void moveToEnd() {
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (oldPagination == 0) {
+                    if (arrayListConversation.size() > 25) {
+                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                    }
+                    //recyclerView.smoothScrollToPosition(1);
+                } else {
+                    if (arrayListConversation.size() % 25 > 0) {
+                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - arrayListConversation.size() % 25 - 1);
+                    } else {
+                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 25 - 1);
+                    }
+                }
+            }
+        }, 50);
+    }
 
     private void callBoardCastApi() {
         loader.show_with_label("Loading");
@@ -183,9 +209,8 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
                         arrayListConversation.clear();
-                        callChatListApi(receiver_id);
-
-                        //MethodUtils.errorMsg(BoardCastActivity.this, jsObject.getString("message"));
+                        oldPagination = INITIAL_PAGINATION;
+                        callChatListApi(receiver_id, INITIAL_PAGINATION);
                         et_message.setText("");
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
@@ -195,7 +220,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
                         Intent loginIntent = new Intent(BoardCastActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(BoardCastActivity.this, jsObject.getString("message"));
@@ -249,5 +274,12 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
         }
 
+    }
+
+    @Override
+    public void onScrollToTop(int scrollPosition) {
+        int div = arrayListConversation.size() / 25;
+        int pagination = div * 25;
+        callChatListApi(receiver_id, pagination);
     }
 }

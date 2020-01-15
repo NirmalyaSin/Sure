@@ -3,12 +3,10 @@ package com.surefiz.screens.chat.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
@@ -16,8 +14,6 @@ import com.surefiz.screens.chat.ChatConstant;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.utils.ChatDateConverter;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,16 +21,41 @@ import java.util.regex.Pattern;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
         .ChatAdapterViewHolder> {
 
+    private static final Pattern UNICODE_HEX_PATTERN = Pattern.compile("\\\\u([0-9A-Fa-f]{4})");
+    private static final Pattern UNICODE_OCT_PATTERN = Pattern.compile("\\\\([0-7]{3})");
     private Context mContext;
     private ArrayList<Conversation> arrayListConversation = new ArrayList<Conversation>();
     private OnChatScrollListener mOnChatScrollListener;
     private boolean firstLoading = true;
+    private boolean shouldLoadMore = true;
 
     public ChatAdapter(Context context, ArrayList<Conversation> conversations,
                        OnChatScrollListener listener) {
         this.mContext = context;
         this.arrayListConversation = conversations;
         this.mOnChatScrollListener = listener;
+    }
+
+    public static String decodeFromNonLossyAscii(String original) {
+        Matcher matcher = UNICODE_HEX_PATTERN.matcher(original);
+        StringBuffer charBuffer = new StringBuffer(original.length());
+        while (matcher.find()) {
+            String match = matcher.group(1);
+            char unicodeChar = (char) Integer.parseInt(match, 16);
+            matcher.appendReplacement(charBuffer, Character.toString(unicodeChar));
+        }
+        matcher.appendTail(charBuffer);
+        String parsedUnicode = charBuffer.toString();
+
+        matcher = UNICODE_OCT_PATTERN.matcher(parsedUnicode);
+        charBuffer = new StringBuffer(parsedUnicode.length());
+        while (matcher.find()) {
+            String match = matcher.group(1);
+            char unicodeChar = (char) Integer.parseInt(match, 8);
+            matcher.appendReplacement(charBuffer, Character.toString(unicodeChar));
+        }
+        matcher.appendTail(charBuffer);
+        return charBuffer.toString();
     }
 
     @NonNull
@@ -80,13 +101,21 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
         }
     }
 
+    public void setLoadMore(boolean shouldLoadMore) {
+        this.shouldLoadMore = shouldLoadMore;
+    }
 
     @Override
     public void onViewAttachedToWindow(@NonNull ChatAdapterViewHolder holder) {
         super.onViewAttachedToWindow(holder);
 
+        int position = holder.getAdapterPosition();
+        if (shouldLoadMore && position == 0) {
+            mOnChatScrollListener.onScrollToTop(position);
+        }
+
         //int position = holder.getAdapterPosition();
-        if (firstLoading) {
+        /*if (firstLoading) {
             firstLoading = false;
         } else {
             int position = holder.getAdapterPosition();
@@ -94,7 +123,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
             if (position == 0) {
                 mOnChatScrollListener.onScrollToTop(position);
             }
-        }
+        }*/
     }
 
     @Override
@@ -120,31 +149,5 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
             rlMessageLeft = itemView.findViewById(R.id.rlMessageLeft);
             rlMessageRight = itemView.findViewById(R.id.rlMessageRight);
         }
-    }
-
-
-    private static final Pattern UNICODE_HEX_PATTERN = Pattern.compile("\\\\u([0-9A-Fa-f]{4})");
-    private static final Pattern UNICODE_OCT_PATTERN = Pattern.compile("\\\\([0-7]{3})");
-
-    public static String decodeFromNonLossyAscii(String original) {
-        Matcher matcher = UNICODE_HEX_PATTERN.matcher(original);
-        StringBuffer charBuffer = new StringBuffer(original.length());
-        while (matcher.find()) {
-            String match = matcher.group(1);
-            char unicodeChar = (char) Integer.parseInt(match, 16);
-            matcher.appendReplacement(charBuffer, Character.toString(unicodeChar));
-        }
-        matcher.appendTail(charBuffer);
-        String parsedUnicode = charBuffer.toString();
-
-        matcher = UNICODE_OCT_PATTERN.matcher(parsedUnicode);
-        charBuffer = new StringBuffer(parsedUnicode.length());
-        while (matcher.find()) {
-            String match = matcher.group(1);
-            char unicodeChar = (char) Integer.parseInt(match, 8);
-            matcher.appendReplacement(charBuffer, Character.toString(unicodeChar));
-        }
-        matcher.appendTail(charBuffer);
-        return charBuffer.toString();
     }
 }

@@ -1,6 +1,7 @@
 package com.surefiz.fcm;
 
 import android.app.ActivityManager;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -87,11 +88,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         myApplicationClass.chatListNotification.add(conversation);
                         LoginShared.setWeightFromNotification(this, "2");
                     }
-                } /*else if (jObject.optInt("pushType") == 3) {
-                    LoginShared.setWeightFromNotification(this, "3");
-                } else if (jObject.optInt("pushType") == 4) {
-                    LoginShared.setWeightFromNotification(this, "4");
-                }*/ else if (jObject.optInt("pushType") == 5) {
+                }  else if (jObject.optInt("pushType") == 5) {
                     LoginShared.setWeightFromNotification(this, "5");
                 } else if (jObject.optInt("pushType") == 6) {
                     LoginShared.setWeightFromNotification(this, "6");
@@ -342,12 +339,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setColor(getResources().getColor(R.color.colorPrimary))
-                        .setContentTitle(serverNotification.getTitle())
+                        //.setContentTitle(serverNotification.getTitle())
+                        .setContentTitle(getString(R.string.app_name))
                         .setContentText(serverNotification.getBody())
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(serverNotification.getBody()))
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
+                        .setPriority(Notification.PRIORITY_HIGH)
                         .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
@@ -357,7 +356,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
                     getString(R.string.app_name),
-                    NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager.IMPORTANCE_HIGH);
             notificationManager.createNotificationChannel(channel);
         }
 

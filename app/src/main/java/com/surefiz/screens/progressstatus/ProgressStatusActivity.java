@@ -11,6 +11,7 @@ import android.text.util.Linkify;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +44,12 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
     //9180,9211,9015
     @BindView(R.id.tv_desc)
     TextView tv_desc;
+    @BindView(R.id.tvHeader)
+    TextView tvHeader;
+    @BindView(R.id.rl_progress)
+    LinearLayout rl_progress;
+    @BindView(R.id.view2)
+    View view2;
     @BindView(R.id.btn_dashboard)
     Button btn_dashboard;
     @BindView(R.id.tv_name)
@@ -186,6 +193,14 @@ public class ProgressStatusActivity extends AppCompatActivity implements View.On
             tv_desc.setText(Html.fromHtml(object.optString("progressDetails") + " \n" + progressDetailsLink1));
             Linkify.addLinks(tv_desc, Linkify.WEB_URLS);
             tv_desc.setLinkTextColor(Color.parseColor("#3981F5"));
+        }
+
+        //If content type is equals 14 then the stats will not be shown.
+
+        if (object.optString("content_Type").equals("14")){
+            tvHeader.setVisibility(View.GONE);
+            rl_progress.setVisibility(View.GONE);
+            view2.setVisibility(View.GONE);
         }
         JSONObject jsonObject = object.optJSONObject("baseline");
 

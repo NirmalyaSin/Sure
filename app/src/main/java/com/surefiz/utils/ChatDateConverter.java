@@ -19,7 +19,7 @@ public class ChatDateConverter {
             e.printStackTrace();
         }
 
-        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:mm aa", Locale.US);
+        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:mm");
         df.setTimeZone(TimeZone.getDefault());
         String formattedDate = df.format(date);
 

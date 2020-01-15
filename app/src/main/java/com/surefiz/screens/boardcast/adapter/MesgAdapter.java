@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.surefiz.R;
 import com.surefiz.screens.boardcast.model.BroadcastItem;
 import com.surefiz.screens.chat.ChatConstant;
+import com.surefiz.screens.chat.adapter.ChatAdapter;
+import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MessagDateConverter;
 
 import java.util.ArrayList;
@@ -23,10 +25,13 @@ public class MesgAdapter extends RecyclerView.Adapter<MesgAdapter
     private Context mContext;
     private ArrayList<BroadcastItem> arrayListConversation;
     private boolean firstLoading = true;
+    private OnChatScrollListener onChatScrollListener;
+    private boolean shouldLoadMore=true;
 
-    public MesgAdapter(Context context, ArrayList<BroadcastItem> conversations) {
+    public MesgAdapter(Context context, ArrayList<BroadcastItem> conversations,OnChatScrollListener onChatScrollListener) {
         this.mContext = context;
         this.arrayListConversation = conversations;
+        this.onChatScrollListener = onChatScrollListener;
     }
 
     @NonNull
@@ -46,15 +51,31 @@ public class MesgAdapter extends RecyclerView.Adapter<MesgAdapter
         }
 
 
+        if (LoginShared.getRegistrationDataModel(mContext).getData().getUser().get(0).getUserId().equals(arrayListConversation.get(position).getSenderId())){
+            holder.tvUserName.setText("You");
+        }else {
+            holder.tvUserName.setText(arrayListConversation.get(position).getName());
+        }
         holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
-        holder.textDateTimeLeft.setText(MessagDateConverter.DateConverter(mContext,arrayListConversation.get(position).getDateTime()));
+        holder.textDateTimeLeft.setText(MessagDateConverter.boardDateConverter(mContext,arrayListConversation.get(position).getDateTime()));
+    }
 
-        /*switch (arrayListConversation.get(position).getMessageFrom()){
-            case ChatConstant.CHAT_FROM_SENDER:
-                holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
-                holder.textDateTimeLeft.setText(MessagDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
-                break;
-        }*/
+    public void setLoadMore(boolean shouldLoadMore) {
+        this.shouldLoadMore = shouldLoadMore;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull MesgAdapter.ChatAdapterViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+        int position = holder.getAdapterPosition();
+        if (shouldLoadMore && position == 0) {
+            onChatScrollListener.onScrollToTop(position);
+        }
+    }
+
+    public interface OnChatScrollListener {
+        void onScrollToTop(int scrollPosition);
     }
 
 
@@ -65,11 +86,12 @@ public class MesgAdapter extends RecyclerView.Adapter<MesgAdapter
     }
 
     public class ChatAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView textMessageLeft, texMessageRight,textDateTimeLeft,textDateTimeRight;
+        TextView textMessageLeft,textDateTimeLeft,tvUserName;
         RelativeLayout rlMessageRight, rlMessageLeft;
 
         public ChatAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvUserName = itemView.findViewById(R.id.tvUserName);
             textMessageLeft = itemView.findViewById(R.id.textMessageLeft);
             textDateTimeLeft = itemView.findViewById(R.id.textDateTimeLeft);
         }

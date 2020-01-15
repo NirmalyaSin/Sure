@@ -5,25 +5,31 @@
     android:layout_height="match_parent"
     tools:context=".screens.boardcast.BoardCastActivity">
 
-    <!--<View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.6"
-        android:background="@drawable/splash_image" />-->
-
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/message_board"
+        android:layout_margin="@dimen/_15sdp"
+        android:paddingTop="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_30sdp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/ll_enter_message"
+            android:layout_above="@+id/vwSeparator"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             tools:orientation="vertical" />
 
+
+        <View
+            android:id="@+id/vwSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@drawable/shadow"
+            android:layout_above="@+id/ll_enter_message"/>
 
         <LinearLayout
             android:id="@+id/ll_enter_message"
@@ -35,35 +41,26 @@
 
             <EditText
                 android:id="@+id/et_message"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/white"
                 android:cursorVisible="true"
-                android:hint="Type a messge here..."
+                android:hint="Write your message by typing here"
                 android:inputType="textMultiLine"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/montserrat_regular"
                 android:padding="@dimen/_10sdp"
-                android:textColor="@color/registration_color_black"
-                android:textColorHint="@color/registration_color_black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/colorBlack"
+                android:textSize="@dimen/_11sdp" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/btn_boardcast"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="@dimen/_1sdp"
-                android:background="@color/whiteColor"
-                android:padding="@dimen/_5sdp"
-                android:gravity="center"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Send"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:textColor="@color/registration_color_black"
-                android:textSize="@dimen/_15sdp" />
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/_5sdp"
+                android:src="@drawable/message_submit"/>
         </LinearLayout>
-
     </RelativeLayout>
-
 </RelativeLayout>

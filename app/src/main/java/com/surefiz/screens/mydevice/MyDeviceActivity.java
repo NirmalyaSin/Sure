@@ -263,7 +263,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                         registrationModel.getData().getUser().get(0).setUserMac(replaceScaleIDFormatter(et_id.getText().toString().trim()));
                         LoginShared.setRegistrationDataModel(MyDeviceActivity.this, registrationModel);
 
-                        LoginShared.setUserMacId(Integer.parseInt(replaceScaleIDFormatter(et_id.getText().toString().trim())));
+                        LoginShared.setUserMacId(Long.parseLong(replaceScaleIDFormatter(et_id.getText().toString().trim())));
 
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 

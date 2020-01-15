@@ -1487,7 +1487,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
             String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>"
-                    + "<br>" + "<font color=#24F91D><b> Bone " + boneValue + "%<b></font>";
+                    + "<br>" + "<font color=#24F91D><b> Bone Minerals " + boneValue + "%<b></font>";
             //String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>";
             pieChatBodyComposition.setCenterText(Html.fromHtml(centerText));
             //pieChatBodyComposition.setCenterText("Muscle " + muscelValue + "%" + "\nFat " + fatValue + "%");

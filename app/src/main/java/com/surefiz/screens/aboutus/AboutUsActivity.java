@@ -20,8 +20,8 @@ public class AboutUsActivity extends BaseActivity {
         view = View.inflate(this, R.layout.activity_about_us, null);
         addContentView(view);
         viewBind();
-        setHeaderView();
         url = getIntent().getStringExtra("url");
+        setHeaderView();
         loadUrl();
     }
 
@@ -37,6 +37,19 @@ public class AboutUsActivity extends BaseActivity {
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         rlUserSearch.setVisibility(View.GONE);
+
+        if (url.contains("Login")){
+            rl_back.setVisibility(View.VISIBLE);
+        }else {
+            rl_back.setVisibility(View.GONE);
+        }
+
+        rl_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void loadUrl() {

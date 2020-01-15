@@ -13,6 +13,9 @@ public class BroadcastItem{
 	@SerializedName("message")
 	private String message;
 
+	@SerializedName("senderId")
+	private String senderId;
+
 	@SerializedName("messageFrom")
 	private String messageFrom;
 
@@ -46,5 +49,13 @@ public class BroadcastItem{
 
 	public String getMessageFrom(){
 		return messageFrom;
+	}
+
+	public String getSenderId() {
+		return senderId;
+	}
+
+	public void setSenderId(String senderId) {
+		this.senderId = senderId;
 	}
 }

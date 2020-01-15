@@ -59,6 +59,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     private TextView tvUserName;
     private ImageLoader imageLoader;
     private CircleImageView ivUserImage;
+    private int saveMessageCount = 0;
 
     public static String encodeToNonLossyAscii(String original) {
         Charset asciiCharset = Charset.forName("US-ASCII");
@@ -245,8 +246,14 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         Collections.reverse(response.body().getData().getConversations());
                         arrayListConversation.addAll(0, response.body().getData().getConversations());
 
-                        mChatAdapter.notifyDataSetChanged();
+                        if (saveMessageCount < arrayListConversation.size()) {
+                            mChatAdapter.setLoadMore(true);
+                        } else {
+                            mChatAdapter.setLoadMore(false);
+                        }
 
+                        saveMessageCount = arrayListConversation.size();
+                        mChatAdapter.notifyDataSetChanged();
                         System.out.println("conversationSize: " + arrayListConversation.size());
                         moveToEnd();
                         /*if (oldPagination == 0) {
@@ -289,7 +296,10 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
             @Override
             public void run() {
                 if (oldPagination == 0) {
-                    recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                    if (arrayListConversation.size() > 25) {
+                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                    }
+                    //recyclerView.smoothScrollToPosition(1);
                 } else {
                     if (arrayListConversation.size() % 25 > 0) {
                         recyclerView.smoothScrollToPosition(arrayListConversation.size() - arrayListConversation.size() % 25 - 1);
@@ -352,7 +362,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         Intent loginIntent = new Intent(ChatActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
                     }

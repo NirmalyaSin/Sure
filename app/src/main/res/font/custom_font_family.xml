@@ -12,4 +12,12 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/roboto_bold" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/dancing_script" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/montserrat_regular" />
 </font-family>

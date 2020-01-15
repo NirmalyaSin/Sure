@@ -298,7 +298,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         unregisterReceiver(wifiReceiver);
         final String scaleName = "WS915_V2.6_V1.5-";
         //int scaleId = LoginShared.getScaleUserId(this);
-        int scaleId = LoginShared.getUserMacId(this);
+        long scaleId = LoginShared.getUserMacId(this);
         String networkSSID = scaleName + scaleId;
         //String networkSSID = "";
         ScanResult scanResult = null;

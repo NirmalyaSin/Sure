@@ -461,7 +461,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_BroadcastMessage)
     Call<Message> call_BroadcastMessageApi(@Header("x-authorization") String token,
-                                           @Field("senderId") String senderId);
+                                           @Field("senderId") String senderId,
+                                           @Field("pagination") String pagination);
 
     @FormUrlEncoded
     @POST(CHANGEPASSWORD)

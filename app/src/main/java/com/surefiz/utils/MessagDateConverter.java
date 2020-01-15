@@ -37,6 +37,34 @@ public class MessagDateConverter {
         return formattedDate;
     }
 
+    public static String boardDateConverter(Context mContext, String s) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date = null;
+        try {
+            date = sdf.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yy | HH:mm");
+        //boolean use24HourClock = DateFormat.is24HourFormat(mContext);
+        /*if (use24HourClock) {
+            df = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+        } else {
+            df = new SimpleDateFormat("MMM dd, yyyy HH:mm aa");
+        }*/
+
+        df.setTimeZone(TimeZone.getDefault());
+        String formattedDate = df.format(date);
+
+        return formattedDate;
+    }
+
 
     public static String DateConverterForNotification(String dateStr, String time, String notificationType) {
 

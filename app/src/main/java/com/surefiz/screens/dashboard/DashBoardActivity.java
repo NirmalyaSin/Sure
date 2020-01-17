@@ -206,14 +206,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         setRecyclerViewItem();
         //callContactsApi();
-
-        checkDate();
-    }
-
-    private void checkDate() {
-        //String dateStr="2019-12-30 19:54:51";
-        String dateStr="Dec 30, 2019 19:54";
-        System.out.println("currentDate: "+ChatDateConverter.DateConverter(dateStr));
     }
 
     private String getAppVersion() {

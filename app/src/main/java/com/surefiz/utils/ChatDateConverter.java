@@ -10,13 +10,22 @@ public class ChatDateConverter {
 
     public static String DateConverter(String s){
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+        //SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
         try {
             date = sdf.parse(s);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+
+            sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            try {
+                date = sdf.parse(s);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
         SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:mm");

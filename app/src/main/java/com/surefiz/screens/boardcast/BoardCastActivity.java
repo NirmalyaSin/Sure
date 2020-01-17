@@ -128,7 +128,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
                             arrayListConversation.clear();
                             arrayListConversation.addAll(response.body().getData().getBroadcast());
-                            Collections.reverse(arrayListConversation);
+                            //Collections.reverse(arrayListConversation);
 
                             if (saveMessageCount < arrayListConversation.size()) {
                                 mesgAdapter.setLoadMore(true);
@@ -139,7 +139,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
 
                             Log.d("@@ListSize : ", "" + arrayListConversation.size());
                             mesgAdapter.notifyDataSetChanged();
-                            moveToEnd();
+                            //moveToEnd();
                         }
 
                         //myApplicationClass.chatListNotification.clear();

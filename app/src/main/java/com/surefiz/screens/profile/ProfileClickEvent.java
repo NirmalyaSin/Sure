@@ -145,7 +145,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
-
     private void addHeightListAndCall(String change) {
         heightList.clear();
         if (change.equals("INCH")) {
@@ -509,7 +508,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 break;
             case R.id.iv_edit:
                 activity.iv_plus_add_image.setVisibility(View.VISIBLE);
-                activity.tvUserImageHint.setVisibility(View.GONE);
+                activity.tvUserImageHint.setVisibility(View.VISIBLE);
                 activity.btn_register.setVisibility(View.VISIBLE);
                 activity.btn_cancel.setVisibility(View.VISIBLE);
                 activity.iv_edit.setVisibility(View.GONE);

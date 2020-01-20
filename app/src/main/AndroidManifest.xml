@@ -238,6 +238,13 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <receiver android:name=".receivers.AlarmReceiver" />
+
+        <!--<meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/app_icon_notification" />-->
+        <!--<meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/blue" />-->
     </application>
 
 </manifest>

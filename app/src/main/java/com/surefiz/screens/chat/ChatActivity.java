@@ -60,6 +60,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     private ImageLoader imageLoader;
     private CircleImageView ivUserImage;
     private int saveMessageCount = 0;
+    private boolean isMessageSent = false;
 
     public static String encodeToNonLossyAscii(String original) {
         Charset asciiCharset = Charset.forName("US-ASCII");
@@ -295,16 +296,22 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (oldPagination == 0) {
-                    if (arrayListConversation.size() > 25) {
-                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
-                    }
-                    //recyclerView.smoothScrollToPosition(1);
+
+                if (isMessageSent) {
+                    recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                    isMessageSent = false;
                 } else {
-                    if (arrayListConversation.size() % 25 > 0) {
-                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - arrayListConversation.size() % 25 - 1);
+                    if (oldPagination == 0) {
+                        if (arrayListConversation.size() > 25) {
+                            recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                        }
+                        //recyclerView.smoothScrollToPosition(1);
                     } else {
-                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 25 - 1);
+                        if (arrayListConversation.size() % 25 > 0) {
+                            recyclerView.smoothScrollToPosition(arrayListConversation.size() - arrayListConversation.size() % 25 - 1);
+                        } else {
+                            recyclerView.smoothScrollToPosition(arrayListConversation.size() - 25 - 1);
+                        }
                     }
                 }
             }
@@ -354,6 +361,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                 if (response.body().getStatus() != null) {
                     if (response.body().getStatus() == 1) {
                         oldPagination = INITIAL_PAGINATION;
+                        isMessageSent = true;
                         callChatListApi(receiver_id, INITIAL_PAGINATION);
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ChatActivity.this);

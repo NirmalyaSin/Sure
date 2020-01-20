@@ -349,6 +349,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setPriority(Notification.PRIORITY_HIGH)
                         .setContentIntent(pendingIntent);
 
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //notificationBuilder.setSmallIcon(R.drawable.ic_stat_ac_unit);
+            notificationBuilder.setSmallIcon(R.drawable.ic_notification);
+        }
+
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 

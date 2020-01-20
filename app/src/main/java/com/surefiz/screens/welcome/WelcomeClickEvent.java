@@ -48,7 +48,8 @@ public class WelcomeClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.txt_learn_more:
-                String urlvalue = "https://www.surefiz.com/InShort";
+                //String urlvalue = "https://www.surefiz.com/InShort";
+                String urlvalue = "https://www.surefiz.com/Home/landing";
                 Intent learnmoreintent = new Intent(welcomeActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);
                 learnmoreintent.putExtra("menu", false);

@@ -81,7 +81,7 @@ have the primary user registered before you login.</string>
     <string name="sub_user_sign_up_success">You have signed up successfully. For you to start using the service, please have the primary user to
 complete his/her registration process.</string>
     <string name="login"><u>Login</u></string>
-    <string name="press_to_upload">Press the save button to update the profile image</string>
+    <string name="press_to_upload">Press update button to update the profile image</string>
     <string name="title_activity_login_new">LoginNewActivity</string>
     <string name="message_board">Message Board</string>
     <string name="add_friend">Add Friend</string>

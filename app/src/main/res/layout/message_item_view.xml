@@ -20,7 +20,7 @@
                 android:layout_toEndOf="@+id/textDateTimeLeft"
                 android:text="Name"
                 android:fontFamily="@font/dancing_script"
-                android:textColor="@color/blue"
+                android:textColor="@color/broad_cast_blue"
                 android:textSize="@dimen/_12sdp" />
 
             <TextView
@@ -33,7 +33,7 @@
                 android:padding="@dimen/_1sdp"
                 android:layout_marginLeft="@dimen/_4sdp"
                 android:text="Time"
-                android:textColor="@color/hintColor"
+                android:textColor="@color/broad_cast_time"
                 android:textSize="@dimen/_9sdp" />
     </RelativeLayout>
 
@@ -47,6 +47,6 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/login_edit_rounded_corner_grey"
         android:fontFamily="@font/dancing_script"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/broad_cast_text"
         android:textSize="@dimen/_12sdp" />
 </LinearLayout>

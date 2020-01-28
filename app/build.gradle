@@ -7,8 +7,8 @@ android {
         applicationId "com.surefiz"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 14
-        versionName "2.1.3"
+        versionCode 15
+        versionName "2.1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

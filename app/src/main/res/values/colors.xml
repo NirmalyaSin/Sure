@@ -39,4 +39,8 @@
     <color name="colorBlack">#000000</color>
     <color name="accountAbilityTransparent">#50000000</color>
     <color name="opacity_color">#451E282E</color>
+    <color name="broad_cast_blue">#3BA4EC</color>
+    <color name="broad_cast_gray">#F0F0F0</color>
+    <color name="broad_cast_time">#6B6C81</color>
+    <color name="broad_cast_text">#5A5963</color>
 </resources>

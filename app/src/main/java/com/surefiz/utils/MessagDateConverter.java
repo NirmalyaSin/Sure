@@ -51,18 +51,9 @@ public class MessagDateConverter {
 
 
 
-        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yy | HH:mm");
-        //boolean use24HourClock = DateFormat.is24HourFormat(mContext);
-        /*if (use24HourClock) {
-            df = new SimpleDateFormat("MMM dd, yyyy HH:mm");
-        } else {
-            df = new SimpleDateFormat("MMM dd, yyyy HH:mm aa");
-        }*/
-
+        SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy | HH:mm");
         df.setTimeZone(TimeZone.getDefault());
-        String formattedDate = df.format(date);
-
-        return formattedDate;
+        return df.format(date);
     }
 
 
@@ -72,7 +63,7 @@ public class MessagDateConverter {
         if (notificationType.equalsIgnoreCase("4")) {
             sdf = new SimpleDateFormat("MMM dd HH:mm");
         } else {
-            sdf = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+            sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         }
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
@@ -86,10 +77,27 @@ public class MessagDateConverter {
         if (notificationType.equalsIgnoreCase("4")) {
             df = new SimpleDateFormat("MMM dd, HH:mm");
         } else {
-            df = new SimpleDateFormat("dd/MM/yyy, HH:mm:ss");
+            df = new SimpleDateFormat("dd/MM/yyyy, HH:mm:ss");
         }
         df.setTimeZone(TimeZone.getDefault());
         String formattedDate = df.format(date);
+
+        return formattedDate;
+    }
+
+    public static String getConvertedNotificationDate(String s){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date = null;
+        try {
+            date = sdf.parse(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        sdf.setTimeZone(TimeZone.getDefault());
+        String formattedDate = sdf.format(date);
 
         return formattedDate;
     }

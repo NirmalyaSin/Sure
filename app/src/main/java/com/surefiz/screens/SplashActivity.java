@@ -12,7 +12,6 @@ import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.boardcast.BoardCastActivity;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
-import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
@@ -26,6 +25,7 @@ import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
+import com.surefiz.utils.MessagDateConverter;
 import com.surefiz.utils.MethodUtils;
 
 import org.json.JSONException;
@@ -140,19 +140,21 @@ public class SplashActivity extends AppCompatActivity {
                 String dateStr = getServerDate + " " + getServerTime;
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-                DateFormat dateFormat1 = new SimpleDateFormat("MM/dd/yyyy");
+                /*DateFormat dateFormat1 = new SimpleDateFormat("MM/dd/yyyy");
 
-                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));*/
 
                 try {
-                    Date date = dateFormat.parse(dateStr);
-                    dateFormat.setTimeZone(TimeZone.getDefault());
+                    Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
+
+                    /*Date date = dateFormat.parse(dateStr);
+                    dateFormat.setTimeZone(TimeZone.getDefault());*/
                     Date currentDate = new Date();
                     long diff = currentDate.getTime() - date.getTime();
                     int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
                     //if (dateFormat1.format(currentDate).equals(getServerDate)) {
                     int diffSecond = (int) (diff / 1000);
-                    if (diffSecond < 180) {
+                    if (diffSecond < 120) {
                         Intent intent = new Intent(this, WeightDetailsActivity.class);
                         intent.putExtra("timerValue", diffSecond);
                         intent.putExtra("fromPush", "1");

@@ -45,7 +45,8 @@ public class ApiList {
     public static final String REMOVE_ACCOUNT_USER = "ApiServices/Remove_accuser";
     public static final String UPDATE_USER_DEVICE_INFO = "ApiServices/UpdateUserDeviceInfo";
     public static final String API_POST_REMOVE_REMINDER = "ApiServices/Remove_reminder";
-    public static final String API_BroadcastMessage = "ApiServices/ShowBroadcastMessage";
+    //public static final String API_BroadcastMessage = "ApiServices/ShowBroadcastMessage";
+    public static final String API_BroadcastMessage = "ApiServices/showBroadcastMessage_test";
 
     public static final String API_ADD_SOCIAL = "ApiServices/Add_social";
     public static final String API_REMOVE_SOCIAL = "ApiServices/Remove_social";

@@ -110,6 +110,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
         super.onViewAttachedToWindow(holder);
 
         int position = holder.getAdapterPosition();
+
+        if (firstLoading&& position == 0){
+            firstLoading=false;
+            return;
+        }
+
         if (shouldLoadMore && position == 0) {
             mOnChatScrollListener.onScrollToTop(position);
         }

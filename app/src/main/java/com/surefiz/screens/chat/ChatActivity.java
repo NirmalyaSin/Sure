@@ -1,8 +1,11 @@
 package com.surefiz.screens.chat;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -143,19 +146,51 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
             }
         });
 
-        handler.postDelayed(new Runnable() {
+        /*handler.postDelayed(new Runnable() {
             public void run() {
-                /*draftModelArrayList.clear();
-                getJsonData();*/
+                *//*draftModelArrayList.clear();
+                getJsonData();*//*
                 if (myApplicationClass.chatListNotification.size() > 0) {
                     arrayListConversation.addAll(myApplicationClass.chatListNotification);
+                    saveMessageCount = arrayListConversation.size();
                     mChatAdapter.notifyDataSetChanged();
                     recyclerView.scrollToPosition(arrayListConversation.size() - 1);
                     myApplicationClass.chatListNotification.clear();
                 }
                 handler.postDelayed(this, 500);
             }
-        }, 500);
+        }, 500);*/
+    }
+
+    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setMessage();
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(messageReceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setMessage();
+        registerReceiver(messageReceiver, new IntentFilter("ON_MESSAGE_RECEIVED"));
+
+    }
+
+    private void setMessage() {
+        if (myApplicationClass.chatListNotification.size() > 0) {
+            arrayListConversation.addAll(myApplicationClass.chatListNotification);
+            saveMessageCount = arrayListConversation.size();
+            mChatAdapter.notifyDataSetChanged();
+            recyclerView.scrollToPosition(arrayListConversation.size() - 1);
+            myApplicationClass.chatListNotification.clear();
+        }
     }
 
     private void setRecyclerViewItem() {
@@ -164,10 +199,9 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        mLayoutManager.setStackFromEnd(true);
-        //mLayoutManager.setReverseLayout(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        /*LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mLayoutManager.setStackFromEnd(true);*/
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
@@ -235,19 +269,10 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                             arrayListConversation.clear();
                         }
 
-                        /*if (arrayListConversation.size() == 0) {
-                            Collections.reverse(response.body().getData().getConversations());
-                            arrayListConversation.addAll(0, response.body().getData().getConversations());
-                        } else {
-                            Collections.reverse(arrayListConversation);
-                            arrayListConversation.addAll(response.body().getData().getConversations());
-                            Collections.reverse(arrayListConversation);
-                        }*/
-
                         Collections.reverse(response.body().getData().getConversations());
                         arrayListConversation.addAll(0, response.body().getData().getConversations());
 
-                        if (saveMessageCount < arrayListConversation.size()) {
+                        /*if (saveMessageCount < arrayListConversation.size()) {
                             mChatAdapter.setLoadMore(true);
                         } else {
                             mChatAdapter.setLoadMore(false);
@@ -256,10 +281,17 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         saveMessageCount = arrayListConversation.size();
                         mChatAdapter.notifyDataSetChanged();
                         System.out.println("conversationSize: " + arrayListConversation.size());
+                        moveToEnd();*/
+
+
+                        if (!isMessageSent) {
+                            mChatAdapter.notifyItemRangeChanged(0, arrayListConversation.size());
+                        } else {
+                            mChatAdapter.notifyDataSetChanged();
+                        }
                         moveToEnd();
-                        /*if (oldPagination == 0) {
-                            recyclerView.smoothScrollToPosition(arrayListConversation.size()-1);
-                        }*/
+
+
                         myApplicationClass.chatListNotification.clear();
 
                         if (arrayListConversation.size() == 0) {
@@ -296,6 +328,35 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                if (isMessageSent) {
+                    recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                    isMessageSent = false;
+                    System.out.println("First: " + 1);
+                } else {
+                    if (oldPagination == 0) {
+                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                        System.out.println("First: " + 2);
+                    } else {
+                        ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(arrayListConversation.size() - saveMessageCount - 1, 0);
+                        System.out.println("First: " + 3);
+                    }
+                }
+
+                if (saveMessageCount < arrayListConversation.size()) {
+                    mChatAdapter.setLoadMore(true);
+                } else {
+                    mChatAdapter.setLoadMore(false);
+                }
+
+                saveMessageCount = arrayListConversation.size();
+            }
+        }, 50);
+    }
+
+    /*private void moveToEnd() {
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
                 if (isMessageSent) {
                     recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
@@ -316,7 +377,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                 }
             }
         }, 50);
-    }
+    }*/
 
     public void showNoRecordsDialog(String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
@@ -362,6 +423,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     if (response.body().getStatus() == 1) {
                         oldPagination = INITIAL_PAGINATION;
                         isMessageSent = true;
+                        saveMessageCount = 0;
                         callChatListApi(receiver_id, INITIAL_PAGINATION);
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ChatActivity.this);

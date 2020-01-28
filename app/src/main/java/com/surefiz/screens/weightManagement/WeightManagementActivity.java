@@ -46,7 +46,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     Button btn_submit, btn_accept, btn_decline;
     String units = "", weight = "";
     String[] splited;
-    String isnotification;
+    String isnotification="";
     private LoadingData loader;
     private List<String> weightList = new ArrayList<>();
     private List<String> timeList = new ArrayList<>();
@@ -66,7 +66,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_weight_management, null);
-        isnotification = LoginShared.getWeightFromNotification(this);
+        //isnotification = LoginShared.getWeightFromNotification(this);
 
         addContentView(view);
         loader = new LoadingData(this);
@@ -143,13 +143,13 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     private void addManagementListAndCall() {
 
-        managementList.add("Lose And Mantain Weight");
+        managementList.add("Lose And Maintain Weight");
         managementList.add("Maintain Current Weight");
 
         managementPopup = new WeigtUniversalPopup(WeightManagementActivity.this, managementList, et_weight_managment, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
-                if (value.equals("Lose And Mantain Weight")) {
+                if (value.equals("Lose And Maintain Weight")) {
                     et_weight_managment.setText(managementList.get(0));
 
                     findViewById(R.id.ll_desired_weight_selection).setVisibility(View.VISIBLE);
@@ -756,7 +756,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
-                        MethodUtils.errorMsg(WeightManagementActivity.this, jsObject.getString("message"));
+                        showResponseDialog(jsObject.getString("message"));
+                        /*MethodUtils.errorMsg(WeightManagementActivity.this, jsObject.getString("message"));
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -772,7 +773,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 finish();
                             }
-                        }, GeneralToApp.SPLASH_WAIT_TIME);
+                        }, GeneralToApp.SPLASH_WAIT_TIME);*/
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(WeightManagementActivity.this);
@@ -801,6 +802,32 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             }
         });
 
+    }
+
+    public void showResponseDialog(String message) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(WeightManagementActivity.this);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent loginIntent;
+                if (isnotification.equals("7")) {
+                    loginIntent = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
+                } else {
+                    loginIntent = new Intent(WeightManagementActivity.this, SettingsActivity.class);
+                }
+                startActivity(loginIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
+
+        alertDialog.create();
+
+        alertDialog.show();
     }
 
     private void showAndDismissWeightPopup() {

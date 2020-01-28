@@ -27,6 +27,7 @@ import com.surefiz.screens.notifications.models.NotificationsResponse;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.MessagDateConverter;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -442,10 +443,10 @@ public class NotificationActivity extends BaseActivity implements
                 if (item.getNotificationDate() != null && item.getNotificationTime() != null) {
 //                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-                    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    //dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                     try {
-                        Date date = dateFormat.parse(item.getNotificationDate() + " " + item.getNotificationTime());
-                        dateFormat.setTimeZone(TimeZone.getDefault());
+                        //Date date = dateFormat.parse(item.getNotificationDate() + " " + item.getNotificationTime());
+                        Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(item.getNotificationDate() + " " + item.getNotificationTime()));
                         Date currentDate = new Date();
                         long diff = currentDate.getTime() - date.getTime();
                         int diffSecond = (int) (diff / 1000);

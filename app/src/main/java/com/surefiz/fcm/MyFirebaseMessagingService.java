@@ -26,6 +26,7 @@ import com.surefiz.screens.NotificationHandleClassOnForeground;
 import com.surefiz.screens.accountability.AcountabilityActivity;
 import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.boardcast.BoardCastActivity;
+import com.surefiz.screens.boardcast.model.BroadcastItem;
 import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.chat.model.Conversation;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -87,6 +88,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         conversation.setSenderId(Integer.parseInt(jObject.optString("senderId")));
                         myApplicationClass.chatListNotification.add(conversation);
                         LoginShared.setWeightFromNotification(this, "2");
+
+                        callMessageReceived();
                     }
                 }  else if (jObject.optInt("pushType") == 5) {
                     LoginShared.setWeightFromNotification(this, "5");
@@ -106,7 +109,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else if (jObject.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
                 } else if (jObject.optInt("pushType") == 12) {
-                    LoginShared.setWeightFromNotification(this, "12");
+
+
+                    if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.boardcast.BoardCastActivity")) {
+                            BroadcastItem broadcastItem = new BroadcastItem();
+                            broadcastItem.setDateTime(jObject.optString("dateTime"));
+                            broadcastItem.setSenderId(jObject.optString("senderId"));
+                            broadcastItem.setName(jObject.optString("name"));
+                            broadcastItem.setMessage(jObject.optString("message"));
+                            broadcastItem.setMessageFrom(jObject.optString("messageFrom"));
+                            myApplicationClass.broadcastItemsNotification.add(broadcastItem);
+                            callBroadCastMessageReceived();
+                    }else {
+                        LoginShared.setWeightFromNotification(this, "12");
+                    }
+
                 } else {
                     //LoginShared.setWeightFromNotification(this, "7");
                     LoginShared.setWeightFromNotification(this, "0");
@@ -133,6 +150,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 sendBroadcastToPage(jObject.optInt("pushType"));
             } else if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.chat.ChatActivity")) {
                 //Nothing to do
+            }else if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.boardcast.BoardCastActivity")) {
+                //Nothing to do
             } else {
                 showNotification(remoteMessage.getNotification(), remoteMessage.getData());
             }
@@ -154,6 +173,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void callOTPReceived() {
         Intent intent = new Intent("ON_OTP_RECEIVED");
+        sendBroadcast(intent);
+    }
+
+    private void callMessageReceived() {
+        Intent intent = new Intent("ON_MESSAGE_RECEIVED");
+        sendBroadcast(intent);
+    }
+
+
+    private void callBroadCastMessageReceived() {
+        Intent intent = new Intent("ON_BROAD_CAST_MESSAGE_RECEIVED");
         sendBroadcast(intent);
     }
     // [END receive_message]

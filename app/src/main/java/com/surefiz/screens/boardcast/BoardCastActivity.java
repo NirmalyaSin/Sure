@@ -235,10 +235,14 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
                     System.out.println("First: " + 1);
                 } else {
                     if (oldPagination == 0) {
-                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                        if (arrayListConversation.size() > 0) {
+                            recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                        }
                         System.out.println("First: " + 2);
                     } else {
-                        ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(arrayListConversation.size() - saveMessageCount - 1, 0);
+                        if (arrayListConversation.size() > 0) {
+                            ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(arrayListConversation.size() - saveMessageCount - 1, 0);
+                        }
                         System.out.println("First: " + 3);
                     }
                 }

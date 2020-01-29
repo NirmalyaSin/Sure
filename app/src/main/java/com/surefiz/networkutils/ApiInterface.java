@@ -346,7 +346,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST(API_SEND_CHAT)
-    Call<ChatListResponse> call_SendChatApi(@Header("x-authorization") String token,
+    Call<ResponseBody> call_SendChatApi(@Header("x-authorization") String token,
                                             @Field("senderId") String senderId,
                                             @Field("receiverId") String receiverId,
                                             @Field("chatmessage") String chatmessage);

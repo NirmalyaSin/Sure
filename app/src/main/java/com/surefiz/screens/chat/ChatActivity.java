@@ -36,11 +36,14 @@ import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
 import com.surefiz.utils.progressloader.LoadingData;
 
+import org.json.JSONObject;
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,6 +67,12 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     private CircleImageView ivUserImage;
     private int saveMessageCount = 0;
     private boolean isMessageSent = false;
+    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setMessage();
+        }
+    };
 
     public static String encodeToNonLossyAscii(String original) {
         Charset asciiCharset = Charset.forName("US-ASCII");
@@ -162,13 +171,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         }, 500);*/
     }
 
-    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            setMessage();
-        }
-    };
-
     @Override
     public void onPause() {
         super.onPause();
@@ -224,7 +226,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
             //Replace Old value with newer one.
             oldPagination = newPagination;
             //Show loader
-            //loadingData.show_with_label("Loading...");
+            loadingData.show_with_label("Loading...");
             //Call API Using Retrofit
             Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
             final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -334,10 +336,14 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     System.out.println("First: " + 1);
                 } else {
                     if (oldPagination == 0) {
-                        recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                        if (arrayListConversation.size() > 0) {
+                            recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
+                        }
                         System.out.println("First: " + 2);
                     } else {
-                        ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(arrayListConversation.size() - saveMessageCount - 1, 0);
+                        if (arrayListConversation.size() > 0) {
+                            ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(arrayListConversation.size() - saveMessageCount - 1, 0);
+                        }
                         System.out.println("First: " + 3);
                     }
                 }
@@ -353,31 +359,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         }, 50);
     }
 
-    /*private void moveToEnd() {
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                if (isMessageSent) {
-                    recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
-                    isMessageSent = false;
-                } else {
-                    if (oldPagination == 0) {
-                        if (arrayListConversation.size() > 25) {
-                            recyclerView.smoothScrollToPosition(arrayListConversation.size() - 1);
-                        }
-                        //recyclerView.smoothScrollToPosition(1);
-                    } else {
-                        if (arrayListConversation.size() % 25 > 0) {
-                            recyclerView.smoothScrollToPosition(arrayListConversation.size() - arrayListConversation.size() % 25 - 1);
-                        } else {
-                            recyclerView.smoothScrollToPosition(arrayListConversation.size() - 25 - 1);
-                        }
-                    }
-                }
-            }
-        }, 50);
-    }*/
 
     public void showNoRecordsDialog(String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
@@ -409,23 +390,44 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         Log.d("@@Sent-Chat : ", "token = " + "\nsenderId =" + senderId
                 + "\nreceiverId = " + receiver_id + "\nMessage = " + message);
 
-        final Call<ChatListResponse> call_SendChatApi = apiInterface
+        final Call<ResponseBody> call_SendChatApi = apiInterface
                 .call_SendChatApi(token, senderId, receiver_id, message);
 
-        call_SendChatApi.enqueue(new Callback<ChatListResponse>() {
+        call_SendChatApi.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ChatListResponse> call, Response<ChatListResponse> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                   /*  if (loadingData != null && loadingData.isShowing()) {
                         loadingData.dismiss();
                     }*/
 
-                if (response.body().getStatus() != null) {
-                    if (response.body().getStatus() == 1) {
-                        oldPagination = INITIAL_PAGINATION;
+                try {
+                    String responseString = response.body().string();
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    if (jsonObject.optInt("status") == 1) {
+                            /*oldPagination = INITIAL_PAGINATION;
+                            isMessageSent = true;
+                            saveMessageCount = 0;
+                            callChatListApi(receiver_id, INITIAL_PAGINATION);*/
+
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+
+                        if (jsObject.getJSONArray("sendMsg").length() > 0) {
+                            Conversation conversation = new Conversation();
+                            conversation.setSenderId(Integer.valueOf(jsObject.getJSONArray("sendMsg").getJSONObject(0).getString("senderId")));
+                            conversation.setReciverId(Integer.valueOf(jsObject.getJSONArray("sendMsg").getJSONObject(0).getString("receiverId")));
+                            conversation.setMessageFrom(jsObject.getJSONArray("sendMsg").getJSONObject(0).getString("messageFrom"));
+                            conversation.setMessage(jsObject.getJSONArray("sendMsg").getJSONObject(0).getString("message"));
+                            conversation.setDateTime(jsObject.getJSONArray("sendMsg").getJSONObject(0).getString("dateTime"));
+                            arrayListConversation.add(conversation);
+                        }
+
                         isMessageSent = true;
-                        saveMessageCount = 0;
-                        callChatListApi(receiver_id, INITIAL_PAGINATION);
-                    } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
+                        mChatAdapter.notifyDataSetChanged();
+                        moveToEnd();
+
+                        editTextMessage.setText("");
+
+                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ChatActivity.this);
                         LoginShared.destroySessionTypePreference(ChatActivity.this);
                         LoginShared.setDeviceToken(ChatActivity.this, deviceToken);
@@ -434,13 +436,17 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finishAffinity();
                     } else {
-                        MethodUtils.errorMsg(ChatActivity.this, response.body().getData().getMessage());
+                        JSONObject jsObject = jsonObject.getJSONObject("data");
+                        MethodUtils.errorMsg(ChatActivity.this, jsObject.getString("message"));
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    MethodUtils.errorMsg(ChatActivity.this, getString(R.string.error_occurred));
                 }
             }
 
             @Override
-            public void onFailure(Call<ChatListResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (loadingData != null && loadingData.isShowing())
                     loadingData.dismiss();
                 //    MethodUtils.errorMsg(ChatActivity.this, getString(R.string.error_occurred));

@@ -131,8 +131,6 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
         SpacesItemDecoration decoration = new SpacesItemDecoration(20);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        //LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        //mLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
@@ -180,23 +178,19 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
                                 Collections.reverse(response.body().getData().getBroadcast());
                                 arrayListConversation.addAll(0, response.body().getData().getBroadcast());
                             }
-                            //Collections.reverse(arrayListConversation);
-                            /*if (saveMessageCount < arrayListConversation.size()) {
-                                mesgAdapter.setLoadMore(true);
-                            } else {
-                                mesgAdapter.setLoadMore(false);
-                            }*/
 
+                           // Log.d("@@ListSize : ", "" + arrayListConversation.size());
 
-                            Log.d("@@ListSize : ", "" + arrayListConversation.size());
-
-                            // mesgAdapter.notifyDataSetChanged();
                             if (!isMessageSent) {
                                 mesgAdapter.notifyItemRangeChanged(0, arrayListConversation.size());
                             } else {
                                 mesgAdapter.notifyDataSetChanged();
                             }
                             moveToEnd();
+
+                            if (response.body().getData().getBroadcast().size() == 0) {
+                                MethodUtils.errorMsg(BoardCastActivity.this, response.body().getData().getMessage());
+                            }
                         }
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(BoardCastActivity.this);
@@ -248,7 +242,11 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
                 }
 
                 if (saveMessageCount < arrayListConversation.size()) {
-                    mesgAdapter.setLoadMore(true);
+                    if (arrayListConversation.size() > 24) {
+                        mesgAdapter.setLoadMore(true);
+                    } else {
+                        mesgAdapter.setLoadMore(false);
+                    }
                 } else {
                     mesgAdapter.setLoadMore(false);
                 }
@@ -270,7 +268,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void callBoardCastApi() {
-        loader.show_with_label("Loading");
+        //loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -293,12 +291,9 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
                         BroadcastItem broadcastItem = gson.fromJson(jsObject.toString(), BroadcastItem.class);
 
                         arrayListConversation.add(broadcastItem);
-                        //oldPagination = INITIAL_PAGINATION;
                         isMessageSent = true;
                         mesgAdapter.notifyDataSetChanged();
                         moveToEnd();
-                        //saveMessageCount = 0;
-                        //callChatListApi(receiver_id, INITIAL_PAGINATION);
                         et_message.setText("");
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {

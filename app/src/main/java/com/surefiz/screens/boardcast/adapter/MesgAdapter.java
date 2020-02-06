@@ -46,14 +46,9 @@ public class MesgAdapter extends RecyclerView.Adapter<MesgAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapterViewHolder holder, int position) {
-        /*if (position == 0){
-            Log.d("@@getItemCount : ", "fist-loading = " + firstLoading);
-            firstLoading = true;
-        }*/
 
         String processedMessage = "";
         try {
-            //processedMessage = URLDecoder.decode(arrayListConversation.get(position).getMessage(), "utf-8");
             processedMessage = EmojiFormatter.decodeFromNonLossyAscii(arrayListConversation.get(position).getMessage());
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +61,6 @@ public class MesgAdapter extends RecyclerView.Adapter<MesgAdapter
         }else {
             holder.tvUserName.setText(arrayListConversation.get(position).getName());
         }
-        //holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
         holder.textMessageLeft.setText(processedMessage);
         holder.textDateTimeLeft.setText(MessagDateConverter.boardDateConverter(mContext,arrayListConversation.get(position).getDateTime()));
     }
@@ -103,8 +97,6 @@ public class MesgAdapter extends RecyclerView.Adapter<MesgAdapter
 
     public class ChatAdapterViewHolder extends RecyclerView.ViewHolder {
         TextView textMessageLeft,textDateTimeLeft,tvUserName;
-        RelativeLayout rlMessageRight, rlMessageLeft;
-
         public ChatAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUserName = itemView.findViewById(R.id.tvUserName);

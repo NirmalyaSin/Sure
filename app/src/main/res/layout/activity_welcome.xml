@@ -48,14 +48,14 @@
             android:weightSum="2">
 
             <TextView
-                android:id="@+id/tv_signup"
+                android:id="@+id/txt_login"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"
                 android:background="@drawable/login_button_gradient"
                 android:gravity="center"
                 android:fontFamily="@font/roboto_medium"
-                android:text="New Sign up"
+                android:text="@string/login"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="normal" />
@@ -92,12 +92,12 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txt_login"
+            android:id="@+id/tv_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:gravity="center"
-            android:text="@string/login"
+            android:text="@string/sign_up"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:alpha="0.7"

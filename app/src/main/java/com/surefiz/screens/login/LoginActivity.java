@@ -80,8 +80,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ImageView iv_twiter;
     @BindView(R.id.tv_register)
     TextView tv_register;
-    /*@BindView(R.id.tvOR)
-    TextView tvOR;*/
     private CallbackManager callbackManager;
     private LoginClickEvent loginClickEvent;
     private GoogleApiClient googleApiClient;
@@ -101,15 +99,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // REMOVE
         //editEmail.setText("kannanrasimo12@gmail.com");
         //editPassword.setText("12345678");
-        //editEmail.setText("pranay2@capitalnumbers.com");
-        //editEmail.setText("kannanrasimo12@gmail.com");
-        //editPassword.setText("12345678");
-
-
-        //editEmail.setText("john103@surefiz.com");
-        //editPassword.setText("123456");
-        //editEmail.setText("khokhar@rasimo.com");
-        //editPassword.setText("12345678");
 
         startFireBase();
 
@@ -117,9 +106,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void startFireBase() {
-
-        //googleSignInButton = findViewById(R.id.googleSignInButton);
-
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.web_client_id))//you can also use R.string.default_web_client_id
@@ -130,18 +116,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
-
-        /*googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Auth.GoogleSignInApi.signOut(googleApiClient);
-
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(intent, RC_SIGN_IN_GOOGLE);
-            }
-        });*/
     }
 
 
@@ -176,7 +150,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     callFacebooklogin();
                 }
-//                MethodUtils.errorMsg(LoginActivity.this, "Under Development");
                 break;
 
             case R.id.googleSignInButton:
@@ -247,28 +220,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Log.d("@@LoginDataSocial : ", jsonObject.toString());
 
                     loginClickEvent.navigateAfterLogin(responseString,true);
-
-                    /*String responseString = response.body().string();
-                    Gson gson = new Gson();
-                    RegistrationModel registrationModel;
-
-                    JSONObject jsonObject = new JSONObject(responseString);
-                    Log.d("@@LoginData : ", jsonObject.toString());
-
-                    if (jsonObject.optInt("status") == 1) {
-                        Intent intent = new Intent(LoginActivity.this, DashBoardActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-
-                    } else {
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
-                        MethodUtils.errorMsg(LoginActivity.this, jsObject.getString("message"));
-                    }*/
-
-
-
-
 
                 } catch (Exception e) {
                     MethodUtils.errorMsg(LoginActivity.this, getString(R.string.error_occurred));
@@ -349,8 +300,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
-        //Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
-        //loginwithSocial(socialName, socialId, getString(R.string.fb_login_type));
         callapiforSocaillogin(socialId, socialEmail, socialName, getString(R.string.fb_login_type), socialProfileImage,
                 "", "", currentAccessToken.toString());
     }

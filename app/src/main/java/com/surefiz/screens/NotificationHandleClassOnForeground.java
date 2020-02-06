@@ -23,9 +23,7 @@ public class NotificationHandleClassOnForeground extends Activity {
 
         String dateStr = getIntent().getStringExtra("lastServerUpdateDate") + " " + getIntent().getStringExtra("lastServerUpdateTime");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
         try {
             Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
@@ -50,13 +48,6 @@ public class NotificationHandleClassOnForeground extends Activity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
-            /*} else {
-                Intent intent = new Intent(this, DashBoardActivity.class);
-                intent.putExtra("expired", "1");
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }*/
         } catch (ParseException e) {
             e.printStackTrace();
         }

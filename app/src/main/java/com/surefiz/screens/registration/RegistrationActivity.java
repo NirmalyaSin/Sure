@@ -212,14 +212,6 @@ public class RegistrationActivity extends AppCompatActivity {
         setTermsAndCondition();
         registrationClickEvent = new RegistrationClickEvent(this);
 
-        /*if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
-            btn_register.setText(getResources().getString(R.string.register));
-            tv_registration.setText(getResources().getString(R.string.surefiz_register));
-        } else {
-            btn_register.setText(getResources().getString(R.string.complete_sign_up));
-            tv_registration.setText(getResources().getString(R.string.surefiz_signup));
-        }*/
-
         setTextFormatter();
     }
 
@@ -320,8 +312,6 @@ public class RegistrationActivity extends AppCompatActivity {
             tv_upload.setVisibility(View.VISIBLE);
             linearLayout1.setVisibility(View.VISIBLE);
 
-            //tv_scale.setVisibility(View.GONE);
-            //rl_scale.setVisibility(View.GONE);
 
             //----------Addited By Arup---------//
 
@@ -338,10 +328,7 @@ public class RegistrationActivity extends AppCompatActivity {
             ll_zip_code.setVisibility(View.GONE);
             ll_signup_member.setVisibility(View.GONE);
 
-            //btn_register.setText("Update");
-            //btn_register.setText("Register");
             isInCompleteProfile = true;
-            //btn_skip_config.setVisibility(View.GONE);
 
 
             getProfileDataAndSet();
@@ -355,10 +342,7 @@ public class RegistrationActivity extends AppCompatActivity {
             iv_plus_add_image.setVisibility(View.VISIBLE);
             tv_upload.setVisibility(View.VISIBLE);
             linearLayout1.setVisibility(View.VISIBLE);
-            //btn_skip_config.setVisibility(View.GONE);
 
-            //tv_scale.setVisibility(View.VISIBLE);
-            //rl_scale.setVisibility(View.VISIBLE);
         }
 
 
@@ -419,10 +403,6 @@ public class RegistrationActivity extends AppCompatActivity {
         final Call<ResponseBody> call_view_profile = apiInterface.call_viewprofileApi(registrationModel.getData().getToken(),
                 registrationModel.getData().getUser().get(0).getUserId());
 
-
-        /*final Call<ResponseBody> call_view_profile = apiInterface.call_viewprofileApi(LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getToken(),
-                LoginShared.getRegistrationDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserId());*/
-
         System.out.println("@@ProfileInfo :" + call_view_profile);
 
         call_view_profile.enqueue(new Callback<ResponseBody>() {
@@ -478,13 +458,11 @@ public class RegistrationActivity extends AppCompatActivity {
         et_last_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getLastName());
 
         et_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
-        //et_confirm_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
         et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
 
         et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
         et_confirm_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
 
-        //if (!checkIsZeroValue(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender())) {
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("1")) {
             et_gender.setText("Male");
         } else if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserGender().equals("0")) {
@@ -542,8 +520,6 @@ public class RegistrationActivity extends AppCompatActivity {
             tv_registration.setText(getResources().getString(R.string.surefiz_signup));
         }
 
-        //et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
-
         registrationClickEvent.setValuesForListItem(bundle);
         registrationClickEvent.setValuesForWeightSelection(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getIsServerWeight());
         registrationClickEvent.setLifeStyle(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getLifestyle());
@@ -568,6 +544,7 @@ public class RegistrationActivity extends AppCompatActivity {
             et_last_name.setEnabled(false);
             et_email.setEnabled(false);
             //et_confirm_email.setEnabled(false);
+            et_lifestyle.setEnabled(false);
             et_phone.setEnabled(false);
             et_gender.setEnabled(false);
             age.setEnabled(false);

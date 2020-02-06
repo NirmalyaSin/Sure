@@ -25,7 +25,6 @@ import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;
-import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
@@ -46,7 +45,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     Button btn_submit, btn_accept, btn_decline;
     String units = "", weight = "";
     String[] splited;
-    String isnotification="";
+    String isnotification = "";
     private LoadingData loader;
     private List<String> weightList = new ArrayList<>();
     private List<String> timeList = new ArrayList<>();
@@ -185,7 +184,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     private void addSelectionListAndCall() {
         desiredWeightSelectionList.add("I Will Provide The Info");
         //desiredWeightSelectionList.add("I want SureFiz™ to suggest");
-        desiredWeightSelectionList.add("I want "+getResources().getString(R.string.app_name) +" to suggest");
+        desiredWeightSelectionList.add("I want " + getResources().getString(R.string.app_name) + " to suggest");
 
         selectionPopup = new WeigtUniversalPopup(WeightManagementActivity.this, desiredWeightSelectionList, et_desired_weight_selection, new OnWeightCallback() {
             @Override
@@ -370,23 +369,10 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void setData(JSONObject jsnObject) {
-        /*et_weight.setText(jsnObject.optString("desiredWeight"));
-
-        if (jsnObject.optString("timeToLoseWeight").equals("0 Weeks")) {
-            et_time_loss.setText("");
-        } else {
-            et_time_loss.setText(jsnObject.optString("timeToLoseWeight"));
-        }*/
 
         units = jsnObject.optString("preferredUnits");
         weight = et_weight.getText().toString().trim();
         splited = weight.split(" ");
-
-        /*if (units.equalsIgnoreCase("LB")) {
-            addWeightListAndCall("LB");
-        } else {
-            addWeightListAndCall("KG");
-        }*/
 
         if (units.equalsIgnoreCase("0")) {
             addWeightListAndCall("LBS");
@@ -408,12 +394,11 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
         weight_value = jsnObject.optString("desiredWeight");
         time_value = jsnObject.optString("timeToLoseWeight");
-        //maintain_Weight_By_Server = jsnObject.optInt("maintain_Weight_By_Server");
 
 
-        if (jsnObject.optInt("type") == 1) {
+        if (jsnObject.optString("type").equalsIgnoreCase("1")) {
             managementPopup.onWeightCallback.onSuccess(managementList.get(1));
-        } else if (jsnObject.optInt("type") == 2) {
+        } else if (jsnObject.optString("type").equalsIgnoreCase("2")) {
             managementPopup.onWeightCallback.onSuccess(managementList.get(0));
         }
 
@@ -446,13 +431,21 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             }
         }
 
-        if (!weight_value.equalsIgnoreCase("0.0 LBS") &&
+        /*if (!weight_value.equalsIgnoreCase("0.0 LBS") &&
                 !weight_value.equalsIgnoreCase("0 LBS") &&
                 !weight_value.equalsIgnoreCase("0.00 LBS") &&
                 !weight_value.equalsIgnoreCase("0.0 KG") &&
                 !weight_value.equalsIgnoreCase("0 KG") &&
                 !weight_value.equalsIgnoreCase("0.00 KG") &&
                 !weight_value.equalsIgnoreCase("0")) {
+
+            findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
+            findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
+            et_weight.setText(weight_value);
+        }*/
+
+        if (isNonZeroValue(weight_value) &&
+                !jsnObject.optString("type").equalsIgnoreCase("1")) {
 
             findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
             findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
@@ -468,7 +461,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         }
 
 
-        if (jsnObject.optInt("type") == 2 && jsnObject.optInt("maintain_Weight_By_Server") == 1){
+        if (jsnObject.optInt("type") == 2 && jsnObject.optInt("maintain_Weight_By_Server") == 1) {
             if (jsnObject.optString("timeToLoseWeight").equals("0 Weeks")) {
                 et_time_loss.setText("TBD");
             }
@@ -477,6 +470,16 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         }
 
         //et_weight_managment.setText(jsnObject.optString("type"));
+    }
+
+    private boolean isNonZeroValue(String weight_value) {
+        return !weight_value.equalsIgnoreCase("0.0 LBS") ||
+                !weight_value.equalsIgnoreCase("0 LBS") ||
+                !weight_value.equalsIgnoreCase("0.00 LBS") ||
+                !weight_value.equalsIgnoreCase("0.0 KG") ||
+                !weight_value.equalsIgnoreCase("0 KG") ||
+                !weight_value.equalsIgnoreCase("0.00 KG") ||
+                !weight_value.equalsIgnoreCase("0");
     }
 
     private void addPrefferedListAndCall() {

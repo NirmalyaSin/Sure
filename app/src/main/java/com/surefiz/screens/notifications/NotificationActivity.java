@@ -35,7 +35,6 @@ import com.surefiz.utils.progressloader.LoadingData;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,7 +97,7 @@ public class NotificationActivity extends BaseActivity implements
             ll_notification_tab.setVisibility(View.GONE);
             callNotificationListApi("4");
             selectedTab = 4;
-        }else {
+        } else {
             ll_notification_tab.setVisibility(View.VISIBLE);
             txt_stepped.performClick();
             selectedTab = 1;
@@ -441,16 +440,13 @@ public class NotificationActivity extends BaseActivity implements
         switch (item.getNotificationType()) {
             case "1":
                 if (item.getNotificationDate() != null && item.getNotificationTime() != null) {
-//                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-                    //dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     try {
-                        //Date date = dateFormat.parse(item.getNotificationDate() + " " + item.getNotificationTime());
                         Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(item.getNotificationDate() + " " + item.getNotificationTime()));
                         Date currentDate = new Date();
                         long diff = currentDate.getTime() - date.getTime();
                         int diffSecond = (int) (diff / 1000);
-                        if (diffSecond < 100) {
+                        if (diffSecond < 115) {
                             Intent intent = new Intent(this, WeightDetailsActivity.class);
                             intent.putExtra("timerValue", diffSecond);
                             intent.putExtra("fromPush", "1");

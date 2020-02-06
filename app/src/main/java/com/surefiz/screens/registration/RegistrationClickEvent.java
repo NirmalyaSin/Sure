@@ -297,9 +297,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     validationAndApiCall();
                 }
                 break;
-            /*case R.id.rl_back:
-                registrationActivity.onBackPressed();
-                break;*/
             case R.id.profile_image:
                 new OpenCameraOrGalleryDialog(registrationActivity, path -> filePath = path, "0").show();
                 break;
@@ -374,12 +371,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 break;
             case R.id.et_height:
                 hideSoftKeyBoard();
-//                heightList.clear();
-                /*if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
-                    addHeightListAndCall("CM");
-                } else {
-                    addHeightListAndCall("INCH");
-                }*/
                 if (prefferedPopup != null && prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();
                 } else if (genderPopup != null && genderPopup.isShowing()) {
@@ -415,7 +406,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 break;
             case R.id.et_weight:
                 hideSoftKeyBoard();
-//                weightList.clear();
 
                 if (prefferedPopup != null && prefferedPopup.isShowing()) {
                     prefferedPopup.dismiss();
@@ -462,28 +452,15 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     registrationActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            // if (!isFinishing()) {
-                            //showCustomPopupforWeightmanagemnt();
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // showAndDismissManagementPopup();
-                                    //showCustomPopupforWeightmanagemnt();
                                     showAndDismissManagementPopup();
                                 }
                             }, 100);
                         }
                         // }
                     });
-
-
-                   /* new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                           // showAndDismissManagementPopup();
-                            showCustomPopupforWeightmanagemnt();
-                        }
-                    }, 100);*/
                 }
 
                 break;
@@ -540,18 +517,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 showAndDismissLifeStylePopup();
                 break;
 
-            /*case R.id.toolTipScaleId:
-                new SimpleTooltip.Builder(registrationActivity)
-                        .anchorView(v)
-                        .backgroundColor(registrationActivity.getResources().getColor(R.color.whiteColor))
-                        .arrowColor(registrationActivity.getResources().getColor(R.color.whiteColor))
-                        .text("Texto do Tooltip")
-                        .gravity(Gravity.START)
-                        .animated(false)
-                        .transparentOverlay(true)
-                        .build()
-                        .show();
-                break;*/
         }
     }
 
@@ -662,8 +627,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 if (lv_userselection.getVisibility() == View.VISIBLE)
                     lv_userselection.setVisibility(View.GONE);
                 list.setVisibility(View.VISIBLE);
-                //addManagementListAndCall();
-                //  managementPopup.showAsDropDown(et_select_weight_managment);
             }
         });
 
@@ -694,13 +657,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
         registrationActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // if (!isFinishing()) {
                 popupWindow.showAtLocation(registrationActivity.rl_main_registration, Gravity.CENTER, 0, 0);
             }
-            // }
         });
-
-        // popupWindow.showAtLocation(registrationActivity.rl_main_registration, Gravity.CENTER, 0, 0);
 
     }
 
@@ -746,9 +705,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
         } else if (registrationActivity.et_first_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
-        } /*else if (registrationActivity.et_middle_name.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your middle name");
-        }*/ else if (registrationActivity.et_last_name.getText().toString().equals("")) {
+        } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your last name");
         } else if (registrationActivity.et_email.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your email");
@@ -760,11 +717,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
             MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
         } else if (registrationActivity.et_management.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select Weight Managment goal");
-        }
-         /*else if (registrationActivity.et_userselection.getVisibility()==View.VISIBLE && registrationActivity.et_userselection.getText().toString().equals("")) {
-          MethodUtils.errorMsg(registrationActivity, "Please select any option");
-        }*/
-        else if (registrationActivity.et_units.getText().toString().equals("")) {
+        } else if (registrationActivity.et_units.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
         } else if (registrationActivity.et_gender.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
@@ -835,79 +788,83 @@ public class RegistrationClickEvent implements View.OnClickListener {
     //--This method is responsible for validating all the fields for IncompleteProfile Update
 
     private void validationAndApiCallForIncompleteProfile() {
-        if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
-        } else if (registrationActivity.et_first_name.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
-        } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your last name");
-        } else if (registrationActivity.et_email.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your email");
-        } else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter a valid email address");
-        } /*else if (registrationActivity.et_confirm_email.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter confirm email");
-        } else if (!MethodUtils.isValidEmail(registrationActivity.et_confirm_email.getText().toString())) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter a valid confirm email address");
-        } else if (!registrationActivity.et_confirm_email.getText().toString().equals(registrationActivity.et_email.getText().toString())) {
-            MethodUtils.errorMsg(registrationActivity, "Email and Confirm Email is not same.");
-        } else if (registrationActivity.et_password.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your password");
-        }*/ else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
-                registrationActivity.et_scale_id.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your scale ID");
-        } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
-                !lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter valid scale ID");
-        } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
-                registrationActivity.et_confirm_scale_id.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter confirm scale ID");
-        } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
-                !registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Scale ID and confirm scale ID are not identical");
-        } else if (registrationActivity.et_phone.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
-        } else if (registrationActivity.et_management.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select Weight Management goal");
-        } else if (registrationActivity.et_units.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
-        } else if (registrationActivity.et_gender.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
-        } else if (registrationActivity.age.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your Age");
-        } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
-            MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
-        } else if (registrationActivity.et_height.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your height");
-        } else if (selectedLifeStyle == 0) {
-            MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");
-        } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
-        } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
-        } /*else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
-        }*/ else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
-            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
-        }/*else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Password must be more than 8 characters");
-        } else if (registrationActivity.address.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your street address");
-        } else if (registrationActivity.city.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your city name");
-        } else if (registrationActivity.state.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your state");
-        } else if (registrationActivity.zipcode.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your zip code");
-        } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
-            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
-        } else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition.");
-        }*/ else {
-            if (registrationActivity.mCompressedFile != null) {
-                callCompleteUserInfoApiWithImage();
+
+        if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
+            if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                    registrationActivity.et_scale_id.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your scale ID");
+            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                    !lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter valid scale ID");
+            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                    registrationActivity.et_confirm_scale_id.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter confirm scale ID");
+            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                    !registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
+                MethodUtils.errorMsg(registrationActivity, "Scale ID and confirm scale ID are not identical");
+            } else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
+                MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
+            } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
             } else {
-                callCompleteUserInfoApi();
+                if (registrationActivity.mCompressedFile != null) {
+                    callCompleteUserInfoApiWithImage();
+                } else {
+                    callCompleteUserInfoApi();
+                }
+            }
+        } else {
+
+            if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
+                MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
+            } else if (registrationActivity.et_first_name.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
+            } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your last name");
+            } else if (registrationActivity.et_email.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your email");
+            } else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter a valid email address");
+            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                    registrationActivity.et_scale_id.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your scale ID");
+            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                    !lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter valid scale ID");
+            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                    registrationActivity.et_confirm_scale_id.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter confirm scale ID");
+            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                    !registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
+                MethodUtils.errorMsg(registrationActivity, "Scale ID and confirm scale ID are not identical");
+            } else if (registrationActivity.et_phone.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
+            } else if (registrationActivity.et_management.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please select Weight Management goal");
+            } else if (registrationActivity.et_units.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
+            } else if (registrationActivity.et_gender.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
+            } else if (registrationActivity.age.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your Age");
+            } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
+                MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
+            } else if (registrationActivity.et_height.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your height");
+            } else if (selectedLifeStyle == 0) {
+                MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");
+            } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
+            } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
+            } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
+            } else {
+                if (registrationActivity.mCompressedFile != null) {
+                    callCompleteUserInfoApiWithImage();
+                } else {
+                    callCompleteUserInfoApi();
+                }
             }
         }
     }
@@ -947,8 +904,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
             registrationActivity.tv_time_loss.setVisibility(View.GONE);
             registrationActivity.rl_time_loss.setVisibility(View.GONE);
             registrationActivity.et_time_loss.setText("");
-
-            //registrationActivity.et_management.setEnabled(true);
         }
     }
 
@@ -987,12 +942,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody time = null;
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-
-        //RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserId());
         RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.registrationModel.getData().getUser().get(0).getUserId());
-
-        //String name = registrationActivity.et_first_name.getText().toString().trim() + "%20" + registrationActivity.et_last_name.getText().toString().trim();
-        //String name = registrationActivity.et_first_name.getText().toString().trim();
 
         RequestBody first_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_first_name.getText().toString().trim());
         RequestBody middle_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_middle_name.getText().toString().trim());
@@ -1047,9 +997,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
         Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoApi(registrationActivity.registrationModel.getData().getToken(), current_User_Id, first_name, middle_name, last_name,
                 email, time, height, lifestyle, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken);
 
-        /*Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoApi(LoginShared.getRegistrationDataModel(registrationActivity).getData().getToken(), current_User_Id, first_name, middle_name, last_name,
-                email, time, height, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken);*/
-
 
         complete_user_info_api.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -1059,15 +1006,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
                 try {
                     String responseString = response.body().string();
-                    Gson gson = new Gson();
-                    RegistrationModel registrationModel;
+                    //Gson gson = new Gson();
+                    //RegistrationModel registrationModel;
 
                     JSONObject jsonObject = new JSONObject(responseString);
                     Log.d("@@CompleteUserInfo : ", jsonObject.toString());
 
                     if (jsonObject.optInt("status") == 1) {
-
-                        //System.out.println("scaleUserId: "+registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId());
 
                         registrationActivity.registrationModel.getData().getUser().get(0).setUserMac(jsonObject.getJSONObject("data").getString("user_mac"));
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationActivity.registrationModel);
@@ -1082,47 +1027,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                             LoginShared.setUserMacId(0);
                         }
 
-
-                        //System.out.println("userMacID: " + LoginShared.getUserMacId(registrationActivity));
-                        //System.out.println("scaleUserId: "+registrationActivity.registrationModel.getData().getUser().get(0).getUserMac());
-
-                        //MethodUtils.errorMsg(registrationActivity, jsonObject.getString("message"));
-                        /*if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
-                            MethodUtils.errorMsg(registrationActivity, jsonObject.getJSONObject("data").getString("message"));
-                        }*/
-
-                        /*new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
-
-                                    Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
-                                    registrationActivity.startActivity(intent);
-                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    registrationActivity.finish();
-
-                                } else {
-                                    Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
-                                    registrationActivity.startActivity(intent);
-                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    registrationActivity.finish();
-                                }
-                            }
-                        }, GeneralToApp.SPLASH_WAIT_TIME);*/
-
-
                         showAckowlegmentDialog(jsonObject.getJSONObject("data").getString("message"));
-
-
-                        /*registrationModel = gson.fromJson(responseString, RegistrationModel.class);
-                        LoginShared.setRegistrationDataModel(registrationActivity, registrationModel);
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
-                        LoginShared.setUserPhoto(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserPhoto());
-                        LoginShared.setUserName(registrationActivity, LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserName());
-                        LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId()));
-                        MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));*/
-
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(registrationActivity);
@@ -1164,13 +1069,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
             dialog.setMessage(msg);
         }
 
-        /*if (!LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
-                LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleid().equalsIgnoreCase("")) {
-            dialog.setMessage(registrationActivity.getResources().getString(R.string.sub_user_sign_up_success));
-        } else {
-            dialog.setMessage(msg);
-        }*/
-
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -1196,32 +1094,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         registrationActivity.finish();
                     }
                 }
-
-                /*new android.os.Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if (!LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
-                                LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleid().equalsIgnoreCase("")) {
-                            Intent intent = new Intent(registrationActivity, LoginActivity.class);
-                            registrationActivity.startActivity(intent);
-                            registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            registrationActivity.finishAffinity();
-                        } else {
-                            if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
-                                Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
-                                registrationActivity.startActivity(intent);
-                                registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                registrationActivity.finish();
-                            } else {
-                                Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
-                                registrationActivity.startActivity(intent);
-                                registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                registrationActivity.finish();
-                            }
-                        }
-                    }
-                }, GeneralToApp.SPLASH_WAIT_TIME);*/
             }
         });
 
@@ -1251,11 +1123,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_password.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
 
-     /*   if (registrationActivity.et_management.getText().toString().trim().equalsIgnoreCase("Maintain Current Weight"))
-           type = RequestBody.create(MediaType.parse("text/plain"), "2");
-        else
-            type = RequestBody.create(MediaType.parse("text/plain"), "1");*/
-
         if (weight_managment_goal == 2) {
             type = RequestBody.create(MediaType.parse("text/plain"), "2");
             if (user_selection_val == 1) {
@@ -1266,10 +1133,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 userselectionbody = RequestBody.create(MediaType.parse("text/plain"), "1");
                 weight = RequestBody.create(MediaType.parse("text/plain"), "");
                 time = RequestBody.create(MediaType.parse("text/plain"), "");
-
             }
-
-
         } else {
             type = RequestBody.create(MediaType.parse("text/plain"), "1");
             userselectionbody = RequestBody.create(MediaType.parse("text/plain"), "0");
@@ -1290,15 +1154,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (registrationActivity.et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         } else {
-            //gender = RequestBody.create(MediaType.parse("text/plain"), "4");
             gender = RequestBody.create(MediaType.parse("text/plain"), "3");
         }
 
 
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.age.getText().toString().trim());
         RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim().split(Pattern.quote(" "))[0]);
-        // RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
-        //  RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
         RequestBody count = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_member.getText().toString());
@@ -1430,7 +1291,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (registrationActivity.et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
             gender = RequestBody.create(MediaType.parse("text/plain"), "2");
         } else {
-            //gender = RequestBody.create(MediaType.parse("text/plain"), "4");
             gender = RequestBody.create(MediaType.parse("text/plain"), "3");
         }
 
@@ -1455,8 +1315,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
         RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.age.getText().toString().trim());
         RequestBody height = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_height.getText().toString().trim());
-        //  RequestBody weight = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_weight.getText().toString().trim());
-        // RequestBody time = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_time_loss.getText().toString().trim());
         RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");
         RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(registrationActivity));
         RequestBody count = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_member.getText().toString());
@@ -1577,8 +1435,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 registrationActivity.mCompressedFile.getName(), reqFile);
 
         RequestBody current_User_Id = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.registrationModel.getData().getUser().get(0).getUserId());
-        //String name = registrationActivity.et_first_name.getText().toString().trim() + registrationActivity.et_last_name.getText().toString().trim();
-        //RequestBody full_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_first_name.getText().toString().trim());
 
         RequestBody first_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_first_name.getText().toString().trim());
         RequestBody middle_name = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_middle_name.getText().toString().trim());
@@ -1652,7 +1508,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
                     if (jsonObject.optInt("status") == 1) {
 
-
                         registrationActivity.registrationModel.getData().getUser().get(0).setUserMac(jsonObject.getJSONObject("data").getString("user_mac"));
 
                         LoginShared.setRegistrationDataModel(registrationActivity, registrationActivity.registrationModel);
@@ -1666,69 +1521,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                             LoginShared.setUserMacId(0);
                         }
 
-
-                        System.out.println("userMacID: " + LoginShared.getUserMacId(registrationActivity));
-
-                        //JSONObject jsObject = jsonObject.getJSONObject("data");
-
-
-                        /*if (!LoginShared.getstatusforwifivarification(registrationActivity))
-                            MethodUtils.errorMsg(registrationActivity, jsObject.getString("message"));*/
-
-
                         showAckowlegmentDialog(jsonObject.getJSONObject("data").getString("message"));
 
-                       /* new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
-                                    Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
-                                    registrationActivity.startActivity(intent);
-                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    registrationActivity.finish();
-                                } else {
-                                    Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
-                                    registrationActivity.startActivity(intent);
-                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    registrationActivity.finish();
-                                }
-                            }
-                        }, GeneralToApp.SPLASH_WAIT_TIME);*/
-
-
-                        /*new android.os.Handler().postDelayed(() -> {
-                            switch (registrationActivity.regType) {
-                                case 1:
-                                    Intent loginIntent = new Intent(registrationActivity, OtpActivity.class);
-                                    registrationActivity.startActivity(loginIntent);
-                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    registrationActivity.finishAffinity();
-                                    break;
-                                case 2:
-                                    if (registrationActivity.et_member.getText().toString().equals("0")) {
-                                        loginIntent = new Intent(registrationActivity, OtpActivity.class);
-                                    } else {
-                                        loginIntent = new Intent(registrationActivity, GroupInviteActivity.class);
-                                        loginIntent.putExtra("count", Integer.parseInt(registrationActivity.et_member.getText().toString()));
-                                    }
-                                    registrationActivity.startActivity(loginIntent);
-                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    registrationActivity.finishAffinity();
-                                    break;
-                                case 3:
-                                    if (registrationActivity.et_member.getText().toString().equals("0")) {
-                                        loginIntent = new Intent(registrationActivity, OtpActivity.class);
-                                    } else {
-                                        loginIntent = new Intent(registrationActivity, FamilyInviteActivity.class);
-                                        loginIntent.putExtra("count", Integer.parseInt(registrationActivity.et_member.getText().toString()));
-                                    }
-                                    registrationActivity.startActivity(loginIntent);
-                                    registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    registrationActivity.finishAffinity();
-                                    break;
-                            }
-                        }, GeneralToApp.SPLASH_WAIT_TIME);*/
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(registrationActivity);
                         LoginShared.destroySessionTypePreference(registrationActivity);

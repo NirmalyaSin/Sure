@@ -69,14 +69,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapterViewHolder holder, int position) {
-        /*if (position == 0) {
-            Log.d("@@getItemCount : ", "fist-loading = " + firstLoading);
-            firstLoading = true;
-        }*/
 
         String processedMessage = "";
         try {
-            //processedMessage = URLDecoder.decode(arrayListConversation.get(position).getMessage(), "utf-8");
             processedMessage = decodeFromNonLossyAscii(arrayListConversation.get(position).getMessage());
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,14 +82,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
             case ChatConstant.CHAT_FROM_SENDER:
                 holder.rlMessageRight.setVisibility(View.VISIBLE);
                 holder.rlMessageLeft.setVisibility(View.GONE);
-                //holder.texMessageRight.setText(arrayListConversation.get(position).getMessage());
                 holder.texMessageRight.setText(processedMessage);
                 holder.textDateTimeRight.setText(ChatDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
                 break;
             case ChatConstant.CHAT_FROM_RECEIVER:
                 holder.rlMessageRight.setVisibility(View.GONE);
                 holder.rlMessageLeft.setVisibility(View.VISIBLE);
-                //holder.textMessageLeft.setText(arrayListConversation.get(position).getMessage());
                 holder.textMessageLeft.setText(processedMessage);
                 holder.textDateTimeLeft.setText(ChatDateConverter.DateConverter(arrayListConversation.get(position).getDateTime()));
                 break;
@@ -119,17 +112,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter
         if (shouldLoadMore && position == 0) {
             mOnChatScrollListener.onScrollToTop(position);
         }
-
-        //int position = holder.getAdapterPosition();
-        /*if (firstLoading) {
-            firstLoading = false;
-        } else {
-            int position = holder.getAdapterPosition();
-            Log.d("@@Scrolling : ", "New-Pos = " + position);
-            if (position == 0) {
-                mOnChatScrollListener.onScrollToTop(position);
-            }
-        }*/
     }
 
     @Override

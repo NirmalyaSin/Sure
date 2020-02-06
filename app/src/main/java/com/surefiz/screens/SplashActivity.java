@@ -3,6 +3,7 @@ package com.surefiz.screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -31,11 +32,9 @@ import com.surefiz.utils.MethodUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -51,8 +50,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         MethodUtils.fullScreen(this);
-        //bundle.get("pushData")
-        //pushData
 
         System.out.println("instructionShown: "+ new InstructionSharedPreference(SplashActivity.this).getInstructionVisibility(SplashActivity.this));
 
@@ -72,9 +69,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (jsonObject1.optInt("pushType") == 2) {
                     receiver_id = jsonObject1.optString("senderId");
                     LoginShared.setWeightFromNotification(this, "2");
-                }/* else if (jsonObject1.optInt("pushType") == 3) {
-                    LoginShared.setWeightFromNotification(this, "3");
-                }*/ else if (jsonObject1.optInt("pushType") == 4) {
+                } else if (jsonObject1.optInt("pushType") == 4) {
                     LoginShared.setWeightFromNotification(this, "4");
                 } else if (jsonObject1.optInt("pushType") == 5) {
                     LoginShared.setWeightFromNotification(this, "5");
@@ -138,21 +133,12 @@ public class SplashActivity extends AppCompatActivity {
         if (!LoginShared.getWeightFromNotification(this).equals("0")) {
             if (LoginShared.getWeightFromNotification(this).equals("1") || LoginShared.getWeightFromNotification(this).equals("10")) {
                 String dateStr = getServerDate + " " + getServerTime;
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-                /*DateFormat dateFormat1 = new SimpleDateFormat("MM/dd/yyyy");
-
-                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));*/
-
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                 try {
                     Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
-
-                    /*Date date = dateFormat.parse(dateStr);
-                    dateFormat.setTimeZone(TimeZone.getDefault());*/
                     Date currentDate = new Date();
                     long diff = currentDate.getTime() - date.getTime();
-                    int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
-                    //if (dateFormat1.format(currentDate).equals(getServerDate)) {
+                    //int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
                     int diffSecond = (int) (diff / 1000);
                     if (diffSecond < 120) {
                         Intent intent = new Intent(this, WeightDetailsActivity.class);
@@ -173,39 +159,21 @@ public class SplashActivity extends AppCompatActivity {
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
                     }
-                    //}
-                    /*else {
-                        Intent intent = new Intent(this, DashBoardActivity.class);
-                        intent.putExtra("expired", "1");
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                    }*/
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                /*Intent intent = new Intent(this, WeightDetailsActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();*/
             } else if (LoginShared.getWeightFromNotification(this).equals("2")) {
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("reciver_id", receiver_id);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            } /*else if (LoginShared.getWeightFromNotification(this).equals("3")) {
-                Intent intent = new Intent(this, NotificationActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            } */ else if (LoginShared.getWeightFromNotification(this).equals("4")) {
+            }  else if (LoginShared.getWeightFromNotification(this).equals("4")) {
                 Intent intent = new Intent(this, AcountabilityActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             } else if (LoginShared.getWeightFromNotification(this).equals("5")) {
-                //   LoginShared.setWeightFromNotification(this, "0");
                 String serverUserId = "";
                 String scaleUserId = "";
                 if (jsonObject1 != null) {
@@ -242,13 +210,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            } /*else if (LoginShared.getWeightFromNotification(this).equals("10")) {
-                Intent intent = new Intent(this, UserListActivity.class);
-                intent.putExtra("isFromPushNotification", true);
-                startActivitexpiredy(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }*/
+            }
         } else if (LoginShared.getRegistrationDataModel(this) != null &&
                 LoginShared.getRegistrationDataModel(this).getData() != null &&
                 LoginShared.getRegistrationDataModel(this).getData().getToken().equals("") &&
@@ -284,12 +246,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
-                    } /*else if (notificationPage.equals("1")) {
-                        Intent intent = new Intent(this, WeightDetailsActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                    }*/ else {
+                    }  else {
                         Intent intent = new Intent(this, DashBoardActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

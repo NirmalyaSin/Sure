@@ -1,7 +1,6 @@
 package com.surefiz.screens.users;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.AddUserDialog;
-import com.surefiz.dialog.ChooseOptionDialog;
 import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.networkutils.ApiInterface;
@@ -74,7 +72,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
 
     private void doneUserDialog() {
 
-        if (getIntent().getBooleanExtra("showSkipButton",false)){
+        if (getIntent().getBooleanExtra("showSkipButton", false)) {
             findViewById(R.id.btn_skip).setVisibility(View.GONE);
             findViewById(R.id.rl_back).setVisibility(View.VISIBLE);
         }
@@ -110,14 +108,14 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
         aboutIntent.putExtra("url", "https://www.surefiz.com/Login");
         aboutIntent.putExtra("header", getResources().getString(R.string.app_name));
         aboutIntent.putExtra("menu", false);
-        startActivityForResult(aboutIntent,200);
+        startActivityForResult(aboutIntent, 200);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==200){
+        if (requestCode == 200) {
             callUserListApi();
         }
     }
@@ -142,10 +140,11 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
                         //userLists.addAll(response.body().getData().getUserList());
                         userLists.addAll(checkMainUserVisibility(response.body().getData().getUserList()));
 
-                        //printUserdata(response.body().getData().getUserList());
                         adapter.notifyDataSetChanged();
+
+                        showAddUserButton(response.body().getData().getSubUserAddStatus(), response.body().getData().getUserList().size());
                         //if (response.body().getData().getSubUserAddStatus() == 0) {
-                        if (response.body().getData().getUserList().size() >= 4) {
+                        /*if (response.body().getData().getUserList().size() >= 4) {
                             btn_add_user.setEnabled(false);
                             btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_edit_rounded_corner_blue));
                             btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.black));
@@ -153,7 +152,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
                             btn_add_user.setEnabled(true);
                             btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_button_gradient));
                             btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.white));
-                        }
+                        }*/
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(UserListActivity.this);
                         LoginShared.destroySessionTypePreference(UserListActivity.this);
@@ -180,6 +179,20 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
         });
     }
 
+    private void showAddUserButton(int subUserAddStatus, int userListSize) {
+        if (subUserAddStatus == 0 || userListSize > 3) {
+            btn_add_user.setEnabled(false);
+            btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_edit_rounded_corner_blue));
+            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.black));
+            btn_add_user.setVisibility(View.GONE);
+        } else {
+            btn_add_user.setEnabled(true);
+            btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_button_gradient));
+            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.white));
+            btn_add_user.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     // This method is to check wheather any sub-user wants to be displayed on Main users family
     private List<UserListItem> checkMainUserVisibility(List<UserListItem> userList) {
@@ -191,16 +204,13 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
             tempUserList.add(userList.get(0));
 
             for (int i = 1; i < userList.size(); i++) {
-                if (userList.get(i).getMainuservisibility() == 1) {
-                    tempUserList.add(userList.get(i));
-                }
+                //if (userList.get(i).getMainuservisibility() == 1) {
+                tempUserList.add(userList.get(i));
+                //}
 
-                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility()+ " " + userList.get(i).getIsUserHaveCompleteInfo());
+                System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility() + " " + userList.get(i).getIsUserHaveCompleteInfo());
             }
         } else {
-
-            //tempUserList.addAll(userList);
-
             for (int i = 0; i < userList.size(); i++) {
                 if (String.valueOf(userList.get(i).getScaleUserId()).equalsIgnoreCase(LoginShared.getRegistrationDataModel(UserListActivity.this).getData().getUser().get(0).getScaleUserId())) {
                     tempUserList.add(userList.get(i));

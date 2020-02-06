@@ -38,26 +38,12 @@ import retrofit2.Retrofit;
 public class LoginClickEvent implements View.OnClickListener {
     LoginActivity mLoginActivity;
     private LoadingData loader;
-    private FirebaseAuth mAuth;
-    private TwitterAuthClient mTwitterAuthClient;
+    //private FirebaseAuth mAuth;
+    //private TwitterAuthClient mTwitterAuthClient;
 
     public LoginClickEvent(LoginActivity activity) {
         this.mLoginActivity = activity;
         loader = new LoadingData(mLoginActivity);
-/*
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(
-                mLoginActivity.getResources().getString(R.string.twitter_consumer_key),
-                mLoginActivity.getResources().getString(R.string.twitter_consumer_secret));
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        //Twitter Auth-Client
-        mTwitterAuthClient = new TwitterAuthClient();*/
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        //   FirebaseUser currentUser = mAuth.getCurrentUser();
-        //    updateUI(currentUser);
-
-        //    hideSoftKeyBoard();
         setClickEvent();
     }
 
@@ -65,7 +51,6 @@ public class LoginClickEvent implements View.OnClickListener {
     private void setClickEvent() {
         mLoginActivity.btnLogin.setOnClickListener(this);
         mLoginActivity.tv_register.setOnClickListener(this);
-        //mLoginActivity.iv_facebook.setOnClickListener(this);
         mLoginActivity.iv_twiter.setOnClickListener(this);
         mLoginActivity.tv_forgetPassword.setOnClickListener(this);
     }
@@ -84,10 +69,7 @@ public class LoginClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.iv_twiter:
-//                MethodUtils.errorMsg(mLoginActivity, "Under Development");
-                //Perform Twitter login
-                performTwiterLogin();
-
+                //performTwiterLogin();
                 break;
 
             case R.id.tv_register:
@@ -99,7 +81,7 @@ public class LoginClickEvent implements View.OnClickListener {
         }
     }
 
-    private void performTwiterLogin() {
+    /*private void performTwiterLogin() {
         mTwitterAuthClient.authorize(mLoginActivity,
                 new com.twitter.sdk.android.core.Callback<TwitterSession>() {
 
@@ -116,19 +98,16 @@ public class LoginClickEvent implements View.OnClickListener {
                         e.printStackTrace();
                     }
                 });
-    }
+    }*/
 
     private void blankvalidationandapicall() {
         if (!mLoginActivity.editEmail.getText().toString().equals("")) {
             if (!mLoginActivity.editPassword.getText().toString().equals("")) {
                 callapiforlogin();
             } else {
-                //Toast.makeText(mLoginActivity, "pass not blank", Toast.LENGTH_LONG).show();
                 MethodUtils.errorMsg(mLoginActivity, "Please enter your password");
             }
-
         } else {
-            //Toast.makeText(mLoginActivity, "Email not blank", Toast.LENGTH_LONG).show();
             MethodUtils.errorMsg(mLoginActivity, "Please enter your email");
         }
 
@@ -136,7 +115,6 @@ public class LoginClickEvent implements View.OnClickListener {
     }
 
     private void callapiforlogin() {
-//        {"status":1,"data":{"status":1,"message":"You have successfully logged in.","token":"29c41fc29c0ec161708b345901f2dbf6","user":[{"user_id":"101","user_name":"John101  John","user_email":"john101@surefiz.com","user_password":"123456","user_photo":"https:\/\/www.surefiz.com\/img\/profiles\/user-101\/1542293673.jpg","user_mac":"1000000010","user_permission":"ReadOnly","user_LastLogin":"2019-02-14 05:11:55","user_Profile_Complete_Status":1}]}}
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -151,122 +129,13 @@ public class LoginClickEvent implements View.OnClickListener {
                 try {
 
                     String responseString = response.body().string();
-                    //JSONObject jsonObject = new JSONObject(responseString);
-
                     navigateAfterLogin(responseString, false);
-
-                    /*String responseString = response.body().string();
-
-                    Gson gson = new Gson();
-                    RegistrationModel registrationModel;
-
-                    JSONObject jsonObject = new JSONObject(responseString);
-                    Log.d("@@LoginData : ", jsonObject.toString());
-
-                    if (jsonObject.optInt("status") == 1) {
-                        LoginShared.setstatusforOtpvarification(mLoginActivity, true);
-                        LoginShared.setWeightPageFrom(mLoginActivity, "0");
-                        registrationModel = gson.fromJson(responseString, RegistrationModel.class);
-                        LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
-                        LoginShared.setUserPhoto(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserPhoto());
-                        LoginShared.setUserName(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserName());
-                        LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId()));
-
-                        if (!LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
-                                getUserMac().equals("")) {
-                            LoginShared.setUserMacId(Integer.parseInt(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserMac()));
-                        }
-
-                        //System.out.println("userMacID: " + LoginShared.getUserMacId(mLoginActivity));
-
-                        if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId().equals("1")) {
-                            if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
-                                    getUserMac() == null || LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
-                                    getUserMac().equals("")) {
-
-                                LoginShared.setRegistrationDataModel(mLoginActivity, null);
-
-
-                                Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
-                                regIntent.putExtra("completeStatus", "0");
-                                regIntent.putExtra("registrationModelData", responseString);
-                                mLoginActivity.startActivity(regIntent);
-                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                mLoginActivity.finishAffinity();
-                            } else {
-                                if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                                    Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
-                                    mLoginActivity.startActivity(intent);
-                                    mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    mLoginActivity.finishAffinity();
-                                } else {
-                                    Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
-                                    mLoginActivity.startActivity(intent);
-                                    mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    mLoginActivity.finishAffinity();
-                                }
-                            }
-                        } else {
-                            if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0) {
-
-                                LoginShared.setRegistrationDataModel(mLoginActivity, null);
-
-                                Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
-                                regIntent.putExtra("completeStatus", "0");
-                                regIntent.putExtra("registrationModelData", responseString);
-                                mLoginActivity.startActivity(regIntent);
-                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                mLoginActivity.finishAffinity();
-
-                            } else {
-
-                                if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
-                                        getUserMac().equals("")) {
-
-                                    String deviceToken = LoginShared.getDeviceToken(mLoginActivity);
-                                    LoginShared.setRegistrationDataModel(mLoginActivity, null);
-                                    LoginShared.destroySessionTypePreference(mLoginActivity);
-                                    LoginShared.setDeviceToken(mLoginActivity, deviceToken);
-
-                                    JSONObject jsObject = jsonObject.getJSONObject("data");
-                                    //MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
-                                    MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.mac_id_not_found));
-                                } else {
-
-                                    if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                                        Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
-                                        mLoginActivity.startActivity(intent);
-                                        mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                        mLoginActivity.finishAffinity();
-                                    } else {
-                                        Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
-                                        mLoginActivity.startActivity(intent);
-                                        mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                        mLoginActivity.finishAffinity();
-                                    }
-                                }
-                            }
-                        }
-                    } else if (jsonObject.optInt("status") == 4) {
-                        registrationModel = gson.fromJson(responseString, RegistrationModel.class);
-                        LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
-                        Intent intent = new Intent(mLoginActivity, OtpActivity.class);
-                        mLoginActivity.startActivity(intent);
-                        mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        mLoginActivity.finish();
-                        //JSONObject jsObject = jsonObject.getJSONObject("data");
-                        //MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
-                    } else {
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
-                        MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
-                    }*/
 
                 } catch (Exception e) {
                     e.printStackTrace();
                     MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.error_occurred));
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (loader != null && loader.isShowing())
@@ -280,12 +149,9 @@ public class LoginClickEvent implements View.OnClickListener {
     public void navigateAfterLogin(String responseString, boolean isSocialLogin) {
 
         try {
-            /*String responseString = response.body().string();*/
             JSONObject jsonObject = new JSONObject(responseString);
-
             Gson gson = new Gson();
             RegistrationModel registrationModel;
-
 
             Log.d("@@LoginData : ", jsonObject.toString());
 
@@ -308,8 +174,6 @@ public class LoginClickEvent implements View.OnClickListener {
                         getUserMac().equals("")) {
                     LoginShared.setUserMacId(Long.parseLong(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserMac()));
                 }
-
-                //System.out.println("userMacID: " + LoginShared.getUserMacId(mLoginActivity));
 
                 if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId().equals("1")) {
                     if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
@@ -360,22 +224,9 @@ public class LoginClickEvent implements View.OnClickListener {
                             LoginShared.destroySessionTypePreference(mLoginActivity);
                             LoginShared.setDeviceToken(mLoginActivity, deviceToken);
 
-                            JSONObject jsObject = jsonObject.getJSONObject("data");
-                            //MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
+                            //JSONObject jsObject = jsonObject.getJSONObject("data");
                             MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.mac_id_not_found));
                         } else {
-
-                            /*if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                                Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
-                                mLoginActivity.startActivity(intent);
-                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                mLoginActivity.finishAffinity();
-                            } else {
-                                Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
-                                mLoginActivity.startActivity(intent);
-                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                mLoginActivity.finishAffinity();
-                            }*/
 
                             LoginShared.setstatusforwifivarification(mLoginActivity, true);
 
@@ -393,8 +244,6 @@ public class LoginClickEvent implements View.OnClickListener {
                 mLoginActivity.startActivity(intent);
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 mLoginActivity.finish();
-                //JSONObject jsObject = jsonObject.getJSONObject("data");
-                //MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
             } else {
                 JSONObject jsObject = jsonObject.getJSONObject("data");
                 MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
@@ -403,95 +252,6 @@ public class LoginClickEvent implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
             MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.error_occurred));
-        }
-    }
-
-
-
-
-    /*private void callapiforlogin() {
-//        {"status":1,"data":{"status":1,"message":"You have successfully logged in.","token":"29c41fc29c0ec161708b345901f2dbf6","user":[{"user_id":"101","user_name":"John101  John","user_email":"john101@surefiz.com","user_password":"123456","user_photo":"https:\/\/www.surefiz.com\/img\/profiles\/user-101\/1542293673.jpg","user_mac":"1000000010","user_permission":"ReadOnly","user_LastLogin":"2019-02-14 05:11:55","user_Profile_Complete_Status":1}]}}
-        loader.show_with_label("Loading");
-        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
-        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<ResponseBody> loginapicall = apiInterface.call_loginApi(mLoginActivity.editEmail.getText().toString().trim(),
-                mLoginActivity.editPassword.getText().toString(), "2", LoginShared.getDeviceToken(mLoginActivity));
-        loginapicall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (loader != null && loader.isShowing())
-                    loader.dismiss();
-
-                try {
-                    String responseString = response.body().string();
-                    Gson gson = new Gson();
-                    RegistrationModel registrationModel;
-
-                    JSONObject jsonObject = new JSONObject(responseString);
-                    Log.d("@@LoginData : ", jsonObject.toString());
-                    if (jsonObject.optInt("status") == 1) {
-                        LoginShared.setstatusforOtpvarification(mLoginActivity, true);
-                        LoginShared.setWeightPageFrom(mLoginActivity, "0");
-                        registrationModel = gson.fromJson(responseString, RegistrationModel.class);
-                        LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
-                        LoginShared.setUserPhoto(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserPhoto());
-                        LoginShared.setUserName(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserName());
-                        LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId()));
-                        if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
-                                getUserProfileCompleteStatus() == 0) {
-//                            new AddLoginUserDetails(mLoginActivity).show();
-                            //Intent regIntent = new Intent(mLoginActivity, MembershipActivity.class);
-                            Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
-                            regIntent.putExtra("completeStatus", "0");
-                            mLoginActivity.startActivity(regIntent);
-                            mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            mLoginActivity.finish();
-                        } else {
-                            if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                                Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
-                                mLoginActivity.startActivity(intent);
-                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                mLoginActivity.finish();
-                            } else {
-                                Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
-                                mLoginActivity.startActivity(intent);
-                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                mLoginActivity.finish();
-                            }
-                        }
-                    } else if (jsonObject.optInt("status") == 4) {
-                        registrationModel = gson.fromJson(responseString, RegistrationModel.class);
-                        LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
-                        Intent intent = new Intent(mLoginActivity, OtpActivity.class);
-                        mLoginActivity.startActivity(intent);
-                        mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        mLoginActivity.finish();
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
-                        MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
-                    } else {
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
-                        MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));
-                    }
-
-                } catch (Exception e) {
-                    MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.error_occurred));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                if (loader != null && loader.isShowing())
-                    loader.dismiss();
-                MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.error_occurred));
-            }
-        });
-    }*/
-
-    private void hideSoftKeyBoard() {
-        View view = mLoginActivity.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) mLoginActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

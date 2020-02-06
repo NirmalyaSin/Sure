@@ -111,10 +111,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     PieChart chartViewLoss, pieChatBodyComposition;
     HIChartView chartView, chartViewBmi, chartViewGoals, chartViewSubGoals,
             chartViewAchiGoals, chartGauge, hcHistoryGoals;
-    TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded, tv_fat_dynamic, tv_bone_dynamic, tv_muscle_dynamic, tv_bmi_dynamic, tv_water_dynamic, tv_protein_dynamic,tv_bmr_dynamic,tv_body_score_dynamic;
-    Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein,btn_body_score,btn_bmr;
+    TextView tv_name, tv_mac, tv_weight_dynamic, tv_height_dynamic, tv_recorded, tv_fat_dynamic, tv_bone_dynamic, tv_muscle_dynamic, tv_bmi_dynamic, tv_water_dynamic, tv_protein_dynamic, tv_bmr_dynamic, tv_body_score_dynamic;
+    Button btn_fat, btn_bone, btn_muscle, btn_bmi, btn_water, btn_protein, btn_body_score, btn_bmr;
     CardView cv_weight, cv_weight_loss, cv_bmi, cv_user_body_composition, cv_goals, cv_sub_goals, cv_achi_goals, cv_gauge;
-    RelativeLayout rlHistoryChart,rl_battery_status;
+    RelativeLayout rlHistoryChart, rl_battery_status;
     RecyclerView rv_items;
     HIOptions options, optionsLoss, optionsBMI, optionsGoals, optionsSubGoals, optionsAchiGoals, guageChartOptions, historyChartOptions;
     List<UserListItem> contactLists = new ArrayList<>();
@@ -160,7 +160,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             id = getIntent().getStringExtra("id");
             if (getIntent().getStringExtra("page").equals("1")) {
                 rl_back.setVisibility(View.VISIBLE);
-                //rlFriendRequest.setVisibility(View.GONE);
                 selectedUserPosition = -1;
                 tv_universal_header.setText("Performance");
                 img_topbar_menu.setVisibility(View.GONE);
@@ -178,7 +177,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             } else {
                 selectedUserPosition = -1;
                 rl_back.setVisibility(View.GONE);
-                //rlFriendRequest.setVisibility(View.VISIBLE);
                 img_topbar_menu.setVisibility(View.VISIBLE);
                 tv_universal_header.setText("Dashboard");
                 rv_items.setVisibility(View.VISIBLE);
@@ -200,12 +198,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             if (!getIntent().getBooleanExtra("isFromMenu", false)) {
                 callUpdateUserDeviceInfoApi();
             }
-
-            //getAppVersion();
         }
 
         setRecyclerViewItem();
-        //callContactsApi();
     }
 
     private String getAppVersion() {
@@ -303,10 +298,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                     if (response.body().getStatus() == 1) {
                         contactLists.clear();
-                        //      Collections.reverse(response.body().getData().getUserList());
-                        //contactLists.addAll(response.body().getData().getUserList());
                         contactLists.addAll(checkMainUserVisibility(response.body().getData().getUserList()));
-                        //contactLists.addAll(checkSubUserAccount(contactLists));
                         adapter.notifyDataSetChanged();
 
                         if (id != null && !id.equals("")) {
@@ -318,7 +310,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 }
                             }
                         } else {
-                            // rv_items.smoothScrollToPosition(0);
                             mLayoutManager.scrollToPositionWithOffset(0, 0);
                         }
 
@@ -360,7 +351,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     tempUserList.add(userList.get(i));
                 }
 
-                //System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
             }
         } else {
 
@@ -369,8 +359,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 if (String.valueOf(userList.get(i).getScaleUserId()).equalsIgnoreCase(LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId())) {
                     tempUserList.add(userList.get(i));
                 }
-
-                //System.out.println("userDataUpdated: " + userList.get(i).getUserName() + " " + userList.get(i).getScaleUserId() + " " + userList.get(i).getMainuservisibility());
             }
 
         }
@@ -419,11 +407,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     if (jsonObject.optInt("status") == 1) {
                         dashboardModel = gson.fromJson(responseString, DashboardModel.class);
                         LoginShared.setDashBoardDataModel(DashBoardActivity.this, dashboardModel);
-//                        checkForShowView();
                         runOnUiThread(new Thread(new Runnable() {
                             @Override
                             public void run() {
-
 
                                 if (getIntent().hasExtra("Performance")) {
                                     if (getIntent().getStringExtra("Performance").equalsIgnoreCase("1") && LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getVisibleCharts().size() > 0) {
@@ -435,10 +421,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                         setPieChatBodyComposition();
                                         setOtherOptions();
 
-                                        //checkForShowView();
                                     } else {
                                         String restrictionMessage = "Sorry, " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUserName() + " has made these charts private, please ask the user to allow you to view the chart(s)";
-                                        //MethodUtils.errorMsg(DashBoardActivity.this, "Sorry, Charts are private. We can change the message later");
                                         MethodUtils.errorMsg(DashBoardActivity.this, restrictionMessage);
                                     }
                                 } else {
@@ -470,13 +454,10 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                         cv_gauge.setVisibility(View.VISIBLE);
                                     }
 
-                                    //cv_sub_goals.setVisibility(View.GONE);
-
                                     cv_achi_goals.setVisibility(View.GONE);
                                     cv_body_composition.setVisibility(View.VISIBLE);
 
                                     setHighChartAsync();
-                                    //implementHighChart(dashboardModel.getData().getChartList().getGuagechart());
                                 }
                             }));
 
@@ -485,11 +466,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 @Override
                                 public void run() {
                                     cv_gauge.setVisibility(View.GONE);
-                                    //cv_sub_goals.setVisibility(View.VISIBLE);
                                     cv_achi_goals.setVisibility(View.VISIBLE);
                                     cv_body_composition.setVisibility(View.VISIBLE);
-                                    //setSubGoalsChart();
-                                    //showGoalsAndAcheivementsChart();
                                     setGoalsAndAcheivementsChart();
 
 
@@ -513,7 +491,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         Intent loginIntent = new Intent(DashBoardActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        finishAffinity();
                     } else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(DashBoardActivity.this, jsObject.getString("message"));
@@ -597,7 +575,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     tvFriendRequestCount.setVisibility(View.VISIBLE);
                     tvFriendRequestCount.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getFriendrequest_count()));
                 }
-                //tvFriendRequestCount.setText(String.valueOf(100));
             } else {
                 tvFriendRequestCount.setVisibility(View.GONE);
             }
@@ -610,8 +587,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         tv_name.setText(Html.fromHtml(nameText));
         tv_mac.setText(Html.fromHtml(scaleText));
-        //tv_name.setText("Name: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUserName());
-        //tv_mac.setText("Scale ID: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getScaleMacAddress());
         tv_weight_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWeight());
         tv_height_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getHeight());
 
@@ -742,10 +717,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
 
         try {
-
-            //btn_bmr.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getStatus()));
-            //btn_bmr.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getColourCode()));
-
             if (!LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getStatus().equals("")) {
                 btn_bmr.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getStatus()));
                 btn_bmr.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getColourCode()));
@@ -767,9 +738,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
 
-            //btn_body_score.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getStatus()));
-            //btn_body_score.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getColourCode()));
-
             if (!LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getStatus().equals("")) {
                 btn_body_score.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getStatus()));
                 btn_body_score.setBackgroundColor(Color.parseColor(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getColourCode()));
@@ -784,19 +752,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         tv_recorded.setText("Recorded on " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getRecordedOn());
 
-        if (getIntent().hasExtra("Performance")){
+        if (getIntent().hasExtra("Performance")) {
             tv_recorded.setVisibility(View.GONE);
             rl_battery_status.setVisibility(View.GONE);
-        }else {
+        } else {
             tv_recorded.setVisibility(View.VISIBLE);
             rl_battery_status.setVisibility(View.VISIBLE);
         }
         //System.out.println("BatteryStatus: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
-        if (!getIntent().hasExtra("Performance")) {
+        if (!getIntent().hasExtra("Performance") || !LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")) {
             showBatteryStatus(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
         }
-
-
     }
 
     private void showBatteryStatus(int batteryStatus) {
@@ -877,7 +843,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         swiperefresh = findViewById(R.id.swiperefresh);
         swiperefresh.setColorSchemeColors(R.color.blue, R.color.purple, R.color.blue);
         scrollDataView = findViewById(R.id.scrollDataView);
-        //swiperefresh.setNestedScrollingEnabled(false);
         chartView = findViewById(R.id.hc_weight);
         chartView.setOptions(options);
         //chartView.setWillNotDraw(true);
@@ -892,22 +857,18 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         chartViewGoals = findViewById(R.id.hc_goals);
         chartViewGoals.setOptions(optionsGoals);
-        //chartViewGoals.setWillNotDraw(true);
 
         chartViewSubGoals = findViewById(R.id.hc_sub_goals);
         chartViewSubGoals.setOptions(optionsSubGoals);
-        //chartViewSubGoals.setWillNotDraw(true);
 
         chartViewAchiGoals = findViewById(R.id.hc_achi_goals);
         chartViewAchiGoals.setOptions(optionsAchiGoals);
-        //chartViewAchiGoals.setWillNotDraw(true);
 
         chartGauge = findViewById(R.id.hc_gauge);
         chartGauge.setOptions(guageChartOptions);
 
         hcHistoryGoals = findViewById(R.id.hcHistoryGoals);
         hcHistoryGoals.setOptions(historyChartOptions);
-        //chartGauge.setWillNotDraw(true);
 
         tv_name = findViewById(R.id.tv_name);
         tv_mac = findViewById(R.id.tv_mac);
@@ -936,26 +897,20 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         rlHistoryChart = findViewById(R.id.rlHistoryChart);
         rlHistoryChart.setVisibility(View.GONE);
         cv_weight = findViewById(R.id.cv_weight);
-        //cv_weight.setVisibility(View.GONE);
 
-        rl_battery_status=findViewById(R.id.rl_battery_status);
+        rl_battery_status = findViewById(R.id.rl_battery_status);
 
 
         cv_body_composition = findViewById(R.id.cv_body_composition);
-        //cv_body_composition.setVisibility(View.GONE);
 
         cv_weight_loss = findViewById(R.id.cv_weight_loss);
-        //cv_weight_loss.setVisibility(View.GONE);
 
         cv_bmi = findViewById(R.id.cv_bmi);
-        //cv_bmi.setVisibility(View.GONE);
 
         cv_goals = findViewById(R.id.cv_goals);
         cv_user_body_composition = findViewById(R.id.cv_user_body_composition);
-        //cv_goals.setVisibility(View.GONE);
 
         cv_sub_goals = findViewById(R.id.cv_sub_goals);
-        //cv_sub_goals.setVisibility(View.GONE);
 
         cv_achi_goals = findViewById(R.id.cv_achi_goals);
         cv_gauge = findViewById(R.id.cv_gauge);
@@ -1014,7 +969,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void setEmptySubGoalsChart() {
 
         try {
-            //chartViewSubGoals.setWillNotDraw(false);
             HIChart chart = new HIChart();
             HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
@@ -1084,8 +1038,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             hiColumn.setDepth(25);
             plotOptions.setColumn(hiColumn);
             plotOptions.getColumn().setBorderWidth(0);
-            //hiColumn.setStacking("normal");
-            //hiColumn.setDepth(40);
             optionsSubGoals.setPlotOptions(plotOptions);
 
             HIColumn series1 = new HIColumn();
@@ -1128,7 +1080,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void showEmptyGoalsChart() {
 
         try {
-            //chartViewGoals.setWillNotDraw(false);
             chartViewGoals.plugins = new ArrayList<>(Arrays.asList("drilldown"));
 
             HIChart chart = new HIChart();
@@ -1370,14 +1321,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             double total = achieved + toGo;
             float toGoChart = (float) ((total / 100) * toGo);
             float achievedChart = (float) ((total / 100) * achieved);
-            //PieEntry pieEntry = new PieEntry(toGoChart, "To Go: " + toGo);
             PieEntry pieEntry = new PieEntry(achievedChart, "Achieved: " + achieved);
             entries.add(pieEntry);
             pieEntry = new PieEntry(toGoChart, "To Go: " + toGo);
-            //pieEntry = new PieEntry(achievedChart, "Achieved: " + achieved);
             entries.add(pieEntry);
 
-            //chartViewLoss.setCenterText(percentage + "%");
             chartViewLoss.setCenterText(Math.round(percentage) + "%");
             chartViewLoss.setCenterTextColor(getResources().getColor(R.color.textBlue));
             chartViewLoss.setCenterTextSize(35f);
@@ -1398,7 +1346,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
             dataSet.setColors(colors);
-            //dataSet.setSelectionShift(0f);
 
             PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter(chartViewLoss));
@@ -1443,7 +1390,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             l.setYEntrySpace(-10f);
             l.setYOffset(0f);
             l.setCustom(new ArrayList<>());
-            //l.setCustom(new ArrayList<>());
 
 
             pieChatBodyComposition.setEntryLabelColor(Color.WHITE);
@@ -1480,9 +1426,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
             String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>"
                     + "<br>" + "<font color=#24F91D><b> Bone Minerals " + boneValue + "%<b></font>";
-            //String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>";
             pieChatBodyComposition.setCenterText(Html.fromHtml(centerText));
-            //pieChatBodyComposition.setCenterText("Muscle " + muscelValue + "%" + "\nFat " + fatValue + "%");
             pieChatBodyComposition.setCenterTextColor(Color.WHITE);
             pieChatBodyComposition.setCenterTextSize(12f);
 
@@ -1498,9 +1442,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
             // Setting the color code for the slices
-            //ArrayList<Integer> colors = setColorForChart(bmiPercentage);
             ArrayList<Integer> colors = new ArrayList<>();
-            //colors.add(Color.rgb(151, 125, 6));
             colors.add(Color.rgb(253, 125, 4));
             colors.add(Color.rgb(41, 178, 7));
             colors.add(Color.rgb(250, 66, 82));
@@ -1526,8 +1468,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void setEmptyWeightChart() {
 
         try {
-            //chartView.setWillNotDraw(false);
-
             HIChart chart = new HIChart();
             chart.setType("area");
             //Required for gradient Background
@@ -1657,7 +1597,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void showEmptyGoalsAndAcheivementsChart() {
 
         try {
-            //chartViewAchiGoals.setWillNotDraw(false);
             HIChart chart = new HIChart();
             chart.setType("line");
 
@@ -1835,7 +1774,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
             chartGauge.setOptions(guageChartOptions);
-            //chartGauge.reload();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1884,9 +1822,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 public void run() {
 
                     try {
-
-                        //chartView.invalidate();
-
                         HIChart chart = new HIChart();
 
                         //Required for gradient Background
@@ -1939,34 +1874,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             add(xAxis);
                         }});
 
-                        /*int minIndex = 0;
-                        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                getWeightProgress().getData().size() > 0) {
-                            minIndex = getWeightProgressMinIndex();
-                        }
-
-                        Number minY = null;
-                        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                getWeightProgress().getData().size() > 0) {
-
-                            *//*int minIndex = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                    getWeightProgress().getData().indexOf(Collections.min(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                    getWeightProgress().getData()));*//*
-
-                            try {
-                                minY = Math.round(Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                        getWeightProgress().getData().get(minIndex))) - 1;
-
-                                System.out.println("minY: " + minY);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                minY = 0;
-                            }
-                        } else {
-                            minY = 0;
-                        }*/
-
                         HIYAxis yAxis = new HIYAxis();
                         try {
                             Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
@@ -1983,7 +1890,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         }});
 
                         HITooltip tooltip = new HITooltip();
-                        //tooltip.setPointFormat("{series.name} Produced <b>{point.y:,100.0f}</b><br/>Week {point.x}");
                         tooltip.setPointFormat("{series.name} Produced <b>{point.y}</b><br/>");
                         options.setTooltip(tooltip);
 
@@ -1993,7 +1899,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HIPlotOptions plotOptions = new HIPlotOptions();
                         HIArea hiArea = new HIArea();
-                        // hiArea.setPointStart(1940);
                         hiArea.setPointStart(0);
                         HIMarker marker = new HIMarker();
                         marker.setEnabled(true);
@@ -2008,7 +1913,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         hiStates.setHover(hiHover);
                         plotOptions.setArea(hiArea);
 
-                        //plotOptions.getSeries().setClip(false);
                         options.setPlotOptions(plotOptions);
 
                         HIArea series1 = new HIArea();
@@ -2088,7 +1992,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 public void run() {
 
                     try {
-                        //chartViewBmi.setWillNotDraw(false);
                         chartViewBmi.plugins = new ArrayList<>(Arrays.asList("series-label"));
 
                         HIChart chart = new HIChart();
@@ -2238,9 +2141,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 public void run() {
 
                     try {
-                        //chartViewSubGoals.setWillNotDraw(false);
                         HIChart chart = new HIChart();
-
 
                         HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
@@ -2257,9 +2158,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         hiLegend.setItemStyle(hicssObject);
                         optionsSubGoals.setLegend(hiLegend);
 
-
                         chart.setRenderTo("container");
-
 
                         optionsSubGoals.setChart(chart);
 
@@ -2292,7 +2191,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HIYAxis yAxis = new HIYAxis();
                         yAxis.setAllowDecimals(false);
-                        //yAxis.setMin(0);
 
                         try {
                             Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
@@ -2324,18 +2222,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         hiColumn.setDepth(25);
                         plotOptions.setColumn(hiColumn);
                         plotOptions.getColumn().setBorderWidth(0);
-                        //hiColumn.setStacking("normal");
-                        //hiColumn.setDepth(40);
                         optionsSubGoals.setPlotOptions(plotOptions);
 
                         HIColumn series1 = new HIColumn();
                         series1.setColorByPoint(true);
                         series1.setName("Expected Weight To Go");
 
-
-                        //Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo().toArray(new Number[0]);
                         List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo();
-
 
                         Number[] numbers = new Number[series1_data.size()];
                         ArrayList<String> colors1 = new ArrayList<>();
@@ -2359,9 +2252,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         series2.setColorByPoint(true);
                         series2.setName("Acheived Weight");
 
-
                         List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight();
-                        //Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight().toArray(new Number[0]);
                         Number[] numbers1 = new Number[series2_data.size()];
                         for (int i = 0; i < series2_data.size(); i++) {
 
@@ -2371,7 +2262,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 numbers1[i] = 0.0;
                                 e.printStackTrace();
                             }
-
 
                             colors2.add("#FFAF44");
                         }
@@ -2389,8 +2279,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         optionsSubGoals.setCredits(hiCredits);
 
                         chartViewSubGoals.setOptions(optionsSubGoals);
-                        //chartViewSubGoals.reload();
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -2429,7 +2317,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 public void run() {
 
                     try {
-                        //chartViewGoals.setWillNotDraw(false);
                         chartViewGoals.plugins = new ArrayList<>(Arrays.asList("drilldown"));
 
                         HIChart chart = new HIChart();
@@ -2493,12 +2380,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                                 getNextSubGoal().getData().size() > 0) {
 
-
                             try {
                                 minY = Math.round(Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                                         getNextSubGoal().getData().get(minIndex)));
 
-                                System.out.println("minY: " + minY);
+                                //System.out.println("minY: " + minY);
 
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -2508,9 +2394,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             minY = 0;
                         }
 
-
                         yAxis.setMin(minY);
-
                         yAxis.setGridLineColor(HIColor.initWithRGBA(0, 0, 0, 0.3));
                         optionsGoals.setYAxis(new ArrayList<HIYAxis>() {{
                             add(yAxis);
@@ -2536,10 +2420,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HIColumn series1 = new HIColumn();
                         series1.setName("Brands");
-
-                        /*Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getNextSubGoal().
-                                getData().toArray(new Number[0]);*/
-
 
                         ArrayList<Double> seriesData = new ArrayList<>();
 
@@ -2679,9 +2559,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             yaxis.setLabels(new HILabels());
                             yaxis.getLabels().setStep(2);
                             yaxis.setTitle(new HITitle());
-                            //yaxis.getTitle().setText("Latest Weight");
                             yaxis.getTitle().setText("<p style='color: #104c52; '>Latest Weight</p>");
-
 
                             // calculations
                             double greenStart = Double.parseDouble(gaugeChart.getGtw());
@@ -2713,7 +2591,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             gauge.setName("Latest Weight");
                             gauge.setTooltip(new HITooltip());
                             gauge.getTooltip().setValueSuffix(" lbs");
-                            //gauge.setData(new ArrayList<>(Collections.singletonList(Integer.valueOf(gaugeChart.getGtw()))));
                             gauge.setData(new ArrayList<>(Collections.singletonList(Double.parseDouble(gaugeChart.getLastweight()))));
 
                             guageChartOptions.setSeries(new ArrayList<>(Collections.singletonList(gauge)));
@@ -2769,18 +2646,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     try {
                         HIChart chart = new HIChart();
                         chart.setType("line");
-
                         chart.setBackgroundColor(HIColor.initWithHexValue("#554755"));
-
                         HIGradient gradient = new HIGradient(0, 0, 0, 1);
-
                         LinkedList<HIStop> stops = new LinkedList<>();
 
                         stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
                         stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
-
                         chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
-
                         historyChartOptions.setChart(chart);
                         HICSSObject hicssObject = new HICSSObject();
                         hicssObject.setColor("#ffffff");
@@ -2802,7 +2674,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHweeksjson() != null) {
 
-
                             ArrayList<String> xAxisWeeks = new ArrayList<>();
                             for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHs1();
                                  i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHs2(); i++) {
@@ -2818,9 +2689,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             add(xAxis);
                         }});
 
-
                         HIYAxis yaxis = new HIYAxis();
-
                         try {
                             Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
                                     getHistorygoals().getMinval());
@@ -2925,10 +2794,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHe1();
                                      i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHe2(); i++) {
 
-                                    System.out.println("numberList2: " + series2_data.get(i));
-                                    /*if (!series2_data.get(i).equals("")) {
-                                        numberList2.add(Double.parseDouble(series2_data.get(i)));
-                                    }*/
+                                    //System.out.println("numberList2: " + series2_data.get(i));
 
                                     try {
                                         numberList2.add(Double.parseDouble(series2_data.get(i)));
@@ -2936,12 +2802,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                         e.printStackTrace();
                                         numberList2.add(0.0);
                                     }
-
-                                    /*if (!series2_data.get(i).equals("0")) {
-                                        numberList2.add(Double.parseDouble(series2_data.get(i)));
-                                    } else {
-                                        numberList2.add(null);
-                                    }*/
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -2988,26 +2848,19 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     private class AsyncGoalsAndAcheivementsChart extends AsyncTask<String, String, String> {
 
-
         @Override
         protected String doInBackground(String... params) {
-
             Handler mHandler = new Handler(Looper.getMainLooper());
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-
                     try {
-                        //chartViewAchiGoals.setWillNotDraw(false);
                         HIChart chart = new HIChart();
                         chart.setType("line");
 
                         chart.setBackgroundColor(HIColor.initWithHexValue("#554755"));
-
                         HIGradient gradient = new HIGradient(0, 0, 0, 1);
-
                         LinkedList<HIStop> stops = new LinkedList<>();
-
                         stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
                         stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
 
@@ -3020,7 +2873,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         HITitle title = new HITitle();
                         title.setUseHTML(true);
                         title.setText("<p style='color: #ffffff; text-align: left;'>Your Goals</p>");
-                        //title.setAlign("left");
                         optionsAchiGoals.setTitle(title);
 
 
@@ -3033,9 +2885,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         xAxis.setLabels(xlabels);
                         xAxis.setTitle(xtitle1);
 
-                        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson() != null
-                            /*LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().size() > 0*/) {
-
+                        if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson() != null) {
 
                             ArrayList<String> xAxisWeeks = new ArrayList<>();
                             for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMs1();
@@ -3045,17 +2895,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                     xAxisWeeks.add(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson().get(i));
                                 }
                             }
-
-                            //System.out.println("xAxisWeeks: " + xAxisWeeks.toString());
                             xAxis.setCategories(xAxisWeeks);
-
-                            //xAxis.setCategories((ArrayList<String>) LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMiniweeksjson());
                         }
                         optionsAchiGoals.setXAxis(new ArrayList<HIXAxis>() {{
                             add(xAxis);
                         }});
-
-                        //xAxis.setVisible(true);
 
                         HIYAxis yaxis = new HIYAxis();
 
@@ -3066,7 +2910,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         } catch (Exception e) {
                             e.printStackTrace();
                             yaxis.setMin(0);
-                            //yAxis.setMin(minY);
                         }
 
                         HITitle title1 = new HITitle();
@@ -3102,8 +2945,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         hiLabel.setConnectorAllowed(false);
                         plotoptions.setSeries(hiSeries);
 
-                        //yaxis.setTickPositions();
-
                         HIExporting exporting = new HIExporting();
                         exporting.setEnabled(false);
                         optionsAchiGoals.setExporting(exporting);
@@ -3133,44 +2974,26 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson() != null &&
                                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson().size() > 0) {
 
-                /*Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                        getMinigoalsjson().toArray(new Number[0]);*/
-
                             List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
                                     getMinigoalsjson();
 
-                            //Number[] numbers = new Number[series1_data.length];
                             Number[] numbers = new Number[LoginShared.getDashBoardDataModel(DashBoardActivity.this)
                                     .getData().getChartList().getGoals().getMs2()];
-
-                            //System.out.println("numbers: " + numbers.length);
 
                             for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
                                     .getData().getChartList().getGoals().getMs1();
                                  i < LoginShared.getDashBoardDataModel(DashBoardActivity.this)
                                          .getData().getChartList().getGoals().getMs2(); i++) {
-                                //numbers[i] = Double.parseDouble(String.valueOf(series1_data[i]));
                                 if (!series1_data.get(i).equals("")) {
                                     numbers[i] = Double.parseDouble(series1_data.get(i));
                                 }
                             }
 
-
                             line1.setColor(HIColor.initWithRGB(143, 236, 126));
                             line1.setData(new ArrayList<>(Arrays.asList(numbers)));
 
-                /*Number[] series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
-                        getMinigoalsjson().toArray(new Number[0]);*/
-
-
                             List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
                                     getMinigoalsjson();
-
-                            //Number[] numbers2 = new Number[series2_data.length];
-                /*Number[] numbers2 = new Number[(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2() -
-                        LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1()) + 1];*/
-
-                            //System.out.println("numbers2: " + numbers2.length);
 
                             ArrayList<Double> numberList2 = new ArrayList<>();
 
@@ -3182,12 +3005,9 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 }
                             }
 
-                            //System.out.println("numbers2: " + numberList2.toString());
-
                             HILine line2 = new HILine();
                             line2.setName("Achived Sub Goals");
                             line2.setColor(HIColor.initWithRGB(233, 150, 43));
-                            //line2.setData(new ArrayList<>(Arrays.asList(numbers2)));
                             line2.setData(numberList2);
                             optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1, line2)));
                         }

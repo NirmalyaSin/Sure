@@ -95,8 +95,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         initializeImageLoader();
         setClickEvent();
         addPreferredListAndCall();
-        //addHeightListAndCall("INCH");
-
         startFireBase();
 
         if (!ConnectionDetector.isConnectingToInternet(activity)) {
@@ -145,6 +143,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
+
     private void addHeightListAndCall(String change) {
         heightList.clear();
         if (change.equals("INCH")) {
@@ -298,12 +297,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             activity.rl_visibility.setVisibility(View.VISIBLE);
         }
 
-
-        /*ViewProfileModel viewProfileModel = LoginShared.getViewProfileDataModel(activity);
-        viewProfileModel.getData().getUser().get(0).setIsPasswordAvailable(0);
-        LoginShared.setViewProfileDataModel(activity, viewProfileModel);*/
-
-
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 1) {
             activity.ll_add_new_password.setVisibility(View.GONE);
         } else {
@@ -346,12 +339,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     }
 
     private void setSocialAddButtonStatus() {
-
-        /*ViewProfileModel viewProfileModel = LoginShared.getViewProfileDataModel(activity);
-        viewProfileModel.getData().getUser().get(0).setGoogleAccountLinked(1);
-        LoginShared.setViewProfileDataModel(activity, viewProfileModel);
-        System.out.println("googleStatus: " + LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked());*/
-
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getGoogleAccountLinked() == 0) {
             activity.btnGoogleAdd.setBackgroundColor(activity.getResources().getColor(R.color.social_add_button));
             activity.btnGoogleAdd.setText("ADD");
@@ -433,8 +420,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 selectedLifeStyle = lifeStyleList.indexOf(value) + 1;
             }
         });
-
-        //lifeStylePopup = new UniversalPopup(activity, lifeStyleList, activity.et_lifestyle);
     }
 
     private void addPreferredListAndCall() {
@@ -607,9 +592,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     MethodUtils.errorMsg(activity, "Enter country");
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line1.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Enter address line 1");
-                } /*else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line2.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Enter address line 2");
-                }*/ else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_city.getText().toString().equals("")) {
+                }  else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_city.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Enter city");
                 } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_state.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Enter state");
@@ -626,10 +609,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 }
                 break;
             case R.id.btn_cancel:
-                //setData();
-
                 disableProfileEditMode();
-
                 break;
 
             case R.id.iv_weight_managment:
@@ -750,67 +730,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         }
     }
 
-    /*private void callFacebooklogin() {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            requestData();
-            return;
-        }
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email,public_profile"));
-        //LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email"));
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        requestData();
-                        loginResult.getAccessToken();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        System.out.println();
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        System.out.println();
-                        exception.printStackTrace();
-                    }
-                });
-    }
-
-
-    private void requestData() {
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                JSONObject json = response.getJSONObject();
-
-                parseFacebookJsonAndAPiCall(json, AccessToken.getCurrentAccessToken());
-
-            }
-        });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link,email,picture.width(750).height(750)");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
-
-    private void parseFacebookJsonAndAPiCall(final JSONObject jsonObjectFbResult, final AccessToken currentAccessToken) {
-        if (jsonObjectFbResult == null)
-            return;
-
-        final String socialEmail = jsonObjectFbResult.optString("email");
-        String socialId = jsonObjectFbResult.optString("id");
-        String socialName = jsonObjectFbResult.optString("name");
-
-
-        System.out.println("facebookData: " + socialId + "," + socialName);
-
-        callapiforAddSocail(socialId, "fb");
-    }*/
-
     public void callapiforAddSocail(String socicalID, String medianame) {
 
         LoadingData loader = new LoadingData(activity);
@@ -836,7 +755,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                     Log.d("@@AddSocial : ", jsonObject.toString());
 
                     JSONObject jsObject = jsonObject.getJSONObject("data");
-                    //MethodUtils.errorMsg(activity, jsObject.getString("message"));
 
                     if (jsonObject.optInt("status") == 1) {
 
@@ -919,13 +837,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                             viewProfileModel.getData().getUser().get(0).setFacebookAccountLinked(0);
                             LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         }
-
                         setSocialAddButtonStatus();
-
-                    } /*else {
-                        JSONObject jsObject = jsonObject.getJSONObject("data");
-                        MethodUtils.errorMsg(activity, jsObject.getString("message"));
-                    }*/
+                    }
                 } catch (Exception e) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.error_occurred));
                 }
@@ -1062,13 +975,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             zipcode = RequestBody.create(MediaType.parse("text/plain"), "");
         }
 
-
-        /*MultipartBody.Part body1 = MultipartBody.Part.createFormData("middleName",
-                activity.mCompressedFile.getName(), reqFile);
-        MultipartBody.Part body2 = MultipartBody.Part.createFormData("middleName",
-                activity.mCompressedFile.getName(), reqFile);*/
-
-
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
                 userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode, lifestyle, body);
 
@@ -1131,10 +1037,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             @Override
             public void onResponse(Call<CountryList> call, Response<CountryList> response) {
                 try {
-                    //String responseString = response.body().string();
-                    // JSONObject jsonObject = new JSONObject(responseString);
-
-                    //System.out.println("jsonObject: " + jsonObject.toString());
                     if (response.body().getStatus() == 1) {
                         addPrefferedCountryList(response.body().getData());
                     }

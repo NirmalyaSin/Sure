@@ -63,6 +63,8 @@ public class AboutUsActivity extends BaseActivity {
         web.getSettings().setDomStorageEnabled(true);
         web.getSettings().setAppCacheEnabled(true);
         web.getSettings().setLoadsImagesAutomatically(true);
+        //web.getSettings().setLoadWithOverviewMode(true);
+        //web.getSettings().setUseWideViewPort(true);
         web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         web.setWebViewClient(new WebViewClient());
 

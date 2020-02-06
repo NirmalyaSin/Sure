@@ -101,8 +101,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        //view = View.inflate(this, R.layout.activity_chat, null);
-        //addContentView(view);
         handler = new Handler();
         initializeImageLoader();
         myApplicationClass = (MyApplicationClass) getApplication();
@@ -144,7 +142,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     //Send Chat message
 
                     try {
-                        //String toServerUnicodeEncoded = URLEncoder.encode(message, "utf-8");
                         String toServerUnicodeEncoded = encodeToNonLossyAscii(message);
                         callSendChatApi(toServerUnicodeEncoded);
                         editTextMessage.setText("");
@@ -202,8 +199,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         SpacesItemDecoration decoration = new SpacesItemDecoration(10);
         recyclerView.addItemDecoration(decoration);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        /*LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mLayoutManager.setStackFromEnd(true);*/
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
@@ -247,8 +242,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     if (loadingData != null && loadingData.isShowing()) {
                         loadingData.dismiss();
                     }
-                    Log.d("@@ChatList : ", response.body().toString());
-
+                    //Log.d("@@ChatList : ", response.body().toString());
 
                     if (response.body().getStatus() == 0) {
                         try {
@@ -274,17 +268,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         Collections.reverse(response.body().getData().getConversations());
                         arrayListConversation.addAll(0, response.body().getData().getConversations());
 
-                        /*if (saveMessageCount < arrayListConversation.size()) {
-                            mChatAdapter.setLoadMore(true);
-                        } else {
-                            mChatAdapter.setLoadMore(false);
-                        }
-
-                        saveMessageCount = arrayListConversation.size();
-                        mChatAdapter.notifyDataSetChanged();
-                        System.out.println("conversationSize: " + arrayListConversation.size());
-                        moveToEnd();*/
-
 
                         if (!isMessageSent) {
                             mChatAdapter.notifyItemRangeChanged(0, arrayListConversation.size());
@@ -292,7 +275,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                             mChatAdapter.notifyDataSetChanged();
                         }
                         moveToEnd();
-
 
                         myApplicationClass.chatListNotification.clear();
 
@@ -349,7 +331,11 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                 }
 
                 if (saveMessageCount < arrayListConversation.size()) {
-                    mChatAdapter.setLoadMore(true);
+                    if (arrayListConversation.size() > 24) {
+                        mChatAdapter.setLoadMore(true);
+                    } else {
+                        mChatAdapter.setLoadMore(false);
+                    }
                 } else {
                     mChatAdapter.setLoadMore(false);
                 }
@@ -396,18 +382,10 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         call_SendChatApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                  /*  if (loadingData != null && loadingData.isShowing()) {
-                        loadingData.dismiss();
-                    }*/
-
                 try {
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
-                            /*oldPagination = INITIAL_PAGINATION;
-                            isMessageSent = true;
-                            saveMessageCount = 0;
-                            callChatListApi(receiver_id, INITIAL_PAGINATION);*/
 
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
@@ -449,7 +427,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (loadingData != null && loadingData.isShowing())
                     loadingData.dismiss();
-                //    MethodUtils.errorMsg(ChatActivity.this, getString(R.string.error_occurred));
             }
         });
     }

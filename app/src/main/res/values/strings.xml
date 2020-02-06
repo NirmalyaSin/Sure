@@ -70,8 +70,9 @@
     <string name="register">Register</string>
     <string name="update">Update</string>
     <string name="complete_sign_up">Complete Sign Up</string>
-    <string name="surefiz_signup">SureFiz<sup><small>®</small></sup> Signup</string>
-    <string name="surefiz_register">SureFiz<sup><small>®</small></sup> Registration</string>
+    <string name="surefiz_signup">Signup</string>
+    <!--<string name="surefiz_register">SureFiz<sup><small>®</small></sup> Registration</string>-->
+    <string name="surefiz_register">Registration</string>
     <string name="compositions">Composition</string>
     <string name="manage_social_logins">MANAGE SOCIAL LOGINS</string>
     <string name="delete_user_confirmation">Unfriend User Confirmation</string>
@@ -80,7 +81,8 @@ have the primary user registered before you login.</string>
 
     <string name="sub_user_sign_up_success">You have signed up successfully. For you to start using the service, please have the primary user to
 complete his/her registration process.</string>
-    <string name="login"><u>Login</u></string>
+    <string name="login">Login</string>
+    <string name="sign_up"><u>Sign up</u></string>
     <string name="press_to_upload">Press update button to update the profile image</string>
     <string name="title_activity_login_new">LoginNewActivity</string>
     <string name="message_board">Message Board</string>

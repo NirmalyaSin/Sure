@@ -52,6 +52,7 @@ public class OtpClickEvent implements View.OnClickListener {
                 if (otpActivity.et_first.getText().toString().length() == 1)     //size as per your requirement
                 {
                     otpActivity.et_second.requestFocus();
+                    otpActivity.et_second.setCursorVisible(true);
                 }
             }
 
@@ -74,6 +75,8 @@ public class OtpClickEvent implements View.OnClickListener {
                 if (otpActivity.et_second.getText().toString().length() == 1)     //size as per your requirement
                 {
                     otpActivity.et_third.requestFocus();
+                    otpActivity.et_second.setCursorVisible(false);
+                    otpActivity.et_third.setCursorVisible(true);
                 }
             }
 
@@ -96,6 +99,8 @@ public class OtpClickEvent implements View.OnClickListener {
                 if (otpActivity.et_third.getText().toString().length() == 1)     //size as per your requirement
                 {
                     otpActivity.et_fourth.requestFocus();
+                    otpActivity.et_third.setCursorVisible(false);
+                    otpActivity.et_fourth.setCursorVisible(true);
                 }
             }
 
@@ -117,6 +122,7 @@ public class OtpClickEvent implements View.OnClickListener {
                 // TODO Auto-generated method stub
                 if (otpActivity.et_fourth.getText().toString().length() == 1)     //size as per your requirement
                 {
+                    otpActivity.et_fourth.setCursorVisible(false);
                     hideSoftKeyBoard();
                 }
             }
@@ -191,7 +197,7 @@ public class OtpClickEvent implements View.OnClickListener {
 
                         LoginShared.setstatusforOtpvarification(otpActivity, true);
 
-                        NotificationManager notificationManager = (NotificationManager)otpActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+                        NotificationManager notificationManager = (NotificationManager) otpActivity.getSystemService(Context.NOTIFICATION_SERVICE);
                         notificationManager.cancel(100);
 
                         JSONObject jsObject = jsonObject.getJSONObject("data");
@@ -210,7 +216,6 @@ public class OtpClickEvent implements View.OnClickListener {
                             otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             otpActivity.finishAffinity();
                         }*/
-
 
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
@@ -250,13 +255,13 @@ public class OtpClickEvent implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0||
+                if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0 ||
                         LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserMac().equals("")) {
                     Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
                     regIntent.putExtra("completeStatus", "0");
                     otpActivity.startActivity(regIntent);
                     otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    otpActivity.finishAffinity();
+                    otpActivity.finish();
                 } else {
                     Intent intent = new Intent(otpActivity, DashBoardActivity.class);
                     otpActivity.startActivity(intent);

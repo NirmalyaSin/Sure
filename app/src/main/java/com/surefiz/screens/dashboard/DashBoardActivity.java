@@ -760,12 +760,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             rl_battery_status.setVisibility(View.VISIBLE);
         }
         //System.out.println("BatteryStatus: " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
-        if (!getIntent().hasExtra("Performance") || !LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")) {
+        if (!getIntent().hasExtra("Performance")) {
             showBatteryStatus(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBattery());
         }
     }
 
+    //LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId().equals("1")
+
     private void showBatteryStatus(int batteryStatus) {
+
+        System.out.println("selectedUserPosition " + selectedUserPosition);
 
         int imageDrawable = 0;
 
@@ -776,7 +780,20 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
+
+                        if (contactLists.size() > 0) {
+                            if (selectedUserPosition == -1) {
+                                MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
+                            } else {
+                                if (LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId()
+                                        .equalsIgnoreCase(String.valueOf(contactLists.get(selectedUserPosition).getScaleUserId()))) {
+
+                                    MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
+                                }
+                            }
+                        } else {
+                            MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low));
+                        }
                     }
                 }, GeneralToApp.SPLASH_WAIT_TIME);
 
@@ -786,7 +803,20 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low1));
+                        // MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low1));
+                        if (contactLists.size() > 0) {
+                            if (selectedUserPosition == -1) {
+                                MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low1));
+                            } else {
+                                if (LoginShared.getRegistrationDataModel(DashBoardActivity.this).getData().getUser().get(0).getScaleUserId()
+                                        .equalsIgnoreCase(String.valueOf(contactLists.get(selectedUserPosition).getScaleUserId()))) {
+
+                                    MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low1));
+                                }
+                            }
+                        } else {
+                            MethodUtils.showInfoDialog(DashBoardActivity.this, getString(R.string.battery_status_low1));
+                        }
                     }
                 }, GeneralToApp.SPLASH_WAIT_TIME);
 
@@ -831,6 +861,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                     }
                 });
+
     }
 
     @Override

@@ -180,7 +180,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void showAddUserButton(int subUserAddStatus, int userListSize) {
-        if (subUserAddStatus == 0 || userListSize > 3) {
+        if (subUserAddStatus == 0 && userListSize > 3) {
             btn_add_user.setEnabled(false);
             btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_edit_rounded_corner_blue));
             btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.black));

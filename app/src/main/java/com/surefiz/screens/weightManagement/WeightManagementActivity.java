@@ -339,7 +339,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
                         JSONObject jsnObject = jsObject.getJSONObject("WeightDetails");
-                        setData(jsnObject);
+                        showData(jsnObject);
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(WeightManagementActivity.this);
@@ -368,7 +368,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         });
     }
 
-    private void setData(JSONObject jsnObject) {
+    private void showData(JSONObject jsnObject) {
 
         units = jsnObject.optString("preferredUnits");
         weight = et_weight.getText().toString().trim();
@@ -431,18 +431,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             }
         }
 
-        /*if (!weight_value.equalsIgnoreCase("0.0 LBS") &&
-                !weight_value.equalsIgnoreCase("0 LBS") &&
-                !weight_value.equalsIgnoreCase("0.00 LBS") &&
-                !weight_value.equalsIgnoreCase("0.0 KG") &&
-                !weight_value.equalsIgnoreCase("0 KG") &&
-                !weight_value.equalsIgnoreCase("0.00 KG") &&
-                !weight_value.equalsIgnoreCase("0")) {
-
-            findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
-            findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
-            et_weight.setText(weight_value);
-        }*/
 
         if (isNonZeroValue(weight_value) &&
                 !jsnObject.optString("type").equalsIgnoreCase("1")) {
@@ -468,8 +456,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             et_time_loss.setEnabled(false);
             et_weight.setEnabled(false);
         }
-
-        //et_weight_managment.setText(jsnObject.optString("type"));
     }
 
     private boolean isNonZeroValue(String weight_value) {

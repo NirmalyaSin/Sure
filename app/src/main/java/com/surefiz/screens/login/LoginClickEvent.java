@@ -243,7 +243,7 @@ public class LoginClickEvent implements View.OnClickListener {
                 Intent intent = new Intent(mLoginActivity, OtpActivity.class);
                 mLoginActivity.startActivity(intent);
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                mLoginActivity.finish();
+                //mLoginActivity.finish();
             } else {
                 JSONObject jsObject = jsonObject.getJSONObject("data");
                 MethodUtils.errorMsg(mLoginActivity, jsObject.getString("message"));

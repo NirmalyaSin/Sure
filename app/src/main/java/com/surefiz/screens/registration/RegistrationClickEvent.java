@@ -182,7 +182,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void addSelectionListAndCall() {
         selectionList.add("I Will Provide the Info");
         //selectionList.add("I want SureFiz™ to suggest");
-        selectionList.add("I want " + registrationActivity.getResources().getString(R.string.app_name) + "to suggest");
+        selectionList.add("I want " + registrationActivity.getResources().getString(R.string.app_name) + " to suggest");
 
         selectionPopup = new WeigtUniversalPopup(registrationActivity, selectionList, registrationActivity.et_userselection, new OnWeightCallback() {
             @Override
@@ -278,7 +278,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         registrationActivity.profile_image.setOnClickListener(this);
         registrationActivity.iv_plus_add_image.setOnClickListener(this);
         registrationActivity.btn_register.setOnClickListener(this);
-        //registrationActivity.rl_back.setOnClickListener(this);
+        registrationActivity.rl_back.setOnClickListener(this);
         registrationActivity.et_management.setOnClickListener(this);
         registrationActivity.et_userselection.setOnClickListener(this);
         registrationActivity.et_member.setOnClickListener(this);
@@ -515,6 +515,10 @@ public class RegistrationClickEvent implements View.OnClickListener {
             case R.id.et_lifestyle:
                 hideSoftKeyBoard();
                 showAndDismissLifeStylePopup();
+                break;
+
+            case R.id.rl_back:
+                registrationActivity.finish();
                 break;
 
         }
@@ -1086,12 +1090,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         Intent intent = new Intent(registrationActivity, WifiConfigActivity.class);
                         registrationActivity.startActivity(intent);
                         registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        registrationActivity.finish();
+                        registrationActivity.finishAffinity();
                     } else {
                         Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
                         registrationActivity.startActivity(intent);
                         registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        registrationActivity.finish();
+                        registrationActivity.finishAffinity();
                     }
                 }
             }

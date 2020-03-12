@@ -638,7 +638,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Select your state"
-                        android:inputType="text|textNoSuggestions"
+                        android:inputType="textCapCharacters"
                         android:maxLines="1"
                         android:maxLength="2"
                         android:fontFamily="@font/roboto_regular"

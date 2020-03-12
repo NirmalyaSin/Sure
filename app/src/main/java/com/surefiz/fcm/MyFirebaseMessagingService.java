@@ -8,6 +8,8 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -39,6 +41,7 @@ import com.surefiz.sharedhandler.LoginShared;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -249,6 +252,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
         } else if (jObject.optInt("pushType") == 5) {
+
             Intent intent = new Intent(this, BMIDetailsActivity.class);
             intent.putExtra("notificationFlag", "1");
             intent.putExtra("serverUserId", jObject.optString("serverUserId"));
@@ -362,6 +366,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     PendingIntent.FLAG_ONE_SHOT);
         }
 
+
+
+        //buildNotification(pendingIntent,serverNotification.getBody());
+
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
         String channelId = getString(R.string.fcm_default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -395,9 +403,67 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
 
-//        notificationBuilder.setAutoCancel(true);
-        notificationManager.notify(100, notificationBuilder.build());
+        int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        notificationManager.notify(m, notificationBuilder.build());
     }
 
 
+
+    private void buildNotification(PendingIntent pendingIntent ,String body){
+
+        final int NOTIFY_ID = 0; // ID of notification
+        String CHANNEL_ID = this.getString(R.string.fcm_default_notification_channel_id);
+        String id = this.getString(R.string.app_name); // default_channel_id
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        Bitmap icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher);
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,CHANNEL_ID)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(body)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent)
+                .setContentInfo("")
+                .setLargeIcon(icon)
+                .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setSmallIcon(R.drawable.ic_notification);
+            notificationBuilder.setColor(getResources().getColor(R.color.colorAccent));
+        } else {
+            notificationBuilder.setSmallIcon(R.drawable.ic_notification);
+        }
+
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Notification Channel is required for Android O and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
+
+            channel.setDescription("channel description");
+            channel.setShowBadge(true);
+            channel.canShowBadge();
+            channel.enableLights(true);
+            channel.setLightColor(getResources().getColor(R.color.colorAccent));
+            channel.enableVibration(false);
+            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500});
+
+            notificationBuilder.setChannelId(CHANNEL_ID);
+
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+        }
+
+
+        assert notificationManager != null;
+        notificationManager.notify(NOTIFY_ID, notificationBuilder.build());
+    }
 }

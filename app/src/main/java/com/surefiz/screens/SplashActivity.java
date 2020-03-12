@@ -58,7 +58,7 @@ public class SplashActivity extends AppCompatActivity {
             jsonObject1 = null;
             if (getIntent().hasExtra("_fbSourceApplicationHasBeenSet") && !getIntent().hasExtra("pushData")) {
                 LoginShared.setWeightFromNotification(this, "0");
-                System.out.print("SureFIZ");
+               // System.out.print("SureFIZ");
             } else if (getIntent().hasExtra("pushData")) {
                 String value = bundle.get("pushData").toString();
                 try {

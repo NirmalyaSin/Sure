@@ -76,7 +76,7 @@
                 android:paddingEnd="@dimen/_18sdp"
                 android:paddingTop="@dimen/_20sdp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Time To Lose Weight Calculated After The First Weight"
+                android:text="@string/Time_To_Lose_Weight_Will_Be_Calculated"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 

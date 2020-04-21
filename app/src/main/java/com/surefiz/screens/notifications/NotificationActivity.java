@@ -464,14 +464,14 @@ public class NotificationActivity extends BaseActivity implements
                 break;
             case "2":
             case "3":
-                if (item.getContentId() != null) {
+                /*if (item.getContentId() != null) {
                     Intent intent = new Intent(this, ProgressStatusActivity.class);
                     intent.putExtra("userId", LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
                     intent.putExtra("contentId", item.getContentId());
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
-                break;
+                break;*/
         }
     }
 }

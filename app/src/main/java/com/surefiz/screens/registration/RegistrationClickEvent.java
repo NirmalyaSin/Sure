@@ -283,6 +283,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
         registrationActivity.et_userselection.setOnClickListener(this);
         registrationActivity.et_member.setOnClickListener(this);
         registrationActivity.et_lifestyle.setOnClickListener(this);
+        registrationActivity.btn_scan.setOnClickListener(this);        //***AVIK
+
     }
 
     @Override
@@ -521,6 +523,10 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 registrationActivity.finish();
                 break;
 
+            case R.id.btn_scan:        //***AVIK
+                registrationActivity.callScanner();
+                break;
+
         }
     }
 
@@ -706,7 +712,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
     private void validationAndApiCall() {
         if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
+            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions");
         } else if (registrationActivity.et_first_name.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
         } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
@@ -750,7 +756,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
             MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
         } else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition.");
+            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions");
         } else {
             int age = Integer.parseInt(registrationActivity.age.getText().toString());
             if (!(age >= 7 && age <= 99)) {
@@ -807,7 +813,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     !registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
                 MethodUtils.errorMsg(registrationActivity, "Scale ID and confirm scale ID are not identical");
             } else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-                MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
+                MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions");
             } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
                 MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
             } else {
@@ -820,7 +826,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else {
 
             if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-                MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Condition");
+                MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions");
             } else if (registrationActivity.et_first_name.getText().toString().equals("")) {
                 MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
             } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
@@ -956,6 +962,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody scaleId = RequestBody.create(MediaType.parse("text/plain"), replaceScaleIDFormatter(registrationActivity.et_scale_id.getText().toString().trim()));
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
+        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_body.getText().toString().trim());
+
 
         if (weight_managment_goal == 2) {
             type = RequestBody.create(MediaType.parse("text/plain"), "2");
@@ -999,7 +1007,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
         Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoApi(registrationActivity.registrationModel.getData().getToken(), current_User_Id, first_name, middle_name, last_name,
-                email, time, height, lifestyle, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken);
+                email, time, height, lifestyle, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType,bodycondition, deviceToken);
 
 
         complete_user_info_api.enqueue(new Callback<ResponseBody>() {
@@ -1449,6 +1457,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_email.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
+        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_body.getText().toString().trim());
 
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");
@@ -1494,7 +1503,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
         Call<ResponseBody> complete_user_info_api = apiInterface.call_completeUserInfoImageApi(registrationActivity.registrationModel.getData().getToken(), current_User_Id, first_name, middle_name, last_name,
-                email, time, height, lifestyle, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken, body);
+                email, time, height, lifestyle, weight, gender, phone, dob, scaleId, type, userselectionbody, units, deviceType, deviceToken,bodycondition, body);
 
         complete_user_info_api.enqueue(new Callback<ResponseBody>() {
             @Override

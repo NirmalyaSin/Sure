@@ -1,5 +1,5 @@
 
-package com.surefiz.screens.profile.model;
+package com.surefiz.screens.profile.model.profile;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

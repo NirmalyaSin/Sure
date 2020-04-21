@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.surefiz">
-
-    <!--KeyStore Pass : SureFiz@123-->
-
+    <!-- KeyStore Pass : SureFiz@123 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -12,7 +10,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
@@ -20,15 +17,16 @@
     <application
         android:name=".application.MyApplicationClass"
         android:allowBackup="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true"
-        android:largeHeap="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".screens.barcodescanner.BarCodeScanner"></activity>
         <activity
             android:name=".screens.SplashActivity"
             android:screenOrientation="portrait">
@@ -68,7 +66,7 @@
         <activity
             android:name=".screens.dashboard.BaseActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".screens.dashboard.DashBoardActivity"
             android:screenOrientation="portrait" />
@@ -110,14 +108,12 @@
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
-        </service>
-        <!-- [START firebase_service] -->
+        </service> <!-- [START firebase_service] -->
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
-        <!-- [END firebase_service] -->
+        </service> <!-- [END firebase_service] -->
         <service
             android:name=".fcm.FcmLongJobService"
             android:exported="false">
@@ -238,13 +234,6 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <receiver android:name=".receivers.AlarmReceiver" />
-
-        <!--<meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/app_icon_notification" />-->
-        <!--<meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/blue" />-->
     </application>
 
 </manifest>

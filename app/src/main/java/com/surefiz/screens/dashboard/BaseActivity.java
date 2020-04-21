@@ -113,6 +113,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.tvAppVersion)
     public TextView tvAppVersion;
 
+
     LoadingData loader;
     private ActionBarDrawerToggle mDrawerToggle;
     private ImageLoader imageLoader;
@@ -434,7 +435,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                     if (jsonObject.optInt("status") == 1) {
 
                         JSONObject jsObject = jsonObject.getJSONObject("data");
-                        MethodUtils.errorMsg(BaseActivity.this, jsObject.getString("message"));
+                        MethodUtils.errorMsg(BaseActivity.this, "Successfully Logged Out");
 
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override

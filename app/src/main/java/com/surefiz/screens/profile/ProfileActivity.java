@@ -74,6 +74,7 @@ public class ProfileActivity extends BaseActivity {
     EditText et_email;
     EditText et_height;
     EditText et_lifestyle;
+    EditText et_body;
     EditText et_country_name;
     EditText et_add_line1;
     EditText et_add_line2;
@@ -106,6 +107,7 @@ public class ProfileActivity extends BaseActivity {
      RelativeLayout rl_addressLine1;
      TextView tv_country_name;
      RelativeLayout rl_countryName;
+     RelativeLayout rl_body;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +147,7 @@ public class ProfileActivity extends BaseActivity {
         et_height.setEnabled(false);
         et_lifestyle.setEnabled(false);
 
+        et_body.setEnabled(false);
         et_country_name.setEnabled(false);
         et_state.setEnabled(false);
         et_add_line1.setEnabled(false);
@@ -177,6 +180,7 @@ public class ProfileActivity extends BaseActivity {
         et_add_line2 = view.findViewById(R.id.et_add_line2);
         et_city = view.findViewById(R.id.et_city);
         et_state = view.findViewById(R.id.et_state);
+        et_body = view.findViewById(R.id.et_body);
         et_zipcode = view.findViewById(R.id.et_zipcode);
 
         btn_register = view.findViewById(R.id.btn_register);
@@ -207,6 +211,8 @@ public class ProfileActivity extends BaseActivity {
 
         tv_country_name = view.findViewById(R.id.tv_country_name);
         rl_countryName = view.findViewById(R.id.rl_countryName);
+
+        rl_body = view.findViewById(R.id.rl_body);
     }
 
     public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {

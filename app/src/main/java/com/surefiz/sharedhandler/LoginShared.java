@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.surefiz.screens.dashboard.model.DashboardModel;
-import com.surefiz.screens.profile.model.ViewProfileModel;
+import com.surefiz.screens.profile.model.profile.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
 
 

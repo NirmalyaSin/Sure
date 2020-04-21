@@ -41,54 +41,96 @@
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_scale_id"
-            android:paddingLeft="@dimen/_18sdp"
-            android:paddingTop="@dimen/_20sdp"
-            android:text="New scale ID"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_14sdp" />
-
-        <RelativeLayout
-            android:id="@+id/rl_email"
+        <LinearLayout
+            android:id="@+id/ll_scale_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_email"
-            android:layout_marginLeft="@dimen/_18sdp"
-            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_below="@+id/tv_scale_id"
+            android:background="@drawable/edittext_background"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_18sdp"
-            android:background="@drawable/edit_text_background">
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:padding="@dimen/_6sdp"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/et_id"
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New scale ID"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:backgroundTint="@android:color/transparent"
-                android:hint="Enter new scale ID"
-                android:maxLines="1"
-                android:maxLength="12"
-                android:inputType="numberSigned"
-                android:digits="0123456789-"
-                android:paddingBottom="@dimen/_6sdp"
-                android:imeOptions="actionNext"
-                android:textColor="@color/whiteColor"
-                android:textColorHint="@color/whiteColor"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="@dimen/_10sdp" />
-        </RelativeLayout>
+                android:layout_below="@+id/tv_email"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_scan"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Enter new scale ID"
+                    android:maxLines="1"
+                    android:maxLength="12"
+                    android:inputType="numberSigned"
+                    android:digits="0123456789-"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:imeOptions="actionNext"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/whiteColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+
+                <ImageView
+                    android:id="@+id/toolTipScaleId"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:src="@drawable/information"/>
+
+                <TextView
+                    android:id="@+id/btn_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/toolTipScaleId"
+                    android:text="Tap Here To Scan"
+                    android:layout_marginRight="@dimen/_6sdp"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_12sdp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_cscale_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_scale_id"
+            android:background="@drawable/edittext_background"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_18sdp"
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:padding="@dimen/_6sdp"
+            android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/tv_confirm_scale_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_email"
-            android:paddingLeft="@dimen/_18sdp"
-            android:paddingTop="@dimen/_20sdp"
+            android:layout_below="@+id/ll_scale_id"
             android:text="Confirm scale ID"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
@@ -98,9 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_confirm_scale_id"
-            android:layout_marginLeft="@dimen/_18sdp"
             android:layout_marginTop="@dimen/_9sdp"
-            android:layout_marginRight="@dimen/_18sdp"
             android:background="@drawable/edit_text_background">
 
             <EditText
@@ -122,11 +162,13 @@
                 android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
 
+        </LinearLayout>
+
         <Button
             android:id="@+id/btn_update"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_below="@+id/rl_confirm_scale_id"
+            android:layout_below="@+id/ll_cscale_id"
             android:layout_margin="@dimen/_30sdp"
             android:background="@drawable/login_button_gradient"
             android:text="Update"

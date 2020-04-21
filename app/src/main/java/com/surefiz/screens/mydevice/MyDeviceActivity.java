@@ -1,18 +1,25 @@
 package com.surefiz.screens.mydevice;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
@@ -20,9 +27,11 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.barcodescanner.BarCodeScanner;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;
@@ -32,6 +41,7 @@ import com.surefiz.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
 
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,8 +52,13 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
     public View view;
     Button btn_update;
     EditText et_id,et_confirm_scale_id;
-    TextView tv_scale_id;
+    TextView tv_scale_id,btn_scan;
+    ImageView toolTipScaleId;
     private LoadingData loader;
+    private String toolTipText;
+    private static final int REQUEST_BAR_CODE = 101;
+    private static final int CAMERA = 100;
+
     /*private String blockCharacterSet = "~*#^|$%&!/+(),;N.";
     private InputFilter filter = new InputFilter() {
 
@@ -68,11 +83,16 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         loader = new LoadingData(this);
 //        showButton();
 
+        toolTipText = "Scale ID is labeled on\nthe back of your scale";
+
+
     }
 
     private void setClickEvent() {
         btn_update.setOnClickListener(this);
         rl_back.setOnClickListener(this);
+        toolTipScaleId.setOnClickListener(this);
+        btn_scan.setOnClickListener(this);
     }
 
     private void setViewBind() {
@@ -80,6 +100,8 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         et_id = findViewById(R.id.et_id);
         et_confirm_scale_id = findViewById(R.id.et_confirm_scale_id);
         tv_scale_id = findViewById(R.id.tv_scale_id);
+        btn_scan = findViewById(R.id.btn_scan);
+        toolTipScaleId = findViewById(R.id.toolTipScaleId);
 
         setTextFormatter();
     }
@@ -214,6 +236,38 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 break;
+
+            case R.id.toolTipScaleId:
+
+                new SimpleTooltip.Builder(getApplicationContext())
+                        .anchorView(v)
+                        .backgroundColor(getResources().getColor(R.color.whiteColor))
+                        .arrowColor(getResources().getColor(R.color.whiteColor))
+                        .text(toolTipText)
+                        .gravity(Gravity.START)
+                        .animated(false)
+                        .transparentOverlay(true)
+                        .build()
+                        .show();
+
+                break;
+
+            case R.id.btn_scan:
+                callScanner();
+
+
+
+        }
+    }
+
+    //***AVIK
+    protected void callScanner(){
+
+        if (checkStoragePermission()) {
+            Intent intent=new Intent(this, BarCodeScanner.class);
+            startActivityForResult(intent,REQUEST_BAR_CODE);
+        } else {
+            requestStoragePermission();
         }
     }
 
@@ -304,5 +358,48 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 MethodUtils.errorMsg(MyDeviceActivity.this, getString(R.string.error_occurred));
             }
         });
+    }
+
+
+    //***AVIK
+    protected boolean checkStoragePermission() {
+        return (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    protected void requestStoragePermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.CAMERA},
+                CAMERA);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == CAMERA) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Intent intent=new Intent(this, BarCodeScanner.class);
+                startActivityForResult(intent,REQUEST_BAR_CODE);
+
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+
+            case REQUEST_BAR_CODE:
+                if ((resultCode == RESULT_OK)) {
+                    et_id.setText(data.getStringExtra("barCode"));
+                    et_confirm_scale_id.setText(data.getStringExtra("barCode"));
+                }
+                break;
+        }
     }
 }

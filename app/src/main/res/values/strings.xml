@@ -101,6 +101,7 @@ complete his/her registration process.</string>
     <string name="i_will_provide_weight_time">I Will Provide Weight &amp; Time</string>
     <string name="accept_surefiz_weight">Accept SureFiz<sup><small><small>®</small></small></sup> Weight</string>
     <string name="time_to_lose_weight">Time To Lose Weight</string>
+    <string name="Time_To_Lose_Weight_Will_Be_Calculated">Time To Lose Weight Will Be Calculated After The First Weight</string>
     <!--<string name="user_confirmation_header">SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight</string>-->
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
 

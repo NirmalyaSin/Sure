@@ -1,5 +1,5 @@
 
-package com.surefiz.screens.profile.model;
+package com.surefiz.screens.profile.model.profile;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

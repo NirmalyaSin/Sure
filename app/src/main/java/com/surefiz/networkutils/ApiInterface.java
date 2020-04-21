@@ -10,7 +10,8 @@ import com.surefiz.screens.chat.model.ChatListResponse;
 import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
 import com.surefiz.screens.privacy.model.PrivacyListResponse;
-import com.surefiz.screens.profile.model.CountryList;
+import com.surefiz.screens.profile.model.country.CountryList;
+import com.surefiz.screens.profile.model.state.StateResponse;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.users.model.UserListModel;
 
@@ -40,6 +41,7 @@ import static com.surefiz.apilist.ApiList.API_CIRCLE_SEND_CANCEL_REQUEST;
 import static com.surefiz.apilist.ApiList.API_CIRCLE_USER_LIST;
 import static com.surefiz.apilist.ApiList.API_CONVERSATION_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_COUNTRY_LIST;
+import static com.surefiz.apilist.ApiList.API_GET_STATE_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_PRIVACY_LIST;
 import static com.surefiz.apilist.ApiList.API_GET_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_NOTIFICATION_LIST;
@@ -143,6 +145,7 @@ public interface ApiInterface {
                                                 @Part("mantain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
                                                 @Part("prefferedUnits") RequestBody prefferedUnits,
                                                 @Part("deviceType") RequestBody deviceType,
+                                                @Part("bodycondition") RequestBody bodycondition,
                                                 @Part("device_Token") RequestBody device_Token);
 
     @Multipart
@@ -166,6 +169,7 @@ public interface ApiInterface {
                                                      @Part("prefferedUnits") RequestBody prefferedUnits,
                                                      @Part("deviceType") RequestBody deviceType,
                                                      @Part("device_Token") RequestBody device_Token,
+                                                     @Part("bodycondition") RequestBody bodycondition,
                                                      @Part MultipartBody.Part attachment);
 
     @FormUrlEncoded
@@ -254,6 +258,7 @@ public interface ApiInterface {
                                                 @Part("state") RequestBody state,
                                                 @Part("zipcode") RequestBody zipcode,
                                                 @Part("lifestyle") RequestBody lifestyle,
+                                                @Part("bodycondition") RequestBody bodycondition,
                                                 @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -278,11 +283,16 @@ public interface ApiInterface {
                                            @Part("city") RequestBody city,
                                            @Part("state") RequestBody state,
                                            @Part("zipcode") RequestBody zipcode,
-                                           @Part("lifestyle") RequestBody lifestyle);
+                                           @Part("lifestyle") RequestBody lifestyle,
+                                           @Part("bodycondition") RequestBody bodycondition);
 
 
     @GET(API_GET_COUNTRY_LIST)
     Call<CountryList> call_countryListApi();
+
+    @FormUrlEncoded
+    @POST(API_GET_STATE_LIST)
+    Call<StateResponse> callstateListApi(@Field("countryId") String countryId);
 
     @FormUrlEncoded
     @POST(USERLIST)

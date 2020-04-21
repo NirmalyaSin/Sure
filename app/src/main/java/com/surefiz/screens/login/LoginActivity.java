@@ -94,7 +94,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginClickEvent = new LoginClickEvent(this);
         iv_facebook.setOnClickListener(this);
         googleSignInButton.setOnClickListener(this);
-        //getHashKey();
 
         // REMOVE
         //editEmail.setText("kannanrasimo12@gmail.com");

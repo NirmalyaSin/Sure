@@ -1,4 +1,4 @@
-package com.surefiz.screens.profile.model;
+package com.surefiz.screens.profile.model.profile;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -29,7 +29,9 @@ public class User {
     @SerializedName("country")
     @Expose
     private String country;
-    @SerializedName("addressline1")
+    @SerializedName("countryid")
+    @Expose
+    private String countryid;
     @Expose
     private String addressline1;
     @SerializedName("addressline2")
@@ -41,6 +43,9 @@ public class User {
     @SerializedName("state")
     @Expose
     private String state;
+    @SerializedName("stateid")
+    @Expose
+    private String stateid;
     @SerializedName("zip")
     @Expose
     private String zip;
@@ -95,6 +100,10 @@ public class User {
     @SerializedName("lifestyle")
     @Expose
     private String lifestyle;
+    @SerializedName("bodycondition")
+    @Expose
+    private String bodycondition;
+
 
     public String getUserId() {
         return userId;
@@ -334,5 +343,29 @@ public class User {
 
     public void setLifestyle(String lifestyle) {
         this.lifestyle = lifestyle;
+    }
+
+    public String getCountryid() {
+        return countryid;
+    }
+
+    public void setCountryid(String countryid) {
+        this.countryid = countryid;
+    }
+
+    public String getStateid() {
+        return stateid;
+    }
+
+    public void setStateid(String stateid) {
+        this.stateid = stateid;
+    }
+
+    public String getBodycondition() {
+        return bodycondition;
+    }
+
+    public void setBodycondition(String bodycondition) {
+        this.bodycondition = bodycondition;
     }
 }

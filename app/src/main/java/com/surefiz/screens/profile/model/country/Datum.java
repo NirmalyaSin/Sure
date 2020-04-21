@@ -1,4 +1,4 @@
-package com.surefiz.screens.profile.model;
+package com.surefiz.screens.profile.model.country;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -51,4 +51,5 @@ public class ApiList {
     public static final String API_ADD_SOCIAL = "ApiServices/Add_social";
     public static final String API_REMOVE_SOCIAL = "ApiServices/Remove_social";
     public static final String API_GET_COUNTRY_LIST = "ApiServices/CountryList";
+    public static final String API_GET_STATE_LIST = "ApiServices/StateList";
 }

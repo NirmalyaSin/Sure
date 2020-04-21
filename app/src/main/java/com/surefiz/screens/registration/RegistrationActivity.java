@@ -2,12 +2,15 @@ package com.surefiz.screens.registration;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -38,8 +41,9 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.barcodescanner.BarCodeScanner;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.profile.model.ViewProfileModel;
+import com.surefiz.screens.profile.model.profile.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MediaUtils;
@@ -193,12 +197,27 @@ public class RegistrationActivity extends AppCompatActivity {
     ImageView toolTipScaleId;
     @BindView(R.id.toolTipConfirmScaleId)
     ImageView toolTipConfirmScaleId;
+    @BindView(R.id.btn_scan)
+    TextView btn_scan;
+
+    @BindView(R.id.tv_body)
+    TextView tv_body;
+
+    @BindView(R.id.rl_body)
+    RelativeLayout rl_body;
+
+    @BindView(R.id.et_body)
+    EditText et_body;
+
     String toolTipText = "";
     private File mFile = null;
     private Uri fileUri = null;
     private OnImageSet onImageSet;
     private LoadingData loader;
     private ImageLoader imageLoader;
+
+    private static final int REQUEST_BAR_CODE = 101;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,6 +302,16 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
 
+    protected void callScanner(){
+
+        if (checkStoragePermission()) {
+            Intent intent=new Intent(this, BarCodeScanner.class);
+            startActivityForResult(intent,REQUEST_BAR_CODE);
+        } else {
+            requestStoragePermission();
+        }
+    }
+
     private void initializeImageLoader() {
         DisplayImageOptions opts = new DisplayImageOptions.Builder().cacheInMemory(true).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(RegistrationActivity.this)
@@ -342,6 +371,7 @@ public class RegistrationActivity extends AppCompatActivity {
             iv_plus_add_image.setVisibility(View.VISIBLE);
             tv_upload.setVisibility(View.VISIBLE);
             linearLayout1.setVisibility(View.VISIBLE);
+
 
         }
 
@@ -459,6 +489,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         et_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
         et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
+        et_body.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getBodycondition());
 
         et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
         et_confirm_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
@@ -546,6 +577,7 @@ public class RegistrationActivity extends AppCompatActivity {
             //et_confirm_email.setEnabled(false);
             et_lifestyle.setEnabled(false);
             et_phone.setEnabled(false);
+            et_body.setEnabled(false);
             et_gender.setEnabled(false);
             age.setEnabled(false);
             et_units.setEnabled(false);
@@ -594,7 +626,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private void setTermsAndCondition() {
         checkBoxTermsCondition.setText("");
         textTermsCondition.setText(Html.fromHtml("I have read and agree to the " +
-                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms & Condition</font></a>"));
+                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms & Conditions</font></a>"));
         textTermsCondition.setClickable(true);
         textTermsCondition.setMovementMethod(LinkMovementMethod.getInstance());
     }
@@ -733,10 +765,19 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 break;
 
+            case REQUEST_BAR_CODE:
+
+                //***AVIK
+                if ((resultCode == RESULT_OK)) {
+                    et_scale_id.setText(data.getStringExtra("barCode"));
+                    et_confirm_scale_id.setText(data.getStringExtra("barCode"));
+                }
+
             default:
                 break;
 
         }
+
 
     }
 
@@ -785,4 +826,35 @@ public class RegistrationActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    //***AVIK
+    protected boolean checkStoragePermission() {
+        return (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    //***AVIK
+    protected void requestStoragePermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.CAMERA},
+                CAMERA);
+    }
+
+    //***AVIK
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == CAMERA) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Intent intent=new Intent(this, BarCodeScanner.class);
+                startActivityForResult(intent,REQUEST_BAR_CODE);
+
+            }
+        }
+    }
+
+
 }

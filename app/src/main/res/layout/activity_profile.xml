@@ -222,6 +222,43 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/tv_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:paddingTop="@dimen/_20sdp"
+                    android:text="BODY CONDITION"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:hint="Enter Body Condition"
+                        android:focusableInTouchMode="false"
+                        android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <TextView
                     android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -616,7 +653,7 @@
                     android:layout_marginTop="-20dp"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="STATE / PROVINCE / REGION (EG: NC)"
+                    android:text="STATE / PROVINCE / REGION"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
@@ -638,9 +675,9 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Select your state"
+                        android:focusableInTouchMode="false"
                         android:inputType="textCapCharacters"
                         android:maxLines="1"
-                        android:maxLength="2"
                         android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
@@ -678,7 +715,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Enter your zip code"
-                        android:inputType="numberSigned"
+                        android:inputType="text"
                         android:maxLines="1"
                         android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"

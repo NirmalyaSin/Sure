@@ -288,12 +288,12 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     private void addWeightListAndCall(String change) {
         weightList.clear();
         if (change.equals("LB")) {
-            for (int i = 5; i < 301; i++) {
+            for (int i = 5; i < 361; i++) {
                 weightList.add(i + " " + change);
             }
 
         } else {
-            for (int i = 5; i < 151; i++) {
+            for (int i = 5; i < 181; i++) {
                 weightList.add(i + " " + change);
             }
         }

@@ -1,7 +1,6 @@
 package com.rts.commonutils_2_0.deviceinfo;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
 public class DeviceResolution {

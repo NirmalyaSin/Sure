@@ -172,6 +172,57 @@ public interface ApiInterface {
                                                      @Part("bodycondition") RequestBody bodycondition,
                                                      @Part MultipartBody.Part attachment);
 
+    @Multipart
+    @POST(EDITPROFILE)
+    Call<ResponseBody> call_editprofileImageApi(@Header("x-authorization") String token,
+                                                @Part("current_UserId") RequestBody current_UserId,
+                                                @Part("firstName") RequestBody fullName,
+                                                @Part("middleName") RequestBody middleName,
+                                                @Part("lastName") RequestBody lastName,
+                                                @Part("gender") RequestBody gender,
+                                                @Part("phoneNumber") RequestBody phoneNumber,
+                                                @Part("dob") RequestBody dob,
+                                                @Part("deviceType") RequestBody deviceType,
+                                                @Part("user_email") RequestBody user_email,
+                                                @Part("Height") RequestBody Height,
+                                                @Part("prefferedUnits") RequestBody prefferedUnits,
+                                                @Part("mainuservisibility") RequestBody mainuservisibility,
+                                                @Part("password") RequestBody password,
+                                                @Part("country") RequestBody country,
+                                                @Part("addressLineOne") RequestBody addressLine1,
+                                                @Part("addressLineTwo") RequestBody addressLine2,
+                                                @Part("city") RequestBody city,
+                                                @Part("state") RequestBody state,
+                                                @Part("zipcode") RequestBody zipcode,
+                                                @Part("lifestyle") RequestBody lifestyle,
+                                                @Part("bodycondition") RequestBody bodycondition,
+                                                @Part MultipartBody.Part attachment);
+
+    @Multipart
+    @POST(EDITPROFILE)
+    Call<ResponseBody> call_editprofileApi(@Header("x-authorization") String token,
+                                           @Part("current_UserId") RequestBody current_UserId,
+                                           @Part("firstName") RequestBody fullName,
+                                           @Part("middleName") RequestBody middleName,
+                                           @Part("lastName") RequestBody lastName,
+                                           @Part("gender") RequestBody gender,
+                                           @Part("phoneNumber") RequestBody phoneNumber,
+                                           @Part("dob") RequestBody dob,
+                                           @Part("deviceType") RequestBody deviceType,
+                                           @Part("user_email") RequestBody user_email,
+                                           @Part("Height") RequestBody Height,
+                                           @Part("prefferedUnits") RequestBody prefferedUnits,
+                                           @Part("mainuservisibility") RequestBody mainuservisibility,
+                                           @Part("password") RequestBody password,
+                                           @Part("country") RequestBody country,
+                                           @Part("addressLineOne") RequestBody addressLine1,
+                                           @Part("addressLineTwo") RequestBody addressLine2,
+                                           @Part("city") RequestBody city,
+                                           @Part("state") RequestBody state,
+                                           @Part("zipcode") RequestBody zipcode,
+                                           @Part("lifestyle") RequestBody lifestyle,
+                                           @Part("bodycondition") RequestBody bodycondition);
+
     @FormUrlEncoded
     @POST(GROUPINVITE)
     Call<ResponseBody> call_groupApi(@Field("mainuserid") String mainuserid,
@@ -234,57 +285,6 @@ public interface ApiInterface {
                                                     @Field("deviceToken") String deviceToken,
                                                     @Field("deviceVersion") String deviceVersion,
                                                     @Field("appVersion") String appVersion);
-
-    @Multipart
-    @POST(EDITPROFILE)
-    Call<ResponseBody> call_editprofileImageApi(@Header("x-authorization") String token,
-                                                @Part("current_UserId") RequestBody current_UserId,
-                                                @Part("firstName") RequestBody fullName,
-                                                @Part("middleName") RequestBody middleName,
-                                                @Part("lastName") RequestBody lastName,
-                                                @Part("gender") RequestBody gender,
-                                                @Part("phoneNumber") RequestBody phoneNumber,
-                                                @Part("dob") RequestBody dob,
-                                                @Part("deviceType") RequestBody deviceType,
-                                                @Part("user_email") RequestBody user_email,
-                                                @Part("Height") RequestBody Height,
-                                                @Part("prefferedUnits") RequestBody prefferedUnits,
-                                                @Part("mainuservisibility") RequestBody mainuservisibility,
-                                                @Part("password") RequestBody password,
-                                                @Part("country") RequestBody country,
-                                                @Part("addressLineOne") RequestBody addressLine1,
-                                                @Part("addressLineTwo") RequestBody addressLine2,
-                                                @Part("city") RequestBody city,
-                                                @Part("state") RequestBody state,
-                                                @Part("zipcode") RequestBody zipcode,
-                                                @Part("lifestyle") RequestBody lifestyle,
-                                                @Part("bodycondition") RequestBody bodycondition,
-                                                @Part MultipartBody.Part attachment);
-
-    @Multipart
-    @POST(EDITPROFILE)
-    Call<ResponseBody> call_editprofileApi(@Header("x-authorization") String token,
-                                           @Part("current_UserId") RequestBody current_UserId,
-                                           @Part("firstName") RequestBody fullName,
-                                           @Part("middleName") RequestBody middleName,
-                                           @Part("lastName") RequestBody lastName,
-                                           @Part("gender") RequestBody gender,
-                                           @Part("phoneNumber") RequestBody phoneNumber,
-                                           @Part("dob") RequestBody dob,
-                                           @Part("deviceType") RequestBody deviceType,
-                                           @Part("user_email") RequestBody user_email,
-                                           @Part("Height") RequestBody Height,
-                                           @Part("prefferedUnits") RequestBody prefferedUnits,
-                                           @Part("mainuservisibility") RequestBody mainuservisibility,
-                                           @Part("password") RequestBody password,
-                                           @Part("country") RequestBody country,
-                                           @Part("addressLineOne") RequestBody addressLine1,
-                                           @Part("addressLineTwo") RequestBody addressLine2,
-                                           @Part("city") RequestBody city,
-                                           @Part("state") RequestBody state,
-                                           @Part("zipcode") RequestBody zipcode,
-                                           @Part("lifestyle") RequestBody lifestyle,
-                                           @Part("bodycondition") RequestBody bodycondition);
 
 
     @GET(API_GET_COUNTRY_LIST)

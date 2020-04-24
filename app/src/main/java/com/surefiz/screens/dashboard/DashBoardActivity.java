@@ -753,7 +753,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         tv_recorded.setText("Recorded on " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getRecordedOn());
 
         if (getIntent().hasExtra("Performance")) {
-            tv_recorded.setVisibility(View.GONE);
+            tv_recorded.setVisibility(View.VISIBLE);
             rl_battery_status.setVisibility(View.GONE);
         } else {
             tv_recorded.setVisibility(View.VISIBLE);

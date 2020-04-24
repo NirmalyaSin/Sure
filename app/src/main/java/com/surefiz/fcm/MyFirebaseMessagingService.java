@@ -61,7 +61,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         LoginShared.setWeightFromNotification(this, "1");
         myApplicationClass = (MyApplicationClass) getApplication();
         Log.e(TAG, "FromDataPush: " + remoteMessage.getData());
-        Log.e(TAG, "FromDataPush: " + remoteMessage.getNotification());
+        Log.e(TAG, "FromDataPush: " + remoteMessage.getNotification().getBody());
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {

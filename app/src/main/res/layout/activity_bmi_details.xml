@@ -31,10 +31,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true">
 
+                <TextView
+                    android:id="@+id/txt_overall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@android:color/white"
+                    android:text="Overall"
+                    android:textSize="@dimen/_14sdp" />
+
                 <ImageView
                     android:id="@+id/img_bmi_back"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_below="@+id/txt_overall"
                     android:padding="@dimen/_5sdp"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/back" />

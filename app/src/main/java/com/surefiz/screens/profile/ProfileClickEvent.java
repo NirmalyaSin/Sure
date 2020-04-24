@@ -285,7 +285,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getPreferredUnits().equals("1")) {
             activity.et_units.setText("KG/CM");
         } else {
-            activity.et_units.setText("LB/INCH");
+            activity.et_units.setText("LBS/INCH");
         }
         String unit = "";
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getPreferredUnits().equals("1")) {
@@ -462,7 +462,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
     private void addPreferredListAndCall() {
 
-        prefferedList.add("LB/INCH");
+        prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
         weigtUniversalPopupPreferred = new WeigtUniversalPopup(activity, prefferedList, activity.et_units, new OnWeightCallback() {
             @Override
@@ -480,7 +480,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                         activity.et_height.setText(Math.round(Double.parseDouble(splited[0]) * 2.54) + " CM");
                         units = "CM";
                     }
-                    if (value.equals("LB/INCH")) {
+                    if (value.equals("LBS/INCH")) {
                         units = "INCH";
                         activity.et_height.setText((Math.round(Double.parseDouble(splited[0]) * 0.393701)) + " INCH");
                     }

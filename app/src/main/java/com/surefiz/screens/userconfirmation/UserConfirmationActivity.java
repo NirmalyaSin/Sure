@@ -76,6 +76,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     private void setClickEvent() {
+        rl_back.setOnClickListener(this);
         btn_accept.setOnClickListener(this);
         btn_provide.setOnClickListener(this);
         et_weight.setOnClickListener(this);
@@ -281,14 +282,14 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         if (savedUnits == 1) {
             addWeightListAndCall("KG");
         } else {
-            addWeightListAndCall("LB");
+            addWeightListAndCall("LBS");
         }
     }
 
     private void addWeightListAndCall(String change) {
         weightList.clear();
-        if (change.equals("LB")) {
-            for (int i = 5; i < 361; i++) {
+        if (change.equals("LBS")) {
+            for (int i = 5; i < 401; i++) {
                 weightList.add(i + " " + change);
             }
 
@@ -387,13 +388,12 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
     private void setHeaderView() {
         tv_universal_header.setText("User Confirmation");
-        rl_back.setVisibility(View.GONE);
+        rl_back.setVisibility(View.VISIBLE);
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         rlUserSearch.setVisibility(View.GONE);
         img_topbar_menu.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
-        rl_back.setVisibility(View.VISIBLE);
         img_topbar_menu.setVisibility(View.GONE);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
@@ -487,6 +487,11 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+
+            case R.id.rl_back:
+                finish();
+                break;
+
             case R.id.btn_accept:
                 callApiforweightUpdate();
                 break;

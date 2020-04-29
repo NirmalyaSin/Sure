@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ public class ProfileActivity extends BaseActivity {
     ProfileClickEvent profileClickEvent;
     de.hdodenhof.circleimageview.CircleImageView profile_image;
     ImageView iv_plus_add_image;
+    ScrollView sv_main;
     EditText et_DOB;
     EditText et_phone;
     EditText et_full;
@@ -162,6 +164,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void initView() {
+        sv_main = view.findViewById(R.id.sv_main);
         profile_image = view.findViewById(R.id.profile_image);
         iv_plus_add_image = view.findViewById(R.id.iv_plus_add_image);
         tvUserImageHint = view.findViewById(R.id.tvUserImageHint);

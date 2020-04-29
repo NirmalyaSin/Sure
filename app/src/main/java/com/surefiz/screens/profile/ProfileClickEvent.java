@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -422,6 +423,17 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_lifestyle.setOnClickListener(this);
         activity.et_body.setOnClickListener(this);
         activity.findViewById(R.id.iv_weight_managment).setOnClickListener(this);
+
+        activity.et_full.setOnClickListener(this);
+        activity.et_middle.setOnClickListener(this);
+        activity.et_last.setOnClickListener(this);
+        activity.et_email.setOnClickListener(this);
+        activity.et_phone.setOnClickListener(this);
+        activity.et_DOB.setOnClickListener(this);
+        activity.et_add_line1.setOnClickListener(this);
+        activity.et_add_line2.setOnClickListener(this);
+        activity.et_city.setOnClickListener(this);
+        activity.et_zipcode.setOnClickListener(this);
     }
 
     //***AVIK
@@ -489,8 +501,50 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         });
     }
 
+    private void invisibleCursor(){
+        activity.et_full.setCursorVisible(false);
+        activity.et_middle.setCursorVisible(false);
+        activity.et_last.setCursorVisible(false);
+        activity.et_email.setCursorVisible(false);
+        activity.et_phone.setCursorVisible(false);
+        activity.et_DOB.setCursorVisible(false);
+        activity.et_add_line1.setCursorVisible(false);
+        activity.et_add_line2.setCursorVisible(false);
+        activity.et_city.setCursorVisible(false);
+        activity.et_zipcode.setCursorVisible(false);
+    }
+
     public void onClick(View v) {
         switch (v.getId()) {
+
+         /*   case R.id.et_full:
+                activity.et_full.setCursorVisible(true);
+                break;
+            case R.id.et_middle:
+                activity.et_middle.setCursorVisible(true);
+                break;
+            case R.id.et_last:
+                activity.et_last.setCursorVisible(true);
+                break;
+            case R.id.et_email:
+                activity.et_email.setCursorVisible(true);
+                break;
+            case R.id.et_phone:
+                activity.et_phone.setCursorVisible(true);
+                break;
+            case R.id.et_add_line1:
+                activity.et_add_line1.setCursorVisible(true);
+                break;
+            case R.id.et_add_line2:
+                activity.et_add_line2.setCursorVisible(true);
+                break;
+            case R.id.et_city:
+                activity.et_city.setCursorVisible(true);
+                break;
+            case R.id.et_zipcode:
+                activity.et_zipcode.setCursorVisible(true);
+                break;*/
+
             case R.id.et_gender:
                 hideSoftKeyBoard();
                 if (activity.et_units.getText().toString().equals("KG/CM")) {
@@ -510,6 +564,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                         }
                     }, 100);
                 }
+
                 break;
             case R.id.et_DOB:
                 ExpiryDialog();
@@ -535,10 +590,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.btn_register.setVisibility(View.VISIBLE);
                 activity.btn_cancel.setVisibility(View.VISIBLE);
                 activity.iv_edit.setVisibility(View.GONE);
-                //activity.et_full.requestFocus();
                 activity.et_full.setEnabled(true);
                 activity.et_phone.setEnabled(true);
-                activity.et_full.setEnabled(true);
                 activity.et_middle.setEnabled(true);
                 activity.et_last.setEnabled(true);
                 activity.et_gender.setEnabled(true);
@@ -560,9 +613,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.et_new_password.setEnabled(true);
                 activity.et_confirm_password.setEnabled(true);
 
-                activity.et_full.setSelection(activity.et_full.getText().length());
-                InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(activity.et_full, InputMethodManager.SHOW_IMPLICIT);
+                //activity.et_full.setSelection(activity.et_full.getText().length());
+                activity.sv_main.setFocusable(true);
+
                 break;
             case R.id.profile_image:
                 new OpenCameraOrGalleryDialog(activity, new OnImageSet() {
@@ -749,7 +802,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         //activity.et_full.requestFocus();
         activity.et_full.setEnabled(false);
         activity.et_phone.setEnabled(false);
-        activity.et_full.setEnabled(false);
         activity.et_middle.setEnabled(false);
         activity.et_last.setEnabled(false);
         activity.et_gender.setEnabled(false);

@@ -22,6 +22,8 @@ public class Notification implements Parcelable {
     String notificationType;
     @SerializedName("contentId")
     String contentId;
+    @SerializedName("serverUserId")
+    String serverUserId;
 
     public Notification() {
     }
@@ -77,6 +79,7 @@ public class Notification implements Parcelable {
         dest.writeString(notificationTime);
         dest.writeString(notificationType);
         dest.writeString(contentId);
+        dest.writeString(serverUserId);
     }
 
     public String getNotificationId() {
@@ -143,6 +146,14 @@ public class Notification implements Parcelable {
         this.contentId = contentId;
     }
 
+    public String getserverUserId() {
+        return serverUserId;
+    }
+
+    public void setserverUserId(String serverUserId) {
+        this.serverUserId = serverUserId;
+    }
+
     public static Creator<Notification> getCREATOR() {
         return CREATOR;
     }
@@ -158,6 +169,7 @@ public class Notification implements Parcelable {
                 ", notificationTime='" + notificationTime + '\'' +
                 ", notificationType='" + notificationType + '\'' +
                 ", contentId='" + contentId + '\'' +
+                ", serverUserId='" + serverUserId + '\'' +
                 '}';
     }
 }

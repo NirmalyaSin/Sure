@@ -388,7 +388,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
     private void setHeaderView() {
         tv_universal_header.setText("User Confirmation");
-        rl_back.setVisibility(View.VISIBLE);
+        rl_back.setVisibility(View.GONE);
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         rlUserSearch.setVisibility(View.GONE);

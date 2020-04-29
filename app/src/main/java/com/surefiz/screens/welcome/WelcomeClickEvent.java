@@ -7,8 +7,9 @@ import android.view.View;
 
 import com.surefiz.R;
 import com.surefiz.screens.aboutus.AboutUsActivity;
+import com.surefiz.screens.choose.ChooseActivity;
+import com.surefiz.screens.choose.ChooseActivityView;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.login.LoginNewActivity;
 
 public class WelcomeClickEvent implements View.OnClickListener {
     WelcomeActivity welcomeActivity;
@@ -36,14 +37,8 @@ public class WelcomeClickEvent implements View.OnClickListener {
 
             case R.id.tv_signup:
 
-                /*String url = "https://www.surefiz.com/Signup";
-                Intent howToSignUpintent = new Intent(welcomeActivity, AboutUsActivity.class);
-                howToSignUpintent.putExtra("url", url);
-                howToSignUpintent.putExtra("menu", false);
-                howToSignUpintent.putExtra("header", "How to Sign up");
-                welcomeActivity.startActivity(howToSignUpintent);*/
-
-                showHowToSignupDialog();
+                Intent intent=new Intent(welcomeActivity, ChooseActivity.class);
+                welcomeActivity.startActivity(intent);
 
                 break;
 
@@ -58,24 +53,5 @@ public class WelcomeClickEvent implements View.OnClickListener {
 
                 break;
         }
-    }
-
-
-    private void showHowToSignupDialog() {
-
-        //For your weight management make the best decision and please visit  https://www.surefiz.com and click at  SIGNUP
-
-        String showToSignText = "<font color=#000000>For your weight management make the best decision and please visit </font>" + "<font color=#4A68EA><b><u>https://www.surefiz.com</u></b></font>"
-                +"<font color=#000000> and click at  SIGNUP</font>";
-
-        AlertDialog alertDialog = new AlertDialog.Builder(welcomeActivity).create();
-        alertDialog.setTitle(welcomeActivity.getResources().getString(R.string.app_name));
-        alertDialog.setMessage(Html.fromHtml(showToSignText));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                (dialog, which) -> {
-                    dialog.dismiss();
-                });
-
-        alertDialog.show();
     }
 }

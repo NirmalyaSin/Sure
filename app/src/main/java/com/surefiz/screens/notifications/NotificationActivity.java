@@ -18,6 +18,7 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.acountabiltySearch.RequestState;
+import com.surefiz.screens.bmidetails.BMIDetailsActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
@@ -463,15 +464,25 @@ public class NotificationActivity extends BaseActivity implements
                 }
                 break;
             case "2":
-            case "3":
-                /*if (item.getContentId() != null) {
+
+                if (item.getContentId() != null) {
                     Intent intent = new Intent(this, ProgressStatusActivity.class);
                     intent.putExtra("userId", LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
                     intent.putExtra("contentId", item.getContentId());
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
-                break;*/
+                break;
+            case "3":
+                if (item.getContentId() != null) {
+
+                    Intent intent = new Intent(this, BMIDetailsActivity.class);
+                    intent.putExtra("ScaleUserId", LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getScaleUserId());
+                    intent.putExtra("serverUserId", item.getserverUserId());
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                break;
         }
     }
 }

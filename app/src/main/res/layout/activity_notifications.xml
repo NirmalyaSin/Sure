@@ -68,7 +68,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="Battery\nStatus"
+                android:text="Scale\nScreen"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 

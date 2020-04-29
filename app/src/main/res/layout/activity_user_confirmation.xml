@@ -17,7 +17,6 @@
                 android:id="@+id/tv_enter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_header"
                 android:layout_centerHorizontal="true"
                 android:paddingTop="@dimen/_20sdp"
                 android:paddingLeft="@dimen/_18sdp"

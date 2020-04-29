@@ -40,8 +40,7 @@ public class ChooseOnClick implements View.OnClickListener {
                 break;
 
             case R.id.Btn_amazon:
-                AmazonDialog amazonDialog=new AmazonDialog(ChooseActivity);
-                amazonDialog.show();
+                ChooseActivity.callAmazon();
                 break;
 
             case R.id.Btn_surefiz:

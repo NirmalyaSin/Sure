@@ -39,6 +39,8 @@ public class WelcomeClickEvent implements View.OnClickListener {
 
                 Intent intent=new Intent(welcomeActivity, ChooseActivity.class);
                 welcomeActivity.startActivity(intent);
+                welcomeActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
 
                 break;
 

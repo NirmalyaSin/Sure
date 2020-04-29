@@ -13,6 +13,7 @@ public class ApiList {
     public static final String LOGIN = "ApiServices/Login";
     public static final String SOCIAL_LOGIN = "ApiServices/SocialLogin";
     public static final String VIEWPROFILE = "ApiServices/userProfile";
+    public static final String AMAZON = "ApiServices/verifyAmazonOrderID";
     public static final String EDITPROFILE = "ApiServices/EditUserProfile";
     public static final String USERLIST = "ApiServices/UserList";
     public static final String DELETEUSERLIST = "ApiServices/Deleteuser";

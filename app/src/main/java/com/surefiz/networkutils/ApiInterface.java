@@ -7,6 +7,7 @@ import com.surefiz.screens.acountabiltySearch.models.AddToCircleResponse;
 import com.surefiz.screens.bmidetails.model.BMIResponse;
 import com.surefiz.screens.boardcast.model.Message;
 import com.surefiz.screens.chat.model.ChatListResponse;
+import com.surefiz.screens.choose.response.VerifyResponse;
 import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
 import com.surefiz.screens.privacy.model.PrivacyListResponse;
@@ -31,6 +32,7 @@ import retrofit2.http.Path;
 import static com.surefiz.apilist.ApiList.ACCEPTSERVERWEIGHT;
 import static com.surefiz.apilist.ApiList.ADDDEVICE;
 import static com.surefiz.apilist.ApiList.ADDUSER;
+import static com.surefiz.apilist.ApiList.AMAZON;
 import static com.surefiz.apilist.ApiList.API_ADD_EDIT_REMINDER_LIST;
 import static com.surefiz.apilist.ApiList.API_ADD_SOCIAL;
 import static com.surefiz.apilist.ApiList.API_BMI_DATA;
@@ -275,6 +277,10 @@ public interface ApiInterface {
     @POST(VIEWPROFILE)
     Call<ResponseBody> call_viewprofileApi(@Header("x-authorization") String token,
                                            @Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST(AMAZON)
+    Call<VerifyResponse> call_amazon(@Field("orderID") String orderID);
 
 
     @FormUrlEncoded

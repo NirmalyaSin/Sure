@@ -773,6 +773,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     et_confirm_scale_id.setText(data.getStringExtra("barCode"));
                 }
 
+                break;
+
             default:
                 break;
 

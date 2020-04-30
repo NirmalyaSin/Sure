@@ -16,6 +16,7 @@ import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
+import com.surefiz.screens.signup.SignUpActivity;
 
 
 public class OpenCameraOrGalleryDialog extends AppCompatDialog implements View.OnClickListener {
@@ -83,16 +84,21 @@ public class OpenCameraOrGalleryDialog extends AppCompatDialog implements View.O
             case R.id.tv_openCamera:
                 if (choose.equals("0")) {
                     ((RegistrationActivity) mActivity).choiceMedia(RegistrationActivity.CAMERA, onImageSet);
-                }else{
+                }if (choose.equals("1")) {
                     ((ProfileActivity) mActivity).choiceMedia(RegistrationActivity.CAMERA, onImageSet);
+                }
+                if (choose.equals("2")) {
+                    ((SignUpActivity) mActivity).choiceMedia(RegistrationActivity.CAMERA, onImageSet);
                 }
                 dismiss();
                 break;
             case R.id.tv_openGallery:
                 if (choose.equals("0")) {
                     ((RegistrationActivity) mActivity).choiceMedia(RegistrationActivity.GALLERY, onImageSet);
-                }else{
+                }else if(choose.equals("1")){
                     ((ProfileActivity) mActivity).choiceMedia(RegistrationActivity.GALLERY, onImageSet);
+                }else if(choose.equals("2")){
+                    ((SignUpActivity) mActivity).choiceMedia(RegistrationActivity.GALLERY, onImageSet);
                 }
                 dismiss();
                 break;

@@ -6,8 +6,9 @@ import android.text.Html;
 import android.view.View;
 
 import com.surefiz.R;
-import com.surefiz.dialog.amazon.AmazonDialog;
+import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.signup.SignUpActivity;
 
 public class ChooseOnClick implements View.OnClickListener {
     private ChooseActivity ChooseActivity;
@@ -36,7 +37,16 @@ public class ChooseOnClick implements View.OnClickListener {
                 break;
 
             case R.id.Btn_subscribed:
-                showHowToSignupDialog(true);
+                //showHowToSignupDialog(true);
+                /*String urlvalue = "https://www.surefiz.com/Home/landing";
+                Intent learnmoreintent = new Intent(ChooseActivity, AboutUsActivity.class);
+                learnmoreintent.putExtra("url", urlvalue);
+                learnmoreintent.putExtra("menu", false);
+                learnmoreintent.putExtra("header", "Learn More");
+                ChooseActivity.startActivity(learnmoreintent);*/
+
+                Intent intent1=new Intent(ChooseActivity, SignUpActivity.class);
+                ChooseActivity.startActivity(intent1);
                 break;
 
             case R.id.Btn_amazon:

@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 
 import com.surefiz.R;
@@ -19,11 +18,11 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.barcodescanner.BarCodeScanner;
 import com.surefiz.screens.choose.response.VerifyResponse;
 import com.surefiz.screens.registration.RegistrationActivity;
+import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +36,7 @@ public class ChooseActivity extends ChooseActivityView {
     private AmazonDialog amazonDialog;
     private int step=1;
     private String orderId="";
+    private String scaleId="";
     private LoadingData loader;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,27 +46,25 @@ public class ChooseActivity extends ChooseActivityView {
         ButterKnife.bind(this);
         loader = new LoadingData(this);
 
+        amazonDialog=new AmazonDialog(this,step);
         chooseOnClick=new ChooseOnClick(ChooseActivity.this);
 
     }
 
     protected void callAmazon(){
-
-        amazonDialog=new AmazonDialog(this,step);
         amazonDialog.show();
-
         amazonDialog.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(step==1) {
                     if (amazonDialog.isShowing())
                         amazonDialog.dismiss();
-                }else if(step==2) {
+                }else if(step>=2) {
 
-                    Intent regIntent = new Intent(ChooseActivity.this, RegistrationActivity.class);
-                    regIntent.putExtra("completeStatus", "1");
-                    //regIntent.putExtra("registrationModelData", responseString);
-                    startActivity(regIntent);
+                    Intent intent = new Intent(ChooseActivity.this, RegistrationActivity.class);
+                    intent.putExtra("completeStatus", "1");
+                    intent.putExtra("orderId", orderId);
+                    startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finishAffinity();
                 }
@@ -82,12 +80,21 @@ public class ChooseActivity extends ChooseActivityView {
                         MethodUtils.errorMsg(ChooseActivity.this, "Please Enter Your Amazon Order ID");
 
                     }else{
-                        callAmazonVerifyApi(amazonDialog.et_orderId.getText().toString());
+                        callVerifyApi(amazonDialog.et_orderId.getText().toString(),true);
                     }
 
                 }else if(step==2) {
                     amazonDialog.stepThreeView();
+                    step=3;
+                }else if(step==3) {
+                    if(amazonDialog.et_scaleId.getText().toString().trim().equals("")){
+                        MethodUtils.errorMsg(ChooseActivity.this, "Please Enter Your Scale ID");
+
+                    }else{
+                        callVerifyApi(amazonDialog.et_scaleId.getText().toString(),false);
+                    }
                 }
+
             }
         });
 
@@ -167,12 +174,17 @@ public class ChooseActivity extends ChooseActivityView {
 
     }
 
-    private void callAmazonVerifyApi(String orderID) {
+    private void callVerifyApi(String orderID,boolean b) {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        final Call<VerifyResponse> call = apiInterface.call_amazon(orderID);
+        final Call<VerifyResponse> call;
+        if(b)
+            call= apiInterface.call_amazon(orderID);
+        else
+            call= apiInterface.call_scale(orderID);
+
 
         call.enqueue(new Callback<VerifyResponse>() {
             @Override
@@ -182,12 +194,17 @@ public class ChooseActivity extends ChooseActivityView {
                 try {
 
                     if (response.body().getStatus() == 1) {
-                        step=2;
-                        orderId=orderID;
-                        MethodUtils.showInfoDialog(ChooseActivity.this, response.body().getData().getMessage());
 
-                        amazonDialog.stepTwoView();
-
+                        if(step==1) {
+                            step = 2;
+                            orderId = orderID;
+                            MethodUtils.showInfoDialog(ChooseActivity.this, response.body().getData().getMessage());
+                            amazonDialog.stepTwoView();
+                        }else if(step==3){
+                            scaleId=orderID;
+                            MethodUtils.showInfoDialog(ChooseActivity.this, response.body().getData().getMessage());
+                            callRegistration();
+                        }
 
                     } else {
                         MethodUtils.errorMsg(ChooseActivity.this, response.body().getData().getMessage());
@@ -206,6 +223,23 @@ public class ChooseActivity extends ChooseActivityView {
                 MethodUtils.errorMsg(ChooseActivity.this, getString(R.string.error_occurred));
             }
         });
+    }
+
+    private void callRegistration(){
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(ChooseActivity.this, RegistrationActivity.class);
+                intent.putExtra("completeStatus", "1");
+                intent.putExtra("orderId", orderId);
+                intent.putExtra("scaleId", scaleId);
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finishAffinity();
+            }
+        }, GeneralToApp.SPLASH_WAIT_TIME);
     }
 
 
@@ -243,5 +277,13 @@ public class ChooseActivity extends ChooseActivityView {
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (amazonDialog.isShowing())
+            amazonDialog.dismiss();
     }
 }

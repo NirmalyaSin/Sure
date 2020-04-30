@@ -67,6 +67,7 @@ import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
 import static com.surefiz.apilist.ApiList.READ_NOTIFICATION;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.REMOVE_ACCOUNT_USER;
+import static com.surefiz.apilist.ApiList.SCALE;
 import static com.surefiz.apilist.ApiList.SENDOTP;
 import static com.surefiz.apilist.ApiList.SEND_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.SOCIAL_LOGIN;
@@ -281,6 +282,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(AMAZON)
     Call<VerifyResponse> call_amazon(@Field("orderID") String orderID);
+
+    @FormUrlEncoded
+    @POST(SCALE)
+    Call<VerifyResponse> call_scale(@Field("scaleID") String scaleID);
 
 
     @FormUrlEncoded

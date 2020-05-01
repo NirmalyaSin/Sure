@@ -1230,7 +1230,6 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:focusableInTouchMode="false"
                         android:hint="Enter your address line 2"
                         android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textCapSentences"

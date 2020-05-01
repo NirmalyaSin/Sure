@@ -38,15 +38,15 @@ public class ChooseOnClick implements View.OnClickListener {
 
             case R.id.Btn_subscribed:
                 //showHowToSignupDialog(true);
-                /*String urlvalue = "https://www.surefiz.com/Home/landing";
+                String urlvalue = "https://www.surefiz.com/Home/landing";
                 Intent learnmoreintent = new Intent(ChooseActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);
                 learnmoreintent.putExtra("menu", false);
                 learnmoreintent.putExtra("header", "Learn More");
-                ChooseActivity.startActivity(learnmoreintent);*/
+                ChooseActivity.startActivity(learnmoreintent);
 
-                Intent intent1=new Intent(ChooseActivity, SignUpActivity.class);
-                ChooseActivity.startActivity(intent1);
+                /*Intent intent1=new Intent(ChooseActivity, SignUpActivity.class);
+                ChooseActivity.startActivity(intent1);*/
                 break;
 
             case R.id.Btn_amazon:
@@ -56,7 +56,8 @@ public class ChooseOnClick implements View.OnClickListener {
             case R.id.Btn_surefiz:
                 Intent intent=new Intent(ChooseActivity, LoginActivity.class);
                 ChooseActivity.startActivity(intent);
-
+                ChooseActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                ChooseActivity.finishAffinity();
                 break;
 
             case R.id.Btn_nothing:

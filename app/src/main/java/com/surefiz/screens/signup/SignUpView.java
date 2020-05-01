@@ -1,6 +1,8 @@
 package com.surefiz.screens.signup;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +12,8 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -23,20 +27,34 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.gson.Gson;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.surefiz.R;
+import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.heightpopup.DoublePicker;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
 import com.surefiz.interfaces.OnImageSet;
+import com.surefiz.networkutils.ApiInterface;
+import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.familyinvite.FamilyInviteActivity;
+import com.surefiz.screens.groupinvite.GroupInviteActivity;
+import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.profile.ProfileClickEvent;
 import com.surefiz.screens.registration.RegistrationClickEvent;
 import com.surefiz.screens.registration.model.RegistrationModel;
+import com.surefiz.screens.signup.response.SignUpResponse;
+import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MediaUtils;
+import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +67,14 @@ import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 import id.zelory.compressor.FileUtil;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -64,7 +90,7 @@ public class SignUpView extends AppCompatActivity {
     protected RegistrationClickEvent registrationClickEvent;
     protected boolean isInCompleteProfile = false;
     protected RegistrationModel registrationModel;
-    int regType = -1;
+    int regType = 1;
     @BindView(R.id.tv_upload)
     protected TextView tv_upload;
     @BindView(R.id.tv_registration)
@@ -140,7 +166,7 @@ public class SignUpView extends AppCompatActivity {
     @BindView(R.id.et_add_line2)
     protected EditText et_add_line2;
     @BindView(R.id.et_city)
-    protected EditText city;
+    protected EditText et_city;
     @BindView(R.id.et_state)
     protected EditText et_state;
     @BindView(R.id.et_country_name)
@@ -194,13 +220,12 @@ public class SignUpView extends AppCompatActivity {
     protected Uri fileUri = null;
     protected OnImageSet onImageSet;
     protected LoadingData loader;
-    protected ImageLoader imageLoader;
 
     String units = "", height = "",weight = "";
     String[] splited;
+
     protected List<String> genderList = new ArrayList<>();
     protected List<String> lifeStyleList = new ArrayList<>();
-    protected int month, year, day;
     protected List<String> prefferedList = new ArrayList<>();
     protected List<String> countryList = new ArrayList<>();
     protected List<Integer> countryIDList = new ArrayList<>();
@@ -211,16 +236,20 @@ public class SignUpView extends AppCompatActivity {
     protected List<String> managementList = new ArrayList<>();
     protected List<String> desiredWeightSelectionList = new ArrayList<>();
     protected List<String> bodyList = new ArrayList<>();
-    protected String weight_value = "", time_value = "", units_value = "";
     protected DoublePicker doublePicker;
     protected UniversalPopup bodyPopup,genderPopup,weightPopup,timePopup;
     protected WeigtUniversalPopup managementPopup, selectionPopup;
     protected WeigtUniversalPopup countryListPopup, lifeStylePopup,stateListPopup,weigtUniversalPopupPreferred;
     protected int selectedLifeStyle = 0;
     protected String selectedCountryId = "";
+    protected String selectedStateId = "";
     protected boolean isState=false;
     protected int selectedWeightManagmentGoal = 0;
     protected int selectedDesiredWeightSelection = 0;
+
+    protected String orderId = "";
+    protected String scaleId = "";
+
 
     protected SignUpOnClick signUpOnClick;
 
@@ -402,5 +431,192 @@ public class SignUpView extends AppCompatActivity {
 
     }
 
+    protected void callSignUpApi() {
+
+        loader.show_with_label("Loading");
+
+        RequestBody gender = null;
+        RequestBody prefferedUnits = null;
+        RequestBody type = null;
+        RequestBody maintain_Weight_By_Server = null;
+        RequestBody desiredWeight = null;
+        RequestBody timeToloseWeight = null;
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        MultipartBody.Part body=null;
+        if(mCompressedFile!=null) {
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), mCompressedFile);
+            body = MultipartBody.Part.createFormData("userImage", mCompressedFile.getName(), reqFile);
+        }
+
+        RequestBody first_name = RequestBody.create(MediaType.parse("text/plain"), et_first_name.getText().toString().trim());
+        RequestBody middle_name = RequestBody.create(MediaType.parse("text/plain"), et_middle_name.getText().toString().trim());
+        RequestBody last_name = RequestBody.create(MediaType.parse("text/plain"), et_last_name.getText().toString().trim());
+        RequestBody email = RequestBody.create(MediaType.parse("text/plain"), et_email.getText().toString().trim());
+        RequestBody password = RequestBody.create(MediaType.parse("text/plain"), et_password.getText().toString().trim());
+        RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), et_phone.getText().toString().trim());
+
+        if (et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
+            prefferedUnits = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else {
+            prefferedUnits = RequestBody.create(MediaType.parse("text/plain"), "0");
+        }
+        if (et_gender.getText().toString().trim().equals("Male")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "1");
+        } else if (et_gender.getText().toString().trim().equals("Female")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "0");
+        } else if (et_gender.getText().toString().trim().equalsIgnoreCase("Non-binary")) {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "2");
+        } else {
+            gender = RequestBody.create(MediaType.parse("text/plain"), "3");
+        }
+
+
+        RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), age.getText().toString().trim());
+        String str = et_height.getText().toString().trim();
+        String[] splited = str.split(" ");
+        RequestBody height = RequestBody.create(MediaType.parse("text/plain"), splited[0]);
+        RequestBody deviceType = RequestBody.create(MediaType.parse("text/plain"), "2");
+        RequestBody deviceToken = RequestBody.create(MediaType.parse("text/plain"), LoginShared.getDeviceToken(this));
+        RequestBody count = RequestBody.create(MediaType.parse("text/plain"), "0");
+        RequestBody city = RequestBody.create(MediaType.parse("text/plain"), et_city.getText().toString());
+        RequestBody addressLineOne = RequestBody.create(MediaType.parse("text/plain"), et_add_line1.getText().toString());
+        RequestBody addressLineTwo = RequestBody.create(MediaType.parse("text/plain"), et_add_line2.getText().toString());
+        RequestBody zip = RequestBody.create(MediaType.parse("text/plain"), zipcode.getText().toString());
+        RequestBody regtype = RequestBody.create(MediaType.parse("text/plain"), "" + regType);
+        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), et_body.getText().toString().trim());
+        RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
+
+        RequestBody country = RequestBody.create(MediaType.parse("text/plain"), selectedCountryId);
+
+        RequestBody state = RequestBody.create(MediaType.parse("text/plain"), selectedStateId);
+
+        RequestBody address = RequestBody.create(MediaType.parse("text/plain"), "");
+        RequestBody TotalAmount = RequestBody.create(MediaType.parse("text/plain"), "");
+        RequestBody currencycode = RequestBody.create(MediaType.parse("text/plain"), "");
+        RequestBody PayableAmount = RequestBody.create(MediaType.parse("text/plain"), "");
+
+        RequestBody scaleMacId = RequestBody.create(MediaType.parse("text/plain"), scaleId);
+        RequestBody OrderId = RequestBody.create(MediaType.parse("text/plain"), orderId);
+
+        String weight = et_weight.getText().toString().trim();
+        String time = et_time_loss.getText().toString().trim();
+
+        if (!weight.equalsIgnoreCase("")) {
+            String[] weights = weight.split(" ");
+            weight = weights[0];
+            desiredWeight = RequestBody.create(MediaType.parse("text/plain"), weight);
+
+        }
+
+        if (time.equalsIgnoreCase("") || time.equalsIgnoreCase("TBD")) {
+            time = "0";
+            timeToloseWeight = RequestBody.create(MediaType.parse("text/plain"), time);
+
+        } else {
+            String[] splittedTime = time.split(" ");
+            time = splittedTime[0].trim();
+            timeToloseWeight = RequestBody.create(MediaType.parse("text/plain"), time);
+
+        }
+
+
+        if (selectedWeightManagmentGoal == 0) {
+            type = RequestBody.create(MediaType.parse("text/plain"), "2");
+
+            if (selectedDesiredWeightSelection == 0) {
+                maintain_Weight_By_Server = RequestBody.create(MediaType.parse("text/plain"), "0");
+
+            } else if (selectedDesiredWeightSelection == 1) {
+                maintain_Weight_By_Server = RequestBody.create(MediaType.parse("text/plain"), "1");
+                weight = "";
+                time = "";
+                desiredWeight = RequestBody.create(MediaType.parse("text/plain"), weight);
+                timeToloseWeight = RequestBody.create(MediaType.parse("text/plain"), time);
+            }
+        } else {
+            maintain_Weight_By_Server = RequestBody.create(MediaType.parse("text/plain"), "0");
+            type = RequestBody.create(MediaType.parse("text/plain"), "1");
+
+            weight = "";
+            time = "";
+            desiredWeight = RequestBody.create(MediaType.parse("text/plain"), weight);
+            timeToloseWeight = RequestBody.create(MediaType.parse("text/plain"), time);
+        }
+
+        Call<SignUpResponse> call;
+
+        if(mCompressedFile!=null)
+            call= apiInterface.call_signup_image(first_name, middle_name, last_name,
+                    email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
+                    maintain_Weight_By_Server,count, regtype, state, city, zip,addressLineOne,addressLineTwo,bodycondition,lifestyle,country,
+                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,body);
+        else
+            call = apiInterface.call_signup(first_name, middle_name, last_name,
+                    email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
+                    maintain_Weight_By_Server,count, regtype, state, city, zip,addressLineOne,addressLineTwo,bodycondition,lifestyle,country,
+                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId);
+
+
+        call.enqueue(new Callback<SignUpResponse>() {
+            @Override
+            public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+
+                try {
+
+                    if (response.body().getStatus() == 1) {
+
+
+                        if(response.body().getData().getUser().get(0).getScaleUserId().equals("")){
+
+                            showInfoDialog(getString(R.string.signup_completed_without_scale));
+
+                        }else{
+
+                           showInfoDialog(getString(R.string.signup_completed_with_scale));
+
+                        }
+
+                    } else {
+
+                        MethodUtils.errorMsg(SignUpView.this, response.body().getData().getMessage());
+                    }
+
+                } catch (Exception e) {
+                    MethodUtils.errorMsg(SignUpView.this, getString(R.string.error_occurred));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SignUpResponse> call, Throwable t) {
+                if (loader != null && loader.isShowing())
+                    loader.dismiss();
+                MethodUtils.errorMsg(SignUpView.this, getString(R.string.error_occurred));
+            }
+        });
+
+    }
+
+    public void showInfoDialog(String message) {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getResources().getString(R.string.app_name));
+        alertDialog.setMessage(Html.fromHtml(message));
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                (dialog, which) -> {
+                    dialog.dismiss();
+
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finishAffinity();
+                });
+        alertDialog.show();
+    }
 
 }

@@ -2,6 +2,9 @@ package com.surefiz.screens.signup;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 
 import com.surefiz.R;
@@ -35,8 +38,13 @@ public class SignUpActivity extends SignUpView {
         setContentView(R.layout.activity_signup_layout);
         ButterKnife.bind(this);
         loader = new LoadingData(this);
-
         signUpOnClick=new SignUpOnClick(SignUpActivity.this);
+
+        orderId=getIntent().getStringExtra("orderId");
+        scaleId=getIntent().getStringExtra("scaleId");
+
+        Log.e("SignUp-orderId",":::::::::::"+orderId);
+        Log.e("SignUp-scaleId",":::::::::::"+scaleId);
 
         addPreferredListAndCall();
         addBodyList();
@@ -45,7 +53,18 @@ public class SignUpActivity extends SignUpView {
         addManagementListAndCall();
         addTimeListAndCall();
         callCountryListApi();
-        callStateListApi();
+        addSelectionListAndCall();
+
+        setTermsAndCondition();
+    }
+
+
+    private void setTermsAndCondition() {
+        checkBoxTermsCondition.setText("");
+        textTermsCondition.setText(Html.fromHtml("I have read and agree to the " +
+                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms & Conditions</font></a>"));
+        textTermsCondition.setClickable(true);
+        textTermsCondition.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void addBodyList() {
@@ -216,12 +235,11 @@ public class SignUpActivity extends SignUpView {
         stateIDList.clear();
         for (int i = 0; i < data.size(); i++) {
 
-            if(isState) {
-                if (i == 0) {
-                    et_state.setText(data.get(i).getStateName());
-                }
+            if (i == 0) {
+                et_state.setText(data.get(i).getStateName());
+                selectedStateId=data.get(i).getStateID();
+
             }
-            isState = true;
 
             stateList.add(data.get(i).getStateName());
             stateIDList.add(data.get(i).getStateID());
@@ -231,6 +249,10 @@ public class SignUpActivity extends SignUpView {
         stateListPopup = new WeigtUniversalPopup(this, stateList, et_state, new OnWeightCallback() {
             @Override
             public void onSuccess(String value) {
+
+                int index = stateList.indexOf(et_state.getText().toString().trim());
+
+                selectedStateId=stateIDList.get(index);
                 et_state.setText(value);
             }
         });
@@ -248,25 +270,72 @@ public class SignUpActivity extends SignUpView {
                 if (value.equals("Lose And Maintain Weight")) {
                     et_management.setText(managementList.get(0));
 
-                    findViewById(R.id.tv_weight).setVisibility(View.GONE);
-                    findViewById(R.id.rl_weight).setVisibility(View.GONE);
-                    findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
-                    findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
+                    tv_userSelection.setVisibility(View.VISIBLE);
+                    rl_userselection.setVisibility(View.VISIBLE);
+
+                    tv_weight.setVisibility(View.GONE);
+                    rl_weight.setVisibility(View.GONE);
+                    tv_time_loss.setVisibility(View.GONE);
+                    rl_time_loss.setVisibility(View.GONE);
 
                     selectedWeightManagmentGoal = 0;
                     selectedDesiredWeightSelection = -1;
                 } else {
                     et_management.setText(managementList.get(1));
 
+                    tv_userSelection.setVisibility(View.GONE);
+                    rl_userselection.setVisibility(View.GONE);
 
-                    findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
-                    findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
+                    tv_time_loss.setVisibility(View.GONE);
+                    rl_time_loss.setVisibility(View.GONE);
 
-                    findViewById(R.id.tv_weight).setVisibility(View.GONE);
-                    findViewById(R.id.rl_weight).setVisibility(View.GONE);
+                    tv_weight.setVisibility(View.GONE);
+                    rl_weight.setVisibility(View.GONE);
 
                     selectedWeightManagmentGoal = 1;
                     selectedDesiredWeightSelection = -1;
+                }
+            }
+        });
+    }
+
+    private void addSelectionListAndCall() {
+        desiredWeightSelectionList.add("I Will Provide The Info");
+        desiredWeightSelectionList.add("I want " + getResources().getString(R.string.app_name) + " to suggest");
+
+        selectionPopup = new WeigtUniversalPopup(this, desiredWeightSelectionList, et_userselection, new OnWeightCallback() {
+            @Override
+            public void onSuccess(String value) {
+                if (value.equals("I Will Provide The Info")) {
+                    et_userselection.setText(desiredWeightSelectionList.get(0));
+
+                    if (selectedWeightManagmentGoal == 1) {
+                        tv_weight.setVisibility(View.GONE);
+                        rl_weight.setVisibility(View.GONE);
+                        tv_time_loss.setVisibility(View.GONE);
+                        rl_time_loss.setVisibility(View.GONE);
+                    } else {
+                        tv_weight.setVisibility(View.VISIBLE);
+                        rl_weight.setVisibility(View.VISIBLE);
+                        tv_time_loss.setVisibility(View.VISIBLE);
+                        rl_time_loss.setVisibility(View.VISIBLE);
+                        et_time_loss.setHint("Please Select");
+                        et_time_loss.setText("");
+                    }
+
+
+                    selectedDesiredWeightSelection = 0;
+                    et_time_loss.setEnabled(true);
+                    et_weight.setEnabled(true);
+                } else {
+                    et_userselection.setText(desiredWeightSelectionList.get(1));
+
+                    tv_weight.setVisibility(View.GONE);
+                    rl_weight.setVisibility(View.GONE);
+                    tv_time_loss.setVisibility(View.GONE);
+                    rl_time_loss.setVisibility(View.GONE);
+
+                    selectedDesiredWeightSelection = 1;
                 }
             }
         });
@@ -297,7 +366,21 @@ public class SignUpActivity extends SignUpView {
     }
 
 
+
+
     //***************************************************POP UP DISPLAY**************************************************
+
+
+    protected void showAndDismissSelectionPopup() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                selectionPopup.showAsDropDown(et_userselection);
+            }
+        }, 100);
+
+    }
 
     protected void showTimePopup() {
 

@@ -240,7 +240,7 @@
         <activity
             android:name=".screens.signup.SignUpActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <receiver android:name=".receivers.AlarmReceiver" />
     </application>

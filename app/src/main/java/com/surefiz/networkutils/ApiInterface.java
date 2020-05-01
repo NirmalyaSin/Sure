@@ -14,6 +14,7 @@ import com.surefiz.screens.privacy.model.PrivacyListResponse;
 import com.surefiz.screens.profile.model.country.CountryList;
 import com.surefiz.screens.profile.model.state.StateResponse;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
+import com.surefiz.screens.signup.response.SignUpResponse;
 import com.surefiz.screens.users.model.UserListModel;
 
 import okhttp3.MultipartBody;
@@ -127,6 +128,78 @@ public interface ApiInterface {
                                             @Part("city") RequestBody city,
                                             @Part("zipcode") RequestBody zipcode,
                                             @Part("address") RequestBody address);
+
+
+    @Multipart
+    @POST(REGISTRATION)
+    Call<SignUpResponse> call_signup_image(@Part("firstName") RequestBody firstname,
+                                                 @Part("middleName") RequestBody middleName,
+                                                 @Part("lastName") RequestBody lastName,
+                                                 @Part("emailId") RequestBody emailId,
+                                                 @Part("password") RequestBody password,
+                                                 @Part("gender") RequestBody gender,
+                                                 @Part("phoneNumber") RequestBody phoneNumber,
+                                                 @Part("dob") RequestBody dob,
+                                                 @Part("height") RequestBody height,
+                                                 @Part("desiredWeight") RequestBody desiredWeight,
+                                                 @Part("timeToloseWeight") RequestBody timeToloseWeight,
+                                                 @Part("prefferedUnits") RequestBody prefferedUnits,
+                                                 @Part("deviceType") RequestBody deviceType,
+                                                 @Part("type") RequestBody type,
+                                                 @Part("device_Token") RequestBody device_Token,
+                                                 @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
+                                                 @Part("count") RequestBody count,
+                                                 @Part("regtype") RequestBody regtype,
+                                                 @Part("state") RequestBody state,
+                                                 @Part("city") RequestBody city,
+                                                 @Part("zipcode") RequestBody zipcode,
+                                                 @Part("addressLineOne") RequestBody addressLineOne,
+                                                 @Part("addressLineTwo") RequestBody addressLineTwo,
+                                                 @Part("bodycondition") RequestBody bodycondition,
+                                                 @Part("lifestyle") RequestBody lifestyle,
+                                                 @Part("country") RequestBody country,
+                                                 @Part("TotalAmount") RequestBody TotalAmount,
+                                                 @Part("currencycode") RequestBody currencycode,
+                                                 @Part("PayableAmount") RequestBody PayableAmount,
+                                                 @Part("address") RequestBody address,
+                                                 @Part("scaleMacId") RequestBody scaleMacId,
+                                                 @Part("OrderId") RequestBody OrderId,
+                                                 @Part MultipartBody.Part attachment);
+
+    @Multipart
+    @POST(REGISTRATION)
+    Call<SignUpResponse> call_signup(@Part("firstName") RequestBody firstname,
+                                           @Part("middleName") RequestBody middleName,
+                                           @Part("lastName") RequestBody lastName,
+                                           @Part("emailId") RequestBody emailId,
+                                           @Part("password") RequestBody password,
+                                           @Part("gender") RequestBody gender,
+                                           @Part("phoneNumber") RequestBody phoneNumber,
+                                           @Part("dob") RequestBody dob,
+                                           @Part("height") RequestBody height,
+                                           @Part("desiredWeight") RequestBody desiredWeight,
+                                           @Part("timeToloseWeight") RequestBody timeToloseWeight,
+                                           @Part("prefferedUnits") RequestBody prefferedUnits,
+                                           @Part("deviceType") RequestBody deviceType,
+                                           @Part("type") RequestBody type,
+                                           @Part("device_Token") RequestBody device_Token,
+                                           @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
+                                           @Part("count") RequestBody count,
+                                           @Part("regtype") RequestBody regtype,
+                                           @Part("state") RequestBody state,
+                                           @Part("city") RequestBody city,
+                                           @Part("zipcode") RequestBody zipcode,
+                                           @Part("addressLineOne") RequestBody addressLineOne,
+                                           @Part("addressLineTwo") RequestBody addressLineTwo,
+                                           @Part("bodycondition") RequestBody bodycondition,
+                                           @Part("lifestyle") RequestBody lifestyle,
+                                           @Part("country") RequestBody country,
+                                           @Part("TotalAmount") RequestBody TotalAmount,
+                                           @Part("currencycode") RequestBody currencycode,
+                                           @Part("PayableAmount") RequestBody PayableAmount,
+                                           @Part("address") RequestBody address,
+                                           @Part("scaleMacId") RequestBody scaleMacId,
+                                           @Part("OrderId") RequestBody OrderId);
 
     @Multipart
     @POST(COMPLETE_USER_INFO)

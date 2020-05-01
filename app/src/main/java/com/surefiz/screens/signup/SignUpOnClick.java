@@ -7,10 +7,12 @@ import android.widget.Toast;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.dialog.OpenCameraOrGalleryDialog;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.screens.profile.ProfileActivity;
+import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class SignUpOnClick implements View.OnClickListener {
     }
 
     private void setOnClick(){
+        signUpActivity.rl_back.setOnClickListener(this);
         signUpActivity.profile_image.setOnClickListener(this);
         signUpActivity.et_gender.setOnClickListener(this);
         signUpActivity.et_units.setOnClickListener(this);
@@ -38,12 +41,17 @@ public class SignUpOnClick implements View.OnClickListener {
         signUpActivity.et_management.setOnClickListener(this);
         signUpActivity.et_weight.setOnClickListener(this);
         signUpActivity.et_time_loss.setOnClickListener(this);
+        signUpActivity.et_userselection.setOnClickListener(this);
+        signUpActivity.btn_register.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
+            case R.id.rl_back:
+                signUpActivity.finish();
+                break;
             case R.id.profile_image:
                 new OpenCameraOrGalleryDialog(signUpActivity, new OnImageSet() {
                     @Override
@@ -154,6 +162,98 @@ public class SignUpOnClick implements View.OnClickListener {
 
                 signUpActivity.showTimePopup();
                 break;
+
+            case R.id.et_userselection:
+
+                signUpActivity.hideSoftKeyBoard();
+                closeAllPopup();
+
+                signUpActivity.showAndDismissSelectionPopup();
+                break;
+
+            case R.id.btn_register:
+
+                signUpActivity.hideSoftKeyBoard();
+                closeAllPopup();
+
+                if (signUpActivity.et_first_name.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your first name");
+                }
+                else if (signUpActivity.et_last_name.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your last name");
+                }
+                else if (signUpActivity.et_email.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your email");
+                }
+                else if (signUpActivity.et_confirm_email.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please re-enter your email");
+                }else if (!signUpActivity.et_email.getText().toString().equals(signUpActivity.et_confirm_email.getText().toString())) {
+                    MethodUtils.errorMsg(signUpActivity, "Re-enter email not match with email");
+                }
+                else if (signUpActivity.et_password.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Enter new password");
+                }
+                else if (signUpActivity.et_body.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your body condition");
+                }
+                else if (signUpActivity.selectedLifeStyle == 0) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select your lifestyle");
+                }
+                else if (signUpActivity.et_phone.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your phone number");
+                }
+                else if (signUpActivity.et_units.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select your Preferred Units");
+                }
+                else if (signUpActivity.et_management.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select your weight management goal");
+                }
+                else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.et_userselection.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select your desired weight");
+                }else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_weight.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select your weight");
+                }
+                else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_time_loss.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select your time");
+                }
+                else if (signUpActivity.et_height.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select your height");
+                }
+                else if (signUpActivity.et_gender.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select any gender type");
+                }
+                else if (signUpActivity.age.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your Age");
+                }
+                else if (!isNonZeroValue(signUpActivity.age.getText().toString().trim())) {
+                    MethodUtils.errorMsg(signUpActivity, "Age should be between 7 and 99");
+                }
+
+                else if (signUpActivity.et_country_name.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Enter country");
+                }
+                else if (signUpActivity.et_add_line1.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Enter address line 1");
+                }
+                else if (signUpActivity.et_city.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Enter city");
+                }
+                else if (signUpActivity.et_state.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Enter state");
+                }
+                else if (signUpActivity.zipcode.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Enter zip code");
+                }
+                else if (!signUpActivity.checkBoxTermsCondition.isChecked()) {
+                    MethodUtils.errorMsg(signUpActivity, "Please accept Terms & Conditions");
+                }
+                else if (!ConnectionDetector.isConnectingToInternet(signUpActivity)) {
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.no_internet));
+                } else {
+                    signUpActivity.callSignUpApi();
+                }
+
+                break;
         }
 
     }
@@ -186,6 +286,23 @@ public class SignUpOnClick implements View.OnClickListener {
         else if (signUpActivity.timePopup != null && signUpActivity.timePopup.isShowing()) {
             signUpActivity.timePopup.dismiss();
         }
+        else if (signUpActivity.selectionPopup != null && signUpActivity.selectionPopup.isShowing()) {
+            signUpActivity.selectionPopup.dismiss();
+        }
+        else if (signUpActivity.managementPopup != null && signUpActivity.managementPopup.isShowing()) {
+            signUpActivity.managementPopup.dismiss();
+        }
     }
 
+    private boolean isNonZeroValue(String value) {
+        int nonZeroValue = 0;
+        try {
+            nonZeroValue = Integer.valueOf(value);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("nonZeroValue: " + nonZeroValue);
+        return (nonZeroValue >= 9 && nonZeroValue <= 99);
+    }
 }

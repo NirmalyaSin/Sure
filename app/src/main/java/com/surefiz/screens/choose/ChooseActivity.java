@@ -1,12 +1,14 @@
 package com.surefiz.screens.choose;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
 
@@ -18,6 +20,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.barcodescanner.BarCodeScanner;
 import com.surefiz.screens.choose.response.VerifyResponse;
 import com.surefiz.screens.registration.RegistrationActivity;
+import com.surefiz.screens.signup.SignUpActivity;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -61,12 +64,11 @@ public class ChooseActivity extends ChooseActivityView {
                         amazonDialog.dismiss();
                 }else if(step>=2) {
 
-                    Intent intent = new Intent(ChooseActivity.this, RegistrationActivity.class);
-                    intent.putExtra("completeStatus", "1");
+                    Intent intent = new Intent(ChooseActivity.this, SignUpActivity.class);
                     intent.putExtra("orderId", orderId);
+                    intent.putExtra("scaleId", scaleId);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finishAffinity();
                 }
             }
         });
@@ -202,8 +204,8 @@ public class ChooseActivity extends ChooseActivityView {
                             amazonDialog.stepTwoView();
                         }else if(step==3){
                             scaleId=orderID;
-                            MethodUtils.showInfoDialog(ChooseActivity.this, response.body().getData().getMessage());
-                            callRegistration();
+
+                            showInfoDialog(response.body().getData().getMessage());
                         }
 
                     } else {
@@ -225,22 +227,27 @@ public class ChooseActivity extends ChooseActivityView {
         });
     }
 
-    private void callRegistration(){
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                Intent intent = new Intent(ChooseActivity.this, RegistrationActivity.class);
-                intent.putExtra("completeStatus", "1");
-                intent.putExtra("orderId", orderId);
-                intent.putExtra("scaleId", scaleId);
+    public void showInfoDialog(String message) {
 
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finishAffinity();
-            }
-        }, GeneralToApp.SPLASH_WAIT_TIME);
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getResources().getString(R.string.app_name));
+        alertDialog.setMessage(Html.fromHtml(message));
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                (dialog, which) -> {
+                    dialog.dismiss();
+
+                    Intent intent = new Intent(ChooseActivity.this, SignUpActivity.class);
+                    intent.putExtra("orderId", orderId);
+                    intent.putExtra("scaleId", scaleId);
+
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                });
+        alertDialog.show();
     }
+
 
 
     protected void callScanner(){

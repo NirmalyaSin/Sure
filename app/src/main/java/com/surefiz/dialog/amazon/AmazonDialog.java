@@ -37,6 +37,8 @@ public class AmazonDialog extends Dialog {
     public LinearLayout scan_block;
     @BindView(R.id.et_scaleId)
     public EditText et_scaleId;
+    @BindView(R.id.et_con_scaleId)
+    public EditText et_con_scaleId;
     @BindView(R.id.btn_scan)
     public TextView btn_scan;
 
@@ -81,7 +83,7 @@ public class AmazonDialog extends Dialog {
     }
 
     public void stepThreeView(){
-        tv_sub.setText("Please enter your Scale ID.");
+        tv_sub.setText("Please scan the scale ID barcode on the back your scale or enter it manually");
         et_orderId.setVisibility(View.GONE);
         scan_block.setVisibility(View.VISIBLE);
 

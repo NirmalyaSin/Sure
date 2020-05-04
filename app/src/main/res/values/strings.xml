@@ -1,10 +1,8 @@
 <resources>
     <!--<string name="app_name">SureFiz™</string>-->
     <string name="app_name">SureFiz<sup><small><small>®</small></small></sup></string>
-    <string name="app_name_splash">SureFiz<sup><small><small><small>®</small></small></small></sup></string>
-    <!--<string name="app_name_otp">SureFiz™</string>-->
-    <!--<string name="app_name_otp">SureFiz®</string>-->
-    <string name="app_name_otp">SureFiz<sup><small><small>®</small></small></sup></string>
+    <string name="app_name_splash">SureFiz<sup><small><small><small></small></small></small></sup></string>
+    <string name="app_name_otp">SureFiz<sup><small><small></small></small></sup></string>
     <!--<string name="app_name_otp">SureFiz<sup><small>&#174;</small></sup></string>-->
     <string name="facebook_app_id">2086076151705154</string>
     <string name="fb_login_protocol_scheme">fb2086076151705154</string>
@@ -71,7 +69,6 @@
     <string name="update">Update</string>
     <string name="complete_sign_up">Complete Sign Up</string>
     <string name="surefiz_signup">Signup</string>
-    <!--<string name="surefiz_register">SureFiz<sup><small>®</small></sup> Registration</string>-->
     <string name="surefiz_register">Registration</string>
     <string name="compositions">Composition</string>
     <string name="manage_social_logins">MANAGE SOCIAL LOGINS</string>
@@ -96,16 +93,17 @@ complete his/her registration process.</string>
     <string name="enter_title">ENTER TITLE</string>
     <string name="click_to_view_history"><u>View History.</u></string>
     <string name="chat_not_found">Frequent messaging with your accountability circle members is a good idea</string>
-    <string name="user_confirmation_header_declined">Please enter your desired weight and select the time to lose weight.</string>
-    <string name="user_confirmation_header">Please make your choice below: Either Accept SureFiz® Weight or I Will Provide Weight &amp; Time.</string>
+    <string name="user_confirmation_header_declined">Please enter your desired weight and time</string>
+    <!--<string name="user_confirmation_header">Please make your choice below: Either Accept SureFiz Weight or I Will Provide Weight &amp; Time.</string>-->
+    <string name="user_confirmation_header">Please choose one of the options, “Accept SureFiz Weight” or “I Will Provide Weight and Time”</string>
     <string name="i_will_provide_weight_time">I Will Provide Weight &amp; Time</string>
-    <string name="accept_surefiz_weight">Accept SureFiz<sup><small><small>®</small></small></sup> Weight</string>
+    <string name="accept_surefiz_weight">Accept SureFiz<sup><small><small></small></small></sup> Weight</string>
     <string name="time_to_lose_weight">Time To Lose Weight</string>
     <string name="Time_To_Lose_Weight_Will_Be_Calculated">Time To Lose Weight Will Be Calculated After The First Weight</string>
     <!--<string name="user_confirmation_header">SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight</string>-->
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
-    <string name="signup_completed_without_scale">Sign up is completed. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz® mobile App, with email id and password created during signup. Your email will be validated during app login. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
-    <string name="signup_completed_with_scale">Sign up is completed. Login into the SureFiz® mobile App, with email id and password created during signup. Your email will be validated during app login. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
+    <string name="signup_completed_without_scale">Sign up is completed. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email id and password created during signup. Your email will be validated during app login. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
+    <string name="signup_completed_with_scale">Sign up is completed. Login into the SureFiz mobile App, with email id and password created during signup. Your email will be validated during app login. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
 
 
 </resources>

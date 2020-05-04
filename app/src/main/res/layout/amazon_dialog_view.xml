@@ -30,6 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
             android:gravity="center"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/colorBlack"
@@ -59,7 +61,7 @@
             <LinearLayout
                 android:id="@+id/scan_block"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_61sdp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/grey_edittext_background"
                 >
@@ -71,6 +73,29 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
                     android:gravity="center_vertical"
+                    android:hint="Enter scale id"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="@dimen/_12sdp"
+                    android:digits="0123456789-"
+                    android:inputType="number"
+                    android:background="@null"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/opacity_color"
+                    />
+                <EditText
+                    android:id="@+id/et_con_scaleId"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:hint="Confirm scale id"
+                    android:textColorHint="@color/hintColor"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_12sdp"
                     android:digits="0123456789-"
@@ -86,7 +111,7 @@
                 <TextView
                     android:id="@+id/btn_scan"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/_30sdp"
                     android:paddingRight="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:text="Tap Here To Scan"

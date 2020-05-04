@@ -1112,16 +1112,28 @@
                         android:textSize="@dimen/_10sdp" />
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_country_name"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:paddingTop="@dimen/_18sdp"
-                    android:text="Country Name"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_18sdp">
+
+                    <TextView
+                        android:id="@+id/tv_country_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Country Name"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_countryName"

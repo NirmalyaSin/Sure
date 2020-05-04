@@ -401,7 +401,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     public void showConfirmDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserConfirmationActivity.this);
         alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage("Please note, if you decline you will need to provide the desired weight and time to lose weight. You can provide your input in User Confirmation Screen. Would you like to decline?");
+        alertDialog.setMessage("Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight & Time”?");
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -412,6 +412,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 btn_provide.setEnabled(false);
                 btn_provide.setBackgroundResource(R.drawable.rounded_corner_provide);
                 btn_accept.setText("Update");
+                tv_universal_header.setText("Desired Weight and Time");
                 tv_enter.setText(R.string.user_confirmation_header_declined);
                 tv_time_loss.setText(R.string.time_to_lose_weight);
 

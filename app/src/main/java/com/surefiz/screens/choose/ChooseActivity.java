@@ -41,6 +41,7 @@ public class ChooseActivity extends ChooseActivityView {
     private String orderId="";
     private String scaleId="";
     private LoadingData loader;
+    private boolean isScanner=false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,11 +90,26 @@ public class ChooseActivity extends ChooseActivityView {
                     amazonDialog.stepThreeView();
                     step=3;
                 }else if(step==3) {
-                    if(amazonDialog.et_scaleId.getText().toString().trim().equals("")){
-                        MethodUtils.errorMsg(ChooseActivity.this, "Please Enter Your Scale ID");
+                    if(isScanner) {
+                        if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter Scale ID");
 
+                        } else {
+                            callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-",""), false);
+                        }
                     }else{
-                        callVerifyApi(amazonDialog.et_scaleId.getText().toString(),false);
+                        if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter Scale ID");
+
+                        }else if (amazonDialog.et_con_scaleId.getText().toString().trim().equals("")) {
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please confirm your Scale ID");
+
+                        }else if (!amazonDialog.et_con_scaleId.getText().toString().trim().equals(amazonDialog.et_scaleId.getText().toString().trim())) {
+                            MethodUtils.errorMsg(ChooseActivity.this, "Scale ID and Confirm Scale ID mismatch");
+
+                        }else {
+                            callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-",""), false);
+                        }
                     }
                 }
 
@@ -134,6 +150,39 @@ public class ChooseActivity extends ChooseActivityView {
         });
 
         amazonDialog.et_scaleId.addTextChangedListener(new TextWatcher() {
+
+            private boolean isEdiging = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isEdiging) return;
+                isEdiging = true;
+                // removing old dashes
+                StringBuilder sb = new StringBuilder();
+                sb.append(s.toString().trim().replace("-", ""));
+
+                if (sb.length() > 2)
+                    sb.insert(2, "-");
+                if (sb.length() > 7)
+                    sb.insert(7, "-");
+                if (sb.length() > 12)
+                    sb.delete(12, sb.length());
+
+                s.replace(0, s.length(), sb.toString());
+                isEdiging = false;
+            }
+        });
+
+        amazonDialog.et_con_scaleId.addTextChangedListener(new TextWatcher() {
 
             private boolean isEdiging = false;
 
@@ -280,7 +329,9 @@ public class ChooseActivity extends ChooseActivityView {
             case REQUEST_BAR_CODE:
                 if ((resultCode == RESULT_OK)) {
                     if(amazonDialog!=null)
+                        isScanner=true;
                         amazonDialog.et_scaleId.setText(data.getStringExtra("barCode"));
+                        amazonDialog.et_con_scaleId.setVisibility(View.GONE);
                 }
                 break;
         }

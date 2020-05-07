@@ -164,6 +164,7 @@ public interface ApiInterface {
                                                  @Part("address") RequestBody address,
                                                  @Part("scaleMacId") RequestBody scaleMacId,
                                                  @Part("OrderId") RequestBody OrderId,
+                                                 @Part("How") RequestBody learn_about,
                                                  @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -199,7 +200,8 @@ public interface ApiInterface {
                                            @Part("PayableAmount") RequestBody PayableAmount,
                                            @Part("address") RequestBody address,
                                            @Part("scaleMacId") RequestBody scaleMacId,
-                                           @Part("OrderId") RequestBody OrderId);
+                                           @Part("OrderId") RequestBody OrderId,
+                                            @Part("How") RequestBody learn_about);
 
     @Multipart
     @POST(COMPLETE_USER_INFO)

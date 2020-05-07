@@ -213,6 +213,8 @@ public class SignUpView extends AppCompatActivity {
     protected RelativeLayout rl_body;
     @BindView(R.id.et_body)
     protected EditText et_body;
+    @BindView(R.id.et_learn_about)
+    protected EditText et_learn_about;
 
     protected String toolTipText = "";
     protected File mFile = null;
@@ -236,8 +238,9 @@ public class SignUpView extends AppCompatActivity {
     protected List<String> managementList = new ArrayList<>();
     protected List<String> desiredWeightSelectionList = new ArrayList<>();
     protected List<String> bodyList = new ArrayList<>();
+    protected List<String> learnList = new ArrayList<>();
     protected DoublePicker doublePicker;
-    protected UniversalPopup bodyPopup,genderPopup,weightPopup,timePopup;
+    protected UniversalPopup bodyPopup,genderPopup,weightPopup,timePopup,learnPopup;
     protected WeigtUniversalPopup managementPopup, selectionPopup;
     protected WeigtUniversalPopup countryListPopup, lifeStylePopup,stateListPopup,weigtUniversalPopupPreferred;
     protected int selectedLifeStyle = 0;
@@ -487,6 +490,8 @@ public class SignUpView extends AppCompatActivity {
         RequestBody regtype = RequestBody.create(MediaType.parse("text/plain"), "" + regType);
         RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), et_body.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
+        RequestBody learn_about = RequestBody.create(MediaType.parse("text/plain"), et_learn_about.getText().toString().trim());
+
 
         RequestBody country = RequestBody.create(MediaType.parse("text/plain"), selectedCountryId);
 
@@ -551,12 +556,12 @@ public class SignUpView extends AppCompatActivity {
             call= apiInterface.call_signup_image(first_name, middle_name, last_name,
                     email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
                     maintain_Weight_By_Server,count, regtype, state, city, zip,addressLineOne,addressLineTwo,bodycondition,lifestyle,country,
-                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,body);
+                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,learn_about,body);
         else
             call = apiInterface.call_signup(first_name, middle_name, last_name,
                     email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
                     maintain_Weight_By_Server,count, regtype, state, city, zip,addressLineOne,addressLineTwo,bodycondition,lifestyle,country,
-                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId);
+                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,learn_about);
 
 
         call.enqueue(new Callback<SignUpResponse>() {
@@ -604,7 +609,7 @@ public class SignUpView extends AppCompatActivity {
     public void showInfoDialog(String message) {
 
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name));
+        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
         alertDialog.setMessage(Html.fromHtml(message));
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",

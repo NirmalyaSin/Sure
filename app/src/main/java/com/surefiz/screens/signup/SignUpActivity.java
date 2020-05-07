@@ -54,6 +54,7 @@ public class SignUpActivity extends SignUpView {
         addTimeListAndCall();
         callCountryListApi();
         addSelectionListAndCall();
+        addLearnAboutList();
 
         setTermsAndCondition();
     }
@@ -65,6 +66,25 @@ public class SignUpActivity extends SignUpView {
                 "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms & Conditions</font></a>"));
         textTermsCondition.setClickable(true);
         textTermsCondition.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private void addLearnAboutList(){
+
+        learnList.add("Google Search");
+        learnList.add("Facebook");
+        learnList.add("Instagram");
+        learnList.add("Twitter");
+        learnList.add("LinkedIn");
+        learnList.add("YouTube");
+        learnList.add("From a Friend/Relative");
+        learnList.add("CES");
+        learnList.add("News");
+        learnList.add("Printed Media");
+        learnList.add("SureFiz® Website");
+        learnList.add("Others");
+
+        learnPopup = new UniversalPopup(this, learnList, et_learn_about);
+
     }
 
     private void addBodyList() {
@@ -301,7 +321,7 @@ public class SignUpActivity extends SignUpView {
 
     private void addSelectionListAndCall() {
         desiredWeightSelectionList.add("I Will Provide The Info");
-        desiredWeightSelectionList.add("I want " + getResources().getString(R.string.app_name) + " to suggest");
+        desiredWeightSelectionList.add("I want " + getResources().getString(R.string.app_name_splash) + " to suggest");
 
         selectionPopup = new WeigtUniversalPopup(this, desiredWeightSelectionList, et_userselection, new OnWeightCallback() {
             @Override
@@ -499,5 +519,15 @@ public class SignUpActivity extends SignUpView {
                 }
             }, 100);
         }
+
+    protected void showAndDismissLearAboutPopup() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                learnPopup.showAsDropDown(et_learn_about);
+            }
+        }, 100);
+    }
 
 }

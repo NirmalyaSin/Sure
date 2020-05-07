@@ -37,7 +37,7 @@ public class ErrorMessageDialog {
 
     public void show(String msg) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        dialog.setTitle(R.string.app_name);
+        dialog.setTitle(R.string.app_name_splash);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setMessage(msg);
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {

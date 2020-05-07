@@ -106,7 +106,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
 
         Intent aboutIntent = new Intent(this, AboutUsActivity.class);
         aboutIntent.putExtra("url", "https://www.surefiz.com/Login");
-        aboutIntent.putExtra("header", getResources().getString(R.string.app_name));
+        aboutIntent.putExtra("header", getResources().getString(R.string.app_name_splash));
         aboutIntent.putExtra("menu", false);
         startActivityForResult(aboutIntent, 200);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

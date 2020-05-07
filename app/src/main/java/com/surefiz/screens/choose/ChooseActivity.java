@@ -63,13 +63,16 @@ public class ChooseActivity extends ChooseActivityView {
                 if(step==1) {
                     if (amazonDialog.isShowing())
                         amazonDialog.dismiss();
-                }else if(step>=2) {
+                }else if(step==2) {
 
                     Intent intent = new Intent(ChooseActivity.this, SignUpActivity.class);
                     intent.putExtra("orderId", orderId);
                     intent.putExtra("scaleId", scaleId);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else if(step==3){
+                    step=2;
+                    amazonDialog.stepTwoView();
                 }
             }
         });
@@ -102,10 +105,10 @@ public class ChooseActivity extends ChooseActivityView {
                             MethodUtils.errorMsg(ChooseActivity.this, "Please enter Scale ID");
 
                         }else if (amazonDialog.et_con_scaleId.getText().toString().trim().equals("")) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please confirm your Scale ID");
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please Retype Scale ID");
 
                         }else if (!amazonDialog.et_con_scaleId.getText().toString().trim().equals(amazonDialog.et_scaleId.getText().toString().trim())) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Scale ID and Confirm Scale ID mismatch");
+                            MethodUtils.errorMsg(ChooseActivity.this, "Scale ID and Retype Scale ID mismatch");
 
                         }else {
                             callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-",""), false);
@@ -223,6 +226,20 @@ public class ChooseActivity extends ChooseActivityView {
             }
         });
 
+        amazonDialog.btn_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isScanner=false;
+                amazonDialog.et_scaleId.setText("");
+                amazonDialog.et_con_scaleId.setText("");
+                amazonDialog.btn_scan.setVisibility(View.VISIBLE);
+                amazonDialog.tv_or.setVisibility(View.VISIBLE);
+                amazonDialog.et_con_scaleId.setVisibility(View.VISIBLE);
+                amazonDialog.btn_remove.setVisibility(View.GONE);
+
+            }
+        });
+
     }
 
     private void callVerifyApi(String orderID,boolean b) {
@@ -280,7 +297,7 @@ public class ChooseActivity extends ChooseActivityView {
     public void showInfoDialog(String message) {
 
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name));
+        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
         alertDialog.setMessage(Html.fromHtml(message));
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
@@ -330,8 +347,12 @@ public class ChooseActivity extends ChooseActivityView {
                 if ((resultCode == RESULT_OK)) {
                     if(amazonDialog!=null)
                         isScanner=true;
-                        amazonDialog.et_scaleId.setText(data.getStringExtra("barCode"));
-                        amazonDialog.et_con_scaleId.setVisibility(View.GONE);
+                    amazonDialog.et_scaleId.setText(data.getStringExtra("barCode"));
+                    amazonDialog.et_con_scaleId.setVisibility(View.GONE);
+                    amazonDialog.btn_scan.setVisibility(View.GONE);
+                    amazonDialog.btn_remove.setVisibility(View.VISIBLE);
+                    amazonDialog.tv_or.setVisibility(View.GONE);
+
                 }
                 break;
         }

@@ -21,7 +21,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
             android:fontFamily="@font/roboto_bold"
-            android:text="@string/app_name"
+            android:text="@string/app_name_splash"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_14sdp" />
 
@@ -63,62 +63,88 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/grey_edittext_background"
+                android:gravity="center"
                 >
+
+                <TextView
+                    android:id="@+id/btn_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:paddingRight="@dimen/_30sdp"
+                    android:paddingLeft="@dimen/_30sdp"
+                    android:text="Tap Here To Scan"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_12sdp"
+                    android:background="@drawable/shape_rectangle_round_green"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_or"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Or\n Enter Manually"
+                    android:lineSpacingExtra="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_12sdp"
+                    />
+
+
 
                 <EditText
                     android:id="@+id/et_scaleId"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
                     android:gravity="center_vertical"
-                    android:hint="Enter scale id"
+                    android:hint="Enter your scale id"
                     android:textColor="@color/colorBlack"
                     android:textColorHint="@color/hintColor"
                     android:textSize="@dimen/_12sdp"
                     android:digits="0123456789-"
                     android:inputType="number"
-                    android:background="@null"
+                    android:background="@drawable/grey_edittext_background"
                     />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/opacity_color"
-                    />
+
+
+                <TextView
+                    android:id="@+id/btn_remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:visibility="gone"
+                    android:text="Clear"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_12sdp" />
+
                 <EditText
                     android:id="@+id/et_con_scaleId"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
                     android:gravity="center_vertical"
-                    android:hint="Confirm scale id"
+                    android:hint="Retype your scale id"
                     android:textColorHint="@color/hintColor"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_12sdp"
                     android:digits="0123456789-"
                     android:inputType="number"
-                    android:background="@null"
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/opacity_color"
+                    android:background="@drawable/grey_edittext_background"
                     />
 
-                <TextView
-                    android:id="@+id/btn_scan"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:text="Tap Here To Scan"
-                    android:gravity="center_vertical"
-                    android:fontFamily="@font/roboto_medium"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_12sdp" />
 
             </LinearLayout>
 
@@ -127,7 +153,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:background="@color/opacity_color"
             />
 

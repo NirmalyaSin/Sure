@@ -274,7 +274,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             Toast.makeText(mWifiConfigActivity, "Wificonfig done", Toast.LENGTH_LONG).show();
         else {
             AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
-            alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
+            alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name_splash));
             //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
             alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.smart_config_failed));
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
@@ -315,7 +315,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         } else {
             AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
-            alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
+            alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name_splash));
             //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
             alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.smart_config_failed));
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
@@ -335,7 +335,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     private void showalertdialog(boolean isFromSettingPage) {
         AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
-        alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name));
+        alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name_splash));
         alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.configrution));
 
         if (isFromSettingPage) {

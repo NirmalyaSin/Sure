@@ -182,7 +182,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private void addSelectionListAndCall() {
         selectionList.add("I Will Provide the Info");
         //selectionList.add("I want SureFiz™ to suggest");
-        selectionList.add("I want " + registrationActivity.getResources().getString(R.string.app_name) + " to suggest");
+        selectionList.add("I want " + registrationActivity.getResources().getString(R.string.app_name_splash) + " to suggest");
 
         selectionPopup = new WeigtUniversalPopup(registrationActivity, selectionList, registrationActivity.et_userselection, new OnWeightCallback() {
             @Override
@@ -1071,7 +1071,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
     public void showAckowlegmentDialog(String msg) {
         final AlertDialog dialog = new AlertDialog.Builder(registrationActivity).create();
-        dialog.setTitle(R.string.app_name);
+        dialog.setTitle(R.string.app_name_splash);
         dialog.setCanceledOnTouchOutside(false);
 
         if (!LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&

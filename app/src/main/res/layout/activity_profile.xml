@@ -227,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="BODY CONDITION"
+                    android:text="PRE EXISTING CONDITION"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
@@ -247,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:hint="Enter Body Condition"
+                        android:hint="Please Select Pre Existing Condition"
                         android:focusableInTouchMode="false"
                         android:maxLines="1"
                         android:fontFamily="@font/roboto_regular"

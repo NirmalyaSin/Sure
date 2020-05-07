@@ -79,7 +79,7 @@ public class ChooseOnClick implements View.OnClickListener {
         }
 
         AlertDialog alertDialog = new AlertDialog.Builder(ChooseActivity).create();
-        alertDialog.setTitle(ChooseActivity.getResources().getString(R.string.app_name));
+        alertDialog.setTitle(ChooseActivity.getResources().getString(R.string.app_name_splash));
         alertDialog.setMessage(Html.fromHtml(showToSignText));
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 (dialog, which) -> {

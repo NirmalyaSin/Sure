@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -41,6 +42,10 @@ public class AmazonDialog extends Dialog {
     public EditText et_con_scaleId;
     @BindView(R.id.btn_scan)
     public TextView btn_scan;
+    @BindView(R.id.btn_remove)
+    public TextView btn_remove;
+    @BindView(R.id.tv_or)
+    public View tv_or;
 
 
     public AmazonDialog(Activity activity,int step) {
@@ -86,6 +91,7 @@ public class AmazonDialog extends Dialog {
         tv_sub.setText("Please scan the scale ID barcode on the back your scale or enter it manually");
         et_orderId.setVisibility(View.GONE);
         scan_block.setVisibility(View.VISIBLE);
+        btn_remove.setPaintFlags(btn_remove.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 
         btn_cancel.setText("Cancel");
         btn_ok.setText("Submit");

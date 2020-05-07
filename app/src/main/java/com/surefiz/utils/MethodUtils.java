@@ -85,7 +85,7 @@ public class MethodUtils {
     public static void showInfoDialog(Activity activity,String message) {
 
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-        alertDialog.setTitle(activity.getResources().getString(R.string.app_name));
+        alertDialog.setTitle(activity.getResources().getString(R.string.app_name_splash));
         alertDialog.setMessage(Html.fromHtml(message));
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 (dialog, which) -> {

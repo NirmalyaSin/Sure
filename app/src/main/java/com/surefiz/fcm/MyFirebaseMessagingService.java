@@ -378,7 +378,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setColor(getResources().getColor(R.color.colorPrimary))
                         //.setContentTitle(serverNotification.getTitle())
-                        .setContentTitle(getString(R.string.app_name))
+                        .setContentTitle(getString(R.string.app_name_splash))
                         .setContentText(serverNotification.getBody())
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(serverNotification.getBody()))

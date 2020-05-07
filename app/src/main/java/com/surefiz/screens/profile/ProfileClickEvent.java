@@ -654,7 +654,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 if (activity.et_full.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter your name");
                 } else if (activity.et_body.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your body condition");
+                    MethodUtils.errorMsg(activity, "Please select your pre existing condition");
                 }else if (activity.et_phone.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, "Please enter your phone number");
                 } else if (activity.et_units.getText().toString().equals("")) {

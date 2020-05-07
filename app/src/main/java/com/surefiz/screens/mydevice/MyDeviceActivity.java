@@ -278,7 +278,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
     private void showUpdateInfoDialog(String message) {
 
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name));
+        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
         alertDialog.setMessage(Html.fromHtml(message));
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 (dialog, which) -> {

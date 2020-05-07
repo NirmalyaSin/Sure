@@ -42,6 +42,7 @@ public class SignUpOnClick implements View.OnClickListener {
         signUpActivity.et_weight.setOnClickListener(this);
         signUpActivity.et_time_loss.setOnClickListener(this);
         signUpActivity.et_userselection.setOnClickListener(this);
+        signUpActivity.et_learn_about.setOnClickListener(this);
         signUpActivity.btn_register.setOnClickListener(this);
     }
 
@@ -171,6 +172,14 @@ public class SignUpOnClick implements View.OnClickListener {
                 signUpActivity.showAndDismissSelectionPopup();
                 break;
 
+            case R.id.et_learn_about:
+
+                signUpActivity.hideSoftKeyBoard();
+                closeAllPopup();
+
+                signUpActivity.showAndDismissLearAboutPopup();
+                break;
+
             case R.id.btn_register:
 
                 signUpActivity.hideSoftKeyBoard();
@@ -194,7 +203,7 @@ public class SignUpOnClick implements View.OnClickListener {
                     MethodUtils.errorMsg(signUpActivity, "Enter new password");
                 }
                 else if (signUpActivity.et_body.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your body condition");
+                    MethodUtils.errorMsg(signUpActivity, "Please select your pre existing condition");
                 }
                 else if (signUpActivity.selectedLifeStyle == 0) {
                     MethodUtils.errorMsg(signUpActivity, "Please select your lifestyle");
@@ -244,6 +253,9 @@ public class SignUpOnClick implements View.OnClickListener {
                 else if (signUpActivity.zipcode.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, "Enter zip code");
                 }
+                else if (signUpActivity.et_learn_about.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, "Please select");
+                }
                 else if (!signUpActivity.checkBoxTermsCondition.isChecked()) {
                     MethodUtils.errorMsg(signUpActivity, "Please accept Terms & Conditions");
                 }
@@ -291,6 +303,9 @@ public class SignUpOnClick implements View.OnClickListener {
         }
         else if (signUpActivity.managementPopup != null && signUpActivity.managementPopup.isShowing()) {
             signUpActivity.managementPopup.dismiss();
+        }
+        else if (signUpActivity.learnPopup != null && signUpActivity.learnPopup.isShowing()) {
+            signUpActivity.learnPopup.dismiss();
         }
     }
 

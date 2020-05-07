@@ -350,9 +350,9 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     private void showApConfigCofirmationDialog(String SSID) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name));
+        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
 
-        String messageStr = getResources().getString(R.string.app_name) + " Wants to Join Wi-Fi Network \"" + SSID + "\"";
+        String messageStr = getResources().getString(R.string.app_name_splash) + " Wants to Join Wi-Fi Network \"" + SSID + "\"";
 
         alertDialog.setMessage(messageStr);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Join",
@@ -376,7 +376,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     private void showalertdialog(boolean success) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name));
+        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
         if (!success) {
             alertDialog.setMessage("Your Configuration failed to complete.");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",

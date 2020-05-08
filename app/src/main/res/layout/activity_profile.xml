@@ -249,7 +249,6 @@
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Please Select Pre Existing Condition"
                         android:focusableInTouchMode="false"
-                        android:maxLines="1"
                         android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"

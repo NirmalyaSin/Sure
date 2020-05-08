@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +35,7 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
+import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.utils.MediaUtils;
 
@@ -110,6 +112,9 @@ public class ProfileActivity extends BaseActivity {
      TextView tv_country_name;
      RelativeLayout rl_countryName;
      RelativeLayout rl_body;
+
+    public  ArrayList<BodyItem> bodyList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -364,6 +369,17 @@ public class ProfileActivity extends BaseActivity {
                 profileClickEvent.handleSignInResult(result);
 
                 break;
+
+            case ProfileClickEvent.BODY_CONDITION:
+                if(resultCode==RESULT_OK){
+                    bodyList= (ArrayList<BodyItem>) data.getSerializableExtra("selectedBody");
+
+                    String selectedBody=getSelectedItem();
+                    et_body.setText(selectedBody);
+                    Log.d("Selected Body","::::::::::"+selectedBody);
+
+                }
+                break;
             default:
                 if (fbcallbackManager != null) {
                     fbcallbackManager.onActivityResult(requestCode, resultCode, data);
@@ -482,4 +498,16 @@ public class ProfileActivity extends BaseActivity {
 
         profileClickEvent.callapiforAddSocail(socialId, "fb");
     }
+
+    protected String getSelectedItem(){
+        String s="";
+        for (int i = 0;i<bodyList.size();i++){
+            if(bodyList.get(i).isSelection()==true){
+                s=s+bodyList.get(i).getName()+", ";
+            }
+        }
+
+        return s;
+    }
+
 }

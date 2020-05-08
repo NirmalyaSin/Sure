@@ -453,7 +453,6 @@
                         android:backgroundTint="@android:color/transparent"
                         android:hint="Please select your pre existing condition"
                         android:fontFamily="@font/roboto_regular"
-                        android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"
                         android:textColor="@color/whiteColor"
                         android:textColorHint="@color/hintColor"

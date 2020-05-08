@@ -37,7 +37,6 @@ public class ChooseOnClick implements View.OnClickListener {
                 break;
 
             case R.id.Btn_subscribed:
-                //showHowToSignupDialog(true);
                 String urlvalue = "https://www.surefiz.com/Home/landing";
                 Intent learnmoreintent = new Intent(ChooseActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);

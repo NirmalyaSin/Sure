@@ -1,5 +1,6 @@
 package com.surefiz.screens.signup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -15,6 +16,8 @@ import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.bodycodition.BodyActivity;
+import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.profile.model.country.CountryList;
 import com.surefiz.screens.profile.model.country.Datum;
 import com.surefiz.screens.profile.model.state.DataItem;
@@ -22,6 +25,7 @@ import com.surefiz.screens.profile.model.state.StateResponse;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.utils.progressloader.LoadingData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -88,14 +92,15 @@ public class SignUpActivity extends SignUpView {
     }
 
     private void addBodyList() {
-        bodyList.add("Diabetes");
-        bodyList.add("Heart Disease");
-        bodyList.add("High Blood Pressure");
-        bodyList.add("Osteoarthritis");
-        bodyList.add("High Cholesterol");
-        bodyList.add("None");
+        String [] stringList={"Diabetes","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
+        for (int i = 0; i <stringList.length ; i++) {
+            BodyItem bodyItem=new BodyItem();
+            bodyItem.setName(stringList[i]);
+            bodyItem.setSelection(false);
+            bodyList.add(bodyItem);
+        }
 
-        bodyPopup = new UniversalPopup(this, bodyList, et_body);
+        //bodyPopup = new UniversalPopup(this, bodyList, et_body);
     }
     private void addGenderListAndCall() {
         genderList.add("Male");
@@ -425,12 +430,16 @@ public class SignUpActivity extends SignUpView {
     }
     protected void showBodyPopup() {
 
-        new Handler().postDelayed(new Runnable() {
+        /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 bodyPopup.showAsDropDown(et_body);
             }
-        }, 100);
+        }, 100);*/
+
+        Intent intent=new Intent(this, BodyActivity.class);
+        intent.putExtra("selectedBody",bodyList);
+        startActivityForResult(intent,101);
 
     }
 
@@ -530,4 +539,28 @@ public class SignUpActivity extends SignUpView {
         }, 100);
     }
 
+    protected String getSelectedItem(){
+        String s="";
+        for (int i = 0;i<bodyList.size();i++){
+            if(bodyList.get(i).isSelection()==true){
+                s=s+bodyList.get(i).getName()+", ";
+            }
+        }
+
+        return s;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==101){
+            if(resultCode==RESULT_OK){
+                bodyList= (ArrayList<BodyItem>) data.getSerializableExtra("selectedBody");
+
+                String selectedBody=getSelectedItem();
+                et_body.setText(selectedBody);
+                Log.d("Selected Body","::::::::::"+selectedBody);
+            }
+        }
+    }
 }

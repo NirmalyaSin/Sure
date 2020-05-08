@@ -43,6 +43,8 @@ import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.bodycodition.BodyActivity;
+import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.country.CountryList;
 import com.surefiz.screens.profile.model.country.Datum;
@@ -71,6 +73,7 @@ import retrofit2.Retrofit;
 
 public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     static final int RC_SIGN_IN_GOOGLE = 100;
+    static final int BODY_CONDITION = 101;
     ProfileActivity activity;
     String units = "", height = "";
     String[] splited;
@@ -88,7 +91,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private List<String> stateIDList = new ArrayList<>();
     private String filePath = "";
     private List<String> heightList = new ArrayList<>();
-    private List<String> bodyList = new ArrayList<>();
     private UniversalPopup heightPopup;
     DoublePicker doublePicker;
     private String weight_value = "", time_value = "", units_value = "";
@@ -438,14 +440,14 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
     //***AVIK
     private void addBodyList() {
-        bodyList.add("Diabetes");
-        bodyList.add("Heart Disease");
-        bodyList.add("High Blood Pressure");
-        bodyList.add("Osteoarthritis");
-        bodyList.add("High Cholesterol");
-        bodyList.add("None");
+        String [] stringList={"Diabetes","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
+        for (int i = 0; i <stringList.length ; i++) {
+            BodyItem bodyItem=new BodyItem();
+            bodyItem.setName(stringList[i]);
+            bodyItem.setSelection(false);
+            activity.bodyList.add(bodyItem);
+        }
 
-        bodyPopup = new UniversalPopup(activity, bodyList, activity.et_body);
     }
     private void addGenderListAndCall() {
         genderList.add("Male");
@@ -1491,16 +1493,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     }
 
     private void showBodyPopup() {
-        if (bodyPopup.isShowing()) {
-            bodyPopup.dismiss();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    bodyPopup.showAsDropDown(activity.et_body);
-                }
-            }, 100);
-        }
+        Intent intent=new Intent(activity, BodyActivity.class);
+        intent.putExtra("selectedBody",activity.bodyList);
+        activity.startActivityForResult(intent,BODY_CONDITION);
     }
 
     private void showAndDismissLifeStylePopup() {

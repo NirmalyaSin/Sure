@@ -88,7 +88,7 @@ public class AmazonDialog extends Dialog {
     }
 
     public void stepThreeView(){
-        tv_sub.setText("Please scan the scale ID barcode on the back your scale or enter it manually");
+        tv_sub.setText("Please scan the scale ID barcode on the back of your scale or enter it manually");
         et_orderId.setVisibility(View.GONE);
         scan_block.setVisibility(View.VISIBLE);
         btn_remove.setPaintFlags(btn_remove.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);

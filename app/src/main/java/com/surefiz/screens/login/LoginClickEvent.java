@@ -170,6 +170,8 @@ public class LoginClickEvent implements View.OnClickListener {
                 LoginShared.setUserName(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserName());
                 LoginShared.setScaleUserId(Integer.parseInt(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getScaleUserId()));
 
+                LoginShared.setAccessToken(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getToken());
+
                 if (!LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).
                         getUserMac().equals("")) {
                     LoginShared.setUserMacId(Long.parseLong(LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserMac()));

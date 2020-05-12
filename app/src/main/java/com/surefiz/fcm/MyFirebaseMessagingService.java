@@ -36,6 +36,7 @@ import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
+import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.sharedhandler.LoginShared;
 
 import org.json.JSONException;
@@ -156,7 +157,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }else if (taskInfo.get(0).topActivity.getClassName().equals("com.surefiz.screens.boardcast.BoardCastActivity")) {
                 //Nothing to do
             } else {
-                showNotification(remoteMessage.getNotification(), remoteMessage.getData());
+                if(LoginShared.getAccessToken(this).equals("")){
+
+                    Intent intent = new Intent(this, WelcomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+
+                }else {
+                      showNotification(remoteMessage.getNotification(), remoteMessage.getData());
+                }
             }
         }
 
@@ -276,47 +285,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
         } else if (jObject.optInt("pushType") == 1) {
-            /*String dateStr = jObject.optString("lastServerUpdateDate") + " " + jObject.optString("lastServerUpdateTime");
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-            DateFormat dateFormat1 = new SimpleDateFormat("MM/dd/yyyy");
-
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-            try {
-                Date date = dateFormat.parse(dateStr);
-                dateFormat.setTimeZone(TimeZone.getDefault());
-                Date currentDate = new Date();
-                long diff = currentDate.getTime() - date.getTime();
-                int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
-                if (dateFormat1.format(currentDate).equals(jObject.optString("lastServerUpdateDate"))) {
-
-                    int diffSecond = (int) (diff / 1000);
-                    if (diffSecond < 120) {
-                        Intent intent = new Intent(this, WeightDetailsActivity.class);
-                        intent.putExtra("notificationFlag", "1");
-                        intent.putExtra("timerValue", diffSecond);
-                        intent.putExtra("fromPush", "1");
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                                PendingIntent.FLAG_ONE_SHOT);
-                    } else {
-                        Intent intent = new Intent(this, DashBoardActivity.class);
-                        intent.putExtra("notificationFlag", "1");
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                                PendingIntent.FLAG_ONE_SHOT);
-                    }
-                } else {
-                    Intent intent = new Intent(this, DashBoardActivity.class);
-                    intent.putExtra("notificationFlag", "1");
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                            PendingIntent.FLAG_ONE_SHOT);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }*/
             Intent intent = new Intent(this, NotificationHandleClassOnForeground.class);
             intent.putExtra("notificationFlag", "1");
             intent.putExtra("lastServerUpdateDate", jObject.optString("lastServerUpdateDate"));

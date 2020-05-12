@@ -437,12 +437,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(BaseActivity.this, "Successfully Logged Out");
 
+
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 String deviceToken = LoginShared.getDeviceToken(BaseActivity.this);
                                 LoginShared.destroySessionTypePreference(BaseActivity.this);
                                 LoginShared.setDeviceToken(BaseActivity.this, deviceToken);
+                                LoginShared.setAccessToken(BaseActivity.this, "");
                                 Intent logIntent = new Intent(BaseActivity.this, LoginActivity.class);
                                 startActivity(logIntent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

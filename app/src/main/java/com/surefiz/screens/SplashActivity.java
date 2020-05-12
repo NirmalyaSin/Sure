@@ -120,7 +120,17 @@ public class SplashActivity extends AppCompatActivity {
                     notificationPage = "0";
                     e.printStackTrace();
                 }
-                navigate();
+
+                if(LoginShared.getAccessToken(SplashActivity.this).equals("")){
+
+                    Intent loginIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
+                    startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+
+                }else {
+                    navigate();
+                }
 
             }
         }, GeneralToApp.SPLASH_WAIT_TIME);

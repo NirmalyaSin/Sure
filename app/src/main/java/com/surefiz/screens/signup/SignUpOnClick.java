@@ -54,12 +54,7 @@ public class SignUpOnClick implements View.OnClickListener {
                 signUpActivity.finish();
                 break;
             case R.id.profile_image:
-                new OpenCameraOrGalleryDialog(signUpActivity, new OnImageSet() {
-                    @Override
-                    public void onSuccess(String path) {
-                        signUpActivity.filePath = path;
-                    }
-                }, "2").show();
+                signUpActivity.imagePicker();
                 break;
 
             case R.id.et_body:

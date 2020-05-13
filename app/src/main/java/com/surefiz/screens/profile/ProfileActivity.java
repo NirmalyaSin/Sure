@@ -38,6 +38,9 @@ import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.utils.MediaUtils;
+import com.surefiz.utils.RealPathUtil;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONObject;
 
@@ -223,98 +226,15 @@ public class ProfileActivity extends BaseActivity {
         rl_body = view.findViewById(R.id.rl_body);
     }
 
-    public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {
-        this.onImageSet = onImageSet;
-        TedPermission permission = new TedPermission(this)
-                .setPermissionListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-                        switch (currentChoice) {
-                            case CAMERA:
-                                openCamera();
-                                break;
-                            case GALLERY:
-                                openGallery();
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                        Toast.makeText(ProfileActivity.this, "", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setDeniedMessage(getResources().getString(R.string.permission_not_given));
-        switch (currentChoice) {
-            case CAMERA:
-                permission.setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA);
-                break;
-            case GALLERY:
-                permission.setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                break;
-        }
-
-        permission.check();
+    protected void imagePicker(){
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .setAspectRatio(1, 1)
+                .start(this);
     }
 
-    private void openGallery() {
-        Intent intent = new Intent();
-// Show only images, no videos or anything else
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-// Always show the chooser (if there are multiple options available)
 
-
-        fbcallbackManager = null;
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY);
-    }
-
-    private void openCamera() {
-        generateFile();
-        captureImage();
-    }
-
-    private void generateFile() {
-        String fileName = PICTURE_NAME + new SimpleDateFormat("mm_dd_yyyy_HH_mm_ss").format(new Date());
-        mFile = MediaUtils.getOutputMediaFile(ProfileActivity.this, MediaUtils.MEDIA_TYPE_IMAGE, FOLDER_NAME, fileName);
-    }
-
-    /*
-     * Capturing Camera Image will lauch camera app requrest image capture
-     */
-    private void captureImage() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        fileUri = getOutputMediaFileUri();
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-
-        // start the image capture Intent
-
-        fbcallbackManager = null;
-        startActivityForResult(intent, CAMERA);
-    }
-
-    /**
-     * Creating file uri to store image/video
-     */
-    public Uri getOutputMediaFileUri() {
-        Uri photoURI;
-
-        if (Build.VERSION.SDK_INT > M) {
-            photoURI = FileProvider.getUriForFile(ProfileActivity.this, getApplicationContext().getPackageName() +
-                    ".provider", mFile);
-
-        } else {
-            photoURI = Uri.fromFile(mFile);
-        }
-        return photoURI;
-    }
-
-    /**
-     * Receiving activity result method will be called after closing the camera
-     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -322,44 +242,23 @@ public class ProfileActivity extends BaseActivity {
         // if the result is capturing Image
 
         switch (requestCode) {
-            case CAMERA:
 
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE :
+                CropImage.ActivityResult cresult = CropImage.getActivityResult(data);
                 if (resultCode == RESULT_OK) {
-                    // successfully captured the image
-                    // display it in image view
+                    Uri uri = cresult.getUri();
+
+                    String realPath= RealPathUtil.getRealPath(this, uri);
+                    mFile=new File(realPath);
                     compressImage();
-                } else if (resultCode == RESULT_CANCELED) {
-                    // user cancelled Image capture
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.image_capture_cancel_text), Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    // failed to capture image
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed_to_capture_image_text), Toast.LENGTH_SHORT)
-                            .show();
-                }
 
-                break;
+                    Log.d("Image_Path", "::::" + RealPathUtil.getRealPath(this, uri));
 
-            case GALLERY:
 
-                if (resultCode == RESULT_OK) {
-                    // successfully captured the image
-                    // display it in image view
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Exception error = cresult.getError();
+                    Toast.makeText(this, getResources().getString(R.string.failed_to_capture_image_text), Toast.LENGTH_SHORT).show();
 
-                    try {
-                        mFile = FileUtil.from(this, data.getData());
-                        compressImage();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (resultCode == RESULT_CANCELED) {
-                    // user cancelled Image capture
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.image_capture_cancel_text), Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    // failed to capture image
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed_to_capture_image_text), Toast.LENGTH_SHORT)
-                            .show();
                 }
 
                 break;

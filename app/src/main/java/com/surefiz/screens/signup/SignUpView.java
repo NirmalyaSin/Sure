@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -41,7 +42,9 @@ import com.surefiz.screens.signup.response.SignUpResponse;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MediaUtils;
 import com.surefiz.utils.MethodUtils;
+import com.surefiz.utils.RealPathUtil;
 import com.surefiz.utils.progressloader.LoadingData;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.io.IOException;
@@ -251,86 +254,7 @@ public class SignUpView extends AppCompatActivity {
         }
     }
 
-    public void choiceMedia(final int currentChoice, OnImageSet onImageSet) {
-        this.onImageSet = onImageSet;
-        TedPermission permission = new TedPermission(this)
-                .setPermissionListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-                        switch (currentChoice) {
-                            case CAMERA:
-                                openCamera();
-                                break;
-                            case GALLERY:
-                                openGallery();
-                                break;
-                        }
-                    }
 
-                    @Override
-                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                        Toast.makeText(SignUpView.this, "", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setDeniedMessage(getResources().getString(R.string.permission_not_given));
-        switch (currentChoice) {
-            case CAMERA:
-                permission.setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA);
-                break;
-            case GALLERY:
-                permission.setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                break;
-        }
-
-        permission.check();
-    }
-
-    private void openGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY);
-    }
-
-    private void openCamera() {
-        generateFile();
-        captureImage();
-    }
-
-    private void generateFile() {
-        String fileName = PICTURE_NAME + new SimpleDateFormat("mm_dd_yyyy_HH_mm_ss").format(new Date());
-        mFile = MediaUtils.getOutputMediaFile(SignUpView.this, MediaUtils.MEDIA_TYPE_IMAGE, FOLDER_NAME, fileName);
-    }
-
-    /*
-     * Capturing Camera Image will lauch camera app requrest image capture
-     */
-    private void captureImage() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        fileUri = getOutputMediaFileUri();
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-
-        startActivityForResult(intent, CAMERA);
-    }
-
-    /**
-     * Creating file uri to store image/video
-     */
-    public Uri getOutputMediaFileUri() {
-        Uri photoURI;
-
-        if (Build.VERSION.SDK_INT > M) {
-            photoURI = FileProvider.getUriForFile(SignUpView.this, getApplicationContext().getPackageName() +
-                    ".provider", mFile);
-        } else {
-            photoURI = Uri.fromFile(mFile);
-        }
-        return photoURI;
-    }
     private void compressImage() {
         Compressor.getDefault(this)
                 .compressToFileAsObservable(mFile)
@@ -372,49 +296,24 @@ public class SignUpView extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
-            case CAMERA:
 
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE :
+                CropImage.ActivityResult cresult = CropImage.getActivityResult(data);
                 if (resultCode == RESULT_OK) {
-                    // successfully captured the image
-                    // display it in image view
+                    Uri uri = cresult.getUri();
+
+                    String realPath= RealPathUtil.getRealPath(this, uri);
+                    mFile=new File(realPath);
                     compressImage();
-                } else if (resultCode == RESULT_CANCELED) {
-                    // user cancelled Image capture
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.image_capture_cancel_text), Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    // failed to capture image
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed_to_capture_image_text), Toast.LENGTH_SHORT)
-                            .show();
+
+                    Log.d("Image_Path", "::::" + RealPathUtil.getRealPath(this, uri));
+
+
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Exception error = cresult.getError();
+                    Toast.makeText(this, getResources().getString(R.string.failed_to_capture_image_text), Toast.LENGTH_SHORT).show();
+
                 }
-
-                break;
-
-            case GALLERY:
-
-                if (resultCode == RESULT_OK) {
-                    // successfully captured the image
-                    // display it in image view
-
-                    try {
-                        mFile = FileUtil.from(this, data.getData());
-                        compressImage();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (resultCode == RESULT_CANCELED) {
-                    // user cancelled Image capture
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.image_capture_cancel_text), Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    // failed to capture image
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed_to_capture_image_text), Toast.LENGTH_SHORT)
-                            .show();
-                }
-                break;
-
-            default:
-                break;
 
         }
 

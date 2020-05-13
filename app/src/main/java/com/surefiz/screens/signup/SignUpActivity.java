@@ -24,6 +24,8 @@ import com.surefiz.screens.profile.model.state.DataItem;
 import com.surefiz.screens.profile.model.state.StateResponse;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.utils.progressloader.LoadingData;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -548,6 +550,14 @@ public class SignUpActivity extends SignUpView {
         }
 
         return s;
+    }
+
+    protected void imagePicker(){
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .setAspectRatio(1, 1)
+                .start(this);
     }
 
     @Override

@@ -620,21 +620,13 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
                 break;
             case R.id.profile_image:
-                new OpenCameraOrGalleryDialog(activity, new OnImageSet() {
-                    @Override
-                    public void onSuccess(String path) {
-                        filePath = path;
-                    }
-                }, "1").show();
+                activity.imagePicker();
                 break;
+
             case R.id.iv_plus_add_image:
-                new OpenCameraOrGalleryDialog(activity, new OnImageSet() {
-                    @Override
-                    public void onSuccess(String path) {
-                        filePath = path;
-                    }
-                }, "1").show();
+                activity.imagePicker();
                 break;
+
             case R.id.et_height:
                 hideSoftKeyBoard();
                 if (weigtUniversalPopupPreferred != null && weigtUniversalPopupPreferred.isShowing()) {

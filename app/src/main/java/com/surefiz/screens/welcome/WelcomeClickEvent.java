@@ -3,6 +3,7 @@ package com.surefiz.screens.welcome;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 
 import com.surefiz.R;
@@ -45,8 +46,9 @@ public class WelcomeClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.txt_learn_more:
-                //String urlvalue = "https://www.surefiz.com/InShort";
                 String urlvalue = "https://www.surefiz.com/Home/landing";
+                Log.d("Web_Link",":::"+urlvalue);
+
                 Intent learnmoreintent = new Intent(welcomeActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);
                 learnmoreintent.putExtra("menu", false);

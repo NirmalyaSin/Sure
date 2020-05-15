@@ -3,6 +3,7 @@ package com.surefiz.screens.choose;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 
 import com.surefiz.R;
@@ -37,11 +38,13 @@ public class ChooseOnClick implements View.OnClickListener {
                 break;
 
             case R.id.Btn_subscribed:
-                String urlvalue = "https://www.surefiz.com/Home/landing";
+                String urlvalue = "https://www.surefiz.com/Payment/basicinfo";
+                Log.d("Wen_Link",":::"+urlvalue);
+
                 Intent learnmoreintent = new Intent(ChooseActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);
                 learnmoreintent.putExtra("menu", false);
-                learnmoreintent.putExtra("header", "Learn More");
+                learnmoreintent.putExtra("header", "Sign up");
                 ChooseActivity.startActivity(learnmoreintent);
 
                 /*Intent intent1=new Intent(ChooseActivity, SignUpActivity.class);

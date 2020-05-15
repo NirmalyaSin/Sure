@@ -227,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
-                    android:text="PRE EXISTING CONDITION"
+                    android:text="PRE EXISTING CONDITIONS"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
@@ -247,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
-                        android:hint="Please Select Pre Existing Condition"
+                        android:hint="Please Select Pre Existing Conditions"
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/roboto_regular"
                         android:paddingBottom="@dimen/_6sdp"

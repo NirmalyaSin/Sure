@@ -88,12 +88,28 @@ public class BodyActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view, int position) {
 
                 //Log.d("position",":::"+position+"="+list.get(position).isSelection());
-                if(list.get(position).isSelection())
-                    list.get(position).setSelection(false);
-                else
-                    list.get(position).setSelection(true);
 
-                genresAdapter.notifyItemChanged(position);
+
+                    if (list.get(position).isSelection()) {
+                        list.get(position).setSelection(false);
+                    }else {
+                        if(position==list.size()-1){
+                            for (int i = 0; i <list.size() ; i++) {
+                                if(i==list.size()-1){
+                                    list.get(i).setSelection(true);
+
+                                }else{
+                                    list.get(i).setSelection(false);
+
+                                }
+                            }
+                        }else {
+                            list.get(position).setSelection(true);
+                            list.get(list.size() - 1).setSelection(false);
+                        }
+                    }
+
+                genresAdapter.notifyDataSetChanged();
             }
         });
         rv_genres.setLayoutManager(new LinearLayoutManager(this));

@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.common.util.Hex;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.AddUserDialog;
@@ -30,6 +32,7 @@ import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.SpacesItemDecoration;
+import com.surefiz.utils.encryption.MD5;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import java.util.ArrayList;
@@ -101,12 +104,15 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void openWebLink() {
-        /*Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.surefiz.com/Login"));
-        startActivityForResult(browserIntent,200);*/
+
+        String url="https://www.surefiz.com/Home/Adduser?id="+LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId()
+                +"&key="+ MD5.encrypt(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPassword());
+
+        Log.d("Web_URL",":::"+url);
 
         Intent aboutIntent = new Intent(this, AboutUsActivity.class);
-        aboutIntent.putExtra("url", "https://www.surefiz.com/Login");
-        aboutIntent.putExtra("header", getResources().getString(R.string.app_name_splash));
+        aboutIntent.putExtra("url", url);
+        aboutIntent.putExtra("header", "Add User");
         aboutIntent.putExtra("menu", false);
         startActivityForResult(aboutIntent, 200);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

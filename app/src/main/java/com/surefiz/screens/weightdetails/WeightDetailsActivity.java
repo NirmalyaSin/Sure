@@ -86,11 +86,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         handler1 = new Handler();
 
         LoginShared.setWeightFromNotification(this, "0");
-        if (getIntent().getStringExtra("timerValue") != null) {
-            timerValue = getIntent().getStringExtra("timerValue");
-        } else {
-            timerValue = "0";
-        }
+
+        timerValue = ""+getIntent().getIntExtra("timerValue",0);
+
         if (getIntent().getStringExtra("fromPush") != null) {
             fromPush = getIntent().getStringExtra("fromPush");
         } else {

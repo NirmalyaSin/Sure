@@ -406,6 +406,9 @@ public class ProfileActivity extends BaseActivity {
             }
         }
 
+        if(!s.equals(""))
+            s=s.substring(0,s.length()-2);
+
         return s;
     }
 

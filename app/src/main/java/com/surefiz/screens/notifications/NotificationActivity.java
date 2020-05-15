@@ -111,7 +111,7 @@ public class NotificationActivity extends BaseActivity implements
         tv_universal_header.setText(isFromDashboard ? "Friend Requests" : "Notification");
         btn_add.setVisibility(View.VISIBLE);
         rlUserSearch.setVisibility(View.GONE);
-        btn_add.setText("CLEAR ALL");
+        btn_add.setText("Clear");
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

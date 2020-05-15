@@ -549,6 +549,9 @@ public class SignUpActivity extends SignUpView {
             }
         }
 
+        if(!s.equals(""))
+            s=s.substring(0,s.length()-2);
+
         return s;
     }
 

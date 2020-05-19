@@ -53,7 +53,6 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
     Button btn_update;
     EditText et_id,et_confirm_scale_id;
     TextView tv_scale_id,btn_scan;
-    ImageView toolTipScaleId;
     private LoadingData loader;
     private String toolTipText;
     private static final int REQUEST_BAR_CODE = 101;
@@ -91,7 +90,6 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
     private void setClickEvent() {
         btn_update.setOnClickListener(this);
         rl_back.setOnClickListener(this);
-        toolTipScaleId.setOnClickListener(this);
         btn_scan.setOnClickListener(this);
     }
 
@@ -101,7 +99,6 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         et_confirm_scale_id = findViewById(R.id.et_confirm_scale_id);
         tv_scale_id = findViewById(R.id.tv_scale_id);
         btn_scan = findViewById(R.id.btn_scan);
-        toolTipScaleId = findViewById(R.id.toolTipScaleId);
 
         setTextFormatter();
     }
@@ -237,20 +234,6 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
 
-            case R.id.toolTipScaleId:
-
-                new SimpleTooltip.Builder(getApplicationContext())
-                        .anchorView(v)
-                        .backgroundColor(getResources().getColor(R.color.whiteColor))
-                        .arrowColor(getResources().getColor(R.color.whiteColor))
-                        .text(toolTipText)
-                        .gravity(Gravity.START)
-                        .animated(false)
-                        .transparentOverlay(true)
-                        .build()
-                        .show();
-
-                break;
 
             case R.id.btn_scan:
                 callScanner();

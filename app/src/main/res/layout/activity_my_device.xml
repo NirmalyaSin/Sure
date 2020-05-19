@@ -46,7 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_scale_id"
-            android:background="@drawable/edittext_background"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_18sdp"
             android:layout_marginLeft="@dimen/_18sdp"
@@ -88,20 +87,13 @@
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/_10sdp" />
 
-                <ImageView
-                    android:id="@+id/toolTipScaleId"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginBottom="@dimen/_3sdp"
-                    android:src="@drawable/information"/>
 
                 <TextView
                     android:id="@+id/btn_scan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/toolTipScaleId"
                     android:text="Tap Here To Scan"
+                    android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/_6sdp"
                     android:layout_marginLeft="@dimen/_6sdp"
                     android:fontFamily="@font/roboto_medium"
@@ -118,7 +110,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_scale_id"
-            android:background="@drawable/edittext_background"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_18sdp"
             android:layout_marginLeft="@dimen/_18sdp"

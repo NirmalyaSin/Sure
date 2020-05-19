@@ -279,7 +279,11 @@ public class NotificationActivity extends BaseActivity implements
     public void onViewClick(int position) {
         if (arrayListNotifications.size() >= position) {
             Notification item = arrayListNotifications.get(position);
-            callReadNotification(item.getNotificationId(), item.getNotificationType(), position);
+
+            if(item.getNotificationType().equals("1"))
+                callReadNotification(item.getNotificationId(), item.getNotificationType(), position);
+            else
+                notificationClick(item);
         }
     }
 

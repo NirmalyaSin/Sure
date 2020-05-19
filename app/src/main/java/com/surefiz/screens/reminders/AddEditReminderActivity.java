@@ -25,6 +25,7 @@ import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.reminders.model.User;
 import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.ChatDateConverter;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
@@ -330,7 +331,7 @@ public class AddEditReminderActivity extends BaseActivity implements
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         //Set field with selected time
-        editReminderTime.setText(hourOfDay + ":" + minute);
+        editReminderTime.setText(ChatDateConverter.Hour_Minute(hourOfDay + ":" + minute));
         buttonSaveReminder.setVisibility(View.VISIBLE);
     }
 

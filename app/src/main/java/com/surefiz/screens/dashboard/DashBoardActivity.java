@@ -2256,7 +2256,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         optionsSubGoals.setPlotOptions(plotOptions);
 
                         HIColumn series1 = new HIColumn();
-                        series1.setColorByPoint(true);
+                        //series1.setColorByPoint(true);
                         series1.setName("Expected Weight To Go");
 
                         List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo();
@@ -2280,8 +2280,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         series1.setData(new ArrayList<>(Arrays.asList(numbers)));
 
                         HIColumn series2 = new HIColumn();
-                        series2.setColorByPoint(true);
-                        series2.setName("Acheived Weight");
+                        //series2.setColorByPoint(true);
+                        series2.setName("Achieved Weight");
 
                         List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight();
                         Number[] numbers1 = new Number[series2_data.size()];

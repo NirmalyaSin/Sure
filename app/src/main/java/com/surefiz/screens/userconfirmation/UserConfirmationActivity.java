@@ -52,6 +52,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     private int savedType = 1;
     private int savedUnits = 1;
     private TextView tv_enter,tv_time_loss;
+    private JSONObject jsnObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +122,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                     if (jsonObject.optInt("status") == 1) {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
-                        JSONObject jsnObject = jsObject.getJSONObject("WeightDetails");
+                        jsnObject = jsObject.getJSONObject("WeightDetails");
                         setData(jsnObject);
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
@@ -398,6 +399,19 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
+    private void backConfirmationView(){
+
+        setData(jsnObject);
+        rl_back.setVisibility(View.GONE);
+        tv_universal_header.setText("User Confirmation");
+        tv_enter.setText(R.string.user_confirmation_header);
+        tv_time_loss.setText(R.string.Time_To_Lose_Weight_Will_Be_Calculated);
+        btn_accept.setText(R.string.accept_surefiz_weight);
+        btn_provide.setVisibility(View.VISIBLE);
+        showViewMode();
+
+    }
+
     public void showConfirmDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserConfirmationActivity.this);
         alertDialog.setTitle(R.string.app_name_otp);
@@ -407,10 +421,11 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                rl_back.setVisibility(View.VISIBLE);
                 et_weight.setEnabled(true);
                 et_time_loss.setEnabled(true);
-                btn_provide.setEnabled(false);
-                btn_provide.setBackgroundResource(R.drawable.rounded_corner_provide);
+                btn_provide.setVisibility(View.GONE);
+                //btn_provide.setBackgroundResource(R.drawable.rounded_corner_provide);
                 btn_accept.setText("Update");
                 tv_universal_header.setText("Desired Weight and Time");
                 tv_enter.setText(R.string.user_confirmation_header_declined);
@@ -490,7 +505,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         switch (v.getId()) {
 
             case R.id.rl_back:
-                finish();
+                backConfirmationView();
                 break;
 
             case R.id.btn_accept:

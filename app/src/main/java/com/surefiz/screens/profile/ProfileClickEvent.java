@@ -568,9 +568,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 }
 
                 break;
-            case R.id.et_DOB:
-                ExpiryDialog();
-                break;
             case R.id.et_units:
                 hideSoftKeyBoard();
                 if (genderPopup != null && genderPopup.isShowing()) {

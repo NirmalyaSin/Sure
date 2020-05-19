@@ -26,7 +26,7 @@
             android:layout_toEndOf="@+id/img_topbar_menu_profile"
             android:layout_marginStart="@dimen/_10sdp"
             android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_15sdp"
             android:textColor="@color/colorBlack" />
     </RelativeLayout>
 
@@ -46,10 +46,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="Dashboard"
                 android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -57,11 +57,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="Measure Weight"
                 android:fontFamily="@font/roboto_medium"
                 android:visibility="gone"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -72,7 +72,7 @@
                 android:paddingTop="@dimen/_12sdp"
                 android:text="Users"
                 android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -80,10 +80,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Profile"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -91,8 +91,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
-                android:textSize="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:textSize="@dimen/_15sdp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Accountability Circle"
                 android:textColor="@color/colorBlack" />
@@ -102,11 +102,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="Broadcast Message"
                 android:fontFamily="@font/roboto_medium"
                 android:visibility="gone"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -114,10 +114,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="Reminders"
                 android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -125,10 +125,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="Notifications"
                 android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -136,10 +136,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="Settings"
                 android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -147,10 +147,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="About Us"
                 android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -158,10 +158,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
                 android:text="Forum"
                 android:fontFamily="@font/roboto_medium"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
 
             <TextView
@@ -169,11 +169,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
-                android:paddingTop="@dimen/_14sdp"
-                android:paddingBottom="@dimen/_14sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Sign out"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
         </LinearLayout>
     </ScrollView>

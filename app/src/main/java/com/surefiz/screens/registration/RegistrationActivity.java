@@ -42,6 +42,8 @@ import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.barcodescanner.BarCodeScanner;
+import com.surefiz.screens.bodycodition.BodyActivity;
+import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.profile.ViewProfileModel;
 import com.surefiz.screens.registration.model.RegistrationModel;
@@ -216,7 +218,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private LoadingData loader;
     private ImageLoader imageLoader;
 
+
     private static final int REQUEST_BAR_CODE = 101;
+    private static final int BODY_CONDITION = 102;
 
 
     @Override
@@ -301,6 +305,8 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     protected void callScanner(){
 
@@ -545,7 +551,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
             btn_register.setText(getResources().getString(R.string.register));
-            tv_registration.setText(getResources().getString(R.string.surefiz_register));
+            tv_registration.setText("Register");
         } else {
             btn_register.setText(getResources().getString(R.string.complete_sign_up));
             tv_registration.setText(getResources().getString(R.string.surefiz_signup));
@@ -590,13 +596,26 @@ public class RegistrationActivity extends AppCompatActivity {
             et_scale_id.setEnabled(true);
             et_confirm_scale_id.setEnabled(true);
         } else {
-
+            et_units.setEnabled(false);
+            btn_scan.setVisibility(View.GONE);
             ll_scale_id.setVisibility(View.VISIBLE);
             et_scale_id.setEnabled(false);
             ll_confirm_scale_id.setVisibility(View.GONE);
             et_confirm_scale_id.setEnabled(false);
 
+            ll_scale_id.setBackgroundColor(getColor(android.R.color.transparent));
+            ll_scale_id.setPadding(0,0,0,0);
+
         }
+    }
+
+    protected void showBodyPopup() {
+
+
+        Intent intent=new Intent(this, BodyActivity.class);
+        intent.putExtra("selectedBody",registrationClickEvent.bodyList);
+        startActivityForResult(intent,BODY_CONDITION);
+
     }
 
 
@@ -718,6 +737,21 @@ public class RegistrationActivity extends AppCompatActivity {
     /**
      * Receiving activity result method will be called after closing the camera
      */
+
+    protected String getSelectedItem(){
+        String s="";
+        for (int i = 0;i<registrationClickEvent.bodyList.size();i++){
+            if(registrationClickEvent.bodyList.get(i).isSelection()==true){
+                s=s+registrationClickEvent.bodyList.get(i).getName()+", ";
+            }
+        }
+
+        if(!s.equals(""))
+            s=s.substring(0,s.length()-2);
+
+        return s;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // if the result is capturing Image
@@ -773,6 +807,16 @@ public class RegistrationActivity extends AppCompatActivity {
                     et_confirm_scale_id.setText(data.getStringExtra("barCode"));
                 }
 
+                break;
+
+            case BODY_CONDITION:
+                if(resultCode==RESULT_OK){
+                    registrationClickEvent.bodyList= (ArrayList<BodyItem>) data.getSerializableExtra("selectedBody");
+
+                    String selectedBody=getSelectedItem();
+                    et_body.setText(selectedBody);
+                    Log.d("Selected Body","::::::::::"+selectedBody);
+                }
                 break;
 
             default:

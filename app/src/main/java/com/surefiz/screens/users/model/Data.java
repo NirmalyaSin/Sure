@@ -9,7 +9,7 @@ public class Data{
 	@SerializedName("userList")
 	private List<UserListItem> userList;
 
-	@SerializedName("“SubUserAddStatus”")
+	@SerializedName("SubUserAddStatus")
 	private int subUserAddStatus;
 
 	@SerializedName("message")

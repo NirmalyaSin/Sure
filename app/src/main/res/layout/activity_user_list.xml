@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="List of Users"
+            android:text="List Of Users"
             android:fontFamily="@font/roboto_bold"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
@@ -72,7 +72,7 @@
             android:id="@+id/tv_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Do you want to assign your weight?"
+            android:text="Are you want to assign this weight screen"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_18sdp"
             android:layout_centerHorizontal="true"/>

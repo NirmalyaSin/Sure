@@ -280,10 +280,9 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     public void onUiClick(Intent intent, int eventCode) {
         if (eventCode == 1001) {
             scaleUserId = intent.getIntExtra("id", 0);
-            if (isWeightReceived) {
+            //if (isWeightReceived)
                 saveWeightToSDK();
 
-            }
         }
     }
 

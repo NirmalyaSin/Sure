@@ -38,7 +38,7 @@ public class AboutUsActivity extends BaseActivity {
         btn_add.setVisibility(View.GONE);
         rlUserSearch.setVisibility(View.GONE);
 
-        if (url.contains("Login")){
+        if (url.contains("Login") || url.contains("Adduser")){
             rl_back.setVisibility(View.VISIBLE);
         }else {
             rl_back.setVisibility(View.GONE);
@@ -65,6 +65,7 @@ public class AboutUsActivity extends BaseActivity {
         web.getSettings().setLoadsImagesAutomatically(true);
         //web.getSettings().setLoadWithOverviewMode(true);
         //web.getSettings().setUseWideViewPort(true);
+
         web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         web.setWebViewClient(new WebViewClient());
 

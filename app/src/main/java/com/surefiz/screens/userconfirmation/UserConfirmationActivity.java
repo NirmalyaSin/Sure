@@ -20,9 +20,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;
-import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
@@ -53,6 +51,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     private int savedUnits = 1;
     private TextView tv_enter,tv_time_loss;
     private JSONObject jsnObject;
+    private boolean isFinish =true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -389,7 +388,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
     private void setHeaderView() {
         tv_universal_header.setText("User Confirmation");
-        rl_back.setVisibility(View.GONE);
+        rl_back.setVisibility(View.VISIBLE);
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         rlUserSearch.setVisibility(View.GONE);
@@ -402,13 +401,14 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     private void backConfirmationView(){
 
         setData(jsnObject);
-        rl_back.setVisibility(View.GONE);
+        rl_back.setVisibility(View.VISIBLE);
         tv_universal_header.setText("User Confirmation");
         tv_enter.setText(R.string.user_confirmation_header);
         tv_time_loss.setText(R.string.Time_To_Lose_Weight_Will_Be_Calculated);
         btn_accept.setText(R.string.accept_surefiz_weight);
         btn_provide.setVisibility(View.VISIBLE);
         showViewMode();
+        isFinish =true;
 
     }
 
@@ -425,6 +425,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 et_weight.setEnabled(true);
                 et_time_loss.setEnabled(true);
                 btn_provide.setVisibility(View.GONE);
+                isFinish =false;
                 //btn_provide.setBackgroundResource(R.drawable.rounded_corner_provide);
                 btn_accept.setText("Update");
                 tv_universal_header.setText("Desired Weight and Time");
@@ -505,7 +506,12 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
         switch (v.getId()) {
 
             case R.id.rl_back:
-                backConfirmationView();
+                if(isFinish){
+                    startActivity(new Intent(this,DashBoardActivity.class));
+                    finishAffinity();
+                }else {
+                    backConfirmationView();
+                }
                 break;
 
             case R.id.btn_accept:

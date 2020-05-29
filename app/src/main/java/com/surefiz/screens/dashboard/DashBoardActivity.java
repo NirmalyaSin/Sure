@@ -1000,24 +1000,25 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void setEmptySubGoalsChart() {
 
         try {
-            HIChart chart = new HIChart();
-            HIGradient gradient = new HIGradient(0, 0, 0, 1);
 
+            HIGradient gradient = new HIGradient(0, 0, 0, 1);
             LinkedList<HIStop> stops = new LinkedList<>();
             stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
             stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
 
+            HIChart chart = new HIChart();
             chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
-
             chart.setType("column");
-            HILegend hiLegend = new HILegend();
+            chart.setRenderTo("container");
+
+
             HICSSObject hicssObject = new HICSSObject();
             hicssObject.setColor("#ffffff");  //Removed
+            hicssObject.setFontSize("2px");
+
+            HILegend hiLegend = new HILegend();
             hiLegend.setItemStyle(hicssObject);
-            optionsSubGoals.setLegend(hiLegend);
 
-
-            chart.setRenderTo("container");
 
             optionsSubGoals.setChart(chart);
 
@@ -1071,17 +1072,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             plotOptions.getColumn().setBorderWidth(0);
             optionsSubGoals.setPlotOptions(plotOptions);
 
-            HIColumn series1 = new HIColumn();
-            series1.setColorByPoint(true);
-            series1.setName("Expected Weight To Go");
-
 
             ArrayList<String> colors1 = new ArrayList<>();
             ArrayList<String> colors2 = new ArrayList<>();
-
             colors1.add("#49b782");
             colors2.add("#FFAF44");
 
+
+            HIColumn series1 = new HIColumn();
+            series1.setColorByPoint(true);
+            series1.setName("Expected Weight To Go");
             series1.setShowInLegend(true);
             series1.setColor(HIColor.initWithRGB(73, 183, 130));
             series1.setColors(colors1);
@@ -1089,8 +1089,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
             HIColumn series2 = new HIColumn();
             series2.setColorByPoint(true);
-            series2.setName("Acheived Weight");
-
+            series2.setName("Achieved Weight");
             series2.setShowInLegend(true);
             series2.setColor(HIColor.initWithRGB(255, 175, 68));
             series2.setColors(colors2);
@@ -1100,6 +1099,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
             HICredits hiCredits = new HICredits();
             hiCredits.setEnabled(false);
+
+            optionsSubGoals.setLegend(hiLegend);
             optionsSubGoals.setCredits(hiCredits);
 
             chartViewSubGoals.setOptions(optionsSubGoals);

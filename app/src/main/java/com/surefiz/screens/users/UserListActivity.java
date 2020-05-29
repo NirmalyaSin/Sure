@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.common.util.Hex;
 import com.surefiz.R;
@@ -55,6 +56,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     UserIdManager userIdManager;
     private UDPHelper udpHelper;
     private Button btn_add_user;
+    private RelativeLayout rl_add_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,24 +143,21 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
                     loadingData.dismiss();
                 try {
                     if (response.body().getStatus() == 1) {
+
+
+                        if(response.body().getData().getSubUserAddStatus()==0){
+                            rl_add_user.setVisibility(View.GONE);
+                        }else{
+                            rl_add_user.setVisibility(View.VISIBLE);
+                            showAddUserButton(response.body().getData().getSubUserAddStatus(), response.body().getData().getUserList().size());
+                        }
+
+
                         userLists.clear();
-
-                        //userLists.addAll(response.body().getData().getUserList());
                         userLists.addAll(checkMainUserVisibility(response.body().getData().getUserList()));
-
                         adapter.notifyDataSetChanged();
 
-                        showAddUserButton(response.body().getData().getSubUserAddStatus(), response.body().getData().getUserList().size());
-                        //if (response.body().getData().getSubUserAddStatus() == 0) {
-                        /*if (response.body().getData().getUserList().size() >= 4) {
-                            btn_add_user.setEnabled(false);
-                            btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_edit_rounded_corner_blue));
-                            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.black));
-                        } else {
-                            btn_add_user.setEnabled(true);
-                            btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_button_gradient));
-                            btn_add_user.setTextColor(ContextCompat.getColor(UserListActivity.this, android.R.color.white));
-                        }*/
+
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
                         String deviceToken = LoginShared.getDeviceToken(UserListActivity.this);
                         LoginShared.destroySessionTypePreference(UserListActivity.this);
@@ -286,6 +285,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     private void setViewBind() {
         rv_items = view.findViewById(R.id.rv_items);
         btn_add_user = findViewById(R.id.btn_add_user);
+        rl_add_user = findViewById(R.id.rl_add_user);
     }
 
 

@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/roboto_bold"
-            android:text="Signup"
+            android:text="Sign Up"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 

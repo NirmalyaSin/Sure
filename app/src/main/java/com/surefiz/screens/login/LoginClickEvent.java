@@ -18,6 +18,7 @@ import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
+import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
@@ -53,6 +54,7 @@ public class LoginClickEvent implements View.OnClickListener {
         mLoginActivity.tv_register.setOnClickListener(this);
         mLoginActivity.iv_twiter.setOnClickListener(this);
         mLoginActivity.tv_forgetPassword.setOnClickListener(this);
+        mLoginActivity.iv_back.setOnClickListener(this);
     }
 
     @Override
@@ -64,7 +66,11 @@ public class LoginClickEvent implements View.OnClickListener {
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
-            case R.id.btnLogin:
+            case R.id.iv_back:
+                callWelcome();
+                break;
+
+                case R.id.btnLogin:
                 blankvalidationandapicall();
                 break;
 
@@ -79,6 +85,13 @@ public class LoginClickEvent implements View.OnClickListener {
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
+    }
+
+    private void callWelcome(){
+        Intent loginIntent = new Intent(mLoginActivity, WelcomeActivity.class);
+        mLoginActivity.startActivity(loginIntent);
+        mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        mLoginActivity.finish();
     }
 
     /*private void performTwiterLogin() {

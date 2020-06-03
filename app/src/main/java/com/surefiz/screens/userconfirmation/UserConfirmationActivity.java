@@ -289,12 +289,12 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     private void addWeightListAndCall(String change) {
         weightList.clear();
         if (change.equals("LBS")) {
-            for (int i = 5; i < 401; i++) {
+            for (int i = 35; i <= 400; i++) {
                 weightList.add(i + " " + change);
             }
 
         } else {
-            for (int i = 5; i < 181; i++) {
+            for (int i = 20; i <= 180; i++) {
                 weightList.add(i + " " + change);
             }
         }
@@ -493,8 +493,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     private void addTimeListAndCall() {
-        //for (int i = 1; i < 261; i++) {
-        for (int i = 1; i <= 104; i++) {
+        for (int i = 1; i <= 52; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(UserConfirmationActivity.this, timeList, et_time_loss);

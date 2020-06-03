@@ -402,12 +402,12 @@ public class ProfileActivity extends BaseActivity {
         String s="";
         for (int i = 0;i<bodyList.size();i++){
             if(bodyList.get(i).isSelection()==true){
-                s=s+bodyList.get(i).getName()+", ";
+                s=s+bodyList.get(i).getName()+",";
             }
         }
 
         if(!s.equals(""))
-            s=s.substring(0,s.length()-2);
+            s=s.substring(0,s.length()-1);
 
         return s;
     }

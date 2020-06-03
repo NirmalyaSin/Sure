@@ -773,7 +773,7 @@ public class AddUserDialogForOTP extends Dialog {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i < 261; i++) {
+        for (int i = 1; i <=52; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(activity, timeList, et_time_loss);
@@ -796,11 +796,11 @@ public class AddUserDialogForOTP extends Dialog {
     private void addWeightListAndCall(String change) {
         weightList.clear();
         if (change.equals("LB")) {
-            for (int i = 5; i < 301; i++) {
+            for (int i = 35; i <= 400; i++) {
                 weightList.add(i + " " + change);
             }
         } else {
-            for (int i = 5; i < 151; i++) {
+            for (int i = 20; i <= 180; i++) {
                 weightList.add(i + " " + change);
             }
         }
@@ -808,7 +808,7 @@ public class AddUserDialogForOTP extends Dialog {
     }
 
     private void addPreferredListAndCall() {
-        prefferedList.add("LB/INCH");
+        prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
 
         prefferedPopup = new UniversalPopup(activity, prefferedList, et_units);

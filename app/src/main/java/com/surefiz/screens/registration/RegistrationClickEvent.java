@@ -29,6 +29,7 @@ import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.OpenCameraOrGalleryDialog;
+import com.surefiz.dialog.heightpopup.DoublePicker;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
 import com.surefiz.interfaces.OnWeightCallback;
@@ -79,6 +80,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     private int weight_managment_goal = 0;
     private String filePath = "", userselectiontext = "", weightmanagment = "";
     private LoadingData loader;
+    protected DoublePicker doublePicker;
     private UniversalPopup genderPopup, prefferedPopup, heightPopup, weightPopup, timePopup, memberPopup;
     private WeigtUniversalPopup managementPopup, selectionPopup, lifeStylePopup;
     private int selectedLifeStyle = 0;
@@ -223,8 +225,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addTimeListAndCall() {
-        //for (int i = 1; i < 261; i++) {
-        for (int i = 1; i <= 104; i++) {
+        for (int i = 1; i <= 52; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(registrationActivity, timeList, registrationActivity.et_time_loss);
@@ -259,7 +260,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 weightList.add(i + " " + change);
             }
         } else {
-            for (int i = 10; i <= 182; i++) {
+            for (int i = 20; i <= 180; i++) {
                 weightList.add(i + " " + change);
             }
         }
@@ -267,7 +268,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addPreferredListAndCall() {
-        prefferedList.add("LB/INCH");
+        prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
 
         prefferedPopup = new UniversalPopup(registrationActivity, prefferedList, registrationActivity.et_units);
@@ -280,6 +281,12 @@ public class RegistrationClickEvent implements View.OnClickListener {
         genderList.add("Prefer not to say");
 
         genderPopup = new UniversalPopup(registrationActivity, genderList, registrationActivity.et_gender);
+    }
+
+    protected void addHeightList(String change) {
+
+        doublePicker=new DoublePicker(registrationActivity,registrationActivity.et_height,change);
+
     }
 
     private void setClickEvent() {
@@ -406,6 +413,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+
+                            if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                                addHeightList("CM");
+                            } else {
+                                addHeightList("INCH");
+                            }
+
                             showAndDismissHeightPopup();
                         }
                     }, 100);
@@ -874,7 +888,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 MethodUtils.errorMsg(registrationActivity, "Please select Weight Management goal");
             }
            else if (weight_managment_goal ==2 && user_selection_val==0 && registrationActivity.et_userselection.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select your desired weight");
+               MethodUtils.errorMsg(registrationActivity, "Please select any option");
            }
            else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
                MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
@@ -1624,7 +1638,10 @@ public class RegistrationClickEvent implements View.OnClickListener {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                heightPopup.showAsDropDown(registrationActivity.et_height);
+                //heightPopup.showAsDropDown(registrationActivity.et_height);
+
+                doublePicker.Show();
+
             }
         }, 100);
     }

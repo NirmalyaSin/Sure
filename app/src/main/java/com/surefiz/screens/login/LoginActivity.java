@@ -80,6 +80,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ImageView iv_twiter;
     @BindView(R.id.tv_register)
     TextView tv_register;
+    @BindView(R.id.iv_back)
+    ImageView iv_back;
     private CallbackManager callbackManager;
     private LoginClickEvent loginClickEvent;
     private GoogleApiClient googleApiClient;

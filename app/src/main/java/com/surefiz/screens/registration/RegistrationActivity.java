@@ -173,6 +173,8 @@ public class RegistrationActivity extends AppCompatActivity {
     LinearLayout ll_confirm_scale_id;
     @BindView(R.id.et_scale_id)
     EditText et_scale_id;
+    @BindView(R.id.starScale)
+    ImageView starScale;
     @BindView(R.id.et_confirm_scale_id)
     EditText et_confirm_scale_id;
     @BindView(R.id.ll_password)
@@ -522,7 +524,7 @@ public class RegistrationActivity extends AppCompatActivity {
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equalsIgnoreCase("1")) {
             et_units.setText("KG/CM");
         } else {
-            et_units.setText("LB/INCH");
+            et_units.setText("LBS/INCH");
         }
         String unit = "";
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getPreferredUnits().equalsIgnoreCase("1")) {
@@ -569,8 +571,9 @@ public class RegistrationActivity extends AppCompatActivity {
             toolTipText = "Scale ID is labeled on\nthe back of your scale";
         } else {
             toolTipText = "Scale ID is\nassigned by primary user";
-            et_scale_id.setHint("Scale ID is assigned by primary user");
-            et_confirm_scale_id.setHint("Scale ID is assigned by primary user");
+            et_scale_id.setHint("");
+            //et_scale_id.setHint("Scale ID is assigned by primary user");
+           // et_confirm_scale_id.setHint("Scale ID is assigned by primary user");
         }
     }
 
@@ -600,10 +603,13 @@ public class RegistrationActivity extends AppCompatActivity {
             btn_scan.setVisibility(View.GONE);
             ll_scale_id.setVisibility(View.VISIBLE);
             et_scale_id.setEnabled(false);
+            et_scale_id.setTextColor(getResources().getColor(R.color.new_grey));
+            et_units.setTextColor(getResources().getColor(R.color.new_grey));
+            starScale.setVisibility(View.GONE);
             ll_confirm_scale_id.setVisibility(View.GONE);
             et_confirm_scale_id.setEnabled(false);
 
-            ll_scale_id.setBackgroundColor(getColor(android.R.color.transparent));
+            ll_scale_id.setBackgroundColor(getResources().getColor(android.R.color.transparent));
             ll_scale_id.setPadding(0,0,0,0);
 
         }
@@ -742,12 +748,12 @@ public class RegistrationActivity extends AppCompatActivity {
         String s="";
         for (int i = 0;i<registrationClickEvent.bodyList.size();i++){
             if(registrationClickEvent.bodyList.get(i).isSelection()==true){
-                s=s+registrationClickEvent.bodyList.get(i).getName()+", ";
+                s=s+registrationClickEvent.bodyList.get(i).getName()+",";
             }
         }
 
         if(!s.equals(""))
-            s=s.substring(0,s.length()-2);
+            s=s.substring(0,s.length()-1);
 
         return s;
     }

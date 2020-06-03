@@ -53,6 +53,7 @@ public class NotificationActivity extends BaseActivity implements
     private TextView txt_stepped, txt_performance, txt_battery;
     private boolean isFromDashboard;
     private int selectedTab = 0;
+    private  boolean isOK=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +190,8 @@ public class NotificationActivity extends BaseActivity implements
                             arrayListNotifications.addAll(response.body().getData().getNotifications());
                         else {
                             if (type.equals("4")) {
-                                MethodUtils.errorMsg(NotificationActivity.this, "No friend request pending.");
+                                if(!isOK)
+                                    MethodUtils.errorMsg(NotificationActivity.this, "No friend request pending.");
                             } else {
                                 MethodUtils.errorMsg(NotificationActivity.this, "No notification found.");
                             }
@@ -309,6 +311,7 @@ public class NotificationActivity extends BaseActivity implements
                 //Cancel the dialog.
                 dialog.dismiss();
                 //Call the API to list all Notifications
+                isOK=true;
                 callNotificationListApi("4");
             }
         });

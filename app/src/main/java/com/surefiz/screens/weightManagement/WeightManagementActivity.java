@@ -381,13 +381,13 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         }
 
         if (units.equals("0")) {
-            et_units.setText("LB/INCH");
+            et_units.setText("LBS/INCH");
         } else {
             et_units.setText("KG/CM");
         }
 
         if (units.equalsIgnoreCase("0")) {
-            units_value = "LB/INCH";
+            units_value = "LBS/INCH";
         } else {
             units_value = "KG/CM";
         }
@@ -470,7 +470,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
     private void addPrefferedListAndCall() {
 
-        prefferedList.add("LB/INCH");
+        prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
         weigtUniversalPopupPreffered = new WeigtUniversalPopup(WeightManagementActivity.this, prefferedList, et_units, new OnWeightCallback() {
             @Override
@@ -488,8 +488,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                         et_weight.setText(Math.round(Double.parseDouble(splited[0]) * 0.45359237) + " KG");
                         units = "KG";
                     }
-                    if (value.equals("LB/INCH")) {
-                        units = "LB";
+                    if (value.equals("LBS/INCH")) {
+                        units = "LBS";
                         et_weight.setText((Math.round(Double.parseDouble(splited[0]) / 0.45359237)) + " LB");
                     }
                 }
@@ -498,7 +498,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i < 261; i++) {
+        for (int i = 1; i <=52; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(WeightManagementActivity.this, timeList, et_time_loss);
@@ -507,12 +507,12 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     private void addWeightListAndCall(String change) {
         weightList.clear();
         if (change.equals("LBS")) {
-            for (int i = 5; i < 401; i++) {
+            for (int i = 35; i <= 400; i++) {
                 weightList.add(i + " " + change);
             }
 
         } else {
-            for (int i = 5; i < 181; i++) {
+            for (int i = 20; i <= 180; i++) {
                 weightList.add(i + " " + change);
             }
         }

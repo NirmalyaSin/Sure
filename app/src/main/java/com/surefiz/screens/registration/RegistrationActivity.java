@@ -173,6 +173,8 @@ public class RegistrationActivity extends AppCompatActivity {
     LinearLayout ll_confirm_scale_id;
     @BindView(R.id.et_scale_id)
     EditText et_scale_id;
+    @BindView(R.id.tv_scale)
+    TextView tv_scale;
     @BindView(R.id.starScale)
     ImageView starScale;
     @BindView(R.id.et_confirm_scale_id)
@@ -570,7 +572,8 @@ public class RegistrationActivity extends AppCompatActivity {
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
             toolTipText = "Scale ID is labeled on\nthe back of your scale";
         } else {
-            toolTipText = "Scale ID is\nassigned by primary user";
+            //toolTipText = "Scale ID is\nassigned by primary user";
+            toolTipText = "Your primary user has provided\nthe Scale ID,there is no action\nrequired for Scale ID from you.";
             et_scale_id.setHint("");
             //et_scale_id.setHint("Scale ID is assigned by primary user");
            // et_confirm_scale_id.setHint("Scale ID is assigned by primary user");
@@ -603,6 +606,7 @@ public class RegistrationActivity extends AppCompatActivity {
             btn_scan.setVisibility(View.GONE);
             ll_scale_id.setVisibility(View.VISIBLE);
             et_scale_id.setEnabled(false);
+            tv_scale.setTextColor(getResources().getColor(R.color.new_grey));
             et_scale_id.setTextColor(getResources().getColor(R.color.new_grey));
             et_units.setTextColor(getResources().getColor(R.color.new_grey));
             starScale.setVisibility(View.GONE);

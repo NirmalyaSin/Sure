@@ -1448,19 +1448,21 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     boneValue = 0.0;
                 }
             }
-            PieEntry boneEntry = new PieEntry(boneValue.floatValue());
-            entries.add(boneEntry);
 
             double fatValue = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getComposition().getFat();
             PieEntry fatEntry = new PieEntry((float) fatValue);
             entries.add(fatEntry);
+
+            PieEntry boneEntry = new PieEntry(boneValue.floatValue());
+            entries.add(boneEntry);
+
 
 
             String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>"
                     + "<br>" + "<font color=#24F91D><b> Bone Minerals " + boneValue + "%<b></font>";
             pieChatBodyComposition.setCenterText(Html.fromHtml(centerText));
             pieChatBodyComposition.setCenterTextColor(Color.WHITE);
-            pieChatBodyComposition.setCenterTextSize(12f);
+            pieChatBodyComposition.setCenterTextSize(14f);
 
 
             PieDataSet dataSet = new PieDataSet(entries, "");
@@ -1476,8 +1478,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             // Setting the color code for the slices
             ArrayList<Integer> colors = new ArrayList<>();
             colors.add(Color.rgb(253, 125, 4));
-            colors.add(Color.rgb(41, 178, 7));
             colors.add(Color.rgb(250, 66, 82));
+            colors.add(Color.rgb(41, 178, 7));
 
 
             dataSet.setColors(colors);
@@ -1514,13 +1516,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             options.setChart(chart);
             HILegend hiLegend = new HILegend();
             HICSSObject hicssObject = new HICSSObject();
-            hicssObject.setColor("#ffffff");
+            hicssObject.setColor("#000");
             hiLegend.setItemStyle(hicssObject);
             options.setLegend(hiLegend);
 
             HITitle title = new HITitle();
             title.setUseHTML(true);
-            title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress In " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
+            title.setText("<p style='color: #000; text-align: center;'>WEIGHT PROGRESS IN " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
             options.setTitle(title);
 
             HIXAxis xAxis = new HIXAxis();
@@ -1871,13 +1873,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HILegend hiLegend = new HILegend();
                         HICSSObject hicssObject = new HICSSObject();
-                        hicssObject.setColor("#ffffff");
+                        hicssObject.setColor("#000");
                         hiLegend.setItemStyle(hicssObject);
                         options.setLegend(hiLegend);
 
                         HITitle title = new HITitle();
                         title.setUseHTML(true);
-                        title.setText("<p style='color: #ffffff; text-align: center;'>Weight Progress In " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
+                        title.setText("<p style='color: #000; text-align: center;'>WEIGHT PROGRESS IN " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit() + "</p>");
                         options.setTitle(title);
 
                         HIXAxis xAxis = new HIXAxis();

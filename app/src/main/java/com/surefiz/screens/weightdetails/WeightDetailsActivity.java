@@ -100,13 +100,15 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
                 .getUser().get(0).getUserName();
         scaleId = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserMac();
 
-        try {
-            if (getIntent().getStringExtra("notificationFlag").equals("1")) {
-                LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+        if(getIntent().hasExtra("notificationFlag")) {
+            try {
+                if (getIntent().getStringExtra("notificationFlag").equals("1")) {
+                    LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
+                }
+            } catch (NullPointerException e) {
+                Log.d("exception", "exception happened weight");
+                e.printStackTrace();
             }
-        } catch (NullPointerException e) {
-            Log.d("exception", "exception happened weight");
-            e.printStackTrace();
         }
 
 

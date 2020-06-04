@@ -44,7 +44,7 @@ public class ChooseOnClick implements View.OnClickListener {
                 Intent learnmoreintent = new Intent(ChooseActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);
                 learnmoreintent.putExtra("menu", false);
-                learnmoreintent.putExtra("header", "Sign up");
+                learnmoreintent.putExtra("header", "Sign Up");
                 ChooseActivity.startActivity(learnmoreintent);
 
                 /*Intent intent1=new Intent(ChooseActivity, SignUpActivity.class);

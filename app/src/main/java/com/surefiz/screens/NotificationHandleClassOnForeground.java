@@ -3,6 +3,7 @@ package com.surefiz.screens;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.surefiz.R;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -13,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class NotificationHandleClassOnForeground extends Activity {
@@ -30,10 +32,15 @@ public class NotificationHandleClassOnForeground extends Activity {
             Date currentDate = new Date();
             long diff = currentDate.getTime() - date.getTime();
 
+          //*********************AVIK
+
+            Log.d("Time_Diff",":::::"+currentDate.getTime()+"-"+date.getTime()+"="+diff);
+
             int diffSecond = (int) (diff / 1000);
             if (diffSecond < 120) {
+                int remainingTime=120-diffSecond;
                 Intent intent = new Intent(this, WeightDetailsActivity.class);
-                intent.putExtra("timerValue", diffSecond);
+                intent.putExtra("timerValue", remainingTime);
                 intent.putExtra("fromPush", "1");
                 if (getIntent().getBooleanExtra("shouldOpenWeightAssignView",false)) {
                     intent.putExtra("shouldOpenWeightAssignView", true);

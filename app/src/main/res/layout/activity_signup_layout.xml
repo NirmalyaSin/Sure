@@ -952,7 +952,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
-                        android:hint="SureFiz™ will suggest you the time to lose weight"
+                        android:hint="Please select your time"
                         android:fontFamily="@font/roboto_regular"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"

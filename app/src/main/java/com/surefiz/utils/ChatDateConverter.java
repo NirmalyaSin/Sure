@@ -68,4 +68,18 @@ public class ChatDateConverter {
 
         return formattedDate;
     }
+
+    public static String Hours12(String _24HourTime){
+
+            SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat _12HourSDF = new SimpleDateFormat("h:mm a");
+        Date _24HourDt = null;
+        try {
+            _24HourDt = _24HourSDF.parse(_24HourTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return _12HourSDF.format(_24HourDt);
+    }
 }

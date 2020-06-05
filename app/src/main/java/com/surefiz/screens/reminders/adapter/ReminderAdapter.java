@@ -17,6 +17,7 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.surefiz.R;
 import com.surefiz.screens.reminders.model.User;
+import com.surefiz.utils.ChatDateConverter;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
 
         holder.textReminderMessage.setText(arrayListReminder.get(position).getMessage());
         holder.textDate.setText(arrayListReminder.get(position).getDate());
-        holder.textTime.setText(arrayListReminder.get(position).getTime());
+        holder.textTime.setText(ChatDateConverter.Hours12(arrayListReminder.get(position).getTime()));
 
 
         viewBinderHelper.bind(holder.swipeRevealLayout, arrayListReminder.get(position).getId());

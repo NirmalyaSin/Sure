@@ -63,10 +63,14 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         scaleWiFiConfig = new ScaleWiFiConfig();
         loader = new LoadingData(activity);
 
-        showConnectedWifiSSID();
+        if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+            showConnectedWifiSSID();
+        } else {
+            permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
+        }
     }
 
-    private void showConnectedWifiSSID() {
+    public void showConnectedWifiSSID() {
 
 
         try {

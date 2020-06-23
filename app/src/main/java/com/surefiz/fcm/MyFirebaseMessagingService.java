@@ -312,6 +312,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.putExtra("shouldOpenWeightAssignView", true);
             intent.putExtra("lastServerUpdateDate", jObject.optString("lastServerUpdateDate"));
             intent.putExtra("lastServerUpdateTime", jObject.optString("lastServerUpdateTime"));
+            intent.putExtra("userWeight", jObject.optInt("userWeight"));
+            intent.putExtra("scaleMacAddress", jObject.optString("scaleMacAddress"));
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent,

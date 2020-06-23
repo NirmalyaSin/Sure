@@ -13,6 +13,8 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
@@ -60,17 +62,27 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private boolean isAutoConnecting = false;
     private ImageView iv_showPassword;
     private ImageView iv_hidePassword;
-
+    private static int LOCATION_SETTINGS=1000;
+    private PermissionHelper permissionHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_ap_config, null);
         addContentView(view);
         ButterKnife.bind(view);
+        permissionHelper = new PermissionHelper(this);
         loader = new LoadingData(this);
         scaleWiFiConfig = new ScaleWiFiConfig();
         initializeView();
-        showConnectedWifiSSID();
+
+        if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
+            showConnectedWifiSSID();
+        } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+            permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
+        } else if (!checkLocationStatus()) {
+            buildAlertMessageNoGps();
+        }
+
     }
 
     private void initializeView() {
@@ -126,8 +138,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.btnlockwifi:
 
-                PermissionHelper permissionHelperBlock = new PermissionHelper(this);
-                if (permissionHelperBlock.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
+                if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
                     ssid = editSSID.getText().toString();
                     pwd = editPassword.getText().toString();
                     if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
@@ -140,8 +151,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     btnConfigure.setEnabled(true);
                     btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
                     btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));
-                } else if (!permissionHelperBlock.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
-                    permissionHelperBlock.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
+                } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+                    permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
                 } else if (!checkLocationStatus()) {
                     buildAlertMessageNoGps();
                 }
@@ -164,7 +175,6 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.editSSID:
                 hideSoftKeyBoard();
-                PermissionHelper permissionHelper = new PermissionHelper(this);
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
                     isAutoConnecting = false;
                     hideSoftKeyBoard();
@@ -198,7 +208,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        Intent intent=new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent,LOCATION_SETTINGS);
                     }
                 });
         final AlertDialog alert = builder.create();
@@ -443,5 +454,27 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
             else
                 ShowSSIDList();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(requestCode==PermissionHelper.PERMISSION_FINE_LOCATION) {
+            if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+                if (!checkLocationStatus()) {
+                    buildAlertMessageNoGps();
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode==LOCATION_SETTINGS && checkLocationStatus()){
+            showConnectedWifiSSID();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -144,19 +144,31 @@ public class SplashActivity extends AppCompatActivity {
             if (LoginShared.getWeightFromNotification(this).equals("1") || LoginShared.getWeightFromNotification(this).equals("10")) {
                 String dateStr = getServerDate + " " + getServerTime;
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
                 try {
+                 /*   Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
+                    Date currentDate = new Date();
+                    long diff = currentDate.getTime() - date.getTime();*/
+
                     Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
                     Date currentDate = new Date();
                     long diff = currentDate.getTime() - date.getTime();
-                    //int dayDiff = (int) (diff / (24 * 60 * 60 * 1000));
+
+                    //*********************AVIK
+
+                    Log.d("Time_Diff",":::::"+currentDate.getTime()+"-"+date.getTime()+"="+diff);
                     int diffSecond = (int) (diff / 1000);
                     if (diffSecond < 120) {
+                        int remainingTime=120-diffSecond;
+
                         Intent intent = new Intent(this, WeightDetailsActivity.class);
-                        intent.putExtra("timerValue", diffSecond);
+                        intent.putExtra("timerValue", remainingTime);
                         intent.putExtra("fromPush", "1");
 
                         if (LoginShared.getWeightFromNotification(this).equals("10")) {
                             intent.putExtra("shouldOpenWeightAssignView", true);
+                            intent.putExtra("userWeight", jsonObject1.optInt("userWeight"));
+                            intent.putExtra("scaleMacAddress", jsonObject1.optString("scaleMacAddress"));
                         }
 
                         startActivity(intent);

@@ -2,8 +2,10 @@ package com.surefiz.screens.wificonfig;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.surefiz.R;
+import com.surefiz.helpers.PermissionHelper;
 import com.surefiz.screens.settings.SettingsActivity;
 
 import butterknife.BindView;
@@ -34,6 +37,9 @@ public class WifiConfigActivity extends AppCompatActivity {
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
 
+    private PermissionHelper permissionHelper;
+
+
     private WifiActivityClickEvent wifiActivityClickEvent;
 
     @Override
@@ -43,6 +49,7 @@ public class WifiConfigActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setViewAndFunctionality();
         //editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        permissionHelper=new PermissionHelper(this);
         wifiActivityClickEvent = new WifiActivityClickEvent(this);
 
         //btn_skip_config.setBackgroundDrawable(null);
@@ -61,5 +68,16 @@ public class WifiConfigActivity extends AppCompatActivity {
                     finish();
                 });
             }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(requestCode==PermissionHelper.PERMISSION_FINE_LOCATION) {
+            if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+                wifiActivityClickEvent.showConnectedWifiSSID();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

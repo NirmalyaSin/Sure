@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.surefiz.R;
+import com.surefiz.helpers.PermissionHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
     @BindView(R.id.txt_learn_more)
     TextView tv_learn_more;
 
+    PermissionHelper permissionHelper;
     WelcomeClickEvent welcomeClickEvent;
 
     @Override
@@ -29,6 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
 
+        permissionHelper=new PermissionHelper(this);
         welcomeClickEvent = new WelcomeClickEvent(this);
 
         VideoView videoView = findViewById(R.id.video_view_welcome);
@@ -53,6 +56,11 @@ public class WelcomeActivity extends AppCompatActivity {
                 finish();
             }
         }, WELCOME_WAIT_TIME);*/
+
+        if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+        } else {
+            permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
+        }
     }
 
     @Override

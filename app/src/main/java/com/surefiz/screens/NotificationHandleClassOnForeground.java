@@ -34,16 +34,19 @@ public class NotificationHandleClassOnForeground extends Activity {
 
           //*********************AVIK
 
-            Log.d("Time_Diff",":::::"+currentDate.getTime()+"-"+date.getTime()+"="+diff);
+            //Log.d("Time_Diff",":::::"+currentDate.getTime()+"-"+date.getTime()+"="+diff);
 
             int diffSecond = (int) (diff / 1000);
             if (diffSecond < 120) {
                 int remainingTime=120-diffSecond;
+                Log.e("Remaining-Time",":::::::::::::"+remainingTime);
                 Intent intent = new Intent(this, WeightDetailsActivity.class);
                 intent.putExtra("timerValue", remainingTime);
                 intent.putExtra("fromPush", "1");
                 if (getIntent().getBooleanExtra("shouldOpenWeightAssignView",false)) {
                     intent.putExtra("shouldOpenWeightAssignView", true);
+                    intent.putExtra("userWeight", getIntent().getIntExtra("userWeight",0));
+                    intent.putExtra("scaleMacAddress", getIntent().getStringExtra("scaleMacAddress"));
                 }
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

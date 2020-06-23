@@ -55,7 +55,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     private String calledFrom;
     private boolean isWeightReceived;
     private boolean isTimerOff = true;
-    private String timerValue = "0";
+    private int timerValue = 0;
     private String fromPush = "";
 
     // new
@@ -86,9 +86,11 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         handler1 = new Handler();
 
         LoginShared.setWeightFromNotification(this, "0");
-
-        timerValue = ""+getIntent().getIntExtra("timerValue",0);
-
+        if (getIntent().hasExtra("timerValue")) {
+            timerValue = getIntent().getIntExtra("timerValue",0);
+        } else {
+            timerValue = 0;
+        }
         if (getIntent().getStringExtra("fromPush") != null) {
             fromPush = getIntent().getStringExtra("fromPush");
         } else {
@@ -100,24 +102,23 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
                 .getUser().get(0).getUserName();
         scaleId = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserMac();
 
-        if(getIntent().hasExtra("notificationFlag")) {
-            try {
+        try {
+            if (getIntent().hasExtra("notificationFlag"))
                 if (getIntent().getStringExtra("notificationFlag").equals("1")) {
-                    LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
-                }
-            } catch (NullPointerException e) {
-                Log.d("exception", "exception happened weight");
-                e.printStackTrace();
+                LoginShared.setWeightPageFrom(WeightDetailsActivity.this, "0");
             }
+        } catch (NullPointerException e) {
+            Log.d("exception", "exception happened weight");
+            e.printStackTrace();
         }
 
 
 
-        /*if (!getIntent().getBooleanExtra("shouldOpenWeightAssignView", false)) {
+        if (!getIntent().getBooleanExtra("shouldOpenWeightAssignView", false)) {
             callUserListApi();
-        }*/
+        }
 
-        callUserListApi();
+        //callUserListApi();
 
         //Start time Count-down
         startTimerCountDown();
@@ -282,9 +283,10 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     public void onUiClick(Intent intent, int eventCode) {
         if (eventCode == 1001) {
             scaleUserId = intent.getIntExtra("id", 0);
-            //if (isWeightReceived)
+            if (isWeightReceived) {
                 saveWeightToSDK();
 
+            }
         }
     }
 
@@ -307,9 +309,11 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+
         //Initialize Weight
+
         captureWeight = 0;
         data_id = "";
         isWeightReceived = false;
@@ -324,6 +328,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
             e.printStackTrace();
         }
     }
+
 
     public void ClosePrevConnections() {
         if (userIdManager != null) {
@@ -463,20 +468,23 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
                 public void run() {
                     showcancelationDialog();
                 }
-            }, 6000);
+            }, 1000);
         } else {
-            loader.show();
+            //loader.show();
+            loader.show_with_label("Loading");
+
             btn_go_next.setVisibility(View.GONE);
         }
 
-        if (timerValue != null) {
-            if (Integer.parseInt(timerValue) * 1000 > 0) {
+        Log.e("Timer-Remaining",":::::::::::::"+timerValue);
+
+            if (timerValue * 1000 > 0) {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         goNextAction();
                     }
-                }, Integer.parseInt(timerValue) * 1000);
+                }, timerValue * 1000);
             } else {
 
                 handler.postDelayed(new Runnable() {
@@ -486,15 +494,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
                     }
                 }, GeneralToApp.SCALECONFIG_WAIT_TIME);
             }
-        } else {
 
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    goNextAction();
-                }
-            }, GeneralToApp.SCALECONFIG_WAIT_TIME);
-        }
     }
 
     private void goNextAction() {

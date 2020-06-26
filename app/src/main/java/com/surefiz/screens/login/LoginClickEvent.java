@@ -67,7 +67,8 @@ public class LoginClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.iv_back:
-                callWelcome();
+                //callWelcome();
+                mLoginActivity.finish();
                 break;
 
                 case R.id.btnLogin:

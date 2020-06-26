@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:backgroundTint="@android:color/transparent"
-                android:hint="Enter confirm scale ID"
+                android:hint="Re-Enter new scale ID"
                 android:maxLines="1"
                 android:maxLength="12"
                 android:inputType="numberSigned"

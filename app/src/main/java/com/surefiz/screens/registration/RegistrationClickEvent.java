@@ -133,7 +133,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addBodyList() {
-        String [] stringList={"Diabetes","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
+        String [] stringList={"Diabetes","Depression","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
         for (int i = 0; i <stringList.length ; i++) {
             BodyItem bodyItem=new BodyItem();
             bodyItem.setName(stringList[i]);
@@ -773,7 +773,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (selectedLifeStyle == 0) {
             MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");
         } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
+            MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight selection");
         } else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
         } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
@@ -888,10 +888,10 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 MethodUtils.errorMsg(registrationActivity, "Please select Weight Management goal");
             }
            else if (weight_managment_goal ==2 && user_selection_val==0 && registrationActivity.et_userselection.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select any option");
+               MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight selection");
            }
            else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight");
+               MethodUtils.errorMsg(registrationActivity, "Please select your weight");
            } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
                MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
            }

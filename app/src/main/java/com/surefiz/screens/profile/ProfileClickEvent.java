@@ -116,7 +116,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             getProfileDataAndSet();
         }
         //***AVIK
-        addBodyList();
+        //addBodyList();
 
         addGenderListAndCall();
         addLifeStyleListAndCall();
@@ -364,6 +364,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         setSocialAddButtonStatus();
 
         showImage();
+
+        addBodyList();
     }
 
     private void setSocialAddButtonStatus() {
@@ -440,11 +442,19 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
     //***AVIK
     private void addBodyList() {
-        String [] stringList={"Diabetes","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
+        String temp="";
+        temp=LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getBodycondition();
+        Log.e("temp",":::"+temp);
+        String [] stringList={"Diabetes","Depression","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
         for (int i = 0; i <stringList.length ; i++) {
             BodyItem bodyItem=new BodyItem();
             bodyItem.setName(stringList[i]);
-            bodyItem.setSelection(false);
+
+            if(temp.toLowerCase().contains(stringList[i].toLowerCase()))
+                bodyItem.setSelection(true);
+            else
+                bodyItem.setSelection(false);
+
             activity.bodyList.add(bodyItem);
         }
 
@@ -607,7 +617,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.et_city.setEnabled(true);
                 activity.et_zipcode.setEnabled(true);
                 activity.profile_image.setEnabled(true);
-                activity.switch_visibility.setEnabled(true);
+                //activity.switch_visibility.setEnabled(true);
+                activity.switch_lock.setVisibility(View.GONE);
 
                 activity.et_new_password.setEnabled(true);
                 activity.et_confirm_password.setEnabled(true);
@@ -809,7 +820,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_add_line2.setEnabled(false);
         activity.et_city.setEnabled(false);
         activity.et_zipcode.setEnabled(false);
-        activity.switch_visibility.setEnabled(false);
+        //activity.switch_visibility.setEnabled(false);
+        activity.switch_lock.setVisibility(View.VISIBLE);
+
 
         activity.et_new_password.setEnabled(false);
         activity.et_confirm_password.setEnabled(false);

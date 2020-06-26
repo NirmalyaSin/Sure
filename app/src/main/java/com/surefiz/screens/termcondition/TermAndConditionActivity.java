@@ -35,8 +35,8 @@ public class TermAndConditionActivity extends BaseActivity {
     }
 
     private void setHeaderView() {
-        tv_universal_header.setText(getResources().getString(R.string.surefiz_register));
-        //tv_universal_header.setText("Terms & Condition");
+        //tv_universal_header.setText(getResources().getString(R.string.surefiz_register));
+        tv_universal_header.setText("Terms & Conditions");
         img_topbar_menu.setVisibility(View.GONE);
         btn_done.setVisibility(View.GONE);
         iv_edit.setVisibility(View.GONE);

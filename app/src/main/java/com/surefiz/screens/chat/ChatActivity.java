@@ -140,7 +140,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     editTextMessage.setError("Enter message");
                 } else {
                     //Send Chat message
-
                     try {
                         String toServerUnicodeEncoded = encodeToNonLossyAscii(message);
                         callSendChatApi(toServerUnicodeEncoded);
@@ -402,8 +401,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                         isMessageSent = true;
                         mChatAdapter.notifyDataSetChanged();
                         moveToEnd();
-
-                        editTextMessage.setText("");
 
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(ChatActivity.this);

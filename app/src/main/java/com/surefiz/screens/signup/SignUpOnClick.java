@@ -213,7 +213,7 @@ public class SignUpOnClick implements View.OnClickListener {
                     MethodUtils.errorMsg(signUpActivity, "Please select your weight management goal");
                 }
                 else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.et_userselection.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your desired weight");
+                    MethodUtils.errorMsg(signUpActivity, "Please select your desired weight selection");
                 }else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_weight.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, "Please select your weight");
                 }

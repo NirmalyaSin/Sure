@@ -94,7 +94,7 @@ public class SignUpActivity extends SignUpView {
     }
 
     private void addBodyList() {
-        String [] stringList={"Diabetes","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
+        String [] stringList={"Diabetes","Depression","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
         for (int i = 0; i <stringList.length ; i++) {
             BodyItem bodyItem=new BodyItem();
             bodyItem.setName(stringList[i]);
@@ -369,7 +369,7 @@ public class SignUpActivity extends SignUpView {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <=52; i++) {
+        for (int i = 1; i <=30; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(this, timeList, et_time_loss);

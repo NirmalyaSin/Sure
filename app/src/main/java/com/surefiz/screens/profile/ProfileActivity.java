@@ -91,6 +91,7 @@ public class ProfileActivity extends BaseActivity {
     Button btn_register;
     Button btn_cancel;
     Switch switch_visibility;
+    View switch_lock;
     RelativeLayout rl_visibility;
     TextView btnGoogleAdd;
     TextView btnFacebookAdd;
@@ -166,7 +167,9 @@ public class ProfileActivity extends BaseActivity {
         et_zipcode.setEnabled(false);
 
         profile_image.setEnabled(false);
-        switch_visibility.setEnabled(false);
+        //switch_visibility.setEnabled(false);
+        switch_lock.setVisibility(View.VISIBLE);
+
         et_new_password.setEnabled(false);
         et_confirm_password.setEnabled(false);
     }
@@ -196,6 +199,7 @@ public class ProfileActivity extends BaseActivity {
 
         btn_register = view.findViewById(R.id.btn_register);
         btn_cancel = view.findViewById(R.id.btn_cancel);
+        switch_lock = view.findViewById(R.id.switch_lock);
         switch_visibility = view.findViewById(R.id.switch_visibility);
         rl_visibility = view.findViewById(R.id.rl_visibility);
         btnGoogleAdd = view.findViewById(R.id.btnGoogleAdd);

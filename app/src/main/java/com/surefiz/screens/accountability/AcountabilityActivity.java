@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,6 +54,8 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     private LoadingData loadingData;
     private ArrayList<User> arrayListUsers = new ArrayList<User>();
     private AllCircleUserAdapter mAllCircleUserAdapter;
+    private SwipeRefreshLayout swiperefresh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +64,11 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         addContentView(view);
         initializeImageLoader();
         setHeaderView();
+        setSwipeRefresh();
         setRecyclerViewItem();
         LoginShared.setWeightFromNotification(this, "0");
         loadingData = new LoadingData(this);
-        callCircleUserListApi();
+        callCircleUserListApi(false);
     }
 
     private void initializeImageLoader() {
@@ -80,11 +84,12 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         LoginShared.setWeightFromNotification(this, "0");
-        callCircleUserListApi();
+        callCircleUserListApi(false);
     }
 
-    private void callCircleUserListApi() {
-        loadingData.show_with_label("Loading");
+    private void callCircleUserListApi(boolean isSwipe) {
+        if(!isSwipe)
+            loadingData.show_with_label("Loading");
 
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -97,6 +102,9 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
             public void onResponse(Call<CircleUserResponse> call, Response<CircleUserResponse> response) {
                 if (loadingData != null && loadingData.isShowing()) {
                     loadingData.dismiss();
+                    arrayListUsers.clear();
+                }else{
+                    swiperefresh.setRefreshing(false);
                     arrayListUsers.clear();
                 }
 
@@ -136,6 +144,25 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         });
 
 
+    }
+
+    private void setSwipeRefresh(){
+        swiperefresh = findViewById(R.id.swiperefresh);
+        swiperefresh.setColorSchemeColors(R.color.blue, R.color.purple, R.color.blue);
+
+        swiperefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.i("onRefresh", "onRefresh called from SwipeRefreshLayout");
+
+                        swiperefresh.setRefreshing(true);
+                        callCircleUserListApi(true);
+
+
+                    }
+                }
+        );
     }
 
     private void setRecyclerViewItem() {
@@ -188,7 +215,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_FRIEND_REQUEST && resultCode == Activity.RESULT_OK) {
-            callCircleUserListApi();
+            callCircleUserListApi(false);
         }
     }
 

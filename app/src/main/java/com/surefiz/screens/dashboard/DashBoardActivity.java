@@ -2423,6 +2423,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         title.setText("<p style='color: #ffffff; text-align: center;'>YOUR SUB GOALS PROGRESS</p>");
                         optionsSubGoals.setTitle(title);
 
+
                         HIXAxis xAxis = new HIXAxis();
                         HITitle hiXTitle = new HITitle();
                         hiXTitle.setText("<p style='color: #ffffff; '>Weeks</p>");
@@ -2431,6 +2432,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getWeeks());
                         HILabels hiLabels = new HILabels();
                         hiLabels.setStyle(hicssObject);
+                        xAxis.setGridLineColor(HIColor.initWithRGB(75, 79, 99));
                         xAxis.setLabels(hiLabels);
                         hiLabels.setSkew3d(true);
                         HIStyle hiStyle = new HIStyle();
@@ -2461,6 +2463,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
                         hiTitle.setSkew3d(true);
                         hiLabels.setStyle(hicssObject);
+                        yAxis.setGridLineColor(HIColor.initWithRGB(75, 79, 99));
                         yAxis.setTitle(hiTitle);
                         yAxis.setLabels(hiLabels);
                         optionsSubGoals.setYAxis(new ArrayList<HIYAxis>() {{

@@ -59,7 +59,6 @@ public class ChooseOnClick implements View.OnClickListener {
                 Intent intent=new Intent(ChooseActivity, LoginActivity.class);
                 ChooseActivity.startActivity(intent);
                 ChooseActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                ChooseActivity.finishAffinity();
                 break;
 
             case R.id.Btn_nothing:

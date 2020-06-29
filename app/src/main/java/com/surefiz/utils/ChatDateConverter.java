@@ -57,6 +57,8 @@ public class ChatDateConverter {
     public static String Hour_Minute(String s){
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat sdfOutout = new SimpleDateFormat("HH:mm a");
+
         Date date = null;
         try {
             date = sdf.parse(s);
@@ -64,7 +66,26 @@ public class ChatDateConverter {
             e.printStackTrace();
         }
 
-        String formattedDate = sdf.format(date);
+
+        String formattedDate = sdfOutout.format(date);
+
+        return formattedDate;
+    }
+
+    public static String Hour_Minute2(String s){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a");
+        SimpleDateFormat sdfOutout = new SimpleDateFormat("HH:mm");
+
+        Date date = null;
+        try {
+            date = sdf.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        String formattedDate = sdfOutout.format(date);
 
         return formattedDate;
     }

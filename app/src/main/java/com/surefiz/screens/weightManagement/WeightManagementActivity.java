@@ -498,7 +498,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <=52; i++) {
+        for (int i = 1; i <=30; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(WeightManagementActivity.this, timeList, et_time_loss);

@@ -129,6 +129,7 @@
                     android:textSize="@dimen/_14sdp"
                     android:focusableInTouchMode="false"
                     android:editable="false"
+                    android:textAllCaps="true"
                     android:hint="Select"
                     android:gravity="start"
                     android:layout_marginTop="@dimen/_5sdp"

@@ -75,7 +75,7 @@ public class AddEditReminderActivity extends BaseActivity implements
             public void onClick(View v) {
                 String remiderText = editReminderText.getText().toString().trim();
                 String date = editReminderDate.getText().toString().trim();
-                String time = editReminderTime.getText().toString().trim();
+                String time = ChatDateConverter.Hour_Minute2(editReminderTime.getText().toString().trim());
 
                 if (remiderText.equals("")) {
                     editReminderText.setError("Enter reminder message");
@@ -112,7 +112,7 @@ public class AddEditReminderActivity extends BaseActivity implements
             //set field with Current date
             editReminderDate.setText(getCurrentDate());
             //set field with Current time
-            editReminderTime.setText(getCurrentTime());
+            editReminderTime.setText(ChatDateConverter.Hour_Minute(getCurrentTime()));
             //Enable Date-Time Picker
             enableDateTimeSelection();
         } else {
@@ -124,7 +124,7 @@ public class AddEditReminderActivity extends BaseActivity implements
                 if (mReminder != null) {
                     editReminderText.setText(mReminder.getMessage());
                     editReminderDate.setText(mReminder.getDate());
-                    editReminderTime.setText(mReminder.getTime());
+                    editReminderTime.setText(ChatDateConverter.Hour_Minute(mReminder.getTime()));
                     editReminderDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     editReminderTime.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
@@ -139,7 +139,7 @@ public class AddEditReminderActivity extends BaseActivity implements
                 if (mReminder != null) {
                     editReminderText.setText(mReminder.getMessage());
                     editReminderDate.setText(mReminder.getDate());
-                    editReminderTime.setText(mReminder.getTime());
+                    editReminderTime.setText(ChatDateConverter.Hour_Minute(mReminder.getTime()));
                     //Enable Date-Time Picker
                     enableDateTimeSelection();
 

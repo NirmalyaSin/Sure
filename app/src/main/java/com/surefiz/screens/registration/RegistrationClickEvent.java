@@ -225,7 +225,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <= 52; i++) {
+        for (int i = 1; i <= 30; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(registrationActivity, timeList, registrationActivity.et_time_loss);
@@ -759,7 +759,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (registrationActivity.et_phone.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
         } else if (registrationActivity.et_management.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select Weight Managment goal");
+            MethodUtils.errorMsg(registrationActivity, "Please select Weight Management goal");
         } else if (registrationActivity.et_units.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
         } else if (registrationActivity.et_gender.getText().toString().equals("")) {
@@ -773,7 +773,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (selectedLifeStyle == 0) {
             MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");
         } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight selection");
+            MethodUtils.errorMsg(registrationActivity, "Please select desired weight selection option");
         } else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
         } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
@@ -888,7 +888,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 MethodUtils.errorMsg(registrationActivity, "Please select Weight Management goal");
             }
            else if (weight_managment_goal ==2 && user_selection_val==0 && registrationActivity.et_userselection.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please enter your desired weight selection");
+               MethodUtils.errorMsg(registrationActivity, "Please select desired weight selection option");
            }
            else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
                MethodUtils.errorMsg(registrationActivity, "Please select your weight");

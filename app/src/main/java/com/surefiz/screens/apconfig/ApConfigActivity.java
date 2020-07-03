@@ -1,5 +1,6 @@
 package com.surefiz.screens.apconfig;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,12 +8,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.MacAddress;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
+import android.net.NetworkSpecifier;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiNetworkSpecifier;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PatternMatcher;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -40,6 +50,7 @@ import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
+import com.testfairy.TestFairy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +59,8 @@ import butterknife.ButterKnife;
 import cn.onecoder.scalewifi.api.ScaleWiFiConfig;
 import cn.onecoder.scalewifi.api.impl.OnScaleWiFiConfigResultListener;
 
-public class ApConfigActivity extends BaseActivity implements View.OnClickListener, OnScaleWiFiConfigResultListener,
+public class ApConfigActivity extends BaseActivity implements View.OnClickListener,
+        OnScaleWiFiConfigResultListener,
         PopupMenu.OnMenuItemClickListener {
     public View view;
     LoadingData loader;
@@ -62,12 +74,20 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private boolean isAutoConnecting = false;
     private ImageView iv_showPassword;
     private ImageView iv_hidePassword;
-    private static int LOCATION_SETTINGS=1000;
+    private static int LOCATION_SETTINGS = 1000;
     private PermissionHelper permissionHelper;
+    private ConnectivityManager.NetworkCallback networkCallback;
+    ConnectivityManager connectivityManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_ap_config, null);
+
+        TestFairy.begin(this, "SDK-c5oBXdCj");
+        TestFairy.setUserId(LoginShared.getUserName(this));
+
+
         addContentView(view);
         ButterKnife.bind(view);
         permissionHelper = new PermissionHelper(this);
@@ -76,16 +96,22 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         initializeView();
 
         if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
+            TestFairy.log("AP-Config", "Call-showConnectedWifiSSID");
+
             showConnectedWifiSSID();
         } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+            TestFairy.log("AP-Config", "PERMISSION_FINE_LOCATION");
             permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
         } else if (!checkLocationStatus()) {
+            TestFairy.log("AP-Config", "Call-buildAlertMessageNoGps");
             buildAlertMessageNoGps();
         }
+
 
     }
 
     private void initializeView() {
+        TestFairy.log("AP-Config", "initializeView");
         //TextView tvApConfig = view.findViewById(R.id.tvApConfig);
         //tvApConfig.setText(Html.fromHtml(getString(R.string.ap_config)));
         editSSID = view.findViewById(R.id.editSSID);
@@ -106,6 +132,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void setHeaderView() {
+        TestFairy.log("AP-Config", "setHeaderView");
+
         tv_universal_header.setText("AP Configuration");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
@@ -121,9 +149,12 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_back:
+                TestFairy.log("AP-Config", "rl_back");
                 onBackPressed();
                 break;
             case R.id.btnConfigure:
+                TestFairy.log("AP-Config", "btnConfigure");
+
                 String ssid = editSSID.getText().toString();
                 String pwd = editPassword.getText().toString();
                 if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
@@ -137,6 +168,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 getAvailableSSID();
                 break;
             case R.id.btnlockwifi:
+
+                TestFairy.log("AP-Config", "btnlockwifi");
 
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
                     ssid = editSSID.getText().toString();
@@ -158,41 +191,37 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 }
 
 
-
-
-                /*ssid = editSSID.getText().toString();
-                pwd = editPassword.getText().toString();
-                if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
-                    Toast.makeText(this, "Please input SSID and password.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                editSSID.setEnabled(false);
-                editPassword.setEnabled(false);
-                btnlockwifi.setEnabled(false);
-                btnConfigure.setEnabled(true);
-                btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
-                btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));*/
                 break;
             case R.id.editSSID:
                 hideSoftKeyBoard();
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
+                    TestFairy.log("AP-Config", "ALL-Permission");
+
                     isAutoConnecting = false;
                     hideSoftKeyBoard();
+
+                    TestFairy.log("AP-Config", "ALL-getAvailableSSID");
+
                     getAvailableSSID();
                 } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+                    TestFairy.log("AP-Config", "PERMISSION_FINE_LOCATION");
                     permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
                 } else if (!checkLocationStatus()) {
+                    TestFairy.log("AP-Config", "!checkLocationStatus");
                     buildAlertMessageNoGps();
                 }
                 break;
             case R.id.iv_showPassword:
-               iv_showPassword.setVisibility(View.GONE);
+                TestFairy.log("AP-Config", "iv_showPassword");
+
+                iv_showPassword.setVisibility(View.GONE);
                 iv_hidePassword.setVisibility(View.VISIBLE);
-                editPassword.setTransformationMethod
-                        (HideReturnsTransformationMethod.getInstance());
+                editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
                 break;
             case R.id.iv_hidePassword:
+                TestFairy.log("AP-Config", "iv_hidePassword");
+
                 iv_showPassword.setVisibility(View.VISIBLE);
                 iv_hidePassword.setVisibility(View.GONE);
                 editPassword.setTransformationMethod(
@@ -202,14 +231,16 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void buildAlertMessageNoGps() {
+        TestFairy.log("AP-Config", "buildAlertMessageNoGps");
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Your GPS seems to be disabled, you need to enable it to use this service?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
-                        Intent intent=new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivityForResult(intent,LOCATION_SETTINGS);
+                        Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent, LOCATION_SETTINGS);
                     }
                 });
         final AlertDialog alert = builder.create();
@@ -217,28 +248,41 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     }
 
     public boolean checkLocationStatus() {
-        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        TestFairy.log("AP-Config", "checkLocationStatus");
 
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
 
     private void showConnectedWifiSSID() {
+        TestFairy.log("AP-Config", "showConnectedWifiSSID");
+
         try {
             mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if (mWifiManager != null) {
+                TestFairy.log("AP-Config", "mWifiManager");
+
                 WifiManager.MulticastLock lock = mWifiManager.createMulticastLock("Log_Tag");
                 lock.acquire();
             }
         } catch (Exception e) {
             Log.d("Wifi Exception", "" + e.getMessage());
+            TestFairy.log("AP-Config", "Wifi Exception");
+
         }
 
         if (mWifiManager != null) {
+            TestFairy.log("AP-Config", "mWifiManager");
             mWifiManager.getWifiState();
             WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
             if (wifiInfo != null) {
+                TestFairy.log("AP-Config", "!wifiInfo");
+
                 String ssid = wifiInfo.getSSID();
+
+                TestFairy.log("AP-Config", "ssid");
+
                 if (!TextUtils.isEmpty(ssid) && ssid.length() > 2
                         && ssid.startsWith("\"") && ssid.endsWith("\"")) {
                     ssid = ssid.substring(1, ssid.length() - 1);
@@ -246,11 +290,16 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 String bssid = wifiInfo.getBSSID();
                 editSSID.setText(ssid);
                 editBSSID.setText(bssid);
+                TestFairy.log("AP-Config", "ssid-" + ssid);
+                TestFairy.log("AP-Config", "bssid-" + bssid);
+
             }
         }
     }
 
     void getAvailableSSID() {
+        TestFairy.log("AP-Config", "getAvailableSSID");
+
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         mWifiManager.startScan();
         if (!loader.isShowing()) {
@@ -259,6 +308,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void hideSoftKeyBoard() {
+        TestFairy.log("AP-Config", "hideSoftKeyBoard");
+
         View view = getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -271,11 +322,14 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         popup.dismiss();
 
         for (ScanResult result : scanResultsWifi) {
+            TestFairy.log("AP-Config", "scanResultsWifi");
+
             if (result.SSID.equals(menuItem.getTitle())) {
                 editSSID.setText(result.SSID);
                 editBSSID.setText(result.BSSID);
                 popup.dismiss();
                 Log.d("@@Selected-Wifi : ", result.SSID + " (" + result.BSSID + ")");
+                TestFairy.log("AP-Config", "scanResultsWifi-SSID");
                 break;
             }
         }
@@ -284,6 +338,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     }
 
     void ShowSSIDList() {
+        TestFairy.log("AP-Config", "ShowSSIDList");
+
         popup = new PopupMenu(this, editSSID, Gravity.CENTER);
         popup.setOnMenuItemClickListener(this);
         Menu popupMenuItem = popup.getMenu();
@@ -291,6 +347,9 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         for (int i = 0; i < scanResultsWifi.size(); i++) {
             popupMenuItem.add(scanResultsWifi.get(i).SSID);
         }
+
+        TestFairy.log("AP-Config", "unregisterReceiver-wifiReceiver");
+
         unregisterReceiver(wifiReceiver);
         popup.show();
     }
@@ -300,66 +359,116 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
             loader.show_with_label(meassge);
             return;
         }
-        if (loader.isShowing()) {
-            loader.dismiss();
-        }
     }
 
     private void autoConnect() {
+        TestFairy.log("AP-Config", "autoConnect");
+
         unregisterReceiver(wifiReceiver);
         final String scaleName = "WS915_V2.6_V1.5-";
-        //int scaleId = LoginShared.getScaleUserId(this);
         long scaleId = LoginShared.getUserMacId(this);
         String networkSSID = scaleName + scaleId;
-        //String networkSSID = "";
+
+        TestFairy.log("AP-Config", "networkSSID-" + networkSSID);
+
         ScanResult scanResult = null;
         for (ScanResult result : scanResultsWifi) {
             if (result.SSID.endsWith("" + scaleId)) {
                 scanResult = result;
+                TestFairy.log("AP-Config", "scanResult-" + scanResult);
                 break;
             }
-
-            /*if (result.SSID.equals(networkSSID)) {
-                scanResult = result;
-                break;
-            }*/
         }
+
+
         if (scanResult != null) {
-            WifiConfiguration conf = new WifiConfiguration();
-            conf.SSID = "\"" + networkSSID + "\"";
-            conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            wifiManager.addNetwork(conf);
-            List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
-            for (WifiConfiguration i : list) {
-                if (i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")) {
-                    wifiManager.disconnect();
-                    wifiManager.enableNetwork(i.networkId, true);
-                    wifiManager.reconnect();
-                    btnConfigure.setEnabled(false);
-                    btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
-                    //changeAPConfig();
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
 
-                    showApConfigCofirmationDialog(networkSSID);
+                btnConfigure.setEnabled(false);
+                btnConfigure.setBackground(ContextCompat.getDrawable(ApConfigActivity.this, R.drawable.login_edit_rounded_corner_blue));
 
-                    break;
+                NetworkSpecifier specifier = new WifiNetworkSpecifier.Builder()
+                        .setSsid(scanResult.SSID)
+                        .setBssid(MacAddress.fromString(scanResult.BSSID))
+                        .build();
+                final NetworkRequest request =
+                        new NetworkRequest.Builder()
+                                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
+                                .setNetworkSpecifier(specifier)
+                                .build();
+                connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                networkCallback = new ConnectivityManager.NetworkCallback() {
+                    @Override
+                    public void onAvailable(@NonNull Network network) {
+                        super.onAvailable(network);
+                        ConnectivityManager.setProcessDefaultNetwork(network);
+                        changeAPConfig();
+
+                    }
+
+                    @Override
+                    public void onLosing(@NonNull Network network, int maxMsToLive) {
+                        super.onLosing(network, maxMsToLive);
+                    }
+                };
+                if (connectivityManager != null)
+                    connectivityManager.requestNetwork(request, networkCallback);
+                else {
+                    TestFairy.log("AP-Config", "Could not connect OS 10");
+                    Toast.makeText(this, "Could not connect to wifi network with scale name " + networkSSID, Toast.LENGTH_LONG).show();
+                }
+            } else {
+                // Old code
+                TestFairy.log("AP-Config", "!scanResult");
+                WifiConfiguration conf = new WifiConfiguration();
+                conf.SSID = "\"" + networkSSID + "\"";
+                conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                wifiManager.addNetwork(conf);
+                List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+                TestFairy.log("AP-Config", "list" + list.size());
+
+                for (WifiConfiguration i : list) {
+                    if (i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")) {
+                        wifiManager.disconnect();
+                        wifiManager.enableNetwork(i.networkId, true);
+                        wifiManager.reconnect();
+                        btnConfigure.setEnabled(false);
+                        btnConfigure.setBackground(ContextCompat.getDrawable(ApConfigActivity.this, R.drawable.login_edit_rounded_corner_blue));
+                        TestFairy.log("AP-Config", "call-showApConfigCofirmationDialog");
+                        showApConfigCofirmationDialog(networkSSID);
+
+                        break;
+                    }
                 }
             }
         } else {
+            TestFairy.log("AP-Config", "Could not find");
             Toast.makeText(this, "Could not find wifi network with scale name " + networkSSID, Toast.LENGTH_LONG).show();
         }
     }
 
     private void changeAPConfig() {
+        TestFairy.log("AP-Config", "changeAPConfig");
+
+        //showDialog("Configuring...", true);
+
         new Handler().postDelayed(() -> {
+
             String ssid = editSSID.getText().toString();
             String pwd = editPassword.getText().toString();
+            TestFairy.log("AP-Config", "scaleWiFiConfig-" + ssid + "-" + pwd);
             scaleWiFiConfig.apConfig(ssid, pwd, ApConfigActivity.this);
-            showDialog("Configuring...", true);
-        }, 3000);
+            TestFairy.log("AP-Config", "Configuring");
+
+        }, 1000);
     }
 
     private void showApConfigCofirmationDialog(String SSID) {
+        TestFairy.log("AP-Config", "showApConfigCofirmationDialog");
+
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
 
@@ -368,6 +477,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         alertDialog.setMessage(messageStr);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Join",
                 (dialog, which) -> {
+                    TestFairy.log("AP-Config", "call-changeAPConfig");
+
                     dialog.dismiss();
                     changeAPConfig();
                 });
@@ -375,6 +486,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
                 (dialog, which) -> {
                     dialog.dismiss();
+                    TestFairy.log("AP-Config", "Cancel");
 
                     /*btnlockwifi.setEnabled(false);
                     btnConfigure.setEnabled(true);
@@ -386,9 +498,14 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
 
     private void showalertdialog(boolean success) {
+
+        TestFairy.log("AP-Config", "Connection-" + success);
+
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
         if (!success) {
+            TestFairy.log("AP-Config", "Your Configuration failed to complete");
+
             alertDialog.setMessage("Your Configuration failed to complete.");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     (dialog, which) -> {
@@ -414,9 +531,14 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                             }
                         });
             } else {
+                TestFairy.log("AP-Config", "Your Configuration complete");
+
                 alertDialog.setMessage("Your AP Configuration completed successfully.");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
+
+                            TestFairy.log("AP-Config", "finish");
+
                             dialog.dismiss();
                             finish();
                         });
@@ -427,41 +549,53 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onApConfigResult(boolean success) {
-        if (loader.isShowing())
-            loader.dismiss();
+
+        /*if (loader!=null &&loader.isShowing())
+            loader.dismiss();*/
+
+        TestFairy.log("AP-Config", "onApConfigResult-" + success);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            connectivityManager.unregisterNetworkCallback(networkCallback);
+        }
 
         showalertdialog(success);
     }
 
     @Override
     public void onSmartLinkConfigResult(boolean success) {
-        if (loader.isShowing())
-            loader.dismiss();
 
-        showalertdialog(success);
     }
 
     class WifiReceiver extends BroadcastReceiver {
         public void onReceive(Context c, Intent intent) {
-            scanResultsWifi.clear();
-//            Toast.makeText(mWifiConfigActivity, "Wifi List Received", Toast.LENGTH_LONG).show();
-            scanResultsWifi = mWifiManager.getScanResults();
-            if (loader.isShowing()) {
-                loader.dismiss();
+            TestFairy.log("AP-Config", "BroadcastReceiver");
+
+            final String action = intent.getAction();
+
+            if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
+                scanResultsWifi.clear();
+                scanResultsWifi = mWifiManager.getScanResults();
+                if (loader.isShowing()) {
+                    loader.dismiss();
+                }
+                if (isAutoConnecting)
+                    autoConnect();
+                else
+                    ShowSSIDList();
             }
-            if (isAutoConnecting)
-                autoConnect();
-            else
-                ShowSSIDList();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
 
-        if(requestCode==PermissionHelper.PERMISSION_FINE_LOCATION) {
+        if (requestCode == PermissionHelper.PERMISSION_FINE_LOCATION) {
             if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
                 if (!checkLocationStatus()) {
+                    TestFairy.log("AP-Config", "onRequestPermissionsResult");
+
                     buildAlertMessageNoGps();
                 }
             }
@@ -471,10 +605,21 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        TestFairy.log("AP-Config", "onActivityResult-Location");
 
-        if(requestCode==LOCATION_SETTINGS && checkLocationStatus()){
+        if (requestCode == LOCATION_SETTINGS && checkLocationStatus()) {
+            TestFairy.log("AP-Config", "call-showConnectedWifiSSID");
+
             showConnectedWifiSSID();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        TestFairy.log("AP-Config", "onDestroy");
+        TestFairy.stop();
+        super.onDestroy();
+
     }
 }

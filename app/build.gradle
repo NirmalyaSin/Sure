@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.surefiz"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
 
         //This is for live build
         /*versionCode 12
@@ -98,6 +98,8 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zbar:1.9.13'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
 
+
+    implementation 'testfairy:testfairy-android-sdk:1.+@aar'
 
 
 }

@@ -104,6 +104,8 @@ complete his/her registration process.</string>
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
     <string name="signup_completed_without_scale">Sign up is complete. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email ID and password created during signup. Your email will be validated during app login. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
     <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during signup. Your email will be validated during app login. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
+    <string name="androidQ">After you tap on "AP Config" button follow the steps below:\n\n1. A list of WIFI will open.\n2. Select the</string>
+    <string name="androidQ2">from the list\n\nJust wait for few seconds and you are done.</string>
 
 
 </resources>

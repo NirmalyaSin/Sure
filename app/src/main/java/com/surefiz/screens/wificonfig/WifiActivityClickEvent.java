@@ -360,7 +360,9 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                             dialog.dismiss();
                             LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
 
-                            if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
+                            //AVIK
+                            //if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
+                            if (!new InstructionSharedPreference(mWifiConfigActivity).isInstruction()) {
                                 Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
                                 mWifiConfigActivity.startActivity(instruc);
                                 mWifiConfigActivity.finish();

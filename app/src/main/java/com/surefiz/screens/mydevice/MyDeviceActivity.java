@@ -27,6 +27,7 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.barcodescanner.BarCodeScanner;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
@@ -34,6 +35,7 @@ import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.settings.SettingsActivity;
+import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
@@ -305,6 +307,10 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                         JSONObject jsObject = jsonObject.getJSONObject("data");
 
                         showUpdateInfoDialog(jsObject.getString("message"));
+
+                        //AVIK
+                        new InstructionSharedPreference(MyDeviceActivity.this).setAnroidQ(false);
+
 
                         /*MethodUtils.errorMsg(MyDeviceActivity.this, jsObject.getString("message"));
                         new android.os.Handler().postDelayed(new Runnable() {

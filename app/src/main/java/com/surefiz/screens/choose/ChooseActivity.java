@@ -266,7 +266,7 @@ public class ChooseActivity extends ChooseActivityView {
                         if(step==1) {
                             step = 2;
                             orderId = orderID;
-                            MethodUtils.showInfoDialog(ChooseActivity.this, response.body().getData().getMessage());
+                            //MethodUtils.showInfoDialog(ChooseActivity.this, response.body().getData().getMessage());
                             amazonDialog.stepTwoView();
                         }else if(step==3){
                             scaleId=orderID;

@@ -57,7 +57,7 @@ public class ChatDateConverter {
     public static String Hour_Minute(String s){
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat sdfOutout = new SimpleDateFormat("HH:mm a");
+        SimpleDateFormat sdfOutout = new SimpleDateFormat("h:mm a");
 
         Date date = null;
         try {
@@ -74,7 +74,7 @@ public class ChatDateConverter {
 
     public static String Hour_Minute2(String s){
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a");
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
         SimpleDateFormat sdfOutout = new SimpleDateFormat("HH:mm");
 
         Date date = null;

@@ -41,7 +41,9 @@ public class InstructionActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mInstructionActivityonclick = new InstructionActivityonclick(this);
 
+
         new InstructionSharedPreference(InstructionActivity.this).setInstructionVisibility(InstructionActivity.this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+        new InstructionSharedPreference(InstructionActivity.this).setInstruction(true);
         //LoginShared.setInstructionVisibility(InstructionActivity.this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
     }
 

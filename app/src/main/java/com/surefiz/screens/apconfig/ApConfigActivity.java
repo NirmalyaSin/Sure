@@ -19,6 +19,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiNetworkSpecifier;
+import android.net.wifi.WifiNetworkSuggestion;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PatternMatcher;
@@ -184,7 +185,14 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     btnConfigure.setEnabled(true);
                     btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
                     btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));
-                } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
+                        if(!new InstructionSharedPreference(ApConfigActivity.this).getAnroidQ())
+                            androidQ();
+                    }
+
+                    } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
                     permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
                 } else if (!checkLocationStatus()) {
                     buildAlertMessageNoGps();
@@ -228,6 +236,27 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                         PasswordTransformationMethod.getInstance());
                 break;
         }
+    }
+
+    private void androidQ() {
+        TestFairy.log("AP-Config", "androidQ");
+
+        final String scaleName = "WS915_V2.6_V1.5-";
+        long scaleId = LoginShared.getUserMacId(this);
+        String networkSSID = " "+scaleName + scaleId+" ";
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Please follow the step below:");
+        builder.setMessage(getString(R.string.androidQ)+networkSSID+getString(R.string.androidQ2))
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void buildAlertMessageNoGps() {
@@ -403,7 +432,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void onAvailable(@NonNull Network network) {
                         super.onAvailable(network);
-                        ConnectivityManager.setProcessDefaultNetwork(network);
+                        //ConnectivityManager.setProcessDefaultNetwork(network);
+                        connectivityManager.bindProcessToNetwork(network);
                         changeAPConfig();
 
                     }
@@ -536,9 +566,8 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 alertDialog.setMessage("Your AP Configuration completed successfully.");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
-
                             TestFairy.log("AP-Config", "finish");
-
+                            new InstructionSharedPreference(ApConfigActivity.this).setAnroidQ(true);
                             dialog.dismiss();
                             finish();
                         });
@@ -557,6 +586,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             connectivityManager.unregisterNetworkCallback(networkCallback);
+
         }
 
         showalertdialog(success);
@@ -564,16 +594,19 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onSmartLinkConfigResult(boolean success) {
+        TestFairy.log("AP-Config", "onApConfigResult-" + success);
 
+        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            connectivityManager.unregisterNetworkCallback(networkCallback);
+        }
+
+        showalertdialog(success);*/
     }
 
     class WifiReceiver extends BroadcastReceiver {
         public void onReceive(Context c, Intent intent) {
             TestFairy.log("AP-Config", "BroadcastReceiver");
 
-            final String action = intent.getAction();
-
-            if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
                 scanResultsWifi.clear();
                 scanResultsWifi = mWifiManager.getScanResults();
                 if (loader.isShowing()) {
@@ -583,7 +616,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     autoConnect();
                 else
                     ShowSSIDList();
-            }
+
         }
     }
 

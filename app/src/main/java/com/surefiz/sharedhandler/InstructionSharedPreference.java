@@ -45,4 +45,28 @@ public class InstructionSharedPreference {
 
     }
 
+    public void setInstruction( boolean isFirst) {
+        SharedPreferences.Editor editor = mPref.edit();
+
+        editor.putBoolean(SharedUtils.ISFIRST,isFirst);
+        editor.commit();
+    }
+
+    public boolean isInstruction() {
+        return mPref.getBoolean(SharedUtils.ISFIRST, false);
+
+    }
+
+    public void setAnroidQ( boolean isFirst) {
+        SharedPreferences.Editor editor = mPref.edit();
+
+        editor.putBoolean(SharedUtils.ISFIRST,isFirst);
+        editor.commit();
+    }
+
+    public boolean getAnroidQ() {
+        return mPref.getBoolean(SharedUtils.ISFIRST, false);
+
+    }
+
 }

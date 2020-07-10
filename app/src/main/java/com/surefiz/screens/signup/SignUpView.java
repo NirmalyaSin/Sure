@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.surefiz.R;
@@ -215,33 +216,30 @@ public class SignUpView extends AppCompatActivity {
     String units = "", height = "",weight = "";
     String[] splited;
 
-    protected List<String> genderList = new ArrayList<>();
-    protected List<String> lifeStyleList = new ArrayList<>();
-    protected List<String> prefferedList = new ArrayList<>();
-    protected List<String> countryList = new ArrayList<>();
-    protected List<Integer> countryIDList = new ArrayList<>();
-    protected List<String> stateList = new ArrayList<>();
-    protected List<String> stateIDList = new ArrayList<>();
-    protected List<String> timeList = new ArrayList<>();
-    protected List<String> weightList = new ArrayList<>();
-    protected List<String> managementList = new ArrayList<>();
-    protected List<String> desiredWeightSelectionList = new ArrayList<>();
+    protected ArrayList<String> genderList = new ArrayList<>();
+    protected ArrayList<String> lifeStyleList = new ArrayList<>();
+    protected ArrayList<String> prefferedList = new ArrayList<>();
+    protected ArrayList<String> countryList = new ArrayList<>();
+    protected ArrayList<Integer> countryIDList = new ArrayList<>();
+    protected ArrayList<String> stateList = new ArrayList<>();
+    protected ArrayList<String> stateIDList = new ArrayList<>();
+    protected ArrayList<String> timeList = new ArrayList<>();
+    protected ArrayList<String> weightList = new ArrayList<>();
+    protected ArrayList<String> managementList = new ArrayList<>();
+    protected ArrayList<String> desiredWeightSelectionList = new ArrayList<>();
     protected ArrayList<BodyItem> bodyList = new ArrayList<>();
-    protected List<String> learnList = new ArrayList<>();
+    protected ArrayList<String> learnList = new ArrayList<>();
     protected DoublePicker doublePicker;
-    protected UniversalPopup bodyPopup,genderPopup,weightPopup,timePopup,learnPopup;
-    protected WeigtUniversalPopup managementPopup, selectionPopup;
-    protected WeigtUniversalPopup countryListPopup, lifeStylePopup,stateListPopup,weigtUniversalPopupPreferred;
     protected int selectedLifeStyle = 0;
     protected String selectedCountryId = "";
     protected String selectedStateId = "";
     protected boolean isState=false;
     protected int selectedWeightManagmentGoal = 0;
     protected int selectedDesiredWeightSelection = 0;
-
     protected String orderId = "";
     protected String scaleId = "";
-
+    protected MyOptionsPickerView lifeStylePopup,managementPopup,weigtUniversalPopupPreferred,countryListPopup;
+    protected MyOptionsPickerView genderPopup,stateListPopup,weightPopup,timePopup,learnPopup,selectionPopup;
 
     protected SignUpOnClick signUpOnClick;
 

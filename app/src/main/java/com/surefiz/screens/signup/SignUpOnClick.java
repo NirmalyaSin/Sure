@@ -275,9 +275,7 @@ public class SignUpOnClick implements View.OnClickListener {
         else if (signUpActivity.doublePicker != null && signUpActivity.doublePicker.isShowing()) {
             signUpActivity.doublePicker.Dismiss();
         }
-        else if (signUpActivity.bodyPopup != null && signUpActivity.bodyPopup.isShowing()) {
-            signUpActivity.bodyPopup.dismiss();
-        }
+
         else if (signUpActivity.countryListPopup != null && signUpActivity.countryListPopup.isShowing()) {
             signUpActivity.countryListPopup.dismiss();
         }

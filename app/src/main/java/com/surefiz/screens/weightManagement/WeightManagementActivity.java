@@ -12,11 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.universalpopup.UniversalPopup;
-import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -47,15 +46,14 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     String[] splited;
     String isnotification = "";
     private LoadingData loader;
-    private List<String> weightList = new ArrayList<>();
-    private List<String> timeList = new ArrayList<>();
-    private List<String> prefferedList = new ArrayList<>();
-    private List<String> managementList = new ArrayList<>();
-    private List<String> desiredWeightSelectionList = new ArrayList<>();
-    private UniversalPopup weightPopup, timePopup, prefferedPopup;
-    private WeigtUniversalPopup weigtUniversalPopupPreffered;
+    private ArrayList<String> weightList = new ArrayList<>();
+    private ArrayList<String> timeList = new ArrayList<>();
+    private ArrayList<String> prefferedList = new ArrayList<>();
+    private ArrayList<String> managementList = new ArrayList<>();
+    private ArrayList<String> desiredWeightSelectionList = new ArrayList<>();
     private String weight_value = "", time_value = "", units_value = "";
-    private WeigtUniversalPopup managementPopup, selectionPopup;
+
+    private MyOptionsPickerView managementPopup, selectionPopup,weightPopup,timePopup,weigtUniversalPopupPreffered;
     private int selectedWeightManagmentGoal = 0;
     private int selectedDesiredWeightSelection = 0;
     //private boolean isFirstTimeUpdate = true;
@@ -145,10 +143,17 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         managementList.add("Lose And Maintain Weight");
         managementList.add("Maintain Current Weight");
 
-        managementPopup = new WeigtUniversalPopup(WeightManagementActivity.this, managementList, et_weight_managment, new OnWeightCallback() {
+        managementPopup=new MyOptionsPickerView(this);
+        managementPopup.setPicker(managementList);
+        managementPopup.setCyclic(false);
+        managementPopup.setSelectOptions(0);
+
+
+        managementPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                if (value.equals("Lose And Maintain Weight")) {
+            public void onOptionsSelect(int option1, int option2, int option3) {
+
+                if (option1==0) {
                     et_weight_managment.setText(managementList.get(0));
 
                     findViewById(R.id.ll_desired_weight_selection).setVisibility(View.VISIBLE);
@@ -179,17 +184,23 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
             }
         });
+
     }
 
     private void addSelectionListAndCall() {
         desiredWeightSelectionList.add("I Will Provide The Info");
-        //desiredWeightSelectionList.add("I want SureFiz™ to suggest");
-        desiredWeightSelectionList.add("I want " + getResources().getString(R.string.app_name_splash) + " to suggest");
+        desiredWeightSelectionList.add("I Want " + getResources().getString(R.string.app_name_splash) + " To Suggest");
 
-        selectionPopup = new WeigtUniversalPopup(WeightManagementActivity.this, desiredWeightSelectionList, et_desired_weight_selection, new OnWeightCallback() {
+        selectionPopup=new MyOptionsPickerView(this);
+        selectionPopup.setPicker(desiredWeightSelectionList);
+        selectionPopup.setCyclic(false);
+        selectionPopup.setSelectOptions(0);
+
+        selectionPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                if (value.equals("I Will Provide The Info")) {
+            public void onOptionsSelect(int options1, int option2, int options3) {
+
+                if (options1==0) {
                     et_desired_weight_selection.setText(desiredWeightSelectionList.get(0));
 
                     if (selectedWeightManagmentGoal == 1) {
@@ -222,45 +233,18 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
             }
         });
+
     }
 
     private void showAndDismissSelectionPopup() {
 
-        managementPopup.dismiss();
-        weightPopup.dismiss();
-        timePopup.dismiss();
-        weigtUniversalPopupPreffered.dismiss();
+        selectionPopup.show();
 
-        if (selectionPopup != null && selectionPopup.isShowing()) {
-            selectionPopup.dismiss();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    selectionPopup.showAsDropDown(et_desired_weight_selection);
-                }
-            }, 100);
-        }
     }
 
     private void showAndDismissManagementPopup() {
+        managementPopup.show();
 
-        selectionPopup.dismiss();
-        weightPopup.dismiss();
-        timePopup.dismiss();
-        weigtUniversalPopupPreffered.dismiss();
-
-
-        if (managementPopup != null && managementPopup.isShowing()) {
-            managementPopup.dismiss();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    managementPopup.showAsDropDown(et_weight_managment);
-                }
-            }, 100);
-        }
     }
 
     private void callApiforweightUpdate() {
@@ -397,16 +381,74 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
 
         if (jsnObject.optString("type").equalsIgnoreCase("1")) {
-            managementPopup.onWeightCallback.onSuccess(managementList.get(1));
+
+            et_weight_managment.setText(managementList.get(1));
+
+            findViewById(R.id.ll_desired_weight_selection).setVisibility(View.GONE);
+            findViewById(R.id.rl_desired_weight_selection).setVisibility(View.GONE);
+            findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
+            findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
+
+            findViewById(R.id.tv_weight).setVisibility(View.GONE);
+            findViewById(R.id.rl_weight).setVisibility(View.GONE);
+
+            selectedWeightManagmentGoal = 1;
+            selectedDesiredWeightSelection = -1;
+
         } else if (jsnObject.optString("type").equalsIgnoreCase("2")) {
-            managementPopup.onWeightCallback.onSuccess(managementList.get(0));
+
+            et_weight_managment.setText(managementList.get(0));
+
+            findViewById(R.id.ll_desired_weight_selection).setVisibility(View.VISIBLE);
+            findViewById(R.id.rl_desired_weight_selection).setVisibility(View.VISIBLE);
+            et_desired_weight_selection.setText("");
+
+            findViewById(R.id.tv_weight).setVisibility(View.GONE);
+            findViewById(R.id.rl_weight).setVisibility(View.GONE);
+            findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
+            findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
+
+            selectedWeightManagmentGoal = 0;
+            selectedDesiredWeightSelection = -1;
         }
 
 
         if (jsnObject.optInt("maintain_Weight_By_Server") == 1) {
-            selectionPopup.onWeightCallback.onSuccess(desiredWeightSelectionList.get(1));
+
+            et_weight_managment.setText(managementList.get(1));
+            findViewById(R.id.ll_desired_weight_selection).setVisibility(View.GONE);
+            findViewById(R.id.rl_desired_weight_selection).setVisibility(View.GONE);
+            findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
+            findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
+
+            findViewById(R.id.tv_weight).setVisibility(View.GONE);
+            findViewById(R.id.rl_weight).setVisibility(View.GONE);
+
+            selectedWeightManagmentGoal = 1;
+            selectedDesiredWeightSelection = -1;
+
         } else if (jsnObject.optInt("maintain_Weight_By_Server") == 0) {
-            selectionPopup.onWeightCallback.onSuccess(desiredWeightSelectionList.get(0));
+
+            et_desired_weight_selection.setText(desiredWeightSelectionList.get(0));
+
+            if (selectedWeightManagmentGoal == 1) {
+                findViewById(R.id.tv_weight).setVisibility(View.GONE);
+                findViewById(R.id.rl_weight).setVisibility(View.GONE);
+                findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
+                findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
+            } else {
+                findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
+                findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
+                findViewById(R.id.tv_time_loss).setVisibility(View.VISIBLE);
+                findViewById(R.id.rl_time_loss).setVisibility(View.VISIBLE);
+                et_time_loss.setHint("Please Select");
+                et_time_loss.setText("");
+            }
+
+
+            selectedDesiredWeightSelection = 0;
+            et_time_loss.setEnabled(true);
+            et_weight.setEnabled(true);
         }
 
 
@@ -472,11 +514,21 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
         prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
-        weigtUniversalPopupPreffered = new WeigtUniversalPopup(WeightManagementActivity.this, prefferedList, et_units, new OnWeightCallback() {
+
+        weigtUniversalPopupPreffered=new MyOptionsPickerView(this);
+        weigtUniversalPopupPreffered.setPicker(prefferedList);
+        weigtUniversalPopupPreffered.setCyclic(false);
+        weigtUniversalPopupPreffered.setSelectOptions(0);
+
+        weigtUniversalPopupPreffered.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
+            public void onOptionsSelect(int options1, int option2, int options3) {
+
                 weight = et_weight.getText().toString().trim();
                 splited = weight.split(" ");
+
+                String value=prefferedList.get(options1);
+
                 if (value.equals("KG/CM")) {
                     units = "KG";
                 } else {
@@ -495,13 +547,27 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
             }
         });
+
+
     }
 
     private void addTimeListAndCall() {
         for (int i = 1; i <=30; i++) {
             timeList.add(i + " " + "Weeks");
         }
-        timePopup = new UniversalPopup(WeightManagementActivity.this, timeList, et_time_loss);
+
+        timePopup=new MyOptionsPickerView(this);
+        timePopup.setPicker(timeList);
+        timePopup.setCyclic(false);
+        timePopup.setSelectOptions(0);
+        timePopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                et_time_loss.setText(timeList.get(options1));
+
+            }
+        });
+
     }
 
     private void addWeightListAndCall(String change) {
@@ -517,27 +583,21 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             }
         }
 
-        weightPopup = new UniversalPopup(WeightManagementActivity.this, weightList, et_weight);/*, new OnWeightCallback() {
+
+        weightPopup=new MyOptionsPickerView(this);
+        weightPopup.setPicker(weightList);
+        weightPopup.setCyclic(false);
+        weightPopup.setSelectOptions(0);
+
+
+        weightPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                splited = value.split(" ");
+            public void onOptionsSelect(int options1, int option2, int options3) {
 
-//                if (splited[1].equals("LB")) {
-                if (et_units.getText().toString().equals("KG/CM")) {
-                    et_weight.setText(String.valueOf(Double.parseDouble(splited[0]) * 0.45359237) + "KG");
-                } else {
-
-                }
-//                }
-//                if (splited[1].equals("KG")) {
-                if (et_units.getText().toString().equals("LB/INCH")) {
-                    et_weight.setText(String.valueOf(Double.parseDouble(splited[0]) * 2.2046226218) + "LB");
-                } else {
-
-                }
-//                }
+                et_weight.setText(weightList.get(options1));
             }
-        });*/
+        });
+
     }
 
     private void setClickEvent() {
@@ -589,67 +649,18 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
                 break;
             case R.id.et_weight:
-                if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showAndDismissWeightPopup();
-                        }
-                    }, 100);
-                }
+                showAndDismissWeightPopup();
                 break;
+
             case R.id.et_time_loss:
-                if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showAndDismissTimePopup();
-                        }
-                    }, 100);
-                }
+                showAndDismissTimePopup();
                 break;
+
             case R.id.et_units:
-                if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (weigtUniversalPopupPreffered != null && weigtUniversalPopupPreffered.isShowing()) {
-                    weigtUniversalPopupPreffered.dismiss();
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showAndDismissPrefferedPopup();
-                        }
-                    }, 100);
-                }
+                showAndDismissPrefferedPopup();
                 break;
+
             case R.id.btn_submit:
-                /*if (et_weight.getText().toString().trim().equals(weight_value)
-                        && et_time_loss.getText().toString().trim().equals(time_value)) {
-                    MethodUtils.errorMsg(this, "Please update the value");
-                    return;
-                }*/
                 showWeightUpdateDialog();
                 break;
 
@@ -664,12 +675,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void showAndDismissPrefferedPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                weigtUniversalPopupPreffered.showAsDropDown(et_units);
-            }
-        }, 100);
+        weigtUniversalPopupPreffered.show();
+
     }
 
     private void sendWeightManagementDetails() {
@@ -820,21 +827,15 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void showAndDismissWeightPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                weightPopup.showAsDropDown(et_weight);
-            }
-        }, 100);
+
+        weightPopup.show();
+
     }
 
     private void showAndDismissTimePopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                timePopup.showAsDropDown(et_time_loss);
-            }
-        }, 100);
+
+        timePopup.show();
+
     }
 
     @Override

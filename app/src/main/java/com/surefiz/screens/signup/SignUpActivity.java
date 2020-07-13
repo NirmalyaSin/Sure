@@ -11,7 +11,6 @@ import android.view.View;
 import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.heightpopup.DoublePicker;
 
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -383,7 +382,7 @@ public class SignUpActivity extends SignUpView {
     private void addSelectionListAndCall() {
 
         desiredWeightSelectionList.add("I Will Provide The Info");
-        desiredWeightSelectionList.add("I want " + getResources().getString(R.string.app_name_splash) + " to suggest");
+        desiredWeightSelectionList.add("I Want " + getResources().getString(R.string.app_name_splash) + " To Suggest");
 
         selectionPopup=new MyOptionsPickerView(this);
         selectionPopup.setPicker(desiredWeightSelectionList);
@@ -395,7 +394,7 @@ public class SignUpActivity extends SignUpView {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
 
-                if (desiredWeightSelectionList.get(options1).equals("I Will Provide The Info")) {
+                if (options1==0) {
                     et_userselection.setText(desiredWeightSelectionList.get(0));
 
                     if (selectedWeightManagmentGoal == 1) {
@@ -479,7 +478,71 @@ public class SignUpActivity extends SignUpView {
 
     }
 
+    protected void addHeightListAndCall(String change) {
 
+        setupPickerLogic(change);
+
+
+        doublePicker=new MyOptionsPickerView(this);
+        doublePicker.setPicker(array1,array2,false);
+        doublePicker.setCyclic(false,false,false);
+        doublePicker.setSelectOptions(0,0);
+
+
+        doublePicker.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int option1, int option2, int option3) {
+
+                String[] separated = array1.get(option1).split(" ");
+                String[] separated2 = array2.get(option2).split(" ");
+
+                setValue(change,Integer.parseInt(separated[0]),Integer.parseInt(separated2[0]));
+            }
+        });
+
+
+    }
+
+    private void setValue(String change,int v1, int v2){
+        if(change.equals("INCH")){
+
+            int result=v1*12+v2;
+            et_height.setText(result+" INCH");
+
+        }else{
+
+            int result=v1*100+v2;
+            et_height.setText(result+" CM");
+        }
+    }
+
+    private void setupPickerLogic(String change){
+
+        array1.clear();
+        array2.clear();
+
+        if(change.equals("INCH")){
+
+            for (int i = 1; i < 8; i++) {
+                array1.add(i+" FT");
+            }
+
+            for (int j = 0; j < 12; j++) {
+                array2.add(j+" INCH");
+            }
+
+        }else{
+
+            for (int i = 1; i < 4; i++) {
+                array1.add(i+" Metre");
+            }
+
+            for (int j = 0; j < 100; j++) {
+                array2.add(j+" CM");
+
+            }
+        }
+    }
 
 
     //***************************************************POP UP DISPLAY**************************************************
@@ -526,11 +589,7 @@ public class SignUpActivity extends SignUpView {
        lifeStylePopup.show();
     }
 
-    protected void addHeightListAndCall(String change) {
 
-        doublePicker=new DoublePicker(this,et_height,change);
-
-    }
 
     protected void showAndDismissGenderPopup() {
 
@@ -545,14 +604,7 @@ public class SignUpActivity extends SignUpView {
 
 
     protected void showAndDismissHeightPopup() {
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doublePicker.Show();
-            }
-        }, 100);
-
+        doublePicker.show();
     }
 
     protected void showAndDismissManagementPopup() {

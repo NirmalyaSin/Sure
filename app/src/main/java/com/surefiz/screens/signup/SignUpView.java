@@ -25,13 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.MyOptionsPickerView;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.heightpopup.DoublePicker;
-import com.surefiz.dialog.universalpopup.UniversalPopup;
-import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
+
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -216,6 +213,8 @@ public class SignUpView extends AppCompatActivity {
     String units = "", height = "",weight = "";
     String[] splited;
 
+    protected ArrayList<String> array1 = new ArrayList<>();
+    protected ArrayList<String> array2 = new ArrayList<>();
     protected ArrayList<String> genderList = new ArrayList<>();
     protected ArrayList<String> lifeStyleList = new ArrayList<>();
     protected ArrayList<String> prefferedList = new ArrayList<>();
@@ -229,7 +228,6 @@ public class SignUpView extends AppCompatActivity {
     protected ArrayList<String> desiredWeightSelectionList = new ArrayList<>();
     protected ArrayList<BodyItem> bodyList = new ArrayList<>();
     protected ArrayList<String> learnList = new ArrayList<>();
-    protected DoublePicker doublePicker;
     protected int selectedLifeStyle = 0;
     protected String selectedCountryId = "";
     protected String selectedStateId = "";
@@ -240,6 +238,8 @@ public class SignUpView extends AppCompatActivity {
     protected String scaleId = "";
     protected MyOptionsPickerView lifeStylePopup,managementPopup,weigtUniversalPopupPreferred,countryListPopup;
     protected MyOptionsPickerView genderPopup,stateListPopup,weightPopup,timePopup,learnPopup,selectionPopup;
+    protected MyOptionsPickerView doublePicker;
+
 
     protected SignUpOnClick signUpOnClick;
 

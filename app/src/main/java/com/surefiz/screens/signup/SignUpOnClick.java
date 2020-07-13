@@ -273,7 +273,7 @@ public class SignUpOnClick implements View.OnClickListener {
             signUpActivity.genderPopup.dismiss();
         }
         else if (signUpActivity.doublePicker != null && signUpActivity.doublePicker.isShowing()) {
-            signUpActivity.doublePicker.Dismiss();
+            signUpActivity.doublePicker.dismiss();
         }
 
         else if (signUpActivity.countryListPopup != null && signUpActivity.countryListPopup.isShowing()) {

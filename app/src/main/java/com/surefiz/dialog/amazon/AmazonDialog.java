@@ -68,7 +68,7 @@ public class AmazonDialog extends Dialog {
     }
 
     public void stepOneView(){
-        tv_sub.setText("Please enter your Amazon OrderID");
+        tv_sub.setText("Please enter your Amazon Order ID");
         et_orderId.setVisibility(View.VISIBLE);
         scan_block.setVisibility(View.GONE);
 

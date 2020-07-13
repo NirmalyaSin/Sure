@@ -24,15 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.google.gson.Gson;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.OpenCameraOrGalleryDialog;
-import com.surefiz.dialog.heightpopup.DoublePicker;
-import com.surefiz.dialog.universalpopup.UniversalPopup;
-import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
-import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.bodycodition.model.BodyItem;
@@ -68,24 +65,27 @@ public class RegistrationClickEvent implements View.OnClickListener {
     RegistrationActivity registrationActivity;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
-    private List<String> genderList = new ArrayList<>();
-    private List<String> prefferedList = new ArrayList<>();
-    private List<String> heightList = new ArrayList<>();
-    private List<String> memberList = new ArrayList<>();
-    private List<String> weightList = new ArrayList<>();
-    private List<String> timeList = new ArrayList<>();
-    private List<String> managementList = new ArrayList<>();
-    private List<String> selectionList = new ArrayList<>();
+    private ArrayList<String> genderList = new ArrayList<>();
+    private ArrayList<String> prefferedList = new ArrayList<>();
+    private ArrayList<String> heightList = new ArrayList<>();
+    private ArrayList<String> memberList = new ArrayList<>();
+    private ArrayList<String> weightList = new ArrayList<>();
+    private ArrayList<String> timeList = new ArrayList<>();
+    private ArrayList<String> managementList = new ArrayList<>();
+    private ArrayList<String> selectionList = new ArrayList<>();
+    private ArrayList<String> lifeStyleList = new ArrayList<>();
+    protected ArrayList<BodyItem> bodyList = new ArrayList<>();
+    protected ArrayList<String> array1 = new ArrayList<>();
+    protected ArrayList<String> array2 = new ArrayList<>();
+
     private int user_selection_val = 0;
     private int weight_managment_goal = 0;
     private String filePath = "", userselectiontext = "", weightmanagment = "";
     private LoadingData loader;
-    protected DoublePicker doublePicker;
-    private UniversalPopup genderPopup, prefferedPopup, heightPopup, weightPopup, timePopup, memberPopup;
-    private WeigtUniversalPopup managementPopup, selectionPopup, lifeStylePopup;
+    private MyOptionsPickerView managementPopup, selectionPopup, lifeStylePopup,doublePicker;
+    private MyOptionsPickerView genderPopup,weightPopup,timePopup,memberPopup,prefferedPopup;
     private int selectedLifeStyle = 0;
-    private List<String> lifeStyleList = new ArrayList<>();
-    protected ArrayList<BodyItem> bodyList = new ArrayList<>();
+
 
 
     public RegistrationClickEvent(RegistrationActivity registrationActivity) {
@@ -133,11 +133,20 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addBodyList() {
+
+        String temp="";
+        temp=LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getBodycondition();
+        Log.e("temp",":::"+temp);
         String [] stringList={"Diabetes","Depression","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
         for (int i = 0; i <stringList.length ; i++) {
             BodyItem bodyItem=new BodyItem();
             bodyItem.setName(stringList[i]);
-            bodyItem.setSelection(false);
+
+            if(temp.toLowerCase().contains(stringList[i].toLowerCase()))
+                bodyItem.setSelection(true);
+            else
+                bodyItem.setSelection(false);
+
             bodyList.add(bodyItem);
         }
     }
@@ -149,25 +158,37 @@ public class RegistrationClickEvent implements View.OnClickListener {
         lifeStyleList.add("Very active");
         lifeStyleList.add("Extra active");
 
-        lifeStylePopup = new WeigtUniversalPopup(registrationActivity, lifeStyleList, registrationActivity.et_lifestyle, new OnWeightCallback() {
+        lifeStylePopup=new MyOptionsPickerView(registrationActivity);
+        lifeStylePopup.setPicker(lifeStyleList);
+        lifeStylePopup.setCyclic(false);
+        lifeStylePopup.setSelectOptions(0);
+
+        lifeStylePopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                registrationActivity.et_lifestyle.setText(value);
-                selectedLifeStyle = lifeStyleList.indexOf(value) + 1;
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                registrationActivity.et_lifestyle.setText(lifeStyleList.get(options1));
+                selectedLifeStyle = options1 + 1;
             }
         });
 
-        //lifeStylePopup = new UniversalPopup(activity, lifeStyleList, activity.et_lifestyle);
     }
 
     private void addManagementListAndCall() {
-        managementList.add("Lose and Mantain Weight");
+        managementList.add("Lose and Maintain Weight");
         managementList.add("Maintain Current Weight");
 
-        managementPopup = new WeigtUniversalPopup(registrationActivity, managementList, registrationActivity.et_management, new OnWeightCallback() {
+        managementPopup=new MyOptionsPickerView(registrationActivity);
+        managementPopup.setPicker(managementList);
+        managementPopup.setCyclic(false);
+        managementPopup.setSelectOptions(0);
+
+        managementPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                if (value.equals("Lose and Mantain Weight")) {
+            public void onOptionsSelect(int options1, int option2, int options3) {
+
+                String value=managementList.get(options1);
+
+                if (value.equals("Lose and Maintain Weight")) {
                     registrationActivity.tv_userSelection.setVisibility(View.VISIBLE);
                     registrationActivity.rl_userselection.setVisibility(View.VISIBLE);
                     registrationActivity.tv_weight.setVisibility(View.VISIBLE);
@@ -196,14 +217,20 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addSelectionListAndCall() {
-        selectionList.add("I Will Provide the Info");
-        //selectionList.add("I want SureFiz™ to suggest");
-        selectionList.add("I want " + registrationActivity.getResources().getString(R.string.app_name_splash) + " to suggest");
 
-        selectionPopup = new WeigtUniversalPopup(registrationActivity, selectionList, registrationActivity.et_userselection, new OnWeightCallback() {
+        selectionList.add("I Will Provide The Info");
+        selectionList.add("I Want " + registrationActivity.getResources().getString(R.string.app_name_splash) + " To Suggest");
+
+        selectionPopup=new MyOptionsPickerView(registrationActivity);
+        selectionPopup.setPicker(selectionList);
+        selectionPopup.setCyclic(false);
+        selectionPopup.setSelectOptions(0);
+
+        selectionPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                if (value.equals("I Will Provide the Info")) {
+            public void onOptionsSelect(int options1, int option2, int options3) {
+
+                if (options1==0) {
                     registrationActivity.tv_weight.setVisibility(View.VISIBLE);
                     registrationActivity.rl_weight.setVisibility(View.VISIBLE);
                     registrationActivity.tv_time_loss.setVisibility(View.VISIBLE);
@@ -222,27 +249,30 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }
             }
         });
+
     }
 
     private void addTimeListAndCall() {
         for (int i = 1; i <= 30; i++) {
             timeList.add(i + " " + "Weeks");
         }
-        timePopup = new UniversalPopup(registrationActivity, timeList, registrationActivity.et_time_loss);
+
+        timePopup=new MyOptionsPickerView(registrationActivity);
+        timePopup.setPicker(timeList);
+        timePopup.setCyclic(false);
+        timePopup.setSelectOptions(0);
+
+        timePopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                registrationActivity.et_time_loss.setText(timeList.get(options1));
+            }
+        });
     }
 
     private void addHeightListAndCall(String change) {
-        heightList.clear();
-        if (change.equals("INCH")) {
-            for (int i = 35; i <= 110; i++) {
-                heightList.add(i + " " + change);
-            }
-        } else {
-            for (int i = 88; i <= 280; i++) {
-                heightList.add(i + " " + change);
-            }
-        }
-        heightPopup = new UniversalPopup(registrationActivity, heightList, registrationActivity.et_height);
+
+
     }
 
     private void addMemberListAndCall() {
@@ -250,7 +280,18 @@ public class RegistrationClickEvent implements View.OnClickListener {
         for (int i = 0; i <= 4; i++) {
             memberList.add("" + i);
         }
-        memberPopup = new UniversalPopup(registrationActivity, memberList, registrationActivity.et_member);
+
+        memberPopup=new MyOptionsPickerView(registrationActivity);
+        memberPopup.setPicker(memberList);
+        memberPopup.setCyclic(false);
+        memberPopup.setSelectOptions(0);
+
+        memberPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                registrationActivity.et_member.setText(memberList.get(options1));
+            }
+        });
     }
 
     private void addWeightListAndCall(String change) {
@@ -264,14 +305,36 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 weightList.add(i + " " + change);
             }
         }
-        weightPopup = new UniversalPopup(registrationActivity, weightList, registrationActivity.et_weight);
+
+        weightPopup=new MyOptionsPickerView(registrationActivity);
+        weightPopup.setPicker(weightList);
+        weightPopup.setCyclic(false);
+        weightPopup.setSelectOptions(0);
+
+        weightPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                registrationActivity.et_weight.setText(weightList.get(options1));
+            }
+        });
     }
 
     private void addPreferredListAndCall() {
         prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
 
-        prefferedPopup = new UniversalPopup(registrationActivity, prefferedList, registrationActivity.et_units);
+
+        prefferedPopup=new MyOptionsPickerView(registrationActivity);
+        prefferedPopup.setPicker(prefferedList);
+        prefferedPopup.setCyclic(false);
+        prefferedPopup.setSelectOptions(0);
+
+        prefferedPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                registrationActivity.et_units.setText(prefferedList.get(options1));
+            }
+        });
     }
 
     private void addGenderListAndCall() {
@@ -280,13 +343,82 @@ public class RegistrationClickEvent implements View.OnClickListener {
         genderList.add("Non-binary");
         genderList.add("Prefer not to say");
 
-        genderPopup = new UniversalPopup(registrationActivity, genderList, registrationActivity.et_gender);
+
+        genderPopup=new MyOptionsPickerView(registrationActivity);
+        genderPopup.setPicker(genderList);
+        genderPopup.setCyclic(false);
+        genderPopup.setSelectOptions(0);
+
+        genderPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                registrationActivity.et_gender.setText(genderList.get(options1));
+            }
+        });
     }
 
     protected void addHeightList(String change) {
 
-        doublePicker=new DoublePicker(registrationActivity,registrationActivity.et_height,change);
+        setupPickerLogic(change);
 
+        doublePicker=new MyOptionsPickerView(registrationActivity);
+        doublePicker.setPicker(array1,array2,false);
+        doublePicker.setCyclic(false,false,false);
+        doublePicker.setSelectOptions(0,0);
+
+
+        doublePicker.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int option1, int option2, int option3) {
+
+                String[] separated = array1.get(option1).split(" ");
+                String[] separated2 = array2.get(option2).split(" ");
+
+                setValue(change,Integer.parseInt(separated[0]),Integer.parseInt(separated2[0]));
+            }
+        });
+
+    }
+
+    private void setValue(String change,int v1, int v2){
+        if(change.equals("INCH")){
+
+            int result=v1*12+v2;
+            registrationActivity.et_height.setText(result+" INCH");
+
+        }else{
+
+            int result=v1*100+v2;
+            registrationActivity.et_height.setText(result+" CM");
+        }
+    }
+
+    private void setupPickerLogic(String change){
+
+        array1.clear();
+        array2.clear();
+
+        if(change.equals("INCH")){
+
+            for (int i = 1; i < 8; i++) {
+                array1.add(i+" FT");
+            }
+
+            for (int j = 0; j < 12; j++) {
+                array2.add(j+" INCH");
+            }
+
+        }else{
+
+            for (int i = 1; i < 4; i++) {
+                array1.add(i+" Metre");
+            }
+
+            for (int j = 0; j < 100; j++) {
+                array2.add(j+" CM");
+
+            }
+        }
     }
 
     private void setClickEvent() {
@@ -340,53 +472,15 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 } else {
                     addWeightListAndCall("LBS");
                 }
-                if (prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
-                } else if (heightPopup.isShowing()) {
-                    heightPopup.dismiss();
-                } else if (weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (genderPopup.isShowing()) {
-                    genderPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showAndDismissGenderPopup();
-                        }
-                    }, 100);
-                }
+
+                showAndDismissGenderPopup();
+
                 break;
+
             case R.id.et_units:
                 hideSoftKeyBoard();
-                if (genderPopup != null && genderPopup.isShowing()) {
-                    genderPopup.dismiss();
-                } else if (heightPopup != null && heightPopup.isShowing()) {
-                    heightPopup.dismiss();
-                } else if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showAndDismissPreferredPopup();
-                        }
-                    }, 100);
-                }
+
+                showAndDismissPreferredPopup();
 
                 registrationActivity.et_weight.setText("");
                 registrationActivity.et_height.setText("");
@@ -395,154 +489,43 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 break;
             case R.id.et_height:
                 hideSoftKeyBoard();
-                if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
-                } else if (genderPopup != null && genderPopup.isShowing()) {
-                    genderPopup.dismiss();
-                } else if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (heightPopup != null && heightPopup.isShowing()) {
-                    heightPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
+
+
+                if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
+                    addHeightList("CM");
                 } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            if (registrationActivity.et_units.getText().toString().equals("KG/CM")) {
-                                addHeightList("CM");
-                            } else {
-                                addHeightList("INCH");
-                            }
-
-                            showAndDismissHeightPopup();
-                        }
-                    }, 100);
+                    addHeightList("INCH");
                 }
+
+                showAndDismissHeightPopup();
+
                 break;
             case R.id.et_member:
                 dismissDialogs();
                 showAndDismissMemberPopup();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showAndDismissMemberPopup();
-                    }
-                }, 100);
+
                 break;
             case R.id.et_weight:
                 hideSoftKeyBoard();
+                showAndDismissWeightPopup();
 
-                if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
-                } else if (genderPopup != null && genderPopup.isShowing()) {
-                    genderPopup.dismiss();
-                } else if (heightPopup != null && heightPopup.isShowing()) {
-                    heightPopup.dismiss();
-                } else if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showAndDismissWeightPopup();
-                        }
-                    }, 100);
-                }
                 break;
 
             case R.id.et_management:
                 hideSoftKeyBoard();
-                if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
-                } else if (genderPopup != null && genderPopup.isShowing()) {
-                    genderPopup.dismiss();
-                } else if (heightPopup != null && heightPopup.isShowing()) {
-                    heightPopup.dismiss();
-                } else if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
-                } else {
-
-                    registrationActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showAndDismissManagementPopup();
-                                }
-                            }, 100);
-                        }
-                        // }
-                    });
-                }
-
+                showAndDismissManagementPopup();
                 break;
+
             case R.id.et_time_loss:
                 hideSoftKeyBoard();
-                if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
-                } else if (genderPopup != null && genderPopup.isShowing()) {
-                    genderPopup.dismiss();
-                } else if (heightPopup != null && heightPopup.isShowing()) {
-                    heightPopup.dismiss();
-                } else if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showAndDismissTimePopup();
-                        }
-                    }, 100);
-                }
+                showAndDismissTimePopup();
                 break;
+
             case R.id.et_userselection:
                 hideSoftKeyBoard();
-                if (prefferedPopup != null && prefferedPopup.isShowing()) {
-                    prefferedPopup.dismiss();
-                } else if (genderPopup != null && genderPopup.isShowing()) {
-                    genderPopup.dismiss();
-                } else if (weightPopup != null && weightPopup.isShowing()) {
-                    weightPopup.dismiss();
-                } else if (timePopup != null && timePopup.isShowing()) {
-                    timePopup.dismiss();
-                } else if (heightPopup != null && heightPopup.isShowing()) {
-                    heightPopup.dismiss();
-                } else if (managementPopup != null && managementPopup.isShowing()) {
-                    managementPopup.dismiss();
-                } else if (selectionPopup != null && selectionPopup.isShowing()) {
-                    selectionPopup.dismiss();
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showAndDismissSelectionPopup();
-                        }
-                    }, 100);
-                }
+                showAndDismissSelectionPopup();
                 break;
+
             case R.id.et_lifestyle:
                 hideSoftKeyBoard();
                 showAndDismissLifeStylePopup();
@@ -564,16 +547,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void showAndDismissLifeStylePopup() {
-        if (lifeStylePopup.isShowing()) {
-            lifeStylePopup.dismiss();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    lifeStylePopup.showAsDropDown(registrationActivity.et_lifestyle);
-                }
-            }, 100);
-        }
+
+        lifeStylePopup.show();
+
     }
 
     private void dismissDialogs() {
@@ -581,9 +557,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
             prefferedPopup.dismiss();
         } else if (genderPopup != null && genderPopup.isShowing()) {
             genderPopup.dismiss();
-        } else if (heightPopup != null && heightPopup.isShowing()) {
-            heightPopup.dismiss();
-        } else if (timePopup != null && timePopup.isShowing()) {
+        }  else if (timePopup != null && timePopup.isShowing()) {
             timePopup.dismiss();
         } else if (weightPopup != null && weightPopup.isShowing()) {
             weightPopup.dismiss();
@@ -925,14 +899,37 @@ public class RegistrationClickEvent implements View.OnClickListener {
     // and sets the values in popup menus.
 
     public void setValuesForListItem(Bundle data) {
+
         if (data.getString("type").equalsIgnoreCase("1")) {
-            managementPopup.onWeightCallback.onSuccess(managementList.get(1));
+            registrationActivity.tv_userSelection.setVisibility(View.GONE);
+            registrationActivity.rl_userselection.setVisibility(View.GONE);
+            registrationActivity.tv_weight.setVisibility(View.GONE);
+            registrationActivity.rl_weight.setVisibility(View.GONE);
+            registrationActivity.tv_time_loss.setVisibility(View.GONE);
+            registrationActivity.rl_time_loss.setVisibility(View.GONE);
+            registrationActivity.et_userselection.setText("");
+            weight_managment_goal = 1;
+            user_selection_val = 0;
+
+            registrationActivity.et_management.setText(managementList.get(1));
+
         } else if (data.getString("type").equalsIgnoreCase("2")) {
 
-            managementPopup.onWeightCallback.onSuccess(managementList.get(0));
+
+            registrationActivity.tv_userSelection.setVisibility(View.VISIBLE);
+            registrationActivity.rl_userselection.setVisibility(View.VISIBLE);
+            registrationActivity.tv_weight.setVisibility(View.VISIBLE);
+            registrationActivity.rl_weight.setVisibility(View.VISIBLE);
+            registrationActivity.tv_time_loss.setVisibility(View.VISIBLE);
+            registrationActivity.rl_time_loss.setVisibility(View.VISIBLE);
+            weight_managment_goal = 2;
+            user_selection_val = 0;
+
+            registrationActivity.et_management.setText(managementList.get(0));
 
             if (!data.getString("time").equalsIgnoreCase("") && !data.getString("weight").equalsIgnoreCase("2")) {
-                selectionPopup.onWeightCallback.onSuccess(selectionList.get(0));
+                setValuesForWeightSelection("0");
+
 
                 if (!registrationActivity.checkIsZeroValue(data.getString("time"))) {
                     registrationActivity.et_time_loss.setText(data.getString("time") + " Weeks");
@@ -943,7 +940,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }
 
             } else {
-                selectionPopup.onWeightCallback.onSuccess(selectionList.get(1));
+                setValuesForWeightSelection("1");
+
             }
         } else if (data.getString("type").equalsIgnoreCase("0")) {
             registrationActivity.tv_userSelection.setVisibility(View.GONE);
@@ -963,14 +961,30 @@ public class RegistrationClickEvent implements View.OnClickListener {
             registrationActivity.et_lifestyle.setText("");
         } else {
             String lifeStyleValue = lifeStyleList.get(Integer.valueOf(value) - 1);
-            lifeStylePopup.onWeightCallback.onSuccess(lifeStyleValue);
+            registrationActivity.et_lifestyle.setText(lifeStyleValue);
+            selectedLifeStyle=lifeStyleList.indexOf(lifeStyleValue)+1;
         }
     }
 
 
     public void setValuesForWeightSelection(String isWeightSelection) {
-        if (isWeightSelection.equalsIgnoreCase("1")) {
-            selectionPopup.onWeightCallback.onSuccess(selectionList.get(1));
+
+        if (isWeightSelection.equalsIgnoreCase("0")) {
+            registrationActivity.tv_weight.setVisibility(View.VISIBLE);
+            registrationActivity.rl_weight.setVisibility(View.VISIBLE);
+            registrationActivity.tv_time_loss.setVisibility(View.VISIBLE);
+            registrationActivity.rl_time_loss.setVisibility(View.VISIBLE);
+            user_selection_val = 1;
+
+            registrationActivity.et_userselection.setText(selectionList.get(0));
+        } else {
+            registrationActivity.tv_weight.setVisibility(View.GONE);
+            registrationActivity.rl_weight.setVisibility(View.GONE);
+            registrationActivity.tv_time_loss.setVisibility(View.GONE);
+            registrationActivity.rl_time_loss.setVisibility(View.GONE);
+            user_selection_val = 2;
+
+            registrationActivity.et_userselection.setText(selectionList.get(1));
         }
     }
 
@@ -1608,78 +1622,49 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void showAndDismissTimePopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                timePopup.showAsDropDown(registrationActivity.et_time_loss);
-            }
-        }, 100);
+        timePopup.show();
+
     }
 
     private void showAndDismissWeightPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                weightPopup.showAsDropDown(registrationActivity.et_weight);
-            }
-        }, 100);
+
+        weightPopup.show();
     }
 
     private void showAndDismissManagementPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                managementPopup.showAsDropDown(registrationActivity.et_management);
-            }
-        }, 100);
+
+        managementPopup.show();
+
     }
 
     private void showAndDismissHeightPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //heightPopup.showAsDropDown(registrationActivity.et_height);
 
-                doublePicker.Show();
+        doublePicker.show();
 
-            }
-        }, 100);
     }
 
     private void showAndDismissGenderPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                genderPopup.showAsDropDown(registrationActivity.et_gender);
-            }
-        }, 100);
+
+        genderPopup.show();
+
     }
 
     private void showAndDismissPreferredPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                prefferedPopup.showAsDropDown(registrationActivity.et_units);
-            }
-        }, 100);
+
+        prefferedPopup.show();
+
     }
 
     private void showAndDismissMemberPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                memberPopup.showAsDropDown(registrationActivity.et_member);
-            }
-        }, 100);
+
+        memberPopup.show();
+
     }
 
     private void showAndDismissSelectionPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                selectionPopup.showAsDropDown(registrationActivity.et_userselection);
-            }
-        }, 100);
+
+        selectionPopup.show();
+
     }
 
     private void hideSoftKeyBoard() {

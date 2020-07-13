@@ -296,7 +296,7 @@ public class AddEditReminderActivity extends BaseActivity implements
         int minute = mcurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(AddEditReminderActivity.this,
-                this, hour, minute, true);//Yes 24 hour time
+                this, hour, minute, false);//Yes 24 hour time
 
         mTimePicker.setTitle("Select Time");
         mTimePicker.setCancelable(false);

@@ -11,10 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
@@ -43,9 +43,9 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     String isnotification;
     String units = "";
     private LoadingData loader;
-    private List<String> weightList = new ArrayList<>();
-    private List<String> timeList = new ArrayList<>();
-    private UniversalPopup weightPopup, timePopup;
+    private ArrayList<String> weightList = new ArrayList<>();
+    private ArrayList<String> timeList = new ArrayList<>();
+    private MyOptionsPickerView weightPopup, timePopup;
     private int maintainWeightByServer = 0;
     private int savedType = 1;
     private int savedUnits = 1;
@@ -298,27 +298,20 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 weightList.add(i + " " + change);
             }
         }
-        weightPopup = new UniversalPopup(UserConfirmationActivity.this, weightList, et_weight);/*, new OnWeightCallback() {
+        weightPopup=new MyOptionsPickerView(this);
+        weightPopup.setPicker(weightList);
+        weightPopup.setCyclic(false);
+        weightPopup.setSelectOptions(0);
+
+
+        weightPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                splited = value.split(" ");
-
-//                if (splited[1].equals("LB")) {
-                if (et_units.getText().toString().equals("KG/CM")) {
-                    et_weight.setText(String.valueOf(Double.parseDouble(splited[0]) * 0.45359237) + "KG");
-                } else {
-
-                }
-//                }
-//                if (splited[1].equals("KG")) {
-                if (et_units.getText().toString().equals("LB/INCH")) {
-                    et_weight.setText(String.valueOf(Double.parseDouble(splited[0]) * 2.2046226218) + "LB");
-                } else {
-
-                }
-//                }
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                et_weight.setText(weightList.get(options1));
             }
-        });*/
+        });
+
+
     }
 
     private void callApiforweightUpdate() {
@@ -475,28 +468,34 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     private void showAndDismissWeightPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                weightPopup.showAsDropDown(et_weight);
-            }
-        }, 100);
+
+        weightPopup.show();
+
     }
 
     private void showAndDismissTimePopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                timePopup.showAsDropDown(et_time_loss);
-            }
-        }, 100);
+
+        timePopup.show();
+
     }
 
     private void addTimeListAndCall() {
         for (int i = 1; i <= 30; i++) {
             timeList.add(i + " " + "Weeks");
         }
-        timePopup = new UniversalPopup(UserConfirmationActivity.this, timeList, et_time_loss);
+
+        timePopup=new MyOptionsPickerView(this);
+        timePopup.setPicker(timeList);
+        timePopup.setCyclic(false);
+        timePopup.setSelectOptions(0);
+
+
+        timePopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                et_time_loss.setText(timeList.get(options1));
+            }
+        });
     }
 
     @Override

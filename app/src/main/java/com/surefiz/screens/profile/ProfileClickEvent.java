@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.facebook.CallbackManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -35,12 +36,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.OpenCameraOrGalleryDialog;
-import com.surefiz.dialog.heightpopup.DoublePicker;
-import com.surefiz.dialog.universalpopup.UniversalPopup;
-import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
-import com.surefiz.interfaces.OnImageSet;
-import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.bodycodition.BodyActivity;
@@ -77,27 +72,24 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     ProfileActivity activity;
     String units = "", height = "";
     String[] splited;
-    private List<String> genderList = new ArrayList<>();
-    private List<String> lifeStyleList = new ArrayList<>();
-    private UniversalPopup genderPopup;
-    private UniversalPopup bodyPopup;
     private int month, year, day;
     private LoadingData loader;
     private ImageLoader imageLoader;
-    private List<String> prefferedList = new ArrayList<>();
-    private List<String> countryList = new ArrayList<>();
-    private List<Integer> countryIDList = new ArrayList<>();
-    private List<String> stateList = new ArrayList<>();
-    private List<String> stateIDList = new ArrayList<>();
+    private ArrayList<String> prefferedList = new ArrayList<>();
+    private ArrayList<String> countryList = new ArrayList<>();
+    private ArrayList<Integer> countryIDList = new ArrayList<>();
+    private ArrayList<String> stateList = new ArrayList<>();
+    private ArrayList<String> stateIDList = new ArrayList<>();
+    private ArrayList<String> genderList = new ArrayList<>();
+    private ArrayList<String> lifeStyleList = new ArrayList<>();
+    protected ArrayList<String> array1 = new ArrayList<>();
+    protected ArrayList<String> array2 = new ArrayList<>();
+
     private String filePath = "";
-    private List<String> heightList = new ArrayList<>();
-    private UniversalPopup heightPopup;
-    DoublePicker doublePicker;
     private String weight_value = "", time_value = "", units_value = "";
-    private WeigtUniversalPopup weigtUniversalPopupPreferred;
     private GoogleApiClient googleApiClient;
-    private CallbackManager callbackManager;
-    private WeigtUniversalPopup countryListPopup, lifeStylePopup,stateListPopup;
+    private MyOptionsPickerView weigtUniversalPopupPreferred,genderPopup,doublePicker,lifeStylePopup;
+    private MyOptionsPickerView countryListPopup,stateListPopup;
     private int selectedLifeStyle = 0;
     private String selectedCountryId = "";
     private boolean isState=false;
@@ -107,19 +99,20 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         loader = new LoadingData(activity);
         initializeImageLoader();
         setClickEvent();
-        addPreferredListAndCall();
         startFireBase();
+
+        addPreferredListAndCall();
+        addGenderListAndCall();
+        addLifeStyleListAndCall();
 
         if (!ConnectionDetector.isConnectingToInternet(activity)) {
             MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
         } else {
             getProfileDataAndSet();
         }
-        //***AVIK
-        //addBodyList();
 
-        addGenderListAndCall();
-        addLifeStyleListAndCall();
+
+
 
 
         activity.et_units.addTextChangedListener(new TextWatcher() {
@@ -135,7 +128,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
             @Override
             public void afterTextChanged(Editable s) {
-                heightList.clear();
                 if (activity.et_units.getText().toString().equals("KG/CM")) {
                     addHeightListAndCall("CM");
                 } else {
@@ -161,21 +153,67 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     }
 
     private void addHeightListAndCall(String change) {
-        /*heightList.clear();
-        if (change.equals("INCH")) {
-            for (int i = 35; i <= 110; i++) {
-                heightList.add(i + " " + change);
-            }
-        } else {
-            for (int i = 88; i <= 280; i++) {
-                heightList.add(i + " " + change);
-            }
-        }*/
-        //heightPopup = new UniversalPopup(activity, heightList, activity.et_height);
 
-        //***AVIK
-        doublePicker=new DoublePicker(activity,activity.et_height,change);
+        setupPickerLogic(change);
 
+        doublePicker=new MyOptionsPickerView(activity);
+        doublePicker.setPicker(array1,array2,false);
+        doublePicker.setCyclic(false,false,false);
+        doublePicker.setSelectOptions(0,0);
+
+
+        doublePicker.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int option1, int option2, int option3) {
+
+                String[] separated = array1.get(option1).split(" ");
+                String[] separated2 = array2.get(option2).split(" ");
+
+                setValue(change,Integer.parseInt(separated[0]),Integer.parseInt(separated2[0]));
+            }
+        });
+
+    }
+
+    private void setValue(String change,int v1, int v2){
+        if(change.equals("INCH")){
+
+            int result=v1*12+v2;
+            activity.et_height.setText(result+" INCH");
+
+        }else{
+
+            int result=v1*100+v2;
+            activity.et_height.setText(result+" CM");
+        }
+    }
+
+    private void setupPickerLogic(String change){
+
+        array1.clear();
+        array2.clear();
+
+        if(change.equals("INCH")){
+
+            for (int i = 1; i < 8; i++) {
+                array1.add(i+" FT");
+            }
+
+            for (int j = 0; j < 12; j++) {
+                array2.add(j+" INCH");
+            }
+
+        }else{
+
+            for (int i = 1; i < 4; i++) {
+                array1.add(i+" Metre");
+            }
+
+            for (int j = 0; j < 100; j++) {
+                array2.add(j+" CM");
+
+            }
+        }
     }
 
     private void initializeImageLoader() {
@@ -262,7 +300,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             activity.et_lifestyle.setText("");
         } else {
             String lifeStyleValue = lifeStyleList.get(Integer.valueOf(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLifestyle()) - 1);
-            lifeStylePopup.onWeightCallback.onSuccess(lifeStyleValue);
+            activity.et_lifestyle.setText(lifeStyleValue);
+            selectedLifeStyle=lifeStyleList.indexOf(lifeStyleValue)+1;
         }
 
 
@@ -465,7 +504,18 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         genderList.add("Non-binary");
         genderList.add("Prefer not to say");
 
-        genderPopup = new UniversalPopup(activity, genderList, activity.et_gender);
+        genderPopup=new MyOptionsPickerView(activity);
+        genderPopup.setPicker(genderList);
+        genderPopup.setCyclic(false);
+        genderPopup.setSelectOptions(0);
+
+
+        genderPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                activity.et_gender.setText(genderList.get(options1));
+            }
+        });
     }
 
     private void addLifeStyleListAndCall() {
@@ -475,24 +525,40 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         lifeStyleList.add("Very active");
         lifeStyleList.add("Extra active");
 
-        lifeStylePopup = new WeigtUniversalPopup(activity, lifeStyleList, activity.et_lifestyle, new OnWeightCallback() {
+        lifeStylePopup=new MyOptionsPickerView(activity);
+        lifeStylePopup.setPicker(lifeStyleList);
+        lifeStylePopup.setCyclic(false);
+        lifeStylePopup.setSelectOptions(0);
+
+        lifeStylePopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                activity.et_lifestyle.setText(value);
-                selectedLifeStyle = lifeStyleList.indexOf(value) + 1;
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                activity.et_lifestyle.setText(lifeStyleList.get(options1));
+                selectedLifeStyle = options1 + 1;
             }
         });
+
     }
 
     private void addPreferredListAndCall() {
 
         prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
-        weigtUniversalPopupPreferred = new WeigtUniversalPopup(activity, prefferedList, activity.et_units, new OnWeightCallback() {
+
+        weigtUniversalPopupPreferred=new MyOptionsPickerView(activity);
+        weigtUniversalPopupPreferred.setPicker(prefferedList);
+        weigtUniversalPopupPreferred.setCyclic(false);
+        weigtUniversalPopupPreferred.setSelectOptions(0);
+
+        weigtUniversalPopupPreferred.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
+            public void onOptionsSelect(int options1, int option2, int options3) {
+
                 height = activity.et_height.getText().toString().trim();
                 splited = height.split(" ");
+                String value=prefferedList.get(options1);
+                activity.et_units.setText(value);
+
                 if (value.equals("KG/CM")) {
                     units = "CM";
                 } else {
@@ -511,6 +577,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 }
             }
         });
+
+
     }
 
     private void invisibleCursor(){
@@ -642,7 +710,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 } else if (genderPopup != null && genderPopup.isShowing()) {
                     genderPopup.dismiss();
                 } else if (doublePicker != null && doublePicker.isShowing()) {
-                    doublePicker.Dismiss();
+                    doublePicker.dismiss();
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -761,38 +829,16 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     }
 
     private void showAndDismissCountryPopup() {
-        if (countryListPopup != null && countryListPopup.isShowing()) {
-            countryListPopup.dismiss();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
 
-                    if (stateListPopup != null && stateListPopup.isShowing())
-                        stateListPopup.dismiss();
+        countryListPopup.show();
 
-                    countryListPopup.showAsDropDown(activity.et_country_name);
-                }
-            }, 100);
-        }
     }
 
     //***AVIK
     private void showAndDismissStatePopup() {
-        if (stateListPopup != null && stateListPopup.isShowing()) {
-            stateListPopup.dismiss();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
 
-                    if (countryListPopup != null && countryListPopup.isShowing())
-                        countryListPopup.dismiss();
+        stateListPopup.show();
 
-                    stateListPopup.showAsDropDown(activity.et_state);
-                }
-            }, 100);
-        }
     }
 
     private void disableProfileEditMode() {
@@ -837,7 +883,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         countryListPopup.dismiss();
         stateListPopup.dismiss();
         genderPopup.dismiss();
-        doublePicker.Dismiss();
+        doublePicker.dismiss();
         weigtUniversalPopupPreferred.dismiss();
     }
 
@@ -997,9 +1043,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
 
 
     private void showAndDismissHeightPopup() {
-
-        //heightPopup.showAsDropDown(activity.et_height);
-        doublePicker.Show();
+        doublePicker.show();
     }
 
     private void sendProfileImageUpdateApi() {
@@ -1224,14 +1268,18 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         }
 
 
-        countryListPopup = new WeigtUniversalPopup(activity, countryList, activity.et_country_name, new OnWeightCallback() {
+        countryListPopup=new MyOptionsPickerView(activity);
+        countryListPopup.setPicker(countryList);
+        countryListPopup.setCyclic(false);
+        countryListPopup.setSelectOptions(0);
+
+
+        countryListPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                activity.et_country_name.setText(value);
+            public void onOptionsSelect(int options1, int option2, int options3) {
 
-                int index = countryList.indexOf(activity.et_country_name.getText().toString().trim());
-
-                selectedCountryId=countryIDList.get(index).toString() ;
+                activity.et_country_name.setText(countryList.get(options1));
+                selectedCountryId=countryIDList.get(options1).toString() ;
                 callStateListApi();
             }
         });
@@ -1254,13 +1302,20 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             stateIDList.add(data.get(i).getStateID());
         }
 
+        stateListPopup=new MyOptionsPickerView(activity);
+        stateListPopup.setPicker(stateList);
+        stateListPopup.setCyclic(false);
+        stateListPopup.setSelectOptions(0);
 
-        stateListPopup = new WeigtUniversalPopup(activity, stateList, activity.et_state, new OnWeightCallback() {
+
+        stateListPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onSuccess(String value) {
-                activity.et_state.setText(value);
+            public void onOptionsSelect(int options1, int option2, int options3) {
+
+                activity.et_state.setText(stateList.get(options1));
             }
         });
+
     }
 
 
@@ -1442,12 +1497,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     }
 
     private void showAndDismissPreferredPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                weigtUniversalPopupPreferred.showAsDropDown(activity.et_units);
-            }
-        }, 100);
+        weigtUniversalPopupPreferred.show();
     }
 
     private void ExpiryDialog() {
@@ -1486,12 +1536,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     }
 
     private void showAndDismissGenderPopup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                genderPopup.showAsDropDown(activity.et_gender);
-            }
-        }, 100);
+
+        genderPopup.show();
+
     }
 
     private void showBodyPopup() {
@@ -1501,16 +1548,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     }
 
     private void showAndDismissLifeStylePopup() {
-        if (lifeStylePopup.isShowing()) {
-            lifeStylePopup.dismiss();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    lifeStylePopup.showAsDropDown(activity.et_lifestyle);
-                }
-            }, 100);
-        }
+        lifeStylePopup.show();
     }
 
     @Override

@@ -32,8 +32,7 @@
             android:hint="Add reminder here"
             android:background="@android:color/transparent"
             android:textSize="@dimen/_14sdp"
-            android:inputType="textMultiLine"
-            android:textColorHint="@color/whiteColor"
+            android:textColorHint="@color/hintColor"
             android:layout_marginTop="@dimen/_5sdp" />
 
         <View
@@ -76,7 +75,7 @@
                     android:hint="Select"
                     android:gravity="start"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:textColorHint="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
                     android:textColor="@color/whiteColor"
                     android:cursorVisible="false" />
             </LinearLayout>
@@ -133,7 +132,7 @@
                     android:hint="Select"
                     android:gravity="start"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:textColorHint="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
                     android:textColor="@color/whiteColor"
                     android:cursorVisible="false" />
             </LinearLayout>

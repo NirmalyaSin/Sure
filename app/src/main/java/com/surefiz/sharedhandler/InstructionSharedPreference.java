@@ -69,4 +69,16 @@ public class InstructionSharedPreference {
 
     }
 
+    public void setFirstText( boolean isFirst) {
+        SharedPreferences.Editor editor = mPref.edit();
+
+        editor.putBoolean(SharedUtils.ISFIRSTTEXT,isFirst);
+        editor.commit();
+    }
+
+    public boolean getFirstText() {
+        return mPref.getBoolean(SharedUtils.ISFIRSTTEXT, false);
+
+    }
+
 }

@@ -2472,7 +2472,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HITooltip tooltip = new HITooltip();
                         tooltip.setHeaderFormat("<b>{point.key}</b><br>");
-                        tooltip.setPointFormat("<span style=\"color:{series.color}\"></span> {series.name}: {point.y} / {point.stackTotal}");
+                        tooltip.setPointFormat("<span style=\"color:{series.color}\"></span> {series.name}: {point.y} {point.stackTotal}");
                         optionsSubGoals.setTooltip(tooltip);
 
                         HIPlotOptions plotOptions = new HIPlotOptions();
@@ -2939,7 +2939,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HITitle title = new HITitle();
                         title.setUseHTML(true);
-                        title.setText("<p style='color: #ffffff; text-align: left;'>Current Performance History</p>");
+                        title.setText("<p style='color: #ffffff; text-align: center;'>Your Performance From First Week</p>");
                         historyChartOptions.setTitle(title);
 
 
@@ -2977,7 +2977,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         } catch (Exception e) {
                             e.printStackTrace();
                             yaxis.setMin(0);
-                            //yAxis.setMin(minY);
                         }
 
                         HITitle title1 = new HITitle();
@@ -3037,7 +3036,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         //ms1 to ms2 Line1
                         HILine line1 = new HILine();
-                        line1.setName("Current Sub Goals");
+                        line1.setName("Actual Sub Goals");
 
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHgoalsjson() != null &&
                                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHgoalsjson().size() > 0) {
@@ -3089,7 +3088,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
                             HILine line2 = new HILine();
-                            line2.setName("Achived Sub Goals");
+                            line2.setName("Achieved Sub Goals");
                             line2.setColor(HIColor.initWithRGB(233, 150, 43));
                             line2.setData(numberList2);
                             historyChartOptions.setSeries(new ArrayList<>(Arrays.asList(line1, line2)));
@@ -3286,7 +3285,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             }
 
                             HILine line2 = new HILine();
-                            line2.setName("Achived Sub Goals");
+                            line2.setName("Achieved Sub Goals");
                             line2.setColor(HIColor.initWithRGB(233, 150, 43));
                             line2.setData(numberList2);
                             optionsAchiGoals.setSeries(new ArrayList<>(Arrays.asList(line1, line2)));

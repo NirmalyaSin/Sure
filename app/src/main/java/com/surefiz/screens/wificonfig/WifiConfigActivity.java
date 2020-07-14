@@ -11,10 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
 import com.surefiz.screens.settings.SettingsActivity;
+import com.surefiz.sharedhandler.InstructionSharedPreference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +38,8 @@ public class WifiConfigActivity extends AppCompatActivity {
     ImageView iv_hidePassword;
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
+    @BindView(R.id.txt_body)
+    TextView txt_body;
 
     private PermissionHelper permissionHelper;
 
@@ -79,5 +83,11 @@ public class WifiConfigActivity extends AppCompatActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        new InstructionSharedPreference(this).setFirstText(true);
     }
 }

@@ -31,6 +31,19 @@ public class AmazonDialog extends Dialog {
     @BindView(R.id.btn_ok)
     public TextView btn_ok;
 
+    @BindView(R.id.btn_yes)
+    public TextView btn_yes;
+    @BindView(R.id.btn_no)
+    public TextView btn_no;
+    @BindView(R.id.btn_cancel2)
+    public TextView btn_cancel2;
+
+    @BindView(R.id.second_view)
+    public LinearLayout second_view;
+
+    @BindView(R.id.third_view)
+    public LinearLayout third_view;
+
     @BindView(R.id.et_orderId)
     public EditText et_orderId;
 
@@ -69,8 +82,11 @@ public class AmazonDialog extends Dialog {
 
     public void stepOneView(){
         tv_sub.setText("Please enter your Amazon Order ID");
+        et_orderId.setText("");
         et_orderId.setVisibility(View.VISIBLE);
         scan_block.setVisibility(View.GONE);
+        third_view.setVisibility(View.VISIBLE);
+        second_view.setVisibility(View.GONE);
 
         btn_cancel.setText("Cancel");
         btn_ok.setText("Verify");
@@ -82,8 +98,8 @@ public class AmazonDialog extends Dialog {
         et_orderId.setVisibility(View.GONE);
         scan_block.setVisibility(View.GONE);
 
-        btn_cancel.setText("No");
-        btn_ok.setText("Yes");
+        third_view.setVisibility(View.GONE);
+        second_view.setVisibility(View.VISIBLE);
 
     }
 
@@ -91,6 +107,8 @@ public class AmazonDialog extends Dialog {
         tv_sub.setText("Please scan the scale ID barcode on the back of your scale or enter it manually");
         et_orderId.setVisibility(View.GONE);
         scan_block.setVisibility(View.VISIBLE);
+        third_view.setVisibility(View.VISIBLE);
+        second_view.setVisibility(View.GONE);
         btn_remove.setPaintFlags(btn_remove.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 
         btn_cancel.setText("Cancel");

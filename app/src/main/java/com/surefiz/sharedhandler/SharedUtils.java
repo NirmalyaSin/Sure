@@ -46,6 +46,7 @@ public class SharedUtils {
     public static final String KEY_SHARED_CAPTURED_WEIGHT_DEFAULT = "0.0";
     public static final int KEY_SHARED_NO_DATA_INDEX = -1;
     public static final String ISFIRST = "ISFIRST";
+    public static final String ISFIRSTTEXT = "ISFIRSTTEXT";
     public static final String ISINSTRUCTION = "ISINSTRUCTION";
 
     /*******************************************************************************/

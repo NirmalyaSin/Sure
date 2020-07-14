@@ -57,19 +57,13 @@ public class ChooseActivity extends ChooseActivityView {
 
     protected void callAmazon(){
         amazonDialog.show();
+        amazonDialog.stepOneView();
         amazonDialog.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(step==1) {
                     if (amazonDialog.isShowing())
                         amazonDialog.dismiss();
-                }else if(step==2) {
-
-                    Intent intent = new Intent(ChooseActivity.this, SignUpActivity.class);
-                    intent.putExtra("orderId", orderId);
-                    intent.putExtra("scaleId", scaleId);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if(step==3){
                     step=2;
                     amazonDialog.stepTwoView();
@@ -89,9 +83,6 @@ public class ChooseActivity extends ChooseActivityView {
                         callVerifyApi(amazonDialog.et_orderId.getText().toString(),true);
                     }
 
-                }else if(step==2) {
-                    amazonDialog.stepThreeView();
-                    step=3;
                 }else if(step==3) {
                     if(isScanner) {
                         if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
@@ -237,6 +228,35 @@ public class ChooseActivity extends ChooseActivityView {
                 amazonDialog.et_con_scaleId.setVisibility(View.VISIBLE);
                 amazonDialog.btn_remove.setVisibility(View.GONE);
 
+            }
+        });
+
+        amazonDialog.btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                amazonDialog.stepThreeView();
+                step=3;
+            }
+        });
+
+        amazonDialog.btn_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ChooseActivity.this, SignUpActivity.class);
+                intent.putExtra("orderId", orderId);
+                intent.putExtra("scaleId", scaleId);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        amazonDialog.btn_cancel2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                step=1;
+                amazonDialog.stepOneView();
+                amazonDialog.dismiss();
             }
         });
 

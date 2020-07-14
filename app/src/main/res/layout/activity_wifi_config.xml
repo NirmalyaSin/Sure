@@ -93,13 +93,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txt_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:gravity="start"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="@string/wifi_config"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
 

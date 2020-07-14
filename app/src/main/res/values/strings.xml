@@ -18,7 +18,8 @@
 
     <string name="edittext_hint"><font size="20">_</font></string>
     <!--<string name="wifi_config">Choose the wireless network on which you want your scale to  be connected.\nPlease make sure it is not a 5G Wifi.\nIf your router has 5G WiFi, It has two networks, on 5G and the other non-5G.\nPlease pick the non-5G</string>-->
-    <string name="wifi_config">Please choose 2.4 GHz WiFi for your scale. If your router has only one WiFi choose that one. If your router has two WiFi networks, make sure you choose 2.4 GHz network, NOT the 5 GHz network. You can skip this step, if you have already setup WiFi for  your scale.</string>
+    <string name="wifi_config">Please choose 2.4 GHz WiFi for your scale. If your router has only one WiFi choose that one. If your router has two WiFi networks, make sure you choose 2.4 GHz network, NOT the 5 GHz network.</string>
+    <string name="wifi_config2">You can skip this step, if you have already setup WiFi for  your scale. Please choose 2.4 GHz WiFi for your scale. If your router has only one WiFi choose that one. If your router has two WiFi networks, make sure you choose 2.4 GHz network, NOT the 5 GHz network.</string>
     <!--<string name="ap_config">To AP configuration follow the below step.\n 1) Enter the WiFI SSID and password.\n2)Lock WiFi Info\n 3) Go to the WiFi setting and pick the scale WiFi.\n4)Tap on the “AP Configure” Button.</string>-->
     <string name="ap_config"><!--To AP configuration follow the below step.\n\n-->1) Please enter your WiFi network name and password. \n\n2) Tap “Confirm” to confirm that the network name and password is accurate. \n\n3) Follow the instructions on the screen.</string>
     <string name="instruction_page_text">To Know Your Weight follow the steps below :</string>
@@ -61,7 +62,7 @@
     <string name="web_client_id">667975241749-r7hepg2v6q70s98il8lih76e6akrh9br.apps.googleusercontent.com</string>
     <string name="fb_login_type">facebook</string>
     <string name="google_login_type">Google</string>
-    <string name="smart_config_failed">Smart Config didn’t work on your network. We will try AP Config method now.</string>
+    <string name="smart_config_failed">Let\'s try another method to setup WiFi on scale, the current method is not suitable for your network. Please remove the batteries from the scale and put them back. Press and hold the Black button in the batteries compartment until you see \'AP\' next to the WiFi symbol. Release the button. Tap on AP Config below.</string>
     <string name="step_on_the_scale">Step on the Scale</string>
     <string name="delete">DELETE</string>
     <string name="Allow_accountability_circle">Allow accountability circle members to view my:</string>

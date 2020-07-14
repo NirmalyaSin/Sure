@@ -68,6 +68,14 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         } else {
             permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
         }
+
+
+        if(new InstructionSharedPreference(activity).getFirstText()){
+            activity.txt_body.setText(R.string.wifi_config2);
+        }else{
+            activity.txt_body.setText(R.string.wifi_config);
+        }
+
     }
 
     public void showConnectedWifiSSID() {
@@ -279,7 +287,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         else {
             AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
             alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name_splash));
-            //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
             alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.smart_config_failed));
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
                     (dialog, which) -> dialog.dismiss());

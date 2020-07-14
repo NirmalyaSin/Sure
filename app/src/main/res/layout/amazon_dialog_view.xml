@@ -157,40 +157,105 @@
             android:background="@color/opacity_color"
             />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
-            android:weightSum="2"
-            >
-
-            <TextView
-                android:id="@+id/btn_cancel"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/_12sdp" />
-
-            <View
-                android:layout_width="@dimen/_1sdp"
-                android:layout_height="match_parent"
-                android:background="@color/opacity_color"
-                />
-
-            <TextView
-                android:id="@+id/btn_ok"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/_12sdp" />
+            android:layout_height="wrap_content">
 
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/second_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_107sdp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/btn_yes"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:gravity="center"
+                    android:text="Yes"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_12sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/opacity_color"
+                    />
+
+                <TextView
+                    android:id="@+id/btn_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="No"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_12sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/opacity_color"
+                    />
+
+
+                <TextView
+                    android:id="@+id/btn_cancel2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:gravity="center"
+                    android:text="Cancel"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_12sdp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/third_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:weightSum="2"
+                >
+
+                <TextView
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_12sdp" />
+
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"
+                    android:background="@color/opacity_color"
+                    />
+
+                <TextView
+                    android:id="@+id/btn_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_12sdp" />
+
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
 
 
     </LinearLayout>

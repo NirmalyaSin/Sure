@@ -41,6 +41,7 @@ public class WifiConfigActivity extends AppCompatActivity {
     @BindView(R.id.txt_body)
     TextView txt_body;
 
+    public boolean fromLogin=false;
     private PermissionHelper permissionHelper;
 
 
@@ -55,6 +56,10 @@ public class WifiConfigActivity extends AppCompatActivity {
         //editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         permissionHelper=new PermissionHelper(this);
         wifiActivityClickEvent = new WifiActivityClickEvent(this);
+
+        if(getIntent().hasExtra("fromLogin")){
+            fromLogin=getIntent().getBooleanExtra("fromLogin",false);
+        }
 
         //btn_skip_config.setBackgroundDrawable(null);
     }

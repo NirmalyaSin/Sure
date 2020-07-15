@@ -14,12 +14,14 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.forgotpassword.ForgotPasswordActivity;
+import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
+import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -208,6 +210,7 @@ public class LoginClickEvent implements View.OnClickListener {
                     } else {
                         if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
                             Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                            intent.putExtra("fromLogin",true);
                             mLoginActivity.startActivity(intent);
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             mLoginActivity.finishAffinity();
@@ -244,12 +247,20 @@ public class LoginClickEvent implements View.OnClickListener {
                             MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.mac_id_not_found));
                         } else {
 
-                            LoginShared.setstatusforwifivarification(mLoginActivity, true);
+                            if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
+                                Intent instruc = new Intent(mLoginActivity, InstructionActivity.class);
+                                mLoginActivity.startActivity(instruc);
+                                mLoginActivity.finish();
+                            }else {
+                                LoginShared.setstatusforwifivarification(mLoginActivity, true);
+                                Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
+                                mLoginActivity.startActivity(intent);
+                                mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                mLoginActivity.finishAffinity();
+                            }
 
-                            Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
-                            mLoginActivity.startActivity(intent);
-                            mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            mLoginActivity.finishAffinity();
+
+
                         }
                     }
                 }

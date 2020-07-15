@@ -45,15 +45,14 @@ public class InstructionSharedPreference {
 
     }
 
-    public void setInstruction( boolean isFirst) {
+    public void setInstruction( String s) {
         SharedPreferences.Editor editor = mPref.edit();
-
-        editor.putBoolean(SharedUtils.ISFIRST,isFirst);
+        editor.putString(SharedUtils.ALLUSER,"");
         editor.commit();
     }
 
-    public boolean isInstruction() {
-        return mPref.getBoolean(SharedUtils.ISFIRST, false);
+    public String getInstruction() {
+        return mPref.getString(SharedUtils.ALLUSER, "");
 
     }
 
@@ -80,5 +79,7 @@ public class InstructionSharedPreference {
         return mPref.getBoolean(SharedUtils.ISFIRSTTEXT, false);
 
     }
+
+
 
 }

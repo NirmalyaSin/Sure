@@ -71,7 +71,11 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
 
         if(new InstructionSharedPreference(activity).getFirstText()){
-            activity.txt_body.setText(R.string.wifi_config2);
+            if(activity.fromLogin)
+                activity.txt_body.setText(R.string.wifi_config2);
+            else
+                activity.txt_body.setText(R.string.wifi_config);
+
         }else{
             activity.txt_body.setText(R.string.wifi_config);
         }
@@ -368,8 +372,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                             LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
 
                             //AVIK
-                            //if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
-                            if (!new InstructionSharedPreference(mWifiConfigActivity).isInstruction()) {
+                            if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
                                 Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
                                 mWifiConfigActivity.startActivity(instruc);
                                 mWifiConfigActivity.finish();

@@ -142,48 +142,58 @@ public class SplashActivity extends AppCompatActivity {
 
         if (!LoginShared.getWeightFromNotification(this).equals("0")) {
             if (LoginShared.getWeightFromNotification(this).equals("1") || LoginShared.getWeightFromNotification(this).equals("10")) {
-                String dateStr = getServerDate + " " + getServerTime;
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
-                try {
-                 /*   Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
-                    Date currentDate = new Date();
-                    long diff = currentDate.getTime() - date.getTime();*/
+                if (jsonObject1.has("userWeight"))
+                    if (jsonObject1.optInt("userWeight") == 0) {
 
-                    Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
-                    Date currentDate = new Date();
-                    long diff = currentDate.getTime() - date.getTime();
+                        Intent intent = new Intent(this, DashBoardActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
 
-                    //*********************AVIK
+                    } else {
 
-                    Log.d("Time_Diff",":::::"+currentDate.getTime()+"-"+date.getTime()+"="+diff);
-                    int diffSecond = (int) (diff / 1000);
-                    if (diffSecond < 120) {
-                        int remainingTime=120-diffSecond;
+                        String dateStr = getServerDate + " " + getServerTime;
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
-                        Intent intent = new Intent(this, WeightDetailsActivity.class);
-                        intent.putExtra("timerValue", remainingTime);
-                        intent.putExtra("fromPush", "1");
+                        try {
 
-                        if (LoginShared.getWeightFromNotification(this).equals("10")) {
-                            intent.putExtra("shouldOpenWeightAssignView", true);
-                            intent.putExtra("userWeight", jsonObject1.optInt("userWeight"));
-                            intent.putExtra("scaleMacAddress", jsonObject1.optString("scaleMacAddress"));
+                            Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
+                            Date currentDate = new Date();
+                            long diff = currentDate.getTime() - date.getTime();
+
+                            //*********************AVIK
+
+                            Log.d("Time_Diff", ":::::" + currentDate.getTime() + "-" + date.getTime() + "=" + diff);
+                            int diffSecond = (int) (diff / 1000);
+                            if (diffSecond < 120) {
+                                int remainingTime = 120 - diffSecond;
+
+                                Intent intent = new Intent(this, WeightDetailsActivity.class);
+                                intent.putExtra("timerValue", remainingTime);
+                                intent.putExtra("fromPush", "1");
+
+                                if (LoginShared.getWeightFromNotification(this).equals("10")) {
+                                    intent.putExtra("shouldOpenWeightAssignView", true);
+                                    intent.putExtra("userWeight", jsonObject1.optInt("userWeight"));
+                                    intent.putExtra("scaleMacAddress", jsonObject1.optString("scaleMacAddress"));
+                                }
+
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
+                            } else {
+                                Intent intent = new Intent(this, DashBoardActivity.class);
+                                intent.putExtra("expired", "1");
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
 
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                    } else {
-                        Intent intent = new Intent(this, DashBoardActivity.class);
-                        intent.putExtra("expired", "1");
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
             } else if (LoginShared.getWeightFromNotification(this).equals("2")) {
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("reciver_id", receiver_id);

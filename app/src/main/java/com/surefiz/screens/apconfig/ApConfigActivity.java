@@ -148,7 +148,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
 
-                    if(!new InstructionSharedPreference(ApConfigActivity.this).getAnroidQ())
+                    //if(!new InstructionSharedPreference(ApConfigActivity.this).getAnroidQ())
                         androidQ();
                 }else {
                     apConfigAction();
@@ -524,7 +524,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 alertDialog.setMessage("Your AP Configuration completed successfully.");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
-                            new InstructionSharedPreference(ApConfigActivity.this).setAnroidQ(true);
+                            //new InstructionSharedPreference(ApConfigActivity.this).setAnroidQ(true);
                             dialog.dismiss();
                             finish();
                         });

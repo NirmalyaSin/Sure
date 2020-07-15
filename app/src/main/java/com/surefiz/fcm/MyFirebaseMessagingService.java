@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -45,6 +46,7 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
@@ -288,6 +290,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             Intent intent = new Intent(this, NotificationHandleClassOnForeground.class);
             intent.putExtra("notificationFlag", "1");
+            intent.putExtra("userWeight", jObject.optInt("userWeight"));
             intent.putExtra("lastServerUpdateDate", jObject.optString("lastServerUpdateDate"));
             intent.putExtra("lastServerUpdateTime", jObject.optString("lastServerUpdateTime"));
 
@@ -341,8 +344,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         //buildNotification(pendingIntent,serverNotification.getBody());
 
-        NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-        String channelId = getString(R.string.fcm_default_notification_channel_id);
+        //String channelId = getString(R.string.fcm_default_notification_channel_id);
+        String channelId = "channelID";
+
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
@@ -363,7 +367,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationBuilder.setSmallIcon(R.drawable.ic_notification);
         }
 
-        NotificationManager notificationManager =
+       /* NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Since android Oreo notification channel is needed.
@@ -375,7 +379,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        notificationManager.notify(m, notificationBuilder.build());*/
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(channelId,
+                    getString(R.string.app_name),
+                    NotificationManager.IMPORTANCE_HIGH);
+
+            AudioAttributes attributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build();
+
+            // Configure the notification channel.
+            mChannel.setShowBadge(true);
+            mChannel.setSound(defaultSoundUri, attributes);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        Random random = new Random();
+        int m = random.nextInt(9999 - 1000) + 1000;
         notificationManager.notify(m, notificationBuilder.build());
+
     }
 
 

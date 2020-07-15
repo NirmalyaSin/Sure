@@ -248,6 +248,9 @@ public class ChooseActivity extends ChooseActivityView {
                 intent.putExtra("scaleId", scaleId);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                amazonDialog.dismiss();
+                step=1;
             }
         });
 

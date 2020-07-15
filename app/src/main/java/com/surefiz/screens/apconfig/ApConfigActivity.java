@@ -28,6 +28,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -145,24 +146,22 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.btnConfigure:
 
-                String ssid = editSSID.getText().toString();
-                String pwd = editPassword.getText().toString();
-                if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
-                    Toast.makeText(this, "Please input SSID and password.", Toast.LENGTH_SHORT).show();
-                    return;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
+                    if(!new InstructionSharedPreference(ApConfigActivity.this).getAnroidQ())
+                        androidQ();
+                }else {
+                    apConfigAction();
                 }
-                editSSID.setEnabled(false);
-                editPassword.setEnabled(false);
-                isAutoConnecting = true;
-                hideSoftKeyBoard();
-                getAvailableSSID();
+
                 break;
             case R.id.btnlockwifi:
 
 
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
-                    ssid = editSSID.getText().toString();
-                    pwd = editPassword.getText().toString();
+
+                    String ssid = editSSID.getText().toString();
+                    String pwd = editPassword.getText().toString();
                     if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
                         Toast.makeText(this, "Please input SSID and password.", Toast.LENGTH_SHORT).show();
                         return;
@@ -174,13 +173,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
                     btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));
 
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-
-                        if(!new InstructionSharedPreference(ApConfigActivity.this).getAnroidQ())
-                            androidQ();
-                    }
-
-                    } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+                } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
                     permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
                 } else if (!checkLocationStatus()) {
                     buildAlertMessageNoGps();
@@ -220,6 +213,21 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    private void apConfigAction(){
+
+        String ssid = editSSID.getText().toString();
+        String pwd = editPassword.getText().toString();
+        if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
+            Toast.makeText(this, "Please input SSID and password.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        editSSID.setEnabled(false);
+        editPassword.setEnabled(false);
+        isAutoConnecting = true;
+        hideSoftKeyBoard();
+        getAvailableSSID();
+    }
+
     private void androidQ() {
 
         final String scaleName = "WS915_V2.6_V1.5-";
@@ -227,16 +235,18 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         String networkSSID = " "+scaleName + scaleId+" ";
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Please follow the step below:");
-        builder.setMessage(getString(R.string.androidQ)+networkSSID+getString(R.string.androidQ2))
+        builder.setTitle("Please note important information below");
+        builder.setMessage(Html.fromHtml(getString(R.string.androidQ)+ "<b>"+networkSSID+"</b>"+getString(R.string.androidQ2)))
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Got It", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
+                        apConfigAction();
 
                     }
                 });
         final AlertDialog alert = builder.create();
+        alert.setCanceledOnTouchOutside(false);
         alert.show();
     }
 

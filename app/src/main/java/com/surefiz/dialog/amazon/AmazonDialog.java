@@ -105,6 +105,8 @@ public class AmazonDialog extends Dialog {
 
     public void stepThreeView(){
         tv_sub.setText("Please scan the scale ID barcode on the back of your scale or enter it manually");
+        et_scaleId.setText("");
+        et_con_scaleId.setText("");
         et_orderId.setVisibility(View.GONE);
         scan_block.setVisibility(View.VISIBLE);
         third_view.setVisibility(View.VISIBLE);

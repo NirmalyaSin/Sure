@@ -400,7 +400,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
         if(change.equals("INCH")){
 
-            for (int i = 1; i < 8; i++) {
+            for (int i = 3; i < 8; i++) {
                 array1.add(i+" FT");
             }
 
@@ -411,7 +411,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         }else{
 
             for (int i = 1; i < 4; i++) {
-                array1.add(i+" Metre");
+                array1.add(i+" Meter");
             }
 
             for (int j = 0; j < 100; j++) {

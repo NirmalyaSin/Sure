@@ -103,10 +103,21 @@ complete his/her registration process.</string>
     <string name="Time_To_Lose_Weight_Will_Be_Calculated">Time To Lose Weight Will Be Calculated After The First Weight</string>
     <!--<string name="user_confirmation_header">SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight</string>-->
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
-    <string name="signup_completed_without_scale">Sign up is complete. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email ID and password created during signup. Your email will be validated during app login. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
-    <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during signup. Your email will be validated during app login. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
+    <string name="signup_completed_without_scale">Sign up is complete. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email ID and password created during signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
+    <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
     <string name="androidQ">As a security measure, newer versions of Android have added an additional step to connect to WiFi. Therefore next, you will see a popup with temporary WiFi of your scale named, </string>
-    <string name="androidQ2"> please select this network to connect.</string>
+    <string name="androidQ2">please select this network to connect.</string>
+    <string name="AmazonAlready">I have bought subscription through Amazon Already</string>
+    <string name="SureFizWebsite">I have already bought subscription through SureFiz Website</string>
+    <string name="ApplePurchase">I have not bought subscription from anywhere yet, I need to buy subscription now</string>
+    <string name="NeitherSureFizNorAmazon">I have bought subscription through a source which was neither SureFiz nor Amazon</string>
+    <string name="SetupPreparation">
+        1. From your phone Settings, verify that your phone is connected to a 2.4 GHz WiFi
+        network. If not, please go to phone Settings and connect to the WiFi on which you plan
+        to use your scale before you proceed further.\n\n2. Install batteries into the scale. The WiFi symbol on the scale screen should be blinking.\n\n3. If batteries are already installed, remove them and reinstall. If WiFi symbol is not
+        blinking. Press and hold the Black button in batteries compartment until you see
+        flashing WiFi Symbol. Please make sure the WiFi symbol is blinking on the scale screen
+        before you can procced further.\n\nIs your phone connected to the correct WiFi and a WiFi symbol is flashing on the scale scree?</string>
 
 
 </resources>

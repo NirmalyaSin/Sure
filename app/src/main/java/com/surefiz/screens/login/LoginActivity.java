@@ -42,6 +42,7 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
+import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -308,5 +309,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isTaskRoot()){
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();
+        }else{
+            super.onBackPressed();
+        }
     }
 }

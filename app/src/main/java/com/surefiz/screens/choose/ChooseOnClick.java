@@ -76,7 +76,7 @@ public class ChooseOnClick implements View.OnClickListener {
             showToSignText = "<font color=#000000>For your weight management make the best decision and please visit </font>" + "<font color=#4A68EA><b><u>https://www.surefiz.com</u></b></font>"
                     + "<font color=#000000> and click at  SIGNUP</font>";
         }else{
-            showToSignText = "<font color=#000000>Coming Soon</font>";
+            showToSignText = "<font color=#000000>Please reach SUPPORT</font>";
         }
 
         AlertDialog alertDialog = new AlertDialog.Builder(ChooseActivity).create();

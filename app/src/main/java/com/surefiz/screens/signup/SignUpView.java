@@ -384,6 +384,7 @@ public class SignUpView extends AppCompatActivity {
         RequestBody TotalAmount = RequestBody.create(MediaType.parse("text/plain"), "");
         RequestBody currencycode = RequestBody.create(MediaType.parse("text/plain"), "");
         RequestBody PayableAmount = RequestBody.create(MediaType.parse("text/plain"), "");
+        RequestBody Period = RequestBody.create(MediaType.parse("text/plain"), "100");
 
         RequestBody scaleMacId = RequestBody.create(MediaType.parse("text/plain"), scaleId);
         RequestBody OrderId = RequestBody.create(MediaType.parse("text/plain"), orderId);
@@ -439,12 +440,12 @@ public class SignUpView extends AppCompatActivity {
             call= apiInterface.call_signup_image(first_name, middle_name, last_name,
                     email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
                     maintain_Weight_By_Server,count, regtype, state, city, zip,addressLineOne,addressLineTwo,bodycondition,lifestyle,country,
-                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,learn_about,body);
+                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,learn_about,Period,body);
         else
             call = apiInterface.call_signup(first_name, middle_name, last_name,
                     email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
                     maintain_Weight_By_Server,count, regtype, state, city, zip,addressLineOne,addressLineTwo,bodycondition,lifestyle,country,
-                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,learn_about);
+                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,learn_about,Period);
 
 
         call.enqueue(new Callback<SignUpResponse>() {

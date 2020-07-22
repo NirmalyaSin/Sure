@@ -41,6 +41,7 @@ public class WifiConfigActivity extends AppCompatActivity {
     @BindView(R.id.txt_body)
     TextView txt_body;
 
+    protected boolean fromSettings=false;
     public boolean fromLogin=false;
     private PermissionHelper permissionHelper;
 
@@ -52,7 +53,6 @@ public class WifiConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_config);
         ButterKnife.bind(this);
-        setViewAndFunctionality();
         //editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         permissionHelper=new PermissionHelper(this);
         wifiActivityClickEvent = new WifiActivityClickEvent(this);
@@ -61,22 +61,25 @@ public class WifiConfigActivity extends AppCompatActivity {
             fromLogin=getIntent().getBooleanExtra("fromLogin",false);
         }
 
-        //btn_skip_config.setBackgroundDrawable(null);
+        if(getIntent().hasExtra("fromSettings")){
+            fromSettings=getIntent().getBooleanExtra("fromSettings",false);
+        }
+
+        setViewAndFunctionality();
+
+
     }
 
     private void setViewAndFunctionality() {
-        if (getIntent().getStringExtra("comeFrom") != null)
-            if (getIntent().getStringExtra("comeFrom").equals("1")) {
-                rl_back.setVisibility(View.VISIBLE);
-                btn_skip_config.setVisibility(View.GONE);
+        rl_back.setVisibility(View.VISIBLE);
 
-                rl_back.setOnClickListener(v -> {
-                    Intent deviceIntent = new Intent(WifiConfigActivity.this, SettingsActivity.class);
-                    startActivity(deviceIntent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
-                });
-            }
+        if (fromSettings) {
+            btn_skip_config.setVisibility(View.GONE);
+        }
+
+        rl_back.setOnClickListener(v -> {
+            onBackPressed();
+        });
     }
 
     @Override

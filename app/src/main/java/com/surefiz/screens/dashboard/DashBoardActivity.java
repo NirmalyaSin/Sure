@@ -1087,7 +1087,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
             HIColumn series1 = new HIColumn();
             series1.setColorByPoint(true);
-            series1.setName("Expected Weight To Go");
+            series1.setName("Expected Weight");
             series1.setShowInLegend(true);
             series1.setColor(HIColor.initWithRGB(73, 183, 130));
             series1.setColors(colors1);
@@ -2197,185 +2197,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
     }
 
-/*
-    private class AsyncSubGoalsChart extends AsyncTask<String, String, String> {
-
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            Handler mHandler = new Handler(Looper.getMainLooper());
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-
-                    try {
-                        HIChart chart = new HIChart();
-
-                        HIGradient gradient = new HIGradient(0, 0, 0, 1);
-
-                        LinkedList<HIStop> stops = new LinkedList<>();
-                        stops.add(new HIStop(0, HIColor.initWithRGB(65, 71, 85)));
-                        stops.add(new HIStop(1, HIColor.initWithRGB(65, 71, 85)));
-
-
-                        HILegend hiLegend = new HILegend();
-                        HICSSObject hicssObject = new HICSSObject();
-                        hicssObject.setColor("#ffffff");  //Removed
-                        hiLegend.setItemStyle(hicssObject);
-
-                        chart.setType("column");
-                        chart.setRenderTo("container");
-                        chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
-
-
-                        optionsSubGoals.setLegend(hiLegend);
-                        optionsSubGoals.setChart(chart);
-
-                        HITitle title = new HITitle();
-                        title.setUseHTML(true);
-                        title.setText("<p style='color: #ffffff; text-align: center;'>YOUR SUB GOALS PROGRESS</p>");
-                        optionsSubGoals.setTitle(title);
-
-                        HIXAxis xAxis = new HIXAxis();
-                        HITitle hiXTitle = new HITitle();
-                        hiXTitle.setText("<p style='color: #ffffff; '>Weeks</p>");
-                        xAxis.setTitle(hiXTitle);
-                        xAxis.setCategories((ArrayList<String>)
-                                LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getWeeks());
-                        HILabels hiLabels = new HILabels();
-                        hiLabels.setStyle(hicssObject);
-                        xAxis.setLabels(hiLabels);
-                        hiLabels.setSkew3d(true);
-                        HIStyle hiStyle = new HIStyle();
-                        hiStyle.setFontSize("16px");
-
-                        optionsSubGoals.setXAxis(new ArrayList<HIXAxis>() {{
-                            add(xAxis);
-                        }});
-
-                        HIExporting exporting = new HIExporting();
-                        exporting.setEnabled(false);
-                        optionsSubGoals.setExporting(exporting);
-
-                        HIYAxis yAxis = new HIYAxis();
-                        yAxis.setAllowDecimals(false);
-
-                        try {
-                            Double val = Double.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                    getSubGoalsProgress().getMinval());
-                            yAxis.setMin(val);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            yAxis.setMin(0);
-                        }
-
-
-                        HITitle hiTitle = new HITitle();
-                        hiTitle.setText("<p style='color: #ffffff; '>Weight</p>");
-                        hiTitle.setSkew3d(true);
-                        hiLabels.setStyle(hicssObject);
-                        yAxis.setTitle(hiTitle);
-                        yAxis.setLabels(hiLabels);
-                        optionsSubGoals.setYAxis(new ArrayList<HIYAxis>() {{
-                            add(yAxis);
-                        }});
-
-                        HITooltip tooltip = new HITooltip();
-                        tooltip.setHeaderFormat("<b>{point.key}</b><br>");
-                        tooltip.setPointFormat("<span style=\"color:{series.color}\"></span> {series.name}: {point.y} / {point.stackTotal}");
-                        optionsSubGoals.setTooltip(tooltip);
-
-                        HIPlotOptions plotOptions = new HIPlotOptions();
-                        HIColumn hiColumn = new HIColumn();
-                        hiColumn.setDepth(25);
-                        plotOptions.setColumn(hiColumn);
-                        plotOptions.getColumn().setBorderWidth(0);
-                        optionsSubGoals.setPlotOptions(plotOptions);
-
-                        HIColumn series1 = new HIColumn();
-                        //series1.setColorByPoint(true);
-                        series1.setName("Expected Weight To Go");
-
-                        List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo();
-
-                        Number[] numbers = new Number[series1_data.size()];
-                        ArrayList<String> colors1 = new ArrayList<>();
-                        ArrayList<String> colors2 = new ArrayList<>();
-
-                        for (int i = 0; i < series1_data.size(); i++) {
-                            try {
-                                numbers[i] = Double.parseDouble(series1_data.get(i));
-                            } catch (NumberFormatException e) {
-                                e.printStackTrace();
-                                numbers[i] = 0.0;
-                            }
-                            colors1.add("#49b782");
-                        }
-                        series1.setShowInLegend(true);
-                        series1.setColor(HIColor.initWithRGB(73, 183, 130));
-                        series1.setColors(colors1);
-                        series1.setData(new ArrayList<>(Arrays.asList(numbers)));
-
-                        HIColumn series2 = new HIColumn();
-                        //series2.setColorByPoint(true);
-                        series2.setName("Achieved Weight");
-
-                        List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getAcheivedWeight();
-                        Number[] numbers1 = new Number[series2_data.size()];
-                        for (int i = 0; i < series2_data.size(); i++) {
-
-                            try {
-                                numbers1[i] = Double.parseDouble(series2_data.get(i));
-                            } catch (NumberFormatException e) {
-                                numbers1[i] = 0.0;
-                                e.printStackTrace();
-                            }
-
-                            colors2.add("#FFAF44");
-                        }
-
-                        series2.setShowInLegend(true);
-                        series2.setColor(HIColor.initWithRGB(255, 175, 68));
-                        series2.setColors(colors2);
-                        series2.setData(new ArrayList<>(Arrays.asList(numbers1)));
-
-                        optionsSubGoals.setSeries(new ArrayList<>(Arrays.asList(series1, series2*/
-/*, series3, series4*//*
-)));
-
-
-                        HICredits hiCredits = new HICredits();
-                        hiCredits.setEnabled(false);
-                        optionsSubGoals.setCredits(hiCredits);
-
-                        chartViewSubGoals.setOptions(optionsSubGoals);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            chartViewSubGoals.setOptions(optionsSubGoals);
-            chartViewSubGoals.reload();
-            setGoalsChartAsync();
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-    }
-*/
 
     //***************AVIK
     private class AsyncSubGoalsChart extends AsyncTask<String, String, String> {
@@ -2484,7 +2305,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HIColumn series1 = new HIColumn();
                         //series1.setColorByPoint(true);
-                        series1.setName("Expected Weight To Go");
+                        series1.setName("Expected Weight");
 
                         List<String> series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getSubGoalsProgress().getExpectedWeightToGo();
 
@@ -2939,7 +2760,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HITitle title = new HITitle();
                         title.setUseHTML(true);
-                        title.setText("<p style='color: #ffffff; text-align: center;'>Your Performance From First Week</p>");
+                        title.setText("<p style='color: #ffffff; text-align: center;'>Your Accumulative Performance So Far</p>");
                         historyChartOptions.setTitle(title);
 
 
@@ -3036,7 +2857,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         //ms1 to ms2 Line1
                         HILine line1 = new HILine();
-                        line1.setName("Actual Sub Goals");
+                        line1.setName("Desired Sub Goals");
 
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHgoalsjson() != null &&
                                 LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getHistorygoals().getHgoalsjson().size() > 0) {

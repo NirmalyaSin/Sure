@@ -1,5 +1,6 @@
 package com.surefiz.screens.login;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.welcome.WelcomeActivity;
+import com.surefiz.screens.wificonfig.SetUpPreparation;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
@@ -70,7 +72,7 @@ public class LoginClickEvent implements View.OnClickListener {
 
             case R.id.iv_back:
                 //callWelcome();
-                mLoginActivity.finish();
+                mLoginActivity.onBackPressed();
                 break;
 
                 case R.id.btnLogin:
@@ -209,11 +211,12 @@ public class LoginClickEvent implements View.OnClickListener {
                         mLoginActivity.finishAffinity();
                     } else {
                         if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                            Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                            //AVIK
+                            //Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                            Intent intent = new Intent(mLoginActivity, SetUpPreparation.class);
                             intent.putExtra("fromLogin",true);
                             mLoginActivity.startActivity(intent);
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            mLoginActivity.finishAffinity();
                         } else {
                             Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
                             mLoginActivity.startActivity(intent);

@@ -100,7 +100,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
         addMemberListAndCall();
         addTimeListAndCall();
         addLifeStyleListAndCall();
-        addBodyList();
         setClickEvent();
         registrationActivity.et_units.addTextChangedListener(new TextWatcher() {
             @Override
@@ -132,7 +131,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         });
     }
 
-    private void addBodyList() {
+    public void addBodyList() {
 
         String temp="";
         temp=LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getBodycondition();

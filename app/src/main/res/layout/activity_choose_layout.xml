@@ -52,38 +52,16 @@
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/Btn_subscribed"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_65sdp"
-                android:padding="@dimen/_10sdp"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="center"
-                android:text="I have not subscribed anywhere yet, this is my first time I am subscribing"
-                android:textColor="@color/whiteColor"
-                android:textSize="@dimen/_13sdp"
-                android:background="@drawable/login_button_gradient"
-                />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/Btn_amazon"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_65sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
-                android:text="I have subscribed through Amazon already"
+                android:text="@string/AmazonAlready"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_13sdp"
                 android:background="@drawable/login_button_gradient"
@@ -100,13 +78,39 @@
 
             <TextView
                 android:id="@+id/Btn_surefiz"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_65sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
-                android:text="I have already subscribed on SureFiz Website"
+                android:text="@string/SureFizWebsite"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_13sdp"
+                android:background="@drawable/login_button_gradient"
+                />
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/Btn_subscribed"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_65sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="@string/ApplePurchase"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_13sdp"
                 android:background="@drawable/login_button_gradient"
@@ -123,13 +127,13 @@
 
             <TextView
                 android:id="@+id/Btn_nothing"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_65sdp"
                 android:padding="@dimen/_10sdp"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
-                android:text="I have subscribed through a source which was neither Surefiz nor Amazon"
+                android:text="@string/NeitherSureFizNorAmazon"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_13sdp"
                 android:background="@drawable/login_button_gradient"

@@ -13,6 +13,7 @@ import com.surefiz.screens.mydevice.MyDeviceActivity;
 import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
+import com.surefiz.screens.wificonfig.SetUpPreparation;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.utils.MethodUtils;
 
@@ -66,11 +67,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_config:
-                Intent settingsIntent = new Intent(this, WifiConfigActivity.class);
-                settingsIntent.putExtra("comeFrom", "1");
+                Intent settingsIntent = new Intent(this, SetUpPreparation.class);
+                settingsIntent.putExtra("fromSettings", true);
                 startActivity(settingsIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                //finish();
                 break;
             case R.id.rl_device:
                 Intent deviceIntent = new Intent(this, MyDeviceActivity.class);

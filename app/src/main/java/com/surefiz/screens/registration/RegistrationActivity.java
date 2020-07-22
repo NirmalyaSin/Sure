@@ -493,6 +493,8 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void setData() {
+        registrationClickEvent.addBodyList();
+
         et_first_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
         et_middle_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getMiddleName());
         et_last_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getLastName());

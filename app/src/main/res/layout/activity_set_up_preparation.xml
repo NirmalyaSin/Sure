@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".screens.wificonfig.SetUpPreparation">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerVertical="true"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/back"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Scale WiFi Setup Preparation"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_header">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/new_bg_image" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/opacity_color" />
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_20sdp"
+                >
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/_60sdp"
+                    >
+
+                    <TextView
+                        android:id="@+id/sub_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/SetupPreparation"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp"
+                        />
+
+                </ScrollView>
+
+
+                <Button
+                    android:id="@+id/btnOk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@color/blue"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Yes"
+                    android:textAllCaps="false"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+            </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

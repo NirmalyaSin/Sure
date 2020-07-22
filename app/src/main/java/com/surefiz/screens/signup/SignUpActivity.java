@@ -581,7 +581,8 @@ public class SignUpActivity extends SignUpView {
     }
 
     protected void showAndDismissStatePopup() {
-        stateListPopup.show();
+        if(stateListPopup!=null)
+            stateListPopup.show();
     }
 
     protected void showAndDismissLifeStylePopup() {

@@ -188,13 +188,6 @@ public class OtpClickEvent implements View.OnClickListener {
                     JSONObject jsonObject = new JSONObject(responseString);
                     if (jsonObject.optInt("status") == 1) {
 
-                        /*JSONObject jsObject = jsonObject.getJSONObject("data");
-                        Intent regIntent = new Intent(otpActivity, LoginActivity.class);
-                        otpActivity.startActivity(regIntent);
-                        otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        otpActivity.finishAffinity();*/
-
-
                         LoginShared.setstatusforOtpvarification(otpActivity, true);
 
                         NotificationManager notificationManager = (NotificationManager) otpActivity.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -203,22 +196,8 @@ public class OtpClickEvent implements View.OnClickListener {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         showOTPSuccessDialog(jsObject.getString("message"));
 
-                        /*if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0||
-                                LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserMac().equals("")) {
-                            Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
-                            regIntent.putExtra("completeStatus", "0");
-                            otpActivity.startActivity(regIntent);
-                            otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            otpActivity.finishAffinity();
-                        } else {
-                            Intent intent = new Intent(otpActivity, DashBoardActivity.class);
-                            otpActivity.startActivity(intent);
-                            otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            otpActivity.finishAffinity();
-                        }*/
-
-
-                    } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
+                      //AVIK
+                    }/* else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(otpActivity);
                         LoginShared.destroySessionTypePreference(otpActivity);
                         LoginShared.setDeviceToken(otpActivity, deviceToken);
@@ -226,9 +205,13 @@ public class OtpClickEvent implements View.OnClickListener {
                         otpActivity.startActivity(loginIntent);
                         otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         otpActivity.finish();
-                    } else {
+                    }*/ else {
                         JSONObject jsObject = jsonObject.getJSONObject("data");
                         MethodUtils.errorMsg(otpActivity, jsObject.getString("message"));
+                        otpActivity.et_first.setText("");
+                        otpActivity.et_second.setText("");
+                        otpActivity.et_third.setText("");
+                        otpActivity.et_fourth.setText("");
                     }
 
                 } catch (Exception e) {

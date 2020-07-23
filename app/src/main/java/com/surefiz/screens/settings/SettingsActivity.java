@@ -14,7 +14,6 @@ import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.screens.wificonfig.SetUpPreparation;
-import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.utils.MethodUtils;
 
 import butterknife.BindView;

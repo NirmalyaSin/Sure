@@ -70,6 +70,7 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
                 }
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
                 break;
 
         }
@@ -80,6 +81,7 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
     public void onBackPressed() {
         if(isTaskRoot()){
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }else{
             super.onBackPressed();
         }

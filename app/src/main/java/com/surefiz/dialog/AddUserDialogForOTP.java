@@ -36,7 +36,7 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
-import com.surefiz.screens.wificonfig.WifiConfigActivity;
+import com.surefiz.screens.wificonfig.SetUpPreparation;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -698,7 +698,7 @@ public class AddUserDialogForOTP extends Dialog {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 dismiss();
-                Intent dashBoardIntent = new Intent(activity, WifiConfigActivity.class);
+                Intent dashBoardIntent = new Intent(activity, SetUpPreparation.class);
                 activity.startActivity(dashBoardIntent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 activity.finish();

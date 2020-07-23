@@ -22,7 +22,6 @@ import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.SetUpPreparation;
-import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;

@@ -78,7 +78,22 @@ public class WifiConfigActivity extends AppCompatActivity {
         }
 
         rl_back.setOnClickListener(v -> {
-            onBackPressed();
+
+            Intent intent = new Intent(this, SetUpPreparation.class);
+
+            if(fromLogin){
+                intent.putExtra("fromLogin",true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }else if(fromSettings){
+                intent.putExtra("fromSettings",true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }else
+                onBackPressed();
         });
     }
 

@@ -23,7 +23,6 @@ import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.screens.wificonfig.SetUpPreparation;
-import com.surefiz.screens.wificonfig.WifiConfigActivity;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -278,6 +277,7 @@ public class SplashActivity extends AppCompatActivity {
                         //AVIK
                         //Intent intent = new Intent(this, WifiConfigActivity.class);
                         Intent intent = new Intent(this, SetUpPreparation.class);
+                        intent.putExtra("fromLogin",true);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();

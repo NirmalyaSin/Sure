@@ -18,8 +18,7 @@
 
     <string name="edittext_hint"><font size="20">_</font></string>
     <!--<string name="wifi_config">Choose the wireless network on which you want your scale to  be connected.\nPlease make sure it is not a 5G Wifi.\nIf your router has 5G WiFi, It has two networks, on 5G and the other non-5G.\nPlease pick the non-5G</string>-->
-    <string name="wifi_config">Please choose 2.4 GHz WiFi for your scale. If your router has only one WiFi choose that one. If your router has two WiFi networks, make sure you choose 2.4 GHz network, NOT the 5 GHz network.</string>
-    <string name="wifi_config2">You can skip this step, if you have already setup WiFi for  your scale. Please choose 2.4 GHz WiFi for your scale. If your router has only one WiFi choose that one. If your router has two WiFi networks, make sure you choose 2.4 GHz network, NOT the 5 GHz network.</string>
+    <string name="wifi_config">Now, you are all set with your phone connected to the right 2.4 GHz WiFi and a WiFi symbol is blinking on the scale screen.\n\nEnter the WiFi password and tap on Configure.</string>
     <!--<string name="ap_config">To AP configuration follow the below step.\n 1) Enter the WiFI SSID and password.\n2)Lock WiFi Info\n 3) Go to the WiFi setting and pick the scale WiFi.\n4)Tap on the “AP Configure” Button.</string>-->
     <string name="ap_config"><!--To AP configuration follow the below step.\n\n-->1) Please enter your WiFi network name and password. \n\n2) Tap “Confirm” to confirm that the network name and password is accurate. \n\n3) Follow the instructions on the screen.</string>
     <string name="instruction_page_text">To Know Your Weight follow the steps below :</string>
@@ -103,8 +102,8 @@ complete his/her registration process.</string>
     <string name="Time_To_Lose_Weight_Will_Be_Calculated">Time To Lose Weight Will Be Calculated After The First Weight</string>
     <!--<string name="user_confirmation_header">SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight</string>-->
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
-    <string name="signup_completed_without_scale">Sign up is complete. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email ID and password created during signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
-    <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
+    <string name="signup_completed_without_scale">Sign up is complete. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email ID and password created during this signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
+    <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during this signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
     <string name="androidQ">As a security measure, newer versions of Android have added an additional step to connect to WiFi. Therefore next, you will see a popup with temporary WiFi of your scale named, </string>
     <string name="androidQ2">please select this network to connect.</string>
     <string name="AmazonAlready">I have bought subscription through Amazon Already</string>

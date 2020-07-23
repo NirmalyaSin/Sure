@@ -19,7 +19,7 @@ import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
-import com.surefiz.screens.wificonfig.WifiConfigActivity;
+import com.surefiz.screens.wificonfig.SetUpPreparation;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -276,7 +276,7 @@ public class OtpClickEvent implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                Intent dashBoardIntent = new Intent(otpActivity, WifiConfigActivity.class);
+                Intent dashBoardIntent = new Intent(otpActivity, SetUpPreparation.class);
                 otpActivity.startActivity(dashBoardIntent);
                 otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 otpActivity.finish();

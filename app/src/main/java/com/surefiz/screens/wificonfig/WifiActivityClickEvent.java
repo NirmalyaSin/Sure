@@ -69,16 +69,8 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
         }
 
+        activity.txt_body.setText(R.string.wifi_config);
 
-        if(new InstructionSharedPreference(activity).getFirstText()){
-            if(activity.fromLogin)
-                activity.txt_body.setText(R.string.wifi_config2);
-            else
-                activity.txt_body.setText(R.string.wifi_config);
-
-        }else{
-            activity.txt_body.setText(R.string.wifi_config);
-        }
 
     }
 
@@ -313,18 +305,9 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             loader.dismiss();
         }
         if (sucess) {
-            if (mWifiConfigActivity.getIntent().getStringExtra("comeFrom") != null) {
-                if (mWifiConfigActivity.getIntent().getStringExtra("comeFrom").equals("1")) {
-
-                    /*Toast.makeText(mWifiConfigActivity, "wifi configruation done", Toast.LENGTH_LONG).show();
-                    Intent deviceIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
-                    mWifiConfigActivity.startActivity(deviceIntent);
-                    mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    mWifiConfigActivity.finish();*/
-
-                    showalertdialog(true);
-                }
-            } else {
+            if (mWifiConfigActivity.fromSettings) {
+                showalertdialog(true);
+            } else if(mWifiConfigActivity.fromLogin){
                 showalertdialog(false);
             }
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
@@ -358,9 +341,9 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            Intent deviceIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
+                            /*Intent deviceIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
                             mWifiConfigActivity.startActivity(deviceIntent);
-                            mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
                             mWifiConfigActivity.finish();
                         }
                     });
@@ -375,11 +358,11 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                             if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
                                 Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
                                 mWifiConfigActivity.startActivity(instruc);
-                                mWifiConfigActivity.finish();
+                                mWifiConfigActivity.finishAffinity();
                             }else {
                                 Intent dashboardIntent = new Intent(mWifiConfigActivity, DashBoardActivity.class);
                                 mWifiConfigActivity.startActivity(dashboardIntent);
-                                mWifiConfigActivity.finish();
+                                mWifiConfigActivity.finishAffinity();
                             }
                         }
                     });

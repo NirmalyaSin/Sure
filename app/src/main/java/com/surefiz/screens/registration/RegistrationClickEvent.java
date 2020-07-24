@@ -1150,6 +1150,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 } else {
                     if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
                         Intent intent = new Intent(registrationActivity, SetUpPreparation.class);
+                        intent.putExtra("fromLogin",true);
                         registrationActivity.startActivity(intent);
                         registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         registrationActivity.finishAffinity();

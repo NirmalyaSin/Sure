@@ -209,9 +209,11 @@ public class LoginClickEvent implements View.OnClickListener {
                         mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         mLoginActivity.finishAffinity();
                     } else {
-                        if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
+                        //if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
                             //AVIK
                             //Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                        if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
+
                             Intent intent = new Intent(mLoginActivity, SetUpPreparation.class);
                             intent.putExtra("fromLogin",true);
                             mLoginActivity.startActivity(intent);

@@ -150,14 +150,14 @@ public class WheelView extends View {
         paintOuterText = new Paint();
         paintOuterText.setColor(textColorOut);
         paintOuterText.setAntiAlias(true);
-        paintOuterText.setTypeface(Typeface.MONOSPACE);
+        //paintOuterText.setTypeface(Typeface.MONOSPACE);
         paintOuterText.setTextSize(textSize);
 
         paintCenterText = new Paint();
         paintCenterText.setColor(textColorCenter);
         paintCenterText.setAntiAlias(true);
         paintCenterText.setTextScaleX(1.1F);
-        paintCenterText.setTypeface(Typeface.MONOSPACE);
+        //paintCenterText.setTypeface(Typeface.MONOSPACE);
         paintCenterText.setTextSize(textSize);
 
         paintIndicator = new Paint();

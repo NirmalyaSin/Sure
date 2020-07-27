@@ -2814,6 +2814,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             title1.setText("<p style='color: #ffffff; '>Sub Goals Progress</p>");
                         }
                         labels.setStyle(hicssObject);
+                        yaxis.setGridLineColor(HIColor.initWithRGB(75, 79, 99));
                         yaxis.setLabels(labels);
                         yaxis.setTitle(title1);
                         historyChartOptions.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
@@ -3027,6 +3028,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         }
                         labels.setStyle(hicssObject);
                         yaxis.setLabels(labels);
+                        yaxis.setGridLineColor(HIColor.initWithRGB(75, 79, 99));
                         yaxis.setTitle(title1);
                         optionsAchiGoals.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
 

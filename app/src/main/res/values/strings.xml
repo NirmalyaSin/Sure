@@ -29,7 +29,7 @@
     <string name="scale_blinking"> 2. Scale start blinking and with your weight &amp; stop</string>
     <string name="step_down"> 3. Step down from scale.</string>
     <string name="yes_it_down">Yes! it"'s" done</string>
-    <string name="configrution">Your Configuration completed successfully.</string>
+    <string name="configrution">Your configuration completed successfully.</string>
     <string name="youe_weight">Your Weight</string>
     <string name="go_next_action">Go DashBoard</string>
     <string name="skip">Skip</string>
@@ -116,7 +116,7 @@ complete his/her registration process.</string>
         to use your scale before you proceed further.\n\n2. Install batteries into the scale. The WiFi symbol on the scale screen should be blinking.\n\n3. If batteries are already installed, remove them and reinstall. If WiFi symbol is not
         blinking. Press and hold the Black button in batteries compartment until you see
         flashing WiFi Symbol. Please make sure the WiFi symbol is blinking on the scale screen
-        before you can procced further.\n\nIs your phone connected to the correct WiFi and a WiFi symbol is flashing on the scale scree?</string>
+        before you can procced further.\n\nIs your phone connected to the correct WiFi and a WiFi symbol is flashing on the scale screen?</string>
 
 
 </resources>

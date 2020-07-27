@@ -207,7 +207,7 @@ public class LoginClickEvent implements View.OnClickListener {
                         regIntent.putExtra("registrationModelData", responseString);
                         mLoginActivity.startActivity(regIntent);
                         mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        mLoginActivity.finishAffinity();
+                        //mLoginActivity.finishAffinity();
                     } else {
                         //if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
                             //AVIK
@@ -235,7 +235,7 @@ public class LoginClickEvent implements View.OnClickListener {
                         regIntent.putExtra("registrationModelData", responseString);
                         mLoginActivity.startActivity(regIntent);
                         mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        mLoginActivity.finishAffinity();
+                        //mLoginActivity.finishAffinity();
 
                     } else {
 

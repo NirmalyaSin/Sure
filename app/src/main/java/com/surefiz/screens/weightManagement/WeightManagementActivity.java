@@ -415,7 +415,9 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
         if (jsnObject.optInt("maintain_Weight_By_Server") == 1) {
 
-            et_weight_managment.setText(managementList.get(1));
+            et_desired_weight_selection.setText(desiredWeightSelectionList.get(1));
+
+            //et_weight_managment.setText(managementList.get(1));
             findViewById(R.id.ll_desired_weight_selection).setVisibility(View.GONE);
             findViewById(R.id.rl_desired_weight_selection).setVisibility(View.GONE);
             findViewById(R.id.tv_time_loss).setVisibility(View.GONE);

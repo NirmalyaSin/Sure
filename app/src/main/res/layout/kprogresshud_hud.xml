@@ -2,7 +2,7 @@
 <com.surefiz.utils.progressloader.BackgroundLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/background"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/_70sdp"
+    android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"

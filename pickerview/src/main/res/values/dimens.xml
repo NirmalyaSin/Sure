@@ -6,5 +6,5 @@
     <dimen name="pickerview_topbar_paddingright">@dimen/_30sdp</dimen>
     <dimen name="pickerview_topbar_btn_textsize">@dimen/_13sdp</dimen>
     <dimen name="pickerview_topbar_title_textsize">@dimen/_16sdp</dimen>
-    <dimen name="pickerview_textsize">@dimen/_14sdp</dimen>
+    <dimen name="pickerview_textsize">@dimen/_15sdp</dimen>
 </resources>

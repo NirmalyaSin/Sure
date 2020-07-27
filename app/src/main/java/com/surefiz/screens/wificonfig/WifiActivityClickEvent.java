@@ -222,7 +222,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 } else {
                     //  mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     if (!loader.isShowing()) {
-                        loader.show_with_label("Loading");
+                        loader.show();
                     }
                     Log.d("@@Sent-SmartLink : ", ssid + "\n" + pwd + "\n" + bssid);
                     //  scaleWiFiConfig.apConfig(ssid, pwd, this);
@@ -243,7 +243,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 /*progressDialog.setMessage("Please wait ");
                 progressDialog.show();*/
                 if (!loader.isShowing()) {
-                    loader.show_with_label("Loading");
+                    loader.show();
                 }
                 //  scaleWiFiConfig.apConfig(ssid, pwd, this);
                 scaleWiFiConfig.smartLinkConfig(mWifiConfigActivity, ssid, bssid, pwd, this);
@@ -268,7 +268,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         progressDialog.setMessage("Finding Available WiFi-Network");
         progressDialog.show();*/
         if (!loader.isShowing()) {
-            loader.show_with_label("Loading");
+            loader.show();
         }
     }
 

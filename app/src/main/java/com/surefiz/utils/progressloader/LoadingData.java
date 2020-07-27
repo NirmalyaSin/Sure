@@ -21,6 +21,8 @@ public class LoadingData {
     public void show() {
 
         if (progressLoader != null && !progressLoader.isShowing())
+            progressLoader.setStyle(ProgressLoader.Style.SPIN_INDETERMINATE);
+        progressLoader.setWindowColor(activity.getResources().getColor(R.color.kprogresshud_default_color));
             progressLoader.show();
     }
 

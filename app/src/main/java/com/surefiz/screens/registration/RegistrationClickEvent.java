@@ -1,9 +1,7 @@
 package com.surefiz.screens.registration;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -29,9 +27,11 @@ import com.google.gson.Gson;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.dialog.OpenCameraOrGalleryDialog;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
+import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.familyinvite.FamilyInviteActivity;
@@ -1124,22 +1124,20 @@ public class RegistrationClickEvent implements View.OnClickListener {
 
 
     public void showAckowlegmentDialog(String msg) {
-        final AlertDialog dialog = new AlertDialog.Builder(registrationActivity).create();
-        dialog.setTitle(R.string.app_name_splash);
-        dialog.setCanceledOnTouchOutside(false);
 
+        CustomAlert customAlert=new CustomAlert(registrationActivity);
         if (!LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                 LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac().equalsIgnoreCase("")) {
-            dialog.setMessage(registrationActivity.getResources().getString(R.string.sub_user_sign_up_success));
+            customAlert.setSubText(registrationActivity.getResources().getString(R.string.sub_user_sign_up_success));
         } else {
-            dialog.setMessage(msg);
+            customAlert.setSubText(msg);
         }
-
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                dialog.dismiss();
+            public void onClick(View v) {
 
+                customAlert.dismiss();
 
                 if (!LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                         LoginShared.getRegistrationDataModel(registrationActivity).getData().getUser().get(0).getUserMac().equalsIgnoreCase("")) {
@@ -1149,6 +1147,10 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     registrationActivity.finishAffinity();
                 } else {
                     if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
+
+                        LoginShared.setRegistrationComplete(registrationActivity, true);
+                        LoginShared.setRegistrationResponse("");
+
                         Intent intent = new Intent(registrationActivity, SetUpPreparation.class);
                         intent.putExtra("fromLogin",true);
                         registrationActivity.startActivity(intent);
@@ -1163,12 +1165,6 @@ public class RegistrationClickEvent implements View.OnClickListener {
                 }
             }
         });
-
-        try {
-            dialog.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 

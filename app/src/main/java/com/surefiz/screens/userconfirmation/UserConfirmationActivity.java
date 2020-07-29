@@ -1,7 +1,5 @@
 package com.surefiz.screens.userconfirmation;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +13,7 @@ import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
@@ -406,14 +405,16 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     public void showConfirmDialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserConfirmationActivity.this);
-        alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage("Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight & Time”?");
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(getString(R.string.ProvideWeightTime));
+        customAlert.setCancelVisible();
+        customAlert.setKeyName("No","Yes");
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
                 rl_back.setVisibility(View.VISIBLE);
                 et_weight.setEnabled(true);
                 et_time_loss.setEnabled(true);
@@ -432,39 +433,30 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
             }
         });
 
-        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
             }
         });
-
-        alertDialog.create();
-
-        alertDialog.show();
     }
 
 
     public void showSuccessMessage(String message) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserConfirmationActivity.this);
-        alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage(message);
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(message);
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
                 Intent dashboard = new Intent(UserConfirmationActivity.this, DashBoardActivity.class);
                 startActivity(dashboard);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finishAffinity();
             }
         });
-
-
-        alertDialog.create();
-
-        alertDialog.show();
     }
 
     private void showAndDismissWeightPopup() {

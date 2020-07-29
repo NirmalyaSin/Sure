@@ -1,11 +1,9 @@
 package com.surefiz.screens.weightdetails;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -512,21 +511,17 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     }
 
     public void showcancelationDialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        //alertDialog.setMessage("Sorry! Cannot connect to scale. Please try later.");
-        alertDialog.setMessage("This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.");
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(getString(R.string.NotificationExpired));
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
                 goToDashboard();
             }
         });
-
-        alertDialog.create();
-
-        alertDialog.show();
     }
 
 }

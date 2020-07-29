@@ -1,7 +1,5 @@
 package com.surefiz.screens.privacy;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +11,7 @@ import android.widget.Button;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
@@ -272,20 +271,18 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
     }
 
     public void showResponseDialog(int status, String message) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setCancelable(false);
-        dialog.setMessage(message);
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(message);
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 //Cancel the dialog.
-                dialog.dismiss();
+                customAlert.dismiss();
                 //Call Privacy list Api Again
                 callPrivacyListApi();
             }
         });
-
-        dialog.create();
-        dialog.show();
     }
 }

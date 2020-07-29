@@ -44,7 +44,7 @@ public class MethodUtils {
         window.setStatusBarColor(ContextCompat.getColor(activity, R.color.statusBarColor));
     }
 
-    public static void errorMsg(Context context, String msg) {
+    public static void errorMsg(Activity context, String msg) {
         ErrorMessageDialog.getInstant(context).show(msg);
     }
 

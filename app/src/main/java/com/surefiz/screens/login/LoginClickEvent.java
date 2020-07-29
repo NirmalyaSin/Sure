@@ -200,6 +200,10 @@ public class LoginClickEvent implements View.OnClickListener {
                             getUserMac().equals("")) {
 
                         LoginShared.setRegistrationDataModel(mLoginActivity, null);
+                        //LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
+                        LoginShared.setRegistrationResponse(responseString);
+
+
 
 
                         Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
@@ -229,6 +233,10 @@ public class LoginClickEvent implements View.OnClickListener {
                     if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0) {
 
                         LoginShared.setRegistrationDataModel(mLoginActivity, null);
+                        LoginShared.setRegistrationResponse(responseString);
+
+                        //LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
+
 
                         Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
                         regIntent.putExtra("completeStatus", "0");

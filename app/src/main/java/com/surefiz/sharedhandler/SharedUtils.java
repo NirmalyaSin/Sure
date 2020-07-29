@@ -19,6 +19,7 @@ public class SharedUtils {
     public static final String TYPE_DEAD_ON_LOGOUT_SHARED = "TYPE_DEAD_ON_LOGOUT_SHARED";
     public static final String KEY_SHARED_USER_DATA_MODEL = "KEY_SHARED_USER_DATA_MODEL";
     public static final String KEY_SHARED_REGISTRATION_MODEL = "KEY_SHARED_REGISTRATION_MODEL";
+    public static final String KEY_SHARED_REGISTRATION_COMPLETE = "IS_REGISTRATION_COMPLETE";
     public static final String KEY_SHARED_OTP_VERIFIED = "IS_OTP_VARIFIED";
     public static final String KEY_SHARED_WIFI_VERIFIED = "IS_WiFi_VARIFIED";
     public static final String KEY_SHARED_VIEW_PROFILE = "KEY_SHARED_VIEW_PROFILE";

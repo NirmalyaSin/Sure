@@ -1433,7 +1433,7 @@
                         android:background="@null"
                         android:focusableInTouchMode="false"
                         android:backgroundTint="@android:color/transparent"
-                        android:hint="Please Select How Do You Learn About The SureFiz"
+                        android:hint="Please Select"
                         android:fontFamily="@font/roboto_regular"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"

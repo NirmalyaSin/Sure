@@ -2,11 +2,9 @@ package com.surefiz.screens.wificonfig;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -28,6 +26,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.surefiz.R;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.helpers.PermissionHelper;
 import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -185,17 +184,18 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     }
 
     private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mWifiConfigActivity);
-        builder.setMessage("Your GPS seems to be disabled, you need to enable it to use this service?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        dialog.cancel();
-                        mWifiConfigActivity.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
+
+        CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
+        customAlert.setSubText("Your GPS seems to be disabled, you need to enable it to use this service?");
+        customAlert.setKeyName("","Yes");
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.cancel();
+                mWifiConfigActivity.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        });
     }
 
     public boolean checkLocationStatus() {
@@ -281,20 +281,30 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         if (success)
             Toast.makeText(mWifiConfigActivity, "Wificonfig done", Toast.LENGTH_LONG).show();
         else {
-            AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
-            alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name_splash));
-            alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.smart_config_failed));
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                    (dialog, which) -> dialog.dismiss());
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "AP Config",
-                    (dialog, which) -> {
-                        dialog.dismiss();
-                        LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
-                        Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
-                        instruc.putExtra("wifi", true);
-                        mWifiConfigActivity.startActivity(instruc);
-                    });
-            alertDialog.show();
+
+            CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
+            customAlert.setSubText(mWifiConfigActivity.getString(R.string.smart_config_failed));
+            customAlert.setCancelVisible();
+            customAlert.setKeyName("Cancel","AP Config");
+            customAlert.show();
+
+            customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    customAlert.dismiss();
+                    LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
+                    Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
+                    instruc.putExtra("wifi", true);
+                    mWifiConfigActivity.startActivity(instruc);
+                }
+            });
+
+            customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    customAlert.dismiss();
+                }
+            });
         }
     }
 
@@ -312,65 +322,66 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             }
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         } else {
-            AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
-            alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name_splash));
-            //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
-            alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.smart_config_failed));
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                    (dialog, which) -> dialog.dismiss());
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "AP Config",
-                    (dialog, which) -> {
-                        dialog.dismiss();
-                        LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
-                        Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
-                        instruc.putExtra("wifi", true);
-                        mWifiConfigActivity.startActivity(instruc);
-                        mWifiConfigActivity.finish();
-                    });
-            alertDialog.show();
+
+            CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
+            customAlert.setSubText(mWifiConfigActivity.getString(R.string.smart_config_failed));
+            customAlert.setCancelVisible();
+            customAlert.setKeyName("Cancel","AP Config");
+            customAlert.show();
+
+            customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    customAlert.dismiss();
+                    LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
+                    Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
+                    instruc.putExtra("wifi", true);
+                    mWifiConfigActivity.startActivity(instruc);
+                    mWifiConfigActivity.finish();
+                }
+            });
+
+            customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    customAlert.dismiss();
+                }
+            });
         }
     }
 
     private void showalertdialog(boolean isFromSettingPage) {
-        AlertDialog alertDialog = new AlertDialog.Builder(mWifiConfigActivity).create();
-        alertDialog.setTitle(mWifiConfigActivity.getResources().getString(R.string.app_name_splash));
-        alertDialog.setMessage(mWifiConfigActivity.getResources().getString(R.string.configrution));
 
-        if (isFromSettingPage) {
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            /*Intent deviceIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
-                            mWifiConfigActivity.startActivity(deviceIntent);
-                            mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-                            mWifiConfigActivity.finish();
-                        }
-                    });
-        } else {
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Next",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
-
-                            //AVIK
-                            if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
-                                Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
-                                mWifiConfigActivity.startActivity(instruc);
-                                mWifiConfigActivity.finishAffinity();
-                            }else {
-                                Intent dashboardIntent = new Intent(mWifiConfigActivity, DashBoardActivity.class);
-                                mWifiConfigActivity.startActivity(dashboardIntent);
-                                mWifiConfigActivity.finishAffinity();
-                            }
-                        }
-                    });
+        CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
+        customAlert.setSubText(mWifiConfigActivity.getString(R.string.configrution));
+        if (!isFromSettingPage) {
+            customAlert.setKeyName("","Next");
         }
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+                if (isFromSettingPage) {
+                    mWifiConfigActivity.finish();
 
+                } else {
+                    LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
+                    if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {
+                        Intent instruc = new Intent(mWifiConfigActivity, InstructionActivity.class);
+                        mWifiConfigActivity.startActivity(instruc);
+                        mWifiConfigActivity.finishAffinity();
+                    } else {
+                        Intent dashboardIntent = new Intent(mWifiConfigActivity, DashBoardActivity.class);
+                        mWifiConfigActivity.startActivity(dashboardIntent);
+                        mWifiConfigActivity.finishAffinity();
+                    }
+                }
+            }
+        });
 
-        alertDialog.show();
     }
+
 
     public void ShowSSIDList() {
         popup = new PopupMenu(mWifiConfigActivity, mWifiConfigActivity.editSSID, Gravity.CENTER);

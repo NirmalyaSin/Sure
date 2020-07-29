@@ -1,7 +1,5 @@
 package com.surefiz.screens.notifications;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +13,7 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.acountabiltySearch.RequestState;
@@ -302,22 +301,19 @@ public class NotificationActivity extends BaseActivity implements
     }
 
     public void showResponseDialog(int status, String message) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setCancelable(false);
-        dialog.setMessage(message);
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(message);
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Cancel the dialog.
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
                 //Call the API to list all Notifications
                 isOK=true;
                 callNotificationListApi("4");
             }
         });
-
-        dialog.create();
-        dialog.show();
     }
 
     @Override
@@ -364,28 +360,26 @@ public class NotificationActivity extends BaseActivity implements
     }
 
     private void callClearNotification() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setCancelable(false);
-        dialog.setMessage("Do you want to clear all notifications?");
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText("Do you want to clear all notifications?");
+        customAlert.setCancelVisible();
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Cancel the dialog.
-                dialog.dismiss();
-                //Call the API to list all Notifications
+            public void onClick(View v) {
+                customAlert.dismiss();
                 callReadNotification("", "" + selectedTab, 0);
+
             }
         });
 
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
             }
         });
-
-        dialog.create();
-        dialog.show();
     }
 
     private void callReadNotification(String notificationId, String notificationType, final int adapterPosition) {

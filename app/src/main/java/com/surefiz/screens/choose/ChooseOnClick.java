@@ -1,12 +1,12 @@
 package com.surefiz.screens.choose;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 
 import com.surefiz.R;
-import com.surefiz.dialog.CustomAlert;
 import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.signup.SignUpActivity;
@@ -79,14 +79,14 @@ public class ChooseOnClick implements View.OnClickListener {
             showToSignText = "<font color=#000000>Please reach SUPPORT</font>";
         }
 
-        CustomAlert customAlert=new CustomAlert(ChooseActivity);
-        customAlert.setSubText(""+Html.fromHtml(showToSignText));
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
-            }
-        });
+        AlertDialog alertDialog = new AlertDialog.Builder(ChooseActivity).create();
+        alertDialog.setTitle(ChooseActivity.getResources().getString(R.string.app_name_splash));
+        alertDialog.setMessage(Html.fromHtml(showToSignText));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                (dialog, which) -> {
+                    dialog.dismiss();
+                });
+
+        alertDialog.show();
     }
 }

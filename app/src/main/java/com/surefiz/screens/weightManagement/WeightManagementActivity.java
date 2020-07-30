@@ -1,5 +1,7 @@
 package com.surefiz.screens.weightManagement;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +16,6 @@ import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.CustomAlert;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -802,14 +803,14 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     public void showResponseDialog(String message) {
-
-        CustomAlert customAlert=new CustomAlert(this);
-        customAlert.setSubText(message);
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(WeightManagementActivity.this);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
                 Intent loginIntent;
                 if (isnotification.equals("7")) {
                     loginIntent = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
@@ -821,6 +822,10 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 finish();
             }
         });
+
+        alertDialog.create();
+
+        alertDialog.show();
     }
 
     private void showAndDismissWeightPopup() {
@@ -854,28 +859,46 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     public void showWeightUpdateDialog() {
-
-        CustomAlert customAlert=new CustomAlert(this);
-        customAlert.setSubText(getString(R.string.Changing));
-        customAlert.setCancelVisible();
-        customAlert.setKeyName("No","Yes");
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(WeightManagementActivity.this);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage("Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure you want to proceed?");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                if (selectedWeightManagmentGoal == 0 && selectedDesiredWeightSelection == 0) {
+                    if (et_weight.getText().toString().trim().equals("")) {
+                        MethodUtils.errorMsg(WeightManagementActivity.this, "Enter desired weight");
+                    } else if (et_time_loss.getText().toString().trim().equals("")) {
+                        MethodUtils.errorMsg(WeightManagementActivity.this, "Enter time to lose weight");
+                    } else if (!ConnectionDetector.isConnectingToInternet(WeightManagementActivity.this)) {
+                        MethodUtils.errorMsg(WeightManagementActivity.this, getString(R.string.no_internet));
+                    } else {
+                        sendWeightManagementDetails();
+                    }
+
+                } else {
+
+                    sendWeightManagementDetails();
+
+                }
             }
         });
 
-        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
-
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
                 et_weight.setText(weight_value);
                 et_time_loss.setText(time_value);
                 et_units.setText(units_value);
             }
         });
+
+        alertDialog.create();
+
+        alertDialog.show();
     }
 }

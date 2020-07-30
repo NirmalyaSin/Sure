@@ -1,8 +1,10 @@
 package com.surefiz.screens.reminders;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +17,6 @@ import android.widget.TimePicker;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.notificationclasses.ReminderNotification;
@@ -335,20 +336,23 @@ public class AddEditReminderActivity extends BaseActivity implements
     }
 
     public void showResponseDialog(int status, String message) {
-
-        CustomAlert customAlert=new CustomAlert(this);
-        customAlert.setSubText(message);
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(false);
+        dialog.setMessage(message);
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                //Cancel the dialog.
+                dialog.dismiss();
                 Intent intent = new Intent();
                 intent.putExtra("action_type", getIntent().getStringExtra("action_type"));
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
+
+        dialog.create();
+        dialog.show();
     }
 
 

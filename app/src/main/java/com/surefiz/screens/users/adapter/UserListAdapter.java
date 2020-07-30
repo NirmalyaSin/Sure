@@ -1,10 +1,12 @@
 package com.surefiz.screens.users.adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
-import com.surefiz.dialog.CustomAlert;
 import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.users.model.UserListItem;
@@ -106,30 +107,27 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             userListViewHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setTitle("Delete user Confirmation")
+                            .setMessage("Do you want to delete " + userLists.get(i).getUserName() + "?")
+                            .setCancelable(false)
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                    Intent intent = new Intent();
+                                    intent.putExtra("user", userLists.get(i).getServerUserId());
+                                    intent.putExtra("position", i);
+                                    onUiEventClick.onUiClick(intent, 1);
+                                }
 
-                    CustomAlert customAlert=new CustomAlert(activity);
-                    customAlert.setHeaderText("Delete user Confirmation");
-                    customAlert.setSubText("Do you want to delete " + userLists.get(i).getUserName() + "?");
-                    customAlert.setCancelVisible();
-                    customAlert.setKeyName("No","Delete");
-                    customAlert.show();
-                    customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+                            }).setNegativeButton("No!", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(View v) {
-                            customAlert.dismiss();
-                            Intent intent = new Intent();
-                            intent.putExtra("user", userLists.get(i).getServerUserId());
-                            intent.putExtra("position", i);
-                            onUiEventClick.onUiClick(intent, 1);
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
                         }
                     });
-
-                    customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            customAlert.dismiss();
-                        }
-                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
             });
 
@@ -191,29 +189,28 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     }
 
     private void showAlert(final UserListItem userListItem) {
-
-        CustomAlert customAlert=new CustomAlert(activity);
-        customAlert.setHeaderText("Save Weight Confirmation");
-        customAlert.setSubText("Do you want to assign this weight to " + userListItem.getUserName());
-        customAlert.setCancelVisible();
-        customAlert.setKeyName("No","Yes");
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+        alertDialog.setTitle("Save Weight Confirmation");
+        alertDialog.setMessage("Do you want to assign this weight to " + userListItem.getUserName() /*+ " for this weight?"*/);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent();
                 intent.putExtra("id", userListItem.getScaleUserId());
                 onUiEventClick.onUiClick(intent, 1001);
+                dialog.dismiss();
             }
         });
 
-        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
+        alertDialog.create();
+        alertDialog.show();
     }
 
     public class UserListViewHolder extends RecyclerView.ViewHolder {

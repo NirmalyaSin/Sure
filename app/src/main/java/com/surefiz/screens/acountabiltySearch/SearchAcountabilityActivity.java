@@ -18,7 +18,6 @@ import android.widget.ImageView;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
@@ -283,7 +282,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
     }
 
     public void showResponseDialog(int status, String message) {
-        /*AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setMessage(message);
         dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -297,18 +296,6 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         });
 
         dialog.create();
-        dialog.show();*/
-
-        CustomAlert customAlert=new CustomAlert(this);
-        customAlert.setSubText(message);
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
-                callSearchCircleUserApi(searchBar.getText().toString().trim());
-
-            }
-        });
+        dialog.show();
     }
 }

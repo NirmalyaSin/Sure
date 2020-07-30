@@ -18,7 +18,6 @@ import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.registration.MembershipActivity;
-import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
@@ -301,22 +300,6 @@ public class SplashActivity extends AppCompatActivity {
                         finish();
                     }
                 }
-            }else if (!LoginShared.getRegistrationResponse(this).equals("")) {
-
-                 if (!LoginShared.getRegistrationComplete(this)) {
-                    Intent intent = new Intent(this, RegistrationActivity.class);
-                    intent.putExtra("completeStatus", "0");
-                    intent.putExtra("registrationModelData",LoginShared.getRegistrationResponse(this));
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
-                }else{
-                     Intent loginIntent = new Intent(this, LoginActivity.class);
-                     startActivity(loginIntent);
-                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                     finish();
-                 }
-
             } else {
                 if (LoginShared.getWelcome(this)) {
                     Intent loginIntent = new Intent(this, LoginActivity.class);

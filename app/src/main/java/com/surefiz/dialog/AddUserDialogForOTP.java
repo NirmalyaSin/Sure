@@ -1,7 +1,9 @@
 package com.surefiz.dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -687,30 +689,32 @@ public class AddUserDialogForOTP extends Dialog {
     }
 
     public void showConfirmDialog() {
-
-        CustomAlert customAlert=new CustomAlert(activity);
-        customAlert.setSubText("Do you want to Cancel?");
-        customAlert.setCancelVisible();
-        customAlert.setKeyName("No","Yes");
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage("Do you want to Cancel?");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
                 dismiss();
-
                 Intent dashBoardIntent = new Intent(activity, SetUpPreparation.class);
                 activity.startActivity(dashBoardIntent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 activity.finish();
             }
         });
-        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
+
+        alertDialog.create();
+
+        alertDialog.show();
     }
 
     private void ExpiryDialog() {

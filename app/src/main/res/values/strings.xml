@@ -1,6 +1,6 @@
 <resources>
     <!--<string name="app_name">SureFiz™</string>-->
-    <string name="app_name">SureFiz<sup><small><small></small></small></sup></string>
+    <string name="app_name">SureFiz<sup><small><small>®</small></small></sup></string>
     <string name="app_name_splash">SureFiz<sup><small><small><small></small></small></small></sup></string>
     <string name="app_name_otp">SureFiz<sup><small><small></small></small></sup></string>
     <!--<string name="app_name_otp">SureFiz<sup><small>&#174;</small></sup></string>-->
@@ -13,8 +13,7 @@
     <string name="image_capture_cancel_text">User cancelled image process</string>
     <string name="failed_to_capture_image_text">Sorry! Failed to process image</string>
 
-    <!--<string name="error_occurred">Something went wrong!</string>-->
-    <string name="error_occurred">Server Error. Retry after sometime.</string>
+    <string name="error_occurred">Something went wrong!</string>
     <string name="no_internet">No internet connection</string>
 
     <string name="edittext_hint"><font size="20">_</font></string>
@@ -108,12 +107,9 @@ complete his/her registration process.</string>
     <string name="androidQ">As a security measure, newer versions of Android have added an additional step to connect to WiFi. Therefore next, you will see a popup with temporary WiFi of your scale named, </string>
     <string name="androidQ2">please select this network to connect.</string>
     <string name="AmazonAlready">I have bought subscription through Amazon Already</string>
-    <string name="ProvideWeightTime">"Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight &amp; Time”?"</string>
     <string name="SureFizWebsite">I have already bought subscription through SureFiz Website</string>
     <string name="ApplePurchase">I have not bought subscription from anywhere yet, I need to buy subscription now</string>
     <string name="NeitherSureFizNorAmazon">I have bought subscription through a source which was neither SureFiz nor Amazon</string>
-    <string name="Changing">Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure you want to proceed?</string>
-    <string name="NotificationExpired">This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.</string>
     <string name="SetupPreparation">
         1. From your phone Settings, verify that your phone is connected to a 2.4 GHz WiFi
         network. If not, please go to phone Settings and connect to the WiFi on which you plan

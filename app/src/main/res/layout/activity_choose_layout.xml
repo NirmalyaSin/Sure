@@ -43,75 +43,103 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/_20sdp"
-        android:paddingTop="@dimen/_30sdp"
+        android:weightSum="4"
         >
-
-        <TextView
-            android:id="@+id/Btn_amazon"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_65sdp"
-            android:padding="@dimen/_5sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center"
-            android:text="@string/AmazonAlready"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp"
-            android:background="@drawable/login_button_gradient"
-            />
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_weight="1">
 
 
+            <TextView
+                android:id="@+id/Btn_amazon"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_65sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="@string/AmazonAlready"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/login_button_gradient"
+                />
 
-        <TextView
-            android:id="@+id/Btn_surefiz"
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_65sdp"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:padding="@dimen/_5sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center"
-            android:text="@string/SureFizWebsite"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp"
-            android:background="@drawable/login_button_gradient"
-            />
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/Btn_surefiz"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_65sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="@string/SureFizWebsite"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/login_button_gradient"
+                />
 
 
 
+        </RelativeLayout>
 
-
-
-        <TextView
-            android:id="@+id/Btn_subscribed"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_65sdp"
-            android:padding="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center"
-            android:text="@string/ApplePurchase"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp"
-            android:background="@drawable/login_button_gradient"
-            />
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_weight="1">
 
 
-        <TextView
-            android:id="@+id/Btn_nothing"
+            <TextView
+                android:id="@+id/Btn_subscribed"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_65sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="@string/ApplePurchase"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/login_button_gradient"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_65sdp"
-            android:padding="@dimen/_5sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:gravity="center"
-            android:text="@string/NeitherSureFizNorAmazon"
-            android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp"
-            android:background="@drawable/login_button_gradient"
-            />
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_weight="1">
 
+            <TextView
+                android:id="@+id/Btn_nothing"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_65sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="@string/NeitherSureFizNorAmazon"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/login_button_gradient"
+                />
 
-
+        </RelativeLayout>
 
     </LinearLayout>
 

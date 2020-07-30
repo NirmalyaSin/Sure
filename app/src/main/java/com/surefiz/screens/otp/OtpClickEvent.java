@@ -1,7 +1,9 @@
 package com.surefiz.screens.otp;
 
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,7 +14,6 @@ import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.AddUserDialogForOTP;
-import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -229,16 +230,14 @@ public class OtpClickEvent implements View.OnClickListener {
     }
 
     public void showOTPSuccessDialog(String title) {
-
-        CustomAlert customAlert=new CustomAlert(otpActivity);
-        customAlert.setSubText(title);
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(otpActivity);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage(title);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                customAlert.dismiss();
-
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
                 if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0 ||
                         LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserMac().equals("")) {
                     Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
@@ -255,35 +254,38 @@ public class OtpClickEvent implements View.OnClickListener {
             }
         });
 
+        alertDialog.create();
+        alertDialog.show();
     }
 
 
     public void showUserAddDialog(String title, String positive, String negative) {
-
-        CustomAlert customAlert=new CustomAlert(otpActivity);
-        customAlert.setSubText(title);
-        customAlert.setCancelVisible();
-        customAlert.setKeyName(negative,positive);
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(otpActivity);
+        alertDialog.setTitle(R.string.app_name_otp);
+        alertDialog.setMessage(title);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton(positive, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
                 new AddUserDialogForOTP(otpActivity).show();
             }
         });
 
-        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+        alertDialog.setNegativeButton(negative, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
-
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
                 Intent dashBoardIntent = new Intent(otpActivity, SetUpPreparation.class);
                 otpActivity.startActivity(dashBoardIntent);
                 otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 otpActivity.finish();
             }
         });
+
+        alertDialog.create();
+
+        alertDialog.show();
     }
 
     private void hideSoftKeyBoard() {

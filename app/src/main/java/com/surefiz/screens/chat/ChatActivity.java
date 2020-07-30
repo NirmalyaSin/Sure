@@ -25,7 +25,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.application.MyApplicationClass;
-import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.chat.adapter.ChatAdapter;
@@ -347,17 +346,20 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
 
 
     public void showNoRecordsDialog(String message) {
-
-        CustomAlert customAlert=new CustomAlert(this);
-        customAlert.setSubText(message);
-        customAlert.setKeyName("","Got it");
-        customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
+        alertDialog.setTitle(R.string.app_name_otp);
+        //alertDialog.setMessage(R.string.chat_not_found);
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
+
+        alertDialog.create();
+        alertDialog.show();
     }
 
     private void callSendChatApi(final String message) {

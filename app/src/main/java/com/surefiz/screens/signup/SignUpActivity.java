@@ -85,7 +85,7 @@ public class SignUpActivity extends SignUpView {
         learnList.add("CES");
         learnList.add("News");
         learnList.add("Printed Media");
-        learnList.add("SureFiz Website");
+        learnList.add("SureFiz® Website");
         learnList.add("Others");
 
 

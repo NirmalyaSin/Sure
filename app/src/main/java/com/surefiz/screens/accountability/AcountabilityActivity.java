@@ -20,7 +20,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.adapter.AllCircleUserAdapter;
@@ -56,7 +55,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     private ArrayList<User> arrayListUsers = new ArrayList<User>();
     private AllCircleUserAdapter mAllCircleUserAdapter;
     private SwipeRefreshLayout swiperefresh;
-    CustomAlert customAlert;
 
 
     @Override
@@ -274,31 +272,19 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
 
-    public void showUserConfirmation(int position) {
-
-        customAlert=new CustomAlert(this);
-        customAlert.setHeaderText(getString(R.string.delete_user_confirmation));
-        customAlert.setSubText("Do you want to unfriend " + arrayListUsers.get(position).getUser_name() + "?");
-        customAlert.setKeyName("No","Yes");
-        customAlert.setCancelVisible();
-        customAlert.show();
-
-        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
-            }
-        });
-
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
-                callRemoveAccountUserApi(position);
-            }
-        });
-
-
+    private void showUserConfirmation(int position) {
+        AlertDialog alertDialog = new AlertDialog.Builder(AcountabilityActivity.this).create();
+        alertDialog.setTitle(this.getResources().getString(R.string.delete_user_confirmation));
+        //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
+        alertDialog.setMessage("Do you want to unfriend " + arrayListUsers.get(position).getUser_name() + "?");
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                (dialog, which) -> dialog.dismiss());
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    callRemoveAccountUserApi(position);
+                });
+        alertDialog.show();
     }
 
 

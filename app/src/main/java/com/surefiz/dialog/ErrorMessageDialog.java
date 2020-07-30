@@ -1,10 +1,8 @@
 package com.surefiz.dialog;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.View;
 
 import com.surefiz.R;
 
@@ -12,14 +10,14 @@ public class ErrorMessageDialog {
 
     private static ErrorMessageDialog errorMessageDialog;
     private static Context prevContext;
-    private Activity context;
+    private Context context;
     private AlertDialog dialog = null;
 
-    private ErrorMessageDialog(Activity context) {
+    private ErrorMessageDialog(Context context) {
         this.context = context;
     }
 
-    public static ErrorMessageDialog getInstant(Activity context) {
+    public static ErrorMessageDialog getInstant(Context context) {
         if (errorMessageDialog == null) {
             prevContext = context;
             errorMessageDialog = new ErrorMessageDialog(context);
@@ -38,21 +36,22 @@ public class ErrorMessageDialog {
     }
 
     public void show(String msg) {
-        CustomAlert customAlert=new CustomAlert(context);
-        customAlert.setSubText(msg);
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+        final AlertDialog dialog = new AlertDialog.Builder(context).create();
+        dialog.setTitle(R.string.app_name_splash);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setMessage(msg);
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
+            public void onClick(DialogInterface arg0, int arg1) {
+                dialog.dismiss();
                 return;
             }
         });
 
         try {
-            customAlert.show();
+            dialog.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

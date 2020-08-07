@@ -177,7 +177,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         showImage();
     }
 
-    private void showImage() {
+    public void showImage() {
         /*if (LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto().equals("") ||
                 LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto().equalsIgnoreCase("null") ||
                 LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto() == null) {

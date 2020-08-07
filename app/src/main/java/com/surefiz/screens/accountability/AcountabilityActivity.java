@@ -62,6 +62,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_accountability, null);
         addContentView(view);
+
         initializeImageLoader();
         setHeaderView();
         setSwipeRefresh();
@@ -88,6 +89,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void callCircleUserListApi(boolean isSwipe) {
+
         if(!isSwipe)
             loadingData.show_with_label("Loading");
 
@@ -147,6 +149,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void setSwipeRefresh(){
+
         swiperefresh = findViewById(R.id.swiperefresh);
         swiperefresh.setColorSchemeColors(R.color.blue, R.color.purple, R.color.blue);
 
@@ -180,6 +183,8 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void setHeaderView() {
+
+
         tv_universal_header.setText("Accountability Circle");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
@@ -221,6 +226,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     @Override
     public void onSendMessageClick(int position) {
+
         //Go to Chat Page
         Intent chatIntent = new Intent(this, ChatActivity.class);
         chatIntent.putExtra("reciver_id", arrayListUsers.get(position).getUser_id());
@@ -230,6 +236,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     @Override
     public void onPerformanceClick(int position) {
+
         Intent intent = new Intent(AcountabilityActivity.this, DashBoardActivity.class);
         intent.putExtra("id", arrayListUsers.get(position).getUser_id());
         intent.putExtra("page", "1");
@@ -254,6 +261,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void showUserImage(int position) {
+
         Dialog dialog =new Dialog(this);
         dialog.setContentView(R.layout.expanded_image_layout);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -273,6 +281,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
 
     private void showUserConfirmation(int position) {
+
         AlertDialog alertDialog = new AlertDialog.Builder(AcountabilityActivity.this).create();
         alertDialog.setTitle(this.getResources().getString(R.string.delete_user_confirmation));
         //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
@@ -289,6 +298,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
 
     private void callRemoveAccountUserApi(int position) {
+
         loadingData.show_with_label("Loading");
 
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);

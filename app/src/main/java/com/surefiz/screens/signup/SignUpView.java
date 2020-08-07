@@ -492,6 +492,7 @@ public class SignUpView extends AppCompatActivity {
 
     public void showInfoDialog(String message) {
 
+
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
         alertDialog.setMessage(Html.fromHtml(message));

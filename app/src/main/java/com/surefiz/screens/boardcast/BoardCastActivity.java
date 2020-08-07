@@ -69,6 +69,8 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_board_cast, null);
         addContentView(view);
+
+
         loader = new LoadingData(BoardCastActivity.this);
 
         myApplicationClass = (MyApplicationClass) getApplication();
@@ -139,6 +141,8 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void callChatListApi(final String receiverId, final int newPagination) {
+
+
 
         if (oldPagination < newPagination || oldPagination == 0) {
             //Replace Old value with newer one.
@@ -220,6 +224,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void moveToEnd() {
+
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -268,6 +273,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void callBoardCastApi() {
+
         //loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -346,6 +352,7 @@ public class BoardCastActivity extends BaseActivity implements View.OnClickListe
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_boardcast:
+
                 if (et_message.getText().toString().trim().equals("")) {
                     MethodUtils.errorMsg(BoardCastActivity.this, "Please enter some text to BroadCast.");
                 } else if (!ConnectionDetector.isConnectingToInternet(BoardCastActivity.this)) {

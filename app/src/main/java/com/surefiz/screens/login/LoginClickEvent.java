@@ -65,16 +65,19 @@ public class LoginClickEvent implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.tv_forgetPassword:
+
                 mLoginActivity.startActivity(new Intent(mLoginActivity, ForgotPasswordActivity.class));
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
             case R.id.iv_back:
+
                 //callWelcome();
                 mLoginActivity.onBackPressed();
                 break;
 
-                case R.id.btnLogin:
+            case R.id.btnLogin:
+
                 blankvalidationandapicall();
                 break;
 
@@ -83,6 +86,7 @@ public class LoginClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.tv_register:
+
                 Intent regIntent = new Intent(mLoginActivity, MembershipActivity.class);
                 regIntent.putExtra("completeStatus", "1");
                 mLoginActivity.startActivity(regIntent);
@@ -200,6 +204,8 @@ public class LoginClickEvent implements View.OnClickListener {
                             getUserMac().equals("")) {
 
                         LoginShared.setRegistrationDataModel(mLoginActivity, null);
+                        //LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
+                        LoginShared.setRegistrationResponse(responseString);
 
 
                         Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
@@ -210,15 +216,19 @@ public class LoginClickEvent implements View.OnClickListener {
                         //mLoginActivity.finishAffinity();
                     } else {
                         //if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                            //AVIK
-                            //Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
-                        if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
+                        //AVIK
+                        //Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                        //if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
+
+                        if(registrationModel.getData().getUser().get(0).getIsfirsttime()==1){
 
                             Intent intent = new Intent(mLoginActivity, SetUpPreparation.class);
                             intent.putExtra("fromLogin",true);
                             mLoginActivity.startActivity(intent);
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else {
+
+                            LoginShared.setstatusforwifivarification(mLoginActivity, true);
                             Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
                             mLoginActivity.startActivity(intent);
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -229,6 +239,10 @@ public class LoginClickEvent implements View.OnClickListener {
                     if (LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0) {
 
                         LoginShared.setRegistrationDataModel(mLoginActivity, null);
+                        LoginShared.setRegistrationResponse(responseString);
+
+                        //LoginShared.setRegistrationDataModel(mLoginActivity, registrationModel);
+
 
                         Intent regIntent = new Intent(mLoginActivity, RegistrationActivity.class);
                         regIntent.putExtra("completeStatus", "0");
@@ -251,11 +265,14 @@ public class LoginClickEvent implements View.OnClickListener {
                             MethodUtils.errorMsg(mLoginActivity, mLoginActivity.getString(R.string.mac_id_not_found));
                         } else {
 
-                            if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
+                            //if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
+                            if(registrationModel.getData().getUser().get(0).getIsfirsttime()==1){
+
                                 Intent instruc = new Intent(mLoginActivity, InstructionActivity.class);
                                 mLoginActivity.startActivity(instruc);
                                 mLoginActivity.finish();
                             }else {
+
                                 LoginShared.setstatusforwifivarification(mLoginActivity, true);
                                 Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
                                 mLoginActivity.startActivity(intent);

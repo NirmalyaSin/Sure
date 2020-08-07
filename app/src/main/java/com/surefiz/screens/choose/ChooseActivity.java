@@ -56,6 +56,7 @@ public class ChooseActivity extends ChooseActivityView {
     }
 
     protected void callAmazon(){
+
         amazonDialog.show();
         amazonDialog.stepOneView();
         amazonDialog.btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +221,7 @@ public class ChooseActivity extends ChooseActivityView {
         amazonDialog.btn_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 isScanner=false;
                 amazonDialog.et_scaleId.setText("");
                 amazonDialog.et_con_scaleId.setText("");
@@ -234,6 +236,7 @@ public class ChooseActivity extends ChooseActivityView {
         amazonDialog.btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 amazonDialog.stepThreeView();
                 step=3;
             }
@@ -257,6 +260,7 @@ public class ChooseActivity extends ChooseActivityView {
         amazonDialog.btn_cancel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 step=1;
                 amazonDialog.stepOneView();
                 amazonDialog.dismiss();
@@ -266,6 +270,7 @@ public class ChooseActivity extends ChooseActivityView {
     }
 
     private void callVerifyApi(String orderID,boolean b) {
+
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);

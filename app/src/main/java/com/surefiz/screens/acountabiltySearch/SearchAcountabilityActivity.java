@@ -54,6 +54,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         view = View.inflate(this, R.layout.activity_search_accountability, null);
         addContentView(view);
         initializeView();
+
     }
 
     private void initializeView() {
@@ -104,6 +105,8 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
     }
 
     private void callSearchCircleUserApi(final String keyword) {
+
+
         loadingData.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -222,6 +225,8 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
 
     //Service call to send/cancel request to add in circle
     private void callAddToCircleUserApi(final int listPosition, final String connectionType) {
+
+
         loadingData.show_with_label("Requesting...");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);

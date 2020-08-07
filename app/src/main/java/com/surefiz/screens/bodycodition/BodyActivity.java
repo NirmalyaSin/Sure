@@ -63,6 +63,7 @@ public class BodyActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()){
             case R.id.btn_next:
+
                 if(list.size()>0) {
                     Intent intent = new Intent();
                     intent.putExtra("selectedBody", list);

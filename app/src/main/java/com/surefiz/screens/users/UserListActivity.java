@@ -95,6 +95,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void addUserDialog() {
+
         btn_add_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +130,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void callUserListApi() {
+
         loadingData.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -185,6 +187,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void showAddUserButton(int subUserAddStatus, int userListSize) {
+
         if (subUserAddStatus == 0 && userListSize > 3) {
             btn_add_user.setEnabled(false);
             btn_add_user.setBackground(ContextCompat.getDrawable(UserListActivity.this, R.drawable.login_edit_rounded_corner_blue));
@@ -229,6 +232,7 @@ public class UserListActivity extends AppCompatActivity implements OnUiEventClic
     }
 
     private void callUserDeleteApi(int userId, int position) {
+
         loadingData.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);

@@ -21,9 +21,11 @@ public class SharedUtils {
     public static final String KEY_SHARED_REGISTRATION_MODEL = "KEY_SHARED_REGISTRATION_MODEL";
     public static final String KEY_SHARED_OTP_VERIFIED = "IS_OTP_VARIFIED";
     public static final String KEY_SHARED_WIFI_VERIFIED = "IS_WiFi_VARIFIED";
+    public static final String KEY_SHARED_REGISTRATION_COMPLETE = "IS_REGISTRATION_COMPLETE";
     public static final String KEY_SHARED_VIEW_PROFILE = "KEY_SHARED_VIEW_PROFILE";
     public static final String KEY_SHARED_DASHBOARD = "KEY_SHARED_DASHBOARD";
     public static final String KEY_SHARED_SCALE_USER_ID = "KEY_SHARED_SCALE_USER_ID";
+    public static final String KEY_SHARED_REGISTRATION_RES = "KEY_SHARED_REGISTRATION_RES";
     public static final String KEY_SHARED_USER_MAC_ID = "KEY_SHARED_USER_MAC_ID";
     public static final String KEY_SHARED_DEVICE_TOKEN_KEY = "KEY_SHARED_DEVICE_TOKEN_KEY";
     public static final String KEY_SHARED_ACCESS_TOKEN_KEY = "KEY_SHARED_ACCESS_TOKEN_KEY";

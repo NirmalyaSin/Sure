@@ -38,6 +38,10 @@ public class User {
     @Expose
     private Integer userProfileCompleteStatus;
 
+    @SerializedName("isfirsttime")
+    @Expose
+    private Integer isfirsttime;
+
     public String getUserId() {
         return userId;
     }
@@ -118,4 +122,11 @@ public class User {
         this.userProfileCompleteStatus = userProfileCompleteStatus;
     }
 
+    public Integer getIsfirsttime() {
+        return isfirsttime;
+    }
+
+    public void setIsfirsttime(Integer isfirsttime) {
+        this.isfirsttime = isfirsttime;
+    }
 }

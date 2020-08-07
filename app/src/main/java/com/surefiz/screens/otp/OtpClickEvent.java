@@ -149,6 +149,7 @@ public class OtpClickEvent implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_submit:
+
                 if (otpActivity.et_first.getText().toString().trim().equals("")) {
                     MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP");
 
@@ -171,6 +172,7 @@ public class OtpClickEvent implements View.OnClickListener {
     }
 
     private void sendOtpApi() {
+
         String otpValue = otpActivity.et_first.getText().toString() + otpActivity.et_second.getText().toString() + otpActivity.et_third.getText().toString() +
                 otpActivity.et_fourth.getText().toString();
         loader.show_with_label("Loading");
@@ -246,10 +248,11 @@ public class OtpClickEvent implements View.OnClickListener {
                     otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     otpActivity.finish();
                 } else {
-                    Intent intent = new Intent(otpActivity, DashBoardActivity.class);
+                    Intent intent = new Intent(otpActivity, SetUpPreparation.class);
+                    intent.putExtra("fromLogin",true);
                     otpActivity.startActivity(intent);
                     otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    otpActivity.finishAffinity();
+                    otpActivity.finish();
                 }
             }
         });

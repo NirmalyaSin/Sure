@@ -130,6 +130,7 @@ public class ProfileActivity extends BaseActivity {
         setHeaderView();
         showViewMode();
         profileClickEvent = new ProfileClickEvent(this);
+
     }
 
     private void setHeaderView() {
@@ -248,6 +249,7 @@ public class ProfileActivity extends BaseActivity {
         switch (requestCode) {
 
             case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE :
+
                 CropImage.ActivityResult cresult = CropImage.getActivityResult(data);
                 if (resultCode == RESULT_OK) {
                     Uri uri = cresult.getUri();
@@ -268,12 +270,14 @@ public class ProfileActivity extends BaseActivity {
                 break;
 
             case ProfileClickEvent.RC_SIGN_IN_GOOGLE:
+
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 profileClickEvent.handleSignInResult(result);
 
                 break;
 
             case ProfileClickEvent.BODY_CONDITION:
+
                 if(resultCode==RESULT_OK){
                     bodyList= (ArrayList<BodyItem>) data.getSerializableExtra("selectedBody");
 
@@ -342,6 +346,7 @@ public class ProfileActivity extends BaseActivity {
 
 
     public void callFacebooklogin() {
+
         if (AccessToken.getCurrentAccessToken() != null) {
             requestData();
             return;
@@ -372,6 +377,7 @@ public class ProfileActivity extends BaseActivity {
 
 
     private void requestData() {
+
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {

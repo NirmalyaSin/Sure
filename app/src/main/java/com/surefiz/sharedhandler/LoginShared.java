@@ -83,7 +83,22 @@ public class LoginShared {
 
         return loginModel;
     }
+    public static void setRegistrationResponse(String s) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
 
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SharedUtils.KEY_SHARED_REGISTRATION_RES, s);
+        editor.commit();
+    }
+
+    public static String getRegistrationResponse(Context context) {
+        String res="";
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        res = prefs.getString(SharedUtils.KEY_SHARED_REGISTRATION_RES, "");
+        return res;
+    }
     /**
      * Set Dashboard Data Model
      */
@@ -153,6 +168,25 @@ public class LoginShared {
             activateShared(context);
         isotp_varified = prefs.getBoolean(SharedUtils.KEY_SHARED_WIFI_VERIFIED, false);
         return isotp_varified;
+    }
+
+    //Registration get set method
+
+    public static void setRegistrationComplete(Context context, boolean b) {
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(SharedUtils.KEY_SHARED_REGISTRATION_COMPLETE, b);
+        editor.commit();
+    }
+
+    public static boolean getRegistrationComplete(Context context) {
+        boolean b = false;
+        if (LoginShared.context == null || LoginShared.prefs == null)
+            activateShared(context);
+        b = prefs.getBoolean(SharedUtils.KEY_SHARED_REGISTRATION_COMPLETE, false);
+        return b;
     }
 
     public static void setScaleUserId(int id) {

@@ -102,6 +102,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     private void getWeightManagementApi() {
+
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -152,6 +153,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     private void sendWeightManagementDetails() {
+
         String weight = "";
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
@@ -260,6 +262,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
 
     private void setData(JSONObject jsnObject) {
+
         et_weight.setText(jsnObject.optString("desiredWeight"));
 
         if (jsnObject.optString("timeToLoseWeight").equalsIgnoreCase("0 Weeks")) {
@@ -315,6 +318,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     private void callApiforweightUpdate() {
+
         if (btn_accept.getText().equals("Update")) {
             sendWeightManagementDetails();
 
@@ -406,6 +410,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     public void showConfirmDialog() {
+
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserConfirmationActivity.this);
         alertDialog.setTitle(R.string.app_name_otp);
         alertDialog.setMessage("Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight & Time”?");
@@ -446,6 +451,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
 
 
     public void showSuccessMessage(String message) {
+
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserConfirmationActivity.this);
         alertDialog.setTitle(R.string.app_name_otp);
         alertDialog.setMessage(message);
@@ -513,12 +519,15 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 break;
 
             case R.id.btn_accept:
+
                 callApiforweightUpdate();
                 break;
             case R.id.btn_provide:
+
                 showConfirmDialog();
                 break;
             case R.id.et_weight:
+
                 if (timePopup != null && timePopup.isShowing()) {
                     timePopup.dismiss();
                 } else if (weightPopup != null && weightPopup.isShowing()) {
@@ -533,6 +542,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
                 }
                 break;
             case R.id.et_time_loss:
+
                 if (weightPopup != null && weightPopup.isShowing()) {
                     weightPopup.dismiss();
                 } else if (timePopup != null && timePopup.isShowing()) {

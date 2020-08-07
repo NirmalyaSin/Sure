@@ -9,7 +9,6 @@ import android.view.View;
 import com.surefiz.R;
 import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.choose.ChooseActivity;
-import com.surefiz.screens.choose.ChooseActivityView;
 import com.surefiz.screens.login.LoginActivity;
 
 public class WelcomeClickEvent implements View.OnClickListener {
@@ -32,6 +31,7 @@ public class WelcomeClickEvent implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.txt_login:
+
                 Intent loginintent = new Intent(welcomeActivity, LoginActivity.class);
                 welcomeActivity.startActivity(loginintent);
                 break;
@@ -46,6 +46,7 @@ public class WelcomeClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.txt_learn_more:
+
                 String urlvalue = "https://www.surefiz.com/Home/landing";
                 Log.d("Web_Link",":::"+urlvalue);
 

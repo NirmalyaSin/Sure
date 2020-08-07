@@ -121,6 +121,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
     }
 
     private void callPrivacyListApi() {
+
         //Show loader
         loadingData.show_with_label("Loading...");
         //Call API Using Retrofit
@@ -188,6 +189,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
     }
 
     private void callUpdatePrivacyApi(final String selected, final String unSelected) {
+
         //Show loader
         loadingData.show_with_label("Saving...");
         //Call API Using Retrofit
@@ -272,6 +274,7 @@ public class PrivacyActivity extends BaseActivity implements PrivacyAdapter.OnPr
     }
 
     public void showResponseDialog(int status, String message) {
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setMessage(message);

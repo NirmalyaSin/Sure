@@ -76,7 +76,6 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         setContentView(R.layout.activity_user_list);
         Log.d("@@LifeCycle : ", "onCreate()");
 
-
         setHeader();
         viewBind();
         setRecyclerViewItem();
@@ -199,6 +198,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     }
 
     private void callUserListApi() {
+
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -284,6 +284,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
         if (eventCode == 1001) {
             scaleUserId = intent.getIntExtra("id", 0);
             if (isWeightReceived) {
+
                 saveWeightToSDK();
 
             }
@@ -512,6 +513,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
     }
 
     public void showcancelationDialog() {
+
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         //alertDialog.setMessage("Sorry! Cannot connect to scale. Please try later.");
         alertDialog.setMessage("This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.");

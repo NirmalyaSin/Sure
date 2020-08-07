@@ -12,14 +12,8 @@ import android.widget.Button;
 import com.surefiz.R;
 import com.surefiz.dialog.AddUserDialog;
 import com.surefiz.dialog.ChooseOptionDialog;
-import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.interfaces.OnUiEventClick;
-import com.surefiz.screens.groupinvite.adapter.GroupInviteAdapter;
-import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.otp.OtpActivity;
-import com.surefiz.screens.users.UserListActivity;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
-import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import butterknife.BindView;
@@ -40,6 +34,8 @@ public class FamilyInviteActivity extends AppCompatActivity implements OnUiEvent
         ButterKnife.bind(this);
         loader = new LoadingData(this);
         init();
+
+
     }
 
     private void init() {
@@ -52,9 +48,11 @@ public class FamilyInviteActivity extends AppCompatActivity implements OnUiEvent
     public void manageClicks(View view) {
         switch (view.getId()) {
             case R.id.btn_register_family_add:
+
                 new ChooseOptionDialog(this, this).show();
                 break;
             case R.id.btn_register_skip:
+
                 Intent loginIntent = new Intent(this, OtpActivity.class);
                 startActivity(loginIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -101,6 +101,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         handler = new Handler();
         initializeImageLoader();
         myApplicationClass = (MyApplicationClass) getApplication();
@@ -182,6 +183,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     }
 
     private void setMessage() {
+
         if (myApplicationClass.chatListNotification.size() > 0) {
             arrayListConversation.addAll(myApplicationClass.chatListNotification);
             saveMessageCount = arrayListConversation.size();
@@ -216,6 +218,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     }
 
     private void callChatListApi(final String receiverId, final int newPagination) {
+
         if (oldPagination < newPagination || oldPagination == 0) {
             //Replace Old value with newer one.
             oldPagination = newPagination;
@@ -308,6 +311,8 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     }
 
     private void moveToEnd() {
+
+
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -363,6 +368,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     }
 
     private void callSendChatApi(final String message) {
+
         //Show loader
         //   loadingData.show_with_label("Loading...");
         //Call API Using Retrofit
@@ -430,6 +436,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
 
     @Override
     public void onScrollToTop(int scrollPosition) {
+
         //Calculate next pagination
         int div = arrayListConversation.size() / 25;
         int pagination = div * 25;

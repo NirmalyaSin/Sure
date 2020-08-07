@@ -240,6 +240,7 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationClickEvent = new RegistrationClickEvent(this);
 
         setTextFormatter();
+
     }
 
     private void setTextFormatter() {
@@ -332,6 +333,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void viewShowFromLogin() {
+
         if (getIntent().getStringExtra("completeStatus").equals("0")) {
 
             Gson gson = new Gson();
@@ -341,6 +343,8 @@ public class RegistrationActivity extends AppCompatActivity {
             } else {
                 registrationModel = LoginShared.getRegistrationDataModel(this);
             }
+
+            Log.d("Registration-","-isfirsttime-"+registrationModel.getData().getUser().get(0).getIsfirsttime());
 
             tv_password.setVisibility(View.GONE);
             star_image_password.setVisibility(View.GONE);
@@ -436,6 +440,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void getProfileDataAndSet() {
+
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -493,6 +498,8 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void setData() {
+
+
         registrationClickEvent.addBodyList();
 
         et_first_name.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserName());
@@ -578,7 +585,7 @@ public class RegistrationActivity extends AppCompatActivity {
             toolTipText = "Your primary user has provided\nthe Scale ID,there is no action\nrequired for Scale ID from you.";
             et_scale_id.setHint("");
             //et_scale_id.setHint("Scale ID is assigned by primary user");
-           // et_confirm_scale_id.setHint("Scale ID is assigned by primary user");
+            // et_confirm_scale_id.setHint("Scale ID is assigned by primary user");
         }
     }
 
@@ -914,5 +921,15 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
 
+        if(isTaskRoot()){
+            startActivity(new Intent(this,LoginActivity.class));
+        }else {
+            super.onBackPressed();
+        }
+        finish();
+
+    }
 }

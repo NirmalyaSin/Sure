@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+
         loginClickEvent = new LoginClickEvent(this);
         iv_facebook.setOnClickListener(this);
         googleSignInButton.setOnClickListener(this);
@@ -147,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_facebook:
+
                 if (!ConnectionDetector.isConnectingToInternet(this)) {
                     MethodUtils.errorMsg(this, this.getString(R.string.no_internet));
                 } else {
@@ -155,6 +157,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.googleSignInButton:
+
                 Auth.GoogleSignInApi.signOut(googleApiClient);
 
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
@@ -212,6 +215,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         socialoginapicall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
 

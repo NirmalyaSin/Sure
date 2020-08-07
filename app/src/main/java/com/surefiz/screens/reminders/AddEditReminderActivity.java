@@ -56,6 +56,7 @@ public class AddEditReminderActivity extends BaseActivity implements
         view = View.inflate(this, R.layout.activity_add_edit_reminder, null);
         addContentView(view);
         initializeView();
+
     }
 
     private void initializeView() {
@@ -73,6 +74,8 @@ public class AddEditReminderActivity extends BaseActivity implements
         buttonSaveReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 String remiderText = editReminderText.getText().toString().trim();
                 String date = editReminderDate.getText().toString().trim();
                 String time = ChatDateConverter.Hour_Minute2(editReminderTime.getText().toString().trim());
@@ -224,6 +227,8 @@ public class AddEditReminderActivity extends BaseActivity implements
 
     private void callAddUpdateReminderApi(final String reminderId, final String type,
                                           final String reminderText, final String dateTime) {
+
+
         //Show loader
         loadingData.show_with_label("Saving...");
         //Call API Using Retrofit

@@ -1,7 +1,9 @@
 package com.surefiz.screens.apconfig;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,6 +51,7 @@ import com.surefiz.helpers.PermissionHelper;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
+import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -509,16 +512,27 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Step on Scale",
                         (dialog, which) -> {
                             dialog.dismiss();
-                            LoginShared.setstatusforwifivarification(this, true);
+                            //LoginShared.setstatusforwifivarification(this, true);
 
                             if (!new InstructionSharedPreference(ApConfigActivity.this).isInstructionShown(ApConfigActivity.this, LoginShared.getRegistrationDataModel(ApConfigActivity.this).getData().getUser().get(0).getUserId())) {
-                                Intent instruc = new Intent(this, InstructionActivity.class);
-                                startActivity(instruc);
-                                finish();
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
+                                    androidQRedirection(InstructionActivity.class);
+
+                                }else {
+                                    Intent instruc = new Intent(this, InstructionActivity.class);
+                                    startActivity(instruc);
+                                    finish();
+                                }
                             } else {
-                                Intent dashBoardIntent = new Intent(this, DashBoardActivity.class);
-                                startActivity(dashBoardIntent);
-                                finish();
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                                    androidQRedirection(DashBoardActivity.class);
+
+                                }else {
+                                    Intent dashBoardIntent = new Intent(this, DashBoardActivity.class);
+                                    startActivity(dashBoardIntent);
+                                    finish();
+                                }
                             }
                         });
             } else {
@@ -528,11 +542,28 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                         (dialog, which) -> {
                             //new InstructionSharedPreference(ApConfigActivity.this).setAnroidQ(true);
                             dialog.dismiss();
-                            finish();
+
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                                androidQRedirection(SettingsActivity.class);
+                            }else
+                                finish();
                         });
             }
         }
         alertDialog.show();
+    }
+
+    protected void androidQRedirection(Class x){
+        Intent mStartActivity = new Intent(ApConfigActivity.this, x);
+        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(ApConfigActivity.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)ApConfigActivity.this.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 0, mPendingIntent);
+        System.exit(0);
+
+        finishAffinity();
     }
 
     @Override

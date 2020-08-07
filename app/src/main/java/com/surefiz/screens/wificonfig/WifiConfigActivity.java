@@ -57,6 +57,7 @@ public class WifiConfigActivity extends AppCompatActivity {
         permissionHelper=new PermissionHelper(this);
         wifiActivityClickEvent = new WifiActivityClickEvent(this);
 
+
         if(getIntent().hasExtra("fromLogin")){
             fromLogin=getIntent().getBooleanExtra("fromLogin",false);
         }
@@ -71,6 +72,7 @@ public class WifiConfigActivity extends AppCompatActivity {
     }
 
     private void setViewAndFunctionality() {
+
         rl_back.setVisibility(View.VISIBLE);
 
         if (fromSettings) {

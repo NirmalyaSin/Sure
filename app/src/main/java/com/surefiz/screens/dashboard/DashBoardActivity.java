@@ -72,6 +72,7 @@ import com.highsoft.highcharts.core.HIChartView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.internet.InternetChecking;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.AcountabilityActivity;
@@ -132,12 +133,18 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private ScrollView scrollDataView;
     private ViewTreeObserver.OnScrollChangedListener mOnScrollChangedListener;
     private int selectedUserPosition = -1;
+    private  int retryTime=0;
+    private int maxRetrye=3;
+    private int millisecond=10000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_dash_board, null);
         addContentView(view);
+
+
         loader = new LoadingData(this);
         options = new HIOptions();
         optionsLoss = new HIOptions();
@@ -190,9 +197,64 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             selectedUserPosition = -1;
         }
 
+       /* if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
+            MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
+        } else {
+            loader.show_with_label("Loading");
+            callDashBoardApi(id);
+            callUserListApi();
+
+            if (!getIntent().getBooleanExtra("isFromMenu", false)) {
+                callUpdateUserDeviceInfoApi();
+            }
+        }*/
+        loader.show_with_label("Loading");
+        internet();
+
+        setRecyclerViewItem();
+    }
+
+    protected void internet(){
+        new AsyncTask<Void,Void,Void>(){
+            boolean b;
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                InternetChecking internetChecking=new InternetChecking();
+                if(internetChecking.isInternetAvailable()){
+                    b=true;
+                } else{
+                    b=false;
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                if(b){
+                    callApi();
+                }else{
+                    if (retryTime==maxRetrye) {
+                        loader.dismiss();
+                        MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
+                    }else {
+                        new Handler().postDelayed(() -> {
+                            retryTime++;
+                            internet();
+                        }, millisecond);
+
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    private void callApi(){
         if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
             MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
         } else {
+
             callDashBoardApi(id);
             callUserListApi();
 
@@ -200,8 +262,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 callUpdateUserDeviceInfoApi();
             }
         }
-
-        setRecyclerViewItem();
     }
 
     private String getAppVersion() {
@@ -283,6 +343,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
     private void callUserListApi() {
+
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -384,7 +445,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
     private void callDashBoardApi(String id) {
-        loader.show_with_label("Loading");
+
+
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         Call<ResponseBody> call_dashboardApi = apiInterface.call_dashboardApi(
@@ -988,10 +1050,22 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         // The method calls setRefreshing(false) when it's finished.
                         swiperefresh.setRefreshing(true);
                         if (selectedUserPosition > -1) {
-                            callDashBoardApi("" + contactLists.get(selectedUserPosition).getServerUserId());
+                            if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
+                                swiperefresh.setRefreshing(false);
+                                MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
+                            }else {
+                                loader.show_with_label("Loading");
+                                callDashBoardApi("" + contactLists.get(selectedUserPosition).getServerUserId());
+                            }
                         } else {
-                            callDashBoardApi(id);
-                            selectedUserPosition = -1;
+                            if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
+                                swiperefresh.setRefreshing(false);
+                                MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
+                            }else {
+                                loader.show_with_label("Loading");
+                                callDashBoardApi(id);
+                                selectedUserPosition = -1;
+                            }
                         }
                     }
                 }
@@ -1212,6 +1286,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
     private void setEmptyBMIChart() {
+
+
         try {
             chartViewBmi.plugins = new ArrayList<>(Arrays.asList("series-label"));
 
@@ -1404,6 +1480,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     }
 
     private void setPieChatBodyComposition() {
+
         try {
             pieChatBodyComposition.setUsePercentValues(true);
             pieChatBodyComposition.getDescription().setEnabled(false);
@@ -1730,6 +1807,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
             MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
         } else {
+            loader.show_with_label("Loading");
             selectedUserPosition = position;
             callDashBoardApi("" + contactLists.get(position).getServerUserId());
         }
@@ -1737,6 +1815,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
     private void implementEmptyHighChart() {
+
         try {
 
             HIChart chart = new HIChart();
@@ -1884,6 +1963,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                 public void run() {
 
                     try {
+
                         HIChart chart = new HIChart();
 
                         //Required for gradient Background
@@ -2235,6 +2315,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         chart.getOptions3d().setDepth(50);
                         chart.getOptions3d().setViewDistance(25);
                         chart.setBackgroundColor(HIColor.initWithLinearGradient(gradient, stops));
+
 
                         optionsSubGoals.setLegend(hiLegend);
                         optionsSubGoals.setChart(chart);
@@ -2955,6 +3036,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
+
+
                     try {
                         HIChart chart = new HIChart();
                         chart.setType("line");

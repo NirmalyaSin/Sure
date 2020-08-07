@@ -214,6 +214,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_update:
+
                 if (!ConnectionDetector.isConnectingToInternet(this)) {
                     MethodUtils.errorMsg(this, getString(R.string.no_internet));
                 } else if (et_id.getText().toString().trim().equals("")) {
@@ -230,6 +231,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.rl_back:
+
                 Intent loginIntent = new Intent(MyDeviceActivity.this, SettingsActivity.class);
                 startActivity(loginIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -238,6 +240,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
 
 
             case R.id.btn_scan:
+
                 callScanner();
 
 
@@ -282,6 +285,7 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void changeScaleIdToServer() {
+
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);

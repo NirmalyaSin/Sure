@@ -110,6 +110,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
     }
 
     private void callReminderListApi() {
+
         //Show loader
         loadingData.show_with_label("Loading...");
         //Call API Using Retrofit
@@ -174,6 +175,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
 
     @Override
     public void onReminderSelected(int position) {
+
         Intent viewIntent = new Intent(this, AddEditReminderActivity.class);
         viewIntent.putExtra("action_type", "view");
         viewIntent.putExtra("reminder", arrayListReminder.get(position));
@@ -182,6 +184,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
 
     @Override
     public void onEditEdit(int position) {
+
         Intent editIntent = new Intent(this, AddEditReminderActivity.class);
         editIntent.putExtra("action_type", "edit");
         editIntent.putExtra("reminder", arrayListReminder.get(position));
@@ -190,6 +193,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
 
     @Override
     public void onRemiderDeleted(int position) {
+
         removeItem(position);
     }
 
@@ -234,6 +238,7 @@ public class ReminderActivity extends BaseActivity implements ReminderAdapter.On
 
 
     private void removeReminderApi(int position) {
+
         //Show loader
         loadingData.show_with_label("Loading...");
         //Call API Using Retrofit

@@ -101,6 +101,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         btn_decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 et_time_loss.setEnabled(true);
                 et_units.setEnabled(true);
                 et_weight.setEnabled(true);
@@ -188,6 +190,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void addSelectionListAndCall() {
+
         desiredWeightSelectionList.add("I Will Provide The Info");
         desiredWeightSelectionList.add("I Want " + getResources().getString(R.string.app_name_splash) + " To Suggest");
 
@@ -248,6 +251,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void callApiforweightUpdate() {
+
+
         if (btn_accept.getText().equals("Update")) {
 
             sendWeightManagementDetails();
@@ -303,6 +308,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void getWeightManagementApi() {
+
+
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -353,6 +360,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void showData(JSONObject jsnObject) {
+
 
         units = jsnObject.optString("preferredUnits");
         weight = et_weight.getText().toString().trim();
@@ -641,6 +649,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_back:
+
                 if (getIntent().getBooleanExtra("isInitiatedFromProfile", false)) {
                     finish();
                 } else {
@@ -651,26 +660,32 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
                 break;
             case R.id.et_weight:
+
                 showAndDismissWeightPopup();
                 break;
 
             case R.id.et_time_loss:
+
                 showAndDismissTimePopup();
                 break;
 
             case R.id.et_units:
+
                 showAndDismissPrefferedPopup();
                 break;
 
             case R.id.btn_submit:
+
                 showWeightUpdateDialog();
                 break;
 
             case R.id.et_weight_managment:
+
                 showAndDismissManagementPopup();
                 break;
 
             case R.id.et_desired_weight_selection:
+
                 showAndDismissSelectionPopup();
                 break;
         }

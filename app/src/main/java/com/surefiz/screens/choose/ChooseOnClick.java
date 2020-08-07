@@ -9,7 +9,6 @@ import android.view.View;
 import com.surefiz.R;
 import com.surefiz.screens.aboutus.AboutUsActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.signup.SignUpActivity;
 
 public class ChooseOnClick implements View.OnClickListener {
     private ChooseActivity ChooseActivity;
@@ -34,10 +33,12 @@ public class ChooseOnClick implements View.OnClickListener {
 
         switch (v.getId()){
             case R.id.rl_back:
+
                 ChooseActivity.finish();
                 break;
 
             case R.id.Btn_subscribed:
+
                 String urlvalue = "https://www.surefiz.com/Payment/basicinfo";
                 Log.d("Wen_Link",":::"+urlvalue);
 
@@ -52,16 +53,19 @@ public class ChooseOnClick implements View.OnClickListener {
                 break;
 
             case R.id.Btn_amazon:
+
                 ChooseActivity.callAmazon();
                 break;
 
             case R.id.Btn_surefiz:
+
                 Intent intent=new Intent(ChooseActivity, LoginActivity.class);
                 ChooseActivity.startActivity(intent);
                 ChooseActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
             case R.id.Btn_nothing:
+
                 showHowToSignupDialog(false);
                 break;
         }

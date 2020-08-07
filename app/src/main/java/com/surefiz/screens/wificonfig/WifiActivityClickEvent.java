@@ -76,7 +76,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     public void showConnectedWifiSSID() {
 
-
         try {
             mWifiManager = (WifiManager) mWifiConfigActivity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if (mWifiManager != null) {
@@ -136,6 +135,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         switch (v.getId()) {
 
             case R.id.editSSID:
+
                 hideSoftKeyBoard();
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
                     //Scan for available wifi list
@@ -147,9 +147,11 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 break;
 
             case R.id.btnConfigure:
+
                 wificonfigblankvalidation();
                 break;
             case R.id.iv_showPassword:
+
                 mWifiConfigActivity.iv_showPassword.setVisibility(View.GONE);
                 mWifiConfigActivity.iv_hidePassword.setVisibility(View.VISIBLE);
                 mWifiConfigActivity.editPassword.setTransformationMethod
@@ -157,6 +159,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
                 break;
             case R.id.iv_hidePassword:
+
                 mWifiConfigActivity.iv_showPassword.setVisibility(View.VISIBLE);
                 mWifiConfigActivity.iv_hidePassword.setVisibility(View.GONE);
                 mWifiConfigActivity.editPassword.setTransformationMethod
@@ -171,14 +174,14 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                     mWifiConfigActivity.startActivity(details);
                     mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     mWifiConfigActivity.finish();
-                    LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
+                    //LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
                     break;
                 } else {
                     Intent details = new Intent(mWifiConfigActivity, DashBoardActivity.class);
                     mWifiConfigActivity.startActivity(details);
                     mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     mWifiConfigActivity.finish();
-                    LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
+                    //LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
                 }
 
         }
@@ -274,6 +277,8 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     @Override
     public void onApConfigResult(boolean success) {
+
+
         if (loader.isShowing()) {
             loader.dismiss();
 
@@ -289,7 +294,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "AP Config",
                     (dialog, which) -> {
                         dialog.dismiss();
-                        LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
+                        //LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
                         Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
                         instruc.putExtra("wifi", true);
                         mWifiConfigActivity.startActivity(instruc);
@@ -301,6 +306,8 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     @Override
     public void onSmartLinkConfigResult(boolean sucess) {
+
+
         if (loader.isShowing()) {
             loader.dismiss();
         }
@@ -321,11 +328,11 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "AP Config",
                     (dialog, which) -> {
                         dialog.dismiss();
-                        LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
+                        //LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
                         Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
                         instruc.putExtra("wifi", true);
                         mWifiConfigActivity.startActivity(instruc);
-                        mWifiConfigActivity.finish();
+                        //mWifiConfigActivity.finish();
                     });
             alertDialog.show();
         }
@@ -352,7 +359,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
+                            //LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
 
                             //AVIK
                             if (!new InstructionSharedPreference(mWifiConfigActivity).isInstructionShown(mWifiConfigActivity, LoginShared.getRegistrationDataModel(mWifiConfigActivity).getData().getUser().get(0).getUserId())) {

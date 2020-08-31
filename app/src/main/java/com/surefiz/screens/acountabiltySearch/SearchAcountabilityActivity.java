@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.models.CircleUserResponse;
@@ -54,7 +55,6 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         view = View.inflate(this, R.layout.activity_search_accountability, null);
         addContentView(view);
         initializeView();
-
     }
 
     private void initializeView() {
@@ -105,8 +105,6 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
     }
 
     private void callSearchCircleUserApi(final String keyword) {
-
-
         loadingData.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -225,8 +223,6 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
 
     //Service call to send/cancel request to add in circle
     private void callAddToCircleUserApi(final int listPosition, final String connectionType) {
-
-
         loadingData.show_with_label("Requesting...");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -287,7 +283,7 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
     }
 
     public void showResponseDialog(int status, String message) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        /*AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setMessage(message);
         dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -301,6 +297,18 @@ public class SearchAcountabilityActivity extends BaseActivity implements SearchC
         });
 
         dialog.create();
-        dialog.show();
+        dialog.show();*/
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(message);
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+                callSearchCircleUserApi(searchBar.getText().toString().trim());
+
+            }
+        });
     }
 }

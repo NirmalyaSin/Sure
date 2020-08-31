@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimaryDark"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rl_back"
@@ -64,6 +64,7 @@
         android:id="@+id/rl_weight_assign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
         android:layout_below="@+id/rl_header_user_list"
         android:visibility="gone"
         android:padding="@dimen/_15sdp">
@@ -74,7 +75,7 @@
             android:layout_height="wrap_content"
             android:text="Are you want to assign this weight screen"
             android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_18sdp"
+            android:textSize="@dimen/_16sdp"
             android:layout_centerHorizontal="true"/>
 
         <RelativeLayout

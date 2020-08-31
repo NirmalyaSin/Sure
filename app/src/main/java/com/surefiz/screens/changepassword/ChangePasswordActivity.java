@@ -43,8 +43,6 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_change_password, null);
         addContentView(view);
-
-
         loader = new LoadingData(this);
         viewBind();
         setHeaderView();
@@ -80,7 +78,6 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_submit:
-
                 if (et_old.getText().toString().trim().equals("")) {
                     MethodUtils.errorMsg(this, "Please enter your old password");
                 } else if (et_new.getText().toString().trim().equals("")) {
@@ -117,8 +114,6 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
     }
 
     private void callPasswordChangeApi() {
-
-
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);

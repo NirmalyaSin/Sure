@@ -24,15 +24,15 @@
             android:weightSum="3">
 
             <TextView
-                android:id="@+id/txt_notification_stepped"
+                android:id="@+id/txt_notification_battery"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:fontFamily="@font/roboto_medium"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Someone\nStepped"
+                android:text="Scale\nScreen"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
 
@@ -60,17 +60,18 @@
                 android:background="@android:color/transparent" />
 
             <TextView
-                android:id="@+id/txt_notification_battery"
+                android:id="@+id/txt_notification_stepped"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:fontFamily="@font/roboto_medium"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="Scale\nScreen"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Someone\nStepped"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_12sdp" />
+
 
         </LinearLayout>
 

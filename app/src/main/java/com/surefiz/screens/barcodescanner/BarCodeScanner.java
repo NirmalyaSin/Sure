@@ -29,8 +29,6 @@ public class BarCodeScanner extends AppCompatActivity implements ZBarScannerView
         setContentView(R.layout.activity_bar_code_scanner);
         ButterKnife.bind(this);
 
-
-
         mScannerView = findViewById(R.id.zBarScannerView);
 
         iv_back.setOnClickListener(new View.OnClickListener() {

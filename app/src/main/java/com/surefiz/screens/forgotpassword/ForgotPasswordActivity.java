@@ -68,7 +68,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     }
 
     private void setValidationAndApiCall() {
-
         if (et_email.getText().toString().equals("")) {
             MethodUtils.errorMsg(this, "Please enter your email");
         } else if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
@@ -79,7 +78,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     }
 
     private void callForgotApi() {
-
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);

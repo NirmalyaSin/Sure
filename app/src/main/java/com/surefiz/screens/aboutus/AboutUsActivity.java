@@ -23,8 +23,6 @@ public class AboutUsActivity extends BaseActivity {
         url = getIntent().getStringExtra("url");
         setHeaderView();
         loadUrl();
-
-
     }
 
     private void viewBind() {

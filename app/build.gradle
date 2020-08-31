@@ -9,8 +9,8 @@ android {
         targetSdkVersion 29
 
         //This is for live build
-        /*versionCode 13
-        versionName "2.1"*/
+        /*versionCode 12
+        versionName "2.0"*/
 
         //This is for Debug build
         versionCode 16
@@ -97,6 +97,7 @@ dependencies {
     implementation "com.android.support:support-emoji:28.0.0"
     implementation 'me.dm7.barcodescanner:zbar:1.9.13'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+
 
     implementation project(path: ':pickerview')
 

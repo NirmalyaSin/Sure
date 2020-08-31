@@ -88,7 +88,6 @@ public class BMIDetailsActivity extends AppCompatActivity {
         //Bind ButterKnife to the view
         ButterKnife.bind(this);
         //Initialize Loader
-
         loader = new LoadingData(this);
         LoginShared.setWeightFromNotification(this, "0");
         Intent intent = getIntent();
@@ -102,7 +101,6 @@ public class BMIDetailsActivity extends AppCompatActivity {
         }
 
         img_bmi_back.setOnClickListener(view -> {
-
             startActivity(new Intent(this, DashBoardActivity.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finishAffinity();
@@ -182,8 +180,6 @@ public class BMIDetailsActivity extends AppCompatActivity {
     }*/
 
     private void setBMIProgressChart(String bmiPercentage) {
-
-
         bmiProgressChart.setUsePercentValues(true);
         bmiProgressChart.getDescription().setEnabled(false);
         bmiProgressChart.setExtraOffsets(5, 10, 5, 5);
@@ -321,8 +317,6 @@ public class BMIDetailsActivity extends AppCompatActivity {
 
     //Api to get the BMI data
     private void callBMIApi(final String serverUserId, final String scaleUserId) {
-
-
         loader.show();
         //Call API Using Retrofit
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);

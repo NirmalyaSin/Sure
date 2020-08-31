@@ -25,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.application.MyApplicationClass;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.chat.adapter.ChatAdapter;
@@ -101,7 +102,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         handler = new Handler();
         initializeImageLoader();
         myApplicationClass = (MyApplicationClass) getApplication();
@@ -183,7 +183,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     }
 
     private void setMessage() {
-
         if (myApplicationClass.chatListNotification.size() > 0) {
             arrayListConversation.addAll(myApplicationClass.chatListNotification);
             saveMessageCount = arrayListConversation.size();
@@ -218,7 +217,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     }
 
     private void callChatListApi(final String receiverId, final int newPagination) {
-
         if (oldPagination < newPagination || oldPagination == 0) {
             //Replace Old value with newer one.
             oldPagination = newPagination;
@@ -311,8 +309,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     }
 
     private void moveToEnd() {
-
-
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -351,24 +347,20 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
 
 
     public void showNoRecordsDialog(String message) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
-        alertDialog.setTitle(R.string.app_name_otp);
-        //alertDialog.setMessage(R.string.chat_not_found);
-        alertDialog.setMessage(message);
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(message);
+        customAlert.setKeyName("","Got it");
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
             }
         });
-
-        alertDialog.create();
-        alertDialog.show();
     }
 
     private void callSendChatApi(final String message) {
-
         //Show loader
         //   loadingData.show_with_label("Loading...");
         //Call API Using Retrofit
@@ -436,7 +428,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
 
     @Override
     public void onScrollToTop(int scrollPosition) {
-
         //Calculate next pagination
         int div = arrayListConversation.size() / 25;
         int pagination = div * 25;

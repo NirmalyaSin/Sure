@@ -49,8 +49,6 @@ public class SignUpActivity extends SignUpView {
         Log.e("SignUp-orderId",":::::::::::"+orderId);
         Log.e("SignUp-scaleId",":::::::::::"+scaleId);
 
-
-
         addPreferredListAndCall();
         addBodyList();
         addGenderListAndCall();
@@ -87,7 +85,7 @@ public class SignUpActivity extends SignUpView {
         learnList.add("CES");
         learnList.add("News");
         learnList.add("Printed Media");
-        learnList.add("SureFiz® Website");
+        learnList.add("SureFiz Website");
         learnList.add("Others");
 
 
@@ -305,7 +303,7 @@ public class SignUpActivity extends SignUpView {
         stateIDList.clear();
         for (int i = 0; i < data.size(); i++) {
 
-            /*if (i == 0) {
+           /* if (i == 0) {
                 et_state.setText(data.get(i).getStateName());
                 selectedStateId=data.get(i).getStateID();
 

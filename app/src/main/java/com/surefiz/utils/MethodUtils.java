@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.surefiz.R;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.dialog.ErrorMessageDialog;
 
 import java.text.DateFormat;
@@ -43,7 +44,7 @@ public class MethodUtils {
         window.setStatusBarColor(ContextCompat.getColor(activity, R.color.statusBarColor));
     }
 
-    public static void errorMsg(Context context, String msg) {
+    public static void errorMsg(Activity context, String msg) {
         ErrorMessageDialog.getInstant(context).show(msg);
     }
 
@@ -84,15 +85,14 @@ public class MethodUtils {
 
     public static void showInfoDialog(Activity activity,String message) {
 
-        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-        alertDialog.setTitle(activity.getResources().getString(R.string.app_name_splash));
-        alertDialog.setMessage(Html.fromHtml(message));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                (dialog, which) -> {
-                    dialog.dismiss();
-                });
-
-
-        alertDialog.show();
+        CustomAlert customAlert=new CustomAlert(activity);
+        customAlert.setSubText(""+Html.fromHtml(message));
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+            }
+        });
     }
 }

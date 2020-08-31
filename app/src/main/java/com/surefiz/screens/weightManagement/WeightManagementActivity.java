@@ -1,7 +1,5 @@
 package com.surefiz.screens.weightManagement;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +14,7 @@ import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -101,8 +100,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         btn_decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 et_time_loss.setEnabled(true);
                 et_units.setEnabled(true);
                 et_weight.setEnabled(true);
@@ -190,7 +187,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void addSelectionListAndCall() {
-
         desiredWeightSelectionList.add("I Will Provide The Info");
         desiredWeightSelectionList.add("I Want " + getResources().getString(R.string.app_name_splash) + " To Suggest");
 
@@ -251,8 +247,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void callApiforweightUpdate() {
-
-
         if (btn_accept.getText().equals("Update")) {
 
             sendWeightManagementDetails();
@@ -308,8 +302,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void getWeightManagementApi() {
-
-
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -360,7 +352,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void showData(JSONObject jsnObject) {
-
 
         units = jsnObject.optString("preferredUnits");
         weight = et_weight.getText().toString().trim();
@@ -426,8 +417,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             et_desired_weight_selection.setText(desiredWeightSelectionList.get(1));
 
             //et_weight_managment.setText(managementList.get(1));
-            findViewById(R.id.ll_desired_weight_selection).setVisibility(View.GONE);
-            findViewById(R.id.rl_desired_weight_selection).setVisibility(View.GONE);
+            findViewById(R.id.ll_desired_weight_selection).setVisibility(View.VISIBLE);
+            findViewById(R.id.rl_desired_weight_selection).setVisibility(View.VISIBLE);
             findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
             findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
 
@@ -649,7 +640,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_back:
-
                 if (getIntent().getBooleanExtra("isInitiatedFromProfile", false)) {
                     finish();
                 } else {
@@ -660,32 +650,26 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 }
                 break;
             case R.id.et_weight:
-
                 showAndDismissWeightPopup();
                 break;
 
             case R.id.et_time_loss:
-
                 showAndDismissTimePopup();
                 break;
 
             case R.id.et_units:
-
                 showAndDismissPrefferedPopup();
                 break;
 
             case R.id.btn_submit:
-
                 showWeightUpdateDialog();
                 break;
 
             case R.id.et_weight_managment:
-
                 showAndDismissManagementPopup();
                 break;
 
             case R.id.et_desired_weight_selection:
-
                 showAndDismissSelectionPopup();
                 break;
         }
@@ -745,8 +729,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 return;
             }
         } else {
-            type = "1";
-            userselectionbody = "0";
+            type = "2";
+            userselectionbody = "1";
             //weight = "";
             time = "";
         }
@@ -818,14 +802,14 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     public void showResponseDialog(String message) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(WeightManagementActivity.this);
-        alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage(message);
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(message);
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
                 Intent loginIntent;
                 if (isnotification.equals("7")) {
                     loginIntent = new Intent(WeightManagementActivity.this, DashBoardActivity.class);
@@ -837,10 +821,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 finish();
             }
         });
-
-        alertDialog.create();
-
-        alertDialog.show();
     }
 
     private void showAndDismissWeightPopup() {
@@ -874,14 +854,16 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     public void showWeightUpdateDialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(WeightManagementActivity.this);
-        alertDialog.setTitle(R.string.app_name_otp);
-        alertDialog.setMessage("Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure you want to proceed?");
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(getString(R.string.Changing));
+        customAlert.setCancelVisible();
+        customAlert.setKeyName("No","Yes");
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
 
                 if (selectedWeightManagmentGoal == 0 && selectedDesiredWeightSelection == 0) {
                     if (et_weight.getText().toString().trim().equals("")) {
@@ -902,18 +884,15 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             }
         });
 
-        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                customAlert.dismiss();
+
                 et_weight.setText(weight_value);
                 et_time_loss.setText(time_value);
                 et_units.setText(units_value);
             }
         });
-
-        alertDialog.create();
-
-        alertDialog.show();
     }
 }

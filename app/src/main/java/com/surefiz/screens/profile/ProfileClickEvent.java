@@ -1184,6 +1184,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                         //setData();
                         getProfileDataAndSet();
                         activity.showImage();
+
                     } else if (jsonObject.optInt("status") == 2 || jsonObject.optInt("status") == 3) {
                         String deviceToken = LoginShared.getDeviceToken(activity);
                         LoginShared.destroySessionTypePreference(activity);
@@ -1209,7 +1210,6 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
             }
         });
     }
-
 
     private void callCountryListApi() {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);

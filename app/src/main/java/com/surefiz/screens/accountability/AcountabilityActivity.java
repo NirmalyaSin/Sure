@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.accountability.adapter.AllCircleUserAdapter;
@@ -55,6 +56,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     private ArrayList<User> arrayListUsers = new ArrayList<User>();
     private AllCircleUserAdapter mAllCircleUserAdapter;
     private SwipeRefreshLayout swiperefresh;
+    CustomAlert customAlert;
 
 
     @Override
@@ -62,7 +64,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_accountability, null);
         addContentView(view);
-
         initializeImageLoader();
         setHeaderView();
         setSwipeRefresh();
@@ -89,7 +90,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void callCircleUserListApi(boolean isSwipe) {
-
         if(!isSwipe)
             loadingData.show_with_label("Loading");
 
@@ -149,7 +149,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void setSwipeRefresh(){
-
         swiperefresh = findViewById(R.id.swiperefresh);
         swiperefresh.setColorSchemeColors(R.color.blue, R.color.purple, R.color.blue);
 
@@ -183,8 +182,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void setHeaderView() {
-
-
         tv_universal_header.setText("Accountability Circle");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
@@ -226,7 +223,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     @Override
     public void onSendMessageClick(int position) {
-
         //Go to Chat Page
         Intent chatIntent = new Intent(this, ChatActivity.class);
         chatIntent.putExtra("reciver_id", arrayListUsers.get(position).getUser_id());
@@ -236,7 +232,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
 
     @Override
     public void onPerformanceClick(int position) {
-
         Intent intent = new Intent(AcountabilityActivity.this, DashBoardActivity.class);
         intent.putExtra("id", arrayListUsers.get(position).getUser_id());
         intent.putExtra("page", "1");
@@ -261,7 +256,6 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
     private void showUserImage(int position) {
-
         Dialog dialog =new Dialog(this);
         dialog.setContentView(R.layout.expanded_image_layout);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -280,25 +274,35 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
     }
 
 
-    private void showUserConfirmation(int position) {
+    public void showUserConfirmation(int position) {
 
-        AlertDialog alertDialog = new AlertDialog.Builder(AcountabilityActivity.this).create();
-        alertDialog.setTitle(this.getResources().getString(R.string.delete_user_confirmation));
-        //alertDialog.setMessage("Your Configuration failed to complete. Would you like to configure AP?");
-        alertDialog.setMessage("Do you want to unfriend " + arrayListUsers.get(position).getUser_name() + "?");
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
-                (dialog, which) -> dialog.dismiss());
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
-                (dialog, which) -> {
-                    dialog.dismiss();
-                    callRemoveAccountUserApi(position);
-                });
-        alertDialog.show();
+        customAlert=new CustomAlert(this);
+        customAlert.setHeaderText(getString(R.string.delete_user_confirmation));
+        customAlert.setSubText("Do you want to unfriend " + arrayListUsers.get(position).getUser_name() + "?");
+        customAlert.setKeyName("No","Yes");
+        customAlert.setCancelVisible();
+        customAlert.show();
+
+        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+            }
+        });
+
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+                callRemoveAccountUserApi(position);
+            }
+        });
+
+
     }
 
 
     private void callRemoveAccountUserApi(int position) {
-
         loadingData.show_with_label("Loading");
 
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);

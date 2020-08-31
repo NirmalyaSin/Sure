@@ -3,6 +3,7 @@ package com.surefiz.screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -50,7 +51,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         MethodUtils.fullScreen(this);
-
 
         System.out.println("instructionShown: "+ new InstructionSharedPreference(SplashActivity.this).getInstructionVisibility(SplashActivity.this));
 
@@ -178,6 +178,8 @@ public class SplashActivity extends AppCompatActivity {
                                     intent.putExtra("shouldOpenWeightAssignView", true);
                                     intent.putExtra("userWeight", jsonObject1.optInt("userWeight"));
                                     intent.putExtra("scaleMacAddress", jsonObject1.optString("scaleMacAddress"));
+                                    intent.putExtra("text", jsonObject1.optString("text"));
+
                                 }
 
                                 startActivity(intent);
@@ -306,7 +308,7 @@ public class SplashActivity extends AppCompatActivity {
                  if (!LoginShared.getRegistrationComplete(this)) {
                     Intent intent = new Intent(this, RegistrationActivity.class);
                     intent.putExtra("completeStatus", "0");
-                    intent.putExtra("registrationModelData", LoginShared.getRegistrationResponse(this));
+                    intent.putExtra("registrationModelData",LoginShared.getRegistrationResponse(this));
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();

@@ -1,7 +1,6 @@
 package com.surefiz.screens.signup;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,6 +28,7 @@ import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -492,21 +492,20 @@ public class SignUpView extends AppCompatActivity {
 
     public void showInfoDialog(String message) {
 
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(""+Html.fromHtml(message));
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
 
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
-        alertDialog.setMessage(Html.fromHtml(message));
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                (dialog, which) -> {
-                    dialog.dismiss();
-
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finishAffinity();
-                });
-        alertDialog.show();
+                Intent intent = new Intent(SignUpView.this, LoginActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finishAffinity();
+            }
+        });
     }
 
 }

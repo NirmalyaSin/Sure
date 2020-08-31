@@ -1,8 +1,6 @@
 package com.surefiz.screens.mydevice;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -25,6 +23,7 @@ import android.widget.TextView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.apconfig.ApConfigActivity;
@@ -214,7 +213,6 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
         super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_update:
-
                 if (!ConnectionDetector.isConnectingToInternet(this)) {
                     MethodUtils.errorMsg(this, getString(R.string.no_internet));
                 } else if (et_id.getText().toString().trim().equals("")) {
@@ -231,7 +229,6 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.rl_back:
-
                 Intent loginIntent = new Intent(MyDeviceActivity.this, SettingsActivity.class);
                 startActivity(loginIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -240,7 +237,6 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
 
 
             case R.id.btn_scan:
-
                 callScanner();
 
 
@@ -265,27 +261,19 @@ public class MyDeviceActivity extends BaseActivity implements View.OnClickListen
 
     private void showUpdateInfoDialog(String message) {
 
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
-        alertDialog.setMessage(Html.fromHtml(message));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                (dialog, which) -> {
-                    dialog.dismiss();
-
-                    finish();
-
-                    /*if (LoginShared.getRegistrationDataModel(this) != null) {
-                        tv_scale_id.setText("Current scale ID: " + formatScaleId(LoginShared.getRegistrationDataModel(MyDeviceActivity.this).getData().getUser().get(0).getUserMac()));
-                        et_id.setText("");
-                        et_confirm_scale_id.setText("");
-                    }*/
-                });
-
-        alertDialog.show();
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(""+Html.fromHtml(message));
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+                finish();
+            }
+        });
     }
 
     private void changeScaleIdToServer() {
-
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);

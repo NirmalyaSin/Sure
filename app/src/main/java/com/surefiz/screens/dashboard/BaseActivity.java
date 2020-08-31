@@ -305,7 +305,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 userIntent.putExtra("showSkipButton", true);
                 startActivity(userIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                //finish();
+                finish();
                 break;
             case R.id.tv_profile:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

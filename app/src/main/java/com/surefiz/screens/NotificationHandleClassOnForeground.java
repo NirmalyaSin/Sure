@@ -56,6 +56,7 @@ public class NotificationHandleClassOnForeground extends Activity {
                         intent.putExtra("shouldOpenWeightAssignView", true);
                         intent.putExtra("userWeight", getIntent().getIntExtra("userWeight",0));
                         intent.putExtra("scaleMacAddress", getIntent().getStringExtra("scaleMacAddress"));
+                        intent.putExtra("text", getIntent().getStringExtra("text"));
                     }
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

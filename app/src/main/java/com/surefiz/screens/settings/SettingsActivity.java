@@ -30,7 +30,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         addContentView(view);
         initializeView();
         setClickEvent();
-
     }
 
     private void setClickEvent() {
@@ -67,7 +66,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_config:
-
                 Intent settingsIntent = new Intent(this, SetUpPreparation.class);
                 settingsIntent.putExtra("fromSettings", true);
                 startActivity(settingsIntent);
@@ -75,14 +73,12 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 //finish();
                 break;
             case R.id.rl_device:
-
                 Intent deviceIntent = new Intent(this, MyDeviceActivity.class);
                 startActivity(deviceIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 // finish();
                 break;
             case R.id.rl_privacy:
-
                 //    MethodUtils.errorMsg(SettingsActivity.this, "Under Development");
                 Intent privacyIntent = new Intent(this, PrivacyActivity.class);
                 startActivity(privacyIntent);
@@ -90,7 +86,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 //    finish();
                 break;
             case R.id.rl_password:
-
 //                MethodUtils.errorMsg(SettingsActivity.this, "Under Development");
                 Intent passwordIntent = new Intent(this, ChangePasswordActivity.class);
                 startActivity(passwordIntent);
@@ -98,14 +93,12 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.rl_weight:
-
                 Intent weightIntent = new Intent(this, WeightManagementActivity.class);
                 startActivity(weightIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 break;
             case R.id.rl_apconfig:
-
                 Intent apconfigIntent = new Intent(this, ApConfigActivity.class);
                 startActivity(apconfigIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -42,10 +42,9 @@ public class InstructionActivity extends AppCompatActivity {
         mInstructionActivityonclick = new InstructionActivityonclick(this);
 
 
-        LoginShared.setstatusforwifivarification(InstructionActivity.this, true);
-
         new InstructionSharedPreference(InstructionActivity.this).setInstructionVisibility(InstructionActivity.this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
         //LoginShared.setInstructionVisibility(InstructionActivity.this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId());
+        LoginShared.setstatusforwifivarification(InstructionActivity.this, true);
     }
 
     @Override
@@ -55,7 +54,6 @@ public class InstructionActivity extends AppCompatActivity {
     }
 
     private void callUserListApi() {
-
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 

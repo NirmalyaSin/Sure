@@ -47,6 +47,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.surefiz.R;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.helpers.PermissionHelper;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
@@ -239,7 +240,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         long scaleId = LoginShared.getUserMacId(this);
         String networkSSID = " "+scaleName + scaleId+" ";
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       /* final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Please note important information below");
         builder.setMessage(Html.fromHtml(getString(R.string.androidQ)+ "<b>"+networkSSID+"</b>"+getString(R.string.androidQ2)))
                 .setCancelable(false)
@@ -252,23 +253,38 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 });
         final AlertDialog alert = builder.create();
         alert.setCanceledOnTouchOutside(false);
-        alert.show();
+        alert.show();*/
+
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setHeaderText("Please note important information below");
+
+        customAlert.setSubText(""+Html.fromHtml(getString(R.string.androidQ)+ "<b>"+networkSSID+"</b>"+getString(R.string.androidQ2)));
+        customAlert.setKeyName("","Got It");
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.cancel();
+                apConfigAction();
+            }
+        });
+
     }
+
 
     private void buildAlertMessageNoGps() {
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your GPS seems to be disabled, you need to enable it to use this service?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        dialog.cancel();
-                        Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivityForResult(intent, LOCATION_SETTINGS);
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText("Your GPS seems to be disabled, you need to enable it to use this service?");
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.cancel();
+                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(intent, LOCATION_SETTINGS);
+            }
+        });
     }
 
     public boolean checkLocationStatus() {
@@ -467,36 +483,35 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     private void showApConfigCofirmationDialog(String SSID) {
 
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
-
         String messageStr = getResources().getString(R.string.app_name_splash) + " Wants to Join Wi-Fi Network \"" + SSID + "\"";
 
-        alertDialog.setMessage(messageStr);
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Join",
-                (dialog, which) -> {
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(messageStr);
+        customAlert.setCancelVisible();
+        customAlert.setKeyName("Cancel","Join");
+        customAlert.show();
 
-                    dialog.dismiss();
-                    changeAPConfig();
-                });
+        customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+            }
+        });
 
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                (dialog, which) -> {
-                    dialog.dismiss();
-
-                    /*btnlockwifi.setEnabled(false);
-                    btnConfigure.setEnabled(true);
-                    btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
-                    btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));*/
-                });
-        alertDialog.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
+                changeAPConfig();
+            }
+        });
     }
 
 
     private void showalertdialog(boolean success) {
 
 
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        /*AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
         if (!success) {
 
@@ -512,27 +527,16 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Step on Scale",
                         (dialog, which) -> {
                             dialog.dismiss();
-                            //LoginShared.setstatusforwifivarification(this, true);
+                            LoginShared.setstatusforwifivarification(this, true);
 
                             if (!new InstructionSharedPreference(ApConfigActivity.this).isInstructionShown(ApConfigActivity.this, LoginShared.getRegistrationDataModel(ApConfigActivity.this).getData().getUser().get(0).getUserId())) {
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-
-                                    androidQRedirection(InstructionActivity.class);
-
-                                }else {
-                                    Intent instruc = new Intent(this, InstructionActivity.class);
-                                    startActivity(instruc);
-                                    finish();
-                                }
+                                Intent instruc = new Intent(this, InstructionActivity.class);
+                                startActivity(instruc);
+                                finish();
                             } else {
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                                    androidQRedirection(DashBoardActivity.class);
-
-                                }else {
-                                    Intent dashBoardIntent = new Intent(this, DashBoardActivity.class);
-                                    startActivity(dashBoardIntent);
-                                    finish();
-                                }
+                                Intent dashBoardIntent = new Intent(this, DashBoardActivity.class);
+                                startActivity(dashBoardIntent);
+                                finish();
                             }
                         });
             } else {
@@ -542,15 +546,75 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                         (dialog, which) -> {
                             //new InstructionSharedPreference(ApConfigActivity.this).setAnroidQ(true);
                             dialog.dismiss();
-
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                                androidQRedirection(SettingsActivity.class);
-                            }else
-                                finish();
+                            finish();
                         });
             }
         }
-        alertDialog.show();
+        alertDialog.show();*/
+
+        CustomAlert customAlert = new CustomAlert(this);
+
+        if (!success) {
+            customAlert.setSubText("Your Configuration failed to complete.");
+            customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    customAlert.dismiss();
+                }
+            });
+
+        }else {
+
+            if (getIntent().getBooleanExtra("wifi", false)) {
+
+                customAlert.setSubText(getResources().getString(R.string.configrution));
+                customAlert.setKeyName("","Step on Scale");
+                customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        customAlert.dismiss();
+                        //LoginShared.setstatusforwifivarification(ApConfigActivity.this, true);
+
+                        if (!new InstructionSharedPreference(ApConfigActivity.this).isInstructionShown(ApConfigActivity.this, LoginShared.getRegistrationDataModel(ApConfigActivity.this).getData().getUser().get(0).getUserId())) {
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
+                                androidQRedirection(InstructionActivity.class);
+
+                            }else {
+                                Intent instruc = new Intent(ApConfigActivity.this, InstructionActivity.class);
+                                startActivity(instruc);
+                                finish();
+                            }
+                        } else {
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                                androidQRedirection(DashBoardActivity.class);
+
+                            }else {
+                                Intent dashBoardIntent = new Intent(ApConfigActivity.this, DashBoardActivity.class);
+                                startActivity(dashBoardIntent);
+                                finish();
+                            }
+                        }
+                    }
+                });
+
+            } else {
+
+                customAlert.setSubText("Your AP Configuration completed successfully.");
+                customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        customAlert.dismiss();
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                            androidQRedirection(SettingsActivity.class);
+                        }else
+                            finish();
+                    }
+                });
+
+            }
+            customAlert.show();
+        }
     }
 
     protected void androidQRedirection(Class x){

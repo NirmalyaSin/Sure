@@ -68,7 +68,7 @@
                 android:paddingStart="@dimen/_14sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Profile Complete Status:"
+                android:text="Payment and Profile Status:"
                 android:textColor="@color/colorBlack" />
 
             <TextView

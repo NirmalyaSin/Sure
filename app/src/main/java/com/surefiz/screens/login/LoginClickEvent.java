@@ -65,19 +65,16 @@ public class LoginClickEvent implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.tv_forgetPassword:
-
                 mLoginActivity.startActivity(new Intent(mLoginActivity, ForgotPasswordActivity.class));
                 mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
 
             case R.id.iv_back:
-
                 //callWelcome();
                 mLoginActivity.onBackPressed();
                 break;
 
-            case R.id.btnLogin:
-
+                case R.id.btnLogin:
                 blankvalidationandapicall();
                 break;
 
@@ -86,7 +83,6 @@ public class LoginClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.tv_register:
-
                 Intent regIntent = new Intent(mLoginActivity, MembershipActivity.class);
                 regIntent.putExtra("completeStatus", "1");
                 mLoginActivity.startActivity(regIntent);
@@ -216,18 +212,16 @@ public class LoginClickEvent implements View.OnClickListener {
                         //mLoginActivity.finishAffinity();
                     } else {
                         //if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                        //AVIK
-                        //Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
+                            //AVIK
+                            //Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
                         //if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
 
                         if(registrationModel.getData().getUser().get(0).getIsfirsttime()==1){
-
                             Intent intent = new Intent(mLoginActivity, SetUpPreparation.class);
                             intent.putExtra("fromLogin",true);
                             mLoginActivity.startActivity(intent);
                             mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else {
-
                             LoginShared.setstatusforwifivarification(mLoginActivity, true);
                             Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
                             mLoginActivity.startActivity(intent);
@@ -267,12 +261,10 @@ public class LoginClickEvent implements View.OnClickListener {
 
                             //if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
                             if(registrationModel.getData().getUser().get(0).getIsfirsttime()==1){
-
                                 Intent instruc = new Intent(mLoginActivity, InstructionActivity.class);
                                 mLoginActivity.startActivity(instruc);
                                 mLoginActivity.finish();
                             }else {
-
                                 LoginShared.setstatusforwifivarification(mLoginActivity, true);
                                 Intent intent = new Intent(mLoginActivity, DashBoardActivity.class);
                                 mLoginActivity.startActivity(intent);

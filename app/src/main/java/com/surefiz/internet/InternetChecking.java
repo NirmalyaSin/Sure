@@ -1,10 +1,6 @@
 package com.surefiz.internet;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.util.Log;
 
 import java.net.InetAddress;

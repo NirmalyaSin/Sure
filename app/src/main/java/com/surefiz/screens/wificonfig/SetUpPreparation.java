@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.welcome.WelcomeActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +35,6 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_set_up_preparation);
         ButterKnife.bind(this);
 
-
         if(getIntent().hasExtra("fromLogin")){
             fromLogin=getIntent().getBooleanExtra("fromLogin",false);
         }
@@ -58,12 +58,10 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
 
         switch (v.getId()){
             case R.id.rl_back:
-
                 onBackPressed();
                 break;
 
             case R.id.btnOk:
-
                 Intent intent = new Intent(this, WifiConfigActivity.class);
                 if(fromLogin){
                     intent.putExtra("fromLogin",true);

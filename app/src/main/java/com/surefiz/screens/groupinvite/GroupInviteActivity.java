@@ -49,7 +49,6 @@ public class GroupInviteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         loader = new LoadingData(this);
         init();
-
     }
 
     private void init() {
@@ -65,11 +64,9 @@ public class GroupInviteActivity extends AppCompatActivity {
     public void manageClicks(View view) {
         switch (view.getId()) {
             case R.id.btn_register_invite:
-
                 getGroupData();
                 break;
             case R.id.btn_register_skip:
-
                 Intent loginIntent = new Intent(this, OtpActivity.class);
                 startActivity(loginIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -79,7 +76,6 @@ public class GroupInviteActivity extends AppCompatActivity {
     }
 
     private void getGroupData() {
-
         if (adapter != null) {
             ArrayList<ModelGroupInvite> groupInvites = adapter.getData();
             if (groupInvites != null && groupInvites.size() > 0) {
@@ -111,8 +107,6 @@ public class GroupInviteActivity extends AppCompatActivity {
     }
 
     private void callAPI(String allNames, String allEmails) {
-
-
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);

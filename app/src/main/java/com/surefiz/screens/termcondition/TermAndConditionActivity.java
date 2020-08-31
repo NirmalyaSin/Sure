@@ -22,8 +22,6 @@ public class TermAndConditionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         view = View.inflate(this, R.layout.activity_term_and_condition, null);
         addContentView(view);
-
-
         viewBind();
         setHeaderView();
         //url = "https://www.surefiz.com/AboutUs";
@@ -49,7 +47,6 @@ public class TermAndConditionActivity extends BaseActivity {
         rl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 finish();
             }
         });

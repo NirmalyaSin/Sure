@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.dialog.CustomAlert;
 import com.surefiz.dialog.amazon.AmazonDialog;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -56,7 +57,6 @@ public class ChooseActivity extends ChooseActivityView {
     }
 
     protected void callAmazon(){
-
         amazonDialog.show();
         amazonDialog.stepOneView();
         amazonDialog.btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +221,6 @@ public class ChooseActivity extends ChooseActivityView {
         amazonDialog.btn_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 isScanner=false;
                 amazonDialog.et_scaleId.setText("");
                 amazonDialog.et_con_scaleId.setText("");
@@ -236,7 +235,6 @@ public class ChooseActivity extends ChooseActivityView {
         amazonDialog.btn_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 amazonDialog.stepThreeView();
                 step=3;
             }
@@ -260,7 +258,6 @@ public class ChooseActivity extends ChooseActivityView {
         amazonDialog.btn_cancel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 step=1;
                 amazonDialog.stepOneView();
                 amazonDialog.dismiss();
@@ -270,7 +267,6 @@ public class ChooseActivity extends ChooseActivityView {
     }
 
     private void callVerifyApi(String orderID,boolean b) {
-
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -324,22 +320,23 @@ public class ChooseActivity extends ChooseActivityView {
 
     public void showInfoDialog(String message) {
 
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
-        alertDialog.setMessage(Html.fromHtml(message));
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                (dialog, which) -> {
-                    dialog.dismiss();
 
-                    Intent intent = new Intent(ChooseActivity.this, SignUpActivity.class);
-                    intent.putExtra("orderId", orderId);
-                    intent.putExtra("scaleId", scaleId);
+        CustomAlert customAlert=new CustomAlert(this);
+        customAlert.setSubText(""+Html.fromHtml(message));
+        customAlert.show();
+        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customAlert.dismiss();
 
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                });
-        alertDialog.show();
+                Intent intent = new Intent(ChooseActivity.this, SignUpActivity.class);
+                intent.putExtra("orderId", orderId);
+                intent.putExtra("scaleId", scaleId);
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
     }
 
 

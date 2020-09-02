@@ -9,12 +9,15 @@ android {
         targetSdkVersion 29
 
         //This is for live build
-        /*versionCode 12
-        versionName "2.0"*/
+
+        versionCode 14
+        versionName "2.2"
 
         //This is for Debug build
-        versionCode 16
-        versionName "2.1.9"
+
+        /*versionCode 16
+        versionName "2.1.9"*/
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

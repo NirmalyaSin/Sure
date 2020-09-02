@@ -25,6 +25,11 @@ public class Notification implements Parcelable {
     @SerializedName("serverUserId")
     String serverUserId;
 
+    @SerializedName("scaleMacAddress")
+    String scaleMacAddress;
+    @SerializedName("userWeight")
+    String userWeight;
+
     public Notification() {
     }
 
@@ -80,6 +85,9 @@ public class Notification implements Parcelable {
         dest.writeString(notificationType);
         dest.writeString(contentId);
         dest.writeString(serverUserId);
+
+        dest.writeString(scaleMacAddress);
+        dest.writeString(userWeight);
     }
 
     public String getNotificationId() {
@@ -152,6 +160,22 @@ public class Notification implements Parcelable {
 
     public void setserverUserId(String serverUserId) {
         this.serverUserId = serverUserId;
+    }
+
+    public String getUserWeight() {
+        return userWeight;
+    }
+
+    public void setUserWeight(String userWeight) {
+        this.userWeight = userWeight;
+    }
+
+    public String getScaleMacAddress() {
+        return scaleMacAddress;
+    }
+
+    public void setScaleMacAddress(String scaleMacAddress) {
+        this.scaleMacAddress = scaleMacAddress;
     }
 
     public static Creator<Notification> getCREATOR() {

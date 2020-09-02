@@ -40,11 +40,7 @@ public class NotificationHandleClassOnForeground extends Activity {
                 Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
                 Date currentDate = new Date();
                 long diff = currentDate.getTime() - date.getTime();
-
                 //*********************AVIK
-
-                //Log.d("Time_Diff",":::::"+currentDate.getTime()+"-"+date.getTime()+"="+diff);
-
                 int diffSecond = (int) (diff / 1000);
                 if (diffSecond < 120) {
                     int remainingTime=120-diffSecond;

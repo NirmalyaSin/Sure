@@ -22,6 +22,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiNetworkSpecifier;
 import android.net.wifi.WifiNetworkSuggestion;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PatternMatcher;
@@ -80,6 +81,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private ImageView iv_showPassword;
     private ImageView iv_hidePassword;
     private static int LOCATION_SETTINGS = 1000;
+    private static int DELAY = 15000;
     private PermissionHelper permissionHelper;
     private ConnectivityManager.NetworkCallback networkCallback;
     ConnectivityManager connectivityManager;
@@ -132,6 +134,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     private void setHeaderView() {
 
+
         tv_universal_header.setText("AP Configuration");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
@@ -156,12 +159,12 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     //if(!new InstructionSharedPreference(ApConfigActivity.this).getAnroidQ())
                         androidQ();
                 }else {
+
                     apConfigAction();
                 }
 
                 break;
             case R.id.btnlockwifi:
-
 
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
 
@@ -180,6 +183,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));
 
                 } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+
                     permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
                 } else if (!checkLocationStatus()) {
                     buildAlertMessageNoGps();
@@ -188,13 +192,13 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
                 break;
             case R.id.editSSID:
+
+
                 hideSoftKeyBoard();
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
 
                     isAutoConnecting = false;
                     hideSoftKeyBoard();
-
-
                     getAvailableSSID();
                 } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
                     permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
@@ -240,21 +244,6 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         long scaleId = LoginShared.getUserMacId(this);
         String networkSSID = " "+scaleName + scaleId+" ";
 
-       /* final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Please note important information below");
-        builder.setMessage(Html.fromHtml(getString(R.string.androidQ)+ "<b>"+networkSSID+"</b>"+getString(R.string.androidQ2)))
-                .setCancelable(false)
-                .setPositiveButton("Got It", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        dialog.cancel();
-                        apConfigAction();
-
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.setCanceledOnTouchOutside(false);
-        alert.show();*/
-
         CustomAlert customAlert=new CustomAlert(this);
         customAlert.setHeaderText("Please note important information below");
 
@@ -265,6 +254,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 customAlert.cancel();
+
                 apConfigAction();
             }
         });
@@ -280,6 +270,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 customAlert.cancel();
                 Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivityForResult(intent, LOCATION_SETTINGS);
@@ -442,6 +433,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                     Toast.makeText(this, "Could not connect to wifi network with scale name " + networkSSID, Toast.LENGTH_LONG).show();
                 }
             } else {
+
                 // Old code
                 WifiConfiguration conf = new WifiConfiguration();
                 conf.SSID = "\"" + networkSSID + "\"";
@@ -455,9 +447,24 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                         wifiManager.disconnect();
                         wifiManager.enableNetwork(i.networkId, true);
                         wifiManager.reconnect();
-                        btnConfigure.setEnabled(false);
-                        btnConfigure.setBackground(ContextCompat.getDrawable(ApConfigActivity.this, R.drawable.login_edit_rounded_corner_blue));
-                        showApConfigCofirmationDialog(networkSSID);
+
+                        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+
+                            new Handler().postDelayed(() -> {
+                                if (loader.isShowing()) {
+                                    loader.dismiss();
+                                }
+
+                                btnConfigure.setEnabled(false);
+                                btnConfigure.setBackground(ContextCompat.getDrawable(ApConfigActivity.this, R.drawable.login_edit_rounded_corner_blue));
+                                showApConfigCofirmationDialog(networkSSID);
+                            },DELAY);
+                        }else{
+
+                            btnConfigure.setEnabled(false);
+                            btnConfigure.setBackground(ContextCompat.getDrawable(ApConfigActivity.this, R.drawable.login_edit_rounded_corner_blue));
+                            showApConfigCofirmationDialog(networkSSID);
+                        }
 
                         break;
                     }
@@ -471,7 +478,6 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private void changeAPConfig() {
 
         //showDialog("Configuring...", true);
-
         new Handler().postDelayed(() -> {
 
             String ssid = editSSID.getText().toString();
@@ -494,6 +500,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 customAlert.dismiss();
             }
         });
@@ -501,6 +508,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 customAlert.dismiss();
                 changeAPConfig();
             }
@@ -510,48 +518,6 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
     private void showalertdialog(boolean success) {
 
-
-        /*AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name_splash));
-        if (!success) {
-
-            alertDialog.setMessage("Your Configuration failed to complete.");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    (dialog, which) -> {
-                        dialog.dismiss();
-                    });
-        } else {
-            if (getIntent().getBooleanExtra("wifi", false)) {
-                alertDialog.setMessage(getResources().getString(R.string.configrution));
-                //alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Update Weight",
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Step on Scale",
-                        (dialog, which) -> {
-                            dialog.dismiss();
-                            LoginShared.setstatusforwifivarification(this, true);
-
-                            if (!new InstructionSharedPreference(ApConfigActivity.this).isInstructionShown(ApConfigActivity.this, LoginShared.getRegistrationDataModel(ApConfigActivity.this).getData().getUser().get(0).getUserId())) {
-                                Intent instruc = new Intent(this, InstructionActivity.class);
-                                startActivity(instruc);
-                                finish();
-                            } else {
-                                Intent dashBoardIntent = new Intent(this, DashBoardActivity.class);
-                                startActivity(dashBoardIntent);
-                                finish();
-                            }
-                        });
-            } else {
-
-                alertDialog.setMessage("Your AP Configuration completed successfully.");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> {
-                            //new InstructionSharedPreference(ApConfigActivity.this).setAnroidQ(true);
-                            dialog.dismiss();
-                            finish();
-                        });
-            }
-        }
-        alertDialog.show();*/
-
         CustomAlert customAlert = new CustomAlert(this);
 
         if (!success) {
@@ -559,6 +525,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
             customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     customAlert.dismiss();
                 }
             });
@@ -587,6 +554,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                             }
                         } else {
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
                                 androidQRedirection(DashBoardActivity.class);
 
                             }else {
@@ -618,6 +586,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     }
 
     protected void androidQRedirection(Class x){
+
         Intent mStartActivity = new Intent(ApConfigActivity.this, x);
         mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mStartActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -637,6 +606,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
             loader.dismiss();*/
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
             connectivityManager.unregisterNetworkCallback(networkCallback);
         }
 
@@ -654,17 +624,24 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     }
 
     class WifiReceiver extends BroadcastReceiver {
+
         public void onReceive(Context c, Intent intent) {
 
                 scanResultsWifi.clear();
                 scanResultsWifi = mWifiManager.getScanResults();
+
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+
                 if (loader.isShowing()) {
                     loader.dismiss();
                 }
-                if (isAutoConnecting)
-                    autoConnect();
-                else
-                    ShowSSIDList();
+            }
+
+            if (isAutoConnecting)
+                autoConnect();
+            else
+                ShowSSIDList();
+
 
         }
     }
@@ -692,11 +669,5 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
             showConnectedWifiSSID();
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
     }
 }

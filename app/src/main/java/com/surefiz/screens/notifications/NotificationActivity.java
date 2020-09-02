@@ -284,7 +284,7 @@ public class NotificationActivity extends BaseActivity implements
         if (arrayListNotifications.size() >= position) {
             Notification item = arrayListNotifications.get(position);
 
-            if(item.getNotificationType().equals("1"))
+            if(item.getNotificationType().equals("1") || item.getNotificationType().equals("10"))
                 callReadNotification(item.getNotificationId(), item.getNotificationType(), position);
             else
                 notificationClick(item);
@@ -443,23 +443,70 @@ public class NotificationActivity extends BaseActivity implements
 
     private void notificationClick(Notification item) {
         switch (item.getNotificationType()) {
-            case "1":
+            case "10":
                 if (item.getNotificationDate() != null && item.getNotificationTime() != null) {
+                    String dateStr = item.getNotificationDate()  + " " + item.getNotificationTime();
+
                     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     try {
-                        Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(item.getNotificationDate() + " " + item.getNotificationTime()));
+                        /*Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(item.getNotificationDate() + " " + item.getNotificationTime()));
                         Date currentDate = new Date();
                         long diff = currentDate.getTime() - date.getTime();
                         int diffSecond = (int) (diff / 1000);
-                        if (diffSecond < 115) {
+                        if (diffSecond < 115) {*/
+
+                        Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
+                        Date currentDate = new Date();
+                        long diff = currentDate.getTime() - date.getTime();
+                        //*********************AVIK
+                        int diffSecond = (int) (diff / 1000);
+                        if (diffSecond < 120) {
+                            int remainingTime=120-diffSecond;
+
                             Intent intent = new Intent(this, WeightDetailsActivity.class);
-                            intent.putExtra("timerValue", diffSecond);
+                            intent.putExtra("timerValue", remainingTime);
                             intent.putExtra("fromPush", "1");
+
+                            intent.putExtra("shouldOpenWeightAssignView", true);
+                            intent.putExtra("userWeight", item.getUserWeight());
+                            intent.putExtra("scaleMacAddress", item.getScaleMacAddress());
+                            intent.putExtra("text", item.getNotificationText());
+
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             finish();
                         } else {
-                            //MethodUtils.errorMsg(this, "Sorry! Cannot connect to scale. Please try later.");
+                            MethodUtils.errorMsg(this, "Your notification is expired.");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+
+            case "1":
+                if (item.getNotificationDate() != null && item.getNotificationTime() != null) {
+                    String dateStr = item.getNotificationDate()  + " " + item.getNotificationTime();
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                    try {
+                        Date date = dateFormat.parse(MessagDateConverter.getConvertedNotificationDate(dateStr));
+                        Date currentDate = new Date();
+                        long diff = currentDate.getTime() - date.getTime();
+                        //*********************AVIK
+                        int diffSecond = (int) (diff / 1000);
+                        if (diffSecond < 120) {
+                            int remainingTime=120-diffSecond;
+
+                            Intent intent = new Intent(this, WeightDetailsActivity.class);
+                            intent.putExtra("timerValue", remainingTime);
+                            intent.putExtra("fromPush", "1");
+                            intent.putExtra("shouldOpenWeightAssignView", false);
+
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
+                        } else {
                             MethodUtils.errorMsg(this, "Your notification is expired.");
                         }
                     } catch (Exception e) {
@@ -489,4 +536,5 @@ public class NotificationActivity extends BaseActivity implements
                 break;
         }
     }
+
 }

@@ -135,7 +135,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private void setHeaderView() {
 
 
-        tv_universal_header.setText("AP Configuration");
+        tv_universal_header.setText("Scale WiFi Setup");
         iv_edit.setVisibility(View.GONE);
         btn_add.setVisibility(View.GONE);
         rlUserSearch.setVisibility(View.GONE);
@@ -560,7 +560,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
                             }else {
                                 Intent dashBoardIntent = new Intent(ApConfigActivity.this, DashBoardActivity.class);
                                 startActivity(dashBoardIntent);
-                                finish();
+                                finishAffinity();
                             }
                         }
                     }

@@ -36,7 +36,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".screens.wificonfig.SetUpPreparation"></activity>
+        <activity android:name=".screens.setupPreparation.SetUpPreparation"></activity>
         <activity android:name=".screens.barcodescanner.BarCodeScanner" />
         <activity
             android:name=".screens.SplashActivity"

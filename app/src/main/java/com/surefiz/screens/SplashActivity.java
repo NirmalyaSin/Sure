@@ -3,7 +3,6 @@ package com.surefiz.screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -23,7 +22,7 @@ import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.welcome.WelcomeActivity;
-import com.surefiz.screens.wificonfig.SetUpPreparation;
+import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;

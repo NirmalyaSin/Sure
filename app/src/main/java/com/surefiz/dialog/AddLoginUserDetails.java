@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.application.Constant;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.networkutils.ApiInterface;
@@ -420,7 +421,7 @@ public class AddLoginUserDetails extends Dialog {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <=30; i++) {
+        for (int i = 1; i <= Constant.WEEKS; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(activity, timeList, et_time_loss);

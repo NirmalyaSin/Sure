@@ -46,4 +46,6 @@
     <color name="broad_cast_gray">#F0F0F0</color>
     <color name="broad_cast_time">#6B6C81</color>
     <color name="broad_cast_text">#5A5963</color>
+    <color name="grey_color">#aaaaaa</color>
+
 </resources>

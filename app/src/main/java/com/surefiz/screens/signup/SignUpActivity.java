@@ -12,6 +12,7 @@ import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 
+import com.surefiz.application.Constant;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.bodycodition.BodyActivity;
@@ -431,7 +432,7 @@ public class SignUpActivity extends SignUpView {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <=30; i++) {
+        for (int i = 1; i <= Constant.WEEKS; i++) {
             timeList.add(i + " " + "Weeks");
         }
 

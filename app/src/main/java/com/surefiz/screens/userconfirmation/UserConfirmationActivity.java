@@ -13,6 +13,7 @@ import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.application.Constant;
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -472,7 +473,7 @@ public class UserConfirmationActivity extends BaseActivity implements View.OnCli
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <= 30; i++) {
+        for (int i = 1; i <= Constant.WEEKS; i++) {
             timeList.add(i + " " + "Weeks");
         }
 

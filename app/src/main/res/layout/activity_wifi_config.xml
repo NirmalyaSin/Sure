@@ -99,6 +99,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:gravity="start"
+                    android:text="@string/wifi_config"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />

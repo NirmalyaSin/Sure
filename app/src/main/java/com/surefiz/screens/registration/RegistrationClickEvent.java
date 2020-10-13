@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,11 +26,11 @@ import com.google.gson.Gson;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.application.Constant;
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.dialog.OpenCameraOrGalleryDialog;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.familyinvite.FamilyInviteActivity;
@@ -39,7 +38,7 @@ import com.surefiz.screens.groupinvite.GroupInviteActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
-import com.surefiz.screens.wificonfig.SetUpPreparation;
+import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
@@ -49,7 +48,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
@@ -252,7 +250,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <= 30; i++) {
+        for (int i = 1; i <= Constant.WEEKS; i++) {
             timeList.add(i + " " + "Weeks");
         }
 

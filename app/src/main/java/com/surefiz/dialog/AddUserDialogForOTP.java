@@ -3,14 +3,9 @@ package com.surefiz.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
 import android.text.Editable;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,6 +21,7 @@ import android.widget.TextView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.application.Constant;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
 import com.surefiz.dialog.weightpopup.WeigtUniversalPopup;
 import com.surefiz.interfaces.MoveTutorial;
@@ -34,7 +30,7 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
-import com.surefiz.screens.wificonfig.SetUpPreparation;
+import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -45,8 +41,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -769,7 +763,7 @@ public class AddUserDialogForOTP extends Dialog {
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <=30; i++) {
+        for (int i = 1; i <= Constant.WEEKS; i++) {
             timeList.add(i + " " + "Weeks");
         }
         timePopup = new UniversalPopup(activity, timeList, et_time_loss);

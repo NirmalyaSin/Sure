@@ -19,7 +19,7 @@
 
     <string name="edittext_hint"><font size="20">_</font></string>
     <!--<string name="wifi_config">Choose the wireless network on which you want your scale to  be connected.\nPlease make sure it is not a 5G Wifi.\nIf your router has 5G WiFi, It has two networks, on 5G and the other non-5G.\nPlease pick the non-5G</string>-->
-    <string name="wifi_config">Now, you are all set with your phone connected to the right 2.4 GHz WiFi and a WiFi symbol is blinking on the scale screen.\n\nEnter the WiFi password and tap on Configure.</string>
+    <string name="wifi_config">Enter the WiFi password, please make sure the WiFi password is correct.</string>
     <!--<string name="ap_config">To AP configuration follow the below step.\n 1) Enter the WiFI SSID and password.\n2)Lock WiFi Info\n 3) Go to the WiFi setting and pick the scale WiFi.\n4)Tap on the “AP Configure” Button.</string>-->
     <string name="ap_config"><!--To AP configuration follow the below step.\n\n-->1) Please enter your WiFi network name and password. \n\n2) Tap “Confirm” to confirm that the network name and password is accurate. \n\n3) Follow the instructions on the screen.</string>
     <string name="instruction_page_text">To Know Your Weight follow the steps below :</string>
@@ -107,20 +107,19 @@ complete his/her registration process.</string>
     <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during this signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
     <string name="androidQ">As a security measure, newer versions of Android have added an additional step to connect to WiFi. Therefore next, you will see a popup with temporary WiFi of your scale named, </string>
     <string name="androidQ2">please select this network to connect.</string>
-    <string name="AmazonAlready">I have bought subscription through Amazon Already</string>
+    <string name="FromWhere">From where did you \n bought Surefiz?</string>
+    <string name="AmazonAlready">From Amazon</string>
     <string name="ProvideWeightTime">"Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight &amp; Time”?"</string>
-    <string name="SureFizWebsite">I have already bought subscription through SureFiz Website</string>
-    <string name="ApplePurchase">I have not bought subscription from anywhere yet, I need to buy now</string>
-    <string name="NeitherSureFizNorAmazon">I have bought subscription through a source which was neither SureFiz nor Amazon</string>
+    <string name="SureFizWebsite">From SureFiz Website</string>
+    <string name="ApplePurchase">haven\'t Bought yet, Need to Buy</string>
+    <string name="NeitherSureFizNorAmazon">None of the Above</string>
     <string name="Changing">Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure you want to proceed?</string>
     <string name="NotificationExpired">This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.</string>
     <string name="SetupPreparation">
-        1. From your phone Settings, verify that your phone is connected to a 2.4 GHz WiFi
-        network. If not, please go to phone Settings and connect to the WiFi on which you plan
-        to use your scale before you proceed further.\n\n2. Install batteries into the scale. The WiFi symbol on the scale screen should be blinking.\n\n3. If batteries are already installed, remove them and reinstall. If WiFi symbol is not
-        blinking. Press and hold the Black button in batteries compartment until you see
-        flashing WiFi Symbol. Please make sure the WiFi symbol is blinking on the scale screen
-        before you can procced further.\n\nIs your phone connected to the correct WiFi and a WiFi symbol is flashing on the scale screen?</string>
+       On your Wifi routers, do you have two WiFi or only one WiFi? Generally, routers have two separate Wifi, one is 2.4 GHz WiFi and the other is 5 GHz WiFi.</string>
+
+    <string name="TextSmart">Plese make sure your phone is connected to your WiFi. Install the batteries into the scale (If batteries are already installed, take them out and reinstall) and push the black button in the batteries compartment until you see the letters \'AP\' next to flashing WiFi symbol on the scale screen.</string>
+    <string name="TextAp">Please make sure your phone is connected to your 2.4 Ghz WiFi, Install the batteries into the scale, A WiFi Symbol will start flashing on scale screen (If the batteries are already installed, remove them and reinstall and if the WiFi symbol is not flashing on the scale screen, push and hold the black button until you  see flashing WiFi symbol. If you see letters \'AP\' next to flashing WiFi, you went too far.</string>
 
 
 </resources>

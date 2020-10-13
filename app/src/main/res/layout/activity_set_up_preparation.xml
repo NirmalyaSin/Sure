@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".screens.wificonfig.SetUpPreparation">
+    tools:context=".screens.setupPreparation.SetUpPreparation">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -81,19 +81,54 @@
 
                 </ScrollView>
 
-
-                <Button
-                    android:id="@+id/btnOk"
+                <RelativeLayout
+                    android:id="@+id/bothButtonView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/_20sdp">
+
+                    <Button
+                        android:id="@+id/btnWifi"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/blue"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Only One Wifi"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <Button
+                        android:id="@+id/btnWifiAp"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/blue"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Two Wifi"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btnYes"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_centerHorizontal="true"
                     android:background="@color/blue"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Yes"
+                    android:text="Yes, it's done"
                     android:textAllCaps="false"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
+
+
+
 
             </RelativeLayout>
 

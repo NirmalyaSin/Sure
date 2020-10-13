@@ -11,17 +11,14 @@ import com.surefiz.screens.changepassword.ChangePasswordActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.mydevice.MyDeviceActivity;
 import com.surefiz.screens.privacy.PrivacyActivity;
-import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
-import com.surefiz.screens.wificonfig.SetUpPreparation;
-import com.surefiz.utils.MethodUtils;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.surefiz.screens.setupPreparation.SetUpPreparation;
+import com.surefiz.sharedhandler.LoginShared;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     public View view;
     RelativeLayout rl_config, rl_device, rl_privacy, rl_password, rl_weight, rl_apconfig;
+    View view1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +36,13 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         rl_password.setOnClickListener(this);
         rl_weight.setOnClickListener(this);
         rl_apconfig.setOnClickListener(this);
+
+        if(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getScaleUserId().equals("2")){
+            rl_device.setClickable(false);
+            rl_device.setBackgroundColor(getResources().getColor(R.color.grey_color));
+            view1.setVisibility(View.GONE);
+        }
+
     }
 
     private void initializeView() {
@@ -48,6 +52,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         rl_password = findViewById(R.id.rl_password);
         rl_weight = findViewById(R.id.rl_weight);
         rl_apconfig = findViewById(R.id.rl_apconfig);
+
+        view1 = findViewById(R.id.view1);
         setHeaderView();
     }
 

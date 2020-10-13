@@ -10,8 +10,15 @@ public class ChatDateConverter {
 
     public static String DateConverter(String s){
 
-        //SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf;
+
+        if(s.length()==19){
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }else if(s.length()==21){
+            sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+        }else
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
         try {

@@ -33,7 +33,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
-            android:text="Please choose one of\nthe following"
+            android:text="@string/FromWhere"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 

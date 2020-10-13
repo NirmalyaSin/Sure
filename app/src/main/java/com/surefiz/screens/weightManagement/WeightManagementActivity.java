@@ -14,6 +14,7 @@ import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
+import com.surefiz.application.Constant;
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
@@ -202,19 +203,19 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 if (options1==0) {
                     et_desired_weight_selection.setText(desiredWeightSelectionList.get(0));
 
-                    if (selectedWeightManagmentGoal == 1) {
+                  /*  if (selectedWeightManagmentGoal == 1) {
                         findViewById(R.id.tv_weight).setVisibility(View.GONE);
                         findViewById(R.id.rl_weight).setVisibility(View.GONE);
                         findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
                         findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
-                    } else {
+                    } else {*/
                         findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
                         findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
                         findViewById(R.id.tv_time_loss).setVisibility(View.VISIBLE);
                         findViewById(R.id.rl_time_loss).setVisibility(View.VISIBLE);
                         et_time_loss.setHint("Please Select");
-                        et_time_loss.setText("");
-                    }
+                        //et_time_loss.setText("");
+                    //}
 
 
                     selectedDesiredWeightSelection = 0;
@@ -425,7 +426,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             findViewById(R.id.tv_weight).setVisibility(View.GONE);
             findViewById(R.id.rl_weight).setVisibility(View.GONE);
 
-            selectedWeightManagmentGoal = 1;
+            //selectedWeightManagmentGoal = 1;
             selectedDesiredWeightSelection = -1;
 
         } else if (jsnObject.optInt("maintain_Weight_By_Server") == 0) {
@@ -553,7 +554,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
     }
 
     private void addTimeListAndCall() {
-        for (int i = 1; i <=30; i++) {
+        for (int i = 1; i <= Constant.WEEKS; i++) {
             timeList.add(i + " " + "Weeks");
         }
 

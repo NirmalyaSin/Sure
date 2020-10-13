@@ -1,13 +1,9 @@
 package com.surefiz.screens.login;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -21,15 +17,10 @@ import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.welcome.WelcomeActivity;
-import com.surefiz.screens.wificonfig.SetUpPreparation;
-import com.surefiz.sharedhandler.InstructionSharedPreference;
+import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.TwitterSession;
-import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import org.json.JSONObject;
 

@@ -68,9 +68,6 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
         }
 
-        activity.txt_body.setText(R.string.wifi_config);
-
-
     }
 
     public void showConnectedWifiSSID() {

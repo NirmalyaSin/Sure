@@ -321,20 +321,21 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         } else {
 
             CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
-            customAlert.setSubText(mWifiConfigActivity.getString(R.string.smart_config_failed));
+            customAlert.setSubText(mWifiConfigActivity.getString(R.string.Config_failed));
             customAlert.setCancelVisible();
-            customAlert.setKeyName("Cancel","AP Config");
+            customAlert.setKeyName("Cancel","Try Again");
             customAlert.show();
 
             customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     customAlert.dismiss();
-                    //LoginShared.setstatusforwifivarification(mWifiConfigActivity, false);
-                    Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
+                    /*Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
                     instruc.putExtra("wifi", true);
-                    mWifiConfigActivity.startActivity(instruc);
-                    //mWifiConfigActivity.finish();
+                    mWifiConfigActivity.startActivity(instruc);*/
+
+                    wificonfigblankvalidation();
+
                 }
             });
 
@@ -350,7 +351,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     private void showalertdialog(boolean isFromSettingPage) {
 
         CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
-        customAlert.setSubText(mWifiConfigActivity.getString(R.string.configrution));
+        customAlert.setSubText(mWifiConfigActivity.getString(R.string.configuration));
         if (!isFromSettingPage) {
             customAlert.setKeyName("","Next");
         }

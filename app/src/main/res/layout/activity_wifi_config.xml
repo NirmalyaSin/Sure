@@ -16,12 +16,12 @@
             android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:visibility="gone">
+            >
 
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="@dimen/_16sdp"
-                android:layout_height="@dimen/_14sdp"
+                android:layout_height="@dimen/_16sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:background="@drawable/back"
                 android:scaleType="centerInside" />
@@ -38,6 +38,7 @@
             android:text="SKIP"
             android:fontFamily="@font/roboto_regular"
             android:textAllCaps="false"
+            android:visibility="gone"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_12sdp" />
 

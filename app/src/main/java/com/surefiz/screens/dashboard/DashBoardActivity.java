@@ -1802,6 +1802,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
             //ms1 to ms2 Line1
             HILine line1 = new HILine();
+            line1.setConnectNulls(true);
             line1.setName("Current Sub Goals");
 
 
@@ -1812,6 +1813,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             ArrayList<Double> numberList2 = new ArrayList<>();
 
             HILine line2 = new HILine();
+            line2.setConnectNulls(true);
             line2.setName("Achieved Sub Goals");
             line2.setColor(HIColor.initWithRGB(233, 150, 43));
             line2.setData(numberList2);
@@ -3310,6 +3312,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         //ms1 to ms2 Line1
                         HILine line1 = new HILine();
+                        line1.setConnectNulls(true);
                         line1.setName("Current Sub Goals");
 
                         if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMinigoalsjson() != null &&
@@ -3321,17 +3324,24 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             Number[] numbers = new Number[LoginShared.getDashBoardDataModel(DashBoardActivity.this)
                                     .getData().getChartList().getGoals().getMs2()];
 
+                            ArrayList<Double> numberList1 = new ArrayList<>();
+
+
                             for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this)
                                     .getData().getChartList().getGoals().getMs1();
                                  i < LoginShared.getDashBoardDataModel(DashBoardActivity.this)
                                          .getData().getChartList().getGoals().getMs2(); i++) {
-                                if (!series1_data.get(i).equals("")) {
-                                    numbers[i] = Double.parseDouble(series1_data.get(i));
+
+                                if (series1_data.get(i) != null) {
+                                    if(series1_data.get(i).equals(""))
+                                        numberList1.add(null);
+                                    else
+                                        numberList1.add(Double.parseDouble(series1_data.get(i)));
                                 }
                             }
 
                             line1.setColor(HIColor.initWithRGB(143, 236, 126));
-                            line1.setData(new ArrayList<>(Arrays.asList(numbers)));
+                            line1.setData(numberList1);
 
                             List<String> series2_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().
                                     getMinigoalsjson();
@@ -3341,12 +3351,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                             for (int i = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe1();
                                  i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2(); i++) {
 
-                                if (series2_data.get(i) != null && !series2_data.get(i).equals("")) {
-                                    numberList2.add(Double.parseDouble(series2_data.get(i)));
+                                if (series2_data.get(i) != null) {
+                                    if(series2_data.get(i).equals(""))
+                                        numberList2.add(null);
+                                    else
+                                        numberList2.add(Double.parseDouble(series2_data.get(i)));
                                 }
                             }
 
                             HILine line2 = new HILine();
+                            line2.setConnectNulls(true);
                             line2.setName("Achieved Sub Goals");
                             line2.setColor(HIColor.initWithRGB(233, 150, 43));
                             line2.setData(numberList2);

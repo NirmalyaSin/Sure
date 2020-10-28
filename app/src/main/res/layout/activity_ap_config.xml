@@ -11,15 +11,60 @@
         android:layout_height="wrap_content"
         android:background="@color/opacity_color">
 
-        <!--<View
+        <RelativeLayout
+            android:id="@+id/rl_header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.6"
-            android:background="@drawable/splash_image" />-->
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_back"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@drawable/back"
+                    android:scaleType="centerInside" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_skip"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@drawable/login_button_gradient"
+                android:text="SKIP"
+                android:fontFamily="@font/roboto_regular"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Scale WiFi Setup"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+        </RelativeLayout>
+
 
 
         <ScrollView
             android:id="@+id/sv_main"
+            android:layout_below="@+id/rl_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="true">

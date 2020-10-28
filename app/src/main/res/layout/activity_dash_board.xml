@@ -1042,8 +1042,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_recorded"
-                                android:layout_marginLeft="@dimen/_4sdp"
-                                android:layout_marginRight="@dimen/_4sdp"
                                 android:background="@color/sky_blue"
                                 android:paddingStart="@dimen/_6sdp"
                                 android:paddingTop="@dimen/_6sdp"
@@ -1094,10 +1092,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_40sdp"
                                 android:layout_below="@+id/rl_battery_status"
-                                android:layout_marginLeft="@dimen/_4sdp"
-                                android:layout_marginTop="@dimen/_6sdp"
-                                android:layout_marginRight="@dimen/_4sdp"
-                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:background="#40CBDC">
 
                                 <Button

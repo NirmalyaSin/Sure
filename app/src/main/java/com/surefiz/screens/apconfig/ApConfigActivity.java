@@ -31,6 +31,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -45,6 +46,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.surefiz.R;
@@ -65,14 +67,13 @@ import butterknife.ButterKnife;
 import cn.onecoder.scalewifi.api.ScaleWiFiConfig;
 import cn.onecoder.scalewifi.api.impl.OnScaleWiFiConfigResultListener;
 
-public class ApConfigActivity extends BaseActivity implements View.OnClickListener,
+public class ApConfigActivity extends AppCompatActivity implements View.OnClickListener,
         OnScaleWiFiConfigResultListener,
         PopupMenu.OnMenuItemClickListener {
-    public View view;
     LoadingData loader;
     WifiReceiver wifiReceiver = new WifiReceiver();
     private EditText editSSID, editBSSID, editPassword;
-    private Button btnlockwifi, btnConfigure;
+    private Button btnlockwifi, btnConfigure,btn_skip;
     private PopupMenu popup;
     private WifiManager mWifiManager;
     private List<ScanResult> scanResultsWifi = new ArrayList<>();
@@ -80,6 +81,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private boolean isAutoConnecting = false;
     private ImageView iv_showPassword;
     private ImageView iv_hidePassword;
+    private RelativeLayout rl_back;
     private static int LOCATION_SETTINGS = 1000;
     private static int DELAY = 15000;
     private PermissionHelper permissionHelper;
@@ -89,11 +91,9 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = View.inflate(this, R.layout.activity_ap_config, null);
+        setContentView(R.layout.activity_ap_config);
 
-
-        addContentView(view);
-        ButterKnife.bind(view);
+        ButterKnife.bind(this);
         permissionHelper = new PermissionHelper(this);
         loader = new LoadingData(this);
         scaleWiFiConfig = new ScaleWiFiConfig();
@@ -114,43 +114,51 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     private void initializeView() {
         //TextView tvApConfig = view.findViewById(R.id.tvApConfig);
         //tvApConfig.setText(Html.fromHtml(getString(R.string.ap_config)));
-        editSSID = view.findViewById(R.id.editSSID);
-        editBSSID = view.findViewById(R.id.editBSSID);
-        editPassword = view.findViewById(R.id.editPassword);
-        btnlockwifi = view.findViewById(R.id.btnlockwifi);
-        btnConfigure = view.findViewById(R.id.btnConfigure);
-        iv_showPassword = view.findViewById(R.id.iv_showPassword);
-        iv_hidePassword = view.findViewById(R.id.iv_hidePassword);
-        //editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        editSSID = findViewById(R.id.editSSID);
+        editBSSID = findViewById(R.id.editBSSID);
+        editPassword = findViewById(R.id.editPassword);
+        btnlockwifi = findViewById(R.id.btnlockwifi);
+        btnConfigure = findViewById(R.id.btnConfigure);
+        iv_showPassword = findViewById(R.id.iv_showPassword);
+        iv_hidePassword = findViewById(R.id.iv_hidePassword);
+        rl_back = findViewById(R.id.rl_back);
+        btn_skip = findViewById(R.id.btn_skip);
         btnConfigure.setVisibility(View.INVISIBLE);
         btnlockwifi.setOnClickListener(this);
         btnConfigure.setOnClickListener(this);
         editSSID.setOnClickListener(this);
         rl_back.setOnClickListener(this);
+        btn_skip.setOnClickListener(this);
         iv_showPassword.setOnClickListener(this);
         iv_hidePassword.setOnClickListener(this);
-        setHeaderView();
+
+        if(getIntent().hasExtra("fromLogin"))
+            if(getIntent().getBooleanExtra("fromLogin",false))
+                btn_skip.setVisibility(View.VISIBLE);
     }
 
-    private void setHeaderView() {
-
-
-        tv_universal_header.setText("Scale WiFi Setup");
-        iv_edit.setVisibility(View.GONE);
-        btn_add.setVisibility(View.GONE);
-        rlUserSearch.setVisibility(View.GONE);
-        iv_AddPlus.setVisibility(View.GONE);
-        btn_done.setVisibility(View.GONE);
-        img_topbar_menu.setVisibility(View.GONE);
-        rl_back.setVisibility(View.VISIBLE);
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_back:
                 onBackPressed();
+                break;
+
+            case R.id.btn_skip:
+                if (!new InstructionSharedPreference(this).isInstructionShown(this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId())) {
+                    Intent details = new Intent(this, InstructionActivity.class);
+                    startActivity(details);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                    break;
+                } else {
+                    Intent details = new Intent(this, DashBoardActivity.class);
+                    startActivity(details);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                }
+
                 break;
             case R.id.btnConfigure:
 
@@ -521,7 +529,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
         CustomAlert customAlert = new CustomAlert(this);
 
         if (!success) {
-            customAlert.setSubText("Your Configuration failed to complete.");
+            customAlert.setSubText(getString(R.string.Config_failed));
             customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -534,7 +542,7 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
 
             if (getIntent().getBooleanExtra("wifi", false)) {
 
-                customAlert.setSubText(getResources().getString(R.string.configrution));
+                customAlert.setSubText(getResources().getString(R.string.configuration));
                 customAlert.setKeyName("","Step on Scale");
                 customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -616,11 +624,6 @@ public class ApConfigActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onSmartLinkConfigResult(boolean success) {
 
-        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            connectivityManager.unregisterNetworkCallback(networkCallback);
-        }
-
-        showalertdialog(success);*/
     }
 
     class WifiReceiver extends BroadcastReceiver {

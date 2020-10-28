@@ -11,13 +11,30 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimaryDark">
 
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/back"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/tv_registration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/roboto_bold"
-            android:text="One Time Password"
+            android:text="Activation"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 

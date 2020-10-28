@@ -138,6 +138,7 @@ public class OtpClickEvent implements View.OnClickListener {
     }
 
     private void setClickEvent() {
+        otpActivity.rl_back.setOnClickListener(this);
         otpActivity.btn_submit.setOnClickListener(this);
 
     }
@@ -145,6 +146,9 @@ public class OtpClickEvent implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.rl_back:
+                otpActivity.onBackPressed();
+                break;
             case R.id.btn_submit:
                 if (otpActivity.et_first.getText().toString().trim().equals("")) {
                     MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP");

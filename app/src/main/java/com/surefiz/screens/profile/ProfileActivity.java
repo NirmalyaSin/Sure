@@ -255,6 +255,7 @@ public class ProfileActivity extends BaseActivity {
                     String realPath= RealPathUtil.getRealPath(this, uri);
                     mFile=new File(realPath);
                     compressImage();
+                    tvUserImageHint.setVisibility(View.VISIBLE);
 
                     Log.d("Image_Path", "::::" + RealPathUtil.getRealPath(this, uri));
 

@@ -69,7 +69,6 @@ public class WifiConfigActivity extends AppCompatActivity {
     }
 
     private void setViewAndFunctionality() {
-        rl_back.setVisibility(View.VISIBLE);
 
         if (fromSettings) {
             btn_skip_config.setVisibility(View.GONE);

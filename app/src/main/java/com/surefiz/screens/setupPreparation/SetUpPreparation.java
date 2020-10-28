@@ -10,8 +10,12 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.screens.apconfig.ApConfigActivity;
+import com.surefiz.screens.dashboard.DashBoardActivity;
+import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.wificonfig.WifiConfigActivity;
+import com.surefiz.sharedhandler.InstructionSharedPreference;
+import com.surefiz.sharedhandler.LoginShared;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +36,9 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
 
     @BindView(R.id.btnYes)
     Button btnYes;
+
+    @BindView(R.id.btn_skip)
+    Button btn_skip;
 
     @BindView(R.id.bothButtonView)
     RelativeLayout bothButtonView;
@@ -74,6 +81,22 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
         switch (v.getId()){
             case R.id.rl_back:
                 onBackPressed();
+                break;
+
+            case R.id.btn_skip:
+
+                if (!new InstructionSharedPreference(this).isInstructionShown(this, LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId())) {
+                    Intent details = new Intent(this, InstructionActivity.class);
+                    startActivity(details);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                    break;
+                } else {
+                    Intent details = new Intent(this, DashBoardActivity.class);
+                    startActivity(details);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                }
                 break;
 
             case R.id.btnWifi:
@@ -120,6 +143,9 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
         AP=false;
         SMART=false;
         isSecondStage=false;
+
+        if(fromLogin)
+            btn_skip.setVisibility(View.VISIBLE);
     }
 
 
@@ -138,6 +164,12 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
 
     private void callAPConfig(){
         Intent apconfigIntent = new Intent(this, ApConfigActivity.class);
+
+        if(fromLogin){
+            apconfigIntent.putExtra("fromLogin",true);
+        } else if(fromSettings){
+            apconfigIntent.putExtra("fromSettings",true);
+        }
         startActivity(apconfigIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }

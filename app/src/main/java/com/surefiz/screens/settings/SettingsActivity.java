@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.screens.apconfig.ApConfigActivity;
@@ -15,9 +16,12 @@ import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.LoginShared;
 
+import org.w3c.dom.Text;
+
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     public View view;
     RelativeLayout rl_config, rl_device, rl_privacy, rl_password, rl_weight, rl_apconfig;
+    TextView Txt_Register;
     View view1;
 
     @Override
@@ -39,8 +43,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
 
         if(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getScaleUserId().equals("2")){
             rl_device.setClickable(false);
-            rl_device.setBackgroundColor(getResources().getColor(R.color.grey_color));
-            view1.setVisibility(View.GONE);
+            Txt_Register.setTextColor(getResources().getColor(R.color.grey_color));
         }
 
     }
@@ -52,6 +55,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         rl_password = findViewById(R.id.rl_password);
         rl_weight = findViewById(R.id.rl_weight);
         rl_apconfig = findViewById(R.id.rl_apconfig);
+        Txt_Register = findViewById(R.id.Txt_Register);
 
         view1 = findViewById(R.id.view1);
         setHeaderView();

@@ -30,7 +30,7 @@
     <string name="scale_blinking"> 2. Scale start blinking and with your weight &amp; stop</string>
     <string name="step_down"> 3. Step down from scale.</string>
     <string name="yes_it_down">Yes! it"'s" done</string>
-    <string name="configrution">Your configuration completed successfully.</string>
+    <string name="configuration">Your configuration completed successfully.</string>
     <string name="youe_weight">Your Weight</string>
     <string name="go_next_action">Go DashBoard</string>
     <string name="skip">Skip</string>
@@ -63,6 +63,7 @@
     <string name="fb_login_type">facebook</string>
     <string name="google_login_type">Google</string>
     <string name="smart_config_failed">Let\'s try another method to setup WiFi on scale, the current method is not suitable for your network. Please remove the batteries from the scale and put them back. Press and hold the Black button in the batteries compartment until you see \'AP\' next to the WiFi symbol. Release the button. Tap on AP Config below.</string>
+    <string name="Config_failed">Your Configuration failed to complete.</string>
     <string name="step_on_the_scale">Step on the Scale</string>
     <string name="delete">DELETE</string>
     <string name="Allow_accountability_circle">Allow accountability circle members to view my:</string>
@@ -81,7 +82,7 @@ have the primary user registered before you login.</string>
 complete his/her registration process.</string>
     <string name="login">Login</string>
     <string name="sign_up"><u>Sign up</u></string>
-    <string name="press_to_upload">Press update button to update the profile image</string>
+    <string name="press_to_upload">Please tap on ‘Update’ button at the bottom on this page</string>
     <string name="title_activity_login_new">LoginNewActivity</string>
     <string name="message_board">Message Board</string>
     <string name="add_friend">Add Friend</string>
@@ -103,23 +104,23 @@ complete his/her registration process.</string>
     <string name="Time_To_Lose_Weight_Will_Be_Calculated">Time To Lose Weight Will Be Calculated After The First Weight</string>
     <!--<string name="user_confirmation_header">SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight</string>-->
     <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
-    <string name="signup_completed_without_scale">Sign up is complete. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email ID and password created during this signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
-    <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during this signup. Your email will be validated during app login automatically. Alternatively, you can validate your email by clicking on the verification link we have sent to you to your email address.</string>
+    <string name="signup_completed_without_scale">Sign up is complete. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email ID and password created during this signup.</string>
+    <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during this signup.</string>
     <string name="androidQ">As a security measure, newer versions of Android have added an additional step to connect to WiFi. Therefore next, you will see a popup with temporary WiFi of your scale named, </string>
     <string name="androidQ2">please select this network to connect.</string>
-    <string name="FromWhere">From where did you \n bought Surefiz?</string>
+    <string name="FromWhere">From Where Did You \n Buy Surefiz?</string>
     <string name="AmazonAlready">From Amazon</string>
     <string name="ProvideWeightTime">"Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight &amp; Time”?"</string>
     <string name="SureFizWebsite">From SureFiz Website</string>
-    <string name="ApplePurchase">haven\'t Bought yet, Need to Buy</string>
-    <string name="NeitherSureFizNorAmazon">None of the Above</string>
+    <string name="ApplePurchase">Haven\'t Bought Yet, Need to Buy</string>
+    <string name="NeitherSureFizNorAmazon">None of The Above</string>
     <string name="Changing">Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure you want to proceed?</string>
     <string name="NotificationExpired">This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.</string>
     <string name="SetupPreparation">
-       On your Wifi routers, do you have two WiFi or only one WiFi? Generally, routers have two separate Wifi, one is 2.4 GHz WiFi and the other is 5 GHz WiFi.</string>
+       On your Wifi router, do you have two WiFi or only one WiFi? Generally, routers have two separate Wifi, one is 2.4 GHz WiFi and the other is 5 GHz WiFi.</string>
 
     <string name="TextSmart">Plese make sure your phone is connected to your WiFi. Install the batteries into the scale (If batteries are already installed, take them out and reinstall) and push the black button in the batteries compartment until you see the letters \'AP\' next to flashing WiFi symbol on the scale screen.</string>
-    <string name="TextAp">Please make sure your phone is connected to your 2.4 Ghz WiFi, Install the batteries into the scale, A WiFi Symbol will start flashing on scale screen (If the batteries are already installed, remove them and reinstall and if the WiFi symbol is not flashing on the scale screen, push and hold the black button until you  see flashing WiFi symbol. If you see letters \'AP\' next to flashing WiFi, you went too far.</string>
+    <string name="TextAp">Please make sure your phone is connected to your 2.4 GHz WiFi, Install the batteries into the scale, A WiFi Symbol will start flashing on scale screen (If the batteries are already installed, remove them and reinstall and if the WiFi symbol is not flashing on the scale screen, push and hold the black button until you  see flashing WiFi symbol. If you see letters \'AP\' next to flashing WiFi, you went too far.</string>
 
 
 </resources>

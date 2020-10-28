@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.surefiz.R;
+import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.sharedhandler.LoginShared;
 
 import butterknife.BindView;
@@ -28,6 +30,8 @@ public class OtpActivity extends AppCompatActivity {
     EditText et_fourth;
     @BindView(R.id.btn_submit)
     Button btn_submit;
+    @BindView(R.id.rl_back)
+    RelativeLayout rl_back;
 
     private BroadcastReceiver mOTPReceiver = new BroadcastReceiver() {
         @Override
@@ -68,5 +72,15 @@ public class OtpActivity extends AppCompatActivity {
         super.onResume();
         registerReceiver(mOTPReceiver, new IntentFilter("ON_OTP_RECEIVED"));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isTaskRoot()){
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }else{
+            super.onBackPressed();
+        }
     }
 }

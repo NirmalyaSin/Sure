@@ -38,7 +38,9 @@ public class AboutUsActivity extends BaseActivity {
         btn_add.setVisibility(View.GONE);
         rlUserSearch.setVisibility(View.GONE);
 
-        if (url.contains("Login") || url.contains("Adduser")|| url.contains("basicinfo")){
+        if (getIntent().getStringExtra("header").equals("Learn More") ||
+                getIntent().getStringExtra("header").equals("Add User") ||
+                getIntent().getStringExtra("header").contains("Sign Up")){
             rl_back.setVisibility(View.VISIBLE);
         }else {
             rl_back.setVisibility(View.GONE);

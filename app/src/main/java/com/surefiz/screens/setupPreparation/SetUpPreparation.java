@@ -159,7 +159,7 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
         }
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        finish();
+        //finish();
     }
 
     private void callAPConfig(){
@@ -172,6 +172,7 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
         }
         startActivity(apconfigIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        //finish();
     }
 
     @Override

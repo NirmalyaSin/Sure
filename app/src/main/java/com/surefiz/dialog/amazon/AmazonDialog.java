@@ -15,13 +15,14 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.interfaces.OnUiEventClick;
+import com.surefiz.screens.choose.ChooseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AmazonDialog extends Dialog {
 
-    Activity activity;
+    ChooseActivity activity;
     int step;
 
     @BindView(R.id.tv_sub)
@@ -61,7 +62,7 @@ public class AmazonDialog extends Dialog {
     public View tv_or;
 
 
-    public AmazonDialog(Activity activity,int step) {
+    public AmazonDialog(ChooseActivity activity,int step) {
         super(activity, R.style.DialogStyle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -76,12 +77,16 @@ public class AmazonDialog extends Dialog {
         this.step=step;
 
         if(step==1){
-           stepOneView();
+           stepOneView(activity.isAmazon);
         }
     }
 
-    public void stepOneView(){
-        tv_sub.setText("Please enter your Amazon Order ID");
+    public void stepOneView(boolean isAmazon){
+        if(isAmazon)
+            tv_sub.setText("Please enter your Amazon Order ID");
+        else
+            tv_sub.setText("Please enter your Order ID");
+
         et_orderId.setText("");
         et_orderId.setVisibility(View.VISIBLE);
         scan_block.setVisibility(View.GONE);

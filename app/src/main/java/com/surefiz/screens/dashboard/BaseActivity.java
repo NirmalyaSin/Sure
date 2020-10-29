@@ -178,21 +178,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void showImage() {
-        /*if (LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto().equals("") ||
-                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto().equalsIgnoreCase("null") ||
-                LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto() == null) {
-            img_topbar_menu_profile.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.prof_img_placeholder));
-        } else if (!LoginShared.getViewProfileDataModel(this).getData().getUser().get(0).getUserImage().equals("") ||
-                !LoginShared.getViewProfileDataModel(this).getData().getUser().get(0).getUserImage().equalsIgnoreCase("null") ||
-                LoginShared.getViewProfileDataModel(this).getData().getUser().get(0).getUserImage() != null) {
-            String url = LoginShared.getViewProfileDataModel(this).getData().getUser().get(0).getUserImage();
-            url = url.replace(" ", "20%");
-            imageLoader.displayImage(url, img_topbar_menu_profile);
-        } else {
-            String url = LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserPhoto();
-            url = url.replace(" ", "20%");
-            imageLoader.displayImage(url, img_topbar_menu_profile);
-        }*/
         if (LoginShared.getUserPhoto(this).equals("") ||
                 LoginShared.getUserPhoto(this).equalsIgnoreCase("null") ||
                 LoginShared.getUserPhoto(this) == null) {
@@ -403,13 +388,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_signout:
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                /*String deviceToken = LoginShared.getDeviceToken(BaseActivity.this);
-                LoginShared.destroySessionTypePreference();
-                LoginShared.setDeviceToken(BaseActivity.this, deviceToken);
-                Intent logIntent = new Intent(BaseActivity.this, LoginActivity.class);
-                startActivity(logIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();*/
                 callLogoutApi();
                 break;
         }

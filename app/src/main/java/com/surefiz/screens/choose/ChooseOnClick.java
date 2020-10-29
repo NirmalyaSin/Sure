@@ -52,6 +52,7 @@ public class ChooseOnClick implements View.OnClickListener {
                 break;
 
             case R.id.Btn_amazon:
+                ChooseActivity.isAmazon=true;
                 ChooseActivity.callAmazon();
                 break;
 
@@ -62,7 +63,8 @@ public class ChooseOnClick implements View.OnClickListener {
                 break;
 
             case R.id.Btn_nothing:
-                showHowToSignupDialog(false);
+                ChooseActivity.isAmazon=false;
+                ChooseActivity.callAmazon();
                 break;
         }
 

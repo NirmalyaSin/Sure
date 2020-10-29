@@ -113,7 +113,7 @@ complete his/her registration process.</string>
     <string name="ProvideWeightTime">"Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight &amp; Time”?"</string>
     <string name="SureFizWebsite">From SureFiz Website</string>
     <string name="ApplePurchase">Haven\'t Bought Yet, Need to Buy</string>
-    <string name="NeitherSureFizNorAmazon">None of The Above</string>
+    <string name="NeitherSureFizNorAmazon">Didn\'t Buy, Received as a Gift</string>
     <string name="Changing">Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure you want to proceed?</string>
     <string name="NotificationExpired">This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.</string>
     <string name="SetupPreparation">

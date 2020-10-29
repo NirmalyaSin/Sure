@@ -32,6 +32,7 @@ import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.settings.SettingsActivity;
+import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -330,19 +331,28 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 @Override
                 public void onClick(View v) {
                     customAlert.dismiss();
-                    /*Intent instruc = new Intent(mWifiConfigActivity, ApConfigActivity.class);
-                    instruc.putExtra("wifi", true);
-                    mWifiConfigActivity.startActivity(instruc);*/
 
-                    wificonfigblankvalidation();
+                    //wificonfigblankvalidation();
 
+                    Intent intent=new Intent(mWifiConfigActivity,SetUpPreparation.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    mWifiConfigActivity.startActivity(intent);
+                    mWifiConfigActivity.finish();
                 }
             });
 
             customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    customAlert.dismiss();
+
+                    if(mWifiConfigActivity.fromSettings){
+                        Intent loginIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
+                        mWifiConfigActivity.startActivity(loginIntent);
+                        mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        mWifiConfigActivity.finishAffinity();
+                    }else if(mWifiConfigActivity.fromLogin){
+                        customAlert.dismiss();
+                    }
                 }
             });
         }

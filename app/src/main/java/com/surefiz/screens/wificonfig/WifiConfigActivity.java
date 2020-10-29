@@ -76,7 +76,7 @@ public class WifiConfigActivity extends AppCompatActivity {
 
         rl_back.setOnClickListener(v -> {
 
-            Intent intent = new Intent(this, SetUpPreparation.class);
+          /*  Intent intent = new Intent(this, SetUpPreparation.class);
 
             if(fromLogin){
                 intent.putExtra("fromLogin",true);
@@ -89,7 +89,7 @@ public class WifiConfigActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
-            }else
+            }else*/
                 onBackPressed();
         });
     }

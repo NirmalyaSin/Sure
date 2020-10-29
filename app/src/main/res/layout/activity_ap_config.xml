@@ -160,7 +160,7 @@
                             android:backgroundTint="@android:color/transparent"
                             android:drawableLeft="@drawable/ic_lock_open"
                             android:drawablePadding="@dimen/_10sdp"
-                            android:hint="Enter Password"
+                            android:hint="Enter WiFi Password"
                             android:fontFamily="@font/roboto_regular"
                             android:inputType="textPassword"
                             android:maxLines="1"

@@ -43,6 +43,8 @@ public class ChooseActivity extends ChooseActivityView {
     private String scaleId="";
     private LoadingData loader;
     private boolean isScanner=false;
+    public boolean isAmazon;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,7 @@ public class ChooseActivity extends ChooseActivityView {
 
     protected void callAmazon(){
         amazonDialog.show();
-        amazonDialog.stepOneView();
+        amazonDialog.stepOneView(isAmazon);
         amazonDialog.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +80,10 @@ public class ChooseActivity extends ChooseActivityView {
 
                 if(step==1) {
                     if(amazonDialog.et_orderId.getText().toString().trim().equals("")){
-                        MethodUtils.errorMsg(ChooseActivity.this, "Please Enter Your Amazon Order ID");
+                        if(isAmazon)
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Amazon Order ID.");
+                        else
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Order ID.");
 
                     }else{
                         callVerifyApi(amazonDialog.et_orderId.getText().toString(),true);
@@ -259,7 +264,7 @@ public class ChooseActivity extends ChooseActivityView {
             @Override
             public void onClick(View v) {
                 step=1;
-                amazonDialog.stepOneView();
+                amazonDialog.stepOneView(isAmazon);
                 amazonDialog.dismiss();
             }
         });

@@ -56,6 +56,7 @@ import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.settings.SettingsActivity;
+import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -88,15 +89,26 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
     private ConnectivityManager.NetworkCallback networkCallback;
     ConnectivityManager connectivityManager;
 
+    protected boolean fromSettings=false;
+    public boolean fromLogin=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ap_config);
-
         ButterKnife.bind(this);
         permissionHelper = new PermissionHelper(this);
         loader = new LoadingData(this);
         scaleWiFiConfig = new ScaleWiFiConfig();
+
+        if(getIntent().hasExtra("fromLogin")){
+            fromLogin=getIntent().getBooleanExtra("fromLogin",false);
+        }
+
+        if(getIntent().hasExtra("fromSettings")){
+            fromSettings=getIntent().getBooleanExtra("fromSettings",false);
+        }
+
         initializeView();
 
         if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
@@ -132,9 +144,8 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
         iv_showPassword.setOnClickListener(this);
         iv_hidePassword.setOnClickListener(this);
 
-        if(getIntent().hasExtra("fromLogin"))
-            if(getIntent().getBooleanExtra("fromLogin",false))
-                btn_skip.setVisibility(View.VISIBLE);
+        if(fromLogin)
+            btn_skip.setVisibility(View.VISIBLE);
     }
 
 
@@ -530,11 +541,33 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
         if (!success) {
             customAlert.setSubText(getString(R.string.Config_failed));
+            customAlert.setCancelVisible();
+            customAlert.setKeyName("Cancel","Try Again");
+
             customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     customAlert.dismiss();
+
+                    Intent intent=new Intent(ApConfigActivity.this, SetUpPreparation.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+            customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(fromSettings){
+                        Intent loginIntent = new Intent(ApConfigActivity.this, SettingsActivity.class);
+                        startActivity(loginIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finishAffinity();
+                    }else if(fromLogin){
+                        customAlert.dismiss();
+                    }
                 }
             });
 

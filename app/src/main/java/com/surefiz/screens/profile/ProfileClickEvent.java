@@ -938,10 +938,19 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                         ViewProfileModel viewProfileModel = LoginShared.getViewProfileDataModel(activity);
 
                         if (medianame.equalsIgnoreCase("google")) {
-                            viewProfileModel.getData().getUser().get(0).setGoogleAccountLinked(1);
+                            if(activity.getString(R.string.Try_Another_Google).equals(jsObject.getString("message"))) {
+                                viewProfileModel.getData().getUser().get(0).setGoogleAccountLinked(0);
+                            }else
+                                viewProfileModel.getData().getUser().get(0).setGoogleAccountLinked(1);
+
                             LoginShared.setViewProfileDataModel(activity, viewProfileModel);
+
                         } else if (medianame.equalsIgnoreCase("fb")) {
-                            viewProfileModel.getData().getUser().get(0).setFacebookAccountLinked(1);
+                            if(activity.getString(R.string.Try_Another_FB).equals(jsObject.getString("message"))) {
+                                viewProfileModel.getData().getUser().get(0).setFacebookAccountLinked(0);
+                            }else
+                                viewProfileModel.getData().getUser().get(0).setFacebookAccountLinked(1);
+
                             LoginShared.setViewProfileDataModel(activity, viewProfileModel);
                         }
 

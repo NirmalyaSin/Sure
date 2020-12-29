@@ -215,41 +215,41 @@ public class SignUpOnClick implements View.OnClickListener {
                 else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.et_userselection.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, "Please select desired weight selection option");
                 }else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_weight.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your weight");
+                    MethodUtils.errorMsg(signUpActivity, "Please select your desired weight");
                 }
                 else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_time_loss.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your time");
+                    MethodUtils.errorMsg(signUpActivity, "Please select your time to lose");
                 }
                 else if (signUpActivity.et_height.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, "Please select your height");
                 }
                 else if (signUpActivity.et_gender.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select any gender type");
+                    MethodUtils.errorMsg(signUpActivity, "Please select your gender");
                 }
                 else if (signUpActivity.age.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your Age");
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your age");
                 }
                 else if (!isNonZeroValue(signUpActivity.age.getText().toString().trim())) {
                     MethodUtils.errorMsg(signUpActivity, "Age should be between 7 and 99");
                 }
 
                 else if (signUpActivity.et_country_name.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Enter country");
+                    MethodUtils.errorMsg(signUpActivity, "Please select your country");
                 }
                 else if (signUpActivity.et_add_line1.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, "Enter address line 1");
                 }
                 else if (signUpActivity.et_city.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Enter city");
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your city");
                 }
                 else if (signUpActivity.et_state.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Enter state");
+                    MethodUtils.errorMsg(signUpActivity, "Please select your state");
                 }
                 else if (signUpActivity.zipcode.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Enter zip code");
+                    MethodUtils.errorMsg(signUpActivity, "Please enter your zip code");
                 }
                 else if (signUpActivity.et_learn_about.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select");
+                    MethodUtils.errorMsg(signUpActivity, "Please select how do you learn about");
                 }
                 else if (!signUpActivity.checkBoxTermsCondition.isChecked()) {
                     MethodUtils.errorMsg(signUpActivity, "Please accept Terms & Conditions");

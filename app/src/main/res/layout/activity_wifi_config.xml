@@ -103,7 +103,7 @@
                     android:text="@string/wifi_config"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
 
                 <TextView

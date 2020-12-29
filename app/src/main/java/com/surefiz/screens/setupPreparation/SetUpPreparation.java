@@ -73,6 +73,7 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
         btnWifi.setOnClickListener(this);
         btnWifiAp.setOnClickListener(this);
         btnYes.setOnClickListener(this);
+        btn_skip.setOnClickListener(this);
     }
 
     @Override
@@ -117,6 +118,16 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
 
     }
 
+    private void setUpApWifiView(){
+        sub_txt.setText(R.string.TextAp);
+        bothButtonView.setVisibility(View.GONE);
+        btnYes.setVisibility(View.VISIBLE);
+        AP=true;
+        isSecondStage=true;
+
+    }
+
+
     private void setUpSmartWifiView(){
 
         sub_txt.setText(R.string.TextSmart);
@@ -127,14 +138,6 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void setUpApWifiView(){
-        sub_txt.setText(R.string.TextAp);
-        bothButtonView.setVisibility(View.GONE);
-        btnYes.setVisibility(View.VISIBLE);
-        AP=true;
-        isSecondStage=true;
-
-    }
 
     private void setUpDefaultView(){
         sub_txt.setText(R.string.SetupPreparation);

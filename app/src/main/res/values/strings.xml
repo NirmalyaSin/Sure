@@ -63,7 +63,7 @@
     <string name="fb_login_type">facebook</string>
     <string name="google_login_type">Google</string>
     <string name="smart_config_failed">Let\'s try another method to setup WiFi on scale, the current method is not suitable for your network. Please remove the batteries from the scale and put them back. Press and hold the Black button in the batteries compartment until you see \'AP\' next to the WiFi symbol. Release the button. Tap on AP Config below.</string>
-    <string name="Config_failed">Your Configuration failed to complete.</string>
+    <string name="Config_failed">Please double check your password and health of your Wi-Fi network, and try again</string>
     <string name="step_on_the_scale">Step on the Scale</string>
     <string name="delete">DELETE</string>
     <string name="Allow_accountability_circle">Allow accountability circle members to view my:</string>
@@ -108,8 +108,10 @@ complete his/her registration process.</string>
     <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during this signup.</string>
     <string name="androidQ">As a security measure, newer versions of Android have added an additional step to connect to WiFi. Therefore next, you will see a popup with temporary WiFi of your scale named, </string>
     <string name="androidQ2">please select this network to connect.</string>
-    <string name="FromWhere">From Where Did You \n Buy Surefiz?</string>
+    <string name="FromWhere">From Where Did You \n Buy SureFiz?</string>
     <string name="AmazonAlready">From Amazon</string>
+    <string name="Try_Another_FB">"This Facebook Account has been already linked with another SureFiz account. Please try with someother."</string>
+    <string name="Try_Another_Google">"This Google Account has been already linked with another SureFiz account. Please try with someother."</string>
     <string name="ProvideWeightTime">"Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight &amp; Time”?"</string>
     <string name="SureFizWebsite">From SureFiz Website</string>
     <string name="ApplePurchase">Haven\'t Bought Yet, Need to Buy</string>
@@ -117,9 +119,9 @@ complete his/her registration process.</string>
     <string name="Changing">Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure you want to proceed?</string>
     <string name="NotificationExpired">This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.</string>
     <string name="SetupPreparation">
-       On your Wifi router, do you have two WiFi or only one WiFi? Generally, routers have two separate Wifi, one is 2.4 GHz WiFi and the other is 5 GHz WiFi.</string>
+       On your WiFi router, do you have two WiFi or only one WiFi? Generally, routers have two separate WiFi, one is 2.4 GHz WiFi and the other is 5 GHz WiFi.</string>
 
-    <string name="TextSmart">Plese make sure your phone is connected to your WiFi. Install the batteries into the scale (If batteries are already installed, take them out and reinstall) and push the black button in the batteries compartment until you see the letters \'AP\' next to flashing WiFi symbol on the scale screen.</string>
+    <string name="TextSmart">Please make sure your phone is connected to your WiFi. Install the batteries into the scale (If batteries are already installed, take them out and reinstall) and push the black button in the batteries compartment until you see the letters \'AP\' next to flashing WiFi symbol on the scale screen.</string>
     <string name="TextAp">Please make sure your phone is connected to your 2.4 GHz WiFi, Install the batteries into the scale, A WiFi Symbol will start flashing on scale screen (If the batteries are already installed, remove them and reinstall and if the WiFi symbol is not flashing on the scale screen, push and hold the black button until you  see flashing WiFi symbol. If you see letters \'AP\' next to flashing WiFi, you went too far.</string>
 
 

@@ -56,13 +56,14 @@ public class ChooseOnClick implements View.OnClickListener {
                 ChooseActivity.callAmazon();
                 break;
 
-            case R.id.Btn_surefiz:
+           /* case R.id.Btn_surefiz:
                 Intent intent=new Intent(ChooseActivity, LoginActivity.class);
                 ChooseActivity.startActivity(intent);
                 ChooseActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
+                break;*/
 
             case R.id.Btn_nothing:
+            case R.id.Btn_surefiz:
                 ChooseActivity.isAmazon=false;
                 ChooseActivity.callAmazon();
                 break;

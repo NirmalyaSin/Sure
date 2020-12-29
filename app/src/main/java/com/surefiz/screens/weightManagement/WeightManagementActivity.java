@@ -729,6 +729,11 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 MethodUtils.errorMsg(WeightManagementActivity.this, "Enter desired weight selection");
                 return;
             }
+        }else if (selectedWeightManagmentGoal == 1 && selectedDesiredWeightSelection == -1) {
+            type = "1";
+            userselectionbody = "0";
+            //weight = "";
+            time = "0";
         } else {
             type = "2";
             userselectionbody = "1";

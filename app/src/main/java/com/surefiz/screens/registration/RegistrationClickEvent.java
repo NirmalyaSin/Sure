@@ -192,6 +192,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     registrationActivity.rl_weight.setVisibility(View.VISIBLE);
                     registrationActivity.tv_time_loss.setVisibility(View.VISIBLE);
                     registrationActivity.rl_time_loss.setVisibility(View.VISIBLE);
+                    registrationActivity.et_userselection.setText("");
                     weight_managment_goal = 2;
                     user_selection_val = 0;
 
@@ -730,13 +731,13 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else if (registrationActivity.et_phone.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
         } else if (registrationActivity.et_management.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select Weight Management goal");
+            MethodUtils.errorMsg(registrationActivity, "Please select weight management goal");
         } else if (registrationActivity.et_units.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
         } else if (registrationActivity.et_gender.getText().toString().equals("")) {
             MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
         } else if (registrationActivity.age.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your Age");
+            MethodUtils.errorMsg(registrationActivity, "Please enter your age");
         } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
             MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
         } else if (registrationActivity.et_height.getText().toString().equals("")) {
@@ -856,18 +857,17 @@ public class RegistrationClickEvent implements View.OnClickListener {
             } else if (registrationActivity.et_units.getText().toString().equals("")) {
                MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
            }else if (registrationActivity.et_management.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please select Weight Management goal");
+                MethodUtils.errorMsg(registrationActivity, "Please select weight management goal");
             }
            else if (weight_managment_goal ==2 && user_selection_val==0 && registrationActivity.et_userselection.getText().toString().equals("")) {
                MethodUtils.errorMsg(registrationActivity, "Please select desired weight selection option");
            }
-           else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select your weight");
-           } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
-           }
 
-           else if (registrationActivity.et_height.getText().toString().equals("")) {
+           else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
+               MethodUtils.errorMsg(registrationActivity, "Please select your desired weight");
+           } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
+               MethodUtils.errorMsg(registrationActivity, "Please select your time to lose");
+           } else if (registrationActivity.et_height.getText().toString().equals("")) {
                 MethodUtils.errorMsg(registrationActivity, "Please enter your height");
             } else if (selectedLifeStyle == 0) {
                 MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");

@@ -96,12 +96,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="SELECT WIFI"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background">
 
-                        <EditText
+                        <!--<EditText
                             android:id="@+id/editSSID"
                             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:layout_width="match_parent"
@@ -113,6 +121,24 @@
                             android:drawablePadding="@dimen/_10sdp"
                             android:focusableInTouchMode="false"
                             android:hint="Enter your WiFi-Name"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/whiteColor"
+                            android:textColorHint="@color/hintColor"
+                            android:textSize="@dimen/_12sdp" />-->
+
+                        <EditText
+                            android:id="@+id/editSSID"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:drawableStart="@drawable/ic_wifi"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:focusableInTouchMode="false"
+                            android:hint="Enter your WiFi-Name"
+                            android:fontFamily="@font/roboto_regular"
                             android:inputType="text|textNoSuggestions"
                             android:maxLines="1"
                             android:textColor="@color/whiteColor"
@@ -142,14 +168,24 @@
                             android:textSize="@dimen/_10sdp" />
                     </RelativeLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="WIFI PASSWORD"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:background="@drawable/edit_text_background"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <EditText
+                  <!--      <EditText
                             android:id="@+id/editPassword"
                             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:layout_width="0dp"
@@ -162,6 +198,25 @@
                             android:drawablePadding="@dimen/_10sdp"
                             android:hint="Enter WiFi Password"
                             android:fontFamily="@font/roboto_regular"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:textColor="@color/whiteColor"
+                            android:textColorHint="@color/hintColor"
+                            android:textSize="@dimen/_12sdp" />-->
+
+                        <EditText
+                            android:id="@+id/editPassword"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:drawableStart="@drawable/ic_lock_open"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:hint="Enter WiFi Password"
                             android:inputType="textPassword"
                             android:maxLines="1"
                             android:textColor="@color/whiteColor"

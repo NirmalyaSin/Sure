@@ -1094,12 +1094,11 @@
                                 android:layout_below="@+id/rl_battery_status"
                                 android:background="#40CBDC">
 
-                                <Button
+                                <TextView
                                     android:id="@+id/tv_status"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:background="#40CBDC"
                                     android:textAllCaps="false"
                                     android:fontFamily="@font/roboto_medium"
                                     android:text="Performance Status"

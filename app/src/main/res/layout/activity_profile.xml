@@ -62,12 +62,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/rlUserImage"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginLeft="@dimen/_18sdp"
-                            android:layout_marginRight="@dimen/_18sdp"
-                            android:gravity="center"
                             android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="@dimen/_18sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_18sdp"
                             android:fontFamily="@font/roboto_regular"
+                            android:gravity="center"
                             android:text="@string/press_to_upload"
                             android:textColor="@color/whiteColor" />
                     </RelativeLayout>

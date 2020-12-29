@@ -25,9 +25,8 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
             android:fontFamily="@font/roboto_medium"
-            android:background="@drawable/shape_rectangle_round_white"
             android:text="@string/Allow_accountability_circle"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/whiteColor"
             android:textSize="@dimen/_15sdp" />
 
         <!--<View

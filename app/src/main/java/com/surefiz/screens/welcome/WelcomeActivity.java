@@ -4,6 +4,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -21,6 +24,8 @@ public class WelcomeActivity extends AppCompatActivity {
     TextView tv_signup;
     @BindView(R.id.txt_learn_more)
     TextView tv_learn_more;
+    @BindView(R.id.video_view_welcome)
+    VideoView videoView;
 
     PermissionHelper permissionHelper;
     WelcomeClickEvent welcomeClickEvent;
@@ -35,7 +40,8 @@ public class WelcomeActivity extends AppCompatActivity {
         welcomeClickEvent = new WelcomeClickEvent(this);
 
         VideoView videoView = findViewById(R.id.video_view_welcome);
-        videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.welcomevideo);
+        //videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.welcome_480_720);
+        getHeight();
         videoView.start();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -61,13 +67,32 @@ public class WelcomeActivity extends AppCompatActivity {
         } else {
             permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
         }
+
+    }
+
+    private void getHeight(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) getApplicationContext().getSystemService(this.WINDOW_SERVICE);
+        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        Log.d("Device-WidthPixels",":::"+displayMetrics.heightPixels);
+
+        if(displayMetrics.heightPixels<2132){
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.wc1);
+
+        }else if(displayMetrics.heightPixels==2132){
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.wc2);
+
+        }else if(displayMetrics.heightPixels>2132){
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.wc3);
+
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        VideoView videoView = findViewById(R.id.video_view_welcome);
-        videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.welcomevideo);
+        getHeight();
         videoView.start();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override

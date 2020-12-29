@@ -343,7 +343,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         mWifiManager.startScan();
         if (!loader.isShowing()) {
-            loader.show_with_label("Loading");
+            loader.show_with_label("Connecting");
         }
     }
 
@@ -622,8 +622,9 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                 });
 
             }
-            customAlert.show();
         }
+
+        customAlert.show();
     }
 
     protected void androidQRedirection(Class x){

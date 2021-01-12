@@ -458,8 +458,7 @@ public class SignUpView extends AppCompatActivity {
 
                     if (response.body().getStatus() == 1) {
 
-
-                        if(response.body().getData().getUser().get(0).getScaleUserId().equals("")){
+                        if(scaleId.equals("")){
 
                             showInfoDialog(getString(R.string.signup_completed_without_scale));
 

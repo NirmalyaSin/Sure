@@ -121,8 +121,8 @@ complete his/her registration process.</string>
     <string name="SetupPreparation">
        On your WiFi router, do you have two WiFi or only one WiFi? Generally, routers have two separate WiFi, one is 2.4 GHz WiFi and the other is 5 GHz WiFi.</string>
 
-    <string name="TextSmart">Please make sure your phone is connected to your WiFi. Install the batteries into the scale (If batteries are already installed, take them out and reinstall) and push the black button in the batteries compartment until you see the letters \'AP\' next to flashing WiFi symbol on the scale screen.</string>
-    <string name="TextAp">Please make sure your phone is connected to your 2.4 GHz WiFi, Install the batteries into the scale, A WiFi Symbol will start flashing on scale screen (If the batteries are already installed, remove them and reinstall and if the WiFi symbol is not flashing on the scale screen, push and hold the black button until you  see flashing WiFi symbol. If you see letters \'AP\' next to flashing WiFi, you went too far.</string>
+    <string name="TextAp">Please make sure your phone is connected to your WiFi. Install the batteries into the scale (If batteries are already installed, take them out and reinstall) and push the black button in the batteries compartment until you see the letters \'AP\' next to flashing WiFi symbol on the scale screen.</string>
+    <string name="TextSmart">Please make sure your phone is connected to your 2.4 GHz WiFi, Install the batteries into the scale, A WiFi Symbol will start flashing on scale screen (If the batteries are already installed, remove them and reinstall and if the WiFi symbol is not flashing on the scale screen, push and hold the black button until you  see flashing WiFi symbol. If you see letters \'AP\' next to flashing WiFi, you went too far.</string>
 
 
 </resources>

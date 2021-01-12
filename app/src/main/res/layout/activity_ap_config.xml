@@ -253,18 +253,17 @@
                         android:textAllCaps="false"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/_14sdp"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                     <Button
                         android:id="@+id/btnConfigure"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
                         android:layout_marginRight="@dimen/_20sdp"
                         android:layout_marginBottom="@dimen/_40sdp"
-                        android:background="@drawable/login_edit_rounded_corner_blue"
-                        android:enabled="false"
+                        android:background="@drawable/login_button_gradient"
                         android:fontFamily="@font/roboto_bold"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"

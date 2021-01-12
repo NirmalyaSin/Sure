@@ -135,7 +135,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
         iv_hidePassword = findViewById(R.id.iv_hidePassword);
         rl_back = findViewById(R.id.rl_back);
         btn_skip = findViewById(R.id.btn_skip);
-        btnConfigure.setVisibility(View.INVISIBLE);
+        //btnConfigure.setVisibility(View.INVISIBLE);
         btnlockwifi.setOnClickListener(this);
         btnConfigure.setOnClickListener(this);
         editSSID.setOnClickListener(this);
@@ -173,17 +173,41 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.btnConfigure:
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
 
-                    //if(!new InstructionSharedPreference(ApConfigActivity.this).getAnroidQ())
+                    String ssid = editSSID.getText().toString();
+                    String pwd = editPassword.getText().toString();
+                    if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
+                        Toast.makeText(this, "Please input SSID and password.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    editSSID.setEnabled(false);
+                    editPassword.setEnabled(false);
+                    btnlockwifi.setEnabled(false);
+                    //btnConfigure.setVisibility(View.VISIBLE);
+                    btnConfigure.setEnabled(true);
+                    btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
+                    btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));
+
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
                         androidQ();
-                }else {
+                    }else {
 
-                    apConfigAction();
+                        apConfigAction();
+                    }
+
+                } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
+
+                    permissionHelper.requestForPermission(PermissionHelper.PERMISSION_FINE_LOCATION);
+                } else if (!checkLocationStatus()) {
+                    buildAlertMessageNoGps();
                 }
 
+
                 break;
-            case R.id.btnlockwifi:
+       /*     case R.id.btnlockwifi:
 
                 if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
 
@@ -207,9 +231,9 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                 } else if (!checkLocationStatus()) {
                     buildAlertMessageNoGps();
                 }
+                break;*/
 
 
-                break;
             case R.id.editSSID:
 
 
@@ -616,8 +640,11 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                         customAlert.dismiss();
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
                             androidQRedirection(SettingsActivity.class);
-                        }else
-                            finish();
+                        }else {
+                            Intent intent = new Intent(ApConfigActivity.this, SettingsActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
+                        }
                     }
                 });
 

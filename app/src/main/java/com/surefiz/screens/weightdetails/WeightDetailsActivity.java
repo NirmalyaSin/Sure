@@ -229,7 +229,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
 
 
                         //userLists.addAll(response.body().getData().getUserList());
-                        userLists.addAll(checkMainUserVisibility(response.body().getData().getUserList()));
+                        userLists.addAll(checkUserHaveCompleteInfo(response.body().getData().getUserList()));
 
                         adapter.notifyDataSetChanged();
                     } else if (response.body().getStatus() == 2 || response.body().getStatus() == 3) {
@@ -260,7 +260,7 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
 
 
     // This method is to check wheather any sub-user wants to be displayed on Main users family
-    private List<UserListItem> checkMainUserVisibility(List<UserListItem> userList) {
+    private List<UserListItem> checkUserHaveCompleteInfo(List<UserListItem> userList) {
 
         List<UserListItem> tempUserList = new ArrayList<>();
 
@@ -269,7 +269,14 @@ public class WeightDetailsActivity extends AppCompatActivity implements OnUiEven
             tempUserList.add(userList.get(0));
 
             for (int i = 1; i < userList.size(); i++) {
-                if (userList.get(i).getMainuservisibility() == 1) {
+
+                //AVIK
+
+                /*if (userList.get(i).getMainuservisibility() == 1) {
+                    tempUserList.add(userList.get(i));
+                }*/
+
+                if (userList.get(i).getIsUserHaveCompleteInfo() == 1) {
                     tempUserList.add(userList.get(i));
                 }
 

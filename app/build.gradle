@@ -10,8 +10,8 @@ android {
 
         //This is for live build
 
-        versionCode 18
-        versionName "2.6"
+        versionCode 19
+        versionName "2.7"
 
         //This is for Debug build
 

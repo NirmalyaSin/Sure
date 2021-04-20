@@ -41,7 +41,7 @@
 
     </RelativeLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_header"
@@ -52,7 +52,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
+            <androidx.recyclerview.widget.RecyclerView
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/rv_registration_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,5 +89,5 @@
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

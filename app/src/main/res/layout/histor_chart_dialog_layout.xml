@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="@dimen/_300sdp"
         android:background="#A9A9A9"
@@ -17,6 +17,6 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_5sdp"
             android:background="#554755" />-->
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

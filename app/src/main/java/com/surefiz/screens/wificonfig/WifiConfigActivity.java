@@ -1,9 +1,6 @@
 package com.surefiz.screens.wificonfig;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,9 +8,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
-import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 
 import butterknife.BindView;
@@ -70,8 +69,8 @@ public class WifiConfigActivity extends AppCompatActivity {
 
     private void setViewAndFunctionality() {
 
-        if (fromSettings) {
-            btn_skip_config.setVisibility(View.GONE);
+        if (fromLogin) {
+            btn_skip_config.setVisibility(View.VISIBLE);
         }
 
         rl_back.setOnClickListener(v -> {

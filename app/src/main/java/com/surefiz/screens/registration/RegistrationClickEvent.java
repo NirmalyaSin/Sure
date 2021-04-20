@@ -35,6 +35,7 @@ import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.familyinvite.FamilyInviteActivity;
 import com.surefiz.screens.groupinvite.GroupInviteActivity;
+import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
@@ -716,62 +717,84 @@ public class RegistrationClickEvent implements View.OnClickListener {
     }
 
     private void validationAndApiCall() {
-        if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions");
-        } else if (registrationActivity.et_first_name.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
-        } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your last name");
-        } else if (registrationActivity.et_email.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your email");
-        } else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter a valid email address");
-        } else if (registrationActivity.et_password.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your password");
-        } else if (registrationActivity.et_phone.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
-        } else if (registrationActivity.et_management.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select weight management goal");
-        } else if (registrationActivity.et_units.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
-        } else if (registrationActivity.et_gender.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
-        } else if (registrationActivity.age.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your age");
-        } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
-            MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
-        } else if (registrationActivity.et_height.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your height");
-        } else if (selectedLifeStyle == 0) {
-            MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");
-        } else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select desired weight selection option");
-        } else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please select your time to lose weight");
-        } else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
-            MethodUtils.errorMsg(registrationActivity, "Password must be minimum 8 characters");
+     /*   if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
+            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions.");
+        }*/
+        if (registrationActivity.et_first_name.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_First_Name));
+        }
+        else if (registrationActivity.et_last_name.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Last_Name));
+        }
+        else if (registrationActivity.et_email.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Email_ID));
+        }
+        else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_a_valid_Email_ID));
+        }
+        else if (registrationActivity.et_password.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_password));
+        }
+        else if (!lengthCheck(registrationActivity.et_password.getText().toString().trim())) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Password_must_be_minimum_8_characters));
+        }
+        else if (registrationActivity.et_phone.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Phone_Number));
+        }
+        else if (registrationActivity.et_management.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_Weight_Management_Goal));
+        }
+        else if (registrationActivity.et_units.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Preferred_Units));
+        }
+        else if (registrationActivity.et_gender.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Gender));
+        }
+        else if (registrationActivity.age.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Age));
+        }
+        else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Your_age_should_be_greater_than_6));
+        }
+        else if (registrationActivity.et_height.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Height));
+        }
+        else if (selectedLifeStyle == 0) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Lifestyle));
+        }
+        else if (weight_managment_goal == 2 && registrationActivity.et_weight.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_Weight_Management_Goal));
+        }
+        else if (weight_managment_goal == 2 && registrationActivity.et_time_loss.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Time_To_Lose_Weight));
         } else if (registrationActivity.address.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your street address");
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Address_Line_1));
+
         } else if (registrationActivity.city.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your city name");
-        } else if (registrationActivity.state.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your state");
-        } else if (registrationActivity.zipcode.getText().toString().equals("")) {
-            MethodUtils.errorMsg(registrationActivity, "Please enter your zip code");
-        } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_City));
+        }
+        else if (registrationActivity.state.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_State));
+        }
+        else if (registrationActivity.zipcode.getText().toString().equals("")) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Zip_Code));
+        }
+        else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
             MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
-        } else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-            MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions");
-        } else {
+        }
+       /* else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
+            MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_accept_Terms_and_Conditions));
+        }*/
+        else {
             int age = Integer.parseInt(registrationActivity.age.getText().toString());
             if (!(age >= 7 && age <= 99)) {
-                MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Your_age_should_be_greater_than_6));
                 return;
             }
 
             if (registrationActivity.regType > 1) {
                 if (registrationActivity.et_member.getText().toString().isEmpty()) {
-                    MethodUtils.errorMsg(registrationActivity, "Please enter number of members you want to add");
+                    MethodUtils.errorMsg(registrationActivity, "Please enter number of members you want to add.");
                 } else {
                     if (registrationActivity.mCompressedFile != null) {
                         callRegistrationApiWithImage();
@@ -807,21 +830,28 @@ public class RegistrationClickEvent implements View.OnClickListener {
         if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
             if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                     registrationActivity.et_scale_id.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter your scale ID");
-            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.If_you_have_received_your_scale));
+
+            }
+            else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                     !lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter valid scale ID");
-            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Scale_ID_must_contain_10_digits));
+            }
+            else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                     registrationActivity.et_confirm_scale_id.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter confirm scale ID");
-            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_confirm_your_Scale_ID));
+            }
+            else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                     !registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
-                MethodUtils.errorMsg(registrationActivity, "Scale ID and confirm scale ID are not identical");
-            } else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-                MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions");
-            } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Scale_ID_and_Confirm_Scale_ID_mismatched));
+            }
+           /* else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_accept_Terms_and_Conditions));
+            }*/
+            else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
                 MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
-            } else {
+            }
+            else {
                 if (registrationActivity.mCompressedFile != null) {
                     callCompleteUserInfoApiWithImage();
                 } else {
@@ -831,55 +861,72 @@ public class RegistrationClickEvent implements View.OnClickListener {
         } else {
 
            if (registrationActivity.et_first_name.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter your first name");
-            } else if (registrationActivity.et_last_name.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter your last name");
-            } else if (registrationActivity.et_email.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter your email");
-            } else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter a valid email address");
-            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_First_Name));
+           }
+           else if (registrationActivity.et_last_name.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Last_Name));
+            }
+           else if (registrationActivity.et_email.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Email_ID));
+            }
+           else if (!MethodUtils.isValidEmail(registrationActivity.et_email.getText().toString())) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_a_valid_Email_ID));
+            }
+           else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                     registrationActivity.et_scale_id.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter your scale ID");
-            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.If_you_have_received_your_scale));
+            }
+           else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                     !lengthScale(registrationActivity.et_scale_id.getText().toString().trim())) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter valid scale ID");
-            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Scale_ID_must_contain_10_digits));
+            }
+           else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                     registrationActivity.et_confirm_scale_id.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter confirm scale ID");
-            } else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_confirm_your_Scale_ID));
+            }
+           else if (LoginShared.getViewProfileDataModel(registrationActivity).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1") &&
                     !registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
-                MethodUtils.errorMsg(registrationActivity, "Scale ID and confirm scale ID are not identical");
-            } else if (registrationActivity.et_body.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select your pre existing condition");
-           }else if (registrationActivity.et_phone.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter your phone number");
-            } else if (registrationActivity.et_units.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select your Preferred Units");
-           }else if (registrationActivity.et_management.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please select weight management goal");
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Scale_ID_and_Confirm_Scale_ID_mismatched));
+            }
+           else if (registrationActivity.et_body.getText().toString().equals("")) {
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Pre_Existing_Conditions));
+           }
+           else if (registrationActivity.et_phone.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Phone_Number));
+            }
+           else if (registrationActivity.et_units.getText().toString().equals("")) {
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Preferred_Units));
+           }
+           else if (registrationActivity.et_management.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_Weight_Management_Goal));
             }
            else if (weight_managment_goal ==2 && user_selection_val==0 && registrationActivity.et_userselection.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select desired weight selection option");
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_how_to_determine_your_desired_weight));
            }
-
            else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_weight.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select your desired weight");
-           } else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select your time to lose");
-           } else if (registrationActivity.et_height.getText().toString().equals("")) {
-                MethodUtils.errorMsg(registrationActivity, "Please enter your height");
-            } else if (selectedLifeStyle == 0) {
-                MethodUtils.errorMsg(registrationActivity, "Please select your lifestyle");
-            } else if (registrationActivity.et_gender.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please select any gender type");
-           } else if (registrationActivity.age.getText().toString().equals("")) {
-               MethodUtils.errorMsg(registrationActivity, "Please enter your Age");
-           } else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
-               MethodUtils.errorMsg(registrationActivity, "Age should be between 7 and 99");
-           } else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
-               MethodUtils.errorMsg(registrationActivity, "Please accept Terms & Conditions");
-           } else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Desired_Weight));
+           }
+           else if (weight_managment_goal == 2 && user_selection_val == 1 && registrationActivity.et_time_loss.getText().toString().equals("")) {
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Time_To_Lose_Weight));
+           }
+           else if (registrationActivity.et_height.getText().toString().equals("")) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Height));
+            }
+           else if (selectedLifeStyle == 0) {
+                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Lifestyle));
+            }
+           else if (registrationActivity.et_gender.getText().toString().equals("")) {
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Gender));
+           }
+           else if (registrationActivity.age.getText().toString().equals("")) {
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Age));
+           }
+           else if (!isNonZeroValue(registrationActivity.age.getText().toString())) {
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Your_age_should_be_greater_than_6));
+           }
+          /* else if (!registrationActivity.checkBoxTermsCondition.isChecked()) {
+               MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_accept_Terms_and_Conditions));
+           } */else if (!ConnectionDetector.isConnectingToInternet(registrationActivity)) {
                 MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.no_internet));
             } else   {
                 if (registrationActivity.mCompressedFile != null) {
@@ -1145,7 +1192,8 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     registrationActivity.finishAffinity();
                 } else {
                     //if (!LoginShared.getstatusforwifivarification(registrationActivity)) {
-                    if (registrationActivity.registrationModel.getData().getUser().get(0).getIsfirsttime()==1) {
+                    if (registrationActivity.registrationModel.getData().getUser().get(0).getIsfirsttime()==1 &&
+                            registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId().equals("1")) {
 
                         LoginShared.setRegistrationDataModel(registrationActivity,registrationActivity.registrationModel);
                         LoginShared.setRegistrationComplete(registrationActivity, true);
@@ -1156,6 +1204,14 @@ public class RegistrationClickEvent implements View.OnClickListener {
                         registrationActivity.startActivity(intent);
                         registrationActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         registrationActivity.finishAffinity();
+
+                    }else if (registrationActivity.registrationModel.getData().getUser().get(0).getIsfirsttime()==1 &&
+                            !registrationActivity.registrationModel.getData().getUser().get(0).getScaleUserId().equals("1")) {
+
+                        Intent instruc = new Intent(registrationActivity, InstructionActivity.class);
+                        registrationActivity.startActivity(instruc);
+                        registrationActivity.finishAffinity();
+
                     } else {
                         Intent intent = new Intent(registrationActivity, DashBoardActivity.class);
                         registrationActivity.startActivity(intent);

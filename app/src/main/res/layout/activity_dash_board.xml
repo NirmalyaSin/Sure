@@ -223,25 +223,33 @@
                         android:visibility="visible"
                         app:cardBackgroundColor="@color/card_border">
 
-                        <com.highsoft.highcharts.core.HIChartView
-                            android:id="@+id/hc_achi_goals"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/_3sdp"
-                            android:background="#414655" />
-
-                        <TextView
-                            android:id="@+id/tvViewHistory"
+                        <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/whiteColor"
-                            android:layout_gravity="end"
-                            android:padding="@dimen/_4sdp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:layout_marginEnd="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_20sdp"
-                            android:text="@string/click_to_view_history"
-                            android:textSize="@dimen/_10sdp" />
+                            android:layout_height="wrap_content">
+
+                            <com.highsoft.highcharts.core.HIChartView
+                                android:id="@+id/hc_achi_goals"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:background="#414655" />
+
+                            <TextView
+                                android:id="@+id/tvViewHistory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/whiteColor"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="end"
+                                android:padding="@dimen/_4sdp"
+                                android:fontFamily="@font/roboto_medium"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_20sdp"
+                                android:text="@string/click_to_view_history"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </RelativeLayout>
+
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
@@ -254,12 +262,34 @@
                         android:visibility="visible"
                         app:cardBackgroundColor="@color/card_border">
 
-                        <com.highsoft.highcharts.core.HIChartView
-                            android:id="@+id/hc_gauge"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/_3sdp"
-                            android:background="#414655" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.highsoft.highcharts.core.HIChartView
+                                android:id="@+id/hc_gauge"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:background="#414655" />
+
+                            <TextView
+                                android:id="@+id/tvViewHistory2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/whiteColor"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="end"
+                                android:padding="@dimen/_4sdp"
+                                android:fontFamily="@font/roboto_medium"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_20sdp"
+                                android:text="@string/click_to_view_history"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </RelativeLayout>
+
+
                     </android.support.v7.widget.CardView>
 
                     <!--_535sdp-->

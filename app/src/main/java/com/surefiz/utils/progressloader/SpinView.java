@@ -20,10 +20,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 import com.surefiz.R;
 
 
-class SpinView extends android.support.v7.widget.AppCompatImageView implements Indeterminate {
+class SpinView extends AppCompatImageView implements Indeterminate {
 
     private float mRotateDegrees;
     private int mFrameTime;

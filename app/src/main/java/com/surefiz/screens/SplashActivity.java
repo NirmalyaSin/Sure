@@ -3,8 +3,9 @@ package com.surefiz.screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.surefiz.R;
 import com.surefiz.screens.accountability.AcountabilityActivity;

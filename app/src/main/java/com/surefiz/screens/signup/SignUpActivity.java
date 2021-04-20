@@ -69,7 +69,7 @@ public class SignUpActivity extends SignUpView {
     private void setTermsAndCondition() {
         checkBoxTermsCondition.setText("");
         textTermsCondition.setText(Html.fromHtml("I have read and agree to the " +
-                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms & Conditions</font></a>"));
+                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms and Conditions</font></a>"));
         textTermsCondition.setClickable(true);
         textTermsCondition.setMovementMethod(LinkMovementMethod.getInstance());
     }

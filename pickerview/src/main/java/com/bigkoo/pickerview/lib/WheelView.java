@@ -7,12 +7,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.adapter.WheelAdapter;

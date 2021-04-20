@@ -3,7 +3,6 @@ package com.bigkoo.pickerview.view;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,6 +12,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
 
 import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
 import com.bigkoo.pickerview.R;

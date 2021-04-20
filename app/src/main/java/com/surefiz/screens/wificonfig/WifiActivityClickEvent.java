@@ -35,6 +35,7 @@ import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import java.util.ArrayList;
@@ -216,7 +217,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 String bssid = mWifiConfigActivity.editBSSID.getText().toString();
 
                 if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
-                    Toast.makeText(mWifiConfigActivity, "Please enter ssid and pwd.", Toast.LENGTH_SHORT).show();
+                    MethodUtils.errorMsg(mWifiConfigActivity,"Please enter your WiFi Password.");
                 } else {
                     //  mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     if (!loader.isShowing()) {
@@ -277,7 +278,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
         }
         if (success)
-            Toast.makeText(mWifiConfigActivity, "Wificonfig done", Toast.LENGTH_LONG).show();
+            Toast.makeText(mWifiConfigActivity, "Wifi Config done", Toast.LENGTH_LONG).show();
         else {
 
             CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
@@ -371,7 +372,10 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             public void onClick(View v) {
                 customAlert.dismiss();
                 if (isFromSettingPage) {
-                    mWifiConfigActivity.finish();
+
+                    Intent intent = new Intent(mWifiConfigActivity, SettingsActivity.class);
+                    mWifiConfigActivity.startActivity(intent);
+                    mWifiConfigActivity.finishAffinity();
 
                 } else {
                     //LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
@@ -383,6 +387,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                         Intent dashboardIntent = new Intent(mWifiConfigActivity, DashBoardActivity.class);
                         mWifiConfigActivity.startActivity(dashboardIntent);
                         mWifiConfigActivity.finishAffinity();
+
                     }
                 }
             }

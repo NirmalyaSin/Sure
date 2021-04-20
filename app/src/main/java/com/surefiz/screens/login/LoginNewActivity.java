@@ -1,7 +1,8 @@
 package com.surefiz.screens.login;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.surefiz.R;
 
 public class LoginNewActivity extends AppCompatActivity {

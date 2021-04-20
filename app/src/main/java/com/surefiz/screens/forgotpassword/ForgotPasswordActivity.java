@@ -1,12 +1,13 @@
 package com.surefiz.screens.forgotpassword;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -69,9 +70,9 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
     private void setValidationAndApiCall() {
         if (et_email.getText().toString().equals("")) {
-            MethodUtils.errorMsg(this, "Please enter your email");
+            MethodUtils.errorMsg(this, "Please enter your email.");
         } else if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
-            MethodUtils.errorMsg(this, "Please enter a valid email address");
+            MethodUtils.errorMsg(this, "Please enter a valid email ID.");
         } else {
             callForgotApi();
         }

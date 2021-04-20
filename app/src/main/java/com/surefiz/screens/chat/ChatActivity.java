@@ -8,16 +8,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -138,7 +139,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
             public void onClick(View v) {
                 String message = editTextMessage.getText().toString().trim();
                 if (message.equals("")) {
-                    editTextMessage.setError("Enter message");
+                    editTextMessage.setError("Please enter a message");
                 } else {
                     //Send Chat message
                     try {

@@ -77,7 +77,7 @@ public class SignUpOnClick implements View.OnClickListener {
                 closeAllPopup();
 
                 if(signUpActivity.et_country_name.getText().toString().equals("")){
-                    MethodUtils.errorMsg(signUpActivity, "Please select your country first");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Country));
                 }else {
                     signUpActivity.showAndDismissStatePopup();
                 }
@@ -113,7 +113,7 @@ public class SignUpOnClick implements View.OnClickListener {
                 closeAllPopup();
 
                 if(signUpActivity.et_units.getText().toString().equals("")){
-                    MethodUtils.errorMsg(signUpActivity, "Please select your preferred unit");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Preferred_Units));
                 }else {
                     if (signUpActivity.et_units.getText().toString().equals("KG/CM")) {
                         signUpActivity.addHeightListAndCall("CM");
@@ -131,7 +131,7 @@ public class SignUpOnClick implements View.OnClickListener {
                 closeAllPopup();
 
                 if(signUpActivity.et_units.getText().toString().equals("")){
-                    MethodUtils.errorMsg(signUpActivity, "Please select your preferred unit");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Preferred_Units));
                 }else {
                     if (signUpActivity.et_units.getText().toString().equals("KG/CM")) {
                         signUpActivity.addWeightListAndCall("KG");
@@ -181,78 +181,79 @@ public class SignUpOnClick implements View.OnClickListener {
                 closeAllPopup();
 
                 if (signUpActivity.et_first_name.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your first name");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_First_Name));
                 }
                 else if (signUpActivity.et_last_name.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your last name");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_Last_Name));
                 }
                 else if (signUpActivity.et_email.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your email");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_Email_ID));
                 }
                 else if (signUpActivity.et_confirm_email.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please re-enter your email");
-                }else if (!signUpActivity.et_email.getText().toString().equals(signUpActivity.et_confirm_email.getText().toString())) {
-                    MethodUtils.errorMsg(signUpActivity, "Re-enter email not match with email");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_reenter_your_Email_ID));
+                }
+                else if (!signUpActivity.et_email.getText().toString().equals(signUpActivity.et_confirm_email.getText().toString())) {
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_check_your_email_entry));
                 }
                 else if (signUpActivity.et_password.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Enter new password");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_create_a_new_Password));
                 }
                 else if (signUpActivity.et_body.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your pre existing condition");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Pre_Existing_Conditions));
                 }
                 else if (signUpActivity.selectedLifeStyle == 0) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your lifestyle");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Lifestyle));
                 }
                 else if (signUpActivity.et_phone.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your phone number");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_Phone_Number));
                 }
                 else if (signUpActivity.et_units.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your Preferred Units");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Preferred_Units));
                 }
                 else if (signUpActivity.et_management.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your weight management goal");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_Weight_Management_Goal));
                 }
                 else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.et_userselection.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select desired weight selection option");
-                }else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_weight.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your desired weight");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_how_to_determine_your_desired_weight));
+                }
+                else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_weight.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Desired_Weight));
                 }
                 else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_time_loss.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your time to lose");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Time_To_Lose_Weight));
                 }
                 else if (signUpActivity.et_height.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your height");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Height));
                 }
                 else if (signUpActivity.et_gender.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your gender");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Gender));
                 }
                 else if (signUpActivity.age.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your age");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_Age));
                 }
                 else if (!isNonZeroValue(signUpActivity.age.getText().toString().trim())) {
-                    MethodUtils.errorMsg(signUpActivity, "Age should be between 7 and 99");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Your_age_should_be_greater_than_6));
                 }
-
                 else if (signUpActivity.et_country_name.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your country");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Country));
                 }
                 else if (signUpActivity.et_add_line1.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Enter address line 1");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_Address_Line_1));
                 }
                 else if (signUpActivity.et_city.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your city");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_City));
                 }
                 else if (signUpActivity.et_state.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select your state");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_State));
                 }
                 else if (signUpActivity.zipcode.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please enter your zip code");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_Zip_Code));
                 }
                 else if (signUpActivity.et_learn_about.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(signUpActivity, "Please select how do you learn about");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_choose_how_did_you_learn_about_SureFiz));
                 }
                 else if (!signUpActivity.checkBoxTermsCondition.isChecked()) {
-                    MethodUtils.errorMsg(signUpActivity, "Please accept Terms & Conditions");
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_accept_Terms_and_Conditions));
                 }
                 else if (!ConnectionDetector.isConnectingToInternet(signUpActivity)) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.no_internet));

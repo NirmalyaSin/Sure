@@ -5,12 +5,13 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
@@ -92,20 +93,20 @@ public class ChooseActivity extends ChooseActivityView {
                 }else if(step==3) {
                     if(isScanner) {
                         if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter Scale ID");
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Scale ID.");
 
                         } else {
                             callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-",""), false);
                         }
                     }else{
                         if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter Scale ID");
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Scale ID.");
 
                         }else if (amazonDialog.et_con_scaleId.getText().toString().trim().equals("")) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please Retype Scale ID");
+                            MethodUtils.errorMsg(ChooseActivity.this, "Please confirm your Scale ID.");
 
                         }else if (!amazonDialog.et_con_scaleId.getText().toString().trim().equals(amazonDialog.et_scaleId.getText().toString().trim())) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Scale ID and Retype Scale ID mismatch");
+                            MethodUtils.errorMsg(ChooseActivity.this, "Scale ID and Confirm Scale ID mismatch.");
 
                         }else {
                             callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-",""), false);

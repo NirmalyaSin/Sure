@@ -113,10 +113,10 @@ public class LoginClickEvent implements View.OnClickListener {
             if (!mLoginActivity.editPassword.getText().toString().equals("")) {
                 callapiforlogin();
             } else {
-                MethodUtils.errorMsg(mLoginActivity, "Please enter your password");
+                MethodUtils.errorMsg(mLoginActivity, "Please enter your password.");
             }
         } else {
-            MethodUtils.errorMsg(mLoginActivity, "Please enter your email");
+            MethodUtils.errorMsg(mLoginActivity, "Please enter your email.");
         }
 
 
@@ -202,10 +202,6 @@ public class LoginClickEvent implements View.OnClickListener {
                         mLoginActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         //mLoginActivity.finishAffinity();
                     } else {
-                        //if (!LoginShared.getstatusforwifivarification(mLoginActivity)) {
-                            //AVIK
-                            //Intent intent = new Intent(mLoginActivity, WifiConfigActivity.class);
-                        //if (!new InstructionSharedPreference(mLoginActivity).isInstructionShown(mLoginActivity, LoginShared.getRegistrationDataModel(mLoginActivity).getData().getUser().get(0).getUserId())) {
 
                         if(registrationModel.getData().getUser().get(0).getIsfirsttime()==1){
                             Intent intent = new Intent(mLoginActivity, SetUpPreparation.class);

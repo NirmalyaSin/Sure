@@ -9,11 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -29,6 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
 import com.gun0912.tedpermission.PermissionListener;
@@ -351,7 +352,7 @@ public class RegistrationActivity extends AppCompatActivity {
             profile_image.setVisibility(View.VISIBLE);
             iv_plus_add_image.setVisibility(View.VISIBLE);
             tv_upload.setVisibility(View.VISIBLE);
-            linearLayout1.setVisibility(View.VISIBLE);
+            linearLayout1.setVisibility(View.GONE);
 
 
             //----------Addited By Arup---------//
@@ -382,7 +383,7 @@ public class RegistrationActivity extends AppCompatActivity {
             profile_image.setVisibility(View.VISIBLE);
             iv_plus_add_image.setVisibility(View.VISIBLE);
             tv_upload.setVisibility(View.VISIBLE);
-            linearLayout1.setVisibility(View.VISIBLE);
+            linearLayout1.setVisibility(View.GONE);
 
 
         }
@@ -574,7 +575,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         if (LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleUserId().equalsIgnoreCase("1")) {
-            toolTipText = "Scale ID is labeled on\nthe back of your scale";
+            toolTipText = "Scale ID is labeled on\nthe back of your scale.";
         } else {
             //toolTipText = "Scale ID is\nassigned by primary user";
             toolTipText = "Your primary user has provided\nthe Scale ID,there is no action\nrequired for Scale ID from you.";
@@ -659,7 +660,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private void setTermsAndCondition() {
         checkBoxTermsCondition.setText("");
         textTermsCondition.setText(Html.fromHtml("I have read and agree to the " +
-                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms & Conditions</font></a>"));
+                "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms and Conditions</font></a>"));
         textTermsCondition.setClickable(true);
         textTermsCondition.setMovementMethod(LinkMovementMethod.getInstance());
     }

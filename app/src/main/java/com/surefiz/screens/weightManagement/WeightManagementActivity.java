@@ -3,12 +3,13 @@ package com.surefiz.screens.weightManagement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;

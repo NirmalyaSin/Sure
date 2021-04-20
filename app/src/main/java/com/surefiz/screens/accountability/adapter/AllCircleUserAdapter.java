@@ -1,10 +1,8 @@
 package com.surefiz.screens.accountability.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+
+import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,7 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.surefiz.R;
@@ -137,6 +141,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
             });
 
             ivViewOptions.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
                 @Override
                 public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(mContext, ivViewOptions, Gravity.END|Gravity.TOP,0,R.style.PopupMenuWindow);

@@ -2,12 +2,13 @@ package com.surefiz.screens.groupinvite;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.surefiz.R;
@@ -37,7 +38,7 @@ import retrofit2.Retrofit;
 public class GroupInviteActivity extends AppCompatActivity {
     @BindView(R.id.rv_registration_group)
     RecyclerView rv_registration_group;
-    private GroupInviteAdapter adapter;
+    GroupInviteAdapter adapter;
 
     private LoadingData loader;
     private int count;

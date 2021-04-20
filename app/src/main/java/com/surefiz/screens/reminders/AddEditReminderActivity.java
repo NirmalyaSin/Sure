@@ -77,11 +77,11 @@ public class AddEditReminderActivity extends BaseActivity implements
                 String time = ChatDateConverter.Hour_Minute2(editReminderTime.getText().toString().trim());
 
                 if (remiderText.equals("")) {
-                    editReminderText.setError("Enter reminder message");
+                    editReminderText.setError("Please enter a reminder text");
                 } else if (date.equals("")) {
-                    editReminderDate.setError("Select date");
+                    editReminderDate.setError("Please select a date");
                 } else if (time.equals("")) {
-                    editReminderTime.setError("Select Time");
+                    editReminderTime.setError("Please select a time");
                 } else {
                     String finalDateTime = date + " " + time;
                     switch (type) {

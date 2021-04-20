@@ -1,12 +1,12 @@
 package com.surefiz.screens.changepassword;
 
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
@@ -79,16 +79,16 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.btn_submit:
                 if (et_old.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(this, "Please enter your old password");
+                    MethodUtils.errorMsg(this, "Please enter your old password.");
                 } else if (et_new.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(this, "Please enter your new password");
+                    MethodUtils.errorMsg(this, "Please enter your new password.");
                 } else if (et_retype.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(this, "Please retype your new password");
+                    MethodUtils.errorMsg(this, "Please retype your new password.");
                 } else if (!et_new.getText().toString().trim().equals(et_retype.getText().toString().trim())) {
-                    MethodUtils.errorMsg(this, "Entered passwords are not matching");
+                    MethodUtils.errorMsg(this, "“Entered passwords are not matching.");
                 } else if (!(et_new.getText().toString().trim().length() >= 8
                         && et_new.getText().toString().trim().length() <= 16)) {
-                    MethodUtils.errorMsg(this, "Password must be between 8 and 16 characters");
+                    MethodUtils.errorMsg(this, "Password must be 8 characters or more.");
                 } else if (!ConnectionDetector.isConnectingToInternet(this)) {
                     MethodUtils.errorMsg(this, getString(R.string.no_internet));
                 } else {

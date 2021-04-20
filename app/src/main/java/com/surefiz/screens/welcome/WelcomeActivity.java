@@ -2,13 +2,14 @@ package com.surefiz.screens.welcome;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.surefiz.R;
 import com.surefiz.helpers.PermissionHelper;
@@ -77,7 +78,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Log.d("Device-WidthPixels",":::"+displayMetrics.heightPixels);
 
-        if(displayMetrics.heightPixels<2132){
+      /*  if(displayMetrics.heightPixels<2132){
             videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.wc1);
 
         }else if(displayMetrics.heightPixels==2132){
@@ -85,9 +86,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         }else if(displayMetrics.heightPixels>2132){
             videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.wc3);
+        }*/
 
-        }
-    }
+
+        videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.wc3);
+
+}
 
     @Override
     protected void onResume() {

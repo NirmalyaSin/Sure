@@ -2,12 +2,13 @@ package com.bigkoo.pickerview;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.MyWheelTime;

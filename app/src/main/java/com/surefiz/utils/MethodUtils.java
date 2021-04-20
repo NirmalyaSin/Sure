@@ -1,14 +1,13 @@
 package com.surefiz.utils;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.core.content.ContextCompat;
 
 import com.surefiz.R;
 import com.surefiz.dialog.CustomAlert;

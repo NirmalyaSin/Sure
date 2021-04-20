@@ -152,29 +152,29 @@ public class AddUserDialogForOTP extends Dialog {
             @Override
             public void onClick(View v) {
                 if (et_name.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter user name");
+                    MethodUtils.errorMsg(activity, "Please enter user name.");
                 } else if (et_last.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter User Last name");
+                    MethodUtils.errorMsg(activity, "Please enter User Last name.");
                 } else if (et_email.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter user email");
+                    MethodUtils.errorMsg(activity, "Please enter user email.");
                 } else if (!MethodUtils.isValidEmail(et_email.getText().toString())) {
-                    MethodUtils.errorMsg(activity, "Please enter a valid email address");
+                    MethodUtils.errorMsg(activity, "Please enter a valid email ID.");
                 } else if (et_phone.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your phone number");
+                    MethodUtils.errorMsg(activity, "Please enter your phone number.");
                 } else if (et_units.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your Preferred Units");
+                    MethodUtils.errorMsg(activity, "Please select your Preferred Units.");
                 } else if (et_management.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select Weight Managment goal");
+                    MethodUtils.errorMsg(activity, "Please select Weight Managment goal.");
                 } else if (et_gender.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select any gender type");
+                    MethodUtils.errorMsg(activity, "Please select your gender.");
                 } else if (et_DOB.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your Age");
+                    MethodUtils.errorMsg(activity, "Please enter your age.");
                 } else if (et_height.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your height");
+                    MethodUtils.errorMsg(activity, "Please select your height.");
                 } else if (et_weight.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your desired weight");
+                    MethodUtils.errorMsg(activity, "Please enter your desired weight.");
                 } else if (et_time_loss.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your time to lose weight");
+                    MethodUtils.errorMsg(activity, "Please select your time to lose weight.");
                 } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 } else {

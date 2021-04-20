@@ -27,11 +27,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PatternMatcher;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -49,6 +44,11 @@ import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.surefiz.R;
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.helpers.PermissionHelper;
@@ -59,6 +59,7 @@ import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
+import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import java.util.ArrayList;
@@ -178,7 +179,9 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                     String ssid = editSSID.getText().toString();
                     String pwd = editPassword.getText().toString();
                     if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
-                        Toast.makeText(this, "Please input SSID and password.", Toast.LENGTH_SHORT).show();
+
+                        MethodUtils.errorMsg(this,"Please enter your WiFi Password.");
+
                         return;
                     }
                     editSSID.setEnabled(false);
@@ -271,7 +274,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
         String ssid = editSSID.getText().toString();
         String pwd = editPassword.getText().toString();
         if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
-            Toast.makeText(this, "Please input SSID and password.", Toast.LENGTH_SHORT).show();
+            MethodUtils.errorMsg(this,"Please enter your WiFi Password.");
             return;
         }
         editSSID.setEnabled(false);
@@ -600,7 +603,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
             if (getIntent().getBooleanExtra("wifi", false)) {
 
                 customAlert.setSubText(getResources().getString(R.string.configuration));
-                customAlert.setKeyName("","Step on Scale");
+                customAlert.setKeyName("","Step on the Scale");
                 customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

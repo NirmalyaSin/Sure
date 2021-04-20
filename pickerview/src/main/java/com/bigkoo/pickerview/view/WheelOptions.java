@@ -3,8 +3,9 @@ package com.bigkoo.pickerview.view;
 import java.util.ArrayList;
 
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -83,9 +82,9 @@ public class AmazonDialog extends Dialog {
 
     public void stepOneView(boolean isAmazon){
         if(isAmazon)
-            tv_sub.setText("Please enter your Amazon Order ID");
+            tv_sub.setText("Please enter your Amazon Order ID.");
         else
-            tv_sub.setText("Please enter your Order ID");
+            tv_sub.setText("Please enter your Order ID.");
 
         et_orderId.setText("");
         et_orderId.setVisibility(View.VISIBLE);
@@ -109,7 +108,7 @@ public class AmazonDialog extends Dialog {
     }
 
     public void stepThreeView(){
-        tv_sub.setText("Please scan the scale ID barcode on the back of your scale or enter it manually");
+        tv_sub.setText("Please scan the scale ID barcode on the back your scale or enter it manually.");
         et_scaleId.setText("");
         et_con_scaleId.setText("");
         et_orderId.setVisibility(View.GONE);

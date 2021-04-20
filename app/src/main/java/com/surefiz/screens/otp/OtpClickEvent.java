@@ -151,16 +151,16 @@ public class OtpClickEvent implements View.OnClickListener {
                 break;
             case R.id.btn_submit:
                 if (otpActivity.et_first.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP");
+                    MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP.");
 
                 } else if (otpActivity.et_second.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP");
+                    MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP.");
 
                 } else if (otpActivity.et_third.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP");
+                    MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP.");
 
                 } else if (otpActivity.et_fourth.getText().toString().trim().equals("")) {
-                    MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP");
+                    MethodUtils.errorMsg(otpActivity, "Enter full four digit OTP.");
                 } else if (!ConnectionDetector.isConnectingToInternet(otpActivity)) {
                     MethodUtils.errorMsg(otpActivity, otpActivity.getString(R.string.no_internet));
                 } else {

@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,6 +18,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.facebook.CallbackManager;
@@ -721,49 +722,66 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 break;
             case R.id.btn_register:
                 if (activity.et_full.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your name");
-                } else if (activity.et_body.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your pre existing condition");
-                }else if (activity.et_phone.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your phone number");
-                } else if (activity.et_units.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select your Preferred Units");
-                } else if (activity.et_gender.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please select any gender type");
-                } else if (activity.et_DOB.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Please enter your Age");
-                } else if (!isNonZeroValue(activity.et_DOB.getText().toString().trim())) {
-                    MethodUtils.errorMsg(activity, "Age should be between 7 and 99");
-                } else if (selectedLifeStyle == 0) {
-                    MethodUtils.errorMsg(activity, "Please select your lifestyle");
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_First_Name));
+                }
+                else if (activity.et_last.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Last_Name));
+                }
+                else if (activity.et_email.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Email_ID));
+                }
+                else if (activity.et_body.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_select_your_Pre_Existing_Conditions));
+                }
+                else if (activity.et_phone.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Phone_Number));
+                }
+                else if (activity.et_units.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_select_your_Preferred_Units));
+                }
+                else if (activity.et_gender.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_select_your_Gender));
+                }
+                else if (activity.et_DOB.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Age));
+                }
+                else if (!isNonZeroValue(activity.et_DOB.getText().toString().trim())) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Your_age_should_be_greater_than_6));
+                }
+                else if (selectedLifeStyle == 0) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_select_your_Lifestyle));
+                }
+                else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
                         activity.et_new_password.getText().toString().equals("")) {
-
-                    MethodUtils.errorMsg(activity, "Enter new password");
-
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_password));
+                }
+                else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
                         activity.et_confirm_password.getText().toString().equals("")) {
-
-                    MethodUtils.errorMsg(activity, "Enter confirm password");
-
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_confirm_your_password));
+                }
+                else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getIsPasswordAvailable() == 0 &&
                         !activity.et_confirm_password.getText().toString().equals(activity.et_new_password.getText().toString())) {
-
-                    MethodUtils.errorMsg(activity, "New password and confirm password must be same");
-
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_country_name.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Enter country");
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line1.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Enter address line 1");
-                }  else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_city.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Enter city");
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_state.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Enter state");
-                } else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_zipcode.getText().toString().equals("")) {
-                    MethodUtils.errorMsg(activity, "Enter zip code");
-                } else if (!ConnectionDetector.isConnectingToInternet(activity)) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.New_password_and_confirm_password_must_be_same));
+                }
+                else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_country_name.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_select_your_Country));
+                }
+                else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_add_line1.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Enter_Your_Address_Line_1));
+                }
+                else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_city.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_City));
+                }
+                else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_state.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_select_your_State));
+                }
+                else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_zipcode.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Zip_Code));
+                }
+                else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
-                } else {
+                }
+                else {
                     if (activity.mCompressedFile != null) {
                         sendProfileImageUpdateApi();
                     } else {

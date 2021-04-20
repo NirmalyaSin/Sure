@@ -9,12 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +18,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -128,7 +129,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private ImageView img_battery_status;
     private CardView cv_body_composition;
     private ImageView ivCloseButton;
-    private TextView tvViewHistory;
+    private TextView tvViewHistory,tvViewHistory2;
     private SwipeRefreshLayout swiperefresh;
     private ScrollView scrollDataView;
     private ViewTreeObserver.OnScrollChangedListener mOnScrollChangedListener;
@@ -490,6 +491,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                     setWeightLossChart();
                                     setPieChatBodyComposition();
                                     setOtherOptions();
+                                    setHistoryChart();
                                 }
 
                             }
@@ -996,6 +998,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         tv_body_score_dynamic = findViewById(R.id.tv_body_score_dynamic);
 
         tvViewHistory = findViewById(R.id.tvViewHistory);
+        tvViewHistory2 = findViewById(R.id.tvViewHistory2);
         rlHistoryChart = findViewById(R.id.rlHistoryChart);
         rlHistoryChart.setVisibility(View.GONE);
         cv_weight = findViewById(R.id.cv_weight);
@@ -1033,6 +1036,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
 
         tvViewHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showHistoryGoalsChart();
+            }
+        });
+
+        tvViewHistory2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showHistoryGoalsChart();
@@ -2107,7 +2117,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             rlHistoryChart.setVisibility(View.VISIBLE);
             ivCloseButton.bringToFront();
 
-            hcHistoryGoals.setOptions(historyChartOptions);
+            //hcHistoryGoals.setOptions(historyChartOptions);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.forgotpassword.ForgotPasswordActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--<View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.6"
+            android:background="@drawable/splash_image" />-->
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_40sdp"
+            android:gravity="center_horizontal"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:text="Please enter the scale ID. You can find the scale ID on the back of the scale."
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:id="@+id/tv_scale_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_header"
+            android:paddingLeft="@dimen/_18sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:text="Scale ID"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <LinearLayout
+            android:id="@+id/ll_scale_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_scale_id"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_18sdp"
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:padding="@dimen/_6sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New scale ID"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_email"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_scan"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Enter New Scale ID"
+                    android:maxLines="1"
+                    android:maxLength="12"
+                    android:inputType="numberSigned"
+                    android:digits="0123456789-"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:imeOptions="actionNext"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/whiteColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+
+
+                <TextView
+                    android:id="@+id/btn_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tap Here To Scan"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/_6sdp"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_12sdp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_cscale_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_scale_id"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_18sdp"
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:padding="@dimen/_6sdp"
+            android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_confirm_scale_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_scale_id"
+            android:text="Confirm scale ID"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_confirm_scale_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_confirm_scale_id"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:background="@drawable/edit_text_background">
+
+            <EditText
+                android:id="@+id/et_confirm_scale_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="Re-Enter New Scale ID"
+                android:maxLines="1"
+                android:maxLength="12"
+                android:inputType="numberSigned"
+                android:digits="0123456789-"
+                android:paddingBottom="@dimen/_6sdp"
+                android:imeOptions="actionDone"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/whiteColor"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:textSize="@dimen/_10sdp" />
+        </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_update"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/ll_cscale_id"
+            android:layout_margin="@dimen/_30sdp"
+            android:background="@drawable/login_button_gradient"
+            android:text="Update"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp"
+            android:visibility="visible" />
+    </RelativeLayout>
+</RelativeLayout>

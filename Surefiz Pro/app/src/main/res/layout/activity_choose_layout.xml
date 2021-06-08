@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimaryDark">
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/back"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="@string/FromWhere"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_20sdp"
+        android:paddingTop="@dimen/_30sdp"
+        >
+
+        <TextView
+            android:id="@+id/Btn_amazon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_65sdp"
+            android:padding="@dimen/_5sdp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/AmazonAlready"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp"
+            android:background="@drawable/login_button_gradient"
+            />
+
+
+
+        <TextView
+            android:id="@+id/Btn_surefiz"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_65sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:padding="@dimen/_5sdp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/SureFizWebsite"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp"
+            android:background="@drawable/login_button_gradient"
+            />
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/Btn_subscribed"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_65sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/ApplePurchase"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp"
+            android:background="@drawable/login_button_gradient"
+            />
+
+
+        <TextView
+            android:id="@+id/Btn_nothing"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_65sdp"
+            android:padding="@dimen/_5sdp"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:gravity="center"
+            android:text="@string/NeitherSureFizNorAmazon"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_12sdp"
+            android:background="@drawable/login_button_gradient"
+            />
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,203 @@
+<resources>
+    <!--<string name="app_name">SureFiz™</string>-->
+    <string name="app_name">SureFiz<sup><small><small></small></small></sup></string>
+    <string name="app_name_splash">SureFiz<sup><small><small><small></small></small></small></sup></string>
+    <string name="app_name_otp">SureFiz<sup><small><small></small></small></sup></string>
+    <!--<string name="app_name_otp">SureFiz<sup><small>&#174;</small></sup></string>-->
+    <string name="facebook_app_id">2086076151705154</string>
+    <string name="fb_login_protocol_scheme">fb2086076151705154</string>
+
+    <string name="permission_not_given">If you deny permission, you can not use this service. Please turn on permissions in [Setup]-> [Permission]</string>
+
+    <string name="image_compression_error_text">Image not compressed</string>
+    <string name="image_capture_cancel_text">User cancelled image process</string>
+    <string name="failed_to_capture_image_text">Sorry! Failed to process image</string>
+
+    <!--<string name="error_occurred">Something went wrong!</string>-->
+    <string name="error_occurred">Sorry, we ran into a network glitch. Please login.</string>
+    <string name="no_internet">No internet connection. Make sure Wi-Fi or cellular data is turned on, then try again.</string>
+
+    <string name="edittext_hint"><font size="20">_</font></string>
+    <!--<string name="wifi_config">Choose the wireless network on which you want your scale to  be connected.\nPlease make sure it is not a 5G Wifi.\nIf your router has 5G WiFi, It has two networks, on 5G and the other non-5G.\nPlease pick the non-5G</string>-->
+    <string name="wifi_config">Enter the WiFi password, please make sure the WiFi password is correct.</string>
+    <!--<string name="ap_config">To AP configuration follow the below step.\n 1) Enter the WiFI SSID and password.\n2)Lock WiFi Info\n 3) Go to the WiFi setting and pick the scale WiFi.\n4)Tap on the “AP Configure” Button.</string>-->
+    <string name="ap_config"><!--To AP configuration follow the below step.\n\n-->1) Please enter your WiFi network name and password. \n\n2) Tap “Confirm” to confirm that the network name and password is accurate. \n\n3) Follow the instructions on the screen.</string>
+    <string name="instruction_page_text">To Know Your Weight follow the steps below :</string>
+    <string name="instruction_step1"> 1. With scale placed on sturdy, leveled and hard surface, step on the scale bare footed.</string>
+    <string name="instruction_step2"> 2. The digits displaying weight will blink three times, and a dotted line will show up three times, after that step down the scale.</string>
+    <string name="instruction_step3"> 3. Continue doing so several times a week.</string>
+    <string name="step_on_scale"> 1. Step on the scale and measure your weight</string>
+    <string name="scale_blinking"> 2. Scale start blinking and with your weight &amp; stop</string>
+    <string name="step_down"> 3. Step down from scale.</string>
+    <string name="yes_it_down">Yes! it"'s" done</string>
+    <string name="configuration">Your configuration completed successfully.</string>
+    <string name="youe_weight">Your Weight</string>
+    <string name="go_next_action">Go DashBoard</string>
+    <string name="skip">Skip</string>
+    <string name="fcm_default_notification_channel_id" translatable="false">surefiz_general</string>
+
+    <!-- weight managment strings -->
+    <string name="weight_popupheader">Please Select Weight Managment Goal Type</string>
+    <string name="weight_goal">Weight managment Goal</string>
+    <string name="user_selection">User Selection</string>
+    <string name="select_weight_goal">Select Weight Managment Goal</string>
+    <string name="select_input_choice">Select Your input choice</string>
+
+    <!-- Twitter consumer key and secret -->
+    <string name="twitter_consumer_key" translatable="false">yyHhnmp0arMveGG8P7xGxE8Vm</string>
+    <string name="twitter_consumer_secret" translatable="false">Hvi5rMmOGJ9yKXa6VbdJ5bfV7YuL4OAvexL8FSCvAMTtkAQzcx</string>
+    <string name="please_choose_option">Please Choose Any Option</string>
+    <string name="i_am_having_all_info">I am having all the info.</string>
+    <string name="only_email_name">Only Email &amp; Name</string>
+    <string name="all_terms_condition">I agree to all the Terms and Conditions</string>
+
+
+    <string name="battery_status_low"><b>Battery Low!</b> Please change the scale batteries in scale immediately.</string>
+    <string name="battery_status_low1"><b>Battery Low!</b> Please change the scale batteries in scale very soon.</string>
+    <string name="battery_status">Battery Status:</string>
+    <string name="visibility">Show My Performance To The Primary User</string>
+    <string name="performance">Performance</string>
+    <string name="unfriend">Unfriend</string>
+
+    <string name="web_client_id">667975241749-r7hepg2v6q70s98il8lih76e6akrh9br.apps.googleusercontent.com</string>
+    <string name="fb_login_type">facebook</string>
+    <string name="google_login_type">Google</string>
+    <string name="smart_config_failed">Let\'s try another method to setup WiFi on scale, the current method is not suitable for your network. Please remove the batteries from the scale and put them back. Press and hold the Black button in the batteries compartment until you see \'AP\' next to the WiFi symbol. Release the button. Tap on AP Config below.</string>
+    <string name="Config_failed">Please double check your password and health of your Wi-Fi network, and try again.</string>
+    <string name="step_on_the_scale">Step on the Scale</string>
+    <string name="delete">DELETE</string>
+    <string name="Allow_accountability_circle">Allow accountability circle members to view my:</string>
+    <string name="register">Register</string>
+    <string name="update">Update</string>
+    <string name="complete_sign_up">Complete Sign Up</string>
+    <string name="surefiz_signup">Sign Up</string>
+    <string name="surefiz_register">Registration</string>
+    <string name="compositions">Composition</string>
+    <string name="manage_social_logins">MANAGE SOCIAL LOGINS</string>
+    <string name="delete_user_confirmation">Unfriend User Confirmation</string>
+    <string name="mac_id_not_found">No scale ID found associated with your account, please have the primary user registered before you login.</string>
+
+    <string name="sub_user_sign_up_success">You have signed up successfully. For you to start using the service, please have the primary user to
+complete his/her registration process.</string>
+    <string name="login">Login</string>
+    <string name="sign_up"><u>Sign up</u></string>
+    <string name="press_to_upload">Please tap on ‘Update’ button at the bottom on this page</string>
+    <string name="title_activity_login_new">LoginNewActivity</string>
+    <string name="message_board">Message Board</string>
+    <string name="add_friend">Add Friend</string>
+
+
+    <string name="vertical_ellipsis">&#8942;</string>
+    <string name="select_time">SELECT TIME</string>
+    <string name="select_date">SELECT DATE</string>
+    <string name="set_reminder">Set Reminder</string>
+    <string name="enter_title">ENTER TITLE</string>
+    <string name="click_to_view_history"><u>View History</u></string>
+    <string name="chat_not_found">Frequent messaging with your accountability circle members is a good idea</string>
+    <string name="user_confirmation_header_declined">Please enter your desired weight and time</string>
+    <!--<string name="user_confirmation_header">Please make your choice below: Either Accept SureFiz Weight or I Will Provide Weight &amp; Time.</string>-->
+    <string name="user_confirmation_header">Please choose one of the options, “Accept SureFiz Weight” or “I Will Provide Weight and Time”</string>
+    <string name="i_will_provide_weight_time">I Will Provide Weight &amp; Time</string>
+    <string name="accept_surefiz_weight">Accept SureFiz<sup><small><small></small></small></sup> Weight</string>
+    <string name="time_to_lose_weight">Time To Lose Weight</string>
+    <string name="Time_To_Lose_Weight_Will_Be_Calculated">Time To Lose Weight Will Be Calculated After The First Weight</string>
+    <!--<string name="user_confirmation_header">SureFiz™ Assigned Target Weight and Estimated Time to Lose Weight</string>-->
+    <!--<string name="all_terms_condition">I agree to all the <font color='#3981F5'><b>Terms and Conditions</b></font></string>-->
+    <string name="signup_completed_without_scale">Sign up is complete. Your free scale will arrive within 2 to 5 business days of your purchase from Amazon. When you receive your scale, login into the SureFiz mobile App, with email ID and password created during this signup.</string>
+    <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during this signup.</string>
+    <string name="androidQ">As a security measure, newer versions of Android have added an additional step to connect to WiFi. Therefore next, you will see a popup with temporary WiFi of your scale named, </string>
+    <string name="androidQ2">please select this network to connect.</string>
+    <string name="FromWhere">From Where Did You \n Buy SureFiz?</string>
+    <string name="AmazonAlready">From Amazon</string>
+    <string name="Try_Another_FB">"This Facebook Account has been already linked with another SureFiz account. Please try with someother."</string>
+    <string name="Try_Another_Google">"This Google Account has been already linked with another SureFiz account. Please try with someother."</string>
+    <string name="ProvideWeightTime">"Please note, should you choose this option, you will need to provide your desired weight and the time to lose that weight. Would you like to proceed with “I Will Provide Weight &amp; Time”?"</string>
+    <string name="SureFizWebsite">From SureFiz Website</string>
+    <string name="ApplePurchase">Haven\'t Bought Yet, Need to Buy</string>
+    <string name="NeitherSureFizNorAmazon">Didn\'t Buy, Received as a Gift</string>
+    <string name="Changing">Changing these parameters will reassign your sub goals. Current data on your charts will reset. Are you sure you want to proceed?</string>
+    <string name="NotificationExpired">This notification is expired and cannot be used now because the scale is turned off and is no more broadcasting your weight.</string>
+    <string name="SetupPreparation">
+       On your WiFi router, do you have two WiFi or only one WiFi? Generally, routers have two separate WiFi, one is 2.4 GHz WiFi and the other is 5 GHz WiFi.</string>
+
+    <string name="TextAp">Please make sure your phone is connected to your WiFi. Install the batteries into the scale (If batteries are already installed, take them out and reinstall) and push the black button in the batteries compartment until you see the letters \'AP\' next to flashing WiFi symbol on the scale screen.</string>
+    <string name="TextSmart">Please make sure your phone is connected to your 2.4 GHz WiFi, Install the batteries into the scale, A WiFi Symbol will start flashing on scale screen (If the batteries are already installed, remove them and reinstall and if the WiFi symbol is not flashing on the scale screen, push and hold the black button until you  see flashing WiFi symbol. If you see letters \'AP\' next to flashing WiFi, you went too far.</string>
+
+//***************HINTS***********************************************************************
+
+    <string name="Enter_First_Name">Enter First Name</string>
+    <string name="Enter_Middle_Name">Enter Middle Name</string>
+    <string name="Enter_Last_Name">Enter Last Name</string>
+    <string name="Enter_Your_Email_ID">Enter Your Email ID</string>
+    <string name="Please_enter_a_valid_Email_ID">Please enter a valid Email ID</string>
+    <string name="Reenter_Your_Email_ID">Re-enter Your Email ID</string>
+    <string name="Create_New_Password">Create New Password</string>
+    <string name="Please_Select_Pre_Existing_Conditions">Please Select Pre Existing Conditions</string>
+    <string name="Please_Select_Your_Lifestyle">Please Select Your Lifestyle</string>
+    <string name="Enter_Phone_Number">Enter Phone Number</string>
+    <string name="Enter_Scale_ID">Enter Scale ID</string>
+    <string name="Enter_Confirm_Scale_ID">Enter Confirm Scale ID</string>
+    <string name="Select_Preferred_Units">Select Preferred Units</string>
+    <string name="Select_Weight_Management_Goal">Select Weight Management Goal</string>
+    <string name="Select_Your_Input_Choice">Select Your Input Choice</string>
+    <string name="Desired_Weight">Desired Weight</string>
+    <string name="Please_Select_Your_Time">Please Select Your Time</string>
+    <string name="Select_Height">Select Height</string>
+    <string name="Select_Gender">Select Gender</string>
+    <string name="Enter_Age">Enter Age</string>
+    <string name="Select_Your_Country">Select Your Country</string>
+    <string name="Enter_Your_Address_Line_1">Enter Your Address Line 1</string>
+    <string name="Enter_Your_Address_Line_2">Enter Your Address Line 2</string>
+    <string name="Enter_Your_City">Enter Your City</string>
+    <string name="Select_Your_State">Select Your State</string>
+    <string name="Enter_Your_Zip_Code">Enter Your Zip Code</string>
+    <string name="Please_Select">Please Select</string>
+
+    <string name="Enter_New_Password">Enter New Password</string>
+    <string name="Enter_Confirm_Password">Enter Confirm Password</string>
+    <string name="Enter_Your_Password">Enter Your Password</string>
+    <string name="Enter_Your_Scale_ID">Enter Your Scale ID</string>
+    <string name="ReEnter_Your_Scale_ID">Re-enter Your Scale ID</string>
+
+
+    //***************Alerts***********************************************************************
+
+    <string name="Please_enter_your_First_Name">Please enter your First Name.</string>
+    <string name="Please_enter_your_Last_Name">Please enter your Last Name.</string>
+    <string name="Please_enter_your_Email_ID">Please enter your Email ID.</string>
+    <string name="Please_reenter_your_Email_ID">Please re-enter your Email ID.</string>
+    <string name="Please_check_your_email_entry">Please check your email entry. The entered emails are not matching.</string>
+    <string name="Please_create_a_new_Password">Please create a new Password.</string>
+    <string name="Please_select_your_Pre_Existing_Conditions">Please select your Pre Existing Conditions.</string>
+    <string name="Please_select_your_Lifestyle">Please select your Lifestyle.</string>
+    <string name="Please_enter_your_Phone_Number">Please enter your Phone Number.</string>
+    <string name="Please_select_your_Preferred_Units">Please select your Preferred Units.</string>
+    <string name="Please_select_Weight_Management_Goal">Please select Weight Management Goal.</string>
+    <string name="Please_select_how_to_determine_your_desired_weight">Please select how to determine your desired weight.</string>
+    <string name="Please_select_your_Desired_Weight">Please select your Desired Weight.</string>
+    <string name="Please_select_your_Time_To_Lose_Weight">Please select your Time To Lose Weight.</string>
+    <string name="Please_select_your_Height">Please select your Height.</string>
+    <string name="Please_select_your_Gender">Please select your Gender.</string>
+    <string name="Please_enter_your_Age">Please enter your Age.</string>
+    <string name="Your_age_should_be_greater_than_6">Your age should be greater than 6.</string>
+    <string name="Please_select_your_Country">Please select your Country.</string>
+    <string name="Please_enter_your_Address_Line_1">Please enter your Address Line 1.</string>
+    <string name="Please_enter_your_City">Please enter your City.</string>
+    <string name="Please_select_your_State">Please select your State.</string>
+    <string name="Please_enter_your_Zip_Code">Please enter your Zip Code.</string>
+    <string name="Please_choose_how_did_you_learn_about_SureFiz">Please choose, how did you learn about SureFiz.</string>
+    <string name="Please_accept_Terms_and_Conditions">Please accept Terms and Conditions.</string>
+    <string name="Please_enter_your_password">Please enter your password.</string>
+    <string name="Password_must_be_minimum_8_characters">Password must be minimum 8 characters.</string>
+
+    <string name="Please_confirm_your_password">Please confirm your password.</string>
+    <string name="New_password_and_confirm_password_must_be_same">New password and confirm password must be same.</string>
+    <string name="Scale_ID_must_contain_10_digits">Scale ID must contain 10 digits.</string>
+    <string name="Scale_ID_and_Confirm_Scale_ID_mismatched">Scale ID and Confirm Scale ID mismatched.</string>
+    <string name="Please_confirm_your_Scale_ID">Please confirm your Scale ID.</string>
+    <string name="If_you_have_received_your_scale">If you have received your scale, please enter or scan your scale ID. If you have not received your scale yet, please wait and login again when you have your scale.</string>
+
+
+
+
+</resources>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.userconfirmation.UserConfirmationActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_enter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="@dimen/_20sdp"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingRight="@dimen/_18sdp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/user_confirmation_header"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/tv_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_enter"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:text="Desired Weight"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_weight"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:hint="Desired Weight"
+                    android:inputType="text|textNoSuggestions"
+                    android:maxLines="1"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_time_loss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_weight"
+                android:paddingStart="@dimen/_18sdp"
+                android:paddingEnd="@dimen/_18sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/Time_To_Lose_Weight_Will_Be_Calculated"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_time_loss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_time_loss"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:background="@drawable/edit_text_background">
+
+                <EditText
+                    android:id="@+id/et_time_loss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:hint="SureFiz™ will suggest you the time to lose weight"
+                    android:inputType="text|textNoSuggestions"
+                    android:maxLines="1"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:textColor="@color/whiteColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_accept"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/rl_time_loss"
+                android:layout_marginTop="@dimen/_44sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/login_button_gradient"
+                android:text="@string/accept_surefiz_weight"
+                android:textAllCaps="false"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+
+            <!--I Will Provide The Details-->
+            <Button
+                android:id="@+id/btn_provide"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/btn_accept"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/roboto_bold"
+                android:background="@drawable/login_button_gradient"
+                android:text="@string/i_will_provide_weight_time"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

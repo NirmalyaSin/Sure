@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteColor">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_130sdp"
+        android:background="#F3F3F3">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_topbar_menu_profile"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_22sdp"
+            android:src="@drawable/prof_img_placeholder" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/img_topbar_menu_profile"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/colorBlack" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_header"
+        android:layout_above="@+id/tvAppVersion">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:text="Dashboard"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:text="Measure Weight"
+                android:fontFamily="@font/roboto_medium"
+                android:visibility="gone"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_users"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_12sdp"
+                android:text="Users"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Profile"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_circle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:textSize="@dimen/_15sdp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Accountability Circle"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:text="Broadcast Message"
+                android:fontFamily="@font/roboto_medium"
+                android:visibility="gone"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_reminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:text="Reminders"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:text="Notifications"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:text="Settings"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:text="About Us"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_forum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:text="Forum"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_signout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingTop="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_15sdp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Sign out"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tvAppVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_12sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/colorBlack"/>
+</RelativeLayout>

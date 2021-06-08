@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.otp.OtpActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimaryDark">
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/back"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_registration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Activation"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_header">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/new_bg_image" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/opacity_color" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_header"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="One Time Password will be auto-filled in the boxes below. If the boxes do not show the activation code please check your email and enter the One Time Password manually."
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_below="@+id/tv_enter" />
+
+    <LinearLayout
+        android:id="@+id/ll_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/_100sdp"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <RelativeLayout
+            android:id="@+id/rl_first"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_weight="1"
+            android:background="@drawable/login_edit_rounded_corner">
+
+            <EditText
+                android:id="@+id/et_first"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:textCursorDrawable="@drawable/white_cursor"
+                android:gravity="center|bottom"
+                android:hint="@string/edittext_hint"
+                android:inputType="number"
+                android:fontFamily="@font/roboto_regular"
+                android:maxLines="1"
+                android:maxLength="1"
+                android:textStyle="bold"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/otphintColor"
+                android:textSize="@dimen/_16sdp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_second"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_toRightOf="@+id/rl_first"
+            android:layout_weight="1"
+            android:background="@drawable/login_edit_rounded_corner">
+
+            <EditText
+                android:id="@+id/et_second"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/white_cursor"
+                android:gravity="center|bottom"
+                android:hint="@string/edittext_hint"
+                android:inputType="number"
+                android:fontFamily="@font/roboto_regular"
+                android:maxLines="1"
+                android:maxLength="1"
+                android:textStyle="bold"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/otphintColor"
+                android:textSize="@dimen/_16sdp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_third"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_toRightOf="@+id/rl_second"
+            android:layout_weight="1"
+            android:background="@drawable/login_edit_rounded_corner">
+
+            <EditText
+                android:id="@+id/et_third"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/white_cursor"
+                android:gravity="center|bottom"
+                android:hint="@string/edittext_hint"
+                android:inputType="number"
+                android:maxLines="1"
+                android:fontFamily="@font/roboto_regular"
+                android:maxLength="1"
+                android:textStyle="bold"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/otphintColor"
+                android:textSize="@dimen/_16sdp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_fourth"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_toRightOf="@+id/rl_third"
+            android:layout_weight="1"
+            android:background="@drawable/login_edit_rounded_corner">
+
+            <EditText
+                android:id="@+id/et_fourth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:backgroundTint="@android:color/transparent"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/white_cursor"
+                android:gravity="center|bottom"
+                android:hint="@string/edittext_hint"
+                android:inputType="number"
+                android:maxLines="1"
+                android:fontFamily="@font/roboto_regular"
+                android:maxLength="1"
+                android:textStyle="bold"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textColor="@color/whiteColor"
+                android:textColorHint="@color/otphintColor"
+                android:textSize="@dimen/_16sdp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/ll_otp"
+        android:layout_marginTop="@dimen/_44sdp"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:fontFamily="@font/roboto_bold"
+        android:background="@drawable/login_button_gradient"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_14sdp" />
+
+
+</RelativeLayout>

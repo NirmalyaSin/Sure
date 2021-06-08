@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_Main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/popup_color"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="3dp">
+
+    <TextView
+        android:id="@+id/tv_vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIP TRAINER"
+        android:textColor="@color/popup_color"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/llAddView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/popup_color"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
+</androidx.cardview.widget.CardView>

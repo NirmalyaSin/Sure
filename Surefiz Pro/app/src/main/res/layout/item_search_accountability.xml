@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@null"
+    tools:context=".screens.accountability.AcountabilityActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/accountability_rounded_corner_bg"
+        android:gravity="center_vertical"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_2sdp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageUserProfile"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:src="@drawable/prof_img_placeholder" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_dot_offline"
+                android:layout_gravity="end|bottom" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:fontFamily="@font/roboto_regular"
+                android:text="My User Name"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="@color/whiteColor" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnRequestSent"
+                android:layout_width="@dimen/_108sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/shape_rectangle_blue"
+                android:text="Request Sent"
+                android:layout_gravity="end"
+                android:fontFamily="@font/roboto_bold"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnCancelRequest"
+                android:layout_width="@dimen/_108sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/shape_rectangle_red"
+                android:text="Cancel Request"
+                android:layout_gravity="end"
+                android:fontFamily="@font/roboto_bold"
+                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColor="@color/whiteColor"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:visibility="gone" />
+
+            <!--<Button
+                android:id="@+id/btnAddToCircle"
+                android:layout_width="@dimen/_108sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/shape_rectangle_blue"
+                android:text="Add to Circle"
+                android:layout_gravity="end"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:visibility="visible" />-->
+
+            <ImageView
+                android:id="@+id/btnAddToCircle"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_gravity="end|center_vertical"
+                android:src="@drawable/accountability_add_new"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnAccepted"
+                android:layout_width="@dimen/_108sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/shape_rectangle_green"
+                android:text="Accepted"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_gravity="end"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--<View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/whiteColor"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp" />-->
+</LinearLayout>

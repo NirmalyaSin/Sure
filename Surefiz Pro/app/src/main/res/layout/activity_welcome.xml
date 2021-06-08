@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.welcome.WelcomeActivity">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <VideoView
+            android:id="@+id/video_view_welcome"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_above="@+id/llLowerButtons"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.7"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:src="@mipmap/ic_launcher" />
+
+
+    <LinearLayout
+        android:id="@+id/llLowerButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_28sdp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_howto_sign_learn_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/txt_login"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_weight="1"
+                android:background="@drawable/login_button_gradient"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/login"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="normal" />
+
+
+            <!--<TextView
+                android:id="@+id/txt_login"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_weight="1"
+                android:background="@drawable/login_submit_rounded_corner"
+                android:gravity="center"
+                android:text="@string/login"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="normal" />-->
+
+            <View
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:id="@+id/txt_learn_more"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_weight="1"
+                android:background="@drawable/login_button_gradient"
+                android:gravity="center"
+                android:text="Learn more"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center"
+            android:text="@string/sign_up"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:alpha="0.7"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/whiteColor"
+            android:textSize="@dimen/_18sdp"
+            android:visibility="visible" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "667975241749",
+    "firebase_url": "https://surefiz-8ebda.firebaseio.com",
+    "project_id": "surefiz-8ebda",
+    "storage_bucket": "surefiz-8ebda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667975241749:android:42d12c2008d5d28f",
+        "android_client_info": {
+          "package_name": "com.surefiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667975241749-oj7pb7ask3aoalg4ppvps4prt21np7nk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.surefiz",
+            "certificate_hash": "071a3c3cf146f9cbe928cb5db84def9355938cc1"
+          }
+        },
+        {
+          "client_id": "667975241749-r7hepg2v6q70s98il8lih76e6akrh9br.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlBHMsIEVi84IfYNgxZd3ghmE94BmjCCM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667975241749-r7hepg2v6q70s98il8lih76e6akrh9br.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "667975241749-aiesiut959oh30lht49drkhgtle9d0f6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ScaleWiFiFit"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

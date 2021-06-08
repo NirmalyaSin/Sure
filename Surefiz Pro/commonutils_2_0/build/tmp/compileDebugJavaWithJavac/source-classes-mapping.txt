@@ -1,0 +1,8 @@
+com/rts/commonutils_2_0/BuildConfig.java
+ com.rts.commonutils_2_0.BuildConfig
+com/rts/commonutils_2_0/deviceinfo/DeviceResolution.java
+ com.rts.commonutils_2_0.deviceinfo.DeviceResolution
+com/rts/commonutils_2_0/netconnection/ConnectionDetector.java
+ com.rts.commonutils_2_0.netconnection.ConnectionDetector
+com/rts/commonutils_2_0/emoji/EmojiFormatter.java
+ com.rts.commonutils_2_0.emoji.EmojiFormatter

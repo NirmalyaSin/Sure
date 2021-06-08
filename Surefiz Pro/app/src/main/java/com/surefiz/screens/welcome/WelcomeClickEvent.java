@@ -37,7 +37,7 @@ public class WelcomeClickEvent implements View.OnClickListener {
 
             case R.id.tv_signup:
 
-                Intent intent=new Intent(welcomeActivity, ChooseActivity.class);
+                Intent intent = new Intent(welcomeActivity, ChooseActivity.class);
                 welcomeActivity.startActivity(intent);
                 welcomeActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
@@ -45,8 +45,9 @@ public class WelcomeClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.txt_learn_more:
-                String urlvalue = "https://www.surefiz.com/Home/landing";
-                Log.d("Web_Link",":::"+urlvalue);
+//                String urlvalue = "https://www.surefiz.com/Home/landing";
+                String urlvalue = "https://www.surefiz.com/Howtopro";
+                Log.d("Web_Link", ":::" + urlvalue);
 
                 Intent learnmoreintent = new Intent(welcomeActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);

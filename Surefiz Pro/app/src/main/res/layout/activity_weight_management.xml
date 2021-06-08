@@ -172,6 +172,7 @@
                 android:paddingTop="@dimen/_20sdp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="DESIRED WEIGHT"
+                android:visibility="gone"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
@@ -182,6 +183,7 @@
                 android:layout_below="@+id/tv_weight"
                 android:layout_marginLeft="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_9sdp"
+                android:visibility="gone"
                 android:layout_marginRight="@dimen/_18sdp"
                 android:background="@drawable/edit_text_background">
 

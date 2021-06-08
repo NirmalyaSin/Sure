@@ -210,7 +210,7 @@ public class SignUpView extends AppCompatActivity {
     protected OnImageSet onImageSet;
     protected LoadingData loader;
 
-    String units = "", height = "",weight = "";
+    String units = "", height = "", weight = "";
     String[] splited;
 
     protected ArrayList<String> array1 = new ArrayList<>();
@@ -231,13 +231,13 @@ public class SignUpView extends AppCompatActivity {
     protected int selectedLifeStyle = 0;
     protected String selectedCountryId = "";
     protected String selectedStateId = "";
-    protected boolean isState=false;
+    protected boolean isState = false;
     protected int selectedWeightManagmentGoal = 0;
     protected int selectedDesiredWeightSelection = 0;
     protected String orderId = "";
     protected String scaleId = "";
-    protected MyOptionsPickerView lifeStylePopup,managementPopup,weigtUniversalPopupPreferred,countryListPopup;
-    protected MyOptionsPickerView genderPopup,stateListPopup,weightPopup,timePopup,learnPopup,selectionPopup;
+    protected MyOptionsPickerView lifeStylePopup, managementPopup, weigtUniversalPopupPreferred, countryListPopup;
+    protected MyOptionsPickerView genderPopup, stateListPopup, weightPopup, timePopup, learnPopup, selectionPopup;
     protected MyOptionsPickerView doublePicker;
 
 
@@ -295,13 +295,13 @@ public class SignUpView extends AppCompatActivity {
 
         switch (requestCode) {
 
-            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE :
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                 CropImage.ActivityResult cresult = CropImage.getActivityResult(data);
                 if (resultCode == RESULT_OK) {
                     Uri uri = cresult.getUri();
 
-                    String realPath= RealPathUtil.getRealPath(this, uri);
-                    mFile=new File(realPath);
+                    String realPath = RealPathUtil.getRealPath(this, uri);
+                    mFile = new File(realPath);
                     compressImage();
 
                     Log.d("Image_Path", "::::" + RealPathUtil.getRealPath(this, uri));
@@ -330,8 +330,8 @@ public class SignUpView extends AppCompatActivity {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
-        MultipartBody.Part body=null;
-        if(mCompressedFile!=null) {
+        MultipartBody.Part body = null;
+        if (mCompressedFile != null) {
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), mCompressedFile);
             body = MultipartBody.Part.createFormData("userImage", mCompressedFile.getName(), reqFile);
         }
@@ -436,16 +436,16 @@ public class SignUpView extends AppCompatActivity {
 
         Call<SignUpResponse> call;
 
-        if(mCompressedFile!=null)
-            call= apiInterface.call_signup_image(first_name, middle_name, last_name,
+        if (mCompressedFile != null)
+            call = apiInterface.call_signup_image(first_name, middle_name, last_name,
                     email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
-                    maintain_Weight_By_Server,count, regtype, state, city, zip,addressLineOne,addressLineTwo,bodycondition,lifestyle,country,
-                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,learn_about,Period,body);
+                    maintain_Weight_By_Server, count, regtype, state, city, zip, addressLineOne, addressLineTwo, bodycondition, lifestyle, country,
+                    TotalAmount, currencycode, PayableAmount, address, scaleMacId, OrderId, learn_about, Period, body);
         else
             call = apiInterface.call_signup(first_name, middle_name, last_name,
                     email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
-                    maintain_Weight_By_Server,count, regtype, state, city, zip,addressLineOne,addressLineTwo,bodycondition,lifestyle,country,
-                    TotalAmount,currencycode,PayableAmount,address,scaleMacId,OrderId,learn_about,Period);
+                    maintain_Weight_By_Server, count, regtype, state, city, zip, addressLineOne, addressLineTwo, bodycondition, lifestyle, country,
+                    TotalAmount, currencycode, PayableAmount, address, scaleMacId, OrderId, learn_about, Period);
 
 
         call.enqueue(new Callback<SignUpResponse>() {
@@ -458,14 +458,16 @@ public class SignUpView extends AppCompatActivity {
 
                     if (response.body().getStatus() == 1) {
 
-                        if(scaleId.equals("")){
+                        if (scaleId.equals("")) {
 
                             showInfoDialog(getString(R.string.signup_completed_without_scale));
 
-                        }else{
+                            showInfoDialog(response.body().getData().getMessage());
+                        } else {
 
-                           showInfoDialog(getString(R.string.signup_completed_with_scale));
+//                           showInfoDialog(getString(R.string.signup_completed_with_scale));
 
+                            showInfoDialog(response.body().getData().getMessage());
                         }
 
                     } else {
@@ -491,8 +493,8 @@ public class SignUpView extends AppCompatActivity {
 
     public void showInfoDialog(String message) {
 
-        CustomAlert customAlert=new CustomAlert(this);
-        customAlert.setSubText(""+Html.fromHtml(message));
+        CustomAlert customAlert = new CustomAlert(this);
+        customAlert.setSubText("" + Html.fromHtml(message));
         customAlert.show();
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override

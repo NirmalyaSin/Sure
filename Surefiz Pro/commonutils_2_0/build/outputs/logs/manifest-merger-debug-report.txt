@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:1:1-12:12
+INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:1:1-12:12
+INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:1:1-12:12
+	package
+		ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:3:5-38
+		INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+		INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:5:5-79
+	android:name
+		ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:5:22-76
+application
+ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:7:5-10:19
+	android:supportsRtl
+		ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:8:9-35
+	android:label
+		ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:7:45-77
+	android:allowBackup
+		ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:7:18-44
+uses-sdk
+INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+		ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+		INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+		ADDED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
+		INJECTED from F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml

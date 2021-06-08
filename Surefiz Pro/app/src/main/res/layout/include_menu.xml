@@ -71,6 +71,7 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_12sdp"
                 android:text="Users"
+                android:visibility="gone"
                 android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
@@ -148,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_15sdp"
-                android:text="About Us"
+                android:text="Technical Support"
                 android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />
@@ -160,6 +161,7 @@
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_15sdp"
                 android:text="Forum"
+                android:visibility="gone"
                 android:fontFamily="@font/roboto_medium"
                 android:textSize="@dimen/_15sdp"
                 android:textColor="@color/colorBlack" />

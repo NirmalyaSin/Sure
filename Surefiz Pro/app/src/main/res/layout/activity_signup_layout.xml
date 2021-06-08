@@ -870,6 +870,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="visible"
                     android:paddingTop="@dimen/_18sdp">
 
                     <TextView
@@ -893,6 +894,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_9sdp"
+                    android:visibility="visible"
                     android:layout_marginRight="@dimen/_18sdp"
                     android:background="@drawable/edit_text_background">
 
@@ -1401,6 +1403,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:paddingTop="@dimen/_18sdp">
 
                     <TextView
@@ -1424,6 +1427,7 @@
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_9sdp"
                     android:layout_marginRight="@dimen/_18sdp"
+                    android:visibility="gone"
                     android:background="@drawable/edit_text_background">
 
                     <EditText

@@ -198,9 +198,9 @@ public class SignUpOnClick implements View.OnClickListener {
                 else if (signUpActivity.et_password.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_create_a_new_Password));
                 }
-                else if (signUpActivity.et_body.getText().toString().equals("")) {
+               /* else if (signUpActivity.et_body.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Pre_Existing_Conditions));
-                }
+                }*/
                 else if (signUpActivity.selectedLifeStyle == 0) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Lifestyle));
                 }
@@ -213,9 +213,9 @@ public class SignUpOnClick implements View.OnClickListener {
                 else if (signUpActivity.et_management.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_Weight_Management_Goal));
                 }
-                else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.et_userselection.getText().toString().equals("")) {
+               /* else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.et_userselection.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_how_to_determine_your_desired_weight));
-                }
+                }*/
                 else if (signUpActivity.selectedWeightManagmentGoal==0 && signUpActivity.selectedDesiredWeightSelection==0 && signUpActivity.et_weight.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_select_your_Desired_Weight));
                 }
@@ -249,9 +249,9 @@ public class SignUpOnClick implements View.OnClickListener {
                 else if (signUpActivity.zipcode.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_enter_your_Zip_Code));
                 }
-                else if (signUpActivity.et_learn_about.getText().toString().equals("")) {
+               /* else if (signUpActivity.et_learn_about.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_choose_how_did_you_learn_about_SureFiz));
-                }
+                }*/
                 else if (!signUpActivity.checkBoxTermsCondition.isChecked()) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_accept_Terms_and_Conditions));
                 }

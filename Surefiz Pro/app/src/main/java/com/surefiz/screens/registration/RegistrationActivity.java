@@ -504,7 +504,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         et_email.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserEmail());
         et_phone.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getUserPhoneNumber());
-        et_body.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getBodycondition());
+//        et_body.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getBodycondition());
 
         et_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());
         et_confirm_scale_id.setText(LoginShared.getViewProfileDataModel(RegistrationActivity.this).getData().getUser().get(0).getScaleid());

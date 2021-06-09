@@ -730,9 +730,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 else if (activity.et_email.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Email_ID));
                 }
-                else if (activity.et_body.getText().toString().equals("")) {
+               /* else if (activity.et_body.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.Please_select_your_Pre_Existing_Conditions));
-                }
+                }*/
                 else if (activity.et_phone.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Phone_Number));
                 }
@@ -1088,7 +1088,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), activity.et_phone.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
-        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), activity.et_body.getText().toString().trim());
+        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), "0");
 
         if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
             preffered = RequestBody.create(MediaType.parse("text/plain"), "1");
@@ -1363,7 +1363,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
-        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), activity.et_body.getText().toString().trim());        //***AVIK
+        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), "0");        //***AVIK
 
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"),
                 activity.et_phone.getText().toString().trim());

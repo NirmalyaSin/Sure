@@ -78,7 +78,7 @@
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/_18sdp"
                 android:layout_below="@+id/rl_management"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
                 android:layout_marginRight="@dimen/_18sdp"
                 android:layout_below="@+id/ll_desired_weight_selection"
                 android:background="@drawable/edit_text_background"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/et_desired_weight_selection"
@@ -172,7 +172,7 @@
                 android:paddingTop="@dimen/_20sdp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="DESIRED WEIGHT"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textColor="@color/whiteColor"
                 android:textSize="@dimen/_14sdp" />
 
@@ -183,7 +183,7 @@
                 android:layout_below="@+id/tv_weight"
                 android:layout_marginLeft="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginRight="@dimen/_18sdp"
                 android:background="@drawable/edit_text_background">
 

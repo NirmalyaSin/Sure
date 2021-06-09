@@ -129,15 +129,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private ImageView img_battery_status;
     private CardView cv_body_composition;
     private ImageView ivCloseButton;
-    private TextView tvViewHistory,tvViewHistory2;
+    private TextView tvViewHistory, tvViewHistory2;
     private SwipeRefreshLayout swiperefresh;
     private ScrollView scrollDataView;
     private ViewTreeObserver.OnScrollChangedListener mOnScrollChangedListener;
     private int selectedUserPosition = -1;
 
-    private  int retryTime=0;
-    private int maxRetrye=3;
-    private int millisecond=10000;
+    private int retryTime = 0;
+    private int maxRetrye = 3;
+    private int millisecond = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,17 +212,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         setRecyclerViewItem();
     }
 
-    protected void internet(){
-        new AsyncTask<Void,Void,Void>(){
+    protected void internet() {
+        new AsyncTask<Void, Void, Void>() {
             boolean b;
 
             @Override
             protected Void doInBackground(Void... voids) {
-                InternetChecking internetChecking=new InternetChecking();
-                if(internetChecking.isInternetAvailable()){
-                    b=true;
-                } else{
-                    b=false;
+                InternetChecking internetChecking = new InternetChecking();
+                if (internetChecking.isInternetAvailable()) {
+                    b = true;
+                } else {
+                    b = false;
                 }
                 return null;
             }
@@ -230,13 +230,13 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                if(b){
+                if (b) {
                     callApi();
-                }else{
-                    if (retryTime==maxRetrye) {
+                } else {
+                    if (retryTime == maxRetrye) {
                         loader.dismiss();
                         MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
-                    }else {
+                    } else {
                         new Handler().postDelayed(() -> {
                             retryTime++;
                             internet();
@@ -248,7 +248,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }.execute();
     }
 
-    private void callApi(){
+    private void callApi() {
         if (!ConnectionDetector.isConnectingToInternet(DashBoardActivity.this)) {
             MethodUtils.errorMsg(DashBoardActivity.this, DashBoardActivity.this.getString(R.string.no_internet));
         } else {
@@ -652,16 +652,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         try {
 
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getValue() > 0.0) {
-                tv_fat_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit());
+                tv_fat_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getUnit());
                 tv_fat_dynamic.setVisibility(View.VISIBLE);
             } else {
-                tv_fat_dynamic.setText("0.0 KG");
+                tv_fat_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getUnit());
                 tv_fat_dynamic.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            tv_fat_dynamic.setText("0.0 KG");
-            tv_fat_dynamic.setVisibility(View.VISIBLE);        }
+            tv_fat_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getUnit());
+            tv_fat_dynamic.setVisibility(View.VISIBLE);
+        }
 
         try {
             btn_fat.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyFat().getStatus());
@@ -672,15 +673,15 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getValue() > 0.0) {
-                tv_bone_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit());
+                tv_bone_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getUnit());
                 tv_bone_dynamic.setVisibility(View.VISIBLE);
             } else {
-                tv_bone_dynamic.setText("0.0 KG");
+                tv_bone_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getUnit());
                 tv_bone_dynamic.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            tv_bone_dynamic.setText("0.0 KG");
+            tv_bone_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBoneKg().getUnit());
             tv_bone_dynamic.setVisibility(View.VISIBLE);
         }
 
@@ -695,16 +696,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getValue() > 0.0) {
-                tv_muscle_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getUnit());
+                tv_muscle_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getValue() + " " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getUnit());
                 tv_muscle_dynamic.setVisibility(View.VISIBLE);
             } else {
-                tv_muscle_dynamic.setText("0.0 KG");
+                tv_muscle_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getUnit());
                 tv_muscle_dynamic.setVisibility(View.VISIBLE);
 
             }
         } catch (Exception e) {
             e.printStackTrace();
-            tv_muscle_dynamic.setText("0.0 KG");
+            tv_muscle_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getMuscle().getUnit());
             tv_muscle_dynamic.setVisibility(View.VISIBLE);
         }
 
@@ -1549,7 +1550,6 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             entries.add(boneEntry);
 
 
-
             String centerText = "<font color=#fd7d04><b> Muscle " + muscelValue + "%</b></font>" + "<br>" + "<font color=#fa4251><b> Fat " + fatValue + "%<b></font>"
                     + "<br>" + "<font color=#24F91D><b> Bone Minerals " + boneValue + "%<b></font>";
             pieChatBodyComposition.setCenterText(Html.fromHtml(centerText));
@@ -1721,7 +1721,8 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         AsyncHistoryChart historyRunner = new AsyncHistoryChart();
         historyRunner.execute();
     }
-//////AVIK
+
+    //////AVIK
     private void showEmptyGoalsAndAcheivementsChart() {
 
         try {
@@ -1932,20 +1933,20 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
             line1.setName("Desired Sub Goals");
 
 
-                Number[] numbers = new Number[LoginShared.getDashBoardDataModel(DashBoardActivity.this)
-                        .getData().getChartList().getHistorygoals().getHs2()];
+            Number[] numbers = new Number[LoginShared.getDashBoardDataModel(DashBoardActivity.this)
+                    .getData().getChartList().getHistorygoals().getHs2()];
 
 
-                line1.setColor(HIColor.initWithRGB(143, 236, 126));
-                line1.setData(new ArrayList<>(Arrays.asList(new Number[0])));
+            line1.setColor(HIColor.initWithRGB(143, 236, 126));
+            line1.setData(new ArrayList<>(Arrays.asList(new Number[0])));
 
-                ArrayList<Double> numberList2 = new ArrayList<>();
+            ArrayList<Double> numberList2 = new ArrayList<>();
 
-                HILine line2 = new HILine();
-                line2.setName("Achieved Sub Goals");
-                line2.setColor(HIColor.initWithRGB(233, 150, 43));
-                line2.setData(numberList2);
-                historyChartOptions.setSeries(new ArrayList<>(Arrays.asList(line1, line2)));
+            HILine line2 = new HILine();
+            line2.setName("Achieved Sub Goals");
+            line2.setColor(HIColor.initWithRGB(233, 150, 43));
+            line2.setData(numberList2);
+            historyChartOptions.setSeries(new ArrayList<>(Arrays.asList(line1, line2)));
 
 
             HICredits hiCredits = new HICredits();
@@ -2092,6 +2093,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
         return valueList.indexOf(Collections.min(valueList));
     }
+
     private int getNextSubGoalMaxIndex() {
         ArrayList<Double> valueList = new ArrayList<>();
 
@@ -2405,7 +2407,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                         HISpline series1 = new HISpline();
                         series1.setName("BMI");
-                       series1.setColor(HIColor.initWithRGB(255, 255, 255));
+                        series1.setColor(HIColor.initWithRGB(255, 255, 255));
 
                         Number[] series1_data = LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getBMI().getData().toArray(new Number[0]);
                         Number[] numbers = new Number[series1_data.length];
@@ -2713,7 +2715,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                             try {
                                 minY = Math.round(Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                        getNextSubGoal().getData().get(minIndex))-6);
+                                        getNextSubGoal().getData().get(minIndex)) - 6);
 
                                 //System.out.println("minY: " + minY);
 
@@ -2737,7 +2739,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
                             try {
                                 maxY = Math.round(Double.parseDouble(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().
-                                        getNextSubGoal().getData().get(maxIndex))+6);
+                                        getNextSubGoal().getData().get(maxIndex)) + 6);
 
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -2795,7 +2797,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                         }
 
                         series1.setShowInLegend(true);
-                        series1.setColor(HIColor.initWithRGBA(255, 255, 255,.35));
+                        series1.setColor(HIColor.initWithRGBA(255, 255, 255, .35));
                         series1.setData(new ArrayList<>(Arrays.asList(numbers)));
                         optionsGoals.setColors(colors);
                         optionsGoals.setSeries(new ArrayList<>(Arrays.asList(series1)));
@@ -3343,7 +3345,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                          .getData().getChartList().getGoals().getMs2(); i++) {
 
                                 if (series1_data.get(i) != null) {
-                                    if(series1_data.get(i).equals(""))
+                                    if (series1_data.get(i).equals(""))
                                         numberList1.add(null);
                                     else
                                         numberList1.add(Double.parseDouble(series1_data.get(i)));
@@ -3362,7 +3364,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                                  i < LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getGoals().getMe2(); i++) {
 
                                 if (series2_data.get(i) != null) {
-                                    if(series2_data.get(i).equals(""))
+                                    if (series2_data.get(i).equals(""))
                                         numberList2.add(null);
                                     else
                                         numberList2.add(Double.parseDouble(series2_data.get(i)));

@@ -350,8 +350,8 @@ public class SignUpActivity extends SignUpView {
                 if (managementList.get(options1).equals("Lose And Maintain Weight")) {
                     et_management.setText(managementList.get(0));
 
-                    tv_userSelection.setVisibility(View.VISIBLE);
-                    rl_userselection.setVisibility(View.VISIBLE);
+                    tv_userSelection.setVisibility(View.GONE);
+                    rl_userselection.setVisibility(View.GONE);
 
                     tv_weight.setVisibility(View.GONE);
                     rl_weight.setVisibility(View.GONE);
@@ -360,6 +360,7 @@ public class SignUpActivity extends SignUpView {
 
                     selectedWeightManagmentGoal = 0;
                     selectedDesiredWeightSelection = -1;
+
                 } else {
                     et_management.setText(managementList.get(1));
 
@@ -375,6 +376,26 @@ public class SignUpActivity extends SignUpView {
                     selectedWeightManagmentGoal = 1;
                     selectedDesiredWeightSelection = -1;
                 }
+
+                if (selectedWeightManagmentGoal == 1) {
+                    tv_weight.setVisibility(View.GONE);
+                    rl_weight.setVisibility(View.GONE);
+                    tv_time_loss.setVisibility(View.GONE);
+                    rl_time_loss.setVisibility(View.GONE);
+                } else {
+                    tv_weight.setVisibility(View.VISIBLE);
+                    rl_weight.setVisibility(View.VISIBLE);
+                    tv_time_loss.setVisibility(View.VISIBLE);
+                    rl_time_loss.setVisibility(View.VISIBLE);
+                    et_time_loss.setHint("Please Select");
+                    et_time_loss.setText("");
+                }
+
+
+                selectedDesiredWeightSelection = 0;
+                et_time_loss.setEnabled(true);
+                et_weight.setEnabled(true);
+
             }
         });
 

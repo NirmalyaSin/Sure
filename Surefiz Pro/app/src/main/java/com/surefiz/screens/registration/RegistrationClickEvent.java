@@ -888,9 +888,9 @@ public class RegistrationClickEvent implements View.OnClickListener {
                     !registrationActivity.et_scale_id.getText().toString().trim().equals(registrationActivity.et_confirm_scale_id.getText().toString().trim())) {
                 MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Scale_ID_and_Confirm_Scale_ID_mismatched));
             }
-           else if (registrationActivity.et_body.getText().toString().equals("")) {
+          /* else if (registrationActivity.et_body.getText().toString().equals("")) {
                MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_select_your_Pre_Existing_Conditions));
-           }
+           }*/
            else if (registrationActivity.et_phone.getText().toString().equals("")) {
                 MethodUtils.errorMsg(registrationActivity, registrationActivity.getString(R.string.Please_enter_your_Phone_Number));
             }
@@ -1061,7 +1061,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody scaleId = RequestBody.create(MediaType.parse("text/plain"), replaceScaleIDFormatter(registrationActivity.et_scale_id.getText().toString().trim()));
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
-        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_body.getText().toString().trim());
+        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), "0");
 
 
         if (weight_managment_goal == 2) {
@@ -1564,7 +1564,7 @@ public class RegistrationClickEvent implements View.OnClickListener {
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_email.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_phone.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
-        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), registrationActivity.et_body.getText().toString().trim());
+        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), "0");
 
         if (registrationActivity.et_units.getText().toString().trim().equalsIgnoreCase("KG/CM")) {
             units = RequestBody.create(MediaType.parse("text/plain"), "1");

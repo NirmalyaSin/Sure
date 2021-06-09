@@ -371,9 +371,9 @@ public class SignUpView extends AppCompatActivity {
         RequestBody addressLineTwo = RequestBody.create(MediaType.parse("text/plain"), et_add_line2.getText().toString());
         RequestBody zip = RequestBody.create(MediaType.parse("text/plain"), zipcode.getText().toString());
         RequestBody regtype = RequestBody.create(MediaType.parse("text/plain"), "" + regType);
-        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), et_body.getText().toString().trim());
+        RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), "0");
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
-        RequestBody learn_about = RequestBody.create(MediaType.parse("text/plain"), et_learn_about.getText().toString().trim());
+        RequestBody learn_about = RequestBody.create(MediaType.parse("text/plain"), "0");
 
 
         RequestBody country = RequestBody.create(MediaType.parse("text/plain"), selectedCountryId);

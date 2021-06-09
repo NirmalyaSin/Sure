@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class CurrentCompositions {
 
     @SerializedName("bodyFat")
-    private BodyFat bodyFat;
+    private Fat bodyFat;
 
     @SerializedName("muscle")
-    private BodyFat muscle;
+    private Fat muscle;
 
     @SerializedName("protein")
     private BodyFat protein;
@@ -17,7 +17,7 @@ public class CurrentCompositions {
     private String weight;
 
     @SerializedName("boneKg")
-    private BodyFat boneKg;
+    private Fat boneKg;
 
     @SerializedName("bmr")
     private BodyFat bmr;
@@ -52,19 +52,19 @@ public class CurrentCompositions {
     @SerializedName("BMI")
     private BodyFat bMI;
 
-    public BodyFat getBodyFat() {
+    public Fat getBodyFat() {
         return bodyFat;
     }
 
-    public void setBodyFat(BodyFat bodyFat) {
+    public void setBodyFat(Fat bodyFat) {
         this.bodyFat = bodyFat;
     }
 
-    public BodyFat getMuscle() {
+    public Fat getMuscle() {
         return muscle;
     }
 
-    public void setMuscle(BodyFat muscle) {
+    public void setMuscle(Fat muscle) {
         this.muscle = muscle;
     }
 
@@ -84,11 +84,11 @@ public class CurrentCompositions {
         this.weight = weight;
     }
 
-    public BodyFat getBoneKg() {
+    public Fat getBoneKg() {
         return boneKg;
     }
 
-    public void setBoneKg(BodyFat boneKg) {
+    public void setBoneKg(Fat boneKg) {
         this.boneKg = boneKg;
     }
 

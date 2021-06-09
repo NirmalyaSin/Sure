@@ -231,6 +231,7 @@
                     android:paddingLeft="@dimen/_18sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:text="PRE EXISTING CONDITIONS"
+                    android:visibility="gone"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/whiteColor"
                     android:textSize="@dimen/_14sdp" />
@@ -242,6 +243,7 @@
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_9sdp"
                     android:layout_marginRight="@dimen/_18sdp"
+                    android:visibility="gone"
                     android:background="@drawable/edit_text_background">
 
                     <EditText

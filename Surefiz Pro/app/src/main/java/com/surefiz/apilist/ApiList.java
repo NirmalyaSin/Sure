@@ -7,6 +7,7 @@ public class ApiList {
 
 
     public static final String REGISTRATION = "ApiServices/Registration";
+    public static final String SIGN_UP = "ApiServices/Registration_Pro";
     public static final String COMPLETE_USER_INFO = "ApiServices/Completeuserinfo";
     public static final String GROUPINVITE = "ApiServices/Group_invite";
     public static final String SENDOTP = "ApiServices/OtpValidation";
@@ -21,7 +22,7 @@ public class ApiList {
     public static final String ADDUSER = "ApiServices/AddUser";
     public static final String FORGOTPASSWORD = "ApiServices/ForgotPassword";
     public static final String LOGOUT = "ApiServices/Logout";
-    public static final String DASHBOARD = "ApiServices/DashboardChart";
+    public static final String DASHBOARD = "ApiServices/DashboardChart_Pro";
     public static final String ADDDEVICE = "ApiServices/AddDevice";
     public static final String CONTACTLIST = "ApiServices/ContactList";
     public static final String BOARDCAST = "ApiServices/SendBroadcastMessage";

@@ -71,6 +71,7 @@ import static com.surefiz.apilist.ApiList.REMOVE_ACCOUNT_USER;
 import static com.surefiz.apilist.ApiList.SCALE;
 import static com.surefiz.apilist.ApiList.SENDOTP;
 import static com.surefiz.apilist.ApiList.SEND_WEIGHT_MANAGEMENT;
+import static com.surefiz.apilist.ApiList.SIGN_UP;
 import static com.surefiz.apilist.ApiList.SOCIAL_LOGIN;
 import static com.surefiz.apilist.ApiList.UPDATE_USER_DEVICE_INFO;
 import static com.surefiz.apilist.ApiList.USERLIST;
@@ -131,7 +132,7 @@ public interface ApiInterface {
 
 
     @Multipart
-    @POST(REGISTRATION)
+    @POST(SIGN_UP)
     Call<SignUpResponse> call_signup_image(@Part("firstName") RequestBody firstname,
                                                  @Part("middleName") RequestBody middleName,
                                                  @Part("lastName") RequestBody lastName,
@@ -169,7 +170,7 @@ public interface ApiInterface {
                                                  @Part MultipartBody.Part attachment);
 
     @Multipart
-    @POST(REGISTRATION)
+    @POST(SIGN_UP)
     Call<SignUpResponse> call_signup(@Part("firstName") RequestBody firstname,
                                            @Part("middleName") RequestBody middleName,
                                            @Part("lastName") RequestBody lastName,

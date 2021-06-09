@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -53,6 +54,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     private MyApplicationClass myApplicationClass;
     private JSONObject jObject;
+
+    @Override
+    public void onNewToken(@NonNull String refreshedToken) {
+        super.onNewToken(refreshedToken);
+        LoginShared.setDeviceToken(getApplicationContext(), refreshedToken);
+    }
 
     /**
      * Called when message is received.

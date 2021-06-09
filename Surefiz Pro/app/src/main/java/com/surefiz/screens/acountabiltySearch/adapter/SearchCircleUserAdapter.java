@@ -52,7 +52,7 @@ public class SearchCircleUserAdapter extends RecyclerView.Adapter<SearchCircleUs
         String image = arrayListCircleUser.get(position).getUser_search_image();
     //    Log.d("@@Image : ", arrayListCircleUser.get(position).getUser_search_image());
         if(!image.equals("")){
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(image)
                     .fit()
                     .placeholder(R.drawable.prof_img_placeholder)

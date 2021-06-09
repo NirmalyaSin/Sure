@@ -53,7 +53,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
         holder.textUserName.setText(arrayListCircleUser.get(position).getUser_name());
         String image = arrayListCircleUser.get(position).getUser_search_image();
         if (!image.equals("") && !image.equals("null")) {
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(image)
                     .fit()
                     .placeholder(R.drawable.prof_img_placeholder)
@@ -90,7 +90,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
         CircleImageView imageUserProfile;
         TextView textUserName;
         Button btnPerformance, btnRemove;
-        ImageView imgSendMessage, imageOnlineOffline,ivViewOptions;
+        ImageView imgSendMessage, imageOnlineOffline, ivViewOptions;
 
         public CircleUserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -144,7 +144,7 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
                 @Override
                 public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(mContext, ivViewOptions, Gravity.END|Gravity.TOP,0,R.style.PopupMenuWindow);
+                    PopupMenu popup = new PopupMenu(mContext, ivViewOptions, Gravity.END | Gravity.TOP, 0, R.style.PopupMenuWindow);
 
                     popup.inflate(R.menu.custom_menu);
 

@@ -421,7 +421,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
 
             selectedWeightManagmentGoal = 0;
-            selectedDesiredWeightSelection = -1;
+            selectedDesiredWeightSelection = 0;
         }
 
 
@@ -460,7 +460,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
             }
 
 
-            selectedDesiredWeightSelection = 0;
+//            selectedDesiredWeightSelection = 0;
             et_time_loss.setEnabled(true);
             et_weight.setEnabled(true);
         }

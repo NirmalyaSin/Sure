@@ -321,7 +321,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_full.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName());
         activity.et_middle.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMiddleName());
         activity.et_last.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLastName());
-        activity.et_body.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getBodycondition());
+//        activity.et_body.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getBodycondition());
         LoginShared.setUserName(activity, LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getUserName() + " " +
                 LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getMiddleName() + " " +
                 LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getLastName());

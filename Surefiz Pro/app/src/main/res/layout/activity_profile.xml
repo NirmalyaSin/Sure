@@ -251,6 +251,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
+                        android:visibility="gone"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="@string/Please_Select_Pre_Existing_Conditions"
                         android:focusableInTouchMode="false"

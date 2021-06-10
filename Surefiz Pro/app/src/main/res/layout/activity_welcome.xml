@@ -25,10 +25,9 @@
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"
         android:layout_centerHorizontal="true"
-        android:alpha="0.7"
         android:layout_above="@id/llLowerButtons"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/logo" />
 
     <LinearLayout
         android:id="@+id/ll_howto_sign_learn_more"
@@ -49,7 +48,8 @@
             android:fontFamily="@font/roboto_medium"
             android:text="@string/login"
             android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_18sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:textStyle="normal" />
         <TextView
             android:id="@+id/tv_signup"
@@ -59,8 +59,9 @@
             android:gravity="center"
             android:text="@string/sign_up"
             android:paddingTop="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:background="@drawable/login_button_gradient"
             android:paddingBottom="@dimen/_5sdp"
-            android:alpha="0.7"
             android:fontFamily="@font/roboto_bold"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_18sdp"

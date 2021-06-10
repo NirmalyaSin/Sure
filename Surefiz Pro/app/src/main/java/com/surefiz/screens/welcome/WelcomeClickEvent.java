@@ -52,7 +52,7 @@ public class WelcomeClickEvent implements View.OnClickListener {
                 Intent learnmoreintent = new Intent(welcomeActivity, AboutUsActivity.class);
                 learnmoreintent.putExtra("url", urlvalue);
                 learnmoreintent.putExtra("menu", false);
-                learnmoreintent.putExtra("header", "Learn More");
+                learnmoreintent.putExtra("header", "Instructions");
                 welcomeActivity.startActivity(learnmoreintent);
 
                 break;

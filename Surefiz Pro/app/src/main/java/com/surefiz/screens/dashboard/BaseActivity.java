@@ -312,7 +312,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 Intent aboutIntent = new Intent(this, AboutUsActivity.class);
                 aboutIntent.putExtra("url", "https://www.surefiz.com/Home/problem");
-                aboutIntent.putExtra("header", "About Us");
+                aboutIntent.putExtra("header", "Technical Support");
                 aboutIntent.putExtra("menu", true);
                 startActivity(aboutIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -278,7 +278,7 @@ public class ProfileActivity extends BaseActivity {
                     bodyList= (ArrayList<BodyItem>) data.getSerializableExtra("selectedBody");
 
                     String selectedBody=getSelectedItem();
-                    et_body.setText(selectedBody);
+//                    et_body.setText(selectedBody);
                     Log.d("Selected Body","::::::::::"+selectedBody);
 
                 }

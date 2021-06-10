@@ -157,17 +157,17 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 if (option1 == 0) {
                     et_weight_managment.setText(managementList.get(0));
 
-                    findViewById(R.id.ll_desired_weight_selection).setVisibility(View.VISIBLE);
-                    findViewById(R.id.rl_desired_weight_selection).setVisibility(View.VISIBLE);
+                    findViewById(R.id.ll_desired_weight_selection).setVisibility(View.GONE);
+                    findViewById(R.id.rl_desired_weight_selection).setVisibility(View.GONE);
                     et_desired_weight_selection.setText("");
 
-                    findViewById(R.id.tv_weight).setVisibility(View.GONE);
-                    findViewById(R.id.rl_weight).setVisibility(View.GONE);
-                    findViewById(R.id.tv_time_loss).setVisibility(View.GONE);
-                    findViewById(R.id.rl_time_loss).setVisibility(View.GONE);
+                    findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
+                    findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
+                    findViewById(R.id.tv_time_loss).setVisibility(View.VISIBLE);
+                    findViewById(R.id.rl_time_loss).setVisibility(View.VISIBLE);
 
                     selectedWeightManagmentGoal = 0;
-                    selectedDesiredWeightSelection = -1;
+                    selectedDesiredWeightSelection = 0;
                 } else {
                     et_weight_managment.setText(managementList.get(1));
 
@@ -184,7 +184,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     selectedDesiredWeightSelection = -1;
                 }
 
-                findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
+                /*findViewById(R.id.tv_weight).setVisibility(View.VISIBLE);
                 findViewById(R.id.rl_weight).setVisibility(View.VISIBLE);
                 findViewById(R.id.tv_time_loss).setVisibility(View.VISIBLE);
                 findViewById(R.id.rl_time_loss).setVisibility(View.VISIBLE);
@@ -193,7 +193,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
                 selectedDesiredWeightSelection = 0;
                 et_time_loss.setEnabled(true);
-                et_weight.setEnabled(true);
+                et_weight.setEnabled(true);*/
             }
         });
 
@@ -411,8 +411,8 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
 
             et_weight_managment.setText(managementList.get(0));
 
-            findViewById(R.id.ll_desired_weight_selection).setVisibility(View.VISIBLE);
-            findViewById(R.id.rl_desired_weight_selection).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_desired_weight_selection).setVisibility(View.GONE);
+            findViewById(R.id.rl_desired_weight_selection).setVisibility(View.GONE);
             et_desired_weight_selection.setText("");
 
             findViewById(R.id.tv_weight).setVisibility(View.GONE);
@@ -732,7 +732,7 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                 //weight = et_weight.getText().toString().trim();
                 //time = et_time_loss.getText().toString().trim();
             } else if (selectedDesiredWeightSelection == 1) {
-                userselectionbody = "1";
+                userselectionbody = "0";
                 weight = "";
                 time = "";
             } else {
@@ -894,7 +894,6 @@ public class WeightManagementActivity extends BaseActivity implements View.OnCli
                     }
 
                 } else {
-
                     sendWeightManagementDetails();
 
                 }

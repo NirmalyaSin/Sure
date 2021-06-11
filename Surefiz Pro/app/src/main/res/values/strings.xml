@@ -1,7 +1,7 @@
 <resources>
     <!--<string name="app_name">SureFiz™</string>-->
     <string name="app_name">SureFiz Pro<sup><small><small></small></small></sup></string>
-    <string name="app_name_splash">SureFiz<sup><small><small><small></small></small></small></sup></string>
+    <string name="app_name_splash">SureFiz Pro<sup><small><small><small></small></small></small></sup></string>
     <string name="app_name_otp">SureFiz<sup><small><small></small></small></sup></string>
     <!--<string name="app_name_otp">SureFiz<sup><small>&#174;</small></sup></string>-->
     <string name="facebook_app_id">2086076151705154</string>

@@ -15,9 +15,7 @@ import androidx.appcompat.app.AppCompatDialog;
 
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
-import com.surefiz.screens.profile.ProfileActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
-import com.surefiz.screens.signup.SignUpActivity;
 
 
 public class OpenCameraOrGalleryDialog extends AppCompatDialog implements View.OnClickListener {

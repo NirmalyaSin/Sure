@@ -11,14 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.surefiz.R;
 import com.surefiz.dialog.AddUserDialog;
 import com.surefiz.dialog.ChooseOptionDialog;
-import com.surefiz.interfaces.MoveTutorial;
 import com.surefiz.interfaces.OnUiEventClick;
-import com.surefiz.screens.groupinvite.adapter.GroupInviteAdapter;
-import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.otp.OtpActivity;
-import com.surefiz.screens.users.UserListActivity;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
-import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import butterknife.BindView;

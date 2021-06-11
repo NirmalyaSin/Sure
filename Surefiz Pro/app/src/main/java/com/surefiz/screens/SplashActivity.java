@@ -20,10 +20,10 @@ import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.registration.MembershipActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
+import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.screens.welcome.WelcomeActivity;
-import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
@@ -59,7 +59,7 @@ public class SplashActivity extends AppCompatActivity {
             jsonObject1 = null;
             if (getIntent().hasExtra("_fbSourceApplicationHasBeenSet") && !getIntent().hasExtra("pushData")) {
                 LoginShared.setWeightFromNotification(this, "0");
-               // System.out.print("SureFIZ");
+               // System.out.print("SureFIZ Pro");
             } else if (getIntent().hasExtra("pushData")) {
                 String value = bundle.get("pushData").toString();
                 try {

@@ -1,11 +1,9 @@
 package com.surefiz.screens.boardcast.adapter;
 
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rts.commonutils_2_0.emoji.EmojiFormatter;
 import com.surefiz.R;
 import com.surefiz.screens.boardcast.model.BroadcastItem;
-import com.surefiz.screens.chat.ChatConstant;
-import com.surefiz.screens.chat.adapter.ChatAdapter;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MessagDateConverter;
 

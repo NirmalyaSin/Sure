@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.surefiz.R;
 import com.surefiz.designhelper.ResolutionHelper;
-import com.surefiz.screens.registration.RegistrationActivity;
 
 import java.util.List;
 

@@ -3,7 +3,6 @@ package com.surefiz.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,28 +18,14 @@ import android.widget.LinearLayout;
 
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
-import com.surefiz.apilist.ApiList;
 import com.surefiz.application.Constant;
 import com.surefiz.dialog.universalpopup.UniversalPopup;
-import com.surefiz.interfaces.MoveTutorial;
-import com.surefiz.networkutils.ApiInterface;
-import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class AddLoginUserDetails extends Dialog {
     Activity activity;

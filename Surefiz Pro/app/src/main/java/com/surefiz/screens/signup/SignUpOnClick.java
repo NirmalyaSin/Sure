@@ -1,21 +1,10 @@
 package com.surefiz.screens.signup;
 
-import android.Manifest;
-import android.os.Handler;
 import android.view.View;
-import android.widget.Toast;
 
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.rts.commonutils_2_0.netconnection.ConnectionDetector;
 import com.surefiz.R;
-import com.surefiz.dialog.OpenCameraOrGalleryDialog;
-import com.surefiz.interfaces.OnImageSet;
-import com.surefiz.screens.profile.ProfileActivity;
-import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;
-
-import java.util.ArrayList;
 
 public class SignUpOnClick implements View.OnClickListener {
 

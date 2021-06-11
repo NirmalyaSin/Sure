@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;

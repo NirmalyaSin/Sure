@@ -39,13 +39,11 @@ import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.progressstatus.ProgressStatusActivity;
 import com.surefiz.screens.userconfirmation.UserConfirmationActivity;
-import com.surefiz.screens.welcome.WelcomeActivity;
 import com.surefiz.sharedhandler.LoginShared;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;

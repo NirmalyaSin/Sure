@@ -42,6 +42,15 @@ public class User {
     @Expose
     private Integer isfirsttime;
 
+    @SerializedName("imageName")
+    private Object imageName;
+
+    @SerializedName("count")
+    private String count;
+
+    @SerializedName("regtype")
+    private String regtype;
+
     public String getUserId() {
         return userId;
     }
@@ -128,5 +137,29 @@ public class User {
 
     public void setIsfirsttime(Integer isfirsttime) {
         this.isfirsttime = isfirsttime;
+    }
+
+    public Object getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(Object imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getRegtype() {
+        return regtype;
+    }
+
+    public void setRegtype(String regtype) {
+        this.regtype = regtype;
     }
 }

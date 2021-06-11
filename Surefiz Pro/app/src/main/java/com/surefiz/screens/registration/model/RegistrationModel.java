@@ -13,7 +13,7 @@ public class RegistrationModel implements Serializable {
     private Integer status;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private Data data=new Data();
 
     public Integer getStatus() {
         return status;

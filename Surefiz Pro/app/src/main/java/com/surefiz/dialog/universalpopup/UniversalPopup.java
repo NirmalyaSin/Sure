@@ -6,7 +6,6 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import com.surefiz.R;
-import com.surefiz.screens.registration.RegistrationActivity;
 
 import java.util.List;
 

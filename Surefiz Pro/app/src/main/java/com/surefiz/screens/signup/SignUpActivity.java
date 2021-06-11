@@ -2,7 +2,6 @@ package com.surefiz.screens.signup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.View;
 import com.bigkoo.pickerview.MyOptionsPickerView;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-
 import com.surefiz.application.Constant;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
@@ -58,17 +56,14 @@ public class SignUpActivity extends SignUpView {
         addTimeListAndCall();
         addSelectionListAndCall();
         addLearnAboutList();
-
         setTermsAndCondition();
-
         callCountryListApi();
-
     }
 
 
     private void setTermsAndCondition() {
         checkBoxTermsCondition.setText("");
-        textTermsCondition.setText(Html.fromHtml("I have read and agree to the " +
+        textTermsCondition.setText(Html.fromHtml("I have read and agreed to the " +
                 "<a href='com.surefiz.screens.termcondition.TermAndConditionActivity://Kode'><font color='#3981F5'>Terms and Conditions</font></a>"));
         textTermsCondition.setClickable(true);
         textTermsCondition.setMovementMethod(LinkMovementMethod.getInstance());
@@ -96,12 +91,7 @@ public class SignUpActivity extends SignUpView {
         learnPopup.setSelectOptions(0);
 
 
-        learnPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                et_learn_about.setText(learnList.get(options1));
-            }
-        });
+        learnPopup.setOnoptionsSelectListener((options1, option2, options3) -> et_learn_about.setText(learnList.get(options1)));
 
     }
 
@@ -128,12 +118,7 @@ public class SignUpActivity extends SignUpView {
         genderPopup.setSelectOptions(0);
 
 
-        genderPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                et_gender.setText(genderList.get(options1));
-            }
-        });
+        genderPopup.setOnoptionsSelectListener((options1, option2, options3) -> et_gender.setText(genderList.get(options1)));
     }
 
     private void addLifeStyleListAndCall() {
@@ -149,17 +134,13 @@ public class SignUpActivity extends SignUpView {
         lifeStylePopup.setSelectOptions(0);
 
 
-        lifeStylePopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                et_lifestyle.setText(lifeStyleList.get(options1));
-                selectedLifeStyle = options1 + 1;
-            }
+        lifeStylePopup.setOnoptionsSelectListener((options1, option2, options3) -> {
+            et_lifestyle.setText(lifeStyleList.get(options1));
+            selectedLifeStyle = options1 + 1;
         });
     }
 
     private void addPreferredListAndCall() {
-
         prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
 
@@ -169,56 +150,53 @@ public class SignUpActivity extends SignUpView {
         weigtUniversalPopupPreferred.setSelectOptions(0);
 
 
-        weigtUniversalPopupPreferred.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                height = et_height.getText().toString().trim();
-                String value=prefferedList.get(options1);
-                et_units.setText(value);
+        weigtUniversalPopupPreferred.setOnoptionsSelectListener((options1, option2, options3) -> {
+            height = et_height.getText().toString().trim();
+            String value=prefferedList.get(options1);
+            et_units.setText(value);
 
-                if(!height.equals("")) {
-                    splited = height.split(" ");
+            if(!height.equals("")) {
+                splited = height.split(" ");
+                if (value.equals("KG/CM")) {
+                    units = "CM";
+                } else {
+                    units = "INCH";
+                }
+                if (units.equals(splited[1])) {
+                } else {
                     if (value.equals("KG/CM")) {
+                        et_height.setText(Math.round(Double.parseDouble(splited[0]) * 2.54) + " CM");
                         units = "CM";
-                    } else {
-                        units = "INCH";
                     }
-                    if (units.equals(splited[1])) {
-                    } else {
-                        if (value.equals("KG/CM")) {
-                            et_height.setText(Math.round(Double.parseDouble(splited[0]) * 2.54) + " CM");
-                            units = "CM";
-                        }
-                        if (value.equals("LBS/INCH")) {
-                            units = "INCH";
-                            et_height.setText((Math.round(Double.parseDouble(splited[0]) * 0.393701)) + " INCH");
-                        }
+                    if (value.equals("LBS/INCH")) {
+                        units = "INCH";
+                        et_height.setText((Math.round(Double.parseDouble(splited[0]) * 0.393701)) + " INCH");
                     }
                 }
-
-                weight = et_weight.getText().toString().trim();
-
-                if(!weight.equals("")) {
-                    splited = weight.split(" ");
-                    if (value.equals("KG/CM")) {
-                        units = "CM";
-                    } else {
-                        units = "INCH";
-                    }
-                    if (units.equals(splited[1])) {
-                    } else {
-                        if (value.equals("KG/CM")) {
-                            et_weight.setText(Math.round(Double.parseDouble(splited[0]) * 2.2046) + " KG");
-                            units = "CM";
-                        }
-                        if (value.equals("LBS/INCH")) {
-                            units = "INCH";
-                            et_weight.setText((Math.round(Double.parseDouble(splited[0]) /2.2046)) + " LBS");
-                        }
-                    }
-                }
-
             }
+
+            weight = et_weight.getText().toString().trim();
+
+            if(!weight.equals("")) {
+                splited = weight.split(" ");
+                if (value.equals("KG/CM")) {
+                    units = "CM";
+                } else {
+                    units = "INCH";
+                }
+                if (units.equals(splited[1])) {
+                } else {
+                    if (value.equals("KG/CM")) {
+                        et_weight.setText(Math.round(Double.parseDouble(splited[0]) * 2.2046) + " KG");
+                        units = "CM";
+                    }
+                    if (value.equals("LBS/INCH")) {
+                        units = "INCH";
+                        et_weight.setText((Math.round(Double.parseDouble(splited[0]) /2.2046)) + " LBS");
+                    }
+                }
+            }
+
         });
     }
 
@@ -286,14 +264,11 @@ public class SignUpActivity extends SignUpView {
         countryListPopup.setSelectOptions(0);
 
 
-        countryListPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
+        countryListPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
 
-                et_country_name.setText(countryList.get(options1));
-                selectedCountryId=countryIDList.get(options1).toString() ;
-                callStateListApi();
-            }
+            et_country_name.setText(countryList.get(options1));
+            selectedCountryId=countryIDList.get(options1).toString() ;
+            callStateListApi();
         });
     }
 
@@ -320,13 +295,10 @@ public class SignUpActivity extends SignUpView {
         stateListPopup.setSelectOptions(0);
 
 
-        stateListPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
+        stateListPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
 
-                et_state.setText(stateList.get(options1));
-                selectedStateId=stateIDList.get(options1);
-            }
+            et_state.setText(stateList.get(options1));
+            selectedStateId=stateIDList.get(options1);
         });
 
     }
@@ -343,39 +315,76 @@ public class SignUpActivity extends SignUpView {
         managementPopup.setSelectOptions(0);
 
 
-        managementPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
+        managementPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
 
-                if (managementList.get(options1).equals("Lose And Maintain Weight")) {
-                    et_management.setText(managementList.get(0));
+            if (managementList.get(options1).equals("Lose And Maintain Weight")) {
+                et_management.setText(managementList.get(0));
 
-                    tv_userSelection.setVisibility(View.GONE);
-                    rl_userselection.setVisibility(View.GONE);
+                tv_userSelection.setVisibility(View.GONE);
+                rl_userselection.setVisibility(View.GONE);
 
-                    tv_weight.setVisibility(View.GONE);
-                    rl_weight.setVisibility(View.GONE);
-                    tv_time_loss.setVisibility(View.GONE);
-                    rl_time_loss.setVisibility(View.GONE);
+                tv_weight.setVisibility(View.GONE);
+                rl_weight.setVisibility(View.GONE);
+                tv_time_loss.setVisibility(View.GONE);
+                rl_time_loss.setVisibility(View.GONE);
 
-                    selectedWeightManagmentGoal = 0;
-                    selectedDesiredWeightSelection = -1;
+                selectedWeightManagmentGoal = 0;
+                selectedDesiredWeightSelection = -1;
 
-                } else {
-                    et_management.setText(managementList.get(1));
+            } else {
+                et_management.setText(managementList.get(1));
 
-                    tv_userSelection.setVisibility(View.GONE);
-                    rl_userselection.setVisibility(View.GONE);
+                tv_userSelection.setVisibility(View.GONE);
+                rl_userselection.setVisibility(View.GONE);
 
-                    tv_time_loss.setVisibility(View.GONE);
-                    rl_time_loss.setVisibility(View.GONE);
+                tv_time_loss.setVisibility(View.GONE);
+                rl_time_loss.setVisibility(View.GONE);
 
-                    tv_weight.setVisibility(View.GONE);
-                    rl_weight.setVisibility(View.GONE);
+                tv_weight.setVisibility(View.GONE);
+                rl_weight.setVisibility(View.GONE);
 
-                    selectedWeightManagmentGoal = 1;
-                    selectedDesiredWeightSelection = -1;
-                }
+                selectedWeightManagmentGoal = 1;
+                selectedDesiredWeightSelection = -1;
+            }
+
+            if (selectedWeightManagmentGoal == 1) {
+                tv_weight.setVisibility(View.GONE);
+                rl_weight.setVisibility(View.GONE);
+                tv_time_loss.setVisibility(View.GONE);
+                rl_time_loss.setVisibility(View.GONE);
+            } else {
+                tv_weight.setVisibility(View.VISIBLE);
+                rl_weight.setVisibility(View.VISIBLE);
+                tv_time_loss.setVisibility(View.VISIBLE);
+                rl_time_loss.setVisibility(View.VISIBLE);
+                et_time_loss.setHint("Please Select");
+                et_time_loss.setText("");
+            }
+
+
+            selectedDesiredWeightSelection = 0;
+            et_time_loss.setEnabled(true);
+            et_weight.setEnabled(true);
+
+        });
+
+    }
+
+    private void addSelectionListAndCall() {
+
+        desiredWeightSelectionList.add("I Will Provide The Info");
+        desiredWeightSelectionList.add("I Want " + getResources().getString(R.string.app_name_splash) + " To Suggest");
+
+        selectionPopup=new MyOptionsPickerView(this);
+        selectionPopup.setPicker(desiredWeightSelectionList);
+        selectionPopup.setCyclic(false);
+        selectionPopup.setSelectOptions(0);
+
+
+        selectionPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
+
+            if (options1==0) {
+                et_userselection.setText(desiredWeightSelectionList.get(0));
 
                 if (selectedWeightManagmentGoal == 1) {
                     tv_weight.setVisibility(View.GONE);
@@ -395,58 +404,15 @@ public class SignUpActivity extends SignUpView {
                 selectedDesiredWeightSelection = 0;
                 et_time_loss.setEnabled(true);
                 et_weight.setEnabled(true);
+            } else {
+                et_userselection.setText(desiredWeightSelectionList.get(1));
 
-            }
-        });
+                tv_weight.setVisibility(View.GONE);
+                rl_weight.setVisibility(View.GONE);
+                tv_time_loss.setVisibility(View.GONE);
+                rl_time_loss.setVisibility(View.GONE);
 
-    }
-
-    private void addSelectionListAndCall() {
-
-        desiredWeightSelectionList.add("I Will Provide The Info");
-        desiredWeightSelectionList.add("I Want " + getResources().getString(R.string.app_name_splash) + " To Suggest");
-
-        selectionPopup=new MyOptionsPickerView(this);
-        selectionPopup.setPicker(desiredWeightSelectionList);
-        selectionPopup.setCyclic(false);
-        selectionPopup.setSelectOptions(0);
-
-
-        selectionPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-
-                if (options1==0) {
-                    et_userselection.setText(desiredWeightSelectionList.get(0));
-
-                    if (selectedWeightManagmentGoal == 1) {
-                        tv_weight.setVisibility(View.GONE);
-                        rl_weight.setVisibility(View.GONE);
-                        tv_time_loss.setVisibility(View.GONE);
-                        rl_time_loss.setVisibility(View.GONE);
-                    } else {
-                        tv_weight.setVisibility(View.VISIBLE);
-                        rl_weight.setVisibility(View.VISIBLE);
-                        tv_time_loss.setVisibility(View.VISIBLE);
-                        rl_time_loss.setVisibility(View.VISIBLE);
-                        et_time_loss.setHint("Please Select");
-                        et_time_loss.setText("");
-                    }
-
-
-                    selectedDesiredWeightSelection = 0;
-                    et_time_loss.setEnabled(true);
-                    et_weight.setEnabled(true);
-                } else {
-                    et_userselection.setText(desiredWeightSelectionList.get(1));
-
-                    tv_weight.setVisibility(View.GONE);
-                    rl_weight.setVisibility(View.GONE);
-                    tv_time_loss.setVisibility(View.GONE);
-                    rl_time_loss.setVisibility(View.GONE);
-
-                    selectedDesiredWeightSelection = 1;
-                }
+                selectedDesiredWeightSelection = 1;
             }
         });
 
@@ -463,13 +429,7 @@ public class SignUpActivity extends SignUpView {
         timePopup.setSelectOptions(0);
 
 
-        timePopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-
-                et_time_loss.setText(timeList.get(options1));
-            }
-        });
+        timePopup.setOnoptionsSelectListener((options1, option2, options3) -> et_time_loss.setText(timeList.get(options1)));
     }
 
     protected void addWeightListAndCall(String change) {
@@ -491,12 +451,7 @@ public class SignUpActivity extends SignUpView {
         weightPopup.setSelectOptions(0);
 
 
-        weightPopup.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                et_weight.setText(weightList.get(options1));
-            }
-        });
+        weightPopup.setOnoptionsSelectListener((options1, option2, options3) -> et_weight.setText(weightList.get(options1)));
 
     }
 
@@ -511,15 +466,12 @@ public class SignUpActivity extends SignUpView {
         doublePicker.setSelectOptions(0,0);
 
 
-        doublePicker.setOnoptionsSelectListener(new MyOptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int option1, int option2, int option3) {
+        doublePicker.setOnoptionsSelectListener((option1, option2, option3) -> {
 
-                String[] separated = array1.get(option1).split(" ");
-                String[] separated2 = array2.get(option2).split(" ");
+            String[] separated = array1.get(option1).split(" ");
+            String[] separated2 = array2.get(option2).split(" ");
 
-                setValue(change,Integer.parseInt(separated[0]),Integer.parseInt(separated2[0]));
-            }
+            setValue(change,Integer.parseInt(separated[0]),Integer.parseInt(separated2[0]));
         });
 
 

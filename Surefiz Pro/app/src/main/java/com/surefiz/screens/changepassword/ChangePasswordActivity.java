@@ -15,7 +15,6 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.mydevice.MyDeviceActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.LoginShared;

@@ -12,15 +12,15 @@ import android.util.Log;
 
 import com.surefiz.screens.UDPHelper;
 
-import cn.onecoder.scalewifi.api.impl.OnUserIdManagerListener;
-import cn.onecoder.scalewifi.net.impl.OnDataListener;
-import cn.onecoder.scalewifi.util.HexUtil;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import cn.onecoder.scalewifi.api.impl.OnUserIdManagerListener;
+import cn.onecoder.scalewifi.net.impl.OnDataListener;
+import cn.onecoder.scalewifi.util.HexUtil;
 
 public class UserIdManager implements OnDataListener {
     public static final long TIMEOUT_IN_MILLIS_MIN = 300000L;

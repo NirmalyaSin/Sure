@@ -1,8 +1,6 @@
 package com.surefiz.dialog.amazon;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -13,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.surefiz.R;
-import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.screens.choose.ChooseActivity;
 
 import butterknife.BindView;

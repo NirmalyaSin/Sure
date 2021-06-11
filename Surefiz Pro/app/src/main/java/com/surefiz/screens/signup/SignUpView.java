@@ -1,13 +1,10 @@
 package com.surefiz.screens.signup;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -24,37 +21,30 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bigkoo.pickerview.MyOptionsPickerView;
-
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
-
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.screens.registration.RegistrationClickEvent;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.signup.response.SignUpResponse;
 import com.surefiz.sharedhandler.LoginShared;
-import com.surefiz.utils.MediaUtils;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.RealPathUtil;
 import com.surefiz.utils.progressloader.LoadingData;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
-import id.zelory.compressor.FileUtil;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -66,12 +56,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static android.os.Build.VERSION_CODES.M;
-
 public class SignUpView extends AppCompatActivity {
 
-    protected static final String PICTURE_NAME = "SureFIZProfile";
-    protected static final String FOLDER_NAME = "SureFIZ";
+    protected static final String PICTURE_NAME = "SureFIZProProfile";
+    protected static final String FOLDER_NAME = "SureFIZPro";
     protected static final int CAMERA = 1, GALLERY = 2;
     protected File mCompressedFile = null;
     protected RegistrationClickEvent registrationClickEvent;
@@ -292,7 +280,6 @@ public class SignUpView extends AppCompatActivity {
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         switch (requestCode) {
 
             case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
@@ -314,6 +301,7 @@ public class SignUpView extends AppCompatActivity {
                 }
 
         }
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 
@@ -453,25 +441,19 @@ public class SignUpView extends AppCompatActivity {
             public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
                 if (loader != null && loader.isShowing())
                     loader.dismiss();
-
                 try {
-
                     if (response.body().getStatus() == 1) {
-
-                        if (scaleId.equals("")) {
-
-                            showInfoDialog(getString(R.string.signup_completed_without_scale));
-
-                            showInfoDialog(response.body().getData().getMessage());
-                        } else {
-
-//                           showInfoDialog(getString(R.string.signup_completed_with_scale));
-
-                            showInfoDialog(response.body().getData().getMessage());
-                        }
-
+                        showInfoDialog(response.body().getData().getMessage());
+                    } else if (response.body().getStatus() == 4) {
+                        RegistrationModel model = new RegistrationModel();
+                        model.getData().setToken(response.body().getData().getToken());
+                        model.getData().setUser(response.body().getData().getUser());
+                        LoginShared.setRegistrationDataModel(SignUpView.this, model);
+                        Intent otpIntent = new Intent(SignUpView.this, OtpActivity.class);
+                        startActivity(otpIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finishAffinity();
                     } else {
-
                         MethodUtils.errorMsg(SignUpView.this, response.body().getData().getMessage());
                     }
 
@@ -496,16 +478,12 @@ public class SignUpView extends AppCompatActivity {
         CustomAlert customAlert = new CustomAlert(this);
         customAlert.setSubText("" + Html.fromHtml(message));
         customAlert.show();
-        customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customAlert.dismiss();
-
-                Intent intent = new Intent(SignUpView.this, LoginActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finishAffinity();
-            }
+        customAlert.btn_ok.setOnClickListener(v -> {
+            customAlert.dismiss();
+            Intent intent = new Intent(SignUpView.this, LoginActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finishAffinity();
         });
     }
 

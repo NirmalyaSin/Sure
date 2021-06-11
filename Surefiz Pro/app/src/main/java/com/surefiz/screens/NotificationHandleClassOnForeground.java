@@ -10,12 +10,9 @@ import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 import com.surefiz.utils.MessagDateConverter;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class NotificationHandleClassOnForeground extends Activity {
 

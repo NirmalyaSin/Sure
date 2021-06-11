@@ -78,8 +78,8 @@ import rx.schedulers.Schedulers;
 import static android.os.Build.VERSION_CODES.M;
 
 public class RegistrationActivity extends AppCompatActivity {
-    public static final String PICTURE_NAME = "SureFIZProfile";
-    public static final String FOLDER_NAME = "SureFIZ";
+    public static final String PICTURE_NAME = "SureFIZProProfile";
+    public static final String FOLDER_NAME = "SureFIZPro";
     public static final int CAMERA = 1, GALLERY = 2;
     public File mCompressedFile = null;
     public RegistrationClickEvent registrationClickEvent;

@@ -6,7 +6,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-
 import com.surefiz.R;
 
 import static android.os.Build.VERSION_CODES;

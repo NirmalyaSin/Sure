@@ -1,7 +1,6 @@
 package com.surefiz.screens.choose;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -21,9 +20,7 @@ import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.barcodescanner.BarCodeScanner;
 import com.surefiz.screens.choose.response.VerifyResponse;
-import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.signup.SignUpActivity;
-import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 

@@ -1,7 +1,6 @@
 package com.surefiz.screens.groupinvite.adapter;
 
 import android.app.Activity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,12 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.surefiz.R;
-import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.groupinvite.ModelGroupInvite;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
-import com.surefiz.sharedhandler.LoginShared;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class GroupInviteAdapter extends RecyclerView.Adapter<GroupInviteAdapter.UserListViewHolder> {

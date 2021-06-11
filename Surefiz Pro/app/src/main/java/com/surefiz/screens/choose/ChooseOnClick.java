@@ -8,8 +8,6 @@ import android.view.View;
 import com.surefiz.R;
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.screens.aboutus.AboutUsActivity;
-import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.signup.SignUpActivity;
 
 public class ChooseOnClick implements View.OnClickListener {
     private ChooseActivity ChooseActivity;

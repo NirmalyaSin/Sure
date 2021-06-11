@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.surefiz.R;
 import com.surefiz.screens.dashboard.DashBoardActivity;
-import com.surefiz.screens.weightdetails.WeightDetailsActivity;
 
 public class InstructionActivityonclick implements View.OnClickListener {
     private InstructionActivity instructionActivity;

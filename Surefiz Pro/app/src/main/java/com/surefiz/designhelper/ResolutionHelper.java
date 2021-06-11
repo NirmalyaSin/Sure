@@ -1,7 +1,6 @@
 package com.surefiz.designhelper;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 
 import com.rts.commonutils_2_0.deviceinfo.DeviceResolution;
 

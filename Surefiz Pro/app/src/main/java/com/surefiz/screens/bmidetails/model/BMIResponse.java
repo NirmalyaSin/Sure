@@ -1,9 +1,6 @@
 package com.surefiz.screens.bmidetails.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.surefiz.screens.chat.model.Conversation;
-
-import java.util.ArrayList;
 
 public class BMIResponse {
     @SerializedName("status")

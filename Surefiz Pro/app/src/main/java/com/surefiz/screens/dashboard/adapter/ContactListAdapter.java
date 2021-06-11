@@ -62,7 +62,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 row_index = i;
                 row_user = 1;
             } else {
-                System.out.print("SureFiz");
+                System.out.print("SureFiz Pro");
             }
         }
 

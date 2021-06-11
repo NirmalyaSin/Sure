@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.surefiz.R;
-import com.surefiz.screens.acountabiltySearch.RequestState;
 import com.surefiz.screens.accountability.models.User;
+import com.surefiz.screens.acountabiltySearch.RequestState;
 
 import java.util.ArrayList;
 

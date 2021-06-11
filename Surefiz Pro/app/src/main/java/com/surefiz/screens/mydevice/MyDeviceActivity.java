@@ -6,14 +6,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,23 +23,18 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
-import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.barcodescanner.BarCodeScanner;
 import com.surefiz.screens.dashboard.BaseActivity;
-import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.registration.model.RegistrationModel;
 import com.surefiz.screens.settings.SettingsActivity;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
-import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
 import com.surefiz.utils.progressloader.LoadingData;
 
 import org.json.JSONObject;
 
-import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

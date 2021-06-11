@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.common.util.Hex;
 import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.dialog.AddUserDialog;

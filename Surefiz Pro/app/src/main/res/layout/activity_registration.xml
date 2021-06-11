@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/roboto_bold"
-            android:text="SureFiz Signup"
+            android:text="SureFiz Pro Signup"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 

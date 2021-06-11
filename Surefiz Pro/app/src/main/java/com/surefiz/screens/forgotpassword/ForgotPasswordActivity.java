@@ -14,7 +14,6 @@ import com.surefiz.apilist.ApiList;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.otp.OtpActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.GeneralToApp;
 import com.surefiz.utils.MethodUtils;
@@ -24,7 +23,6 @@ import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

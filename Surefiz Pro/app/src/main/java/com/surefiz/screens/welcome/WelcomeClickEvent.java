@@ -1,15 +1,14 @@
 package com.surefiz.screens.welcome;
 
 import android.content.Intent;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 
 import com.surefiz.R;
 import com.surefiz.screens.aboutus.AboutUsActivity;
-import com.surefiz.screens.choose.ChooseActivity;
-import com.surefiz.screens.choose.ChooseActivityView;
 import com.surefiz.screens.login.LoginActivity;
+import com.surefiz.screens.registration.RegistrationActivity;
+import com.surefiz.screens.signup.SignUpActivity;
 
 public class WelcomeClickEvent implements View.OnClickListener {
     WelcomeActivity welcomeActivity;
@@ -36,12 +35,12 @@ public class WelcomeClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.tv_signup:
-
-                Intent intent = new Intent(welcomeActivity, ChooseActivity.class);
+//                 Intent intent = new Intent(welcomeActivity, ChooseActivity.class);
+                Intent intent = new Intent(welcomeActivity, SignUpActivity.class);
+                intent.putExtra("orderId", "");
+                intent.putExtra("scaleId", "");
                 welcomeActivity.startActivity(intent);
                 welcomeActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-
                 break;
 
             case R.id.txt_learn_more:

@@ -1,51 +1,53 @@
 package com.surefiz.screens.signup.response;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
+import com.surefiz.screens.registration.model.User;
 
-public class Data{
+import java.util.List;
 
-	@SerializedName("message")
-	private String message;
+public class Data {
 
-	@SerializedName("user")
-	private List<UserItem> user;
+    @SerializedName("message")
+    private String message;
 
-	@SerializedName("status")
-	private int status;
+    @SerializedName("user")
+    private List<User> user;
 
-	@SerializedName("token")
-	private String token;
+    @SerializedName("status")
+    private int status;
 
-	public void setMessage(String message){
-		this.message = message;
-	}
+    @SerializedName("token")
+    private String token;
 
-	public String getMessage(){
-		return message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public void setUser(List<UserItem> user){
-		this.user = user;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public List<UserItem> getUser(){
-		return user;
-	}
+    public void setUser(List<User> user) {
+        this.user = user;
+    }
 
-	public void setStatus(int status){
-		this.status = status;
-	}
+    public List<User> getUser() {
+        return user;
+    }
 
-	public int getStatus(){
-		return status;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public void setToken(String token){
-		this.token = token;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public String getToken(){
-		return token;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
 }

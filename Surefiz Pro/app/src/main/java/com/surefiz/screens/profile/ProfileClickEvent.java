@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -23,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.bigkoo.pickerview.MyOptionsPickerView;
-import com.facebook.CallbackManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

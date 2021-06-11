@@ -2,7 +2,6 @@ package com.surefiz.screens.accountability;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -35,7 +34,6 @@ import com.surefiz.screens.chat.ChatActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.login.LoginActivity;
-import com.surefiz.screens.notifications.NotificationActivity;
 import com.surefiz.screens.privacy.PrivacyActivity;
 import com.surefiz.sharedhandler.LoginShared;
 import com.surefiz.utils.MethodUtils;

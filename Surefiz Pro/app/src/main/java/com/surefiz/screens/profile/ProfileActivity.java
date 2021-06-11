@@ -1,13 +1,10 @@
 package com.surefiz.screens.profile;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,13 +27,10 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.surefiz.R;
 import com.surefiz.interfaces.OnImageSet;
 import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.dashboard.BaseActivity;
-import com.surefiz.utils.MediaUtils;
 import com.surefiz.utils.RealPathUtil;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -44,24 +38,18 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 import butterknife.ButterKnife;
 import id.zelory.compressor.Compressor;
-import id.zelory.compressor.FileUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static android.os.Build.VERSION_CODES.M;
-
 public class ProfileActivity extends BaseActivity {
-    public static final String PICTURE_NAME = "SureFIZProfile";
-    public static final String FOLDER_NAME = "SureFIZ";
+    public static final String PICTURE_NAME = "SureFIZProProfile";
+    public static final String FOLDER_NAME = "SureFIZPro";
     public static final int CAMERA = 1, GALLERY = 2;
     public File mCompressedFile = null;
     public View view;

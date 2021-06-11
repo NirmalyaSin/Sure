@@ -2,7 +2,6 @@ package com.surefiz.screens.weightManagement;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.surefiz.R;
 import com.surefiz.apilist.ApiList;
 import com.surefiz.application.Constant;
 import com.surefiz.dialog.CustomAlert;
-import com.surefiz.interfaces.OnWeightCallback;
 import com.surefiz.networkutils.ApiInterface;
 import com.surefiz.networkutils.AppConfig;
 import com.surefiz.screens.dashboard.BaseActivity;
@@ -31,7 +29,6 @@ import com.surefiz.utils.progressloader.LoadingData;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

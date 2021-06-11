@@ -12,11 +12,9 @@ import com.surefiz.screens.changepassword.ChangePasswordActivity;
 import com.surefiz.screens.dashboard.BaseActivity;
 import com.surefiz.screens.mydevice.MyDeviceActivity;
 import com.surefiz.screens.privacy.PrivacyActivity;
-import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.screens.setupPreparation.SetUpPreparation;
+import com.surefiz.screens.weightManagement.WeightManagementActivity;
 import com.surefiz.sharedhandler.LoginShared;
-
-import org.w3c.dom.Text;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     public View view;

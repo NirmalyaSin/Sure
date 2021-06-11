@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.surefiz.R;
 import com.surefiz.screens.aboutus.AboutUsActivity;
+import com.surefiz.screens.choose.ChooseActivity;
 import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.registration.RegistrationActivity;
 import com.surefiz.screens.signup.SignUpActivity;
@@ -35,8 +36,7 @@ public class WelcomeClickEvent implements View.OnClickListener {
                 break;
 
             case R.id.tv_signup:
-//                 Intent intent = new Intent(welcomeActivity, ChooseActivity.class);
-                Intent intent = new Intent(welcomeActivity, SignUpActivity.class);
+                 Intent intent = new Intent(welcomeActivity, ChooseActivity.class);
                 intent.putExtra("orderId", "");
                 intent.putExtra("scaleId", "");
                 welcomeActivity.startActivity(intent);

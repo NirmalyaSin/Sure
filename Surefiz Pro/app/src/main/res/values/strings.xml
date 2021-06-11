@@ -107,7 +107,7 @@ complete his/her registration process.</string>
     <string name="signup_completed_with_scale">Sign up is complete. Log into the SureFiz mobile App, with email ID and password created during this signup.</string>
     <string name="androidQ">As a security measure, newer versions of Android have added an additional step to connect to WiFi. Therefore next, you will see a popup with temporary WiFi of your scale named, </string>
     <string name="androidQ2">please select this network to connect.</string>
-    <string name="FromWhere">From Where Did You \n Buy SureFiz?</string>
+    <string name="ScaleID">Scale ID</string>
     <string name="AmazonAlready">From Amazon</string>
     <string name="Try_Another_FB">"This Facebook Account has been already linked with another SureFiz account. Please try with someother."</string>
     <string name="Try_Another_Google">"This Google Account has been already linked with another SureFiz account. Please try with someother."</string>

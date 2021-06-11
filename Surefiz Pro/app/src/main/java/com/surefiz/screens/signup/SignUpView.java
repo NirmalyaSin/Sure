@@ -443,16 +443,13 @@ public class SignUpView extends AppCompatActivity {
                     loader.dismiss();
                 try {
                     if (response.body().getStatus() == 1) {
-                        showInfoDialog(response.body().getData().getMessage());
+                        showInfoDialog(response.body().getData().getMessage(), 1);
                     } else if (response.body().getStatus() == 4) {
                         RegistrationModel model = new RegistrationModel();
                         model.getData().setToken(response.body().getData().getToken());
                         model.getData().setUser(response.body().getData().getUser());
                         LoginShared.setRegistrationDataModel(SignUpView.this, model);
-                        Intent otpIntent = new Intent(SignUpView.this, OtpActivity.class);
-                        startActivity(otpIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finishAffinity();
+                        showInfoDialog(response.body().getData().getMessage(), 4);
                     } else {
                         MethodUtils.errorMsg(SignUpView.this, response.body().getData().getMessage());
                     }
@@ -473,14 +470,13 @@ public class SignUpView extends AppCompatActivity {
 
     }
 
-    public void showInfoDialog(String message) {
-
+    public void showInfoDialog(String message, int status) {
         CustomAlert customAlert = new CustomAlert(this);
         customAlert.setSubText("" + Html.fromHtml(message));
         customAlert.show();
         customAlert.btn_ok.setOnClickListener(v -> {
             customAlert.dismiss();
-            Intent intent = new Intent(SignUpView.this, LoginActivity.class);
+            Intent intent = new Intent(SignUpView.this, status == 1 ? LoginActivity.class : OtpActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finishAffinity();

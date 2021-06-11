@@ -240,8 +240,13 @@ public class OtpClickEvent implements View.OnClickListener {
             public void onClick(View v) {
 
                 customAlert.dismiss();
+                Intent intent = new Intent(otpActivity, SetUpPreparation.class);
+                intent.putExtra("fromLogin",true);
+                otpActivity.startActivity(intent);
+                otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                otpActivity.finish();
 
-                if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0 ||
+                /*if (LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserProfileCompleteStatus() == 0 ||
                         LoginShared.getRegistrationDataModel(otpActivity).getData().getUser().get(0).getUserMac().equals("")) {
                     Intent regIntent = new Intent(otpActivity, RegistrationActivity.class);
                     regIntent.putExtra("completeStatus", "0");
@@ -249,12 +254,8 @@ public class OtpClickEvent implements View.OnClickListener {
                     otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     otpActivity.finish();
                 } else {
-                    Intent intent = new Intent(otpActivity, SetUpPreparation.class);
-                    intent.putExtra("fromLogin",true);
-                    otpActivity.startActivity(intent);
-                    otpActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    otpActivity.finish();
-                }
+
+                }*/
             }
         });
 

@@ -36,11 +36,11 @@ public class ChooseActivity extends ChooseActivityView {
     public static final int CAMERA = 1;
     private static final int REQUEST_BAR_CODE = 101;
     private AmazonDialog amazonDialog;
-    private int step=1;
-    private String orderId="";
-    private String scaleId="";
+    private int step = 3;
+    private String orderId = "";
+    private String scaleId = "";
     private LoadingData loader;
-    private boolean isScanner=false;
+    private boolean isScanner = false;
     public boolean isAmazon;
 
     @Override
@@ -51,67 +51,62 @@ public class ChooseActivity extends ChooseActivityView {
         ButterKnife.bind(this);
         loader = new LoadingData(this);
 
-        amazonDialog=new AmazonDialog(this,step);
-        chooseOnClick=new ChooseOnClick(ChooseActivity.this);
-
+        amazonDialog = new AmazonDialog(this, step);
+        chooseOnClick = new ChooseOnClick(ChooseActivity.this);
+        callAmazon();
     }
 
-    protected void callAmazon(){
+    protected void callAmazon() {
         amazonDialog.show();
-        amazonDialog.stepOneView(isAmazon);
-        amazonDialog.btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(step==1) {
-                    if (amazonDialog.isShowing())
-                        amazonDialog.dismiss();
-                }else if(step==3){
-                    step=2;
-                    amazonDialog.stepTwoView();
-                }
+//        amazonDialog.stepOneView(isAmazon);
+        amazonDialog.stepThreeView();
+        amazonDialog.btn_cancel.setOnClickListener(v -> {
+            if (step == 1) {
+                if (amazonDialog.isShowing())
+                    amazonDialog.dismiss();
+            } else if (step == 3) {
+                step = 2;
+                amazonDialog.stepTwoView();
             }
         });
 
-        amazonDialog.btn_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        amazonDialog.btn_ok.setOnClickListener(v -> {
 
-                if(step==1) {
-                    if(amazonDialog.et_orderId.getText().toString().trim().equals("")){
-                        if(isAmazon)
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Amazon Order ID.");
-                        else
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Order ID.");
+            if (step == 1) {
+                if (amazonDialog.et_orderId.getText().toString().trim().equals("")) {
+                    if (isAmazon)
+                        MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Amazon Order ID.");
+                    else
+                        MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Order ID.");
 
-                    }else{
-                        callVerifyApi(amazonDialog.et_orderId.getText().toString(),true);
-                    }
-
-                }else if(step==3) {
-                    if(isScanner) {
-                        if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Scale ID.");
-
-                        } else {
-                            callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-",""), false);
-                        }
-                    }else{
-                        if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Scale ID.");
-
-                        }else if (amazonDialog.et_con_scaleId.getText().toString().trim().equals("")) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Please confirm your Scale ID.");
-
-                        }else if (!amazonDialog.et_con_scaleId.getText().toString().trim().equals(amazonDialog.et_scaleId.getText().toString().trim())) {
-                            MethodUtils.errorMsg(ChooseActivity.this, "Scale ID and Confirm Scale ID mismatch.");
-
-                        }else {
-                            callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-",""), false);
-                        }
-                    }
+                } else {
+                    callVerifyApi(amazonDialog.et_orderId.getText().toString(), true);
                 }
 
+            } else if (step == 3) {
+                if (isScanner) {
+                    if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
+                        MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Scale ID.");
+
+                    } else {
+                        callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-", ""), false);
+                    }
+                } else {
+                    if (amazonDialog.et_scaleId.getText().toString().trim().equals("")) {
+                        MethodUtils.errorMsg(ChooseActivity.this, "Please enter your Scale ID.");
+
+                    } else if (amazonDialog.et_con_scaleId.getText().toString().trim().equals("")) {
+                        MethodUtils.errorMsg(ChooseActivity.this, "Please confirm your Scale ID.");
+
+                    } else if (!amazonDialog.et_con_scaleId.getText().toString().trim().equals(amazonDialog.et_scaleId.getText().toString().trim())) {
+                        MethodUtils.errorMsg(ChooseActivity.this, "Scale ID and Confirm Scale ID mismatch.");
+
+                    } else {
+                        callVerifyApi(amazonDialog.et_scaleId.getText().toString().replaceAll("-", ""), false);
+                    }
+                }
             }
+
         });
 
         amazonDialog.et_orderId.addTextChangedListener(new TextWatcher() {
@@ -224,7 +219,7 @@ public class ChooseActivity extends ChooseActivityView {
         amazonDialog.btn_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isScanner=false;
+                isScanner = false;
                 amazonDialog.et_scaleId.setText("");
                 amazonDialog.et_con_scaleId.setText("");
                 amazonDialog.btn_scan.setVisibility(View.VISIBLE);
@@ -235,12 +230,9 @@ public class ChooseActivity extends ChooseActivityView {
             }
         });
 
-        amazonDialog.btn_yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                amazonDialog.stepThreeView();
-                step=3;
-            }
+        amazonDialog.btn_yes.setOnClickListener(v -> {
+            amazonDialog.stepThreeView();
+            step = 3;
         });
 
         amazonDialog.btn_no.setOnClickListener(new View.OnClickListener() {
@@ -254,14 +246,14 @@ public class ChooseActivity extends ChooseActivityView {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                 amazonDialog.dismiss();
-                step=1;
+                step = 1;
             }
         });
 
         amazonDialog.btn_cancel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                step=1;
+                step = 1;
                 amazonDialog.stepOneView(isAmazon);
                 amazonDialog.dismiss();
             }
@@ -269,16 +261,16 @@ public class ChooseActivity extends ChooseActivityView {
 
     }
 
-    private void callVerifyApi(String orderID,boolean b) {
+    private void callVerifyApi(String orderID, boolean b) {
         loader.show_with_label("Loading");
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         final Call<VerifyResponse> call;
-        if(b)
-            call= apiInterface.call_amazon(orderID);
+        if (b)
+            call = apiInterface.call_amazon(orderID);
         else
-            call= apiInterface.call_scale(orderID);
+            call = apiInterface.call_scale(orderID);
 
 
         call.enqueue(new Callback<VerifyResponse>() {
@@ -290,13 +282,13 @@ public class ChooseActivity extends ChooseActivityView {
 
                     if (response.body().getStatus() == 1) {
 
-                        if(step==1) {
+                        if (step == 1) {
                             step = 2;
                             orderId = orderID;
                             //MethodUtils.showInfoDialog(ChooseActivity.this, response.body().getData().getMessage());
                             amazonDialog.stepTwoView();
-                        }else if(step==3){
-                            scaleId=orderID;
+                        } else if (step == 3) {
+                            scaleId = orderID;
 
                             showInfoDialog(response.body().getData().getMessage());
                         }
@@ -324,8 +316,8 @@ public class ChooseActivity extends ChooseActivityView {
     public void showInfoDialog(String message) {
 
 
-        CustomAlert customAlert=new CustomAlert(this);
-        customAlert.setSubText(""+Html.fromHtml(message));
+        CustomAlert customAlert = new CustomAlert(this);
+        customAlert.setSubText("" + Html.fromHtml(message));
         customAlert.show();
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -343,12 +335,11 @@ public class ChooseActivity extends ChooseActivityView {
     }
 
 
-
-    protected void callScanner(){
+    protected void callScanner() {
 
         if (checkStoragePermission()) {
-            Intent intent=new Intent(this, BarCodeScanner.class);
-            startActivityForResult(intent,REQUEST_BAR_CODE);
+            Intent intent = new Intent(this, BarCodeScanner.class);
+            startActivityForResult(intent, REQUEST_BAR_CODE);
         } else {
             requestStoragePermission();
         }
@@ -369,12 +360,12 @@ public class ChooseActivity extends ChooseActivityView {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode){
+        switch (requestCode) {
 
             case REQUEST_BAR_CODE:
                 if ((resultCode == RESULT_OK)) {
-                    if(amazonDialog!=null)
-                        isScanner=true;
+                    if (amazonDialog != null)
+                        isScanner = true;
                     amazonDialog.et_scaleId.setText(data.getStringExtra("barCode"));
                     amazonDialog.et_con_scaleId.setVisibility(View.GONE);
                     amazonDialog.btn_scan.setVisibility(View.GONE);

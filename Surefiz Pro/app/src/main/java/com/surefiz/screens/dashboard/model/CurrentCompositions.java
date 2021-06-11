@@ -11,7 +11,7 @@ public class CurrentCompositions {
     private Fat muscle;
 
     @SerializedName("protein")
-    private BodyFat protein;
+    private Fat protein;
 
     @SerializedName("weight")
     private String weight;
@@ -20,10 +20,10 @@ public class CurrentCompositions {
     private Fat boneKg;
 
     @SerializedName("bmr")
-    private BodyFat bmr;
+    private Fat bmr;
 
     @SerializedName("bodyscore")
-    private BodyFat bodyscore;
+    private Fat bodyscore;
 
     @SerializedName("recordedOn")
     private String recordedOn;
@@ -41,7 +41,7 @@ public class CurrentCompositions {
     private String unit;
 
     @SerializedName("water")
-    private BodyFat water;
+    private Fat water;
 
     @SerializedName("scaleMacAddress")
     private String scaleMacAddress;
@@ -50,7 +50,7 @@ public class CurrentCompositions {
     private String height;
 
     @SerializedName("BMI")
-    private BodyFat bMI;
+    private Fat bMI;
 
     public Fat getBodyFat() {
         return bodyFat;
@@ -68,11 +68,11 @@ public class CurrentCompositions {
         this.muscle = muscle;
     }
 
-    public BodyFat getProtein() {
+    public Fat getProtein() {
         return protein;
     }
 
-    public void setProtein(BodyFat protein) {
+    public void setProtein(Fat protein) {
         this.protein = protein;
     }
 
@@ -116,11 +116,11 @@ public class CurrentCompositions {
         this.battery = battery;
     }
 
-    public BodyFat getWater() {
+    public Fat getWater() {
         return water;
     }
 
-    public void setWater(BodyFat water) {
+    public void setWater(Fat water) {
         this.water = water;
     }
 
@@ -140,27 +140,27 @@ public class CurrentCompositions {
         this.height = height;
     }
 
-    public BodyFat getbMI() {
+    public Fat getbMI() {
         return bMI;
     }
 
-    public void setbMI(BodyFat bMI) {
+    public void setbMI(Fat bMI) {
         this.bMI = bMI;
     }
 
-    public BodyFat getBmr() {
+    public Fat getBmr() {
         return bmr;
     }
 
-    public void setBmr(BodyFat bmr) {
+    public void setBmr(Fat bmr) {
         this.bmr = bmr;
     }
 
-    public BodyFat getBodyscore() {
+    public Fat getBodyscore() {
         return bodyscore;
     }
 
-    public void setBodyscore(BodyFat bodyscore) {
+    public void setBodyscore(Fat bodyscore) {
         this.bodyscore = bodyscore;
     }
 

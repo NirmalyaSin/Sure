@@ -720,15 +720,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getValue() > 0.0) {
-                tv_bmi_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getValue()));
+                tv_bmi_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getValue()) + " " +
+                        LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getUnit());
                 tv_bmi_dynamic.setVisibility(View.VISIBLE);
             } else {
-                tv_bmi_dynamic.setText("0.0");
+                tv_bmi_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getUnit());
                 tv_bmi_dynamic.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            tv_bmi_dynamic.setText("0.0");
+            tv_bmi_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getbMI().getUnit());
             tv_bmi_dynamic.setVisibility(View.VISIBLE);
         }
 
@@ -741,15 +742,16 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getValue() > 0.0) {
-                tv_water_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getValue() + " %");
+                tv_water_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getValue() + " " +
+                        LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getUnit());
                 tv_water_dynamic.setVisibility(View.VISIBLE);
             } else {
-                tv_water_dynamic.setText("0.0 %");
+                tv_water_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getUnit());
                 tv_water_dynamic.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            tv_water_dynamic.setText("0.0 %");
+            tv_water_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getWater().getUnit());
             tv_water_dynamic.setVisibility(View.VISIBLE);
         }
 
@@ -762,16 +764,17 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
 
         try {
             if (LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getValue() > 0.0) {
-                tv_protein_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getValue() + " %");
+                tv_protein_dynamic.setText(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getValue() + " " +
+                        LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getUnit());
                 tv_protein_dynamic.setVisibility(View.VISIBLE);
             } else {
-                tv_protein_dynamic.setText("0.0 %");
+                tv_protein_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getUnit());
                 tv_protein_dynamic.setVisibility(View.VISIBLE);
 
             }
         } catch (Exception e) {
             e.printStackTrace();
-            tv_protein_dynamic.setText("0.0 %");
+            tv_protein_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getProtein().getUnit());
             tv_protein_dynamic.setVisibility(View.VISIBLE);
         }
 
@@ -783,10 +786,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
 
         try {
-            tv_bmr_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getValue()));
+            tv_bmr_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getValue()) + " "
+                    + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getUnit());
         } catch (Exception e) {
             e.printStackTrace();
-            tv_bmr_dynamic.setText("0.0");
+            tv_bmr_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBmr().getUnit());
         }
 
         try {
@@ -803,10 +807,11 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }
 
         try {
-            tv_body_score_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getValue()));
+            tv_body_score_dynamic.setText(String.valueOf(LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getValue()) + " "
+                    + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getUnit());
         } catch (Exception e) {
             e.printStackTrace();
-            tv_body_score_dynamic.setText("0.0");
+            tv_body_score_dynamic.setText("0.0 "+LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getUnit());
         }
 
         try {

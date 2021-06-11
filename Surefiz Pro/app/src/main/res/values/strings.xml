@@ -80,7 +80,8 @@
     <string name="sub_user_sign_up_success">You have signed up successfully. For you to start using the service, please have the primary user to
 complete his/her registration process.</string>
     <string name="login">Login</string>
-    <string name="sign_up"><u>Sign up</u></string>
+    <string name="sign_up">Sign up</string>
+    <string name="instruction"><u>Instructions</u></string>
     <string name="press_to_upload">Please tap on ‘Update’ button at the bottom on this page</string>
     <string name="title_activity_login_new">LoginNewActivity</string>
     <string name="message_board">Message Board</string>

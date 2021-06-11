@@ -65,8 +65,9 @@ public class ChooseActivity extends ChooseActivityView {
                 if (amazonDialog.isShowing())
                     amazonDialog.dismiss();
             } else if (step == 3) {
-                step = 2;
-                amazonDialog.stepTwoView();
+                finish();
+                /*step = 2;
+                amazonDialog.stepTwoView();*/
             }
         });
 

@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "667975241749-oj7pb7ask3aoalg4ppvps4prt21np7nk.apps.googleusercontent.com",
+          "client_id": "667975241749-0qasf6uttih2m43703oc01aht4601c6k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.surefiz",
-            "certificate_hash": "071a3c3cf146f9cbe928cb5db84def9355938cc1"
+            "certificate_hash": "973be776770883cb82ac9e57a0adbd7e6ab99809"
+          }
+        },
+        {
+          "client_id": "667975241749-omkg4998o2lq1qsd8fr2oia5t60una6c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.surefiz",
+            "certificate_hash": "241f18c10ed0a5babd9a10b654e0bcc1d073ad60"
           }
         },
         {
@@ -33,27 +41,72 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "667975241749-r7hepg2v6q70s98il8lih76e6akrh9br.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "667975241749-aiesiut959oh30lht49drkhgtle9d0f6.apps.googleusercontent.com",
+              "client_id": "667975241749-8csqh42g2e4aj4b7u3k7uf84u63p2kcr.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ScaleWiFiFit"
+                "bundle_id": "com.SureFizPro"
               }
             }
           ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667975241749:android:5498ff37140b7e2cf47e1c",
+        "android_client_info": {
+          "package_name": "com.surefizPro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667975241749-7r72c3c511m6e4nn4935vi17b1u2vobi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.surefizPro",
+            "certificate_hash": "241f18c10ed0a5babd9a10b654e0bcc1d073ad60"
+          }
         },
-        "ads_service": {
-          "status": 2
+        {
+          "client_id": "667975241749-ap513sivhqn92ktrpb20gkk0jrt8lg2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.surefizPro",
+            "certificate_hash": "973be776770883cb82ac9e57a0adbd7e6ab99809"
+          }
+        },
+        {
+          "client_id": "667975241749-r7hepg2v6q70s98il8lih76e6akrh9br.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlBHMsIEVi84IfYNgxZd3ghmE94BmjCCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667975241749-r7hepg2v6q70s98il8lih76e6akrh9br.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "667975241749-8csqh42g2e4aj4b7u3k7uf84u63p2kcr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.SureFizPro"
+              }
+            }
+          ]
         }
       }
     }

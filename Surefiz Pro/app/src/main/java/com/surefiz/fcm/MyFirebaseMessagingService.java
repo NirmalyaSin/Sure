@@ -140,7 +140,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     //LoginShared.setWeightFromNotification(this, "7");
                     LoginShared.setWeightFromNotification(this, "0");
                 }
-                scheduleJob();
             } else {
                 // Handle message within 10 seconds
                 handleNow();
@@ -207,20 +206,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         sendBroadcast(intent);
     }
     // [END receive_message]
-
-    /**
-     * Schedule a job using FirebaseJobDispatcher.
-     */
-    private void scheduleJob() {
-        // [START dispatch_job]
-        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
-        Job myJob = dispatcher.newJobBuilder()
-                .setService(FcmLongJobService.class)
-                .setTag("my-job-tag")
-                .build();
-        dispatcher.schedule(myJob);
-        // [END dispatch_job]
-    }
 
     /**
      * Handle time allotted to BroadcastReceivers.
@@ -422,7 +407,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String id = this.getString(R.string.app_name); // default_channel_id
         //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
-        Bitmap icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher);
+        Bitmap icon = BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_applogo);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -441,10 +426,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            notificationBuilder.setSmallIcon(R.drawable.ic_notification);
+            notificationBuilder.setSmallIcon(R.mipmap.ic_applogo);
             notificationBuilder.setColor(getResources().getColor(R.color.colorAccent));
         } else {
-            notificationBuilder.setSmallIcon(R.drawable.ic_notification);
+            notificationBuilder.setSmallIcon(R.mipmap.ic_applogo);
         }
 
 

@@ -576,7 +576,7 @@
                         android:background="@null"
                         android:backgroundTint="@android:color/transparent"
                         android:focusableInTouchMode="false"
-                        android:hint="SureFiz™ will suggest you the time to lose weight"
+                        android:hint="SureFiz Pro™ will suggest you the time to lose weight"
                         android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/_6sdp"

@@ -41,9 +41,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            builder.setSmallIcon(R.drawable.ic_notification);
+            builder.setSmallIcon(R.mipmap.ic_applogo);
         } else {
-            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setSmallIcon(R.mipmap.ic_applogo);
         }
 
         Notification notification = builder.setContentTitle(context.getString(R.string.app_name)+" Reminder")

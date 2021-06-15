@@ -75,6 +75,7 @@ public class ProfileActivity extends BaseActivity {
     EditText et_city;
     EditText et_state;
     EditText et_zipcode;
+    EditText et_provider;
     Button btn_register;
     Button btn_cancel;
     Switch switch_visibility;
@@ -103,6 +104,7 @@ public class ProfileActivity extends BaseActivity {
      TextView tv_country_name;
      RelativeLayout rl_countryName;
      RelativeLayout rl_body;
+     RelativeLayout rl_provider;
 
     public  ArrayList<BodyItem> bodyList = new ArrayList<>();
 
@@ -144,6 +146,7 @@ public class ProfileActivity extends BaseActivity {
         et_email.setEnabled(false);
         et_height.setEnabled(false);
         et_lifestyle.setEnabled(false);
+        et_provider.setEnabled(false);
 
         et_body.setEnabled(false);
         et_country_name.setEnabled(false);
@@ -176,6 +179,7 @@ public class ProfileActivity extends BaseActivity {
         et_email = view.findViewById(R.id.et_email);
         et_height = view.findViewById(R.id.et_height);
         et_lifestyle = view.findViewById(R.id.et_lifestyle);
+        et_provider = view.findViewById(R.id.et_provider);
         et_country_name = view.findViewById(R.id.et_country_name);
         et_add_line1 = view.findViewById(R.id.et_add_line1);
         et_add_line2 = view.findViewById(R.id.et_add_line2);
@@ -215,6 +219,8 @@ public class ProfileActivity extends BaseActivity {
         rl_countryName = view.findViewById(R.id.rl_countryName);
 
         rl_body = view.findViewById(R.id.rl_body);
+
+        rl_provider = view.findViewById(R.id.rl_provider);
     }
 
     protected void imagePicker(){

@@ -12,6 +12,7 @@ import com.surefiz.screens.dashboard.contactmodel.ContactListModel;
 import com.surefiz.screens.notifications.models.NotificationsResponse;
 import com.surefiz.screens.privacy.model.PrivacyListResponse;
 import com.surefiz.screens.profile.model.country.CountryList;
+import com.surefiz.screens.profile.model.provider.ProviderResponse;
 import com.surefiz.screens.profile.model.state.StateResponse;
 import com.surefiz.screens.reminders.model.ReminderListResponse;
 import com.surefiz.screens.signup.response.SignUpResponse;
@@ -65,6 +66,7 @@ import static com.surefiz.apilist.ApiList.GROUPINVITE;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.LOGOUT;
 import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
+import static com.surefiz.apilist.ApiList.PROVIDER_PRO;
 import static com.surefiz.apilist.ApiList.READ_NOTIFICATION;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
 import static com.surefiz.apilist.ApiList.REMOVE_ACCOUNT_USER;
@@ -277,6 +279,7 @@ public interface ApiInterface {
                                                 @Part("zipcode") RequestBody zipcode,
                                                 @Part("lifestyle") RequestBody lifestyle,
                                                 @Part("bodycondition") RequestBody bodycondition,
+                                                @Part("providerid") RequestBody providerid,
                                                 @Part MultipartBody.Part attachment);
 
     @Multipart
@@ -302,7 +305,8 @@ public interface ApiInterface {
                                            @Part("state") RequestBody state,
                                            @Part("zipcode") RequestBody zipcode,
                                            @Part("lifestyle") RequestBody lifestyle,
-                                           @Part("bodycondition") RequestBody bodycondition);
+                                           @Part("bodycondition") RequestBody bodycondition,
+                                           @Part("providerid") RequestBody providerid);
 
     @FormUrlEncoded
     @POST(GROUPINVITE)
@@ -382,6 +386,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_GET_STATE_LIST)
     Call<StateResponse> callstateListApi(@Field("countryId") String countryId);
+
+    @GET(PROVIDER_PRO)
+    Call<ProviderResponse> callProviderListApi();
 
     @FormUrlEncoded
     @POST(USERLIST)

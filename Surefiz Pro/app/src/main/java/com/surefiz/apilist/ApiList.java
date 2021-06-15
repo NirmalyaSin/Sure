@@ -2,27 +2,29 @@ package com.surefiz.apilist;
 
 public class ApiList {
 
-    //    public static final String BASE_URL = "https://rasimo.com/betanew/";
     public static final String BASE_URL = "https://www.surefiz.com/";
 
-
-    public static final String REGISTRATION = "ApiServices/Registration";
+    //SureFiz Pro
+    public static final String LOGIN = "ApiServices/Login_Pro";
     public static final String SIGN_UP = "ApiServices/Registration_Pro";
+    public static final String DASHBOARD = "ApiServices/DashboardChart_Pro";
+    public static final String VIEWPROFILE = "ApiServices/userProfile_Pro";
+    public static final String EDITPROFILE = "ApiServices/EditUserProfile_Pro";
+    public static final String PROVIDER_PRO = "ApiServices/Providerlist_Pro";
+
+    //SureFiz Normal
+    public static final String REGISTRATION = "ApiServices/Registration";
     public static final String COMPLETE_USER_INFO = "ApiServices/Completeuserinfo";
     public static final String GROUPINVITE = "ApiServices/Group_invite";
     public static final String SENDOTP = "ApiServices/OtpValidation";
-    public static final String LOGIN = "ApiServices/Login_Pro";
     public static final String SOCIAL_LOGIN = "ApiServices/SocialLogin";
-    public static final String VIEWPROFILE = "ApiServices/userProfile";
     public static final String AMAZON = "ApiServices/verifyAmazonOrderID";
     public static final String SCALE = "ApiServices/verifyScaleID";
-    public static final String EDITPROFILE = "ApiServices/EditUserProfile";
     public static final String USERLIST = "ApiServices/UserList";
     public static final String DELETEUSERLIST = "ApiServices/Deleteuser";
     public static final String ADDUSER = "ApiServices/AddUser";
     public static final String FORGOTPASSWORD = "ApiServices/ForgotPassword";
     public static final String LOGOUT = "ApiServices/Logout";
-    public static final String DASHBOARD = "ApiServices/DashboardChart_Pro";
     public static final String ADDDEVICE = "ApiServices/AddDevice";
     public static final String CONTACTLIST = "ApiServices/ContactList";
     public static final String BOARDCAST = "ApiServices/SendBroadcastMessage";

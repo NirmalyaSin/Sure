@@ -43,6 +43,8 @@ import com.surefiz.screens.login.LoginActivity;
 import com.surefiz.screens.profile.model.country.CountryList;
 import com.surefiz.screens.profile.model.country.Datum;
 import com.surefiz.screens.profile.model.profile.ViewProfileModel;
+import com.surefiz.screens.profile.model.provider.ProviderResponse;
+import com.surefiz.screens.profile.model.provider.ProviderlistItem;
 import com.surefiz.screens.profile.model.state.DataItem;
 import com.surefiz.screens.profile.model.state.StateResponse;
 import com.surefiz.screens.weightManagement.WeightManagementActivity;
@@ -81,6 +83,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private ArrayList<String> stateIDList = new ArrayList<>();
     private ArrayList<String> genderList = new ArrayList<>();
     private ArrayList<String> lifeStyleList = new ArrayList<>();
+    private ArrayList<String> providerIdList = new ArrayList<>();
+    private ArrayList<String> providerNameList = new ArrayList<>();
     protected ArrayList<String> array1 = new ArrayList<>();
     protected ArrayList<String> array2 = new ArrayList<>();
 
@@ -88,9 +92,10 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
     private String weight_value = "", time_value = "", units_value = "";
     private GoogleApiClient googleApiClient;
     private MyOptionsPickerView weigtUniversalPopupPreferred,genderPopup,doublePicker,lifeStylePopup;
-    private MyOptionsPickerView countryListPopup,stateListPopup;
+    private MyOptionsPickerView countryListPopup,stateListPopup,providerPopup;
     private int selectedLifeStyle = 0;
     private String selectedCountryId = "";
+    private String selectedProviderId = "";
     private boolean isState=false;
 
     public ProfileClickEvent(ProfileActivity activity) {
@@ -136,6 +141,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         });
 
         callCountryListApi();
+        callProviderListApi();
     }
 
     private void startFireBase() {
@@ -348,6 +354,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_city.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getCity());
         activity.et_state.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getState());
         activity.et_zipcode.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getZip());
+        activity.et_provider.setText(LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getProviderName());
+        selectedProviderId=LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getProviderid();
 
 
         if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1")) {
@@ -463,6 +471,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.et_country_name.setOnClickListener(this);
         activity.et_state.setOnClickListener(this);
         activity.et_lifestyle.setOnClickListener(this);
+        activity.et_provider.setOnClickListener(this);
         activity.et_body.setOnClickListener(this);
         activity.findViewById(R.id.iv_weight_managment).setOnClickListener(this);
 
@@ -677,6 +686,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 activity.et_height.setEnabled(true);
                 activity.et_country_name.setEnabled(true);
                 activity.et_lifestyle.setEnabled(true);
+                activity.et_provider.setEnabled(true);
                 activity.et_state.setEnabled(true);
                 activity.et_add_line1.setEnabled(true);
                 activity.et_add_line2.setEnabled(true);
@@ -776,6 +786,9 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_zipcode.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Zip_Code));
                 }
+                else if (activity.et_provider.getText().toString().equals("")) {
+                    MethodUtils.errorMsg(activity, activity.getString(R.string.Please_Select_Your_Provider));
+                }
                 else if (!ConnectionDetector.isConnectingToInternet(activity)) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.no_internet));
                 }
@@ -840,6 +853,10 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 hideSoftKeyBoard();
                 showBodyPopup();
                 break;
+            case R.id.et_provider:        //***AVIK
+                hideSoftKeyBoard();
+                providerPopup.show();
+                break;
         }
     }
 
@@ -875,6 +892,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         activity.profile_image.setEnabled(false);
         activity.et_country_name.setEnabled(false);
         activity.et_lifestyle.setEnabled(false);
+        activity.et_provider.setEnabled(false);
         activity.et_state.setEnabled(false);
         activity.et_body.setEnabled(false);
         activity.et_add_line1.setEnabled(false);
@@ -900,6 +918,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         genderPopup.dismiss();
         doublePicker.dismiss();
         weigtUniversalPopupPreferred.dismiss();
+        providerPopup.dismiss();
     }
 
     public void handleSignInResult(GoogleSignInResult result) {
@@ -1086,6 +1105,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), activity.et_phone.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
+        RequestBody providerid = RequestBody.create(MediaType.parse("text/plain"), selectedProviderId);
         RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), "0");
 
         if (activity.et_units.getText().toString().trim().equals("KG/CM")) {
@@ -1181,7 +1201,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         }
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileImageApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode, lifestyle,bodycondition, body);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password,
+                country, addressLine1, addressLine2, city, state, zipcode, lifestyle,bodycondition,providerid, body);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -1283,6 +1304,50 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         });
     }
 
+    private void callProviderListApi() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        Call<ProviderResponse> call = apiInterface.callProviderListApi();
+        call.enqueue(new Callback<ProviderResponse>() {
+            @Override
+            public void onResponse(Call<ProviderResponse> call, Response<ProviderResponse> response) {
+                try {
+                    if (response.body().getStatus() == 1) {
+                        addProviderList(response.body().getData().getProviderlist());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProviderResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    private void addProviderList(List<ProviderlistItem> data) {
+
+        providerIdList.clear();
+        providerNameList.clear();
+        for (int i = 0; i < data.size(); i++) {
+            providerIdList.add(data.get(i).getId());
+            providerNameList.add(data.get(i).getName());
+        }
+
+        providerPopup=new MyOptionsPickerView(activity);
+        providerPopup.setPicker(providerNameList);
+        providerPopup.setCyclic(false);
+        providerPopup.setSelectOptions(0);
+
+        providerPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
+            activity.et_provider.setText(providerNameList.get(options1));
+            selectedProviderId=providerIdList.get(options1) ;
+        });
+    }
+
+
 
     private void addPrefferedCountryList(List<Datum> data) {
 
@@ -1361,6 +1426,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody middleName = RequestBody.create(MediaType.parse("text/plain"), activity.et_middle.getText().toString().trim());
         RequestBody lastName = RequestBody.create(MediaType.parse("text/plain"), activity.et_last.getText().toString().trim());
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
+        RequestBody providerid = RequestBody.create(MediaType.parse("text/plain"), selectedProviderId);
         RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), "0");        //***AVIK
 
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"),
@@ -1461,7 +1527,8 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
         RequestBody Height = RequestBody.create(MediaType.parse("text/plain"), splited[0]);
 
         Call<ResponseBody> editProfile = apiInterface.call_editprofileApi(LoginShared.getRegistrationDataModel(activity).getData().getToken(),
-                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility, password, country, addressLine1, addressLine2, city, state, zipcode, lifestyle,bodycondition);
+                userId, fullName, middleName, lastName, gender, phone, dob, deviceType, user_email, Height, preffered, mainuservisibility,
+                password, country, addressLine1, addressLine2, city, state, zipcode, lifestyle,bodycondition,providerid);
 
         editProfile.enqueue(new Callback<ResponseBody>() {
             @Override

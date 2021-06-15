@@ -103,6 +103,12 @@ public class User {
     @SerializedName("bodycondition")
     @Expose
     private String bodycondition;
+    @SerializedName("providerid")
+    @Expose
+    private String providerid;
+    @SerializedName("providername")
+    @Expose
+    private String providername;
 
 
     public String getUserId() {
@@ -203,6 +209,13 @@ public class User {
 
     public String getZip() {
         return zip;
+    }
+
+    public String getProviderid() {
+        return providerid;
+    }
+    public String getProviderName() {
+        return providername;
     }
 
     public void setZip(String zip) {

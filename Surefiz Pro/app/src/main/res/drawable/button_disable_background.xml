@@ -4,8 +4,8 @@
         <shape android:shape="rectangle">
             <!--make a gradient background-->
             <gradient
-                android:startColor="@color/grey_color"
-                android:endColor="@color/grey_color"
+                android:startColor="#7fcbf5"
+                android:endColor="#7fcbf5"
                 android:angle="0"/>
             <!-- make the button corners rounded-->
             <padding

@@ -35,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Scale WiFi Setup Preparation"
             android:fontFamily="@font/roboto_bold"
+            android:text="Scale WiFi Setup Preparation"
             android:textColor="@color/whiteColor"
             android:textSize="@dimen/_14sdp" />
 
@@ -48,19 +48,19 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/login_button_gradient"
-            android:text="SKIP"
             android:fontFamily="@font/roboto_regular"
+            android:text="SKIP"
             android:textAllCaps="false"
-            android:visibility="gone"
             android:textColor="@color/whiteColor"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_header"
-        >
+        android:layout_below="@+id/rl_header">
 
         <ImageView
             android:layout_width="match_parent"
@@ -74,77 +74,60 @@
             android:background="@color/opacity_color" />
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/_20sdp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/sub_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/_20sdp"
-                >
+                android:text="@string/SetupPreparation"
+                android:textColor="@color/whiteColor"
+                android:textSize="@dimen/_14sdp" />
 
-                <TextView
-                    android:id="@+id/sub_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/SetupPreparation"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp"
-                    />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_above="@id/bothButtonView"
+                android:layout_below="@id/sub_txt"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_10sdp">
 
-                <RelativeLayout
-                    android:id="@+id/bothButtonView"
+                <VideoView
+                    android:id="@+id/video_view_welcome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="@dimen/_20sdp">
+                    />
+
+                <ImageView
+                    android:id="@+id/ivPlayPause"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/play">
+
+                </ImageView>
+
+            </RelativeLayout>
 
 
-                    <Button
-                        android:id="@+id/btnWifiAp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/login_button_gradient"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/_35sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_35sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:text="Only One WiFi"
-                        android:textAllCaps="false"
-                        android:visibility="visible"
-                        android:textColor="@color/whiteColor"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <Button
-                        android:id="@+id/btnWifi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/btnWifiAp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/login_button_gradient"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/_35sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_35sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:text="Two WiFi"
-                        android:visibility="visible"
-                        android:textAllCaps="false"
-                        android:textColor="@color/whiteColor"
-                        android:textSize="@dimen/_14sdp" />
-
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/bothButtonView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/_20sdp">
 
 
                 <Button
-                    android:id="@+id/btnYes"
+                    android:id="@+id/btnWifiAp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnWifi"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/login_button_gradient"
                     android:gravity="center"
@@ -152,14 +135,53 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingRight="@dimen/_35sdp"
                     android:paddingBottom="@dimen/_10sdp"
-                    android:text="Yes, it's done"
-                    android:visibility="visible"
+                    android:text="Only One WiFi"
                     android:textAllCaps="false"
                     android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/_14sdp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btnWifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnWifiAp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@drawable/login_button_gradient"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_35sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_35sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="Two WiFi"
+                    android:textAllCaps="false"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btnYes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnWifi"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/login_button_gradient"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_35sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_35sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="Yes, it's done"
+                    android:textAllCaps="false"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp"
+                    android:visibility="visible" />
+            </RelativeLayout>
 
 
-            </LinearLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
 

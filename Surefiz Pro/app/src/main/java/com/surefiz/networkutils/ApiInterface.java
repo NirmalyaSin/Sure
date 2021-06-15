@@ -64,6 +64,7 @@ import static com.surefiz.apilist.ApiList.GET_WEIGHT_MANAGEMENT;
 import static com.surefiz.apilist.ApiList.GROUPINVITE;
 import static com.surefiz.apilist.ApiList.LOGIN;
 import static com.surefiz.apilist.ApiList.LOGOUT;
+import static com.surefiz.apilist.ApiList.NOTIFICATION_STATUS;
 import static com.surefiz.apilist.ApiList.PROGRESS_STATUS;
 import static com.surefiz.apilist.ApiList.READ_NOTIFICATION;
 import static com.surefiz.apilist.ApiList.REGISTRATION;
@@ -611,4 +612,10 @@ public interface ApiInterface {
     Call<RemoveUserAccount> call_ApiforRemove_accuser(@Header("x-authorization") String token,
                                                       @Field("sender") String sender,
                                                       @Field("receiver") String receiver);
+
+    @FormUrlEncoded
+    @POST(NOTIFICATION_STATUS)
+    Call<ResponseBody> callNotificationStatus(@Field("userID") String userID,
+                                              @Field("status") int status);
+
 }

@@ -208,8 +208,30 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
         }*/
         loader.show_with_label("Loading");
         internet();
-
+        callNotificationStatus();
         setRecyclerViewItem();
+    }
+
+    private void callNotificationStatus() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        final Call<ResponseBody> userListModelCall = apiInterface.callNotificationStatus(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),1);
+
+        userListModelCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.isSuccessful()){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                MethodUtils.errorMsg(DashBoardActivity.this, getString(R.string.error_occurred));
+            }
+        });
+
     }
 
     protected void internet() {
@@ -811,7 +833,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
                     + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getUnit());
         } catch (Exception e) {
             e.printStackTrace();
-            tv_body_score_dynamic.setText("0.0 "+LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getUnit());
+            tv_body_score_dynamic.setText("0.0 " + LoginShared.getDashBoardDataModel(DashBoardActivity.this).getData().getChartList().getCurrentCompositions().getBodyscore().getUnit());
         }
 
         try {

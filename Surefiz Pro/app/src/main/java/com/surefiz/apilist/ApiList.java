@@ -11,6 +11,8 @@ public class ApiList {
     public static final String VIEWPROFILE = "ApiServices/userProfile_Pro";
     public static final String EDITPROFILE = "ApiServices/EditUserProfile_Pro";
     public static final String PROVIDER_PRO = "ApiServices/Providerlist_Pro";
+    public static final String NOTIFICATION_STATUS = "ApiServices/Notificationstatus_Pro";
+
 
     //SureFiz Normal
     public static final String REGISTRATION = "ApiServices/Registration";

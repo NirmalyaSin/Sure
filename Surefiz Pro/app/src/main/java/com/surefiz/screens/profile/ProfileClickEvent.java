@@ -786,7 +786,7 @@ public class ProfileClickEvent implements View.OnClickListener, GoogleApiClient.
                 else if (LoginShared.getViewProfileDataModel(activity).getData().getUser().get(0).getScaleUserId().equals("1") && activity.et_zipcode.getText().toString().equals("")) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.Please_enter_your_Zip_Code));
                 }
-                else if (activity.et_provider.getText().toString().equals("")) {
+                else if (activity.et_provider.getText().toString().trim().equals("")) {
                     MethodUtils.errorMsg(activity, activity.getString(R.string.Please_Select_Your_Provider));
                 }
                 else if (!ConnectionDetector.isConnectingToInternet(activity)) {

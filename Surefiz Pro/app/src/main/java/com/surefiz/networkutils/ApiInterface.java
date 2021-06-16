@@ -622,7 +622,8 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST(NOTIFICATION_STATUS)
-    Call<ResponseBody> callNotificationStatus(@Field("userID") String userID,
+    Call<ResponseBody> callNotificationStatus(@Header("x-authorization") String token,
+                                              @Field("userID") String userID,
                                               @Field("status") int status);
 
 }

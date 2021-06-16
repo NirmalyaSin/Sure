@@ -215,7 +215,7 @@ public class DashBoardActivity extends BaseActivity implements ContactListAdapte
     private void callNotificationStatus() {
         Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
         final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        final Call<ResponseBody> userListModelCall = apiInterface.callNotificationStatus(LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),1);
+        final Call<ResponseBody> userListModelCall = apiInterface.callNotificationStatus(LoginShared.getRegistrationDataModel(this).getData().getToken(),LoginShared.getRegistrationDataModel(this).getData().getUser().get(0).getUserId(),1);
 
         userListModelCall.enqueue(new Callback<ResponseBody>() {
             @Override

@@ -4,22 +4,22 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="21"
-6-->/home/cn74/Documents/cnp385-android/Surefiz Pro/commonutils_2_0/src/main/AndroidManifest.xml
+6-->F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="30" />
-7-->/home/cn74/Documents/cnp385-android/Surefiz Pro/commonutils_2_0/src/main/AndroidManifest.xml
+7-->F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml
 8
 9    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-9-->/home/cn74/Documents/cnp385-android/Surefiz Pro/commonutils_2_0/src/main/AndroidManifest.xml:5:5-79
-9-->/home/cn74/Documents/cnp385-android/Surefiz Pro/commonutils_2_0/src/main/AndroidManifest.xml:5:22-76
+9-->F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:5:5-79
+9-->F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:5:22-76
 10
 11    <application
-11-->/home/cn74/Documents/cnp385-android/Surefiz Pro/commonutils_2_0/src/main/AndroidManifest.xml:7:5-10:19
+11-->F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:7:5-10:19
 12        android:allowBackup="true"
-12-->/home/cn74/Documents/cnp385-android/Surefiz Pro/commonutils_2_0/src/main/AndroidManifest.xml:7:18-44
+12-->F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:7:18-44
 13        android:label="@string/app_name"
-13-->/home/cn74/Documents/cnp385-android/Surefiz Pro/commonutils_2_0/src/main/AndroidManifest.xml:7:45-77
+13-->F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:7:45-77
 14        android:supportsRtl="true" >
-14-->/home/cn74/Documents/cnp385-android/Surefiz Pro/commonutils_2_0/src/main/AndroidManifest.xml:8:9-35
+14-->F:\Surefiz\cnp385-android\Surefiz Pro\commonutils_2_0\src\main\AndroidManifest.xml:8:9-35
 15    </application>
 16
 17</manifest>

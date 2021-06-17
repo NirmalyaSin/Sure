@@ -102,6 +102,13 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
 
 
         videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.wc3);
+        videoView.start();
+        isPlayed = true;
+        ivPlayPause.setImageResource(R.drawable.pause);
+        btnWifiAp.setBackground(getResources().getDrawable(R.drawable.button_disable_background));
+        btnWifi.setBackground(getResources().getDrawable(R.drawable.button_disable_background));
+        btnWifi.setEnabled(false);
+        btnWifiAp.setEnabled(false);
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -112,7 +119,7 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                if(videoView != null){
+                if (videoView != null) {
                     ivPlayPause.setImageResource(R.drawable.play);
                     isPlayed = false;
                     videoView.pause();
@@ -125,18 +132,6 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getHeight();
-       /* videoView.start();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });*/
-    }
 
     protected void setOnClick() {
         rl_back.setOnClickListener(this);
@@ -290,9 +285,10 @@ public class SetUpPreparation extends AppCompatActivity implements View.OnClickL
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         } else {
-            if (isSecondStage)
+            if (isSecondStage) {
                 setUpDefaultView();
-            else
+                getHeight();
+            } else
                 super.onBackPressed();
         }
     }

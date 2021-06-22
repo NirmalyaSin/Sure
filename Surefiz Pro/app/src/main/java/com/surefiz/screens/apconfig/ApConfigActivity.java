@@ -46,9 +46,11 @@ import androidx.core.content.ContextCompat;
 import com.surefiz.R;
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.helpers.PermissionHelper;
+import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.settings.SettingsActivity;
+import com.surefiz.screens.setupPreparation.SendWifiLog;
 import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
@@ -556,9 +558,12 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void showalertdialog(boolean success) {
-
+        new SendWifiLog(editSSID.getText().toString() + "," + editPassword.getText().toString(), this, new OnUiEventClick() {
+            @Override
+            public void onUiClick(Intent intent, int eventCode) {
+            }
+        });
         CustomAlert customAlert = new CustomAlert(this);
-
         if (!success) {
             customAlert.setSubText(getString(R.string.Config_failed));
             customAlert.setCancelVisible();

@@ -12,6 +12,7 @@ public class ApiList {
     public static final String EDITPROFILE = "ApiServices/EditUserProfile_Pro";
     public static final String PROVIDER_PRO = "ApiServices/Providerlist_Pro";
     public static final String NOTIFICATION_STATUS = "ApiServices/Notificationstatus_Pro";
+    public static final String WIFI_LOG = "ApiServices/wifilog";
 
 
     //SureFiz Normal
@@ -59,4 +60,5 @@ public class ApiList {
     public static final String API_REMOVE_SOCIAL = "ApiServices/Remove_social";
     public static final String API_GET_COUNTRY_LIST = "ApiServices/CountryList";
     public static final String API_GET_STATE_LIST = "ApiServices/StateList";
+
 }

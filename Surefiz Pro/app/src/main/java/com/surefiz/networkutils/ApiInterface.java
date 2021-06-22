@@ -79,6 +79,7 @@ import static com.surefiz.apilist.ApiList.SOCIAL_LOGIN;
 import static com.surefiz.apilist.ApiList.UPDATE_USER_DEVICE_INFO;
 import static com.surefiz.apilist.ApiList.USERLIST;
 import static com.surefiz.apilist.ApiList.VIEWPROFILE;
+import static com.surefiz.apilist.ApiList.WIFI_LOG;
 
 public interface ApiInterface {
 
@@ -137,44 +138,6 @@ public interface ApiInterface {
     @Multipart
     @POST(SIGN_UP)
     Call<SignUpResponse> call_signup_image(@Part("firstName") RequestBody firstname,
-                                                 @Part("middleName") RequestBody middleName,
-                                                 @Part("lastName") RequestBody lastName,
-                                                 @Part("emailId") RequestBody emailId,
-                                                 @Part("password") RequestBody password,
-                                                 @Part("gender") RequestBody gender,
-                                                 @Part("phoneNumber") RequestBody phoneNumber,
-                                                 @Part("dob") RequestBody dob,
-                                                 @Part("height") RequestBody height,
-                                                 @Part("desiredWeight") RequestBody desiredWeight,
-                                                 @Part("timeToloseWeight") RequestBody timeToloseWeight,
-                                                 @Part("prefferedUnits") RequestBody prefferedUnits,
-                                                 @Part("deviceType") RequestBody deviceType,
-                                                 @Part("type") RequestBody type,
-                                                 @Part("device_Token") RequestBody device_Token,
-                                                 @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
-                                                 @Part("count") RequestBody count,
-                                                 @Part("regtype") RequestBody regtype,
-                                                 @Part("state") RequestBody state,
-                                                 @Part("city") RequestBody city,
-                                                 @Part("zipcode") RequestBody zipcode,
-                                                 @Part("addressLineOne") RequestBody addressLineOne,
-                                                 @Part("addressLineTwo") RequestBody addressLineTwo,
-                                                 @Part("bodycondition") RequestBody bodycondition,
-                                                 @Part("lifestyle") RequestBody lifestyle,
-                                                 @Part("country") RequestBody country,
-                                                 @Part("TotalAmount") RequestBody TotalAmount,
-                                                 @Part("currencycode") RequestBody currencycode,
-                                                 @Part("PayableAmount") RequestBody PayableAmount,
-                                                 @Part("address") RequestBody address,
-                                                 @Part("scaleMacId") RequestBody scaleMacId,
-                                                 @Part("OrderId") RequestBody OrderId,
-                                                 @Part("How") RequestBody learn_about,
-                                                 @Part("Period") RequestBody Period,
-                                                 @Part MultipartBody.Part attachment);
-
-    @Multipart
-    @POST(SIGN_UP)
-    Call<SignUpResponse> call_signup(@Part("firstName") RequestBody firstname,
                                            @Part("middleName") RequestBody middleName,
                                            @Part("lastName") RequestBody lastName,
                                            @Part("emailId") RequestBody emailId,
@@ -206,8 +169,46 @@ public interface ApiInterface {
                                            @Part("address") RequestBody address,
                                            @Part("scaleMacId") RequestBody scaleMacId,
                                            @Part("OrderId") RequestBody OrderId,
-                                            @Part("How") RequestBody learn_about,
-                                            @Part("Period") RequestBody Period);
+                                           @Part("How") RequestBody learn_about,
+                                           @Part("Period") RequestBody Period,
+                                           @Part MultipartBody.Part attachment);
+
+    @Multipart
+    @POST(SIGN_UP)
+    Call<SignUpResponse> call_signup(@Part("firstName") RequestBody firstname,
+                                     @Part("middleName") RequestBody middleName,
+                                     @Part("lastName") RequestBody lastName,
+                                     @Part("emailId") RequestBody emailId,
+                                     @Part("password") RequestBody password,
+                                     @Part("gender") RequestBody gender,
+                                     @Part("phoneNumber") RequestBody phoneNumber,
+                                     @Part("dob") RequestBody dob,
+                                     @Part("height") RequestBody height,
+                                     @Part("desiredWeight") RequestBody desiredWeight,
+                                     @Part("timeToloseWeight") RequestBody timeToloseWeight,
+                                     @Part("prefferedUnits") RequestBody prefferedUnits,
+                                     @Part("deviceType") RequestBody deviceType,
+                                     @Part("type") RequestBody type,
+                                     @Part("device_Token") RequestBody device_Token,
+                                     @Part("maintain_Weight_By_Server") RequestBody mantain_Weight_By_Server,
+                                     @Part("count") RequestBody count,
+                                     @Part("regtype") RequestBody regtype,
+                                     @Part("state") RequestBody state,
+                                     @Part("city") RequestBody city,
+                                     @Part("zipcode") RequestBody zipcode,
+                                     @Part("addressLineOne") RequestBody addressLineOne,
+                                     @Part("addressLineTwo") RequestBody addressLineTwo,
+                                     @Part("bodycondition") RequestBody bodycondition,
+                                     @Part("lifestyle") RequestBody lifestyle,
+                                     @Part("country") RequestBody country,
+                                     @Part("TotalAmount") RequestBody TotalAmount,
+                                     @Part("currencycode") RequestBody currencycode,
+                                     @Part("PayableAmount") RequestBody PayableAmount,
+                                     @Part("address") RequestBody address,
+                                     @Part("scaleMacId") RequestBody scaleMacId,
+                                     @Part("OrderId") RequestBody OrderId,
+                                     @Part("How") RequestBody learn_about,
+                                     @Part("Period") RequestBody Period);
 
     @Multipart
     @POST(COMPLETE_USER_INFO)
@@ -454,9 +455,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API_SEND_CHAT)
     Call<ResponseBody> call_SendChatApi(@Header("x-authorization") String token,
-                                            @Field("senderId") String senderId,
-                                            @Field("receiverId") String receiverId,
-                                            @Field("chatmessage") String chatmessage);
+                                        @Field("senderId") String senderId,
+                                        @Field("receiverId") String receiverId,
+                                        @Field("chatmessage") String chatmessage);
 
     @FormUrlEncoded
     @POST(API_GET_PRIVACY_LIST)
@@ -625,5 +626,11 @@ public interface ApiInterface {
     Call<ResponseBody> callNotificationStatus(@Header("x-authorization") String token,
                                               @Field("userID") String userID,
                                               @Field("status") int status);
+
+    @FormUrlEncoded
+    @POST(WIFI_LOG)
+    Call<ResponseBody> sendWifiLog(@Header("x-authorization") String token,
+                                   @Field("scaleID") String scaleId,
+                                   @Field("action") String action);
 
 }

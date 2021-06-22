@@ -28,10 +28,12 @@ import android.widget.Toast;
 import com.surefiz.R;
 import com.surefiz.dialog.CustomAlert;
 import com.surefiz.helpers.PermissionHelper;
+import com.surefiz.interfaces.OnUiEventClick;
 import com.surefiz.screens.apconfig.ApConfigActivity;
 import com.surefiz.screens.dashboard.DashBoardActivity;
 import com.surefiz.screens.instruction.InstructionActivity;
 import com.surefiz.screens.settings.SettingsActivity;
+import com.surefiz.screens.setupPreparation.SendWifiLog;
 import com.surefiz.screens.setupPreparation.SetUpPreparation;
 import com.surefiz.sharedhandler.InstructionSharedPreference;
 import com.surefiz.sharedhandler.LoginShared;
@@ -275,8 +277,12 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
     public void onApConfigResult(boolean success) {
         if (loader.isShowing()) {
             loader.dismiss();
-
         }
+        new SendWifiLog(mWifiConfigActivity.editSSID.getText().toString() + "," + mWifiConfigActivity.editPassword.getText().toString(), mWifiConfigActivity, new OnUiEventClick() {
+            @Override
+            public void onUiClick(Intent intent, int eventCode) {
+            }
+        });
         if (success)
             Toast.makeText(mWifiConfigActivity, "Wifi Config done", Toast.LENGTH_LONG).show();
         else {

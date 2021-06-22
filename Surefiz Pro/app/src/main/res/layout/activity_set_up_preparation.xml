@@ -90,6 +90,7 @@
                 android:textSize="@dimen/_14sdp" />
 
             <RelativeLayout
+                android:id="@+id/rl_videoViewWelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_above="@id/bothButtonView"
@@ -115,6 +116,61 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_video_onlyOneWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_above="@id/bothButtonView"
+                android:layout_below="@id/sub_txt"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <VideoView
+                    android:id="@+id/video_view_only_oneWifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivPlayPauseOnlyWifi"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/play">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_video_onlyTwoWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_above="@id/bothButtonView"
+                android:layout_below="@id/sub_txt"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <VideoView
+                    android:id="@+id/video_view_only_twoWifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivPlayPauseOnlyTwoWifi"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/play">
+
+                </ImageView>
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/bothButtonView"

@@ -65,7 +65,12 @@ public class AllCircleUserAdapter extends RecyclerView.Adapter<AllCircleUserAdap
                     .getDrawable(R.drawable.ic_dot_online));
         }
 
-        DrawableCompat.setTint(holder.ivViewOptions.getDrawable(), mContext.getResources().getColor(R.color.whiteColor));
+        if (arrayListCircleUser.get(position).isIsprovider() == 1) {
+            holder.ivViewOptions.setVisibility(View.INVISIBLE);
+        } else {
+            holder.ivViewOptions.setVisibility(View.VISIBLE);
+            DrawableCompat.setTint(holder.ivViewOptions.getDrawable(), mContext.getResources().getColor(R.color.whiteColor));
+        }
     }
 
     @Override

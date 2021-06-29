@@ -444,7 +444,8 @@ public interface ApiInterface {
     Call<ChatListResponse> call_ConversationListApi(@Header("x-authorization") String token,
                                                     @Field("senderId") String senderId,
                                                     @Field("receiverId") String receiverId,
-                                                    @Field("pagination") String pagination);
+                                                    @Field("pagination") String pagination,
+                                                    @Field("isprovider") int isProvider);
 
     @FormUrlEncoded
     @POST(API_BMI_DATA)
@@ -457,7 +458,8 @@ public interface ApiInterface {
     Call<ResponseBody> call_SendChatApi(@Header("x-authorization") String token,
                                         @Field("senderId") String senderId,
                                         @Field("receiverId") String receiverId,
-                                        @Field("chatmessage") String chatmessage);
+                                        @Field("chatmessage") String chatmessage,
+                                        @Field("isprovider") int isProvider);
 
     @FormUrlEncoded
     @POST(API_GET_PRIVACY_LIST)

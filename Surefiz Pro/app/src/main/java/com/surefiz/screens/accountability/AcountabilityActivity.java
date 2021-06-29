@@ -228,6 +228,7 @@ public class AcountabilityActivity extends BaseActivity implements AllCircleUser
         Intent chatIntent = new Intent(this, ChatActivity.class);
         chatIntent.putExtra("reciver_id", arrayListUsers.get(position).getUser_id());
         chatIntent.putExtra("reciverName", arrayListUsers.get(position).getUser_name());
+        chatIntent.putExtra("isProvider", arrayListUsers.get(position).isIsprovider());
         startActivity(chatIntent);
     }
 

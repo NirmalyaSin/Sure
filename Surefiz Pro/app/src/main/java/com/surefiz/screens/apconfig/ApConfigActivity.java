@@ -1,5 +1,6 @@
 package com.surefiz.screens.apconfig;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.MacAddress;
 import android.net.Network;
@@ -26,9 +28,11 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -36,12 +40,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GestureDetectorCompat;
 
 import com.surefiz.R;
 import com.surefiz.dialog.CustomAlert;
@@ -60,6 +68,7 @@ import com.surefiz.utils.progressloader.LoadingData;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.onecoder.scalewifi.api.ScaleWiFiConfig;
 import cn.onecoder.scalewifi.api.impl.OnScaleWiFiConfigResultListener;
@@ -70,7 +79,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
     LoadingData loader;
     WifiReceiver wifiReceiver = new WifiReceiver();
     private EditText editSSID, editBSSID, editPassword;
-    private Button btnlockwifi, btnConfigure,btn_skip;
+    private Button btnlockwifi, btnConfigure, btn_skip;
     private PopupMenu popup;
     private WifiManager mWifiManager;
     private List<ScanResult> scanResultsWifi = new ArrayList<>();
@@ -84,9 +93,32 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
     private PermissionHelper permissionHelper;
     private ConnectivityManager.NetworkCallback networkCallback;
     ConnectivityManager connectivityManager;
+    VideoView video_view_only_oneWifi;
 
-    protected boolean fromSettings=false;
-    public boolean fromLogin=false;
+    @BindView(R.id.rl_video_onlyOneWifi)
+    RelativeLayout rl_video_onlyOneWifi;
+
+    @BindView(R.id.ivPlayPauseOnlyWifi)
+    ImageView ivPlayPauseOnlyWifi;
+
+    @BindView(R.id.sub_txt)
+    TextView sub_txt;
+
+    @BindView(R.id.bothButtonView)
+    RelativeLayout bothButtonView;
+
+    @BindView(R.id.btnYes)
+    Button btnYes;
+
+    @BindView(R.id.sv_main)
+    ScrollView sv_main;
+
+    protected boolean isSecondStage = false;
+
+    GestureDetectorCompat gestureDetectorCompat;
+    boolean isOnlyWifiVideoPlayed = true;
+    protected boolean fromSettings = false;
+    public boolean fromLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +129,50 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
         loader = new LoadingData(this);
         scaleWiFiConfig = new ScaleWiFiConfig();
 
-        if(getIntent().hasExtra("fromLogin")){
-            fromLogin=getIntent().getBooleanExtra("fromLogin",false);
+        if (getIntent().hasExtra("fromLogin")) {
+            fromLogin = getIntent().getBooleanExtra("fromLogin", false);
         }
 
-        if(getIntent().hasExtra("fromSettings")){
-            fromSettings=getIntent().getBooleanExtra("fromSettings",false);
+        if (getIntent().hasExtra("fromSettings")) {
+            fromSettings = getIntent().getBooleanExtra("fromSettings", false);
         }
 
         initializeView();
+
+        gestureDetectorCompat = new GestureDetectorCompat(this, new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent motionEvent) {
+                /* Always return true, to indicate that the gestureDetectorCompat
+                 * consumed the touch and can continue to the
+                 * next gestures(long, single, etc..)
+                 */
+                return true;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent motionEvent) {
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent motionEvent) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent motionEvent) {
+                Log.i("SOME_TAG", "Longpress detected");
+            }
+
+            @Override
+            public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+                return false;
+            }
+        });
 
         if (permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION) && checkLocationStatus()) {
 
@@ -115,8 +182,65 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
         } else if (!checkLocationStatus()) {
             buildAlertMessageNoGps();
         }
+    }
 
 
+    private void setUpApWifiView() {
+        sub_txt.setVisibility(View.VISIBLE);
+        sub_txt.setText(R.string.TextAp);
+        sub_txt.setVisibility(View.GONE);
+        bothButtonView.setVisibility(View.VISIBLE);
+       /* btnWifiAp.setVisibility(View.GONE);
+        btnWifi.setVisibility(View.GONE);
+        videoView.setVisibility(View.GONE);
+        ivPlayPause.setVisibility(View.GONE);*/
+        btnYes.setVisibility(View.VISIBLE);
+
+        rl_video_onlyOneWifi.setVisibility(View.VISIBLE);
+        video_view_only_oneWifi = findViewById(R.id.video_view_only_oneWifi);
+        video_view_only_oneWifi.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.video2);
+        video_view_only_oneWifi.start();
+        isOnlyWifiVideoPlayed = true;
+        ivPlayPauseOnlyWifi.setVisibility(View.GONE);
+        ivPlayPauseOnlyWifi.setImageResource(R.drawable.pause);
+        btnYes.setEnabled(false);
+        btnYes.setBackground(getResources().getDrawable(R.drawable.button_disable_background));
+
+        setOncompletion();
+
+        video_view_only_oneWifi.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (isOnlyWifiVideoPlayed) {
+                    isOnlyWifiVideoPlayed = false;
+                    video_view_only_oneWifi.pause();
+                    ivPlayPauseOnlyWifi.setVisibility(View.VISIBLE);
+                    ivPlayPauseOnlyWifi.setImageResource(R.drawable.play);
+                    btnYes.setEnabled(true);
+                    btnYes.setBackground(getResources().getDrawable(R.drawable.login_button_gradient));
+                }
+                return gestureDetectorCompat.onTouchEvent(motionEvent);
+            }
+        });
+
+//        AP = true;
+        isSecondStage = true;
+    }
+
+    private void setOncompletion() {
+        video_view_only_oneWifi.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                if (video_view_only_oneWifi != null) {
+                    ivPlayPauseOnlyWifi.setVisibility(View.VISIBLE);
+                    ivPlayPauseOnlyWifi.setImageResource(R.drawable.play);
+                    isOnlyWifiVideoPlayed = false;
+                    video_view_only_oneWifi.pause();
+                    btnYes.setBackground(getResources().getDrawable(R.drawable.login_button_gradient));
+                    btnYes.setEnabled(true);
+                }
+            }
+        });
     }
 
     private void initializeView() {
@@ -139,8 +263,9 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
         btn_skip.setOnClickListener(this);
         iv_showPassword.setOnClickListener(this);
         iv_hidePassword.setOnClickListener(this);
-
-        if(fromLogin)
+        ivPlayPauseOnlyWifi.setOnClickListener(this);
+        btnYes.setOnClickListener(this);
+        if (fromLogin)
             btn_skip.setVisibility(View.VISIBLE);
     }
 
@@ -175,7 +300,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                     String pwd = editPassword.getText().toString();
                     if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
 
-                        MethodUtils.errorMsg(this,"Please enter your WiFi Password.");
+                        MethodUtils.errorMsg(this, "Please enter your WiFi Password.");
 
                         return;
                     }
@@ -186,15 +311,14 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                     btnConfigure.setEnabled(true);
                     btnlockwifi.setBackground(ContextCompat.getDrawable(this, R.drawable.login_edit_rounded_corner_blue));
                     btnConfigure.setBackground(ContextCompat.getDrawable(this, R.drawable.login_button_gradient));
-
-
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-
-                        androidQ();
-                    }else {
-
-                        apConfigAction();
-                    }
+                    new SendWifiLog("3", this, new OnUiEventClick() {
+                        @Override
+                        public void onUiClick(Intent intent, int eventCode) {
+                            if(intent.getBooleanExtra("success",false)){
+                                next();
+                            }
+                        }
+                    });
 
                 } else if (!permissionHelper.checkPermission(PermissionHelper.PERMISSION_FINE_LOCATION)) {
 
@@ -261,15 +385,55 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                 editPassword.setTransformationMethod(
                         PasswordTransformationMethod.getInstance());
                 break;
+
+
+            case R.id.ivPlayPauseOnlyWifi:
+                if (!isOnlyWifiVideoPlayed) {
+                    video_view_only_oneWifi.start();
+                    ivPlayPauseOnlyWifi.setImageResource(R.drawable.pause);
+                    ivPlayPauseOnlyWifi.setVisibility(View.GONE);
+                    btnYes.setEnabled(false);
+                    btnYes.setBackground(getResources().getDrawable(R.drawable.button_disable_background));
+                    isOnlyWifiVideoPlayed = true;
+                } else {
+                    isOnlyWifiVideoPlayed = false;
+                    video_view_only_oneWifi.pause();
+                    ivPlayPauseOnlyWifi.setImageResource(R.drawable.play);
+                    btnYes.setEnabled(true);
+                    btnYes.setBackground(getResources().getDrawable(R.drawable.login_button_gradient));
+                }
+
+                break;
+
+            case R.id.btnYes:
+                new SendWifiLog("4", this, new OnUiEventClick() {
+                    @Override
+                    public void onUiClick(Intent intent, int eventCode) {
+                        if(intent.getBooleanExtra("success",false)){
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                                androidQ();
+                            } else {
+                                apConfigAction();
+                            }
+                        }
+                    }
+                });
+
+                break;
         }
     }
 
-    private void apConfigAction(){
+    private void next() {
+        sv_main.setVisibility(View.GONE);
+        setUpApWifiView();
+    }
+
+    private void apConfigAction() {
 
         String ssid = editSSID.getText().toString();
         String pwd = editPassword.getText().toString();
         if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(pwd)) {
-            MethodUtils.errorMsg(this,"Please enter your WiFi Password.");
+            MethodUtils.errorMsg(this, "Please enter your WiFi Password.");
             return;
         }
         editSSID.setEnabled(false);
@@ -283,13 +447,13 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
         final String scaleName = "WS915_V2.6_V1.5-";
         long scaleId = LoginShared.getUserMacId(this);
-        String networkSSID = " "+scaleName + scaleId+" ";
+        String networkSSID = " " + scaleName + scaleId + " ";
 
-        CustomAlert customAlert=new CustomAlert(this);
+        CustomAlert customAlert = new CustomAlert(this);
         customAlert.setHeaderText("Please note important information below");
 
-        customAlert.setSubText(""+Html.fromHtml(getString(R.string.androidQ)+ "<b>"+networkSSID+"</b>"+getString(R.string.androidQ2)));
-        customAlert.setKeyName("","Got It");
+        customAlert.setSubText("" + Html.fromHtml(getString(R.string.androidQ) + "<b>" + networkSSID + "</b>" + getString(R.string.androidQ2)));
+        customAlert.setKeyName("", "Got It");
         customAlert.show();
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,10 +466,28 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (isSecondStage) {
+            if (video_view_only_oneWifi != null) {
+                video_view_only_oneWifi.stopPlayback();
+                sub_txt.setVisibility(View.GONE);
+                btnYes.setVisibility(View.GONE);
+                rl_video_onlyOneWifi.setVisibility(View.GONE);
+                sv_main.setVisibility(View.VISIBLE);
+
+                /*AP = false;
+                SMART = false;*/
+                isSecondStage = false;
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     private void buildAlertMessageNoGps() {
 
-        CustomAlert customAlert=new CustomAlert(this);
+        CustomAlert customAlert = new CustomAlert(this);
         customAlert.setSubText("Your GPS seems to be disabled, you need to enable it to use this service?");
         customAlert.show();
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -481,7 +663,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                 conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
                 WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                 wifiManager.addNetwork(conf);
-                List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+                @SuppressLint("MissingPermission") List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
 
                 for (WifiConfiguration i : list) {
                     if (i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")) {
@@ -499,8 +681,8 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                                 btnConfigure.setEnabled(false);
                                 btnConfigure.setBackground(ContextCompat.getDrawable(ApConfigActivity.this, R.drawable.login_edit_rounded_corner_blue));
                                 showApConfigCofirmationDialog(networkSSID);
-                            },DELAY);
-                        }else{
+                            }, DELAY);
+                        } else {
 
                             btnConfigure.setEnabled(false);
                             btnConfigure.setBackground(ContextCompat.getDrawable(ApConfigActivity.this, R.drawable.login_edit_rounded_corner_blue));
@@ -514,6 +696,11 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
         } else {
             Toast.makeText(this, "Could not find wifi network with scale name " + networkSSID, Toast.LENGTH_LONG).show();
         }
+        new SendWifiLog(editSSID.getText().toString() + "," + editPassword.getText().toString(), this, new OnUiEventClick() {
+            @Override
+            public void onUiClick(Intent intent, int eventCode) {
+            }
+        });
     }
 
     private void changeAPConfig() {
@@ -532,10 +719,10 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
         String messageStr = getResources().getString(R.string.app_name_splash) + " Wants to Join Wi-Fi Network \"" + SSID + "\"";
 
-        CustomAlert customAlert=new CustomAlert(this);
+        CustomAlert customAlert = new CustomAlert(this);
         customAlert.setSubText(messageStr);
         customAlert.setCancelVisible();
-        customAlert.setKeyName("Cancel","Join");
+        customAlert.setKeyName("Cancel", "Join");
         customAlert.show();
 
         customAlert.btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -558,23 +745,20 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void showalertdialog(boolean success) {
-        new SendWifiLog(editSSID.getText().toString() + "," + editPassword.getText().toString(), this, new OnUiEventClick() {
-            @Override
-            public void onUiClick(Intent intent, int eventCode) {
-            }
-        });
+
         CustomAlert customAlert = new CustomAlert(this);
+
         if (!success) {
             customAlert.setSubText(getString(R.string.Config_failed));
             customAlert.setCancelVisible();
-            customAlert.setKeyName("Cancel","Try Again");
+            customAlert.setKeyName("Cancel", "Try Again");
 
             customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     customAlert.dismiss();
 
-                    Intent intent=new Intent(ApConfigActivity.this, SetUpPreparation.class);
+                    Intent intent = new Intent(ApConfigActivity.this, SetUpPreparation.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                     finish();
@@ -585,23 +769,22 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onClick(View v) {
 
-                    if(fromSettings){
+                    if (fromSettings) {
                         Intent loginIntent = new Intent(ApConfigActivity.this, SettingsActivity.class);
                         startActivity(loginIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finishAffinity();
-                    }else if(fromLogin){
+                    } else if (fromLogin) {
                         customAlert.dismiss();
                     }
                 }
             });
 
-        }else {
-
+        } else {
             if (getIntent().getBooleanExtra("wifi", false)) {
 
                 customAlert.setSubText(getResources().getString(R.string.configuration));
-                customAlert.setKeyName("","Step on the Scale");
+                customAlert.setKeyName("", "Step on the Scale");
                 customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -613,7 +796,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
                                 androidQRedirection(InstructionActivity.class);
 
-                            }else {
+                            } else {
                                 Intent instruc = new Intent(ApConfigActivity.this, InstructionActivity.class);
                                 startActivity(instruc);
                                 finish();
@@ -623,7 +806,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
                                 androidQRedirection(DashBoardActivity.class);
 
-                            }else {
+                            } else {
                                 Intent dashBoardIntent = new Intent(ApConfigActivity.this, DashBoardActivity.class);
                                 startActivity(dashBoardIntent);
                                 finishAffinity();
@@ -641,7 +824,7 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
                         customAlert.dismiss();
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
                             androidQRedirection(SettingsActivity.class);
-                        }else {
+                        } else {
                             Intent intent = new Intent(ApConfigActivity.this, SettingsActivity.class);
                             startActivity(intent);
                             finishAffinity();
@@ -651,18 +834,22 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
             }
         }
-
+        new SendWifiLog(editSSID.getText().toString() + "," + editPassword.getText().toString(), this, new OnUiEventClick() {
+            @Override
+            public void onUiClick(Intent intent, int eventCode) {
+            }
+        });
         customAlert.show();
     }
 
-    protected void androidQRedirection(Class x){
+    protected void androidQRedirection(Class x) {
 
         Intent mStartActivity = new Intent(ApConfigActivity.this, x);
         mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mStartActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         int mPendingIntentId = 123456;
         PendingIntent mPendingIntent = PendingIntent.getActivity(ApConfigActivity.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager)ApConfigActivity.this.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager mgr = (AlarmManager) ApConfigActivity.this.getSystemService(Context.ALARM_SERVICE);
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 0, mPendingIntent);
         System.exit(0);
 
@@ -692,8 +879,8 @@ public class ApConfigActivity extends AppCompatActivity implements View.OnClickL
 
         public void onReceive(Context c, Intent intent) {
 
-                scanResultsWifi.clear();
-                scanResultsWifi = mWifiManager.getScanResults();
+            scanResultsWifi.clear();
+            scanResultsWifi = mWifiManager.getScanResults();
 
             if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
 

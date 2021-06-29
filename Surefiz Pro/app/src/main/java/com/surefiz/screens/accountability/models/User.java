@@ -25,6 +25,17 @@ public class User implements Parcelable {
     @SerializedName("onlineStatus")
     String onlineStatus;
 
+    public int isIsprovider() {
+        return isprovider;
+    }
+
+    public void setIsprovider(int isprovider) {
+        this.isprovider = isprovider;
+    }
+
+    @SerializedName("isprovider")
+    int isprovider;
+
     public User() { }
 
     protected User(Parcel in) {
@@ -37,6 +48,7 @@ public class User implements Parcelable {
         user_LastLogin = in.readString();
         connectionStatus = in.readString();
         onlineStatus = in.readString();
+        isprovider = in.readInt();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -67,6 +79,7 @@ public class User implements Parcelable {
         dest.writeString(user_LastLogin);
         dest.writeString(connectionStatus);
         dest.writeString(onlineStatus);
+        dest.writeInt(isprovider);
     }
 
     public String getUser_id() {

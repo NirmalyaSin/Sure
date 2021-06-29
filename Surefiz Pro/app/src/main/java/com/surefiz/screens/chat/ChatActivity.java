@@ -58,6 +58,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
     private ArrayList<Conversation> arrayListConversation = new ArrayList<Conversation>();
     private ChatAdapter mChatAdapter;
     private String receiver_id;
+    private int isProvider;
     private int oldPagination;
     private EditText editTextMessage;
     private ImageView imageSendMsg;
@@ -107,6 +108,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
         LoginShared.setWeightFromNotification(this, "0");
         //Receive receiverId from previous page.
         receiver_id = getIntent().getStringExtra("reciver_id");
+        isProvider = getIntent().getIntExtra("isProvider", 0);
         //Initialize Views
         initializeView();
     }
@@ -233,7 +235,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                     + "\nnewPagination = " + newPagination);
 
             final Call<ChatListResponse> call_ConversationListApi = apiInterface
-                    .call_ConversationListApi(token, senderId, receiverId, String.valueOf(newPagination));
+                    .call_ConversationListApi(token, senderId, receiverId, String.valueOf(newPagination),isProvider);
 
             call_ConversationListApi.enqueue(new Callback<ChatListResponse>() {
                 @Override
@@ -347,9 +349,9 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
 
     public void showNoRecordsDialog(String message) {
 
-        CustomAlert customAlert=new CustomAlert(this);
+        CustomAlert customAlert = new CustomAlert(this);
         customAlert.setSubText(message);
-        customAlert.setKeyName("","Got it");
+        customAlert.setKeyName("", "Got it");
         customAlert.show();
         customAlert.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,7 +375,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnCha
                 + "\nreceiverId = " + receiver_id + "\nMessage = " + message);
 
         final Call<ResponseBody> call_SendChatApi = apiInterface
-                .call_SendChatApi(token, senderId, receiver_id, message);
+                .call_SendChatApi(token, senderId, receiver_id, message,isProvider);
 
         call_SendChatApi.enqueue(new Callback<ResponseBody>() {
             @Override

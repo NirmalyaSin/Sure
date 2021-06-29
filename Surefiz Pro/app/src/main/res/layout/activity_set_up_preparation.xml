@@ -90,12 +90,9 @@
                 android:textSize="@dimen/_14sdp" />
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_above="@id/bothButtonView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/sub_txt"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
                 android:visibility="visible"
                 android:layout_marginTop="@dimen/_10sdp">
 
@@ -120,7 +117,7 @@
             <RelativeLayout
                 android:id="@+id/rl_video_onlyTwoWifi"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_200sdp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/sub_txt"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"

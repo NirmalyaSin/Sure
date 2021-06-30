@@ -32,6 +32,7 @@ public class SignUpOnClick implements View.OnClickListener {
         signUpActivity.et_time_loss.setOnClickListener(this);
         signUpActivity.et_userselection.setOnClickListener(this);
         signUpActivity.et_learn_about.setOnClickListener(this);
+        signUpActivity.et_provider.setOnClickListener(this);
         signUpActivity.btn_register.setOnClickListener(this);
     }
 
@@ -241,6 +242,9 @@ public class SignUpOnClick implements View.OnClickListener {
                /* else if (signUpActivity.et_learn_about.getText().toString().equals("")) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_choose_how_did_you_learn_about_SureFiz));
                 }*/
+                else if(signUpActivity.et_provider.getText().toString().equals("")){
+                    MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_Select_Your_Provider));
+                }
                 else if (!signUpActivity.checkBoxTermsCondition.isChecked()) {
                     MethodUtils.errorMsg(signUpActivity, signUpActivity.getString(R.string.Please_accept_Terms_and_Conditions));
                 }
@@ -250,6 +254,11 @@ public class SignUpOnClick implements View.OnClickListener {
                     signUpActivity.callSignUpApi();
                 }
 
+                break;
+
+            case R.id.et_provider:
+                signUpActivity.hideSoftKeyBoard();
+                signUpActivity.providerPopup.show();
                 break;
         }
 

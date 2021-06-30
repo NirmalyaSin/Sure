@@ -17,6 +17,8 @@ import com.surefiz.screens.bodycodition.BodyActivity;
 import com.surefiz.screens.bodycodition.model.BodyItem;
 import com.surefiz.screens.profile.model.country.CountryList;
 import com.surefiz.screens.profile.model.country.Datum;
+import com.surefiz.screens.profile.model.provider.ProviderResponse;
+import com.surefiz.screens.profile.model.provider.ProviderlistItem;
 import com.surefiz.screens.profile.model.state.DataItem;
 import com.surefiz.screens.profile.model.state.StateResponse;
 import com.surefiz.utils.progressloader.LoadingData;
@@ -34,19 +36,21 @@ import retrofit2.Retrofit;
 
 public class SignUpActivity extends SignUpView {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_layout);
         ButterKnife.bind(this);
         loader = new LoadingData(this);
-        signUpOnClick=new SignUpOnClick(SignUpActivity.this);
+        signUpOnClick = new SignUpOnClick(SignUpActivity.this);
 
-        orderId=getIntent().getStringExtra("orderId");
-        scaleId=getIntent().getStringExtra("scaleId");
+        orderId = getIntent().getStringExtra("orderId");
+        scaleId = getIntent().getStringExtra("scaleId");
 
-        Log.e("SignUp-orderId",":::::::::::"+orderId);
-        Log.e("SignUp-scaleId",":::::::::::"+scaleId);
+        Log.e("SignUp-orderId", ":::::::::::" + orderId);
+        Log.e("SignUp-scaleId", ":::::::::::" + scaleId);
 
         addPreferredListAndCall();
         addBodyList();
@@ -58,6 +62,51 @@ public class SignUpActivity extends SignUpView {
         addLearnAboutList();
         setTermsAndCondition();
         callCountryListApi();
+        callProviderListApi();
+    }
+
+    private void callProviderListApi() {
+        Retrofit retrofit = AppConfig.getRetrofit(ApiList.BASE_URL);
+        final ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
+        Call<ProviderResponse> call = apiInterface.callProviderListApi();
+        call.enqueue(new Callback<ProviderResponse>() {
+            @Override
+            public void onResponse(Call<ProviderResponse> call, Response<ProviderResponse> response) {
+                try {
+                    if (response.body().getStatus() == 1) {
+                        addProviderList(response.body().getData().getProviderlist());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProviderResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void addProviderList(List<ProviderlistItem> data) {
+
+        providerIdList.clear();
+        providerNameList.clear();
+        for (int i = 0; i < data.size(); i++) {
+            providerIdList.add(data.get(i).getId());
+            providerNameList.add(data.get(i).getName());
+        }
+
+        providerPopup = new MyOptionsPickerView(this);
+        providerPopup.setPicker(providerNameList);
+        providerPopup.setCyclic(false);
+        providerPopup.setSelectOptions(0);
+
+        providerPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
+            et_provider.setText(providerNameList.get(options1));
+            selectedProviderId = providerIdList.get(options1);
+        });
     }
 
 
@@ -69,7 +118,7 @@ public class SignUpActivity extends SignUpView {
         textTermsCondition.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void addLearnAboutList(){
+    private void addLearnAboutList() {
 
         learnList.add("Google Search");
         learnList.add("Facebook");
@@ -85,7 +134,7 @@ public class SignUpActivity extends SignUpView {
         learnList.add("Others");
 
 
-        learnPopup=new MyOptionsPickerView(this);
+        learnPopup = new MyOptionsPickerView(this);
         learnPopup.setPicker(learnList);
         learnPopup.setCyclic(false);
         learnPopup.setSelectOptions(0);
@@ -96,15 +145,16 @@ public class SignUpActivity extends SignUpView {
     }
 
     private void addBodyList() {
-        String [] stringList={"Diabetes","Depression","Heart Disease","High Blood Pressure","Osteoarthritis","High Cholesterol","None"};
-        for (int i = 0; i <stringList.length ; i++) {
-            BodyItem bodyItem=new BodyItem();
+        String[] stringList = {"Diabetes", "Depression", "Heart Disease", "High Blood Pressure", "Osteoarthritis", "High Cholesterol", "None"};
+        for (int i = 0; i < stringList.length; i++) {
+            BodyItem bodyItem = new BodyItem();
             bodyItem.setName(stringList[i]);
             bodyItem.setSelection(false);
             bodyList.add(bodyItem);
         }
 
     }
+
     private void addGenderListAndCall() {
         genderList.add("Male");
         genderList.add("Female");
@@ -112,7 +162,7 @@ public class SignUpActivity extends SignUpView {
         genderList.add("Prefer not to say");
 
 
-        genderPopup=new MyOptionsPickerView(this);
+        genderPopup = new MyOptionsPickerView(this);
         genderPopup.setPicker(genderList);
         genderPopup.setCyclic(false);
         genderPopup.setSelectOptions(0);
@@ -128,7 +178,7 @@ public class SignUpActivity extends SignUpView {
         lifeStyleList.add("Very active");
         lifeStyleList.add("Extra active");
 
-        lifeStylePopup=new MyOptionsPickerView(this);
+        lifeStylePopup = new MyOptionsPickerView(this);
         lifeStylePopup.setPicker(lifeStyleList);
         lifeStylePopup.setCyclic(false);
         lifeStylePopup.setSelectOptions(0);
@@ -144,7 +194,7 @@ public class SignUpActivity extends SignUpView {
         prefferedList.add("LBS/INCH");
         prefferedList.add("KG/CM");
 
-        weigtUniversalPopupPreferred=new MyOptionsPickerView(this);
+        weigtUniversalPopupPreferred = new MyOptionsPickerView(this);
         weigtUniversalPopupPreferred.setPicker(prefferedList);
         weigtUniversalPopupPreferred.setCyclic(false);
         weigtUniversalPopupPreferred.setSelectOptions(0);
@@ -152,10 +202,10 @@ public class SignUpActivity extends SignUpView {
 
         weigtUniversalPopupPreferred.setOnoptionsSelectListener((options1, option2, options3) -> {
             height = et_height.getText().toString().trim();
-            String value=prefferedList.get(options1);
+            String value = prefferedList.get(options1);
             et_units.setText(value);
 
-            if(!height.equals("")) {
+            if (!height.equals("")) {
                 splited = height.split(" ");
                 if (value.equals("KG/CM")) {
                     units = "CM";
@@ -177,7 +227,7 @@ public class SignUpActivity extends SignUpView {
 
             weight = et_weight.getText().toString().trim();
 
-            if(!weight.equals("")) {
+            if (!weight.equals("")) {
                 splited = weight.split(" ");
                 if (value.equals("KG/CM")) {
                     units = "CM";
@@ -192,7 +242,7 @@ public class SignUpActivity extends SignUpView {
                     }
                     if (value.equals("LBS/INCH")) {
                         units = "INCH";
-                        et_weight.setText((Math.round(Double.parseDouble(splited[0]) /2.2046)) + " LBS");
+                        et_weight.setText((Math.round(Double.parseDouble(splited[0]) / 2.2046)) + " LBS");
                     }
                 }
             }
@@ -258,7 +308,7 @@ public class SignUpActivity extends SignUpView {
         }
 
 
-        countryListPopup=new MyOptionsPickerView(this);
+        countryListPopup = new MyOptionsPickerView(this);
         countryListPopup.setPicker(countryList);
         countryListPopup.setCyclic(false);
         countryListPopup.setSelectOptions(0);
@@ -267,7 +317,7 @@ public class SignUpActivity extends SignUpView {
         countryListPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
 
             et_country_name.setText(countryList.get(options1));
-            selectedCountryId=countryIDList.get(options1).toString() ;
+            selectedCountryId = countryIDList.get(options1).toString();
             callStateListApi();
         });
     }
@@ -289,7 +339,7 @@ public class SignUpActivity extends SignUpView {
             stateIDList.add(data.get(i).getStateID());
         }
 
-        stateListPopup=new MyOptionsPickerView(this);
+        stateListPopup = new MyOptionsPickerView(this);
         stateListPopup.setPicker(stateList);
         stateListPopup.setCyclic(false);
         stateListPopup.setSelectOptions(0);
@@ -298,7 +348,7 @@ public class SignUpActivity extends SignUpView {
         stateListPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
 
             et_state.setText(stateList.get(options1));
-            selectedStateId=stateIDList.get(options1);
+            selectedStateId = stateIDList.get(options1);
         });
 
     }
@@ -309,7 +359,7 @@ public class SignUpActivity extends SignUpView {
         managementList.add("Lose And Maintain Weight");
         managementList.add("Maintain Current Weight");
 
-        managementPopup=new MyOptionsPickerView(this);
+        managementPopup = new MyOptionsPickerView(this);
         managementPopup.setPicker(managementList);
         managementPopup.setCyclic(false);
         managementPopup.setSelectOptions(0);
@@ -375,7 +425,7 @@ public class SignUpActivity extends SignUpView {
         desiredWeightSelectionList.add("I Will Provide The Info");
         desiredWeightSelectionList.add("I Want " + getResources().getString(R.string.app_name_splash) + " To Suggest");
 
-        selectionPopup=new MyOptionsPickerView(this);
+        selectionPopup = new MyOptionsPickerView(this);
         selectionPopup.setPicker(desiredWeightSelectionList);
         selectionPopup.setCyclic(false);
         selectionPopup.setSelectOptions(0);
@@ -383,7 +433,7 @@ public class SignUpActivity extends SignUpView {
 
         selectionPopup.setOnoptionsSelectListener((options1, option2, options3) -> {
 
-            if (options1==0) {
+            if (options1 == 0) {
                 et_userselection.setText(desiredWeightSelectionList.get(0));
 
                 if (selectedWeightManagmentGoal == 1) {
@@ -423,7 +473,7 @@ public class SignUpActivity extends SignUpView {
             timeList.add(i + " " + "Weeks");
         }
 
-        timePopup=new MyOptionsPickerView(this);
+        timePopup = new MyOptionsPickerView(this);
         timePopup.setPicker(timeList);
         timePopup.setCyclic(false);
         timePopup.setSelectOptions(0);
@@ -445,7 +495,7 @@ public class SignUpActivity extends SignUpView {
             }
         }
 
-        weightPopup=new MyOptionsPickerView(this);
+        weightPopup = new MyOptionsPickerView(this);
         weightPopup.setPicker(weightList);
         weightPopup.setCyclic(false);
         weightPopup.setSelectOptions(0);
@@ -460,10 +510,10 @@ public class SignUpActivity extends SignUpView {
         setupPickerLogic(change);
 
 
-        doublePicker=new MyOptionsPickerView(this);
-        doublePicker.setPicker(array1,array2,false);
-        doublePicker.setCyclic(false,false,false);
-        doublePicker.setSelectOptions(0,0);
+        doublePicker = new MyOptionsPickerView(this);
+        doublePicker.setPicker(array1, array2, false);
+        doublePicker.setCyclic(false, false, false);
+        doublePicker.setSelectOptions(0, 0);
 
 
         doublePicker.setOnoptionsSelectListener((option1, option2, option3) -> {
@@ -471,48 +521,48 @@ public class SignUpActivity extends SignUpView {
             String[] separated = array1.get(option1).split(" ");
             String[] separated2 = array2.get(option2).split(" ");
 
-            setValue(change,Integer.parseInt(separated[0]),Integer.parseInt(separated2[0]));
+            setValue(change, Integer.parseInt(separated[0]), Integer.parseInt(separated2[0]));
         });
 
 
     }
 
-    private void setValue(String change,int v1, int v2){
-        if(change.equals("INCH")){
+    private void setValue(String change, int v1, int v2) {
+        if (change.equals("INCH")) {
 
-            int result=v1*12+v2;
-            et_height.setText(result+" INCH");
+            int result = v1 * 12 + v2;
+            et_height.setText(result + " INCH");
 
-        }else{
+        } else {
 
-            int result=v1*100+v2;
-            et_height.setText(result+" CM");
+            int result = v1 * 100 + v2;
+            et_height.setText(result + " CM");
         }
     }
 
-    private void setupPickerLogic(String change){
+    private void setupPickerLogic(String change) {
 
         array1.clear();
         array2.clear();
 
-        if(change.equals("INCH")){
+        if (change.equals("INCH")) {
 
             for (int i = 3; i < 8; i++) {
-                array1.add(i+" FT");
+                array1.add(i + " FT");
             }
 
             for (int j = 0; j < 12; j++) {
-                array2.add(j+" INCH");
+                array2.add(j + " INCH");
             }
 
-        }else{
+        } else {
 
             for (int i = 1; i < 4; i++) {
-                array1.add(i+" Meter");
+                array1.add(i + " Meter");
             }
 
             for (int j = 0; j < 100; j++) {
-                array2.add(j+" CM");
+                array2.add(j + " CM");
 
             }
         }
@@ -539,12 +589,13 @@ public class SignUpActivity extends SignUpView {
         weightPopup.show();
 
     }
+
     protected void showBodyPopup() {
 
 
-        Intent intent=new Intent(this, BodyActivity.class);
-        intent.putExtra("selectedBody",bodyList);
-        startActivityForResult(intent,101);
+        Intent intent = new Intent(this, BodyActivity.class);
+        intent.putExtra("selectedBody", bodyList);
+        startActivityForResult(intent, 101);
 
     }
 
@@ -555,15 +606,14 @@ public class SignUpActivity extends SignUpView {
     }
 
     protected void showAndDismissStatePopup() {
-        if(stateListPopup!=null)
+        if (stateListPopup != null)
             stateListPopup.show();
     }
 
     protected void showAndDismissLifeStylePopup() {
 
-       lifeStylePopup.show();
+        lifeStylePopup.show();
     }
-
 
 
     protected void showAndDismissGenderPopup() {
@@ -591,21 +641,21 @@ public class SignUpActivity extends SignUpView {
         learnPopup.show();
     }
 
-    protected String getSelectedItem(){
-        String s="";
-        for (int i = 0;i<bodyList.size();i++){
-            if(bodyList.get(i).isSelection()==true){
-                s=s+bodyList.get(i).getName()+",";
+    protected String getSelectedItem() {
+        String s = "";
+        for (int i = 0; i < bodyList.size(); i++) {
+            if (bodyList.get(i).isSelection() == true) {
+                s = s + bodyList.get(i).getName() + ",";
             }
         }
 
-        if(!s.equals(""))
-            s=s.substring(0,s.length()-1);
+        if (!s.equals(""))
+            s = s.substring(0, s.length() - 1);
 
         return s;
     }
 
-    protected void imagePicker(){
+    protected void imagePicker() {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
@@ -616,13 +666,13 @@ public class SignUpActivity extends SignUpView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==101){
-            if(resultCode==RESULT_OK){
-                bodyList= (ArrayList<BodyItem>) data.getSerializableExtra("selectedBody");
+        if (requestCode == 101) {
+            if (resultCode == RESULT_OK) {
+                bodyList = (ArrayList<BodyItem>) data.getSerializableExtra("selectedBody");
 
-                String selectedBody=getSelectedItem();
+                String selectedBody = getSelectedItem();
                 et_body.setText(selectedBody);
-                Log.d("Selected Body","::::::::::"+selectedBody);
+                Log.d("Selected Body", "::::::::::" + selectedBody);
             }
         }
     }

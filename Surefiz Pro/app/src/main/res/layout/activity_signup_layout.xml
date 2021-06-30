@@ -1401,6 +1401,44 @@
                         android:textSize="@dimen/_11sdp" />
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingLeft="@dimen/_18sdp"
+                    android:text="YOUR PROVIDER"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/_14sdp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_provider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:layout_marginRight="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/edit_text_background">
+
+                    <EditText
+                        android:id="@+id/et_provider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/Please_Select_Your_Provider"
+                        android:inputType="text|textNoSuggestions"
+                        android:maxLines="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/whiteColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

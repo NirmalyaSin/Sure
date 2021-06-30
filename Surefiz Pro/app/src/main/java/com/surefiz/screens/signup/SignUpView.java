@@ -191,6 +191,10 @@ public class SignUpView extends AppCompatActivity {
     @BindView(R.id.et_learn_about)
     protected EditText et_learn_about;
 
+    @BindView(R.id.et_provider)
+    protected EditText et_provider;
+
+
     protected String toolTipText = "";
     protected File mFile = null;
     protected String filePath = "";
@@ -227,8 +231,10 @@ public class SignUpView extends AppCompatActivity {
     protected MyOptionsPickerView lifeStylePopup, managementPopup, weigtUniversalPopupPreferred, countryListPopup;
     protected MyOptionsPickerView genderPopup, stateListPopup, weightPopup, timePopup, learnPopup, selectionPopup;
     protected MyOptionsPickerView doublePicker;
-
-
+    protected String selectedProviderId = "";
+    protected MyOptionsPickerView providerPopup;
+    protected ArrayList<String> providerIdList = new ArrayList<>();
+    protected ArrayList<String> providerNameList = new ArrayList<>();
     protected SignUpOnClick signUpOnClick;
 
 
@@ -362,6 +368,7 @@ public class SignUpView extends AppCompatActivity {
         RequestBody bodycondition = RequestBody.create(MediaType.parse("text/plain"), "0");
         RequestBody lifestyle = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedLifeStyle));
         RequestBody learn_about = RequestBody.create(MediaType.parse("text/plain"), "0");
+        RequestBody providerid = RequestBody.create(MediaType.parse("text/plain"), selectedProviderId);
 
 
         RequestBody country = RequestBody.create(MediaType.parse("text/plain"), selectedCountryId);
@@ -428,12 +435,12 @@ public class SignUpView extends AppCompatActivity {
             call = apiInterface.call_signup_image(first_name, middle_name, last_name,
                     email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
                     maintain_Weight_By_Server, count, regtype, state, city, zip, addressLineOne, addressLineTwo, bodycondition, lifestyle, country,
-                    TotalAmount, currencycode, PayableAmount, address, scaleMacId, OrderId, learn_about, Period, body);
+                    TotalAmount, currencycode, PayableAmount, address, scaleMacId, OrderId, learn_about, Period, body,providerid);
         else
             call = apiInterface.call_signup(first_name, middle_name, last_name,
                     email, password, gender, phone, dob, height, desiredWeight, timeToloseWeight, prefferedUnits, deviceType, type, deviceToken,
                     maintain_Weight_By_Server, count, regtype, state, city, zip, addressLineOne, addressLineTwo, bodycondition, lifestyle, country,
-                    TotalAmount, currencycode, PayableAmount, address, scaleMacId, OrderId, learn_about, Period);
+                    TotalAmount, currencycode, PayableAmount, address, scaleMacId, OrderId, learn_about, Period,providerid);
 
 
         call.enqueue(new Callback<SignUpResponse>() {

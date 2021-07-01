@@ -1401,15 +1401,26 @@
                         android:textSize="@dimen/_11sdp" />
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:paddingLeft="@dimen/_18sdp"
-                    android:text="YOUR PROVIDER"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/whiteColor"
-                    android:textSize="@dimen/_14sdp" />
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_18sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_18sdp"
+                        android:text="Your Provider"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/whiteColor"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star16" />
+                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_provider"
